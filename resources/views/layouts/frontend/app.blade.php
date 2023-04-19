@@ -13,7 +13,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css','resources/scss/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
 </head>
 
 <body class="">
@@ -25,16 +25,23 @@
                 @if (Route::has('login'))
                     <div class="text-muted">
                         @auth
-                            <a href="{{ url('/dashboard') }}"
-                                class="">Dashboard</a>
+                            <a href="{{ url('/dashboard') }}" class="">Dashboard</a>
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-responsive-nav-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-responsive-nav-link>
+                            </form>
                         @else
-                            <a href="{{ route('login') }}"
-                                class="">Log
+                            <a href="{{ route('login') }}" class="">Log
                                 in</a>
 
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}"
-                                    class="">Register</a>
+                                <a href="{{ route('register') }}" class="">Register</a>
                             @endif
                         @endauth
                     </div>
