@@ -11,7 +11,7 @@
 
 To be more consistant and productive to our team work in this project we must follow some conventions.
 
-1 ### Resoucre Routes
+- ### Resoucre Routes
 Resource routes are a very simple way to write clean and consistant routes
 ```php
 Route:resource('user', UserController::class);
