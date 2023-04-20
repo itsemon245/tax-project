@@ -19,7 +19,18 @@ Route:resource('user', UserController::class);
 This single line of code creates 6 general routes that is necessary for CRUD operations
 The route names is corresponding to the controllers method names.
 
-
+- ### Controllers
+While resource routes creates a clean and consistant they need some predefined method names to work
+So when ever you need a new controller use below command
+```bash
+php artisan make:controller NameController -r
+```
+this will create a controller with all the necessarry methods
+### Additionally you can create everything you need while creating your Model
+```bash
+php artisna make:model ModelName -a
+```
+This command will create Controller, Requests, Migrations and Other files that you may need.
 
 
 ## About Laravel
