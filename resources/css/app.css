@@ -1,0 +1,20 @@
+:root{
+    --primary : #38BDF8;
+    font-size: 13px;
+}
+header{
+    background: #192B31;
+    color: white;
+}
+nav>ul>li{
+    list-style: none;
+    border: 2px red solid;
+}
+.nav-link{
+    text-decoration: none;
+    color: white;
+    background: green;
+}
+.nav-link:hover{
+    color: #38BDF8;
+}

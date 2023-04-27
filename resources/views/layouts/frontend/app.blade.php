@@ -18,45 +18,45 @@
 
 <body class="">
     <!-- Page Heading -->
-    <header>
-        <div>
+    <header class="px-5 py-3 row align-items-center">
+        <div class="col-lg-2">
             Logo Here
         </div>
-        <nav>
-            <ul>
-                <li>NavLink1</li>
-                <li>NavLink2</li>
-                <li>NavLink3</li>
-                <li>NavLink4</li>
-                <li>NavLink5</li>
-                <li>NavLink6</li>
-                <li>NavLink7</li>
-                <li>NavLink8</li>
+        <nav class="col-lg-7">
+            <ul class="d-flex gap-3 justify-content-center align-items-center mb-0">
+                <li class="">
+                    <a href="">Navlink</a>
+                </li>
+                <li class="">
+                    <a href="#">Navlink</a>
+                </li>
+                <li class="">
+                    <a href="#">Navlink</a>
+                </li>
+                <li class="">
+                    <a href="#">Navlink</a>
+                </li>
+                <li class="">
+                    <a href="#">Navlink</a>
+                </li>
+                <li class="">
+                    <a href="#">Navlink</a>
+                </li>
+                <li class="">
+                    <a href="#">Navlink</a>
+                </li>
+                <li class="">
+                    <a href="#">Navlink</a>
+                </li>
             </ul>
         </nav>
-        <div class="">
-            @if (Route::has('login'))
-                <div class="text-muted">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="">Dashboard</a>
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <button>
-                                {{ __('Log Out') }}
-                            </button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="">Log
-                            in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+        <div class="col-lg-3">
+            <div class="d-flex align-items-center gap-2 justify-content-end">
+                <a class="btn btn-secondary" href="">Become a partner</a>
+                @if (Route::has('login'))
+                    <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
+                @endif
+            </div>
         </div>
     </header>
 
