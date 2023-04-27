@@ -19,6 +19,7 @@
     <link href="{{ asset('frontend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
     {{-- Head JS  --}}
     <script src="{{ asset('frontend/assets/js/head.js') }}"></script>
+    <script src="{{ asset('frontend/extractColor.js') }}"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
 </head>
@@ -74,10 +75,12 @@
 
 
     <footer></footer>
+    @stack('customJs')
     {{-- vendor JS  --}}
     <script src="{{ asset('frontend/assets/js/vendor.min.js') }}"></script>
     {{-- app JS  --}}
     <script src="{{ asset('frontend/assets/js/app.min.js') }}"></script>
+
 </body>
 
 
