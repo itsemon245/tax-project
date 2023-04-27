@@ -7,8 +7,7 @@
 import axios from 'axios';
 window.axios = axios;
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'//bootstrap js
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common[ 'X-Requested-With' ] = 'XMLHttpRequest';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

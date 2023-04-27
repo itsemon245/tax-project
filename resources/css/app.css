@@ -1,0 +1,25 @@
+:root{
+    --primary : #38BDF8;
+    --bg-dark: #192B31;
+    font-size: 10px;
+}
+*{
+    font-size: 1.6rem;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+header{
+    background: var(--bg-dark);
+    color: white;
+}
+nav>ul>li{
+    list-style: none;
+}
+nav>ul>li>a{
+    text-decoration: none;
+    color:white;
+}
+nav>ul>li>a:hover{
+    color:var(--primary);
+}
