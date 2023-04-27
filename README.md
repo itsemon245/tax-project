@@ -7,6 +7,32 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Conventions to follow for this project
+
+To be more consistant and productive to our team work in this project we must follow some conventions.
+
+- ### Resoucre Routes
+Resource routes are a very simple way to write clean and consistant routes
+```php
+Route:resource('user', UserController::class);
+```
+This single line of code creates 6 general routes that is necessary for CRUD operations
+The route names is corresponding to the controllers method names.
+
+- ### Controllers
+While resource routes creates a clean and consistant they need some predefined method names to work
+So when ever you need a new controller use below command
+```bash
+php artisan make:controller NameController -r
+```
+this will create a controller with all the necessarry methods
+### Additionally you can create everything you need while creating your Model
+```bash
+php artisna make:model ModelName -a
+```
+This command will create Controller, Requests, Migrations and Other files that you may need.
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
