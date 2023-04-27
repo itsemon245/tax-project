@@ -1,20 +1,25 @@
 :root{
     --primary : #38BDF8;
-    font-size: 13px;
+    --bg-dark: #192B31;
+    font-size: 10px;
+}
+*{
+    font-size: 1.6rem;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 header{
-    background: #192B31;
+    background: var(--bg-dark);
     color: white;
 }
 nav>ul>li{
     list-style: none;
-    border: 2px red solid;
 }
-.nav-link{
+nav>ul>li>a{
     text-decoration: none;
-    color: white;
-    background: green;
+    color:white;
 }
-.nav-link:hover{
-    color: #38BDF8;
+nav>ul>li>a:hover{
+    color:var(--primary);
 }
