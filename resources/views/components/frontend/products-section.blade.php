@@ -23,7 +23,11 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="home1" role="tabpanel">
-                {{ $slot }}
+                <div class="product-wrapper">
+                    <x-frontend.product-card />
+                    <x-frontend.product-card />
+                    <x-frontend.product-card />
+                </div>
             </div>
             <div class="tab-pane show" id="profile1" role="tabpanel">
                 <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,

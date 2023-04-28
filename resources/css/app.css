@@ -31,11 +31,17 @@ nav>ul>li>a:hover{
 
 .product-card{
     border: 10px solid var(--primary);
-    max-width: 320px;
 }
-
+.product-wrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(1fr, 300px));
+}
 .custom-bullet{
     list-style: none;
+}
+.custom-bullet li p{
+    margin-bottom: 5px;
+    font-size: 14px;
 }
 .mdi{
     font-size: 24px;

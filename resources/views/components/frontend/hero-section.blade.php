@@ -16,7 +16,7 @@
                         </a>
                     </div>
                     <img class="hero-image" src="{{ asset('frontend/assets/images/small/img-2.jpg') }}" alt=""
-                        crossOrigin="anonymous" style="height: 360px; object-fit: cover;">
+                        crossOrigin="anonymous" style="height: 250px; object-fit: cover;">
                 </div>
             </div>
         </div>
