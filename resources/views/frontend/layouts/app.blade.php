@@ -26,12 +26,12 @@
 
 <body class="">
     <!-- Page Heading -->
-    <header class="px-5 py-3 row align-items-center">
+    <header class="row align-items-center">
         <div class="col-lg-2">
             Logo Here
         </div>
         <nav class="col-lg-7">
-            <ul class="d-flex gap-3 justify-content-center align-items-center mb-0">
+            <ul class="d-flex gap-4 justify-content-center align-items-center mb-0">
                 <li class="">
                     <a href="">Navlink</a>
                 </li>
@@ -69,7 +69,7 @@
     </header>
 
     <!-- Page Content -->
-    <main>
+    <main class="">
         @yield('main')
     </main>
 
