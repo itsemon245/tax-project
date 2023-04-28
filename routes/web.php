@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function () {
 Route::controller(DashboardController::class)->group(function(){
     Route::get('/dashboard','create')->name('dashboard');
 });
+Route::resource('user-profile', UserProfileController::class);
+
+
 
 
 /*
