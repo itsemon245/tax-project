@@ -4,7 +4,7 @@
         <h2 class="text-uppercase mb-0" style="font-weight: 500;">
             Free
         </h2>
-        <h5 class="mb-0" style="font-weight: 300;">
+        <h5 class="" style="font-weight: 300;">
             <span class="badge bg-danger" style="font-weight: 400;">Free</span> expert assist
             included
         </h5>
