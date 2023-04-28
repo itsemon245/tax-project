@@ -6,12 +6,12 @@
         <div class="carousel-inner" role="listbox">
 
             <div class="carousel-item active">
-                <div class="row" style="position: relative;">
-                    <div class="hero-content"
-                        style="position: absolute;top:30%; left:10%;transform: translate(50px, -50px);max-width:300px;">
-                        <h3 class="">Save Up To 40% With Early Bird Prices</h3>
-                        <p>Get a sneek peek now at great pricing</p>
-                        <a href="#" class="btn btn-primary">
+                <div class="row align-items-center" style="position: relative;">
+                    <div class="hero-content" style="position: absolute;left:15%;max-width:320px;">
+                        <h3 class="mb-0" style="font-weight: 800;">Save Up To 40% With Early Bird Prices</h3>
+                        <p class="my-1" style="font-size:13px;font-weight:500;">Get a sneek peek now at great
+                            pricing</p>
+                        <a href="#" class="btn btn-primary text-dark" style="font-weight:600;">
                             Get Started
                         </a>
                     </div>
