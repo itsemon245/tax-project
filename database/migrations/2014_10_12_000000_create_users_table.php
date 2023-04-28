@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone');
             $table->timestamp('email_verified_at')->nullable();
+            $table->longText('image')->nullable();
+            $table->longText('image_url')->default(url('storage/placeholder/profile_placeholder.jpg'));
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
