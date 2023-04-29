@@ -33,6 +33,7 @@ function saveImage($image, $dir, $prefix = "image")
  */
 function updateFile($file, $old_path)
 {
+    $new_path = $old_path;
     $path = "public/" . $old_path;
     if ($file) {
         $new_path = saveImage($file, 'profile', 'user-image');

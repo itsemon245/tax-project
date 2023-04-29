@@ -12,3 +12,7 @@
 
  <!-- App js-->
  <script src="{{ asset('backend/assets/js/app.min.js') }}"></script>
+ {{-- toaster js  --}}
+ <script src="{{ asset('backend/assets/js/toastr.min.js') }}"></script>
+ @include('backend.layouts.alert')
+ @stack('customJs')

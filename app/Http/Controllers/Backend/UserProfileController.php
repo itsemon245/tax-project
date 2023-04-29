@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\backend\UserProfileUpdateRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class UserProfileController extends Controller
@@ -17,6 +18,7 @@ class UserProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
+        // dd(Session::get('alert-type'));
         return view('backend.profile.profile-edit', compact('user'));
     }
 
@@ -65,9 +67,11 @@ class UserProfileController extends Controller
         $userData->image_url = updateFile($request->profile_img, $old_path);
         $userData->save();
 
-        return redirect()
-            ->back()
-            ->with('success', 'Profile Updated');
+        $notification = array(
+            'message' => "Profile Updated",
+            'alert-type' => 'success',
+        );
+        return redirect()->back()->with($notification);
     }
 
 
