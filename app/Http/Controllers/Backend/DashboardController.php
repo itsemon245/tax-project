@@ -16,7 +16,7 @@ class DashboardController extends Controller
     /*
     * create dashboard view page
     */
-    public function create()
+    public function index()
     {
         return view('backend.dashboard.dashboard');
     }
