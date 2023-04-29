@@ -61,6 +61,7 @@ class UserProfileController extends Controller
     {
         $userData = User::findOrFail($id);
         $userData->name = $request->name;
+        $userData->email = $request->email;
         $userData->user_name = $request->user_name;
         $userData->phone = $request->phone;
         $old_path = $userData->image_url;
