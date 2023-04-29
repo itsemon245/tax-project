@@ -14,7 +14,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = ProductCategory::get();
+        return view('backend.product.category', compact('categories'));
     }
 
     /**
@@ -30,7 +31,10 @@ class ProductCategoryController extends Controller
      */
     public function store(StoreProductCategoryRequest $request)
     {
-        //
+        $category = new ProductCategory();
+        $category->category = $request->category;
+        $category->save();
+        return redirect()->back()->with('info','User Added Successfully');
     }
 
     /**
@@ -64,4 +68,5 @@ class ProductCategoryController extends Controller
     {
         //
     }
+
 }
