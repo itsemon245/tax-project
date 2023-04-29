@@ -23,6 +23,7 @@ To be more consistant and productive to our team work in this project we must fo
 
 - ### Naming Conventions
  1. Use camelCaseing for
+
   - ** Blade Files.
   - ** Function Names.
   - ** Variables
