@@ -461,7 +461,6 @@
         <div class="rightbar-overlay"></div>
 
        @include('backend.layouts.script')
-       @include('backend.layouts.alert')
         
     </body>
 </html>
