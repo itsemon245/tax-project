@@ -10,10 +10,11 @@ class ProductCard extends Component
 {
     /**
      * Create a new component instance.
+     *
+     * @return void
      */
     public function __construct()
     {
-        //
     }
 
     /**
