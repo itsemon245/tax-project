@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Hero\BannerController;
+use App\Http\Controllers\Backend\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,10 +38,17 @@ Route::middleware('auth')->group(function () {
 Route::controller(DashboardController::class)->group(function(){
     Route::get('/dashboard','create')->name('dashboard');
 });
+
+/*
+*this route for user profiles
+*/
 Route::resource('user-profile', UserProfileController::class);
 
+/*
+* this route for user hero sections
+*/
 
-
+Route::resource('hero',BannerController::class);
 
 /*
 * dashboard controller end
