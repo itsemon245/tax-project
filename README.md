@@ -23,9 +23,9 @@ To be more consistant and productive to our team work in this project we must fo
 
 - ### Naming Conventions
  1. Use camelCaseing for
- - **Blade Files.
- - **Function Names.
- - **Variables
+  - ** Blade Files.
+  - ** Function Names.
+  - ** Variables
  2. Always organise your files in separate folders as needed
  3. Always `git fetch && git pull` before merging any branch into `main`
  4. Always sync your fork before `git fetch && git pull`
