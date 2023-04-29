@@ -12,7 +12,7 @@
 - Install dependencies `composer update && npm install`
 - Copy everything from `env.example` & paste them in .`env` file
 - Run the server `php artisan ser` && `npm run dev`
- Open your 
+ Open your project in localhost
 ## Conventions to follow for this project
 
 To be more consistant and productive to our team work in this project we must follow some conventions.
