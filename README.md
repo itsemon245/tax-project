@@ -7,11 +7,11 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 ## Getting Started
-- Fork this project
-- Clone from the forked repository
-- Install dependencies `composer update && npm install`
-- Copy everything from `env.example` & paste them in .`env` file
-- Run the server `php artisan ser` && `npm run dev`
+- Fork this project.
+- Clone from the forked repository.
+- Install dependencies ```composer update && npm install```.
+- Copy everything from ```env.example``` & paste them in .```env``` file.
+- Run the server ```php artisan ser``` && ```npm run dev```.
  Open your project in localhost
 ## Conventions to follow for this project
 
