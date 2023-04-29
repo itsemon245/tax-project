@@ -22,14 +22,14 @@
 To be more consistant and productive to our team work in this project we must follow some conventions.
 
 - ### Naming Conventions
- #### 1.use camelCaseing for
- - blade files.
- - function names.
- - variables
- #### 2.Always organise your files in separate folders as needed
- #### 3.Always `git fetch && git pull` before merging any branch into `main`
- #### 4.Always sync your fork before `git fetch && git pull`
- #### 5.Keep your sub-branch up to date by using `git merge main` (if working tree is clean)
+ 1. Use camelCaseing for
+ - **Blade Files.
+ - **Function Names.
+ - **Variables
+ 2. Always organise your files in separate folders as needed
+ 3. Always `git fetch && git pull` before merging any branch into `main`
+ 4. Always sync your fork before `git fetch && git pull`
+ 5. Keep your sub-branch up to date by using `git merge main` (if working tree is clean)
  
 
 - ### Resoucre Routes
