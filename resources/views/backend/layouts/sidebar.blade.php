@@ -44,9 +44,7 @@
         <div id="sidebar-menu">
 
             <ul id="side-menu">
-
-                <li class="menu-title">Navigation</li>
-    
+ 
                 <li>
                     <a href="#sidebarDashboards" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
@@ -62,16 +60,28 @@
                     </div>
                 </li>
 
-                <li class="menu-title mt-2">Apps</li>
-
+                <li class="menu-title mt-2">Frontend Manage</li>
                 <li>
-                    <a href="apps-calendar.html">
-                        <i class="mdi mdi-calendar"></i>
-                        <span> Calendar </span>
+                    <a href="#category" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Product </span>
+                        <span class="menu-arrow"></span>
                     </a>
+                    <div class="collapse" id="category">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('product-category.index') }}">Category</a>
+                            </li>
+                            <li>
+                                <a href="#">Sub-Category</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
-                <li>
+
+
+                {{-- <li>
                     <a href="apps-chat.html">
                         <i class="mdi mdi-forum-outline"></i>
                         <span> Chat </span>
@@ -761,7 +771,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
             </ul>
 
         </div>

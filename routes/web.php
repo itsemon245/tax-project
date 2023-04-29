@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -37,7 +38,12 @@ Route::middleware('auth')->group(function () {
 Route::controller(DashboardController::class)->group(function(){
     Route::get('/dashboard','create')->name('dashboard');
 });
+
+//Profile edit routes here
 Route::resource('user-profile', UserProfileController::class);
+
+//Categories all routes here
+Route::resource('product-category', ProductCategoryController::class);
 
 
 
