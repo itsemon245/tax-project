@@ -3,6 +3,8 @@
 use App\Http\Controllers\Backend\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\Hero\BannerController;
+use App\Http\Controllers\Backend\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +32,16 @@ Route::middleware('auth')->group(function () {
 });
 
 
+/*
+*this route for user profiles
+*/
+Route::resource('user-profile', UserProfileController::class);
 
+/*
+* this route for user hero sections
+*/
 
+Route::resource('hero',BannerController::class);
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/backend.php';

@@ -61,6 +61,20 @@
                     </div>
                 </li>
 
+                <li>
+                    <a href="#sidebarHeroSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Hero Section </span>
+                    </a>
+                    <div class="collapse" id="sidebarHeroSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('hero.create') }}">Hero Section</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
             </ul>
 
         </div>
