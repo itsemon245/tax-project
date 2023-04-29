@@ -21,6 +21,17 @@
 
 To be more consistant and productive to our team work in this project we must follow some conventions.
 
+- ### Naming Conventions
+ #### 1.use camelCaseing for
+ - blade files.
+ - function names.
+ - variables
+ #### 2.Always organise your files in separate folders as needed
+ #### 3.Always `git fetch && git pull` before merging any branch into `main`
+ #### 4.Always sync your fork before `git fetch && git pull`
+ #### 5.Keep your sub-branch up to date by using `git merge main` (if working tree is clean)
+ 
+
 - ### Resoucre Routes
 Resource routes are a very simple way to write clean and consistant routes
 ```php
@@ -38,7 +49,7 @@ php artisan make:controller NameController -r
 this will create a controller with all the necessarry methods
 ### Additionally you can create everything you need while creating your Model
 ```bash
-php artisna make:model ModelName -a
+php artisan make:model ModelName -a
 ```
 This command will create Controller, Requests, Migrations and Other files that you may need.
 
