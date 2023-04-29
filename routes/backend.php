@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Product\ProductController;
+use App\Http\Controllers\Backend\Product\ProductCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +28,6 @@ Route::prefix('admin')->group(function () {
     //Routes for backend CRUD operation
     Route::resource('user-profile', UserProfileController::class);
     Route::resource('product', ProductController::class);
+    Route::resource('product-category', ProductCategoryController::class);
+    Route::resource('hero', BannerController::class);
 });

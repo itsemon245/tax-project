@@ -1,15 +1,8 @@
 <?php
 
-use App\Http\Controllers\Backend\DashboardController;
-<<<<<<< HEAD
-use App\Http\Controllers\Backend\Product\ProductCategoryController;
-use App\Http\Controllers\Backend\UserProfileController;
-=======
->>>>>>> cc2fba4134902c73fa105725d7b97529bf17a830
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\Hero\BannerController;
-use App\Http\Controllers\Backend\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,33 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-<<<<<<< HEAD
-Route::controller(DashboardController::class)->group(function(){
-    Route::get('/dashboard','create')->name('dashboard');
-});
-
-//Profile edit routes here
-Route::resource('user-profile', UserProfileController::class);
-
-//Categories all routes here
-Route::resource('product-category', ProductCategoryController::class);
-
-
-
-
-=======
-/*
-*this route for user profiles
-*/
-Route::resource('user-profile', UserProfileController::class);
-
->>>>>>> cc2fba4134902c73fa105725d7b97529bf17a830
-/*
-* this route for user hero sections
-*/
-
-Route::resource('hero',BannerController::class);
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/backend.php';
