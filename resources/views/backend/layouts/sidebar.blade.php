@@ -58,6 +58,24 @@
                         </ul>
                     </div>
                 </li>
+                <li class="menu-title mt-2">Frontend Manage</li>
+                <li>
+                    <a href="#category" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Product </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="category">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('product-category.index') }}">Category</a>
+                            </li>
+                            <li>
+                                <a href="#">Sub-Category</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#sidebarHeroSection" data-bs-toggle="collapse">
