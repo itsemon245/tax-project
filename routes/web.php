@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Backend\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\UserProfileController;
 
@@ -31,13 +31,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-/*
-* dashboard controller start
-*/
-
-Route::controller(DashboardController::class)->group(function(){
-    Route::get('/dashboard','create')->name('dashboard');
-});
 
 /*
 *this route for user profiles
@@ -50,7 +43,5 @@ Route::resource('user-profile', UserProfileController::class);
 
 Route::resource('hero',BannerController::class);
 
-/*
-* dashboard controller end
-*/
 require __DIR__ . '/auth.php';
+require __DIR__ . '/backend.php';
