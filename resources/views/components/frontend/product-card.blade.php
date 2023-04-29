@@ -1,5 +1,10 @@
-<div class="product-card">
-    <div class="product-type bg-blue p-2 text-light text-center h5 mb-0" style="font-weight: 600">Most Popular</div>
+@php
+    $isPopular = $attributes->get('is-popular');
+@endphp
+<div class="product-card" style="{{ $isPopular ? '' : 'scale:0.9;' }};">
+    @if ($isPopular)
+        <div class="product-type bg-blue p-2 text-light text-center h5 mb-0" style="font-weight: 600">Most Popular</div>
+    @endif
     <div class="product-content px-4 py-2">
         <h2 class="text-uppercase mb-0" style="font-weight: 500;">
             Free

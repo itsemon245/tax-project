@@ -90,7 +90,7 @@
 
                         <div class="col-md-6"><label class="labels">E-mail <span style="color:green;"><small>
                                         verified</small></span></label><input name="email" type="email"
-                                class="form-control" placeholder="email" disabled value="{{ $user->email }}"></div>
+                                class="form-control" placeholder="email" value="{{ $user->email }}"></div>
                     </div>
                     <div class="mt-3"><button class="btn btn-primary profile-button" type="submit">Update
                             Profile</button></div>

@@ -48,7 +48,6 @@
                 <li>
                     <a href="#sidebarDashboards" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span class="badge bg-success rounded-pill float-end">4</span>
                         <span> Dashboards </span>
                     </a>
                     <div class="collapse" id="sidebarDashboards">
@@ -60,6 +59,7 @@
                     </div>
                 </li>
 
+<<<<<<< HEAD
                 <li class="menu-title mt-2">Frontend Manage</li>
                 <li>
                     <a href="#category" data-bs-toggle="collapse">
@@ -95,41 +95,23 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarEcommerce">
+=======
+                <li>
+                    <a href="#sidebarHeroSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Hero Section </span>
+                    </a>
+                    <div class="collapse" id="sidebarHeroSection">
+>>>>>>> cc2fba4134902c73fa105725d7b97529bf17a830
                         <ul class="nav-second-level">
                             <li>
-                                <a href="ecommerce-dashboard.html">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="ecommerce-products.html">Products</a>
-                            </li>
-                            <li>
-                                <a href="ecommerce-product-detail.html">Product Detail</a>
-                            </li>
-                            <li>
-                                <a href="ecommerce-product-edit.html">Add Product</a>
-                            </li>
-                            <li>
-                                <a href="ecommerce-customers.html">Customers</a>
-                            </li>
-                            <li>
-                                <a href="ecommerce-orders.html">Orders</a>
-                            </li>
-                            <li>
-                                <a href="ecommerce-order-detail.html">Order Detail</a>
-                            </li>
-                            <li>
-                                <a href="ecommerce-sellers.html">Sellers</a>
-                            </li>
-                            <li>
-                                <a href="ecommerce-cart.html">Shopping Cart</a>
-                            </li>
-                            <li>
-                                <a href="ecommerce-checkout.html">Checkout</a>
+                                <a href="{{ route('hero.create') }}">Hero Section</a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
+<<<<<<< HEAD
                 <li>
                     <a href="#sidebarCrm" data-bs-toggle="collapse">
                         <i class="mdi mdi-account-multiple-outline"></i>
@@ -772,6 +754,8 @@
                         </ul>
                     </div>
                 </li> --}}
+=======
+>>>>>>> cc2fba4134902c73fa105725d7b97529bf17a830
             </ul>
 
         </div>
