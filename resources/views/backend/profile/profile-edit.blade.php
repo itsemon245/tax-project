@@ -19,8 +19,8 @@
                             <div class="relative">
                                 <img class="border border-5 border-primary" id="liveImage"
                                     style=" height:100%; width:100%; border-radius:50%;"
-                                    src="{{ useImage($user->image_url) === 'null' ? 'https://api.dicebear.com/6.x/initials/svg?seed=Misty' : useImage($user->image_url) }}"
-                                    alt="">
+                                    src="{{ useImage($user->image_url) === 'null' ? 'https://api.dicebear.com/6.x/initials/svg?seed=' . auth()->user()->name : useImage($user->image_url) }}"
+                                    alt="{{ auth()->user()->name }}">
                                 <div class="d-flex justify-content-center">
                                     <span
                                         style="

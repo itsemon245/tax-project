@@ -61,13 +61,8 @@ class UserProfileController extends Controller
         $userData->name = $request->name;
         $userData->user_name = $request->user_name;
         $userData->phone = $request->phone;
-        if ($request->hasFile('profile_img')) {
-            $path = "public/" . $userData->image_url;
-            $userData->image_url = $this->saveImage($request->profile_img);
-            if (Storage::exists($path)) {
-                $deleted = Storage::delete($path);
-            }
-        }
+        $old_path = $userData->image_url;
+        $userData->image_url = updateFile($request->profile_img, $old_path);
         $userData->save();
 
         return redirect()
@@ -75,18 +70,6 @@ class UserProfileController extends Controller
             ->with('success', 'Profile Updated');
     }
 
-    // save image
-    /**
-     * Stores an image given a request
-     * @return string
-     */
-    public function saveImage($image)
-    {
-        $ext = $image->extension();
-        $name = 'user-image-' . uniqid() . '.' . $ext;
-        $path = $image->storeAs('uploads/profile', $name, 'public');
-        return $path;
-    }
 
     /**
      * Remove the specified resource from storage.
