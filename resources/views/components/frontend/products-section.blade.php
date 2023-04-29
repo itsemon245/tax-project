@@ -1,4 +1,4 @@
-<section>
+<section class="mb-5">
     <div class="card-body container-fluid px-5">
         <h2 class="header-title h4 my-4 text-center">Products</h2>
         <div class="container d-flex justify-content-center">
@@ -34,9 +34,9 @@
                 <div class="tab-pane active" id="standard" role="tabpanel">
                     <div class="product-wrapper">
                         <x-frontend.product-card />
+                        <x-frontend.product-card :is-popular="true" />
                         <x-frontend.product-card />
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
+                        <x-frontend.product-card :is-popular="true" />
                     </div>
                 </div>
                 <div class="tab-pane" id="special" role="tabpanel">
