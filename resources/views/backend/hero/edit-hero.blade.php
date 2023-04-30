@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- start page title -->
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', 'Edit']" />
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', '#'.$banner->id, 'Edit']" />
     <!-- end page title -->
 
 

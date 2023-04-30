@@ -1,11 +1,11 @@
 @extends('backend.layouts.app')
 
 @section('content')
-    <form action="{{ route('user-profile.update', auth()->id()) }}" method="post" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-        <div class="container rounded bg-white my-3 py-3 px-4">
-            <h4 class="my-3 text-center">Profile</h4>
+    <x-backend.ui.breadcrumbs :list="['User', 'Update']" />
+    <x-backend.ui.section-card name="Profile">
+        <form action="{{ route('user-profile.update', auth()->id()) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
             <div class="row align-items-center">
                 <div class="col-md-3 justify-self-center">
                     <div class="row justify-content-center align-items-center gap-2">
@@ -95,8 +95,6 @@
                     <div class="mt-3"><button class="btn btn-primary profile-button" type="submit">Update
                             Profile</button></div>
                 </div>
-            </div>
-        </div>
-    </form>
-    <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
+        </form>
+    </x-backend.ui.section-card>
 @endsection
