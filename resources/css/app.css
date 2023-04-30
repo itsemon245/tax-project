@@ -10,6 +10,7 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
 }
+
 button{
     font-weight: 500;
 }
@@ -77,6 +78,40 @@ header{
     display: none;
 }
 
+.sidebar{
+    position: fixed;
+    padding: 10px 10px;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 30;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    background: var(--bs-light);
+    left: -300px;
+}
+.sidebar-show{
+    left: 0;
+}
+.sidebar .sidebar-item{
+    padding: 8px 16px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    transition: background 500ms ease-in-out;
+}
+.sidebar-item:hover{
+    background: var(--bs-gray-300);
+}
+.sidebar .active{
+    background: var(--primary);
+}
+.sidebar .sidebar-item a{
+    text-decoration: none;
+    color: var(--bs-dark);
+    font-weight: 500;
+}
 @media (min-width: 1440px){
     header{
         padding: 18px 96px;
@@ -95,7 +130,7 @@ header{
 }
 
 @media (max-width: 520px){
-    .partner-btn{
-        display: none;
+    .partner-btn-hide{
+        display: none!important;
     }
 }
