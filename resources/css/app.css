@@ -16,15 +16,40 @@ button{
 header{
     background: var(--bg-dark);
     color: white;
-    padding: 18px 96px;
+    padding: 18px;
 }
-nav>ul>li{
-    list-style: none;
+.nav .custom-nav-item a{
+    padding: 0;
 }
-nav>ul>li>a:hover{
-    color: var(--primary);
+.nav .custom-nav-item{
+    margin: 0 5px;
+    padding: 0 3px;
+    transition: border 200ms ease-in-out;
+    position: relative;
+}
+.nav .custom-nav-item::after {
+	position: absolute;
+	content: "";
+	width: 0%;
+	height: 2px;
+	background-color: var(--primary);
+	left: 50%;
+	bottom: -2px;
+	transition: all 0.4s ease-in-out;
+}
+.nav .custom-nav-item:hover::after {
+	width: 100%;
+	left: 0;
+}
+.nav .custom-nav-item:hover::after {
+	width: 100%;
+	left: 0;
 }
 
+.nav .active-link::after{
+    width: 100%;
+	left: 0;
+}
 .nav-pills .nav-item a {
     border: 1px solid rgb(192, 187, 187);
 }
@@ -47,4 +72,30 @@ nav>ul>li>a:hover{
 }
 .mdi{
     font-size: 24px;
+}
+.menu-btn{
+    display: none;
+}
+
+@media (min-width: 1440px){
+    header{
+        padding: 18px 96px;
+    }
+}
+@media (max-width: 1230px){
+    .menu-btn{
+        display: block;
+    }
+    .menu{
+        display: none;
+    }
+    header{
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 520px){
+    .partner-btn{
+        display: none;
+    }
 }
