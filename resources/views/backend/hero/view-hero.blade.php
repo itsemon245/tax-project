@@ -41,11 +41,19 @@
                             @foreach ($heros as $key => $hero)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td><img src="{{ useImage($hero->image_url) }}" alt="{{ $hero->title }}" width="80px"></td>
+                                    <td><img src="{{ useImage($hero->image_url) }}" alt="{{ $hero->title }}"
+                                            width="80px"></td>
                                     <td>{{ Str::limit($hero->title, 20, '...') }}</td>
                                     <td>{{ Str::limit($hero->sub_title, 20, '...') }}</td>
                                     <td>{{ $hero->button }}</td>
-                                    <td>Action</td>
+                                    <td>
+                                        <a href="{{ route('hero.edit', $hero->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                        <button class="btn btn-danger btn-sm hero-delete">Delete</button>
+                                        <form action="{{ route('hero.destroy', $hero->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        </form>    
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -56,4 +64,31 @@
         </div><!-- end col-->
     </div>
     <!-- end row-->
+
+    @push('customJs')
+        <script>
+            var heroDelete = $('.hero-delete');
+            heroDelete.on('click', function() {
+                var form= $(this).next('form')
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        form.submit()
+                    }
+                })
+            })
+        </script>
+    @endpush
 @endsection

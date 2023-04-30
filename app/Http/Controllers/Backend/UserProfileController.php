@@ -64,7 +64,7 @@ class UserProfileController extends Controller
         $userData->user_name = $request->user_name;
         $userData->phone = $request->phone;
         $old_path = $userData->image_url;
-        $userData->image_url = updateFile($request->profile_img, $old_path);
+        $userData->image_url = updateFile($request->profile_img, $old_path,'profile','user-image');
         $userData->save();
 
         $notification = array(

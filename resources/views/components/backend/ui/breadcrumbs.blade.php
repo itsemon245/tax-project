@@ -9,7 +9,6 @@
                 <ol class="breadcrumb m-0">
                     @foreach ($list as $item)
                     <li class="breadcrumb-item">{{ $item}}</li>
-                        
                     @endforeach
                 </ol>
             </div>
