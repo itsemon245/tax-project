@@ -37,8 +37,8 @@
 
                             <x-backend.form.text-input label="Button Link" type="text" name="button_link" />
 
-                            <x-backend.ui.button name="create hero" className="btn-primary"/>
-                           
+                            <x-backend.ui.button class="btn-primary">Create</x-backend.ui.button>
+
                         </div>
 
                     </div>
@@ -48,5 +48,5 @@
             </div>
         </div>
     </form>
-    <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
+    
 @endsection

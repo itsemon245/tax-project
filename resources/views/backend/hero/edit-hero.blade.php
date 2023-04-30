@@ -5,7 +5,7 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Hero', 'Edit']" />
     <!-- end page title -->
 
-    <form action="{{ route('banner.update',$banner->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('banner.update', $banner->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
         <div class="container rounded bg-white py-3 px-4">
@@ -31,13 +31,16 @@
                         </div>
 
                         <div class="col-md-6">
-                            <x-backend.from.text-input label="Title" type="text" name="title" value="{{ $banner->title }}"/>
+                            <x-backend.form.text-input label="Title" type="text" name="title"
+                                value="{{ $banner->title }}" />
 
-                            <x-backend.from.text-input label="Sub Title" type="text" name="sub_title" value="{{ $banner->sub_title }}"/>
+                            <x-backend.form.text-input label="Sub Title" type="text" name="sub_title"
+                                value="{{ $banner->sub_title }}" />
 
-                            <x-backend.from.text-input label="Button Link" type="text" name="button_link" value="{{ $banner->button }}"/>
+                            <x-backend.form.text-input label="Button Link" type="text" name="button_link"
+                                value="{{ $banner->button }}" />
 
-                            <x-backend.ui.button name="update hero" className="btn-info" />
+                            <x-backend.ui.button class="btn-primary">Update</x-backend.ui.button>
 
                         </div>
 
@@ -48,5 +51,5 @@
             </div>
         </div>
     </form>
-    <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
+    
 @endsection

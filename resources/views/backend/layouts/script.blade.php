@@ -34,6 +34,7 @@
  {{-- toaster js  --}}
  <script src="{{ asset('backend/assets/js/toastr.min.js') }}"></script>
 
+ <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
  {{-- sweet alert2 --}}
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
