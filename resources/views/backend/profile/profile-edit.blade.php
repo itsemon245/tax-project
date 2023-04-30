@@ -19,7 +19,7 @@
                             <div class="relative">
                                 <img class="border border-5 border-primary" id="liveImage"
                                     style=" height:100%; width:100%; border-radius:50%;"
-                                    src="{{ useImage($user->image_url) === 'null' ? 'https://api.dicebear.com/6.x/initials/svg?seed=' . auth()->user()->name : useImage($user->image_url) }}"
+                                    src="{{ useImage($user->image_url) ? useImage($user->image_url) : 'https://api.dicebear.com/6.x/initials/svg?seed=' . auth()->user()->name }}"
                                     alt="{{ auth()->user()->name }}">
                                 <div class="d-flex justify-content-center">
                                     <span
@@ -44,56 +44,33 @@
                 </div>
                 <div class="col-md-9">
                     <div class="row">
-                        <div class="col-md-6"><label class="labels">Name<span style="color:red;">*</span></label><input
-                                name="name" type="text"
-                                class="form-control 
-                            @error('name')
-                            is-invalid
-                            @enderror"
-                                placeholder="fullname" value="{{ $user->name }}">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <div class="col-md-6">
+                            <x-backend.form.text-input name="name" label="Full Name" :value="$user->name" />
                         </div>
 
 
-                        <div class="col-md-6"><label class="labels">Username<span style="color:red;">*</span></label><input
-                                name="user_name" type="text"
-                                class="form-control 
-                            @error('user_name')
-                            is-invalid
-                            @enderror
-                            "
-                                value="{{ $user->user_name }}" placeholder="username">
-                            @error('user_name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
+                        <div class="col-md-6">
+                            <x-backend.form.text-input name="user_name" label="Username" :value="$user->user_name" />
                         </div>
 
 
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-6"><label class="labels">Mobile Number<span
-                                    style="color:red;">*</span></label><input name="phone" type="number"
-                                class="form-control
-                            @error('phone')
-                            is-invalid
-                            @enderror
-                            "
-                                placeholder="phone number" value="{{ $user->phone }}">
-                            @error('phone')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <div class="col-md-6">
+                            <x-backend.form.text-input type='number' name="phone" label="Contact Number"
+                                :value="$user->phone" />
                         </div>
 
-
-
-                        <div class="col-md-6"><label class="labels">E-mail <span style="color:green;"><small>
-                                        verified</small></span></label><input name="email" type="email"
-                                class="form-control" placeholder="email" value="{{ $user->email }}"></div>
+                        <div class="col-md-6">
+                            <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email" />
+                        </div>
+                        <div class="mt-3">
+                            <button class="btn btn-primary profile-button" type="submit">Update
+                                Profile
+                            </button>
+                        </div>
                     </div>
-                    <div class="mt-3"><button class="btn btn-primary profile-button" type="submit">Update
-                            Profile</button></div>
                 </div>
         </form>
     </x-backend.ui.section-card>

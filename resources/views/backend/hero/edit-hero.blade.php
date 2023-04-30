@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- start page title -->
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', '#'.$banner->id, 'Edit']" />
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', '#' . $banner->id, 'Edit']" />
     <!-- end page title -->
 
 
@@ -13,9 +13,6 @@
             <div class="row">
                 <div class="col-md-6 mt-3">
                     <x-backend.form.image-input name="hero_image" :image="$banner->image_url" />
-                    @error('hero_image')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
 
                 <div class="col-md-6">
