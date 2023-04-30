@@ -5,7 +5,7 @@
 @endphp
 <div class="">
     <label for="{{ $name }}">
-        <input name="{{ $name }}" type="file" hidden>
+        <input id="{{ $name }}" name="{{ $name }}" type="file" hidden>
         <img {{ $attributes->class('w-100 border border-2 border-primary') }} id="liveImage"
             src="{{ $image ? useImage($image) : asset('images/Placeholder_view_vector.svg.png') }}">
     </label>
