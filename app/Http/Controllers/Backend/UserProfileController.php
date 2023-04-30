@@ -18,7 +18,6 @@ class UserProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // dd(Session::get('alert-type'));
         return view('backend.profile.profile-edit', compact('user'));
     }
 
