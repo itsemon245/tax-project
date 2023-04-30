@@ -1,7 +1,6 @@
 @extends('backend.layouts.app')
 
 @section('content')
-    
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', 'Create']" />
 
     <x-backend.ui.section-card name="Create Hero">
@@ -10,19 +9,7 @@
             <div class="row">
 
                 <div class="col-md-6 mt-3">
-                    <label for="imagefile">
-                        <input name="hero_image" type="file"
-                            class="form-control d-none 
-                                        @error('hero_image')
-                                        is-invalid
-                                        @enderror"
-                            id="imagefile">
-                        <img class="w-100 border border-2 border-primary" id="liveImage"
-                            src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
-                    </label>
-                    @error('hero_image')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    <x-backend.form.image-input name="hero_image" />
                 </div>
 
                 <div class="col-md-6">
