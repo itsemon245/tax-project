@@ -31,11 +31,11 @@
                         </div>
 
                         <div class="col-md-6">
-                            <x-backend.from.text-input label="Title" type="text" name="title" />
+                            <x-backend.form.text-input label="Title" type="text" name="title" />
 
-                            <x-backend.from.text-input label="Sub Title" type="text" name="sub_title" />
+                            <x-backend.form.text-input label="Sub Title" type="text" name="sub_title" />
 
-                            <x-backend.from.text-input label="Button Link" type="text" name="button_link" />
+                            <x-backend.form.text-input label="Button Link" type="text" name="button_link" />
 
                             <x-backend.ui.button name="create hero" className="btn-primary"/>
                            
