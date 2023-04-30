@@ -2,12 +2,12 @@
 
 @section('content')
     <!-- start page title -->
-    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Hero', 'Create']" />
+    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Hero', 'Edit']" />
     <!-- end page title -->
 
-
-    <form action="{{ route('hero.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('hero.update',$hero->id) }}" method="post" enctype="multipart/form-data">
         @csrf
+        @method('put')
         <div class="container rounded bg-white py-3 px-4">
             <h4 class="my-3 text-center">Hero Section</h4>
             <div class="row">
@@ -23,7 +23,7 @@
                                     @enderror"
                                     id="imagefile">
                                 <img class="w-100 border border-2 border-primary" id="liveImage"
-                                    src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
+                                    src="{{ $hero->image_url ? useImage($hero->image_url) : asset('images/Placeholder_view_vector.svg.png') }}">
                             </label>
                             @error('hero_image')
                                 <span class="text-danger">{{ $message }}</span>
@@ -31,14 +31,14 @@
                         </div>
 
                         <div class="col-md-6">
-                            <x-backend.from.text-input label="Title" type="text" name="title" />
+                            <x-backend.from.text-input label="Title" type="text" name="title" value="{{ $hero->title }}"/>
 
-                            <x-backend.from.text-input label="Sub Title" type="text" name="sub_title" />
+                            <x-backend.from.text-input label="Sub Title" type="text" name="sub_title" value="{{ $hero->sub_title }}"/>
 
-                            <x-backend.from.text-input label="Button Link" type="text" name="button_link" />
+                            <x-backend.from.text-input label="Button Link" type="text" name="button_link" value="{{ $hero->button }}"/>
 
-                            <x-backend.ui.button name="create hero" className="btn-primary"/>
-                           
+                            <x-backend.ui.button name="update hero" className="btn-info" />
+
                         </div>
 
                     </div>

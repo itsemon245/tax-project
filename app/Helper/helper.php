@@ -30,12 +30,12 @@ function saveImage($image, $dir, $prefix = "image")
  * Updates a file given a new file and old path
  * @return string $new_path
  */
-function updateFile($file, $old_path)
+function updateFile($file, $old_path,$dir, $prefix = "image")
 {
     $new_path = $old_path;
     $path = "public/" . $old_path;
     if ($file) {
-        $new_path = saveImage($file, 'profile', 'user-image');
+        $new_path = saveImage($file, $dir, $prefix);
         if (Storage::exists($path)) {
             $deleted = Storage::delete($path);
         }
