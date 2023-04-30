@@ -45,13 +45,13 @@
                 <div class="col-md-9">
                     <div class="row">
                         <div class="col-md-6">
-                            <x-backend.form.text-input name="name" label="Full Name" :value="$user->name" />
+                            <x-backend.form.text-input name="name" label="Full Name" :value="$user->name" required />
                         </div>
 
 
 
                         <div class="col-md-6">
-                            <x-backend.form.text-input name="user_name" label="Username" :value="$user->user_name" />
+                            <x-backend.form.text-input name="user_name" label="Username" :value="$user->user_name" required />
                         </div>
 
 
@@ -59,11 +59,12 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <x-backend.form.text-input type='number' name="phone" label="Contact Number"
-                                :value="$user->phone" />
+                                :value="$user->phone" required />
                         </div>
 
                         <div class="col-md-6">
-                            <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email" />
+                            <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email"
+                                required />
                         </div>
                         <div class="mt-3">
                             <button class="btn btn-primary profile-button" type="submit">Update
