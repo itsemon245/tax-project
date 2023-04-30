@@ -17,7 +17,7 @@ use App\Http\Controllers\Backend\Hero\BannerController;
 
 Route::get('/', function () {
     return view('frontend.pages.welcome');
-});
+})->name('home');
 
 // Route::get('/dashboard', function () {
 //     return view('backend.dashboard.dashboard');
