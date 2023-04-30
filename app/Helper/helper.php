@@ -29,7 +29,7 @@ function saveImage($image, $dir, $prefix = 'image')
  * Updates a file given a new file and old path
  * @return string $new_path
  */
-function updateFile($file, $old_path, $dir, $prefix)
+function updateFile($file, $old_path, $dir,  $prefix = "image")
 {
     $new_path = $old_path;
     $path = 'public/' . $old_path;
