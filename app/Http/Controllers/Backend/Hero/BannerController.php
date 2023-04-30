@@ -15,8 +15,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $heros = Banner::latest()->get();
-        return view('backend.hero.view-hero', compact('heros'));
+        $banners = Banner::latest()->get();
+        return view('backend.hero.view-hero', compact('banners'));
     }
 
     /**
@@ -42,7 +42,7 @@ class BannerController extends Controller
         $store_data->save();
 
         $notification = [
-            'message' => 'Hero Section Data Created',
+            'message' => 'Hero Created',
             'alert-type' => 'success',
         ];
         return redirect()
@@ -61,19 +61,19 @@ class BannerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Banner $banner, $id)
+    public function edit(Banner $banner)
     {
-        $hero = Banner::where('id', $id)->first();
-        return view('backend.hero.edit-hero', compact('hero'));
+        $banner = Banner::where('id', $banner->id)->first();
+        return view('backend.hero.edit-hero', compact('banner'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBannerRequest $request, Banner $banner, $id)
+    public function update(UpdateBannerRequest $request, Banner $banner)
     {
         // update hero data
-        $store_data = Banner::findOrFail($id);
+        $store_data = Banner::findOrFail($banner->id);
         $store_data->title = $request->title;
         $store_data->sub_title = $request->sub_title;
         $store_data->button = $request->button_link;
@@ -93,10 +93,10 @@ class BannerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Banner $banner, $id)
+    public function destroy(Banner $banner)
     {
         //delete banner data
-        $hero = Banner::findOrFail($id);
+        $hero = Banner::findOrFail($banner->id);
         $path = 'public/' . $hero->image_url;
         if (Storage::exists($path)) {
             Storage::delete($path);

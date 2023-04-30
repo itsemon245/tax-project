@@ -38,18 +38,18 @@
 
 
                         <tbody>
-                            @foreach ($heros as $key => $hero)
+                            @foreach ($banners as $key => $banner)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td><img src="{{ useImage($hero->image_url) }}" alt="{{ $hero->title }}"
+                                    <td><img src="{{ useImage($banner->image_url) }}" alt="{{ $banner->title }}"
                                             width="80px"></td>
-                                    <td>{{ Str::limit($hero->title, 20, '...') }}</td>
-                                    <td>{{ Str::limit($hero->sub_title, 20, '...') }}</td>
-                                    <td>{{ $hero->button }}</td>
+                                    <td>{{ Str::limit($banner->title, 20, '...') }}</td>
+                                    <td>{{ Str::limit($banner->sub_title, 20, '...') }}</td>
+                                    <td>{{ $banner->button }}</td>
                                     <td>
-                                        <a href="{{ route('hero.edit', $hero->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                        <a href="{{ route('banner.edit', $banner->id) }}" class="btn btn-info btn-sm">Edit</a>
                                         <button class="btn btn-danger btn-sm hero-delete">Delete</button>
-                                        <form action="{{ route('hero.destroy', $hero->id) }}" method="post">
+                                        <form action="{{ route('banner.destroy', $banner->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         </form>    

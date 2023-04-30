@@ -6,7 +6,7 @@
     <!-- end page title -->
 
 
-    <form action="{{ route('hero.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('banner.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="container rounded bg-white py-3 px-4">
             <h4 class="my-3 text-center">Hero Section</h4>

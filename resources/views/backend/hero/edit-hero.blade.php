@@ -5,7 +5,7 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Hero', 'Edit']" />
     <!-- end page title -->
 
-    <form action="{{ route('hero.update',$hero->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('banner.update',$banner->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
         <div class="container rounded bg-white py-3 px-4">
@@ -23,7 +23,7 @@
                                     @enderror"
                                     id="imagefile">
                                 <img class="w-100 border border-2 border-primary" id="liveImage"
-                                    src="{{ $hero->image_url ? useImage($hero->image_url) : asset('images/Placeholder_view_vector.svg.png') }}">
+                                    src="{{ $banner->image_url ? useImage($banner->image_url) : asset('images/Placeholder_view_vector.svg.png') }}">
                             </label>
                             @error('hero_image')
                                 <span class="text-danger">{{ $message }}</span>
@@ -31,11 +31,11 @@
                         </div>
 
                         <div class="col-md-6">
-                            <x-backend.from.text-input label="Title" type="text" name="title" value="{{ $hero->title }}"/>
+                            <x-backend.from.text-input label="Title" type="text" name="title" value="{{ $banner->title }}"/>
 
-                            <x-backend.from.text-input label="Sub Title" type="text" name="sub_title" value="{{ $hero->sub_title }}"/>
+                            <x-backend.from.text-input label="Sub Title" type="text" name="sub_title" value="{{ $banner->sub_title }}"/>
 
-                            <x-backend.from.text-input label="Button Link" type="text" name="button_link" value="{{ $hero->button }}"/>
+                            <x-backend.from.text-input label="Button Link" type="text" name="button_link" value="{{ $banner->button }}"/>
 
                             <x-backend.ui.button name="update hero" className="btn-info" />
 

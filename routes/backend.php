@@ -29,5 +29,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('user-profile', UserProfileController::class);
     Route::resource('product', ProductController::class);
     Route::resource('product-category', ProductCategoryController::class);
-    Route::resource('hero', BannerController::class);
+    Route::resource('banner', BannerController::class);
 });

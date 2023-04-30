@@ -80,10 +80,10 @@
                     <div class="collapse" id="sidebarHeroSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('hero.index') }}">
+                                <a href="{{ route('banner.index') }}">
                                     View Hero
                                 </a>
-                                <a href="{{ route('hero.create') }}">Create Hero
+                                <a href="{{ route('banner.create') }}">Create Hero
                                    
                                 </a>
                             </li>

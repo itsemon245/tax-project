@@ -14,14 +14,13 @@ function useImage($image)
     }
 }
 
-
 /**
  * Stores an image given an image request and a directory
  */
-function saveImage($image, $dir, $prefix = "image")
+function saveImage($image, $dir, $prefix = 'image')
 {
     $ext = $image->extension();
-    $name =  $prefix . uniqid() . '.' . $ext;
+    $name = $prefix . uniqid() . '.' . $ext;
     $path = $image->storeAs("uploads/$dir", $name, 'public');
     return $path;
 }
@@ -30,10 +29,10 @@ function saveImage($image, $dir, $prefix = "image")
  * Updates a file given a new file and old path
  * @return string $new_path
  */
-function updateFile($file, $old_path,$dir, $prefix = "image")
+function updateFile($file, $old_path, $dir,  $prefix = "image")
 {
     $new_path = $old_path;
-    $path = "public/" . $old_path;
+    $path = 'public/' . $old_path;
     if ($file) {
         $new_path = saveImage($file, $dir, $prefix);
         if (Storage::exists($path)) {
