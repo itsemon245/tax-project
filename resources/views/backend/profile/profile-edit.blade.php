@@ -5,7 +5,7 @@
         @csrf
         @method('PUT')
         <div class="container rounded bg-white my-3 py-3 px-4">
-            <h4 class="my-4 text-center">Profile</h4>
+            <h4 class="my-3 text-center">Profile</h4>
             <div class="row align-items-center">
                 <div class="col-md-3 justify-self-center">
                     <div class="row justify-content-center align-items-center gap-2">

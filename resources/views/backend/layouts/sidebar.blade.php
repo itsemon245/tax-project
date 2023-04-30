@@ -48,28 +48,28 @@
                 <li class="menu-title">Navigation</li>
     
                 <li>
-                    <a href="#sidebarDashboards" data-bs-toggle="collapse">
+                    <a href="{{ route('dashboard') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Dashboards </span>
+                        <span> Dashboard </span>
                     </a>
-                    <div class="collapse" id="sidebarDashboards">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('dashboard') }}">Dashboard</a>
-                            </li>
-                        </ul>
-                    </div>
+                    
                 </li>
 
                 <li>
                     <a href="#sidebarHeroSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> Hero Section </span>
+                        <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarHeroSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('hero.create') }}">Hero Section</a>
+                                <a href="{{ route('hero.index') }}">
+                                    View Hero
+                                </a>
+                                <a href="{{ route('hero.create') }}">Create Hero
+                                   
+                                </a>
                             </li>
                         </ul>
                     </div>

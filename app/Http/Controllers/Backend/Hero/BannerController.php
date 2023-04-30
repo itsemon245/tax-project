@@ -14,7 +14,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        //
+        $heros= Banner::latest()->get();
+        return view('backend.hero.view-hero',compact('heros'));
     }
 
     /**
@@ -23,7 +24,7 @@ class BannerController extends Controller
     public function create()
     {
         //return hero view file
-        return view('backend.banner.view-banner');
+        return view('backend.hero.create-hero');
     }
 
     /**
@@ -31,7 +32,20 @@ class BannerController extends Controller
      */
     public function store(StoreBannerRequest $request)
     {
-        //
+        // store hero data 
+        $store_data=new Banner();
+        $store_data->title= $request->title;
+        $store_data->sub_title= $request->sub_title;
+        $store_data->button= $request->button_link;
+        $store_data->image_url= saveImage($request->hero_image,'hero','hero');
+        $store_data->save();
+
+        $notification = array(
+            'message' => "Hero Section Data Created",
+            'alert-type' => 'success',
+        );
+        return redirect()->back()->with($notification);
+
     }
 
     /**

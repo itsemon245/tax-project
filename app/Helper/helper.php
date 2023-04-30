@@ -17,7 +17,6 @@ function useImage($image)
 
 /**
  * Stores an image given an image request and a directory
- * @return string
  */
 function saveImage($image, $dir, $prefix = "image")
 {
