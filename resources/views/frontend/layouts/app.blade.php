@@ -29,41 +29,42 @@
 
 <body class="">
     <!-- Page Heading -->
-    <header class="row align-items-center">
-        <div class="col-lg-2">
-            Logo Here
+    <header class="d-flex align-items-center">
+        <div class="d-flex align-items-center">
+            <i class="mdi mdi-menu p-2 mx-2 menu-btn"></i>
+            <img style="max-width:200px;" src="{{ asset('frontend/assets/images/logo/app.png') }}" alt="Text Act Logo">
         </div>
-        <nav class="col-lg-7">
+        <nav class="mx-auto menu">
             <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="">Navlink</a>
+                <li class="nav-item custom-nav-item active-link">
+                    <a class=" nav-link text-light" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
+                <li class="nav-item custom-nav-item">
+                    <a class=" nav-link text-light" href="">Tax Products</a>
                 </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
+                <li class="nav-item custom-nav-item">
+                    <a class=" nav-link text-light" href="#">Return Status</a>
                 </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
+                <li class="nav-item custom-nav-item">
+                    <a class=" nav-link text-light" href="#">Services</a>
                 </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
+                <li class="nav-item custom-nav-item">
+                    <a class=" nav-link text-light" href="#">Training</a>
                 </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
+                <li class="nav-item custom-nav-item">
+                    <a class=" nav-link text-light" href="#">Book Store</a>
                 </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
+                <li class="nav-item custom-nav-item">
+                    <a class=" nav-link text-light" href="#">JusAuditor</a>
                 </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
+                <li class="nav-item custom-nav-item">
+                    <a class=" nav-link text-light" href="#">Misc. Services</a>
                 </li>
             </ul>
         </nav>
-        <div class="col-lg-3">
+        <div class="">
             <div class="d-flex align-items-center gap-2 justify-content-end">
-                <a class="btn btn-secondary" href="">Become a partner</a>
+                <a class="btn btn-secondary partner-btn" href="">Become a partner</a>
                 @if (Route::has('login'))
                     <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
                 @endif
@@ -83,6 +84,20 @@
     <script src="{{ asset('frontend/assets/js/vendor.min.js') }}"></script>
     {{-- app JS  --}}
     <script src="{{ asset('frontend/assets/js/app.min.js') }}"></script>
+
+    <script>
+        const navLinks = document.querySelectorAll('.custom-nav-item');
+        const activeLink = document.querySelector('.active-link');
+
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', (e) => {
+                activeLink.classList.remove('active-link')
+            })
+            link.addEventListener('mouseleave', (e) => {
+                setTimeout(activeLink.classList.add('active-link'), 400);
+            })
+        });
+    </script>
 
 </body>
 
