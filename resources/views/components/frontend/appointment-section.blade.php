@@ -8,7 +8,22 @@
         <div class="carousel-inner" role="listbox">
 
             <div class="carousel-item active">
-                <h1>Expert 1</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <img src="{{ asset('frontend/assets/images/products/product-1.png') }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <h2>Expert Assist</h2>
+                            <p>File with free expert</p>
+                            <p>Free For Everyone</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="carousel-item">
                 <h1>Expert 2</h1>
