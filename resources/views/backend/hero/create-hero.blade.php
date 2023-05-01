@@ -1,11 +1,10 @@
 @extends('backend.layouts.app')
 
 @section('content')
-
     <!-- start page title -->
-    <x-backend.ui.breadcrumbs  :list="['Dashboard','Hero','Create']"/>
+    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Hero', 'Create']" />
     <!-- end page title -->
-    
+
 
     <form action="{{ route('hero.store') }}" method="post" enctype="multipart/form-data">
         @csrf
@@ -32,8 +31,12 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="mt-1"><label class="labels">Title<span style="color:red;">*</span></label><input
-                                    name="title" type="text"
+                            <div class="mt-1">
+                                <label class="labels">
+                                    Title
+                                    <span style="color:red;">*</span>
+                                </label>
+                                <input name="title" type="text"
                                     class="form-control 
                                   @error('title')
                                   is-invalid

@@ -30,6 +30,7 @@
         rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css') }}"
         rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
     <!-- Head js -->
     <script src="{{ asset('backend/assets/js/head.js') }}"></script>
 
