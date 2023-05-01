@@ -6,16 +6,98 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+
 ## Getting Started
-- Fork this project
-- Clone from the forked repository
-- Install dependencies `composer update && npm install`
-- Copy everything from `env.example` & paste them in .`env` file
-- Run the server `php artisan ser` && `npm run dev`
- Open your project in localhost
+
+- Fork this project.
+- Clone from the forked repository.
+- Install dependencies ```composer update && npm install```.
+- Copy everything from ```env.example``` & paste them in .```env``` file.
+- Run the server ```php artisan ser``` && ```npm run dev```.
+ 
+ Open your project in https://localhost:8000
+ 
+ 
+## Components & Helpers
+For productivity & efficiency this project is included with some components and helper functions
+ - ### Components
+ 1. ##### Inputs
+     - ###### TextInput
+     ```blade
+     <x-backend.form.text-input type="text" name="text_input" label="Text Input" class="other classes" required />
+     ```
+     - ###### ImageInput
+     ```blade
+     <x-backend.form.image-input name="image_input" image="image_url" class="other classes" />
+     ```
+ 2. ##### UI Elements
+     - ###### Button
+     ```blade
+     <x-backend.ui.button class="btn-primary"/>
+     ```
+     - ###### BreadCrumbs
+     ```blade
+     <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', 'List']" />
+     ```
+     - ###### Card Wrapper
+     ```blade
+    <x-backend.ui.section-card name="Hero List">
+    {{-- Your Content --}}
+    </x-backend.ui.section-card />
+     ```
+     
+ - ### Helpers
+ 1. #### useImage
+     > **useImage function takes an image from database and returns an url**
+     - ###### Example:
+     ```blade
+     <img src="{{useImage($data->image)}}" alt="" />
+     ```
+ 1. #### saveImage
+      **saveImage function takes 3 arguments.**
+      
+     > - **Image from the request,** 
+     > - **Which directory to save &**
+     > - **A prefix to prepend to the image name (default prefix is "image").** 
+     > - **The function returns the path where the image has been saved**
+     - ###### Example:
+     ```php
+     $user = new User();
+     $user->image = saveImage($request->image, 'avatar', 'user-image'); //This will return "uploads/avatar/user-image-154xxxxx.png"
+     $user->save();
+     ```
+ 1. #### updateFile
+      **updateFile function takes 4 arguments.**
+      
+     > - **File from the request,** 
+     > - **Old file path form database record,**
+     > - **Which directory to save &**
+     > - **A prefix to prepend to the file name (default prefix is "image").** 
+     > - **The function returns the new path where the file has been saved**
+     - ###### Example:
+     ```php
+     $user = new User();
+     $old_path = $user->image;
+     $user->image = updateFile($request->image, $old_path, 'avatar', 'user-image'); //This will update the file & return new path
+     $user->save();
+     ```
+ 
 ## Conventions to follow for this project
 
 To be more consistant and productive to our team work in this project we must follow some conventions.
+
+- ### Naming Conventions
+ 1. Use camelCaseing for
+ > - **Blade Files.**
+ > - **Function Names.**
+ > - **Variables**
+  
+ 
+ 2. Always organise your files in separate folders as needed
+ 3. Always `git fetch && git pull` before merging any branch into `main`
+ 4. Always sync your fork before `git fetch && git pull`
+ 5. Keep your sub-branch up to date by using `git merge main` (if working tree is clean)
+ 
 
 - ### Resoucre Routes
 Resource routes are a very simple way to write clean and consistant routes
@@ -34,7 +116,7 @@ php artisan make:controller NameController -r
 this will create a controller with all the necessarry methods
 ### Additionally you can create everything you need while creating your Model
 ```bash
-php artisna make:model ModelName -a
+php artisan make:model ModelName -a
 ```
 This command will create Controller, Requests, Migrations and Other files that you may need.
 
