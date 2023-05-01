@@ -14,7 +14,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ProductCategory::get();
+        $categories = ProductCategory::with('product_sub_categories')->get();
         return view('backend.product.category', compact('categories'));
     }
 
@@ -32,9 +32,9 @@ class ProductCategoryController extends Controller
     public function store(StoreProductCategoryRequest $request)
     {
         $category = new ProductCategory();
-        $category->category = $request->category;
+        $category->name = $request->category;
         $category->save();
-        return redirect()->back()->with('info','User Added Successfully');
+        return redirect()->back()->with('success','Category Added Successfully');
     }
 
     /**

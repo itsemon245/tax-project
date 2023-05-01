@@ -47,7 +47,7 @@
                         @forelse ($categories as $key => $category)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $category->category }}</td>
+                            <td>{{ $category->name }}</td>
                             <td>
                                 <div class="btn-group">
                                     <a href="#" class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
