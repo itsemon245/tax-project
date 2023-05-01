@@ -1,7 +1,7 @@
 @php
     $isPopular = $attributes->get('is-popular');
 @endphp
-<div class="product-card" style="{{ $isPopular ? 'scale:1.05;' : 'scale:1;' }};">
+<div class="product-card">
     @if ($isPopular)
         <div class="product-type bg-blue p-2 text-light text-center h5 mb-0" style="font-weight: 600">Most Popular</div>
     @endif

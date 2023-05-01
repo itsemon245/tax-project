@@ -62,12 +62,15 @@ header{
 
 .product-card{
     border: 10px solid var(--primary);
+    max-width: 300px;
+    margin-top: 10px;
 }
 .product-wrapper{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
-    row-gap:30px;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    align-items:end;
+    margin-top: 16px
 }
 .custom-bullet{
     list-style: none;
