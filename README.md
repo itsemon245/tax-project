@@ -17,6 +17,17 @@
  
  Open your project in https://localhost:8000
  
+ 
+## Components & Helpers
+For productivity & efficiency this project is included with some components and helper functions
+ - ### Components
+ - ** Form **
+ 1. Inputs
+ - TextInput
+ ```blade
+ <x-backend.form.text-input type="text" name="text_input" label="Text Input" required />
+ ```
+ 
 ## Conventions to follow for this project
 
 To be more consistant and productive to our team work in this project we must follow some conventions.
