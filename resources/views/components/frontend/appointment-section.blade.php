@@ -21,7 +21,7 @@
                             <span class="mb-0 px-3 py-1 bg-success rounded text-light"
                                 style="font-size:18px;font-weight:400;">Free For Everyone</span>
                         </div>
-                        <div class="my-4" style="max-width:500px;">
+                        <div class="my-4" style="max-width:500px;text-align:justify;">
                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis sequi nostrum ex quos
                             voluptas repudiandae deleniti, iusto doloremque recusandae veniam. Iure id, repellat illum
                             labore ex beatae voluptatem et reprehenderit consequuntur modi accusantium neque repellendus
