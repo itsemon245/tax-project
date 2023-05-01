@@ -71,7 +71,7 @@
                                 <a href="{{ route('product-category.index') }}">Category</a>
                             </li>
                             <li>
-                                <a href="#">Sub-Category</a>
+                                <a href="{{ route('product-subcategory.index') }}">Sub-Category</a>
                             </li>
                         </ul>
                     </div>

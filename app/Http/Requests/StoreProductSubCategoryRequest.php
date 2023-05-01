@@ -21,8 +21,11 @@ class StoreProductSubCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+
+        return[
+            'category_id' => ['required'],
+            'sub_category' => ['string', 'required', 'max:20', 'unique:product_sub_categories,name'],
         ];
+
     }
 }
