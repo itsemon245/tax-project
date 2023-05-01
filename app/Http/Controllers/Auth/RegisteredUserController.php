@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Referee;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -44,15 +45,17 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
+            'refer_link' => route('refer.link', $request->user_name),
         ]);
-        $user->refer_link = route('refer.link', $user->user_name);
 
         if ($request->has('refer_code')) {
             //refer logic
             $parent = User::where('user_name', $request->refer_code)->first();
-            
+            $referee = new Referee();
+            $referee->user_id = $user->id;
+            $referee->parent_id = $parent->id;
+            $referee->save();
         }
-        $user->save();
 
         event(new Registered($user));
 
