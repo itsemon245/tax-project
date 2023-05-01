@@ -68,9 +68,9 @@
         </nav>
         <div class="">
             <div class="d-flex align-items-center gap-2 justify-content-end">
-                <a class="btn btn-secondary partner-btn-hide" href="">Become a partner</a>
+                <a class="btn btn-secondary rounded-1 partner-btn-hide" href="">Become a partner</a>
                 @if (Route::has('login'))
-                    <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
+                    <a class="btn btn-primary rounded-1" href="{{ route('login') }}">Sign in</a>
                 @endif
             </div>
         </div>
