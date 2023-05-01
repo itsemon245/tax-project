@@ -15,4 +15,6 @@
         <x-frontend.info-card />
         <x-frontend.info-card />
     </x-frontend.info-section>
+    <x-frontend.testimonial-section>
+    </x-frontend.testimonial-section>
 @endsection
