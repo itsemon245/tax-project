@@ -46,6 +46,12 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
         $user->refer_link = route('refer.link', $user->user_name);
+
+        if ($request->has('refer_code')) {
+            //refer logic
+            $parent = User::where('user_name', $request->refer_code)->first();
+            
+        }
         $user->save();
 
         event(new Registered($user));

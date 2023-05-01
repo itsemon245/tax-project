@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('referees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            // $table->foreignId('parent_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            // $table->unsignedBigInteger('parent_id');
             $table->timestamps();
         });
     }

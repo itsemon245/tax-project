@@ -9,8 +9,8 @@ class Referee extends Model
 {
     use HasFactory;
 
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class, 'parent_id');
-    // }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
 }
