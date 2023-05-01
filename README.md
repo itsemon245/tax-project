@@ -17,9 +17,34 @@
  
  Open your project in https://localhost:8000
  
+
  
 ## Components & Helpers
 For productivity & efficiency this project is included with some components and helper functions
+ -### Blade Broilerplate
+ - ##### After creating a blade file paste broilerplate in your blade file
+  ```blade
+ @extends('backend.layouts.app')
+
+
+@section('content')
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', 'List']" />
+
+    <x-backend.ui.section-card name="Hero Section">
+
+        <!-- Your Content-->
+        
+    </x-backend.ui.section-card>
+    
+
+    @push('customJs')
+        <script>
+            
+        </script>
+    @endpush
+@endsection
+
+ ```
  - ### Components
  1. ##### Inputs
      - ###### TextInput
