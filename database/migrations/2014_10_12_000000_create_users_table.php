@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->longText('image_url')->nullable();
+            $table->longText('refer_link');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
