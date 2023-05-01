@@ -2,6 +2,7 @@
     $label = $attributes->get('label');
     $required = $attributes->get('required');
     $name = $attributes->get('name');
+    $class = $attributes->get('class');
     // $value = $attributes->has('value') ? $attributes->get('value') : old($name);
 @endphp
 <div class="mt-1">
@@ -10,7 +11,10 @@
             <span class="text-danger">*</span>
         @endif
     </label>
-    <input {{ $attributes->class('form-control')->merge(['placeholder' => $label])->merge(['value' => old($name)]) }}>
+    <input class="{{ 'form-control ' . $class }} @error($name)
+        is-invalid
+    @enderror"
+        {{ $attributes->merge(['placeholder' => $label])->merge(['value' => old($name)]) }}>
     @error($name)
         <span class="text-danger">{{ $message }}</span>
     @enderror

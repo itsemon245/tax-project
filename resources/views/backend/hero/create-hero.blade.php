@@ -9,7 +9,7 @@
             <div class="row">
 
                 <div class="col-md-6 mt-3">
-                    <x-backend.form.image-input name="hero_image" />
+                    <x-backend.form.image-input name="hero_image"  />
                 </div>
 
                 <div class="col-md-6">
