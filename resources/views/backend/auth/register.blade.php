@@ -111,7 +111,7 @@
                                     @enderror
                                 </div>
                                 @isset($user_name)
-                                    <x-backend.form.text-input name="refer_code" label="Refer Code" :value="$user_name" disabled />
+                                    <x-backend.form.text-input name="refer_code" label="Refer Code" :value="$user_name" />
                                 @endisset
                                 <div class="mb-3">
                                     <div class="form-check">
