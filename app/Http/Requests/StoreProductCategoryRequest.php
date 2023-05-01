@@ -22,7 +22,7 @@ class StoreProductCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category' => ['string', 'required', 'max:20'],
+            'category' => ['string', 'required', 'max:20', 'unique:product_categories,name'],
         ];
     }
 }
