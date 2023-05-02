@@ -38,9 +38,15 @@
                                             <div class="mt-1">
                                                 <label for="category" class="form-label">Category <span
                                                         style="color:red;">*</span></label>
-                                                <select class="form-select" id="category" name="category">
-                                                    <option value="" selected disabled>Choose Category...</option>
-                                                    <option value="1">Fixed</option>
+                                                <select class="form-select" id="category" name="category"
+                                                    onchange="getSubCategories(this)">
+                                                    <option selected disabled>Choose Category...</option>
+                                                    @forelse ($categories as $category)
+                                                        <option value="{{ $category->id }}">{{ $category->category }}
+                                                        </option>
+                                                    @empty
+                                                        <option disabled>No Records Found!</option>
+                                                    @endforelse
                                                 </select>
                                                 @error('category')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -52,8 +58,7 @@
                                                 <label for="sub-category" class="form-label">Sub Category <span
                                                         style="color:red;">*</span></label>
                                                 <select class="form-select" id="sub-category" name="sub_category">
-                                                    <option value="" selected disabled>Choose Sub Category...</option>
-                                                    <option value="1">Fixed</option>
+                                                    <option selected disabled>Choose Category first...</option>
                                                 </select>
                                                 @error('sub_category')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -178,6 +183,33 @@
         const removePackageFeature = () => {
             $("#packacgeFeaturesInputs").find(".row:last").remove()
             featureLength()
+        }
+
+        const getSubCategories = (e) => {
+            const category_id = e.value
+            let url = "{{ route('getSubcategory', ':categoryId') }}"
+            url = url.replace(':categoryId', category_id)
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    const subCategories = data.map(subCategory =>
+                        `<option value="${subCategory.id}">${subCategory.sub_category}</option>`).join(
+                        '')
+                    $("#sub-category").html('')
+                    $("#sub-category").html(
+                        `<option selected disabled>Choose Sub Category...</option>` +
+                        subCategories
+                    )
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
         }
     </script>
 @endpush

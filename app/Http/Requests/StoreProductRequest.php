@@ -25,6 +25,7 @@ class StoreProductRequest extends FormRequest
             'title' => 'required|max:100',
             'category' => 'required',
             'sub_category' => 'required',
+            'ratting' => 'max:1',
         ];
     }
 }

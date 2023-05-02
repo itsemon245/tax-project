@@ -11,6 +11,25 @@ class Product extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     */
+    protected $fillable = [
+        'title',
+        'sub_title',
+        'price',
+        'discount',
+        'package_features',
+        'ratting',
+        'description',
+        'is_discount_fixed',
+        'is_most_popular',
+        'status',
+        'product_category_id',
+        'product_sub_category_id',
+        'user_id',
+    ];
+
     public function productCategory()
     {
         return $this->belongsTo(ProductCategory::class);
@@ -19,5 +38,10 @@ class Product extends Model
     public function productSubCategory()
     {
         return $this->belongsTo(ProductSubCategory::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
