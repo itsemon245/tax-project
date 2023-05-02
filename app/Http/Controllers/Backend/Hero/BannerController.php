@@ -104,10 +104,9 @@ class BannerController extends Controller
         $hero->delete();
         $notification = [
             'message' => 'Hero Deleted',
-            'alert-type' => 'alert',
+            'alert-type' => 'success',
         ];
-        return redirect()
-            ->back()
+        return back()
             ->with($notification);
     }
 }

@@ -29,7 +29,7 @@
                         @enderror
                     </div>
 
-                    <x-backend.ui.button class="btn-primary">Create</x-backend.ui.button>
+                    <x-backend.ui.button class="btn-primary mt-2">Create</x-backend.ui.button>
                 </div>
             </div>
         </form>

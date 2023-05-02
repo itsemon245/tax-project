@@ -94,6 +94,26 @@
                     </div>
                 </li>
 
+                <li>
+                    <a href="#appointmentSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Appointment Section </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="appointmentSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('appointment.index') }}">
+                                    View All
+                                </a>
+                                <a href="{{ route('appointment.create') }}">Create 
+
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
             </ul>
 
         </div>

@@ -29,10 +29,10 @@
                         <td>
                             <a href="{{ route('appointment.edit', $appointment->id) }}"
                                 class="btn btn-info btn-sm">Edit</a>
-                            <button class="btn btn-danger btn-sm appointment-delete">Delete</button>
-                            <form action="{{ route('appointment.destroy', $appointment->id) }}" method="post">
+                            <form action="{{ route('appointment.destroy', $appointment->id) }}" method="post" class="d-inline-block">
                                 @csrf
                                 @method('DELETE')
+                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                             </form>
                         </td>
                     </tr>

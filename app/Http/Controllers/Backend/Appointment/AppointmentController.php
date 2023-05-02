@@ -72,7 +72,7 @@ class AppointmentController extends Controller
         $appointmentUpdate->sub_title = $request->sub_title;
         $appointmentUpdate->tag = $request->tag;
         $appointmentUpdate->description = $request->description;
-        $oldImagePath = 'public/' . $appointmentUpdate->image;
+        $oldImagePath =$appointmentUpdate->image;
         $appointmentUpdate->image = updateFile($request->image, $oldImagePath, 'appointment', 'appointment');
         $appointmentUpdate->save();
         $notification = [
@@ -96,7 +96,7 @@ class AppointmentController extends Controller
         $hero->delete();
         $notification = [
             'message' => 'Appointment Deleted',
-            'alert-type' => 'alert',
+            'alert-type' => 'success',
         ];
         return back()
             ->with($notification);
