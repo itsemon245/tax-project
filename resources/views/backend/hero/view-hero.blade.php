@@ -34,8 +34,9 @@
                                         <td>
                                             <a href="{{ route('banner.edit', $banner->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
-                                            <button class="btn btn-danger btn-sm hero-delete">Delete</button>
-                                            <form action="{{ route('banner.destroy', $banner->id) }}" method="post">
+                                            <button id="delete-item" class="btn btn-danger btn-sm">Delete</button>
+                                            <form id="deleteItem" action="{{ route('banner.destroy', $banner->id) }}"
+                                                method="post">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
@@ -55,7 +56,7 @@
 
     @push('customJs')
         <script>
-            var heroDelete = $('.hero-delete');
+            var heroDelete = $('#delete-item');
             heroDelete.on('click', function() {
                 var form = $(this).next('form')
                 Swal.fire({
