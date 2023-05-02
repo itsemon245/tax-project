@@ -1,3 +1,8 @@
+@php
+    $user_id= auth()->user();
+    $user= App\Models\User::find($user_id->id);
+@endphp
+
 <div class="navbar-custom">
     <div class="container-fluid">
         <ul class="list-unstyled topnav-menu float-end mb-0">
@@ -105,7 +110,7 @@
 
             <li class="dropdown notification-list topbar-dropdown">
                 <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ asset('backend/assets/images/users/user-1.jpg') }}" alt="user-image" class="rounded-circle">
+                    <img src="{{ useImage($user->image_url) ? useImage($user->image_url) :'https://api.dicebear.com/6.x/initials/svg?seed='. auth()->user()->name }}" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ms-1">
                         {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i> 
                     </span>
