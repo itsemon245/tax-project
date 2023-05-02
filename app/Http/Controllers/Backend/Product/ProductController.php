@@ -140,6 +140,7 @@ class ProductController extends Controller
                     'description' => $request->description,
                     'is_discount_fixed' => $request->discount_type,
                     'is_most_popular' => $request->most_popular,
+                    'status' => $request->status,
                 ]
             );
 

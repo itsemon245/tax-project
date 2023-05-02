@@ -109,6 +109,19 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="mt-1">
+                                                <label for="status" class="form-label">Status <span
+                                                        style="color:red;">*</span></label>
+                                                <select class="form-select" name="status">
+                                                    <option value="1" {{ $product->status ? 'selected' : '' }}>Active
+                                                    </option>
+                                                    <option value="0" {{ !$product->status ? 'selected' : '' }}>
+                                                        Deactive
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12">
                                             {{-- Dynamic Package Feature --}}
                                             <div id="packacgeFeaturesInputs"></div>
