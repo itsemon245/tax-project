@@ -44,13 +44,13 @@
         <div id="sidebar-menu">
 
             <ul id="side-menu">
- 
+
                 <li>
                     <a href="{{ route('dashboard') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> Dashboard </span>
                     </a>
-                    
+
                 </li>
                 <li class="menu-title mt-2">Frontend Manage</li>
                 <li>
@@ -84,12 +84,33 @@
                                     View Hero
                                 </a>
                                 <a href="{{ route('banner.create') }}">Create Hero
-                                   
+
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
+                <li>
+                    <a href="#appointmentSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Appointment Section </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="appointmentSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('appointment.index') }}">
+                                    View Appointment
+                                </a>
+                                <a href="{{ route('appointment.create') }}">Create Appointment
+
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
             </ul>
 
         </div>

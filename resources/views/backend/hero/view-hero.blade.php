@@ -35,7 +35,7 @@
                                             <a href="{{ route('banner.edit', $banner->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
                                             <button class="btn btn-danger btn-sm hero-delete">Delete</button>
-                                            <form action="{{ route('banner.destroy', $banner->id) }}" method="post">
+                                            <form action="{{ route('banner.destroy', $banner->id) }}" method="post" class="form">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>

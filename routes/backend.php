@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Hero\BannerController;
@@ -33,4 +34,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('product-subcategory', ProductSubCategoryController::class);
     Route::resource('hero', BannerController::class);
     Route::resource('banner', BannerController::class);
+    Route::resource('appointment',AppointmentController::class);
 });

@@ -12,7 +12,7 @@
     <p class="mt-2" id="{{ $name . '_note' }}">
         {!! $note !!}
     </p>
-    @error('hero_image')
+    @error($name)
         <span class="text-danger">{{ $message }}</span>
     @enderror
 </div>
