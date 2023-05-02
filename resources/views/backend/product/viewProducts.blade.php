@@ -51,8 +51,8 @@
                                     <td title="{{ $product->sub_title }}">
                                         {{ Str::limit($product->sub_title, 20, '...') }}
                                     </td>
-                                    <td>{{ $product->productCategory->category }}</td>
-                                    <td>{{ $product->productSubCategory->sub_category }}</td>
+                                    <td>{{ $product->productCategory->name }}</td>
+                                    <td>{{ $product->productSubCategory->name }}</td>
                                     <td>৳{{ $product->price }}</td>
                                     <td>{{ $product->discount }}%</td>
                                     <td>{!! $product->is_discount_fixed

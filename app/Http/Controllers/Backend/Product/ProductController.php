@@ -17,8 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('productCategory:id,category')
-            ->with('productSubCategory:id,sub_category')
+        $products = Product::with('productCategory:id,name')
+            ->with('productSubCategory:id,name')
             ->with('user:id,name')
             ->get();
 
@@ -142,7 +142,7 @@ class ProductController extends Controller
      */
     public function getSubCategories($categoryId)
     {
-        $subCategories = ProductSubCategory::where('category_id', $categoryId)->get(['id', 'sub_category']);
+        $subCategories = ProductSubCategory::where('product_category_id', $categoryId)->get(['id', 'name']);
         return response()->json($subCategories);
     }
 
