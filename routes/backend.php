@@ -32,10 +32,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('product', ProductController::class);
     Route::resource('product-category', ProductCategoryController::class);
     Route::resource('product-subcategory', ProductSubCategoryController::class);
-    Route::resource('hero', BannerController::class);
-
     Route::resource('info', InfoController::class);
-
     Route::resource('banner', BannerController::class);
 
 
