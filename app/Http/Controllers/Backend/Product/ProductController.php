@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend\Product;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\ProductSubCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
@@ -14,7 +17,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('backend.product.viewProducts');
+        $products = Product::with('productCategory:id,category')
+            ->with('productSubCategory:id,sub_category')
+            ->with('user:id,name')
+            ->get();
+
+        return view('backend.product.viewProducts', compact('products'));
     }
 
     /**
@@ -22,7 +30,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('backend.product.addProduct');
+        $categories = $this->getCategories();
+        return view('backend.product.addProduct', compact('categories'));
     }
 
     /**
@@ -30,7 +39,32 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $request->validated();
+        $packageFeature = $this->createJsonPackage($request->package_feature, $request->color);
+
+        Product::create(
+            [
+                'product_category_id' => $request->category,
+                'product_sub_category_id' => $request->sub_category,
+                'user_id' => Auth::user()->id,
+                'title' => $request->title,
+                'sub_title' => $request->sub_title,
+                'price' => $request->price,
+                'discount' => $request->discount,
+                'package_features' => json_encode($packageFeature),
+                'ratting' => $request->ratting,
+                'description' => $request->description,
+                'is_discount_fixed' => $request->discount_type,
+                'is_most_popular' => $request->most_popular,
+            ]
+        );
+
+        return redirect()
+            ->route("product.index")
+            ->with(array(
+                'message' => "Product Created Successfully",
+                'alert-type' => 'success',
+            ));
     }
 
     /**
@@ -46,7 +80,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('backend.product.editProduct', compact('product'));
+        $product = Product::find($product->id);
+        $categories = $this->getCategories();
+        return view('backend.product.editProduct', compact('categories', 'product'));
     }
 
     /**
@@ -54,7 +90,34 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $request->validated();
+        $packageFeature = $this->createJsonPackage($request->package_feature, $request->color);
+
+        Product::find($product->id)
+            ->update(
+                [
+                    'product_category_id' => $request->category,
+                    'product_sub_category_id' => $request->sub_category,
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'sub_title' => $request->sub_title,
+                    'price' => $request->price,
+                    'discount' => $request->discount,
+                    'package_features' => json_encode($packageFeature),
+                    'ratting' => $request->ratting,
+                    'description' => $request->description,
+                    'is_discount_fixed' => $request->discount_type,
+                    'is_most_popular' => $request->most_popular,
+                    'status' => $request->status,
+                ]
+            );
+
+        return redirect()
+            ->route("product.index")
+            ->with(array(
+                'message' => "Product Updated Successfully",
+                'alert-type' => 'success',
+            ));
     }
 
     /**
@@ -62,6 +125,58 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        Product::find($product->id)->delete();
+        return redirect()
+            ->back()
+            ->with(array(
+                'message' => "Product Deleted Successfully",
+                'alert-type' => 'success',
+            ));
+    }
+
+    /**
+     * Get Sub Category According Category
+     * 
+     * @param App\Models\ProductCategory\id
+     * @return response\json
+     */
+    public function getSubCategories($categoryId)
+    {
+        $subCategories = ProductSubCategory::where('category_id', $categoryId)->get(['id', 'sub_category']);
+        return response()->json($subCategories);
+    }
+
+    /**
+     * Get Category
+     * 
+     * @return response\json 
+     */
+    public function getCategories()
+    {
+        return ProductCategory::all(['id', 'name']);
+    }
+
+    /**
+     * Create Package Json FIle
+     * 
+     * @param $this->store
+     * @param $this->update
+     * @return Array[]
+     */
+    public function createJsonPackage($package_features, $colors)
+    {
+        $packageFeature = [];
+        foreach ($package_features as $index => $feature) {
+            array_push(
+                $packageFeature,
+                (object)
+                [
+                    'package_feature' => $feature,
+                    'color' => $colors[$index],
+                ]
+            );
+        }
+
+        return $packageFeature;
     }
 }

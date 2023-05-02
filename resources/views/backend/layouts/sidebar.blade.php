@@ -44,23 +44,26 @@
         <div id="sidebar-menu">
 
             <ul id="side-menu">
- 
+
                 <li>
                     <a href="{{ route('dashboard') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> Dashboard </span>
                     </a>
-                    
+
                 </li>
                 <li class="menu-title mt-2">Frontend Manage</li>
                 <li>
                     <a href="#category" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Product </span>
+                        <span> Products </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="category">
                         <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('product.index') }}">Products</a>
+                            </li>
                             <li>
                                 <a href="{{ route('product-category.index') }}">Category</a>
                             </li>
@@ -80,11 +83,11 @@
                     <div class="collapse" id="sidebarHeroSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('banner.index') }}">
+                                <a href="{{ route('hero.index') }}">
                                     View Hero
                                 </a>
-                                <a href="{{ route('banner.create') }}">Create Hero
-                                   
+                                <a href="{{ route('hero.create') }}">Create Hero
+
                                 </a>
                             </li>
                         </ul>

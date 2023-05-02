@@ -1,6 +1,7 @@
 <head>
 
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Dashboard | UBold - Responsive Admin Dashboard Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -29,7 +30,8 @@
     <link href="{{ asset('backend/assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}"
         rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css') }}"
-        rel="stylesheet" type="text/css" />  
+        rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
     <!-- Head js -->
     <script src="{{ asset('backend/assets/js/head.js') }}"></script>
 

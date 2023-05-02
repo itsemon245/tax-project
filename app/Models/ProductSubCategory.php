@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\ProductCategory;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,9 +10,8 @@ class ProductSubCategory extends Model
 {
     use HasFactory;
 
-    // relationship with product category
-    public function product_category()
+    public function products()
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->hasMany(Product::class);
     }
 }
