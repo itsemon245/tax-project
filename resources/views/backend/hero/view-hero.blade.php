@@ -9,7 +9,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
+
+                        <x-backend.table.basic>
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -20,14 +21,13 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-    
-    
+
                             <tbody>
                                 @foreach ($banners as $key => $banner)
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td><img src="{{ useImage($banner->image_url) }}" alt="{{ $banner->title }}"
-                                                width="80px"></td>
+                                                width="80px" loading="lazy"></td>
                                         <td>{{ Str::limit($banner->title, 20, '...') }}</td>
                                         <td>{{ Str::limit($banner->sub_title, 20, '...') }}</td>
                                         <td>{{ $banner->button }}</td>
@@ -43,14 +43,14 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                        </table>
-    
+                        </x-backend.table.basic>
+
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
     </x-backend.ui.section-card>
-    
+
     <!-- end row-->
 
     @push('customJs')
