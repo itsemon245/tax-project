@@ -138,7 +138,7 @@
     </main>
 
 
-    <footer></footer>
+    @include('frontend.layouts.footer')
     @stack('customJs')
     {{-- vendor JS  --}}
     <script src="{{ asset('frontend/assets/js/vendor.min.js') }}"></script>

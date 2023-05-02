@@ -16,8 +16,8 @@ class ProductSubCategoryController extends Controller
     public function index()
     {
         $categories = ProductCategory::get();
-        $sub_categories = ProductSubCategory::with('product_category')->get();
-        return view('backend.product.subCategory', compact('categories','sub_categories'));
+        $sub_categories = ProductSubCategory::with('productCategory')->get();
+        return view('backend.product.subCategory', compact('categories', 'sub_categories'));
     }
 
     /**
@@ -37,7 +37,7 @@ class ProductSubCategoryController extends Controller
         $sub_category->product_category_id = $request->category_id;
         $sub_category->name = $request->sub_category;
         $sub_category->save();
-        return redirect()->back()->with('success','Sub-Category Added Successfully');
+        return redirect()->back()->with('success', 'Sub-Category Added Successfully');
     }
 
     /**

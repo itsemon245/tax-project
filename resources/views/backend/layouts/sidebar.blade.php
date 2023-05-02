@@ -54,13 +54,16 @@
                 </li>
                 <li class="menu-title mt-2">Frontend Manage</li>
                 <li>
-                    <a href="#category" data-bs-toggle="collapse">
+                    <a href="#productSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Product </span>
+                        <span> Products </span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="category">
+                    <div class="collapse" id="productSection">
                         <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('product.index') }}">Products</a>
+                            </li>
                             <li>
                                 <a href="{{ route('product-category.index') }}">Category</a>
                             </li>
@@ -84,26 +87,6 @@
                                     View Hero
                                 </a>
                                 <a href="{{ route('banner.create') }}">Create Hero
-
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="#appointmentSection" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Appointment Section </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="appointmentSection">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('appointment.index') }}">
-                                    View Appointment
-                                </a>
-                                <a href="{{ route('appointment.create') }}">Create Appointment
 
                                 </a>
                             </li>

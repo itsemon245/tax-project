@@ -14,7 +14,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ProductCategory::with('product_sub_categories')->get();
+        $categories = ProductCategory::with('productSubCategories')->get();
         return view('backend.product.category', compact('categories'));
     }
 
@@ -34,7 +34,7 @@ class ProductCategoryController extends Controller
         $category = new ProductCategory();
         $category->name = $request->category;
         $category->save();
-        return redirect()->back()->with('success','Category Added Successfully');
+        return redirect()->back()->with('success', 'Category Added Successfully');
     }
 
     /**
@@ -68,5 +68,4 @@ class ProductCategoryController extends Controller
     {
         //
     }
-
 }
