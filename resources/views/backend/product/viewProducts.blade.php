@@ -79,7 +79,8 @@
                                     <td>{{ $product->user->name }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#" class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
+                                            <a href="{{ Route('product.edit', $product) }}"
+                                                class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
                                             <button onclick='deleteProduct("productDelete-{{ $product->id }}")'
                                                 class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
                                             <form class="d-none" id="productDelete-{{ $product->id }}"

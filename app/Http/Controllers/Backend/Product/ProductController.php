@@ -30,7 +30,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = ProductCategory::all(['id', 'category']);
+        $categories = $this->getCategories();
         return view('backend.product.addProduct', compact('categories'));
     }
 
@@ -41,18 +41,7 @@ class ProductController extends Controller
     {
         // dd($request->all());
         $request->validated();
-        $packageFeature = [];
-
-        foreach ($request->package_feature as $index => $feature) {
-            array_push(
-                $packageFeature,
-                (object)
-                [
-                    'package_feature' => $feature,
-                    'color' => $request->color[$index],
-                ]
-            );
-        }
+        $packageFeature = $this->createJsonPackage($request->package_feature, $request->color);
 
         Product::create(
             [
@@ -86,6 +75,30 @@ class ProductController extends Controller
         return response()->json($subCategories);
     }
 
+    // Get Category
+    public function getCategories()
+    {
+        return ProductCategory::all(['id', 'category']);
+    }
+
+    // Create Package Json FIle
+    public function createJsonPackage($package_features, $colors)
+    {
+        $packageFeature = [];
+        foreach ($package_features as $index => $feature) {
+            array_push(
+                $packageFeature,
+                (object)
+                [
+                    'package_feature' => $feature,
+                    'color' => $colors[$index],
+                ]
+            );
+        }
+
+        return $packageFeature;
+    }
+
     /**
      * Display the specified resource.
      */
@@ -99,7 +112,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('backend.product.editProduct', compact('product'));
+        $product = Product::find($product->id);
+        $categories = $this->getCategories();
+        return view('backend.product.editProduct', compact('categories', 'product'));
     }
 
     /**
@@ -107,7 +122,33 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $request->validated();
+        $packageFeature = $this->createJsonPackage($request->package_feature, $request->color);
+
+        Product::find($product->id)
+            ->update(
+                [
+                    'product_category_id' => $request->category,
+                    'product_sub_category_id' => $request->sub_category,
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'sub_title' => $request->sub_title,
+                    'price' => $request->price,
+                    'discount' => $request->discount,
+                    'package_features' => json_encode($packageFeature),
+                    'ratting' => $request->ratting,
+                    'description' => $request->description,
+                    'is_discount_fixed' => $request->discount_type,
+                    'is_most_popular' => $request->most_popular,
+                ]
+            );
+
+        return redirect()
+            ->route("product.index")
+            ->with(array(
+                'message' => "Product Updated Successfully",
+                'alert-type' => 'success',
+            ));
     }
 
     /**
