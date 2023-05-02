@@ -21,7 +21,7 @@ class ProductController extends Controller
             ->with('productSubCategory:id,sub_category')
             ->with('user:id,name')
             ->get();
-        // dd($products);
+
         return view('backend.product.viewProducts', compact('products'));
     }
 
@@ -39,7 +39,6 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        // dd($request->all());
         $request->validated();
         $packageFeature = $this->createJsonPackage($request->package_feature, $request->color);
 
@@ -66,37 +65,6 @@ class ProductController extends Controller
                 'message' => "Product Created Successfully",
                 'alert-type' => 'success',
             ));
-    }
-
-    // Get Sub Category According Category
-    public function getSubCategories($categoryId)
-    {
-        $subCategories = ProductSubCategory::where('category_id', $categoryId)->get(['id', 'sub_category']);
-        return response()->json($subCategories);
-    }
-
-    // Get Category
-    public function getCategories()
-    {
-        return ProductCategory::all(['id', 'category']);
-    }
-
-    // Create Package Json FIle
-    public function createJsonPackage($package_features, $colors)
-    {
-        $packageFeature = [];
-        foreach ($package_features as $index => $feature) {
-            array_push(
-                $packageFeature,
-                (object)
-                [
-                    'package_feature' => $feature,
-                    'color' => $colors[$index],
-                ]
-            );
-        }
-
-        return $packageFeature;
     }
 
     /**
@@ -164,5 +132,51 @@ class ProductController extends Controller
                 'message' => "Product Deleted Successfully",
                 'alert-type' => 'success',
             ));
+    }
+
+    /**
+     * Get Sub Category According Category
+     * 
+     * @param App\Models\ProductCategory\id
+     * @return response\json
+     */
+    public function getSubCategories($categoryId)
+    {
+        $subCategories = ProductSubCategory::where('category_id', $categoryId)->get(['id', 'sub_category']);
+        return response()->json($subCategories);
+    }
+
+    /**
+     * Get Category
+     * 
+     * @return response\json 
+     */
+    public function getCategories()
+    {
+        return ProductCategory::all(['id', 'category']);
+    }
+
+    /**
+     * Create Package Json FIle
+     * 
+     * @param $this->store
+     * @param $this->update
+     * @return Array[]
+     */
+    public function createJsonPackage($package_features, $colors)
+    {
+        $packageFeature = [];
+        foreach ($package_features as $index => $feature) {
+            array_push(
+                $packageFeature,
+                (object)
+                [
+                    'package_feature' => $feature,
+                    'color' => $colors[$index],
+                ]
+            );
+        }
+
+        return $packageFeature;
     }
 }

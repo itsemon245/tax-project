@@ -174,7 +174,7 @@
 @push('customJs')
     <script>
         const descriptionAdd = () => {
-            $("#description").val($("#snow-editor").html())
+            $("#description").val($('.ql-editor').html())
         }
         const featureLength = () => {
             $('#packacgeFeaturesInputs').children().length < 2 ?
