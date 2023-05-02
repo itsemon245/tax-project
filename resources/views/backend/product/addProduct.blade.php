@@ -35,23 +35,17 @@
                                             </x-backend.from.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="mt-1">
-                                                <label for="category" class="form-label">Category <span
-                                                        style="color:red;">*</span></label>
-                                                <select class="form-select" id="category" name="category"
-                                                    onchange="getSubCategories(this)">
-                                                    <option selected disabled>Choose Category...</option>
-                                                    @forelse ($categories as $category)
-                                                        <option value="{{ $category->id }}">{{ $category->name }}
-                                                        </option>
-                                                    @empty
-                                                        <option disabled>No Records Found!</option>
-                                                    @endforelse
-                                                </select>
-                                                @error('category')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+
+                                            <x-backend.form.select-input id="category" label="Category" name="category"
+                                                placeholder="Choose Category..." onchange="getSubCategories(this)">
+                                                @forelse ($categories as $category)
+                                                    <option value="{{ $category->id }}">
+                                                        {{ $category->name }}
+                                                    </option>
+                                                @empty
+                                                    <option disabled>No Records Found!</option>
+                                                @endforelse
+                                            </x-backend.form.select-input>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mt-1">
