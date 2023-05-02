@@ -25,27 +25,72 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Hero Image</th>
                                 <th>Title</th>
                                 <th>Sub Title</th>
-                                <th>Button Link</th>
+                                <th>Category</th>
+                                <th>Sub Category</th>
+                                <th>Price</th>
+                                <th>Discount</th>
+                                <th>Discount Type</th>
+                                <th>Most Popular</th>
+                                <th>Package Feature</th>
+                                <th>ratting</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Author</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
 
                         <tbody>
-                            {{-- @foreach ($heros as $key => $hero)
+                            @foreach ($products as $key => $product)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td><img src="{{ useImage($hero->image_url) }}" alt="{{ $hero->title }}"
-                                            width="80px"></td>
-                                    <td>{{ Str::limit($hero->title, 20, '...') }}</td>
-                                    <td>{{ Str::limit($hero->sub_title, 20, '...') }}</td>
-                                    <td>{{ $hero->button }}</td>
-                                    <td>Action</td>
+                                    <td title="{{ $product->title }}">{{ Str::limit($product->title, 20, '...') }}</td>
+                                    <td title="{{ $product->sub_title }}">
+                                        {{ Str::limit($product->sub_title, 20, '...') }}
+                                    </td>
+                                    <td>{{ $product->productCategory->category }}</td>
+                                    <td>{{ $product->productSubCategory->sub_category }}</td>
+                                    <td>৳{{ $product->price }}</td>
+                                    <td>{{ $product->discount }}%</td>
+                                    <td>{!! $product->is_discount_fixed
+                                        ? "<span class='badge bg-primary'>Fixed</span>"
+                                        : "<span class='badge bg-info'>Percentage</span>" !!}</td>
+                                    <td>{!! $product->is_most_popular
+                                        ? "<span class='badge bg-success'>Yes</span>"
+                                        : "<span class='badge bg-danger'>No</span>" !!}
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            @foreach (json_decode($product->package_features) as $feature)
+                                                <li style="color: {{ $feature->color }}">{{ $feature->package_feature }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td>{{ $product->ratting }}</td>
+                                    <td>{!! $product->description !!}</td>
+                                    <td>{!! $product->status
+                                        ? "<span class='badge bg-success'>Active</span>"
+                                        : "<span class='badge bg-danger'>Deactive</span>" !!}
+                                    </td>
+                                    <td>{{ $product->user->name }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
+                                            <button onclick='deleteProduct("productDelete-{{ $product->id }}")'
+                                                class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
+                                            <form class="d-none" id="productDelete-{{ $product->id }}"
+                                                action="{{ Route('product.destroy', $product) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -55,3 +100,11 @@
     </div>
     <!-- end row-->
 @endsection
+
+@push('customJs')
+    <script>
+        const deleteProduct = id => {
+            $("#" + id).submit()
+        }
+    </script>
+@endpush
