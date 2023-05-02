@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('testimonials', function (Blueprint $table) {
+        Schema::create('social_handles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('avatar');//this should be image input in frontend;
-            $table->longText('comment');
+            $table->string('name')->comment('different social platform names'); //this should be a select box in frontend
+            $table->string('link');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('testimonials');
+        Schema::dropIfExists('social_handles');
     }
 };
