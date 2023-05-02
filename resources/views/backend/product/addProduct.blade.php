@@ -48,7 +48,7 @@
                                             </x-backend.form.select-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="mt-1">
+                                            {{-- <div class="mt-1">
                                                 <label for="sub-category" class="form-label">Sub Category <span
                                                         style="color:red;">*</span></label>
                                                 <select class="form-select" id="sub-category" name="sub_category">
@@ -57,7 +57,10 @@
                                                 @error('sub_category')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
-                                            </div>
+                                            </div> --}}
+                                            <x-backend.form.select-input id="sub-category" label="Sub Category"
+                                                name="category" placeholder="Choose Category first..." name="sub_category">
+                                            </x-backend.form.select-input>
                                         </div>
                                         <div class="col-md-6">
                                             <x-backend.from.text-input label="Price" type="number" name="price">

@@ -33,7 +33,11 @@ Route::prefix('admin')->group(function () {
     Route::resource('product-category', ProductCategoryController::class);
     Route::resource('product-subcategory', ProductSubCategoryController::class);
     Route::resource('hero', BannerController::class);
+
     Route::resource('info', InfoController::class);
+
+    Route::resource('banner', BannerController::class);
+
 
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
 });
