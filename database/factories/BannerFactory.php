@@ -23,7 +23,7 @@ class BannerFactory extends Factory
             'title' => $title,
             'sub_title' => $title,
             'button' => $button,
-            'image_url' => "https://picsum.photos/seed/$seed/350/1080"
+            'image_url' => "https://picsum.photos/seed/$seed/1080/350"
         ];
     }
 }
