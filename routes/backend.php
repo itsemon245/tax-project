@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
+use App\Http\Controllers\TestimonialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +37,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('banner', BannerController::class);
     Route::resource('info', InfoController::class);
     Route::resource('appointment',AppointmentController::class);
+
+    Route::resource('testimonial', TestimonialController::class);
+
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
 });
