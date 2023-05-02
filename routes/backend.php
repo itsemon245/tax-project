@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Info\InfoController;
@@ -32,9 +33,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('product', ProductController::class);
     Route::resource('product-category', ProductCategoryController::class);
     Route::resource('product-subcategory', ProductSubCategoryController::class);
-    Route::resource('info', InfoController::class);
     Route::resource('banner', BannerController::class);
-
-
+    Route::resource('info', InfoController::class);
+    Route::resource('appointment',AppointmentController::class);
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
 });

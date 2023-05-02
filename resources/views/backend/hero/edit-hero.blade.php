@@ -24,7 +24,7 @@
                     <x-backend.form.text-input label="Button Link" type="text" name="button_link"
                         value="{{ $banner->button }}" />
 
-                    <x-backend.ui.button class="btn-primary">Update</x-backend.ui.button>
+                    <x-backend.ui.button class="btn-primary mt-2">Update</x-backend.ui.button>
 
                 </div>
             </div>
