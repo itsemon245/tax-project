@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('product_category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

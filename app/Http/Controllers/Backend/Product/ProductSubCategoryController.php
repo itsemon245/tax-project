@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductSubCategoryRequest;
 use App\Http\Requests\UpdateProductSubCategoryRequest;
 use App\Models\ProductCategory;
+use App\Models\Referee;
+use App\Models\User;
 
 class ProductSubCategoryController extends Controller
 {
@@ -53,7 +55,8 @@ class ProductSubCategoryController extends Controller
      */
     public function edit(ProductSubCategory $productSubCategory)
     {
-        //
+        $categories = ProductCategory::get();
+        return view('backend.product.editSubCategory', compact('productSubCategory','categories'));
     }
 
     /**

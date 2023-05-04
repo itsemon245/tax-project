@@ -77,15 +77,13 @@
                             <td>{{ $sub_category->product_category->name }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="#" class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
+                                    <a href="{{ route('product-subcategory.edit', $sub_category) }}" class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
                                     <a href="#" class="btn btn-danger btn-sm waves-effect waves-light">Delete</a>
                                 </div>
                             </td>
                         </tr> 
                         @empty
-                            <tr>
-                                <td colspan = "100%"><span>No data found.</span></td>
-                            </tr>
+                        <td valign="top" colspan="4" class="dataTables_empty">No data available in table</td>
                         @endforelse
                     </tbody>
                 </table>
