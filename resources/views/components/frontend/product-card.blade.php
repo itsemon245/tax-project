@@ -65,7 +65,7 @@
                     </p>
                 </li>
             </ul>
-            <a href="#" class="d-flex justify-content-center" style="text-decoration:none;font-weight: 500;">More
+            <a href="#" class="d-flex justify-content-center a" style="text-decoration:none;font-weight: 500;">More
                 Details</a>
         </div>
     </div>
