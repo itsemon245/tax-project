@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend\Testimonial;
 
+use App\Models\Testimonial;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTestimonialRequest;
 use App\Http\Requests\UpdateTestimonialRequest;
-use App\Models\Testimonial;
 
 class TestimonialController extends Controller
 {
