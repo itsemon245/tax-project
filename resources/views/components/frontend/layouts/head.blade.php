@@ -28,5 +28,6 @@
     {{-- Color extractor for matching image color --}}
     <script src="{{ asset('frontend/extractColor.js') }}"></script>
     <!-- Scripts -->
+    <script src="{{ asset('frontend/assets/jquery/jquery.min.js') }}"></script>
     @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
 </head>
