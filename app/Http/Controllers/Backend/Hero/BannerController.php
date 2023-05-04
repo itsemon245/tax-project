@@ -34,12 +34,12 @@ class BannerController extends Controller
     public function store(StoreBannerRequest $request)
     {
         // store hero data
-        $store_data = new Banner();
-        $store_data->title = $request->title;
-        $store_data->sub_title = $request->sub_title;
-        $store_data->button = $request->button_link;
-        $store_data->image_url = saveImage($request->hero_image, 'hero', 'hero');
-        $store_data->save();
+        $banner_data = new Banner();
+        $banner_data->title = $request->title;
+        $banner_data->sub_title = $request->sub_title;
+        $banner_data->button = $request->button_link;
+        $banner_data->image_url = saveImage($request->hero_image, 'hero', 'hero');
+        $banner_data->save();
 
         $notification = [
             'message' => 'Hero Created',
@@ -73,13 +73,13 @@ class BannerController extends Controller
     public function update(UpdateBannerRequest $request, Banner $banner)
     {
         // update hero data
-        $store_data = Banner::findOrFail($banner->id);
-        $store_data->title = $request->title;
-        $store_data->sub_title = $request->sub_title;
-        $store_data->button = $request->button_link;
-        $old_path = $store_data->image_url;
-        $store_data->image_url = updateFile($request->hero_image, $old_path, 'hero', 'hero');
-        $store_data->save();
+        $banner_data = Banner::findOrFail($banner->id);
+        $banner_data->title = $request->title;
+        $banner_data->sub_title = $request->sub_title;
+        $banner_data->button = $request->button_link;
+        $old_path = $banner_data->image_url;
+        $banner_data->image_url = updateFile($request->hero_image, $old_path, 'hero', 'hero');
+        $banner_data->save();
 
         $notification = [
             'message' => 'Hero Updated',
@@ -104,10 +104,9 @@ class BannerController extends Controller
         $hero->delete();
         $notification = [
             'message' => 'Hero Deleted',
-            'alert-type' => 'alert',
+            'alert-type' => 'success',
         ];
-        return redirect()
-            ->back()
+        return back()
             ->with($notification);
     }
 }

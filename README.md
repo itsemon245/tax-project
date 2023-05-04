@@ -58,7 +58,7 @@ For productivity & efficiency this project is included with some components and 
      - ###### SelectInput
      ```blade
      <x-backend.form.select-input id="category" label="Category" name="category"
-        placeholder="Choose Category..." onchange="getSubCategories(this)">
+        placeholder="Choose Category...">
         @forelse ($categories as $category)
             <option value="{{ $category->id }}">
                 {{ $category->name }}
