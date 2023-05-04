@@ -20,7 +20,6 @@
     <link href="{{ asset('frontend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
     {{-- bootstrap Css  --}}
     <link href="{{ asset('frontend/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
-    <link href="/node_modules/bootstrap/dist/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style">
     {{-- icons css  --}}
     <link href="{{ asset('frontend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
     {{-- Head JS  --}}

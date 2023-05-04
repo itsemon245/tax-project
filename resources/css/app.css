@@ -16,6 +16,9 @@ button {
 }
 a {
     text-decoration: none !important;
+    color: white;
+}
+footer a {
     color: white !important;
 }
 .a {
@@ -27,6 +30,13 @@ header {
     background: var(--bg-dark);
     color: white;
     padding: 18px;
+    position: sticky;
+    z-index: 30;
+    top: 0;
+    width: 100%;
+}
+.sidebar{
+    z-index: 40;
 }
 .nav .custom-nav-item a {
     padding: 0;
@@ -152,7 +162,7 @@ footer .social-handles {
     }
 }
 @media (max-width: 980px) {
-    .divider-vr{
+    .divider-vr {
         display: none;
     }
 }

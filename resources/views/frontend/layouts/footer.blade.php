@@ -63,7 +63,7 @@
         </div>
     </div>
     <div class="bottom-footer bg-primary text-light mt-3">
-        <p class="d-flex align-items-center justify-content-center">Copyright <span
+        <p class="d-flex align-items-center justify-content-center mb-0">Copyright <span
                 class="mdi mdi-copyright mx-2"></span>
             {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by company name</p>
     </div>
