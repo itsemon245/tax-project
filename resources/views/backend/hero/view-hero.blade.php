@@ -9,7 +9,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
+
+                        <x-backend.table.basic>
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -20,42 +21,43 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-    
-    
+
                             <tbody>
                                 @foreach ($banners as $key => $banner)
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td><img src="{{ useImage($banner->image_url) }}" alt="{{ $banner->title }}"
-                                                width="80px"></td>
+                                                width="80px" loading="lazy"></td>
                                         <td>{{ Str::limit($banner->title, 20, '...') }}</td>
                                         <td>{{ Str::limit($banner->sub_title, 20, '...') }}</td>
                                         <td>{{ $banner->button }}</td>
                                         <td>
                                             <a href="{{ route('banner.edit', $banner->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
-                                            <button class="btn btn-danger btn-sm hero-delete">Delete</button>
-                                            <form action="{{ route('banner.destroy', $banner->id) }}" method="post">
+
+                                            <form action="{{ route('banner.destroy', $banner->id) }}" method="post"
+                                                class="d-inline-block py-0">
                                                 @csrf
                                                 @method('DELETE')
+                                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                                             </form>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
-                        </table>
-    
+                        </x-backend.table.basic>
+
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
     </x-backend.ui.section-card>
-    
+
     <!-- end row-->
 
     @push('customJs')
         <script>
-            var heroDelete = $('.hero-delete');
+            var heroDelete = $('#delete-item');
             heroDelete.on('click', function() {
                 var form = $(this).next('form')
                 Swal.fire({

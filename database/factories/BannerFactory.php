@@ -16,8 +16,14 @@ class BannerFactory extends Factory
      */
     public function definition(): array
     {
+        $title = fake()->realText(50);
+        $button = env('APP_URL') . fake()->word(1);
+        $seed = fake()->word(1);
         return [
-            //
+            'title' => $title,
+            'sub_title' => $title,
+            'button' => $button,
+            'image_url' => "https://picsum.photos/seed/$seed/1080/350"
         ];
     }
 }

@@ -55,6 +55,19 @@ For productivity & efficiency this project is included with some components and 
      ```blade
      <x-backend.form.image-input name="image_input" image="image_url" class="other classes" />
      ```
+     - ###### SelectInput
+     ```blade
+     <x-backend.form.select-input id="category" label="Category" name="category"
+        placeholder="Choose Category...">
+        @forelse ($categories as $category)
+            <option value="{{ $category->id }}">
+                {{ $category->name }}
+            </option>
+        @empty
+            <option disabled>No Records Found!</option>
+        @endforelse
+    </x-backend.form.select-input>
+    ```
  2. ##### UI Elements
      - ###### Button
      ```blade

@@ -22,13 +22,15 @@
  <script src="{{ asset('backend/assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
  <script src="{{ asset('backend/assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
  <!-- datatable js ends -->
-
+ 
  <!-- Datatables init -->
  <script src="{{ asset('backend/assets/js/pages/datatables.init.js') }}"></script>
-
+ 
  <!-- Dashboar 1 init js-->
  <script src="{{ asset('backend/assets/js/pages/dashboard-1.init.js') }}"></script>
-
+ <!-- TextArea -->
+ <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
+ <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script>
  <!-- App js-->
  <script src="{{ asset('backend/assets/js/app.min.js') }}"></script>
  {{-- toaster js  --}}

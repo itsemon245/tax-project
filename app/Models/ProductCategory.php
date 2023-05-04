@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\ProductSubCategory;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,8 +11,11 @@ class ProductCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
-    //relationship with productsub category
-    public function product_sub_categories()
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+    public function productSubCategories()
     {
         return $this->hasMany(ProductSubCategory::class);
     }
