@@ -35,7 +35,7 @@ header {
     top: 0;
     width: 100%;
 }
-.sidebar{
+.sidebar {
     z-index: 40;
 }
 .nav .custom-nav-item a {
@@ -102,7 +102,7 @@ header {
 
 .sidebar {
     position: fixed;
-    padding: 10px 10px;
+    padding: 20px;
     top: 0;
     display: flex;
     flex-direction: column;
@@ -112,10 +112,24 @@ header {
     overflow-y: scroll;
     scroll-behavior: smooth;
     background: var(--bs-light);
-    left: -300px;
+    transition: transform 500ms ease-in-out;
+}
+.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+main {
+    transition: all 500ms ease-in-out;
+}
+.sidebar-1 {
+    transform: translateX(-300px);
 }
 .sidebar-show {
     left: 0;
+}
+.sidebar-2 {
+    transform: translateX(-300px);
 }
 .sidebar .sidebar-item {
     padding: 8px 16px;
@@ -144,6 +158,14 @@ footer .social-handles {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 16px;
+}
+@media (min-width: 920px) {
+    main {
+        transform: translateX(194px);
+    }
+    .sidebar-2 {
+        transform: translateX(0);
+    }
 }
 @media (min-width: 1440px) {
     header {

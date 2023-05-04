@@ -7,10 +7,10 @@
 <script>
     const navLinks = document.querySelectorAll('.custom-nav-item');
     const activeLink = document.querySelector('.active-link');
-    const menuBtn = document.querySelector('.menu-btn');
-    const menuCloseBtn = document.querySelector('.menu-close-btn');
-    const sidebar = document.querySelector('.sidebar');
+    const menuBtn = $('.menu-btn')
+    const menuCloseBtn = $('.menu-close-btn')
 
+    console.log(menuCloseBtn);
     navLinks.forEach(link => {
         link.addEventListener('mouseenter', (e) => {
             activeLink.classList.remove('active-link')
@@ -20,10 +20,29 @@
         })
     });
 
-    menuBtn.addEventListener('click', e => {
-        sidebar.classList.toggle('sidebar-show')
-    })
-    menuCloseBtn.addEventListener('click', e => {
-        sidebar.classList.toggle('sidebar-show')
-    })
+    $.each(menuBtn, (index, btn) => {
+        btn.addEventListener('click', e => {
+            const sidebar = $('.' + btn.id)
+            toggleSidebar(sidebar)
+        })
+    });
+    $.each(menuCloseBtn, (index, btn) => {
+        btn.addEventListener('click', e => {
+            const sidebar = $('.' + btn.id)
+            toggleSidebar(sidebar)
+        })
+    });
+
+    function toggleSidebar(sidebar) {
+        const transformValue = parseInt(sidebar.css('transform').split(' ')[4])
+        if (transformValue === 0) {
+            console.log('sidebar hide');
+            sidebar.css('transform', `translateX(-${sidebar.css('width')})`)
+            $('main').css('transform', `translateX(0px)`)
+        } else {
+            console.log('sidebar show');
+            sidebar.css('transform', `translateX(0px)`)
+            $('main').css('transform', `translateX(${sidebar.css('width')})`)
+        }
+    }
 </script>

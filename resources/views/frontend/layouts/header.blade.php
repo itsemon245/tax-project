@@ -1,7 +1,7 @@
 <header class="d-flex align-items-center">
     <div class="d-flex align-items-center">
         <div>
-            <button class="menu-btn waves-effect waves-light p-2 border-0 mx-2" style="background: none;">
+            <button id="sidebar-1" class="menu-btn waves-effect waves-light p-2 border-0 mx-2" style="background: none;">
                 <i class="mdi mdi-menu text-light"></i>
             </button>
         </div>
@@ -39,7 +39,7 @@
         <div class="d-flex align-items-center gap-3 justify-content-end">
             <a class="btn btn-secondary rounded-1 partner-btn-hide" href="">Become a partner</a>
             @auth
-                <div class="d-flex align-items-center">
+                <div id="sidebar-2" class="d-flex align-items-center menu-btn">
                     <span class="mdi mdi-account-outline text-light" style="font-size: 32px"></span>
                     <span class="mdi mdi-chevron-down text-light" style="font-size: 16px;margin-left:-8px;"></span>
                 </div>
