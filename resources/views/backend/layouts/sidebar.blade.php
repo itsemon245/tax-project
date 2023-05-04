@@ -93,6 +93,25 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#sidebarInfoSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Info Section </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarInfoSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('info.index') }}">
+                                    View Info
+                                </a>
+                                <a href="{{ route('info.create') }}">Create Info
+
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
 
         </div>

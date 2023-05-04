@@ -4,7 +4,7 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', 'List']" />
 
-    <x-backend.ui.section-card name="Hero List">
+<x-backend.ui.section-card name="Hero List">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -50,7 +50,7 @@
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
-    </x-backend.ui.section-card>
+    </x-backend.ui.section-card>    
 
     <!-- end row-->
 
