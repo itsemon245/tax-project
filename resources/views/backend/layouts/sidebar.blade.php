@@ -11,10 +11,15 @@
                     data-bs-toggle="dropdown">Geneva Kennedy</a>
                 <div class="dropdown-menu user-pro-dropdown">
 
-                    <!-- item-->
+                    <!-- Update Profile -->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <i class="fe-user me-1"></i>
                         <span>My Account</span>
+                    </a>
+                    <!-- Change password-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="fe-password me-1"></i>
+                        <span>Change Password</span>
                     </a>
 
                     <!-- item-->
@@ -112,6 +117,12 @@
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li>
+                    <a href="{{ route('social-handle.index') }}">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Social Media</span>
+                    </a>
                 </li>
 
             </ul>

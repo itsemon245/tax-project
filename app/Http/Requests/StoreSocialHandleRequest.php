@@ -11,7 +11,7 @@ class StoreSocialHandleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user() !== null;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreSocialHandleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'social' => ['required','unique:social_handles,name'],
+            'social_link' => ['string', 'required','unique:social_handles,link'],
         ];
     }
 }

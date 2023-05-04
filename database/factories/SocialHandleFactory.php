@@ -16,8 +16,11 @@ class SocialHandleFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->realText(15);
+        $link = fake()->realText(50);
         return [
-            //
+            'name' => $name,
+            'link' => $link
         ];
     }
 }
