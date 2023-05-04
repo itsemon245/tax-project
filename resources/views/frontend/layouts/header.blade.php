@@ -36,11 +36,16 @@
         </ul>
     </nav>
     <div class="">
-        <div class="d-flex align-items-center gap-2 justify-content-end">
+        <div class="d-flex align-items-center gap-3 justify-content-end">
             <a class="btn btn-secondary rounded-1 partner-btn-hide" href="">Become a partner</a>
-            @if (Route::has('login'))
+            @auth
+                <div class="d-flex align-items-center">
+                    <span class="mdi mdi-account-outline text-light" style="font-size: 32px"></span>
+                    <span class="mdi mdi-chevron-down text-light" style="font-size: 16px;margin-left:-8px;"></span>
+                </div>
+            @else
                 <a class="btn btn-primary rounded-1" href="{{ route('login') }}">Sign in</a>
-            @endif
+            @endauth
         </div>
     </div>
 </header>
