@@ -45,4 +45,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('ui-element', UiElementController::class);
 
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
+    Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
 });
