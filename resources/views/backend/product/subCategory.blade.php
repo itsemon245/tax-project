@@ -81,7 +81,7 @@
                                         <td>{{ $sub_category->productCategory->name }}</td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="#"
+                                                <a href="{{ route('product-subcategory.edit', $sub_category->id) }}"
                                                     class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
                                                 <a href="#"
                                                     class="btn btn-danger btn-sm waves-effect waves-light">Delete</a>

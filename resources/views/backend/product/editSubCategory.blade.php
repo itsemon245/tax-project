@@ -12,15 +12,23 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-6">
-                                {{-- {{ dd($productSubCategory) }} --}}
-                                    <div class="mb-1">
-                                        <label for="category" class="form-label">Select Category</label>
-                                        <option value=""></option>
-                                    </div>
+                            <div class="col-md-6">
+                                <x-backend.form.select-input id="category" label="Category" name="category"
+                                >
+                                @forelse ($categories as $category)
+                                {{ dd($productSubCategory) }}
+                                    <option @if ($productSubCategory->product_category_id == $category->id)
+                                        selected
+                                    @endif value="{{ $category->id }}">
+                                        {{ $category->name }}
+                                    </option>
+                                @empty
+                                    <option disabled>No Records Found!</option>
+                                @endforelse
+                             </x-backend.form.select-input>
                             </div> <!-- end col -->
                         {{-- Add sub-category --}}
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                     <div>
                                         <label for="sub_category" class="form-label">Sub-Category</label>
                                         <input type="text" id="sub_category" name="sub_category" placeholder="Type Sub-Category" class="form-control
