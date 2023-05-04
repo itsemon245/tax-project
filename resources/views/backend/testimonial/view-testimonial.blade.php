@@ -18,9 +18,9 @@
                 @foreach ($testimonials as $key => $testimonial)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td><img src="{{ useImage($testimonial->image) }}" alt="{{ $testimonial->title }}" width="80px"
+                        <td><img src="{{ useImage($testimonial->avatar) }}" alt="{{ $testimonial->title }}" width="80px"
                                 loading="lazy" /></td>
-                        <td>{{ $appointment->name }}</td>
+                        <td>{{ $testimonial->name }}</td>
                         <td>{{ Str::limit($testimonial->comment, 20, '...') }}</td>
                         <td>
                             <a href="{{ route('testimonial.edit', $testimonial->id) }}" class="btn btn-info btn-sm">Edit</a>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Testimonial;
 
 use App\Models\Testimonial;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreTestimonialRequest;
 use App\Http\Requests\UpdateTestimonialRequest;
 
@@ -14,7 +15,8 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        //
+        $testimonials=Testimonial::latest()->get();
+        return view('backend.testimonial.view-testimonial',compact('testimonials'));
     }
 
     /**
@@ -22,7 +24,7 @@ class TestimonialController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.testimonial.create-testimonial');
     }
 
     /**
@@ -30,7 +32,16 @@ class TestimonialController extends Controller
      */
     public function store(StoreTestimonialRequest $request)
     {
-        //
+        $testimonialStore = new Testimonial();
+        $testimonialStore->name = $request->name;
+        $testimonialStore->comment = $request->comment;
+        $testimonialStore->avatar = saveImage($request->image, 'testimonial', 'testimonial');
+        $testimonialStore->save();
+        $notification = [
+            'message' => 'Testimonial Created',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
     }
 
     /**
@@ -46,7 +57,7 @@ class TestimonialController extends Controller
      */
     public function edit(Testimonial $testimonial)
     {
-        //
+        return view('backend.testimonial.edit-testimonial',compact('testimonial'));
     }
 
     /**
@@ -54,7 +65,18 @@ class TestimonialController extends Controller
      */
     public function update(UpdateTestimonialRequest $request, Testimonial $testimonial)
     {
-        //
+        $testimonialUpdate = Testimonial::findOrFail($testimonial->id);
+        $testimonialUpdate->name = $request->name;
+        $testimonialUpdate->comment = $request->comment;
+        
+        $oldImagePath =$testimonialUpdate->avatar;
+        $testimonialUpdate->avatar = updateFile($request->image, $oldImagePath, 'testimonial', 'testimonial');
+        $testimonialUpdate->save();
+        $notification = [
+            'message' => 'Testimonial updated',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
     }
 
     /**
@@ -62,6 +84,18 @@ class TestimonialController extends Controller
      */
     public function destroy(Testimonial $testimonial)
     {
-        //
+         //delete testimonial data
+         $testimonial = Testimonial::findOrFail($testimonial->id);
+         $path ='public/'. $testimonial->image_url;
+         if (Storage::exists($path)) {
+             Storage::delete($path);
+         }
+         $testimonial->delete();
+         $notification = [
+             'message' => 'Testimonial Deleted',
+             'alert-type' => 'success',
+         ];
+         return back()
+             ->with($notification);
     }
 }
