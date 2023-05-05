@@ -110,6 +110,8 @@
                                 <a href="{{ route('info.index') }}">
                                     View Info
                                 </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('info.create') }}">Create Info
                                 </a>
                             </li>
