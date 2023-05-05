@@ -39,7 +39,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('banner', BannerController::class);
     Route::resource('info', InfoController::class);
     Route::resource('appointment', AppointmentController::class);
-
     Route::resource('testimonial', TestimonialController::class);
     Route::resource('social-handle', SocialHandleController::class);
     Route::resource('ui-element', UiElementController::class);

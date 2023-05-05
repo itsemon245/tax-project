@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->comment('different social platform names'); //this should be a select box in frontend
             $table->string('link');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
