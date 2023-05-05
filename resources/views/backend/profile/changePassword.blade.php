@@ -16,18 +16,18 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-1">
-                                        <x-backend.form.text-input type="text" name="old_password" label="Old Password" class="other classes" required />
+                                        <x-backend.form.text-input type="text" name="old_password" label="Old Password" class="other classes"  />
                                     </div>
                                 </div> <!-- end col -->
                                 {{-- Add sub-category --}}
                                 <div class="col-md-4">
                                     <div>
-                                        <x-backend.form.text-input type="text" name="new_password" label="New Password" class="other classes" required />
+                                        <x-backend.form.text-input type="text" name="new_password" label="New Password" class="other classes"  />
                                     </div>
                                 </div> <!-- end col -->
                                 <div class="col-md-4">
                                     <div>
-                                        <x-backend.form.text-input type="text" name="confirm_new_password" label="Confirm New Password" class="other classes" required />
+                                        <x-backend.form.text-input type="text" name="confirm_new_password" label="Confirm New Password" class="other classes"  />
                                     </div>
                                 </div> <!-- end col -->
                                 <div class="mt-1"><button class="btn btn-primary w-100 btn-sm profile-button"

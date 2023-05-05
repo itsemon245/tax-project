@@ -91,23 +91,29 @@ class UserProfileController extends Controller
      */
     public function changePassword(Request $request)
     {
-            $request->validate([
-            'old_password' => 'required|string',
-            'new_password' => 'required|string',
-            'confirm_new_password' => 'required|string|same:new_password',
+        //     $request->validate([
+        //     'old_password' => 'required|string',
+        //     'new_password' => 'required|string',
+        //     'confirm_new_password' => 'required|string|same:new_password',
 
-        ]);
-            $user = auth()->user();
-            if (Hash::check($request->old_password, $user->password)) {
+        // ])
+        
+        $user = auth()->user();
+        $isValid = Hash::check($request->old_password, $user->password);
+        $notification = array(
+            'message' => "Password Changed Successfully",
+            'alert-type' => 'success',
+        );
+        if ($isValid) {
                 $user->password = Hash::make($request->confirm_new_password);
                 $user->save();
             } else {
                 $notification = array(
-                    'message' => "Password didn't match",
+                    'message' => "Password Didn't Match",
                     'alert-type' => 'danger',
                 );
-                return back()->with($notification);
             }
+            return back()->with($notification);
     }
 
 }
