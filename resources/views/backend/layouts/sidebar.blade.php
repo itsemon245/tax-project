@@ -67,7 +67,10 @@
                     <div class="collapse" id="productSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('product.index') }}">Products</a>
+                                <a href="{{ route('product.create') }}">Create Product</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('product.index') }}">View Products</a>
                             </li>
                             <li>
                                 <a href="{{ route('product-category.index') }}">Category</a>

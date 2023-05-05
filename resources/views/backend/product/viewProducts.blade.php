@@ -4,12 +4,9 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
-                <div class="page-title-right">
+                <div class="page-title-right mt-0">
                     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Hero', 'Create']" />
                 </div>
-                <a href="{{ route('product.create') }}" class="mt-3 btn btn-primary waves-effect waves-light profile-button">
-                    Create Product
-                </a>
                 <h4 class="page-title">View Products</h4>
             </div>
         </div>
