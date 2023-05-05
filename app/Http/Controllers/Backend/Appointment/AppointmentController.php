@@ -87,13 +87,13 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        //delete banner data
-        $hero = Appointment::findOrFail($appointment->id);
-        $path = 'public/' . $hero->image_url;
+        //delete appointment data
+        $appointment = Appointment::findOrFail($appointment->id);
+        $path = 'public/' . $appointment->image;
         if (Storage::exists($path)) {
             Storage::delete($path);
         }
-        $hero->delete();
+        $appointment->delete();
         $notification = [
             'message' => 'Appointment Deleted',
             'alert-type' => 'success',

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UiElementController;
-use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Info\InfoController;
@@ -11,6 +10,7 @@ use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
+use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 
 /*

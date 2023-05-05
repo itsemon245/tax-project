@@ -127,6 +127,26 @@
                     </div>
                 </li>
 
+                <li>
+                    <a href="#testimonialSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Testimonial Section </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="testimonialSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('testimonial.index') }}">
+                                    View All
+                                </a>
+                                <a href="{{ route('testimonial.create') }}">Create 
+
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
             </ul>
 
         </div>
