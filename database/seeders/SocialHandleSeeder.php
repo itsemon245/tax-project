@@ -13,6 +13,12 @@ class SocialHandleSeeder extends Seeder
      */
     public function run(): void
     {
-        SocialHandle::factory(4)->create();
+        $socials = ['facebook', 'twitter', 'instagram', 'linkedin', 'whatsapp', 'messenger'];
+        foreach ($socials as $name) {
+            SocialHandle::factory(1)->create([
+                'name' => $name,
+                'link' => "https://$name.com"
+            ]);
+        }
     }
 }

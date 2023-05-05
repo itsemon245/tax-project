@@ -17,7 +17,8 @@ class ProductSubCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->realText(15),
+            'product_category_id' => fake()->numberBetween(0, 3),
         ];
     }
 }
