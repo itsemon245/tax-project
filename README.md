@@ -100,7 +100,8 @@ For productivity & efficiency this project is included with some components and 
                 </tr>
             @endforeach
         </tbody>
-    </x-backend.table.basic>
+      </x-backend.table.basic>
+      
      ```
      
  - ### Helpers
