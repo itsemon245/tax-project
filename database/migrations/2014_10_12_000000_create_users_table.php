@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->longText('image_url')->nullable();
             $table->longText('refer_link');
+            $table->integer('refer_discount_rate')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

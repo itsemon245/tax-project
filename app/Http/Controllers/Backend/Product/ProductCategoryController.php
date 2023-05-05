@@ -50,7 +50,8 @@ class ProductCategoryController extends Controller
      */
     public function edit(ProductCategory $productCategory)
     {
-        //
+        
+        return view('backend.product.editCategory', compact('productCategory'));
     }
 
     /**
@@ -58,14 +59,18 @@ class ProductCategoryController extends Controller
      */
     public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
-        //
+        $productCategory->name = $request->category;
+        $productCategory->save();
+        return redirect()->back()->with('success','Category Edit Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductCategory $productCategory)
+    public function destroy(UpdateProductCategoryRequest $request,ProductCategory $productCategory)
     {
-        //
+        $category = ProductCategory::where('name', $request->category)->get();
+        $category->delete();
+        return redirect()->back()->with('danger','Category Delete Successfully');
     }
 }
