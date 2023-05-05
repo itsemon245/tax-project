@@ -111,6 +111,11 @@
                                     View Info
                                 </a>
                                 <a href="{{ route('info.create') }}">Create Info
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#appointmentSection" data-bs-toggle="collapse">
@@ -124,7 +129,7 @@
                                 <a href="{{ route('appointment.index') }}">
                                     View All
                                 </a>
-                                <a href="{{ route('appointment.create') }}">Create 
+                                <a href="{{ route('appointment.create') }}">Create
 
                                 </a>
                             </li>
@@ -150,7 +155,7 @@
                                 <a href="{{ route('testimonial.index') }}">
                                     View All
                                 </a>
-                                <a href="{{ route('testimonial.create') }}">Create 
+                                <a href="{{ route('testimonial.create') }}">Create
 
                                 </a>
                             </li>
