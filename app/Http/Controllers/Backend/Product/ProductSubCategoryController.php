@@ -72,6 +72,7 @@ class ProductSubCategoryController extends Controller
      */
     public function destroy(ProductSubCategory $productSubCategory)
     {
-        //
+        $productSubCategory->delete();
+        return back()->with('success', 'Deleted Successfully');
     }
 }

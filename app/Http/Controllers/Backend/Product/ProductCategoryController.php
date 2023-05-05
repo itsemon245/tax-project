@@ -34,7 +34,7 @@ class ProductCategoryController extends Controller
         $category = new ProductCategory();
         $category->name = $request->category;
         $category->save();
-        return redirect()->back()->with('success', 'Category Added Successfully');
+        return back()->with('success', 'Added Successfully');
     }
 
     /**
@@ -61,16 +61,15 @@ class ProductCategoryController extends Controller
     {
         $productCategory->name = $request->category;
         $productCategory->save();
-        return redirect()->back()->with('success','Category Edit Successfully');
+        return back()->with('success','Category Edit Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UpdateProductCategoryRequest $request,ProductCategory $productCategory)
+    public function destroy(ProductCategory $productCategory)
     {
-        $category = ProductCategory::where('name', $request->category)->get();
-        $category->delete();
-        return redirect()->back()->with('danger','Category Delete Successfully');
+        $productCategory->delete();
+        return back()->with('danger','Deleted Successfully');
     }
 }

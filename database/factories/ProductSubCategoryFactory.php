@@ -16,8 +16,10 @@ class ProductSubCategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->realText(10);
         return [
-            //
+            'name' => $name,
+            'product_category_id' => \App\Models\User::inRandomOrder()->first()->id,
         ];
     }
 }
