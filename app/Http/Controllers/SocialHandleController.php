@@ -34,7 +34,7 @@ class SocialHandleController extends Controller
         $social->name = $request->social;
         $social->link = $request->social_link;
         $social->save();
-        return redirect()->back()->with('success','Account Added Successfully');
+        return back()->with('success','Added Successfully');
     }
 
     /**
@@ -61,7 +61,7 @@ class SocialHandleController extends Controller
     {
         $socialHandle->link = $request->social_link;
         $socialHandle->save();
-        return redirect()->back()->with('success','Account Update Successfully');
+        return back()->with('success','Updated Successfully');
     }
 
     /**
@@ -69,8 +69,7 @@ class SocialHandleController extends Controller
      */
     public function destroy(SocialHandle $socialHandle)
     {
-        $social = SocialHandle::where()->find($socialHandle->id);
-        $social->delete();
-        return redirect()->back()->with('danger','Item Deleted Successfully');
+        $socialHandle->delete();
+        return back()->with('success','Deleted Successfully');
     }
 }

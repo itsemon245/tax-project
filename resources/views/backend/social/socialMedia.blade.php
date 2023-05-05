@@ -77,8 +77,11 @@
                                             <div class="btn-group">
                                                 <a href="{{ route('social-handle.edit', $social_media) }}"
                                                     class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
-                                                <a href="{{ route('social-handle.destroy', $social_media->id) }}"
-                                                    class="btn btn-danger btn-sm waves-effect waves-light">Delete</a>
+                                                    <form action="{{ route('social-handle.destroy', $social_media->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <x-backend.ui.button class="text-capitalize btn-sm btn-danger">Delete</x-backend.ui.button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

@@ -128,7 +128,7 @@
                     </a>
                     
                     <!-- item-->
-                    <a href="{{ route('user-profile.index') }}" class="dropdown-item notify-item">
+                    <a href="{{ route('user-profile.edit',auth()->id()) }}" class="dropdown-item notify-item">
                         <i class="fe-lock"></i>
                         <span>Change Password</span>
                     </a>
