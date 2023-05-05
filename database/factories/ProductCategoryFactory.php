@@ -16,8 +16,9 @@ class ProductCategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->realText(15);
         return [
-            //
+            'name' => $name,
         ];
     }
 }
