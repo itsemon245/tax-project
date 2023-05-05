@@ -15,8 +15,8 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        $testimonials=Testimonial::latest()->get();
-        return view('backend.testimonial.view-testimonial',compact('testimonials'));
+        $testimonials = Testimonial::latest()->get();
+        return view('backend.testimonial.view-testimonial', compact('testimonials'));
     }
 
     /**
@@ -57,7 +57,7 @@ class TestimonialController extends Controller
      */
     public function edit(Testimonial $testimonial)
     {
-        return view('backend.testimonial.edit-testimonial',compact('testimonial'));
+        return view('backend.testimonial.edit-testimonial', compact('testimonial'));
     }
 
     /**
@@ -65,13 +65,12 @@ class TestimonialController extends Controller
      */
     public function update(UpdateTestimonialRequest $request, Testimonial $testimonial)
     {
-        $testimonialUpdate = Testimonial::findOrFail($testimonial->id);
-        $testimonialUpdate->name = $request->name;
-        $testimonialUpdate->comment = $request->comment;
-        
-        $oldImagePath =$testimonialUpdate->avatar;
-        $testimonialUpdate->avatar = updateFile($request->image, $oldImagePath, 'testimonial', 'testimonial');
-        $testimonialUpdate->save();
+        $testimonial->name = $request->name;
+        $testimonial->comment = $request->comment;
+
+        $oldImagePath = $testimonial->avatar;
+        $testimonial->avatar = updateFile($request->image, $oldImagePath, 'testimonial', 'testimonial');
+        $testimonial->save();
         $notification = [
             'message' => 'Testimonial updated',
             'alert-type' => 'success',
@@ -84,18 +83,16 @@ class TestimonialController extends Controller
      */
     public function destroy(Testimonial $testimonial)
     {
-         //delete testimonial data
-         $testimonial = Testimonial::findOrFail($testimonial->id);
-         $path ='public/'. $testimonial->image_url;
-         if (Storage::exists($path)) {
-             Storage::delete($path);
-         }
-         $testimonial->delete();
-         $notification = [
-             'message' => 'Testimonial Deleted',
-             'alert-type' => 'success',
-         ];
-         return back()
-             ->with($notification);
+        $path = 'public/' . $testimonial->image_url;
+        if (Storage::exists($path)) {
+            Storage::delete($path);
+        }
+        $testimonial->delete();
+        $notification = [
+            'message' => 'Testimonial Deleted',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
     }
 }
