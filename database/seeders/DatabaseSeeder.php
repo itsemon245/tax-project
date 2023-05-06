@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ProductSubCategorySeeder::class,
             ProductSeeder::class,
             AppointmentSeeder::class,
+            InfoSeeder::class,
             SocialHandleSeeder::class,
         ]);
     }
