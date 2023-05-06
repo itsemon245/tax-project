@@ -1,8 +1,6 @@
 @extends('frontend.layouts.app')
 @section('main')
-    <div class="">
-        <x-frontend.hero-section />
-    </div>
+    <x-frontend.hero-section :banners="$banners" />
     <x-frontend.products-section />
     <x-frontend.appointment-section />
     <x-frontend.info-section title="We Help You File Quickly And Confidently" class="">
