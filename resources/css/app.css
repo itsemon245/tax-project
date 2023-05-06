@@ -160,10 +160,10 @@ footer .social-handles {
 }
 @media (min-width: 920px) {
     main {
-        /* transform: translateX(194px); */
+        transform: translateX(194px);
     }
     .sidebar-2 {
-        /* transform: translateX(0); */
+        transform: translateX(0);
     }
 }
 @media (min-width: 1440px) {
