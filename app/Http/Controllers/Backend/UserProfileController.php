@@ -61,18 +61,6 @@ class UserProfileController extends Controller
      */
     public function update(UserProfileUpdateRequest $request, $id)
     {
-        if ($request->has('old_password')) {
-            $userData = User::findOrFail($id); 
-            $oldPassword = $request->old_password;
-            if (Hash::check( $oldPassword, $userData->password)) {
-                $userData->password = $request->new_password;
-                $userData->save();
-                return redirect()->back()->with('success', 'Password Update Successful.');
-            } else {
-                return redirect()->back()->with('danger', 'Something is wrong.');
-            }
-            
-        } else {
             $userData = User::findOrFail($id);
             $userData->name = $request->name;
             $userData->email = $request->email;
@@ -86,8 +74,7 @@ class UserProfileController extends Controller
                 'message' => "Profile Updated",
                 'alert-type' => 'success',
             );
-            return redirect()->back()->with($notification);
-        }
+            return back()->with($notification);
         
     }
 
@@ -99,4 +86,34 @@ class UserProfileController extends Controller
     {
         //
     }
+    /**
+     * Change Profile Password.
+     */
+    public function changePassword(Request $request)
+    {
+        //     $request->validate([
+        //     'old_password' => 'required|string',
+        //     'new_password' => 'required|string',
+        //     'confirm_new_password' => 'required|string|same:new_password',
+
+        // ])
+        
+        $user = auth()->user();
+        $isValid = Hash::check($request->old_password, $user->password);
+        $notification = array(
+            'message' => "Password Changed Successfully",
+            'alert-type' => 'success',
+        );
+        if ($isValid) {
+                $user->password = Hash::make($request->confirm_new_password);
+                $user->save();
+            } else {
+                $notification = array(
+                    'message' => "Password Didn't Match",
+                    'alert-type' => 'danger',
+                );
+            }
+            return back()->with($notification);
+    }
+
 }

@@ -83,6 +83,26 @@ For productivity & efficiency this project is included with some components and 
     {{-- Your Content --}}
     </x-backend.ui.section-card />
      ```
+  3. ##### Tables
+     - ###### BasicTable
+     ```blade
+      <x-backend.table.basic>
+        <thead>
+            <tr>
+                <th>#</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach ($banners as $key => $banner)
+                <tr>
+                    <td>{{ ++$key }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+      </x-backend.table.basic>
+      
+     ```
      
  - ### Helpers
  1. #### useImage

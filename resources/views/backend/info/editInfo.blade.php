@@ -42,13 +42,12 @@
 
                     <div class="mt-1">
                         <label for="snow-editor" class="form-label">Description</label>
-                        <div id="snow-editor" style="height: 100px;">{!! $info->description !!} </div>
-                        <textarea class="d-none" name="description" id="description"></textarea>
+                        <textarea class="form-control" name="description" id="description">{!! $info->description !!}</textarea>
                     </div>
 
 
 
-                    <x-backend.ui.button class="btn-primary" onclick="descriptionAdd()">Update</x-backend.ui.button>
+                    <x-backend.ui.button class="btn-primary mt-2">Update</x-backend.ui.button>
 
                 </div>
             </div>
@@ -59,10 +58,6 @@
 
 @push('customJs')
     <script>
-        const descriptionAdd = () => {
-            $("#description").val($('.ql-editor').html())
-        }
-
         const getSectionTitle = (e) => {
             const section_id = e.value
             let url = "{{ route('getInfoSectionTitle', ':sectionId') }}"
