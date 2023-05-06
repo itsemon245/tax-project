@@ -12,6 +12,71 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory(20)->create();
+        $products = [
+            [
+                'title' => 'Free',
+                'sub_title' => 'Free expert assist included',
+                'discount' => 100,
+                'is_discount_fixed' => false
+            ],
+            [
+                'title' => 'Deluxe',
+                'sub_title' => 'Free expert assist included'
+            ],
+            [
+                'title' => 'Premium',
+                'sub_title' => 'Free expert assist included'
+            ],
+            [
+                'title' => 'Family Bundle',
+                'sub_title' => 'Free expert assist included'
+            ],
+        ];
+
+        $categories = [
+            [ //category 1
+                [
+                    $products
+                ],
+                [
+                    $products
+                ],
+                [
+                    $products
+                ],
+                [
+                    $products
+                ],
+            ],
+            [ //category 2
+                [
+                    $products
+                ],
+                [
+                    $products
+                ],
+                [
+                    $products
+                ],
+                [
+                    $products
+                ],
+            ],
+        ];
+        foreach ($categories as $categoryId => $subCategories) {
+            $categoryId++;
+            foreach ($subCategories as $subCategoryId => $subCategories) {
+                $subCategoryId++;
+                foreach ($subCategories as $products) {
+                    foreach ($products as $product) {
+                        Product::factory(1)->create([
+                            ...$product,
+                            'product_category_id' => $categoryId,
+                            'product_sub_category_id' => $subCategoryId,
+                        ]);
+                    }
+                }
+            }
+        }
     }
 }
