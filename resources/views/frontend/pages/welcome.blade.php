@@ -2,7 +2,7 @@
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
     <x-frontend.products-section />
-    <x-frontend.appointment-section />
+    <x-frontend.appointment-section :sections="$appointmentSections" />
     <x-frontend.info-section title="We Help You File Quickly And Confidently" class="">
         <x-frontend.info-card />
         <x-frontend.info-card />

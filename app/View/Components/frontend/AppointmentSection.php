@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class AppointmentSection extends Component
 {
+    public $sections;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($sections)
     {
-        //
+        $this->sections = $sections;
     }
 
     /**

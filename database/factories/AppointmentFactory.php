@@ -16,8 +16,13 @@ class AppointmentFactory extends Factory
      */
     public function definition(): array
     {
+        $seed = fake()->word(1);
         return [
-            //
+            'title' => fake()->realText(10),
+            'sub_title' => fake()->realText(10),
+            'tag' => fake()->realText(10),
+            'description' => fake()->realText(100),
+            'image' => "https://picsum.photos/seed/$seed/350",
         ];
     }
 }
