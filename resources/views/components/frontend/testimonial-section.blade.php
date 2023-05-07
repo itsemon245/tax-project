@@ -1,33 +1,110 @@
 <section class="mt-5 py-5" style="background: #474646;">
     <h3 class="text-center text-light">Our Valuable Partners</h3>
-    <div id="testiMonialSection" class="carousel slide pointer-event" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-bs-target="#testiMonialSection" data-bs-slide-to="0" class="active" aria-current="true"></li>
-            <li data-bs-target="#testiMonialSection" data-bs-slide-to="1" class="" aria-current="true"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active">
-                <div class="d-flex align-items-center justify-content-center gap-3 mx-3 mb-5">
-                    <x-frontend.testimonial-card />
-                    <x-frontend.testimonial-card />
-                    <x-frontend.testimonial-card />
+    <div class="scroll-wrapper">
+        <span id="nextBtn" class="ti-arrow-circle-left icon"></span>
+        <div class="media-scroller snaps-inline">
+            <div class="media-elements">
+                <div class="p-3 bg-light d-flex align-items-center gap-3 rounded-3">
+                    <img class="rounded rounded-circle" style="max-width: 120px;"
+                        src="{{ asset('backend/assets/images/users/user-5.jpg') }}" alt="">
+                    <p class="mb-0 d-inline" style="text-align:justify;">Lorem ipsum dolor sit amet consectetur.
+                        Lorem ipsum dolor sit amet.</p>
                 </div>
             </div>
-            <div class="carousel-item">
-                <div class="d-flex align-items-center justify-content-center gap-3 mx-3 mb-5">
-                    <x-frontend.testimonial-card />
-                    <x-frontend.testimonial-card />
-                    <x-frontend.testimonial-card />
+            <div class="media-elements">
+                <div class="p-3 bg-light d-flex align-items-center gap-3 rounded-3">
+                    <img class="rounded rounded-circle" style="max-width: 120px;"
+                        src="{{ asset('backend/assets/images/users/user-5.jpg') }}" alt="">
+                    <p class="mb-0 d-inline" style="text-align:justify;">Lorem ipsum dolor sit amet consectetur.
+                        Lorem ipsum dolor sit amet.</p>
+                </div>
+            </div>
+            <div class="media-elements">
+                <div class="p-3 bg-light d-flex align-items-center gap-3 rounded-3">
+                    <img class="rounded rounded-circle" style="max-width: 120px;"
+                        src="{{ asset('backend/assets/images/users/user-5.jpg') }}" alt="">
+                    <p class="mb-0 d-inline" style="text-align:justify;">Lorem ipsum dolor sit amet consectetur.
+                        Lorem ipsum dolor sit amet.</p>
                 </div>
             </div>
         </div>
-        <a class="carousel-control-prev" href="#testiMonialSection" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#testiMonialSection" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </a>
+        <span id="prevBtn" class="ti-arrow-circle-right icon"></span>
     </div>
 </section>
+
+@push('customCss')
+    <style>
+        .scroll-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem 4rem;
+        }
+
+        @media (min-width: 1020px) {
+            .scroll-wrapper {
+                padding: 2rem 10rem;
+            }
+        }
+
+        .media-scroller {
+            display: grid;
+            grid-auto-flow: column;
+            grid-tem-columns: 33%;
+            overflow-x: auto;
+            gap: 1rem;
+            overscroll-behavior-inline: contain;
+            scroll-behavior: smooth;
+        }
+
+        #nextBtn,
+        #prevBtn {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .icon {
+            color: var(--bs-primary);
+            font-size: 28px;
+            margin: 0 1rem;
+            cursor: pointer;
+        }
+
+        .media-scroller::-webkit-scrollbar {
+            appearance: none;
+            display: none;
+        }
+
+        .snaps-inline {
+            scroll-snap-type: inline mandatory;
+            scroll-padding-inline: 10rem;
+        }
+
+        .snaps-inline>* {
+            scroll-snap-align: center;
+        }
+    </style>
+@endpush
+
+@push('customJs')
+    <script>
+        $(document).ready(function() {
+            const container = document.querySelector('.media-scroller');
+            const next = document.getElementById('nextBtn')
+            const prev = document.getElementById('prevBtn')
+            container.addEventListener('wheel', e => {
+                e.preventDefault();
+                console.log(e.deltaY);
+                container.scrollLeft += e.deltaY;
+            })
+
+            next.addEventListener('click', () => {
+                container.scrollLeft += 266.66668701171875;
+            })
+            prev.addEventListener('click', () => {
+                container.scrollLeft -= 266.66668701171875;
+            })
+        });
+    </script>
+@endpush
