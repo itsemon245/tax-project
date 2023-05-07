@@ -22,6 +22,7 @@
     <link href="{{ asset('frontend/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
     {{-- icons css  --}}
     <link href="{{ asset('frontend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
+    @stack('customCss')
     {{-- Head JS  --}}
     <script src="{{ asset('frontend/assets/js/head.js') }}"></script>
     {{-- Color extractor for matching image color --}}
