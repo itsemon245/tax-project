@@ -81,7 +81,7 @@ class SocialHandleController extends Controller
     {
         $socialHandle->delete();
         $notification = [
-            'message' => 'Updated Successfully',
+            'message' => 'Deleted Successfully',
             'alert-type' => 'success',
         ];
         return back()->with($notification);
