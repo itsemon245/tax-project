@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
-    <x-frontend.products-section />
+    <x-frontend.products-section :subCategories="$productCategory->productSubCategories" />
     <x-frontend.appointment-section :sections="$appointmentSections" />
     <x-frontend.info-section :title="$infos1[0]->title" class="text-capitalize">
         @foreach ($infos1 as $info)
