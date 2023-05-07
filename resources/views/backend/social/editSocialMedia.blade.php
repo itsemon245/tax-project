@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Frontend','Footer','Social-Media', 'Edit']" />
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Footer', 'Social-Media', 'Edit']" />
 
     <x-backend.ui.section-card name="Social-Media Edit">
 
@@ -18,16 +18,18 @@
                                 <div class="col-md-12">
                                     <div class="mt-3">
                                         <x-backend.form.select-input id="social" label="Social" required name="social">
-                                            <option @if ($socials[0]->name == $socialHandle->name)
-                                                selected
-                                            @endif>
-                                                {{ $socialHandle->name }}
-                                            </option>
+                                            @foreach (socialItems() as $item)
+                                                <option value="{{ json_encode($item) }}"
+                                                    @if ($item['name'] === $socialHandle->name) selected @endif>
+                                                    {{ $item['name'] }}
+                                                </option>
+                                            @endforeach
                                         </x-backend.form.select-input>
                                     </div>
                                 </div> <!-- end col -->
                                 <div class="col-md-12 mt-2">
-                                    <x-backend.form.text-input type="text" name="social_link" label="Social Link" :value="$socialHandle->link" class="other classes" required /></label>
+                                    <x-backend.form.text-input type="text" name="social_link" label="Social Link"
+                                        :value="$socialHandle->link" class="other classes" required /></label>
                                 </div>
                                 {{-- social media link  --}}
                                 <div class="mt-3"><button class="btn btn-primary w-100 btn-sm profile-button"
@@ -37,8 +39,8 @@
                         </div> <!-- end card-body -->
                     </div> <!-- end card -->
                 </div>
-            </form>
-            </div>
+        </form>
+        </div>
 
 
     </x-backend.ui.section-card>

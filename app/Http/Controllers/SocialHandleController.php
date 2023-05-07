@@ -67,7 +67,11 @@ class SocialHandleController extends Controller
     {
         $socialHandle->link = $request->social_link;
         $socialHandle->save();
-        return back()->with('success', 'Updated Successfully');
+        $notification = [
+            'message' => 'Updated Successfully',
+            'alert-type' => 'success',
+        ];
+        return redirect(route('social-handle.index'))->with($notification);
     }
 
     /**
@@ -76,6 +80,10 @@ class SocialHandleController extends Controller
     public function destroy(SocialHandle $socialHandle)
     {
         $socialHandle->delete();
-        return back()->with('success', 'Deleted Successfully');
+        $notification = [
+            'message' => 'Updated Successfully',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
     }
 }
