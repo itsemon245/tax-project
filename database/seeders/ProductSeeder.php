@@ -33,7 +33,7 @@ class ProductSeeder extends Seeder
             ],
         ];
 
-        $subCategories = [1, 2, 3, 4];
+        $subCategories = [1, 3, 5, 7];
 
         foreach ($products as $product) {
             foreach ($subCategories as $subId) {
