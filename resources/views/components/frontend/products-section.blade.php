@@ -27,7 +27,7 @@
                                 });
                             @endphp
                             @foreach ($fillteredProducts as $product)
-                                <x-frontend.product-card :is-popular="$product->is_most_popular" />
+                                <x-frontend.product-card :$product />
                             @endforeach
                         </div>
                     </div>
