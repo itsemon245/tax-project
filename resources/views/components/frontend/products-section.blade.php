@@ -3,66 +3,35 @@
         <h2 class="header-title h4 my-4 text-center">Products</h2>
         <div class="container d-flex justify-content-center">
             <ul class="nav nav-pills navtab-bg" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a href="#standard" data-bs-toggle="tab" aria-expanded="false" class="nav-link active"
-                        aria-selected="false" role="tab" tabindex="-1">
-                        Standard
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a href="#special" data-bs-toggle="tab" aria-expanded="true" class="nav-link" aria-selected="false"
-                        role="tab" tabindex="-1">
-                        Special
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a href="#golden" data-bs-toggle="tab" aria-expanded="false" class="nav-link" aria-selected="true"
-                        role="tab">
-                        Golden
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a href="#premium" data-bs-toggle="tab" aria-expanded="false" class="nav-link" aria-selected="true"
-                        role="tab">
-                        Premium
-                    </a>
-                </li>
+                @foreach ($subCategories as $item)
+                    <li class="nav-item" role="presentation">
+                        <a href="#{{ $item->name }}" data-bs-toggle="tab"
+                            aria-expanded="{{ $item->id === 1 ? 'true' : 'false' }}"
+                            aria-selected="{{ $item->id === 1 ? 'true' : 'false' }}" role="tab"
+                            class="text-capitalize nav-link {{ $item->id === 1 ? 'active' : '' }}" tabindex="-1">
+                            {{ $item->name }}
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </div>
         <div class="container-fluid">
             <div class="tab-content">
-                <div class="tab-pane active" id="standard" role="tabpanel">
-                    <div class="product-wrapper">
-                        <x-frontend.product-card />
-                        <x-frontend.product-card :is-popular="true" />
-                        <x-frontend.product-card />
-                        <x-frontend.product-card :is-popular="true" />
+                @foreach ($subCategories as $subCategory)
+                    <div class="tab-pane {{ $subCategory->id === 1 ? 'active' : '' }}" id="{{ $subCategory->name }}"
+                        role="tabpanel">
+                        <div class="product-wrapper">
+                            @php
+                                $fillteredProducts = $subCategory->products->filter(function ($product) {
+                                    return $product->product_category_id === 1;
+                                });
+                            @endphp
+                            @foreach ($fillteredProducts as $product)
+                                <x-frontend.product-card :$product />
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-                <div class="tab-pane" id="special" role="tabpanel">
-                    <div class="product-wrapper">
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
-                    </div>
-                </div>
-                <div class="tab-pane" id="golden" role="tabpanel">
-                    <div class="product-wrapper">
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
-                    </div>
-                </div>
-                <div class="tab-pane" id="premium" role="tabpanel">
-                    <div class="product-wrapper">
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
-                        <x-frontend.product-card />
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
 

@@ -33,49 +33,24 @@ class ProductSeeder extends Seeder
             ],
         ];
 
-        $categories = [
-            [ //category 1
-                [
-                    $products
-                ],
-                [
-                    $products
-                ],
-                [
-                    $products
-                ],
-                [
-                    $products
-                ],
-            ],
-            [ //category 2
-                [
-                    $products
-                ],
-                [
-                    $products
-                ],
-                [
-                    $products
-                ],
-                [
-                    $products
-                ],
-            ],
-        ];
-        foreach ($categories as $categoryId => $subCategories) {
-            $categoryId++;
-            foreach ($subCategories as $subCategoryId => $subCategories) {
-                $subCategoryId++;
-                foreach ($subCategories as $products) {
-                    foreach ($products as $product) {
-                        Product::factory(1)->create([
-                            ...$product,
-                            'product_category_id' => $categoryId,
-                            'product_sub_category_id' => $subCategoryId,
-                        ]);
-                    }
-                }
+        $subCategories = [1, 3, 5, 7];
+
+        foreach ($products as $product) {
+            foreach ($subCategories as $subId) {
+                Product::factory(1)->create([
+                    ...$product,
+                    'product_category_id' => 1,
+                    'product_sub_category_id' => $subId,
+                ]);
+            }
+        }
+        foreach ($products as $product) {
+            foreach ($subCategories as $subId) {
+                Product::factory(1)->create([
+                    ...$product,
+                    'product_category_id' => 2,
+                    'product_sub_category_id' => $subId,
+                ]);
             }
         }
     }

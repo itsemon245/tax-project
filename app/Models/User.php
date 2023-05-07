@@ -42,4 +42,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Referee::class);
     }
+    public function promoCodes()
+    {
+        return $this->hasMany(PromoCode::class);
+    }
+
 }

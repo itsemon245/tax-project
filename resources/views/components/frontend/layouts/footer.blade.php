@@ -37,22 +37,12 @@
                 <div class="d-flex flex-column align-items-center text-light">
                     <p class="mb-1" style="font-weight: 500;font-size:18px;">Stay Connected</p>
                     <div class="social-handles">
-                        <div class="d-flex gap-2 align-items-center">
-                            <span class="mdi mdi-facebook"></span>
-                            <a class="" href="#">Facebook</a>
-                        </div>
-                        <div class="d-flex gap-2 align-items-center">
-                            <span class="mdi mdi-facebook"></span>
-                            <a class="" href="#">Facebook</a>
-                        </div>
-                        <div class="d-flex gap-2 align-items-center">
-                            <span class="mdi mdi-facebook"></span>
-                            <a class="" href="#">Facebook</a>
-                        </div>
-                        <div class="d-flex gap-2 align-items-center">
-                            <span class="mdi mdi-facebook"></span>
-                            <a class="" href="#">Facebook</a>
-                        </div>
+                        @foreach ($socials as $social)
+                            <div class="d-flex gap-2 align-items-center">
+                                <span class="{{ $social->icon }}"></span>
+                                <a class="text-capitalize" href="{{ $social->link }}">{{ $social->name }}</a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
