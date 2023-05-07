@@ -16,7 +16,7 @@
     </main>
 
 
-    @include('frontend.layouts.footer')
+    @stack('footer')
     @include('frontend.layouts.scripts')
 
 </body>

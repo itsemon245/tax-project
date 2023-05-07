@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('social_handles', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->comment('different social platform names'); //this should be a select box in frontend
+            $table->string('name')->comment('different social platform names');
+            $table->string('icon')->comment('class name for icons');
             $table->string('link');
             $table->timestamps();
             $table->softDeletes();

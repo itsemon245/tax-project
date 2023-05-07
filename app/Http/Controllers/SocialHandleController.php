@@ -30,11 +30,17 @@ class SocialHandleController extends Controller
      */
     public function store(StoreSocialHandleRequest $request)
     {
+        $item = json_decode($request->social);
         $social = new SocialHandle();
-        $social->name = $request->social;
+        $social->name = $item->name;
+        $social->icon = $item->icon;
         $social->link = $request->social_link;
         $social->save();
-        return back()->with('success','Added Successfully');
+        $notification = [
+            'message' => 'Added Successfully',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
     }
 
     /**
@@ -51,7 +57,7 @@ class SocialHandleController extends Controller
     public function edit(SocialHandle $socialHandle)
     {
         $socials = SocialHandle::get();
-        return view('backend.social.editSocialMedia', compact('socialHandle','socials'));
+        return view('backend.social.editSocialMedia', compact('socialHandle', 'socials'));
     }
 
     /**
@@ -61,7 +67,7 @@ class SocialHandleController extends Controller
     {
         $socialHandle->link = $request->social_link;
         $socialHandle->save();
-        return back()->with('success','Updated Successfully');
+        return back()->with('success', 'Updated Successfully');
     }
 
     /**
@@ -70,6 +76,6 @@ class SocialHandleController extends Controller
     public function destroy(SocialHandle $socialHandle)
     {
         $socialHandle->delete();
-        return back()->with('success','Deleted Successfully');
+        return back()->with('success', 'Deleted Successfully');
     }
 }
