@@ -148,11 +148,11 @@
             if (transformValue === 0) {
                 console.log('sidebar hide');
                 sidebar.css('transform', `translateX(-${sidebar.css('width')})`)
-                $('main').css('transform', `translateX(0px)`)
+                $('main').css('width', `100vw`)
             } else {
                 console.log('sidebar show');
                 sidebar.css('transform', `translateX(0px)`)
-                $('main').css('transform', `translateX(${sidebar.css('width')})`)
+                $('main').css('width', `calc(100vw - ${sidebar.css('width')})`)
             }
         }
     </script>
