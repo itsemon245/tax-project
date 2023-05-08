@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend\User;
 
+use App\Models\UserDoc;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserDocRequest;
 use App\Http\Requests\UpdateUserDocRequest;
-use App\Models\UserDoc;
 
 class UserDocController extends Controller
 {
