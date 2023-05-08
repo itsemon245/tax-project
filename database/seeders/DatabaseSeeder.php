@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             InfoSeeder::class,
             TestimonialSeeder::class,
             SocialHandleSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }
