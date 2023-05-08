@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('product_sub_categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->boolean('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

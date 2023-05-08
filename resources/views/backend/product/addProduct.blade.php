@@ -113,7 +113,6 @@
                                             <label for="snow-editor" class="form-label">Description</label>
                                             <div id="snow-editor" style="height: 300px;"></div>
                                             <textarea class="d-none" name="description" id="description"></textarea>
-                                            <!-- end Snow-editor-->
                                         </div><!-- end col -->
 
 

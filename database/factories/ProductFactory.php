@@ -16,8 +16,34 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $packageFeat = '[
+            {
+                "color": "#1abc9c",
+                "package_feature": "Feature 1"
+            },
+            {
+                "color": "#f1556c",
+                "package_feature": "Feature 2"
+            },
+            {
+                "color": "#1abc9c",
+                "package_feature": "Feature 3"
+            }
+        ]';
         return [
-            //
+            "product_sub_category_id" => fake()->numberBetween(1, 4),
+            "product_category_id" => fake()->numberBetween(1, 2),
+            "user_id" => 1,
+            "title" => fake()->realText(15),
+            "sub_title" => fake()->realText(15),
+            "price" => fake()->numberBetween(100, 1500),
+            "discount" => fake()->numberBetween(1, 40),
+            "is_discount_fixed" => fake()->randomElement([true, false]),
+            "is_most_popular" => fake()->randomElement([true, false]),
+            "package_features" => $packageFeat,
+            "description" => fake()->realText(50),
+            "status" => fake()->randomElement([true, false]),
+            "ratting" => fake()->numberBetween(1,5),
         ];
     }
 }

@@ -11,10 +11,15 @@
                     data-bs-toggle="dropdown">Geneva Kennedy</a>
                 <div class="dropdown-menu user-pro-dropdown">
 
-                    <!-- item-->
+                    <!-- Update Profile -->
                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <i class="fe-user me-1"></i>
                         <span>My Account</span>
+                    </a>
+                    <!-- Change password-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="fe-password me-1"></i>
+                        <span>Change Password</span>
                     </a>
 
                     <!-- item-->
@@ -62,7 +67,10 @@
                     <div class="collapse" id="productSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('product.index') }}">Products</a>
+                                <a href="{{ route('product.create') }}">Create Product</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('product.index') }}">View Products</a>
                             </li>
                             <li>
                                 <a href="{{ route('product-category.index') }}">Category</a>
@@ -93,6 +101,26 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#sidebarInfoSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Info Section </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarInfoSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('info.index') }}">
+                                    View Info
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('info.create') }}">Create Info
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#appointmentSection" data-bs-toggle="collapse">
@@ -106,7 +134,33 @@
                                 <a href="{{ route('appointment.index') }}">
                                     View All
                                 </a>
-                                <a href="{{ route('appointment.create') }}">Create 
+                                <a href="{{ route('appointment.create') }}">Create
+
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="{{ route('social-handle.index') }}">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Social Media</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#testimonialSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Testimonial Section </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="testimonialSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('testimonial.index') }}">
+                                    View All
+                                </a>
+                                <a href="{{ route('testimonial.create') }}">Create
 
                                 </a>
                             </li>

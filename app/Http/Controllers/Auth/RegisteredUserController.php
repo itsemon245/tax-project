@@ -48,7 +48,6 @@ class RegisteredUserController extends Controller
         ]);
 
         if ($request->has('refer_code')) {
-            //refer logic
             $parent = User::where('user_name', $request->refer_code)->first();
             $referee = new Referee();
             $referee->user_id = $user->id;
@@ -60,6 +59,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // return redirect(RouteServiceProvider::HOME);
+
+        return redirect('/');
     }
 }

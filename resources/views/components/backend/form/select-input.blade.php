@@ -12,11 +12,11 @@
             <span class="text-danger">*</span>
         @endif
     </label>
-    <select {{ $attributes->merge(['class' => 'form-control'])->merge() }}>
+    <select {{ $attributes->merge(['class' => 'form-select text-capitalize'])->merge() }}>
         <option selected disabled>{{ $placeholder }}</option>
         {{ $slot }}
-        </select>
-        @error($name)
-            <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
+    </select>
+    @error($name)
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>

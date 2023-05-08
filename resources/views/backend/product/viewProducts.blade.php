@@ -4,12 +4,9 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
-                <div class="page-title-right">
+                <div class="page-title-right mt-0">
                     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Hero', 'Create']" />
                 </div>
-                <a href="{{ route('product.create') }}" class="mt-3 btn btn-primary waves-effect waves-light profile-button">
-                    Create Product
-                </a>
                 <h4 class="page-title">View Products</h4>
             </div>
         </div>
@@ -25,42 +22,36 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Title</th>
-                                <th>Sub Title</th>
-                                <th>Category</th>
-                                <th>Sub Category</th>
-                                <th>Price</th>
-                                <th>Discount</th>
-                                <th>Discount Type</th>
-                                <th>Most Popular</th>
-                                <th>Package Feature</th>
-                                <th>ratting</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Author</th>
+                                <th>Product Details</th>
+                                <th>Product Pricing</th>
+                                <th>Product Features</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-
-
                         <tbody>
                             @foreach ($products as $key => $product)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td title="{{ $product->title }}">{{ Str::limit($product->title, 20, '...') }}</td>
-                                    <td title="{{ $product->sub_title }}">
-                                        {{ Str::limit($product->sub_title, 20, '...') }}
+                                    <td>
+                                        <span title="Title"><b>{{ Str::limit($product->title, 20, '...') }}</b></span><br>
+                                        <span title="Sub Title">{{ Str::limit($product->sub_title, 20, '...') }}</span><br>
+                                        <span title="Category"><b>{{ $product->productCategory->name }}</b></span><br>
+                                        <span title="Sub Category">{{ $product->productSubCategory->name }}</span><br>
+                                        <span title="Author"><b>{{ $product->user->name }}</b></span><br>
+                                        <span title="Rattings">{{ $product->ratting }}</span><br>
+                                        <span title="Most Popular">{!! $product->is_most_popular
+                                            ? "<span class='badge bg-success'>Yes</span>"
+                                            : "<span class='badge bg-danger'>No</span>" !!}</span><br>
+                                        <span title="Status">{!! $product->status
+                                            ? "<span class='badge bg-success'>Active</span>"
+                                            : "<span class='badge bg-danger'>Deactive</span>" !!}</span><br>
+                                        <span title="Description">{!! $product->description !!}</span><br>
                                     </td>
-                                    <td>{{ $product->productCategory->name }}</td>
-                                    <td>{{ $product->productSubCategory->name }}</td>
-                                    <td>৳{{ $product->price }}</td>
-                                    <td>{{ $product->discount }}%</td>
-                                    <td>{!! $product->is_discount_fixed
-                                        ? "<span class='badge bg-primary'>Fixed</span>"
-                                        : "<span class='badge bg-info'>Percentage</span>" !!}</td>
-                                    <td>{!! $product->is_most_popular
-                                        ? "<span class='badge bg-success'>Yes</span>"
-                                        : "<span class='badge bg-danger'>No</span>" !!}
+                                    <td>
+                                        <span title="Price"><b>{{ $product->price }}৳</b></span><br>
+                                        <span title="Discount">
+                                            {{ $product->discount }}{{ $product->is_discount_fixed ? '৳' : '%' }}
+                                        </span><br>
                                     </td>
                                     <td>
                                         <ul>
@@ -70,13 +61,6 @@
                                             @endforeach
                                         </ul>
                                     </td>
-                                    <td>{{ $product->ratting }}</td>
-                                    <td>{!! $product->description !!}</td>
-                                    <td>{!! $product->status
-                                        ? "<span class='badge bg-success'>Active</span>"
-                                        : "<span class='badge bg-danger'>Deactive</span>" !!}
-                                    </td>
-                                    <td>{{ $product->user->name }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ Route('product.edit', $product) }}"
@@ -94,7 +78,6 @@
                             @endforeach
                         </tbody>
                     </table>
-
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->
@@ -105,7 +88,25 @@
 @push('customJs')
     <script>
         const deleteProduct = id => {
-            $("#" + id).submit()
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Deleted',
+                        text: "Your file has been deleted.",
+                        icon: 'success',
+                        showConfirmButton: false
+                    })
+                    $("#" + id).submit()
+                }
+            })
         }
     </script>
 @endpush

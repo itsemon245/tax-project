@@ -58,7 +58,7 @@ For productivity & efficiency this project is included with some components and 
      - ###### SelectInput
      ```blade
      <x-backend.form.select-input id="category" label="Category" name="category"
-        placeholder="Choose Category..." onchange="getSubCategories(this)">
+        placeholder="Choose Category...">
         @forelse ($categories as $category)
             <option value="{{ $category->id }}">
                 {{ $category->name }}
@@ -82,6 +82,26 @@ For productivity & efficiency this project is included with some components and 
     <x-backend.ui.section-card name="Hero List">
     {{-- Your Content --}}
     </x-backend.ui.section-card />
+     ```
+  3. ##### Tables
+     - ###### BasicTable
+     ```blade
+      <x-backend.table.basic>
+        <thead>
+            <tr>
+                <th>#</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach ($banners as $key => $banner)
+                <tr>
+                    <td>{{ ++$key }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+      </x-backend.table.basic>
+      
      ```
      
  - ### Helpers

@@ -18,5 +18,20 @@ class UserSeeder extends Seeder
             'user_name' => 'admin',
             'refer_link' => route('refer.link', 'admin')
         ]);
+        User::factory(1)->create([
+            'email' => 'two@gamil.com',
+            'user_name' => 'two',
+            'refer_link' => route('refer.link', 'two')
+        ]);
+        User::factory(1)->create([
+            'email' => 'three@gmail.com',
+            'user_name' => 'three',
+            'refer_link' => route('refer.link', 'three')
+        ]);
+        User::factory(1)->create([
+            'email' => 'four@gmail.com',
+            'user_name' => 'four',
+            'refer_link' => route('refer.link', 'four')
+        ]);
     }
 }

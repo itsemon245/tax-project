@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\backend\UserProfileUpdateRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\backend\UserProfileUpdateRequest;
 
 class UserProfileController extends Controller
 {
@@ -17,8 +18,9 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        return view('backend.profile.profile-edit', compact('user'));
+            $user = Auth::user();
+            return view('backend.profile.profile-edit', compact('user'));
+        
     }
 
     /**
@@ -50,7 +52,8 @@ class UserProfileController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = Auth::user();
+        return view('backend.profile.changePassword', compact('user'));
     }
 
     /**
@@ -58,20 +61,21 @@ class UserProfileController extends Controller
      */
     public function update(UserProfileUpdateRequest $request, $id)
     {
-        $userData = User::findOrFail($id);
-        $userData->name = $request->name;
-        $userData->email = $request->email;
-        $userData->user_name = $request->user_name;
-        $userData->phone = $request->phone;
-        $old_path = $userData->image_url;
-        $userData->image_url = updateFile($request->profile_img, $old_path,'profile','user-image');
-        $userData->save();
-
-        $notification = array(
-            'message' => "Profile Updated",
-            'alert-type' => 'success',
-        );
-        return redirect()->back()->with($notification);
+            $userData = User::findOrFail($id);
+            $userData->name = $request->name;
+            $userData->email = $request->email;
+            $userData->user_name = $request->user_name;
+            $userData->phone = $request->phone;
+            $old_path = $userData->image_url;
+            $userData->image_url = updateFile($request->profile_img, $old_path,'profile','user-image');
+            $userData->save();
+    
+            $notification = array(
+                'message' => "Profile Updated",
+                'alert-type' => 'success',
+            );
+            return back()->with($notification);
+        
     }
 
 
@@ -82,4 +86,34 @@ class UserProfileController extends Controller
     {
         //
     }
+    /**
+     * Change Profile Password.
+     */
+    public function changePassword(Request $request)
+    {
+        //     $request->validate([
+        //     'old_password' => 'required|string',
+        //     'new_password' => 'required|string',
+        //     'confirm_new_password' => 'required|string|same:new_password',
+
+        // ])
+        
+        $user = auth()->user();
+        $isValid = Hash::check($request->old_password, $user->password);
+        $notification = array(
+            'message' => "Password Changed Successfully",
+            'alert-type' => 'success',
+        );
+        if ($isValid) {
+                $user->password = Hash::make($request->confirm_new_password);
+                $user->save();
+            } else {
+                $notification = array(
+                    'message' => "Password Didn't Match",
+                    'alert-type' => 'danger',
+                );
+            }
+            return back()->with($notification);
+    }
+
 }

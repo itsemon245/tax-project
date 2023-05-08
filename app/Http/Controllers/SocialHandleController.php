@@ -13,7 +13,8 @@ class SocialHandleController extends Controller
      */
     public function index()
     {
-        //
+        $socials = SocialHandle::get();
+        return view('backend.social.socialMedia', compact('socials'));
     }
 
     /**
@@ -29,7 +30,17 @@ class SocialHandleController extends Controller
      */
     public function store(StoreSocialHandleRequest $request)
     {
-        //
+        $item = json_decode($request->social);
+        $social = new SocialHandle();
+        $social->name = $item->name;
+        $social->icon = $item->icon;
+        $social->link = $request->social_link;
+        $social->save();
+        $notification = [
+            'message' => 'Added Successfully',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
     }
 
     /**
@@ -45,7 +56,8 @@ class SocialHandleController extends Controller
      */
     public function edit(SocialHandle $socialHandle)
     {
-        //
+        $socials = SocialHandle::get();
+        return view('backend.social.editSocialMedia', compact('socialHandle', 'socials'));
     }
 
     /**
@@ -53,7 +65,13 @@ class SocialHandleController extends Controller
      */
     public function update(UpdateSocialHandleRequest $request, SocialHandle $socialHandle)
     {
-        //
+        $socialHandle->link = $request->social_link;
+        $socialHandle->save();
+        $notification = [
+            'message' => 'Updated Successfully',
+            'alert-type' => 'success',
+        ];
+        return redirect(route('social-handle.index'))->with($notification);
     }
 
     /**
@@ -61,6 +79,11 @@ class SocialHandleController extends Controller
      */
     public function destroy(SocialHandle $socialHandle)
     {
-        //
+        $socialHandle->delete();
+        $notification = [
+            'message' => 'Deleted Successfully',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
     }
 }

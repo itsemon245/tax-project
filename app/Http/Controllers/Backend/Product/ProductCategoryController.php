@@ -34,7 +34,7 @@ class ProductCategoryController extends Controller
         $category = new ProductCategory();
         $category->name = $request->category;
         $category->save();
-        return redirect()->back()->with('success', 'Category Added Successfully');
+        return back()->with('success', 'Added Successfully');
     }
 
     /**
@@ -50,7 +50,8 @@ class ProductCategoryController extends Controller
      */
     public function edit(ProductCategory $productCategory)
     {
-        //
+        
+        return view('backend.product.editCategory', compact('productCategory'));
     }
 
     /**
@@ -58,7 +59,9 @@ class ProductCategoryController extends Controller
      */
     public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
-        //
+        $productCategory->name = $request->category;
+        $productCategory->save();
+        return back()->with('success','Category Edit Successfully');
     }
 
     /**
@@ -66,6 +69,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
-        //
+        $productCategory->delete();
+        return back()->with('danger','Deleted Successfully');
     }
 }

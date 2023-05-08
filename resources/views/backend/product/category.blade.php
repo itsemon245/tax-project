@@ -44,7 +44,7 @@
                 <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
-                            <th>SL No.</th>
+                            <th>#</th>
                             <th>Category Name</th>
                             <th>Actions</th>
                         </tr>
@@ -56,15 +56,17 @@
                             <td>{{ $category->name }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="#" class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm waves-effect waves-light">Delete</a>
+                                    <a href="{{ route('product-category.edit', $category) }}" class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
+                                    <form action="{{ route('product-category.destroy', $category->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-backend.ui.button class="btn-danger btn-sm">Delete</x-backend.ui.button>
+                                    </form>
                                 </div>
                             </td>
                         </tr> 
                         @empty
-                            <tr>
-                                <td colspan = "100%"><span>No data found.</span></td>
-                            </tr>
+                        <td valign="top" colspan="3" class="dataTables_empty">No data available in table</td>
                         @endforelse
                     </tbody>
                 </table>

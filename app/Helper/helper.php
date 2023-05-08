@@ -41,3 +41,53 @@ function updateFile($file, $old_path, $dir,  $prefix = "image")
     }
     return $new_path;
 }
+
+/**
+ * An Array for social media platform data
+ */
+function socialItems(): array
+{
+    $socialItems = [
+        [
+            'name' => 'facebook',
+            'icon' => 'mdi mdi-facebook'
+        ],
+        [
+            'name' => 'messenger',
+            'icon' => 'mdi mdi-facebook-messenger'
+        ],
+        [
+            'name' => 'twitter',
+            'icon' => 'mdi mdi-twitter'
+        ],
+        [
+            'name' => 'youtube',
+            'icon' => 'mdi mdi-youtube'
+        ],
+        [
+            'name' => 'whatsapp',
+            'icon' => 'mdi mdi-whatsapp'
+        ],
+        [
+            'name' => 'linkedin',
+            'icon' => 'mdi mdi-linkedin'
+        ],
+        [
+            'name' => 'telegram',
+            'icon' => 'mdi mdi-telegram'
+        ],
+        [
+            'name' => 'google+',
+            'icon' => 'mdi mdi-google-plus'
+        ],
+        [
+            'name' => 'snapchat',
+            'icon' => 'mdi mdi-snapchat'
+        ],
+        [
+            'name' => 'github',
+            'icon' => 'mdi mdi-github'
+        ],
+    ];
+    return $socialItems;
+}
