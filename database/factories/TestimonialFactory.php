@@ -16,8 +16,11 @@ class TestimonialFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->name();
         return [
-            //
+           'name' => $name,
+           'avatar' => "https://picsum.photos/seed/$name/350",
+           'comment' => fake()->realText(30),
         ];
     }
 }

@@ -1,34 +1,20 @@
 <section class="mt-5 py-5" style="background: #474646;">
     <h3 class="text-center text-light">Our Valuable Partners</h3>
     <div class="scroll-wrapper">
-        <span id="nextBtn" class="ti-arrow-circle-left icon"></span>
+        <span id="next" class="ti-arrow-circle-left custom-icon"></span>
         <div class="media-scroller snaps-inline">
-            <div class="media-elements">
-                <div class="p-3 bg-light d-flex align-items-center gap-3 rounded-3">
-                    <img class="rounded rounded-circle" style="max-width: 120px;"
-                        src="{{ asset('backend/assets/images/users/user-5.jpg') }}" alt="">
-                    <p class="mb-0 d-inline" style="text-align:justify;">Lorem ipsum dolor sit amet consectetur.
-                        Lorem ipsum dolor sit amet.</p>
+            @foreach ($testimonials as $item)
+                <div class="media-elements">
+                    <div class="p-3 d-flex align-items-center gap-3" style="width: 100%;">
+                        <img class="rounded rounded-circle image" src="{{ useImage($item->avatar) }}" alt="">
+                        <p class="comment">
+                            {{ $item->comment }}
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="media-elements">
-                <div class="p-3 bg-light d-flex align-items-center gap-3 rounded-3">
-                    <img class="rounded rounded-circle" style="max-width: 120px;"
-                        src="{{ asset('backend/assets/images/users/user-5.jpg') }}" alt="">
-                    <p class="mb-0 d-inline" style="text-align:justify;">Lorem ipsum dolor sit amet consectetur.
-                        Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
-            <div class="media-elements">
-                <div class="p-3 bg-light d-flex align-items-center gap-3 rounded-3">
-                    <img class="rounded rounded-circle" style="max-width: 120px;"
-                        src="{{ asset('backend/assets/images/users/user-5.jpg') }}" alt="">
-                    <p class="mb-0 d-inline" style="text-align:justify;">Lorem ipsum dolor sit amet consectetur.
-                        Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
+            @endforeach
         </div>
-        <span id="prevBtn" class="ti-arrow-circle-right icon"></span>
+        <span id="prev" class="ti-arrow-circle-right custom-icon"></span>
     </div>
 </section>
 
@@ -37,37 +23,72 @@
         .scroll-wrapper {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 2rem 4rem;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
         }
 
-        @media (min-width: 1020px) {
+
+        @media (min-width: 970px) {
             .scroll-wrapper {
-                padding: 2rem 10rem;
+                padding: 1rem 5rem
+            }
+        }
+
+        @media (min-width: 640px) {
+            .scroll-wrapper {
+                gap: 1rem;
+                padding: 2rem;
             }
         }
 
         .media-scroller {
-            display: grid;
-            grid-auto-flow: column;
-            grid-tem-columns: 33%;
+            display: flex;
             overflow-x: auto;
             gap: 1rem;
             overscroll-behavior-inline: contain;
             scroll-behavior: smooth;
         }
 
-        #nextBtn,
-        #prevBtn {
+        .media-elements {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .media-elements .comment {
+            width: 100px;
+            display: inline;
+            margin: 0;
+            text-align: justify;
+        }
+
+        .media-elements .image {
+            max-width: 70px;
+        }
+
+        @media (min-width:600px) {
+            .media-elements .image {
+                max-width: 120px;
+            }
+
+            .media-elements .comment {
+                width: 200px
+            }
+        }
+
+        #next,
+        #prev {
             background: none;
             border: none;
             padding: 0;
         }
 
-        .icon {
+        .custom-icon {
             color: var(--bs-primary);
             font-size: 28px;
-            margin: 0 1rem;
+            margin: 0 5px;
             cursor: pointer;
         }
 
@@ -78,33 +99,32 @@
 
         .snaps-inline {
             scroll-snap-type: inline mandatory;
-            scroll-padding-inline: 10rem;
+            scroll-padding-inline: 5rem;
         }
 
         .snaps-inline>* {
-            scroll-snap-align: center;
+            scroll-snap-align: start;
         }
     </style>
 @endpush
 
 @push('customJs')
     <script>
-        $(document).ready(function() {
-            const container = document.querySelector('.media-scroller');
-            const next = document.getElementById('nextBtn')
-            const prev = document.getElementById('prevBtn')
-            container.addEventListener('wheel', e => {
-                e.preventDefault();
-                console.log(e.deltaY);
-                container.scrollLeft += e.deltaY;
-            })
+        const container = document.querySelector('.media-scroller');
+        const next = document.getElementById('next')
+        const prev = document.getElementById('prev')
+        const scrollElementWidth = parseInt($('.media-elements').css('width').split('px')[0])
+        const scrollUnit = scrollElementWidth+20;
+        container.addEventListener('wheel', e => {
+            e.preventDefault();
+            container.scrollLeft += e.deltaY;
+        })
 
-            next.addEventListener('click', () => {
-                container.scrollLeft += 266.66668701171875;
-            })
-            prev.addEventListener('click', () => {
-                container.scrollLeft -= 266.66668701171875;
-            })
-        });
+        next.addEventListener('click', () => {
+            container.scrollLeft -= scrollUnit;
+        })
+        prev.addEventListener('click', () => {
+            container.scrollLeft += scrollUnit;
+        })
     </script>
 @endpush
