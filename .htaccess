@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+# That was ONLY to protect you from 500 errors
+# if your server did not have mod_rewrite enabled
+
+RewriteEngine On
+# RewriteBase /
+# NOT needed unless you're using mod_alias to redirect
+
+RewriteCond %{REQUEST_URI} !/public
+RewriteRule ^(.*)$ public/$1 [L]
+# Direct all requests to /public folder
+
+</IfModule>
+RewriteEngine on
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-SSL} !on
+RewriteCond %{HTTP_HOST} ^tax\-project\.wisedev\.xyz$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.tax\-project\.wisedev\.xyz$
+RewriteRule ^/?$ "https\:\/\/tax\-project\.wisedev\.xyz\/" [R=301,L]
+
