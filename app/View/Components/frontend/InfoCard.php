@@ -8,13 +8,15 @@ use Illuminate\View\Component;
 
 class InfoCard extends Component
 {
+    public $info;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($info)
     {
-        //
+        $this->info = $info;
     }
+    
 
     /**
      * Get the view / contents that represent the component.
