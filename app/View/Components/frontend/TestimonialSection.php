@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class TestimonialSection extends Component
 {
+    public $testimonials;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($testimonials)
     {
-        //
+        $this->testimonials = $testimonials;
     }
 
     /**

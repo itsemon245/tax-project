@@ -10,8 +10,11 @@
             {{ $product->title }}
         </h2>
         <h5 class="" style="font-weight: 300;">
-            <span class="badge bg-danger" style="font-weight: 400;">Free</span> expert assist
-            included
+            <span class="badge bg-danger" style="font-weight: 400;">
+                {{ explode(' ' , $product->sub_title)[0] }}
+            </span> {{
+                join(" ",array_slice(explode(' ' , $product->sub_title), 1))
+            }}
         </h5>
         <h3 class="product-price mb-0">
             Tk. {{ Str::lower($product->title) !== 'free' ? $product->price : '0.' }}

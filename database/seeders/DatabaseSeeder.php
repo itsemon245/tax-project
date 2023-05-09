@@ -26,7 +26,10 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             AppointmentSeeder::class,
             InfoSeeder::class,
+            TestimonialSeeder::class,
             SocialHandleSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }

@@ -5,16 +5,16 @@
                 <div class="d-flex flex-column align-items-center text-light">
                     <p style="font-weight: 500;font-size:18px;">Our Services</p>
                     <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#">Lorem, ipsum.</a>
-                        <a href="#">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
                     </div>
                     <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#">Lorem, ipsum.</a>
-                        <a href="#">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
                     </div>
                     <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#">Lorem, ipsum.</a>
-                        <a href="#">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
                     </div>
                 </div>
             </div>
@@ -23,12 +23,12 @@
                 <div class="d-flex flex-column align-items-center text-light">
                     <p style="font-weight: 500;font-size:18px;">About Us</p>
                     <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#">Lorem, ipsum.</a>
-                        <a href="#">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
                     </div>
                     <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#">Lorem, ipsum.</a>
-                        <a href="#">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                         @foreach ($socials as $social)
                             <div class="d-flex gap-2 align-items-center">
                                 <span class="{{ $social->icon }}"></span>
-                                <a class="text-capitalize" href="{{ $social->link }}">{{ $social->name }}</a>
+                                <a class="text-capitalize" href="{{ $social->link }}" target="_blank" rel="noopener noreferrer">{{ $social->name }}</a>
                             </div>
                         @endforeach
                     </div>
@@ -48,8 +48,8 @@
             </div>
         </div>
         <div class="d-flex justify-content-center gap-5" style="font-weight: 500; font-size: 16px;">
-            <a href="#" class="">Terms & Codition</a>
-            <a href="#" class="">Help & Support</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="">Terms & Codition</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="">Help & Support</a>
         </div>
     </div>
     <div class="bottom-footer bg-primary text-light mt-3">

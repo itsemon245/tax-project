@@ -10,9 +10,11 @@ use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
+use App\Http\Controllers\Backend\Map\MapController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
+use App\Models\Map;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +47,11 @@ Route::prefix('admin')->group(function () {
     Route::resource('ui-element', UiElementController::class);
     Route::resource('promo-code', PromoCodeController::class);
 
+    Route::resource('map',MapController::class);
+
+
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
-    Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword');
+    Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword');//Change password on admin panle
+
 });

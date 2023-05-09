@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use App\Http\Controllers\Controller;
+use App\Models\Testimonial;
 
 class HomeController extends Controller
 {
@@ -20,7 +21,8 @@ class HomeController extends Controller
         $productCategory = ProductCategory::with('productSubCategories', "productSubCategories.products")->find(1);
         $infos1 = Info::where('section_id', 1)->get();
         $infos2 = Info::where('section_id', 2)->get();
+        $testimonials = Testimonial::get();
         $socials = SocialHandle::get();
-        return view('frontend.pages.welcome', compact('banners', 'appointmentSections', 'infos1', 'infos2', 'socials', 'productCategory'));
+        return view('frontend.pages.welcome', compact('banners', 'appointmentSections', 'infos1', 'infos2', 'socials', 'productCategory', 'testimonials'));
     }
 }

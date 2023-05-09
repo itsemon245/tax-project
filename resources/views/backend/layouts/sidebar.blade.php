@@ -147,6 +147,23 @@
                         <span>Social Media</span>
                     </a>
                 </li>
+                <li>
+                    <a href="#map-section" data-bs-toggle="collapse">
+                        <i class="fe-map-pin"></i>
+                        <span>Maps</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="map-section">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('map.index') }}">Create</a>
+                                <a href="{{ route('map.create') }}">
+                                    View All
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#testimonialSection" data-bs-toggle="collapse">
