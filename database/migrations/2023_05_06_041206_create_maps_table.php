@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('maps', function (Blueprint $table) {
             $table->id();
-            $table->longText('link')->unique();
+            $table->longText('link');
             $table->longText('address');
             $table->longText('image');
             $table->timestamps();
