@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <ul class="list-unstyled topnav-menu float-end mb-0">
 
-
+            
 
             <li class="dropdown d-none d-lg-inline-block">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen" href="#">
@@ -144,7 +144,7 @@
                     <!-- item-->
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
-                    <button href="" class="dropdown-item notify-item">
+                    <button style="color: red;" href="" class="dropdown-item notify-item">
                         <i class="fe-log-out"></i>
                         <span>Logout</span>
                     </button>
