@@ -8,13 +8,13 @@ use Illuminate\View\Component;
 
 class InfoSection extends Component
 {
-    public $info;
+    public $title;
     /**
      * Create a new component instance.
      */
-    public function __construct($info)
+    public function __construct($title)
     {
-        $this->info = $info;
+        $this->title = $title;
     }
 
     /**
