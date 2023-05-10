@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Product\ProductController;
+use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
@@ -45,6 +46,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('testimonial', TestimonialController::class);
     Route::resource('social-handle', SocialHandleController::class);
     Route::resource('ui-element', UiElementController::class);
+    Route::resource('promo-code', PromoCodeController::class);
+
     Route::resource('map',MapController::class);
     Route::resource('role', RoleController::class);
 

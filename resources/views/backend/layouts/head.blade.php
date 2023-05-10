@@ -34,6 +34,7 @@
     <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
 
     @stack('customCss')
+    <link href="{{ asset('backend/assets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" />
     <!-- Head js -->
     <script src="{{ asset('backend/assets/js/head.js') }}"></script>
 

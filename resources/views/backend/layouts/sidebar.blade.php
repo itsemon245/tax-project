@@ -184,6 +184,23 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#promoCodeSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Promo Code </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="promoCodeSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('promo-code.create') }}">Create Promo Code</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('promo-code.index') }}">View Promo Code</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
             </ul>
 
