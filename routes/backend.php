@@ -14,7 +14,9 @@ use App\Http\Controllers\Backend\Map\MapController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
+use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Models\Map;
+use App\Models\UserDoc;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +48,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('social-handle', SocialHandleController::class);
     Route::resource('ui-element', UiElementController::class);
     Route::resource('promo-code', PromoCodeController::class);
-
+    Route::resource('user-doc',UserDocController::class);
     Route::resource('map',MapController::class);
 
 
