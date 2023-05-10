@@ -74,7 +74,7 @@ For productivity & efficiency this project is included with some components and 
      <x-backend.ui.button class="btn-primary">Create</x-backend.ui.button>
      <x-backend.ui.button type="edit" href="{{ route('role.edit', $role->id) }}" class="btn-sm" />
      <x-backend.ui.button type="delete" action="{{route('role.destroy', $role->id)}}" class="btn-sm" />
-     <x-backend.ui.button type="custom" href="{{route("home")}}">GO Home</x-backend.ui.button>
+     <x-backend.ui.button type="custom" href="{{route("home")}}" class="btn-sm">GO Home</x-backend.ui.button>
      ```
      - ###### BreadCrumbs
      ```blade
