@@ -200,6 +200,23 @@
                             </li>
                         </ul>
                     </div>
+                </li>  
+                <li>
+                    <a href="#calendarCodeSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Calendar </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="calendarCodeSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('calendar.create') }}">Create Calendar</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('promo-code.index') }}">View Promo Code</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
             </ul>
