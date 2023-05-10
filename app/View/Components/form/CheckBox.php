@@ -1,22 +1,19 @@
 <?php
 
-namespace App\View\Components\backend\ui;
+namespace App\View\Components\form;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class button extends Component
+class CheckBox extends Component
 {
-    public $type;
-    public $action;
     /**
      * Create a new component instance.
      */
-    public function __construct($action, $type='')
+    public function __construct()
     {
-        $this->type = $type;
-        $this->action = $action;
+        //
     }
 
     /**
@@ -24,6 +21,6 @@ class button extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.backend.ui.button');
+        return view('components.form.check-box');
     }
 }
