@@ -80,7 +80,9 @@ class CalendarController extends Controller
     public function update(UpdateCalendarRequest $request, Calendar $calendar)
     {
         $evnet = Calendar::find($calendar->id);
+        $evnet->envent_name = $request->event_name;
         $evnet->envent_start_date = $request->start_date;
+        $evnet->event_description = $request->event_description;
         //$evnet->event_end_date =  $request->end_date;
         $evnet->save();
 
@@ -96,7 +98,7 @@ class CalendarController extends Controller
      */
     public function destroy(Calendar $calendar)
     {
-        //delete appointment data
+        //delete calendar data
         $event = Calendar::findOrFail($calendar->id);
         $event->delete();
         return response()->json(['success' => 'event deleled successfully', 'id' => $calendar->id]);

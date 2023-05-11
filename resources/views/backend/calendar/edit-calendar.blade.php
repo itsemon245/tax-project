@@ -21,7 +21,7 @@
                             class="form-control @error('event_description')
                         is-invalid
                     @enderror"
-                            name="description" style="height
+                            name="event_description" style="height
                         57px" placeholder="Event Description">{{ $calendar->event_description }}</textarea>
                         @error('event_description')
                             <span class="text-danger">{{$message}}</span>

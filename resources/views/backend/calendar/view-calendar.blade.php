@@ -24,12 +24,12 @@
                         <td>{{ Str::limit($calendar->event_description, 15, '...') }}</td>
                         <td>
                             <a href="{{ route('calendar.edit', $calendar->id) }}" class="btn btn-info btn-sm">Edit</a>
-                            <form action="{{ route('appointment.destroy', $calendar->id) }}" method="post"
+                            {{-- <form action="{{ route('calendar.destroy', $calendar->id) }}" method="post"
                                 class="d-inline-block">
                                 @csrf
                                 @method('DELETE')
-                                {{-- <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button> --}}
-                            </form>
+                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                            </form> --}}
                         </td>
                     </tr>
                 @endforeach
