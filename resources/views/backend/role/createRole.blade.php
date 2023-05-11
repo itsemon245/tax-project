@@ -6,6 +6,7 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card name="Create Role">
+        <x-backend.ui.button type="custom" :href="route('role.index')" class="btn-secondary btn-sm mb-1">Back</x-backend.ui.button>
         <form class="" action="{{ route('role.store') }}" method="post">
             @csrf
 
