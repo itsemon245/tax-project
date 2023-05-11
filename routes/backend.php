@@ -50,13 +50,17 @@ Route::prefix('admin')->group(function () {
     Route::resource('social-handle', SocialHandleController::class);
     Route::resource('ui-element', UiElementController::class);
     Route::resource('promo-code', PromoCodeController::class);
+
+    Route::resource('map', MapController::class);
+
     Route::resource('user-doc',UserDocController::class);
     Route::resource('map',MapController::class);
     Route::resource('role', RoleController::class);
 
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
+    Route::POST('/get-users/{userType}', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
-    Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword');//Change password on admin panle
+    Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panle
 
     Route::resource('calendar',CalendarController::class);
 
