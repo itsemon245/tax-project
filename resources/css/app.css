@@ -175,9 +175,6 @@ footer .social-handles {
     column-gap: 16px;
 }
 @media (min-width: 920px) {
-    main {
-        width: calc(100vw - 194px);
-    }
     .sidebar-2 {
         transform: translateX(0);
     }
