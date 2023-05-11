@@ -6,6 +6,7 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card name="Create Role">
+        <x-backend.ui.button type="custom" :href="route('role.index')" class="btn-secondary btn-sm mb-1">Back</x-backend.ui.button>
         <form class="" action="{{ route('role.store') }}" method="post">
             @csrf
 
@@ -16,7 +17,7 @@
                 <div class="row">
                     @foreach ($permissions as $permission)
                         <div class="col-lg-3 col-md-4 col-6 mb-1">
-                            <x-form.check-box name="permissions[]" label="{{ $permission->name }}"
+                            <x-form.check-box :id="$permission->id" name="permissions[]" label="{{ $permission->name }}"
                                 value="{{ $permission->name }}" />
                         </div>
                     @endforeach

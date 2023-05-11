@@ -22,7 +22,7 @@ class UserDocController extends Controller
      */
     public function create()
     {
-        //
+        return view('frontend.userdoc.uploadDoc');
     }
 
     /**
