@@ -96,7 +96,7 @@
                 <a class="" href="#">Payment History</a>
             </li>
             <li class="sidebar-item">
-                <a class="btn btn-success waves-effect waves-light" href="#">Upload Documents</a>
+                <a class="btn btn-success waves-effect waves-light" href="{{ route('user-doc.create') }}">Upload Documents</a>
             </li>
             <li class="mt-auto mb-5">
                 <div class="">
