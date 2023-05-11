@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('envent_name');
             $table->dateTime('envent_start_date');
-            $table->dateTime('event_end_date');
+            // $table->dateTime('event_end_date')->nullable();
             $table->text('event_description');
             $table->timestamps();
         });

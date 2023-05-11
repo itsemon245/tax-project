@@ -204,16 +204,16 @@
                 <li>
                     <a href="#calendarCodeSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Calendar </span>
+                        <span> Time Tracking </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="calendarCodeSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('calendar.create') }}">Create Calendar</a>
+                                <a href="{{ route('calendar.create') }}">Create</a>
                             </li>
                             <li>
-                                <a href="{{ route('promo-code.index') }}">View Promo Code</a>
+                                <a href="{{ route('calendar.index') }}">View</a>
                             </li>
                         </ul>
                     </div>
