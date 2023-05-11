@@ -96,7 +96,7 @@
                 <a class="" href="#">Payment History</a>
             </li>
             <li class="sidebar-item">
-                <a class="btn btn-success waves-effect waves-light" href="#">Upload Documents</a>
+                <a class="btn btn-success waves-effect waves-light" href="{{ route('user-doc.create') }}">Upload Documents</a>
             </li>
             <li class="mt-auto mb-5">
                 <div class="">
@@ -151,11 +151,9 @@
             if (transformValue === 0) {
                 console.log('sidebar hide');
                 sidebar.css('transform', `translateX(-${sidebar.css('width')})`)
-                $('main').css('width', `100vw`)
             } else {
                 console.log('sidebar show');
                 sidebar.css('transform', `translateX(0px)`)
-                $('main').css('width', `calc(100vw - ${sidebar.css('width')})`)
             }
         }
     </script>

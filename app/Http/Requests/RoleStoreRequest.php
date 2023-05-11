@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserDocRequest extends FormRequest
+class RoleStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->user() != null;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreUserDocRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'role' => 'required|string|max:25|unique:roles,name',
         ];
     }
 }

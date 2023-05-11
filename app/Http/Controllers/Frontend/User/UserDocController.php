@@ -22,7 +22,7 @@ class UserDocController extends Controller
      */
     public function create()
     {
-        //
+        return view('frontend.userdoc.uploadDoc');
     }
 
     /**
@@ -30,7 +30,7 @@ class UserDocController extends Controller
      */
     public function store(StoreUserDocRequest $request)
     {
-        //
+        dd($request->gallery_images);
     }
 
     /**
