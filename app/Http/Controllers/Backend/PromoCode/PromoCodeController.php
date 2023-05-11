@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\PromoCode;
 
+use App\Models\User;
 use App\Models\PromoCode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePromoCodeRequest;
@@ -63,5 +64,14 @@ class PromoCodeController extends Controller
     public function destroy(PromoCode $promoCode)
     {
         //
+    }
+
+    /**
+     * Get User According User Type
+     */
+    public function getUsers($userType)
+    {
+        $users = User::with('roles')->where('roles.name', $userType)->get();
+        return $users;
     }
 }
