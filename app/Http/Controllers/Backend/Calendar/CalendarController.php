@@ -6,6 +6,7 @@ use App\Models\Calendar;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
+use Carbon\Carbon;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Redis;
 
@@ -16,8 +17,8 @@ class CalendarController extends Controller
      */
     public function index()
     {
-        $calendars= Calendar::latest()->get();
-        return view('backend.calendar.view-calendar',compact('calendars'));
+        $calendars = Calendar::latest()->get();
+        return view('backend.calendar.view-calendar', compact('calendars'));
     }
 
     /**
@@ -31,7 +32,7 @@ class CalendarController extends Controller
             $events[] = [
                 'id' => $calendar->id,
                 'title' => $calendar->envent_name,
-                'start' => $calendar->envent_start_date,
+                'start' => Carbon::parse($calendar->envent_start_date),
                 //'end' => $calendar->event_end_date,
                 'weekTextLong' => $calendar->event_description,
             ];
@@ -57,7 +58,6 @@ class CalendarController extends Controller
         ];
         return back()->with($notification);
     }
-
     /**
      * Display the specified resource.
      */
@@ -71,7 +71,7 @@ class CalendarController extends Controller
      */
     public function edit(Calendar $calendar)
     {
-        return view('backend.calendar.edit-calendar',compact('calendar'));
+        return view('backend.calendar.edit-calendar', compact('calendar'));
     }
 
     /**

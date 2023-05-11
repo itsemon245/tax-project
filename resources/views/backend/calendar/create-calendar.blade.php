@@ -2,12 +2,17 @@
 
 @section('content')
     @push('CustomCssAndJs')
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script> --}}
+
+        <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.7/index.global.min.js'></script>
+        <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.7/index.global.min.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.7/index.global.min.js"></script>
+
         {{-- sweet alert2 --}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @endpush
@@ -42,8 +47,8 @@
 
                                                 <div class="modal-body">
                                                     <x-backend.form.text-input name="event_name" label="Event Name" />
-                                                    <x-backend.form.text-input type="date" name="start_date"
-                                                        label="Event Start Date" />
+                                                    <x-backend.form.text-input type="datetime-local" name="start_date"
+                                                        id="start-date" label="Start Date" />
                                                     {{-- <x-backend.form.text-input type="date" name="end_date"
                                                         label="Event End Date" /> --}}
                                                     <x-backend.form.text-input name="event_desc"
@@ -69,6 +74,11 @@
             </div>
             <!-- end col-12 -->
         </div> <!-- end row -->
+
+
+        {{-- <span class="text-light bg-success d-block p-1 event-content">some html 1</span>
+        <span class="text-light bg-success d-block p-1 event-content">some html 2</span>
+        <span class="text-light bg-success d-block p-1 event-content">some html 3</span> --}}
     </div>
 
 
@@ -83,120 +93,152 @@
         {{-- sweet alert2 --}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            $(document).ready(function() {
+            // $(document).ready(function() {
 
-                var booking = $('#events').val()
-                booking = JSON.parse(booking);
-                var calendar = $('#calendar').fullCalendar({
+            //     var booking = $('#events').val()
+            //     booking = JSON.parse(booking);
+            //     var calendar = $('#calendar').fullCalendar({
 
-                    header: {
-                        left: 'prev,next, today',
-                        right: 'title',
-                    },
-                    events: booking,
-                    selectable: true,
-                    selectHelper: true,
-                    select: function(start, end, allDays) {
+            //         header: {
+            //             left: 'prev,next, today',
+            //             right: 'title',
+            //         },
+            //         events: booking,
+            //         selectable: true,
+            //         selectHelper: true,
+            //         select: function(start, end, allDays) {
+            //             $('#eventModal').modal('toggle')
+            //         },
+            //         // editable: true,
+
+            //         // eventDrop: function(event) {
+            //         //     var id = event.id;
+            //         //     var start_date = moment(event.start).format('YYYY-MM-DD');
+            //         //     // var end_date = moment(event.end).format('YYYY-MM-DD');
+
+            //         //     console.log(id,start_date, end_date)
+
+            //         //     $.ajax({
+            //         //         headers: {
+            //         //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         //         },
+            //         //         url: "{{ route('calendar.destroy', '') }}" + '/' + id,
+            //         //         type: "PUT",
+            //         //         data: {
+            //         //             start_date,
+            //         //             // end_date
+            //         //         },
+            //         //         success: function(response) {
+            //         //             console.log(response)
+            //         //             if (response.success) {
+            //         //                 const Toast = Swal.mixin({
+            //         //                     toast: true,
+            //         //                     position: 'top-end',
+            //         //                     showConfirmButton: false,
+            //         //                     timer: 3000,
+            //         //                     timerProgressBar: true,
+            //         //                     didOpen: (toast) => {
+            //         //                         toast.addEventListener('mouseenter',
+            //         //                             Swal
+            //         //                             .stopTimer)
+            //         //                         toast.addEventListener('mouseleave',
+            //         //                             Swal
+            //         //                             .resumeTimer)
+            //         //                     }
+            //         //                 })
+
+            //         //                 Toast.fire({
+            //         //                     icon: 'success',
+            //         //                     title: 'Updated in successfully'
+            //         //                 })
+            //         //             }
+            //         //         },
+            //         //         error: function(error) {
+            //         //             console.log(error)
+            //         //         },
+            //         //     });
+            //         // },
+
+            //         eventClick: function(event) {
+            //             var eventId = event.id;
+
+            //             if (confirm('Do you want to delete this event?')) {
+            //                 $.ajax({
+            //                     headers: {
+            //                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //                     },
+            //                     url: "{{ route('calendar.destroy', '') }}" + '/' + eventId,
+            //                     method: 'DELETE',
+            //                     success: function(response) {
+
+            //                         if (response.success) {
+            //                             $('#calendar').fullCalendar('removeEvents', response.id)
+            //                             const Toast = Swal.mixin({
+            //                                 toast: true,
+            //                                 position: 'top-end',
+            //                                 showConfirmButton: false,
+            //                                 timer: 3000,
+            //                                 timerProgressBar: true,
+            //                                 didOpen: (toast) => {
+            //                                     toast.addEventListener('mouseenter',
+            //                                         Swal
+            //                                         .stopTimer)
+            //                                     toast.addEventListener('mouseleave',
+            //                                         Swal
+            //                                         .resumeTimer)
+            //                                 }
+            //                             })
+
+            //                             Toast.fire({
+            //                                 icon: 'success',
+            //                                 title: 'Deleted in successfully'
+            //                             })
+            //                         }
+
+
+            //                     },
+            //                     error: function(error) {
+            //                         console.log(error)
+            //                     },
+            //                 })
+            //             }
+
+            //         }
+
+            //     })
+            // })
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var myEvents = $('#events').val()
+                myEvents = JSON.parse(myEvents);
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    dateClick: function(info) {
+                        let date = info.dateStr + "T00:00:00"
                         $('#eventModal').modal('toggle')
+                        $('#start-date').val(date);
                     },
-                    // editable: true,
+                    events: myEvents,
+                    eventContent: function(arg) {
+                        let desc = 'Lorem ipsum';
+                        let title = arg.event.title
+                        console.log(arg);
+                        let bg = arg.isToday ? 'bg-danger' : 'bg-blue'
+                        let html = `<div class="w-100 text-light ${bg} p-1"><strong>
+                            ${title}
+                            </strong>
+                            <p style="font-weight:300;">${desc}</p>
+                            </div>`
 
-                    // eventDrop: function(event) {
-                    //     var id = event.id;
-                    //     var start_date = moment(event.start).format('YYYY-MM-DD');
-                    //     // var end_date = moment(event.end).format('YYYY-MM-DD');
-
-                    //     console.log(id,start_date, end_date)
-
-                    //     $.ajax({
-                    //         headers: {
-                    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    //         },
-                    //         url: "{{ route('calendar.destroy', '') }}" + '/' + id,
-                    //         type: "PUT",
-                    //         data: {
-                    //             start_date,
-                    //             // end_date
-                    //         },
-                    //         success: function(response) {
-                    //             console.log(response)
-                    //             if (response.success) {
-                    //                 const Toast = Swal.mixin({
-                    //                     toast: true,
-                    //                     position: 'top-end',
-                    //                     showConfirmButton: false,
-                    //                     timer: 3000,
-                    //                     timerProgressBar: true,
-                    //                     didOpen: (toast) => {
-                    //                         toast.addEventListener('mouseenter',
-                    //                             Swal
-                    //                             .stopTimer)
-                    //                         toast.addEventListener('mouseleave',
-                    //                             Swal
-                    //                             .resumeTimer)
-                    //                     }
-                    //                 })
-
-                    //                 Toast.fire({
-                    //                     icon: 'success',
-                    //                     title: 'Updated in successfully'
-                    //                 })
-                    //             }
-                    //         },
-                    //         error: function(error) {
-                    //             console.log(error)
-                    //         },
-                    //     });
-                    // },
-
-                    eventClick: function(event) {
-                        var eventId = event.id;
-
-                        if (confirm('Do you want to delete this event?')) {
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                url: "{{ route('calendar.destroy', '') }}" + '/' + eventId,
-                                method: 'DELETE',
-                                success: function(response) {
-
-                                    if (response.success) {
-                                        $('#calendar').fullCalendar('removeEvents', response.id)
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: 'top-end',
-                                            showConfirmButton: false,
-                                            timer: 3000,
-                                            timerProgressBar: true,
-                                            didOpen: (toast) => {
-                                                toast.addEventListener('mouseenter',
-                                                    Swal
-                                                    .stopTimer)
-                                                toast.addEventListener('mouseleave',
-                                                    Swal
-                                                    .resumeTimer)
-                                            }
-                                        })
-
-                                        Toast.fire({
-                                            icon: 'success',
-                                            title: 'Deleted in successfully'
-                                        })
-                                    }
-
-
-                                },
-                                error: function(error) {
-                                    console.log(error)
-                                },
-                            })
+                        return {
+                            html: html
                         }
-
                     }
-
-                })
-            })
+                });
+                calendar.render();
+            });
         </script>
         <style>
             .fc .fc-toolbar {
