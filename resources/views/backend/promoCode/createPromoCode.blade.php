@@ -20,16 +20,12 @@
                                 </x-backend.form.select-input>
                             </div>
                             <div class="col-md-4">
-                                <div class="mt-1">
-                                    <label class="form-label">Select</label> <br />
-                                    <select id="selectize-select">
-                                        <option data-display="Select">Nothing</option>
-                                        <option value="1">Some option</option>
-                                        <option value="2">Another option</option>
-                                        <option value="3" disabled>A disabled option</option>
-                                        <option value="4">Potato</option>
-                                    </select>
-                                </div>
+                                <x-backend.form.select-input id="user_type" label="User Type" name="user_type"
+                                    onchange="getUsers(this)">
+                                    <option selected value="all">All</option>
+                                    <option value="partner">Partner</option>
+                                    <option value="user">User</option>
+                                </x-backend.form.select-input>
                             </div>
                             <div class="col-md-4">
                                 <x-backend.form.text-input label="Promo Code" type="text" name="code">
