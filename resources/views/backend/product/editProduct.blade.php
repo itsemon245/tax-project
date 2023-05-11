@@ -27,14 +27,14 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <x-backend.from.text-input label="Title" required type="text" name="title"
+                                            <x-backend.form.text-input label="Title" required type="text" name="title"
                                                 value="{{ $product->title }}">
-                                            </x-backend.from.text-input>
+                                            </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.from.text-input label="Sub Title" type="text" name="sub_title"
+                                            <x-backend.form.text-input label="Sub Title" type="text" name="sub_title"
                                                 value="{{ $product->sub_title }}">
-                                            </x-backend.from.text-input>
+                                            </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mt-1">
@@ -70,14 +70,14 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.from.text-input label="Price" type="number" name="price"
+                                            <x-backend.form.text-input label="Price" type="number" name="price"
                                                 value="{{ $product->price }}">
-                                            </x-backend.from.text-input>
+                                            </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.from.text-input label="Discount" type="number" name="discount"
+                                            <x-backend.form.text-input label="Discount" type="number" name="discount"
                                                 value="{{ $product->discount }}">
-                                            </x-backend.from.text-input>
+                                            </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mt-1">
@@ -93,9 +93,9 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.from.text-input label="Ratting" type="number" name="ratting"
+                                            <x-backend.form.text-input label="Ratting" type="number" name="ratting"
                                                 value="{{ $product->ratting }}">
-                                            </x-backend.from.text-input>
+                                            </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mt-1">
@@ -186,9 +186,9 @@
             const inputs = `
                <div class="row">
                     <div class="col-md-6">
-                        <x-backend.from.text-input label="Package Feature" type="test"
+                        <x-backend.form.text-input label="Package Feature" type="test"
                             name="package_feature[]">
-                        </x-backend.from.text-input>
+                        </x-backend.form.text-input>
                     </div>
                     <div class="col-md-6">
                         <div class="mt-1">
@@ -212,9 +212,9 @@
                 inputs.push(`
                <div class="row">
                     <div class="col-md-6">
-                        <x-backend.from.text-input label="Package Feature" type="test"
+                        <x-backend.form.text-input label="Package Feature" type="test"
                             name="package_feature[]" value="{{ $feature->package_feature }}">
-                        </x-backend.from.text-input>
+                        </x-backend.form.text-input>
                     </div>
                     <div class="col-md-6">
                         <div class="mt-1">
@@ -232,9 +232,9 @@
                 inputs.push(`
                <div class="row">
                     <div class="col-md-6">
-                        <x-backend.from.text-input label="Package Feature" type="test"
+                        <x-backend.form.text-input label="Package Feature" type="test"
                             name="package_feature[]">
-                        </x-backend.from.text-input>
+                        </x-backend.form.text-input>
                     </div>
                     <div class="col-md-6">
                         <div class="mt-1">
