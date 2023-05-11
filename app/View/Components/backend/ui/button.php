@@ -13,7 +13,7 @@ class Button extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($action, $type='')
+    public function __construct($action ='', $type='submit')
     {
         $this->type = $type;
         $this->action = $action;
