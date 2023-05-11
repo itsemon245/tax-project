@@ -13,16 +13,16 @@
                             <h5 class="card-title" style="margin: 2rem 0rem 2rem 3rem;">Upload Documents</h5>
                                 <div class="row px-5">
                                     <div class="col-md-6 mb-5">
-                                        <x-backend.form.select-input id="category" label="Category" name="category"
-                                        placeholder="Choose Category...">
-                                        <option value="">Tax Document</option>
-                                        <option value="">E-Trade License</option>
-                                        <option value="">License</option>
-                                        <option value="">Certificate</option>
+                                        <x-backend.form.select-input id="Document_type" label="Document type" name="document_type"
+                                        placeholder="Choose Document type...">
+                                        <option value="tax_document">Tax Document</option>
+                                        <option value="e_trade_license">E-Trade License</option>
+                                        <option value="license">License</option>
+                                        <option value="certificate">Certificate</option>
                                      </x-backend.form.select-input>
                                     </div>
                                     <div class="col-md-6 mt-2">
-                                        <x-backend.form.text-input type="text" name="text_input" label="Text Input" class="" required />
+                                        <x-backend.form.text-input type="text" name="title" label="Text Input" required />
                                     </div>
                                     <div class="col-md-12">
                                         <label class="mb-2" >Select Documents</label>

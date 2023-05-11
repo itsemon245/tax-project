@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('user_docs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('document_type');
             $table->string('title');
-            $table->string('file')->comment('File can be either image or document');
+            $table->longText('images')->comment('File can be either image or document');
             $table->timestamps();
         });
     }

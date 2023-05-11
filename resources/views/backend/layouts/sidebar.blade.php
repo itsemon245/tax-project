@@ -102,6 +102,21 @@
                     </div>
                 </li>
                 <li>
+                    <a href="#user-doc" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>User Documents</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="user-doc">
+                        <ul class="nav-second-level">
+                            <li>
+
+                                <a href="{{ route('user-doc.index') }}">Show</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
                     <a href="#sidebarInfoSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> Info Section </span>

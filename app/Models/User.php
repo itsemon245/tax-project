@@ -49,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function userDocs()
     {
-        $this->hasMany(UserDoc::class);
+        return $this->hasMany(UserDoc::class);
     }
 
 }
