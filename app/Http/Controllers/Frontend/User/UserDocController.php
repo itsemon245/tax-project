@@ -30,7 +30,7 @@ class UserDocController extends Controller
      */
     public function store(StoreUserDocRequest $request)
     {
-        //
+        dd($request->gallery_images);
     }
 
     /**

@@ -6,14 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class button extends Component
+class Button extends Component
 {
     public $type;
     public $action;
     /**
      * Create a new component instance.
      */
-    public function __construct($action, $type='')
+    public function __construct($action ='', $type='submit')
     {
         $this->type = $type;
         $this->action = $action;

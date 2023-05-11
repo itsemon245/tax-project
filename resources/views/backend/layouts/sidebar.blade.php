@@ -219,6 +219,24 @@
                     </div>
                 </li>
 
+
+                <li>
+                    <a href="#roleSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Roles</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="roleSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('role.create') }}">Create Role</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('role.index') }}">Manage Roles</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
 
         </div>

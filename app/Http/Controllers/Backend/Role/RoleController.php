@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend\Role;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleStoreRequest;
 use App\Http\Requests\RoleUpdateRequest;
 use Spatie\Permission\Models\Permission;
@@ -43,7 +44,7 @@ class RoleController extends Controller
             'alert-type' => 'success',
         ];
         $role->syncPermissions($request->permissions);
-        return back()->with($notification);
+        return redirect(route('role.index'))->with($notification);
     }
 
     /**
