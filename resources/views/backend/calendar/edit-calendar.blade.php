@@ -28,8 +28,7 @@
                         @enderror
                     </div>
 
-                    {{-- <x-backend.ui.button class="btn-primary mt-2">Update</x-backend.ui.button> --}}
-                    <button>update</button>
+                    <x-backend.ui.button  class="btn-primary mt-2">Update</x-backend.ui.button> 
                 </div>
             </div>
         </form>
