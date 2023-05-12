@@ -6,7 +6,7 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card name="Users Documents">
-        <div class="col-md-12">
+        <x-backend.ui.button type="custom" href="#" class="mb-3 btn-sm btn-success">Document type +</x-backend.ui.button>
             <x-backend.table.basic>
                 <thead>
                     <tr>
@@ -51,8 +51,6 @@
                     {{-- {{ dd(json_decode($upload_documents[0]->images)) }} --}}
                 </tbody>
             </x-backend.table.basic>
-            
-        </div>
     </x-backend.ui.section-card>
     @push('customJs')
         <script></script>
