@@ -21,6 +21,7 @@ class Product extends Model
         'discount',
         'package_features',
         'ratting',
+        'reviews',
         'description',
         'is_discount_fixed',
         'is_most_popular',

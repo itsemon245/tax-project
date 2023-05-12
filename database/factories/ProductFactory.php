@@ -43,7 +43,8 @@ class ProductFactory extends Factory
             "package_features" => $packageFeat,
             "description" => fake()->realText(50),
             "status" => fake()->randomElement([true, false]),
-            "ratting" => fake()->numberBetween(1,5),
+            "ratting" => fake()->numberBetween(1, 5),
+            "reviews" => fake()->realText(15),
         ];
     }
 }
