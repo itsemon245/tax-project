@@ -58,11 +58,6 @@ Route::prefix('admin')->group(function () {
     Route::POST('/get-users/{userType}', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
     Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panle
-<<<<<<< HEAD
-=======
-
-    Route::resource('calendar',CalendarController::class);
->>>>>>> main
 
     Route::resource('calendar', CalendarController::class);
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
