@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserDocRequest;
 use App\Http\Requests\UpdateUserDocRequest;
+use Carbon\Carbon;
 
 class UserDocController extends Controller
 {
@@ -16,10 +17,7 @@ class UserDocController extends Controller
     public function index()
     {
         $upload_documents = UserDoc::with('user')->get();
-        $document_images = json_decode($upload_documents[0]->images);
-        
-       
-        return view('backend.userdoc.viewAllDoc', compact('upload_documents', 'document_images'));
+        return view('backend.userdoc.viewAllDoc', compact('upload_documents'));
     }
 
     /**
@@ -37,18 +35,18 @@ class UserDocController extends Controller
     {
         $images = array();
         $user_id = auth()->id();
-        if($images = $request->file('gallery_images')){
-            foreach ($images as $image) {
-                $image_name = $request->document_type . '_' . Str::random();
-                $ext = strtolower($image->getClientOriginalExtension());
-                $image_full_name = $image_name . '.' . $ext;
-                $image->storeAs('uploads/user-' . $user_id . '/documents/' . $request->document_type , $image_full_name, 'public');
-                $upload_path =  $image->storeAs('uploads/user-' . $user_id . '/documents/' . $request->document_type , $image_full_name, 'public');
-                $image_url = $upload_path . $image_full_name;
-                $images[] = $image_url;
+        $imageFiles = $request->file('gallery_images');
+        $dir = 'user-' . $user_id . '/documents/' . $request->document_type;
+        $prefix = Str::slug($request->title);
+        if($imageFiles){
+            foreach ($imageFiles as $image) {
+                $path = saveImage($image, $dir, $prefix);
+                array_push($images, $path);
+   
             }
 
         }
+
         $upload_document = new UserDoc();
         $upload_document->user_id = $user_id;
         $upload_document->document_type = $request->document_type;
@@ -62,7 +60,10 @@ class UserDocController extends Controller
      */
     public function show(UserDoc $userDoc)
     {
-        //
+        $document_id = $userDoc->id;
+        $upload_documents = UserDoc::with('user')->where('id', $document_id)->get();
+        $select_docs = $upload_documents[0];
+        return view('backend.userdoc.viewSingleDoc', compact('select_docs'));
     }
 
     /**

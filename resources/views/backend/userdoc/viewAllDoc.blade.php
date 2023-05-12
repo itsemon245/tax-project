@@ -2,19 +2,18 @@
 
 @section('content')
     <!-- start page title -->
-    <x-backend.ui.breadcrumbs :list="['Dashboard', 'User-Documents', 'Show']" />
+    <x-backend.ui.breadcrumbs :list="['Dashboard', 'User Documents', 'Show']" />
     <!-- end page title -->
 
-    <x-backend.ui.section-card name="User Documents">
+    <x-backend.ui.section-card name="Users Documents">
         <div class="col-md-12">
             <x-backend.table.basic>
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>User</th>
-                        <th>Title</th>
+                        <th>User Info</th>
+                        <th>Document Title</th>
                         <th>Images</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -23,27 +22,26 @@
                     @forelse ($upload_documents as $key => $document)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $document->user->user_name }}</td>
+                            <td>
+                                <p class="mb-0">Name: {{ $document->user->name }}</p>
+                                <p class="mb-0 text-muted">Username: {{ $document->user->user_name }}</p>
+                                <p class="mb-0 text-muted">Phone: {{ $document->user->phone }}</p>
+                                <p class="mb-0 text-muted">Email: {{ $document->user->email }}</p>   
+                            </td>
                             <td>{{ $document->title }}</td>
-                            <td>
-                                @if ($document_images > 0)
-                                    @forelse ($document_images as $image)
-                                    <img src="{{ $image }}">
-                                    @empty
-                                     <h5>No Data Found...</h5>   
-                                    @endforelse
-                                @else
-                                <img src="{{ $document_images[0] }}">
-                                @endif
+                            <td id="tooltip-container">
+                                <div class="avatar-group">
+                                    @foreach (json_decode($document->images) as $image)
+                                    <a href="javascript: void(0);" class="avatar-group-item" data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="top">
+                                        <img src="{{ useImage($image) }}" class="rounded-circle border border-light border-3 avatar-md" alt="friend">
+                                    </a>  
+                                    @endforeach
+                                </div>
                             </td>
                             <td>
-                                <x-backend.ui.button class="btn-primary btn-sm">Edit</x-backend.ui.button>
-                            </td>
-                            <td>
-                                <div class="button-group">
-
-                                    <x-backend.ui.button type="edit" href="#" class="btn-sm" >Edit</x-backend.ui.button>
-                                    <x-backend.ui.button type="delete" action="#" class="btn-sm">Delete</x-backend.ui.button>
+                                <div class="btn-group">
+                                    <x-backend.ui.button type="custom" href="{{ route('user-doc.show', $document) }}" class="btn-sm btn-info">View</x-backend.ui.button>
+                                        <x-backend.ui.button type="delete" action="#" class="btn-sm" />
                                 </div>
                             </td>
                         </tr>
