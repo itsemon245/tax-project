@@ -1,5 +1,6 @@
 <?php
 
+use Records;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -90,4 +91,11 @@ function socialItems(): array
         ],
     ];
     return $socialItems;
+}
+
+
+
+function getRecords($table = 'users', $queries = [], $limit = 10)
+{
+    return Records::get($table, $queries, $limit);
 }

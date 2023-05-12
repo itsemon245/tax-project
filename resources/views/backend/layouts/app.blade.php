@@ -26,7 +26,7 @@
                 <div class="content">
 
                     <!-- Start Content-->
-                    <div class="container-fluid">
+                    <div class="container-fluid px-4">
                         
                        @yield('content')
                         

@@ -26,7 +26,7 @@
                             name="description" style="height
                         57px" placeholder="Description">{{ $appointment->description }}</textarea>
                         @error('description')
-                            <span class="text-danger"></span>
+                            <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
 

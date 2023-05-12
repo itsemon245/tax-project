@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_docs', function (Blueprint $table) {
+        Schema::create('calendars', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('document_type');
+            $table->string('service')->nullable();
+            $table->string('client')->nullable();
             $table->string('title');
-            $table->longText('images')->comment('File can be either image or document');
+            $table->dateTime('start');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_docs');
+        Schema::dropIfExists('calendars');
     }
 };
