@@ -26,7 +26,7 @@
  <!-- Datatables init -->
  <script src="{{ asset('backend/assets/js/pages/datatables.init.js') }}"></script>
 
- <!-- Dashboar 1 init js-->
+ <!-- Dashboard 1 init js-->
  <script src="{{ asset('backend/assets/js/pages/dashboard-1.init.js') }}"></script>
  <!-- TextArea -->
  <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>

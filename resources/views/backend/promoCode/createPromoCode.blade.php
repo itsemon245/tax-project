@@ -20,6 +20,12 @@
                                 </x-backend.form.select-input>
                             </div>
                             <div class="col-md-4">
+                                <x-backend.form.select-input id="user_type" label="User Type" name="user_type"
+                                    onchange="getUsers(this)">
+                                    <option selected value="all">All</option>
+                                    <option value="partner">Partner</option>
+                                    <option value="user">User</option>
+                                </x-backend.form.select-input>
                                 <div class="mt-1">
                                     <label class="form-label">Select Partner/User</label> <br />
                                     <select id="selectize-select" class="form-control" name="user_id">

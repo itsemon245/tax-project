@@ -20,7 +20,7 @@
 
                 <x-backend.form.text-input label="Button Link" type="text" name="button_link" />
 
-                <x-backend.ui.button class="btn-primary mt-2">Create</x-backend.ui.button>
+                <x-backend.ui.button type="submit" class="btn-primary mt-2">Create</x-backend.ui.button>
 
             </div>
         </div>
