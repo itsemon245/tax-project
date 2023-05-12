@@ -206,7 +206,6 @@
                         let service = 'service';
                         let title = arg.event.title
                         let time = arg.timeText
-                        console.log(arg);
                         let bg = arg.isToday ? 'bg-danger' : 'bg-blue'
                         let html = `
                             <div class="w-100 text-light ${bg} p-1 rounded"
@@ -222,6 +221,58 @@
                         return {
                             html: html
                         }
+                    },
+                    editable: true,
+
+                    eventDrop: function(info) {
+                        // console.log(info.event);
+                        let date = new Date(info.event.start)
+                        let startDate = date.toISOString()
+                        startDate = startDate.replace('Z', '')
+                        let id = info.event._def.publicId;
+                        let url = "{{ route('event.dragUpdate', ':id') }}"
+                        url = url.replace(":id", id)
+
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            url: url,
+                            method: "patch",
+                            data: {
+                                event_name: info.event.title,
+                                start_date: startDate,
+                                event_description: info.event.extendedProps.description
+                            },
+                            success: function(response) {
+                                console.log(response)
+                                if (response.success) {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter',
+                                                Swal
+                                                .stopTimer)
+                                            toast.addEventListener('mouseleave',
+                                                Swal
+                                                .resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: response.message
+                                    })
+                                }
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            },
+                        });
                     }
                 });
                 calendar.render();

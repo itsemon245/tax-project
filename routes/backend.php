@@ -60,4 +60,5 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('calendar', CalendarController::class);
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
+    Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
 });

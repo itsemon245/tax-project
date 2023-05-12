@@ -38,7 +38,7 @@ class CalendarController extends Controller
         $event = new Calendar();
         $event->title = $request->event_name;
         $event->start = $request->start_date;
-        $event->description = $request->event_desc;
+        $event->description = $request->event_description;
         $event->save();
         $notification = [
             'message' => 'Event Created',
@@ -67,17 +67,33 @@ class CalendarController extends Controller
      */
     public function update(UpdateCalendarRequest $request, Calendar $calendar)
     {
-        $event = Calendar::find($calendar->id);
-        $event->name = $request->event_name;
-        $event->start = $request->start_date;
-        $event->description = $request->event_desc;
-        $event->save();
+        $calendar->title = $request->event_name;
+        $calendar->start = $request->start_date;
+        $calendar->description = $request->event_description;
+        $calendar->update();
 
         $notification = [
             'message' => 'Event Updated',
             'alert-type' => 'success',
         ];
         return back()->with($notification);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function dragUpdate(UpdateCalendarRequest $request, Calendar $calendar)
+    {
+        $calendar->title = $request->event_name;
+        $calendar->start = $request->start_date;
+        $calendar->description = $request->event_description;
+        $calendar->update();
+
+        $content = [
+            'success' => true,
+            'message' => 'Event Updated'
+        ];
+        return response($content);
     }
 
     /**

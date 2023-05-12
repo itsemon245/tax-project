@@ -24,7 +24,6 @@ class UpdateCalendarRequest extends FormRequest
         return [
             'event_name' => ['required'],
             'start_date' => ['required'],
-            'event_description' => ['required'],
         ];
     }
 }
