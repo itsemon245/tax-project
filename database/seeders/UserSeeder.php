@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'user_name' => 'admin',
             'refer_link' => route('refer.link', 'admin')
         ]);
-        
+
 
         //test user for refer
         User::factory(1)->create([
