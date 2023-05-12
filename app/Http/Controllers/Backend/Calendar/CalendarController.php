@@ -7,8 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
 use Carbon\Carbon;
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Support\Facades\Redis;
 
 class CalendarController extends Controller
 {
@@ -26,19 +24,10 @@ class CalendarController extends Controller
      */
     public function create()
     {
-        $events = [];
-        $calendars = Calendar::latest()->get();
-        foreach ($calendars as $calendar) {
-            $events[] = [
-                'id' => $calendar->id,
-                'title' => $calendar->envent_name,
-                'start' => Carbon::parse($calendar->envent_start_date),
-                //'end' => $calendar->event_end_date,
-                'weekTextLong' => $calendar->event_description,
-            ];
-        }
-        $events = json_encode($events);
-        return view('backend.calendar.create-calendar', ['events' => $events]);
+        $events = Calendar::latest()->get();
+        $today = Carbon::now()->format('Y-m-d');
+        $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();
+        return view('backend.calendar.create-calendar', compact('events', 'currentEvents'));
     }
 
     /**
@@ -46,14 +35,13 @@ class CalendarController extends Controller
      */
     public function store(StoreCalendarRequest $request)
     {
-        $store_calendar = new Calendar();
-        $store_calendar->envent_name = $request->event_name;
-        $store_calendar->envent_start_date = $request->start_date;
-        //$store_calendar->event_end_date = $request->end_date;
-        $store_calendar->event_description = $request->event_desc;
-        $store_calendar->save();
+        $event = new Calendar();
+        $event->title = $request->event_name;
+        $event->start = $request->start_date;
+        $event->description = $request->event_desc;
+        $event->save();
         $notification = [
-            'message' => 'Evnet Created',
+            'message' => 'Event Created',
             'alert-type' => 'success',
         ];
         return back()->with($notification);
@@ -79,15 +67,14 @@ class CalendarController extends Controller
      */
     public function update(UpdateCalendarRequest $request, Calendar $calendar)
     {
-        $evnet = Calendar::find($calendar->id);
-        $evnet->envent_name = $request->event_name;
-        $evnet->envent_start_date = $request->start_date;
-        $evnet->event_description = $request->event_description;
-        //$evnet->event_end_date =  $request->end_date;
-        $evnet->save();
+        $event = Calendar::find($calendar->id);
+        $event->name = $request->event_name;
+        $event->start = $request->start_date;
+        $event->description = $request->event_desc;
+        $event->save();
 
         $notification = [
-            'message' => 'Evnet Updated',
+            'message' => 'Event Updated',
             'alert-type' => 'success',
         ];
         return back()->with($notification);
@@ -101,6 +88,6 @@ class CalendarController extends Controller
         //delete calendar data
         $event = Calendar::findOrFail($calendar->id);
         $event->delete();
-        return response()->json(['success' => 'event deleled successfully', 'id' => $calendar->id]);
+        return response()->json(['success' => 'event deleted successfully', 'id' => $calendar->id]);
     }
 }

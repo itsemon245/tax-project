@@ -2,94 +2,74 @@
 
 @section('content')
     @push('CustomCssAndJs')
-        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script> --}}
-
-        <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.7/index.global.min.js'></script>
-        <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.7/index.global.min.js'></script>
-        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.7/index.global.min.js"></script>
-
-        {{-- sweet alert2 --}}
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @endpush
     <x-backend.ui.breadcrumbs :list="['Backend', 'Calender']" />
     {{-- {{dd($events)}} --}}
-    <div class="col-md-12">
+    <span class="btn btn-sm btn-primary waves-effect waves-light" title="I&#39;m a Tippy tooltip!" tabindex="0"
+        data-plugin="tippy" data-tippy-placement="top">Top</span>
+    <input type="hidden" id="events" value="{{ $events }}">
+    <x-backend.ui.section-card name="Calendar">
+        {{-- calendar section  --}}
         <div class="row">
-            <div class="col-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <input type="hidden" id="events" value="{{ $events }}">
-                            <div class="col-md-12">
-                                <div id="calendar"></div>
-                            </div> <!-- end col -->
-                            <div class="col-md-12">
-                                <!-- Modal -->
-                                <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                            <form action="{{ route('calendar.store') }}" method="post">
-                                                @csrf
-
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Event</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-
-                                                <div class="modal-body">
-                                                    <x-backend.form.text-input name="event_name" label="Event Name" />
-                                                    <x-backend.form.text-input type="datetime-local" name="start_date"
-                                                        id="start-date" label="Start Date" />
-                                                    {{-- <x-backend.form.text-input type="date" name="end_date"
-                                                        label="Event End Date" /> --}}
-                                                    <x-backend.form.text-input name="event_desc"
-                                                        label="Event Description" />
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- end row -->
-                    </div> <!-- end card body-->
-                </div> <!-- end card -->
-
-                <!-- Add New Event MODAL -->
-
-                <!-- end modal-->
+            <div class="col-md-10">
+                <div id="calendar"></div>
             </div>
-            <!-- end col-12 -->
-        </div> <!-- end row -->
+            <div class="col-md-2">
+                <p class="text-center text-primary h5 mb-0">Todays Events</p>
+                <div class="border-start border-top border-2 border-primary h-100 p-2 my-2">
+                    {{-- Current events --}}
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
+                    <form action="{{ route('calendar.store') }}" method="post">
+                        @csrf
 
-        {{-- <span class="text-light bg-success d-block p-1 event-content">some html 1</span>
-        <span class="text-light bg-success d-block p-1 event-content">some html 2</span>
-        <span class="text-light bg-success d-block p-1 event-content">some html 3</span> --}}
-    </div>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Event</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <x-backend.form.text-input name="event_name" label="Event Name" />
+                            <x-backend.form.select-input id="services" label="Services" name="service"
+                                placeholder="Select Service">
+                                <option value="service 1">Service 1</option>
+                                <option value="service 2">Service 2</option>
+                                <option value="service 3">Service 3</option>
+                            </x-backend.form.select-input>
+                            <x-backend.form.select-input id="client" label="Client" name="client"
+                                placeholder="Select Client">
+                                <option value="client 1">Client 1</option>
+                                <option value="client 2">Client 2</option>
+                                <option value="client 3">Service 3</option>
+                            </x-backend.form.select-input>
+                            <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
+                                label="Start Date" />
+                            <x-backend.form.text-input name="event_desc" label="Event Description" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </x-backend.ui.section-card>
 
 
 
     @push('customJs')
-        <script></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+        <script src="{{ asset('backend/assets/libs/tippy.js/tippy.all.min.js"') }}"></script>
+        {{-- full calender plugin  --}}
+        <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.7/index.global.min.js'></script>
+        <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.7/index.global.min.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.7/index.global.min.js"></script>
         {{-- sweet alert2 --}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
@@ -222,15 +202,22 @@
                     },
                     events: myEvents,
                     eventContent: function(arg) {
-                        let desc = 'Lorem ipsum';
+                        let client = 'Client Name';
+                        let service = 'service';
                         let title = arg.event.title
+                        let time = arg.timeText
                         console.log(arg);
                         let bg = arg.isToday ? 'bg-danger' : 'bg-blue'
-                        let html = `<div class="w-100 text-light ${bg} p-1"><strong>
-                            ${title}
-                            </strong>
-                            <p style="font-weight:300;">${desc}</p>
-                            </div>`
+                        let html = `
+                            <div class="w-100 text-light ${bg} p-1 rounded"
+                            title="${client}" tabindex="0" data-plugin="tippy" data-tippy-placement="top">
+                                <div class="d-flex justify-content-end align-items-center">
+                                    <strong class="mx-auto">${title}</strong>
+                                    <sup class="">${time}</sup>
+                                </div>
+                                <p class='text-light mb-0'>${service}</p>
+                            </div>
+                            `
 
                         return {
                             html: html
