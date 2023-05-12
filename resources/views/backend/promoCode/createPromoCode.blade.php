@@ -26,11 +26,16 @@
                                     <option value="partner">Partner</option>
                                     <option value="user">User</option>
                                 </x-backend.form.select-input>
+                                <div class="mt-1">
+                                    <label class="form-label">Select</label> <br />
+                                    <select id="selectize-select">
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-4">
-                                <x-backend.form.text-input label="Promo Code" type="text" name="code">
+                                <x-backend.form.text-input label="Promo Code" type="text" id="code" name="code">
                                 </x-backend.form.text-input>
-                                <button type="button"
+                                <button type="button" id="code_btn"
                                     class="btn btn-success waves-effect waves-light profile-button mt-1">Generate
                                     Code</button>
                             </div>
@@ -63,6 +68,56 @@
 
 
     @push('customJs')
-        <script></script>
+        <script>
+            const promoBox = document.getElementById('code');
+            const btn = document.getElementById('code_btn');
+            const numberSet = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+            const getRandomChar = (dataset) => {
+                return dataset[Math.floor(Math.random() * dataset.length)];
+            };
+
+            const generatePromoCode = (promoCode = "") => {
+                if (promoCode.length === 6 || promoCode.length > 6) {
+                    return promoCode;
+                }
+
+                promoCode += getRandomChar(numberSet);
+                return generatePromoCode(promoCode);
+            }
+
+            btn.addEventListener('click', () => {
+                promoBox.value = generatePromoCode(promoBox.value);
+            })
+
+            const getUsers = (e) => {
+                const user_type = e.value
+                if (user_type === 'all') return;
+                let url = "{{ route('getUsers', ':userType') }}"
+                url = url.replace(':userType', user_type)
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        // const subCategories = data.map(subCategory =>
+                        //     `<option value="${subCategory.id}">${subCategory.name}</option>`).join(
+                        //     '')
+                        // $("#selectize-select").html('')
+                        // $("#selectize-select").html(
+                        //     `<option selected disabled>Choose Sub Category...</option>` +
+                        //     subCategories
+                        // )
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+        </script>
     @endpush
 @endsection
