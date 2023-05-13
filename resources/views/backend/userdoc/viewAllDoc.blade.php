@@ -6,7 +6,7 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card name="Users Documents">
-        <x-backend.ui.button type="custom" href="#" class="mb-3 btn-sm btn-success">Document type +</x-backend.ui.button>
+        <x-backend.ui.button type="custom" href="{{ route('user-doc-type.index') }}" class="mb-3 btn-sm btn-success">Document type +</x-backend.ui.button>
             <x-backend.table.basic>
                 <thead>
                     <tr>
@@ -26,7 +26,9 @@
                                 <p class="mb-0">Name: {{ $document->user->name }}</p>
                                 <p class="mb-0 text-muted">Username: {{ $document->user->user_name }}</p>
                                 <p class="mb-0 text-muted">Phone: {{ $document->user->phone }}</p>
-                                <p class="mb-0 text-muted">Email: {{ $document->user->email }}</p>   
+                                <a href="mailto:{{$document->user->email}}">
+                                    <p class="mb-0 text-muted">Email: {{ $document->user->email }}</p>   
+                                </a>
                             </td>
                             <td>{{ $document->title }}</td>
                             <td id="tooltip-container">

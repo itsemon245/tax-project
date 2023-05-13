@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\UserDoc;
 
+use Illuminate\Support\Str;
 use App\Models\DocumentType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocumentTypeRequest;
@@ -14,7 +15,9 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        //
+        
+        $doc_types = DocumentType::get();
+        return view('backend.userdoc.createDocType', compact('doc_types'));
     }
 
     /**
@@ -30,7 +33,14 @@ class DocumentTypeController extends Controller
      */
     public function store(StoreDocumentTypeRequest $request)
     {
-        //
+        $document_type = new DocumentType();
+        $document_type->doc_type_name = strtolower(Str::slug($request->add_document_type));
+        $document_type->save();
+        $notification = array(
+            'message' => "Added Successfully",
+            'alert-type' => 'success',
+        );
+        return back()->with($notification);
     }
 
     /**
@@ -46,7 +56,8 @@ class DocumentTypeController extends Controller
      */
     public function edit(DocumentType $documentType)
     {
-        //
+        dd($documentType);
+        return view('backend.userdoc.editDocType', compact('documentType'));
     }
 
     /**

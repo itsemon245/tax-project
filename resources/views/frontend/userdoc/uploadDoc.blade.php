@@ -15,10 +15,10 @@
                                     <div class="col-md-6 mb-5">
                                         <x-backend.form.select-input id="Document_type" label="Document type" name="document_type"
                                         placeholder="Choose Document type...">
-                                        <option value="Tax-Document">Tax Document</option>
-                                        <option value="E-Trade-License">E-Trade License</option>
-                                        <option value="License">License</option>
-                                        <option value="Certificate">Certificate</option>
+                                        @foreach ($doc_types as $doc_type)
+                                        <option value="{{ $doc_type->id }}">{{ $doc_type->doc_type_name }}</option>
+                                        @endforeach
+
                                      </x-backend.form.select-input>
                                     </div>
                                     <div class="col-md-6 mt-2">

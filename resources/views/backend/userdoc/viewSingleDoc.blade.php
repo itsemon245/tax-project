@@ -22,7 +22,9 @@
                 </div>
                 <div class="col-md-4">
                     <h5 class="mb-0">Phone: {{ $select_docs->user->phone }}</h5>
-                    <h5 class="mb-0">Email: {{ $select_docs->user->email }}</h5>
+                    <a href="mailto:{{$select_docs->user->email}}">
+                        <h5 class="mb-0">Email: {{ $select_docs->user->email }}</h5>
+                    </a>
                 </div>
             </div>
 

@@ -11,7 +11,7 @@ class StoreDocumentTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user() != null;
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreDocumentTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'add_document_type'=>['required','max:50'],
         ];
     }
 }
