@@ -19,17 +19,12 @@
                 @foreach ($calendars as $key => $calendar)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ Str::limit($calendar->envent_name, 15, '...') }}</td>
-                        <td>{{ $calendar->envent_start_date }}</td>
-                        <td>{{ Str::limit($calendar->event_description, 15, '...') }}</td>
+                        <td>{{ Str::limit($calendar->title, 15, '...') }}</td>
+                        <td>{{ $calendar->start }}</td>
+                        <td>{{ Str::limit($calendar->description, 15, '...') }}</td>
                         <td>
-                            <a href="{{ route('calendar.edit', $calendar->id) }}" class="btn btn-info btn-sm">Edit</a>
-                            {{-- <form action="{{ route('calendar.destroy', $calendar->id) }}" method="post"
-                                class="d-inline-block">
-                                @csrf
-                                @method('DELETE')
-                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
-                            </form> --}}
+                            <x-backend.ui.button type="edit" :href="route('calendar.edit', $calendar->id)" class="btn-sm" />
+                            <x-backend.ui.button type="delete" :action="route('calendar.destroy', $calendar)" class="btn-sm" />
                         </td>
                     </tr>
                 @endforeach

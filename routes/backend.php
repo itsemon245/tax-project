@@ -50,7 +50,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('social-handle', SocialHandleController::class);
     Route::resource('ui-element', UiElementController::class);
     Route::resource('promo-code', PromoCodeController::class);
-
+    Route::resource('user-doc', UserDocController::class);
     Route::resource('map', MapController::class);
 
     Route::resource('user-doc',UserDocController::class);
@@ -63,6 +63,7 @@ Route::prefix('admin')->group(function () {
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
     Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panle
 
-    Route::resource('calendar',CalendarController::class);
-
+    Route::resource('calendar', CalendarController::class);
+    Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
+    Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
 });
