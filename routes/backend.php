@@ -10,15 +10,16 @@ use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Role\RoleController;
 use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\UserProfileController;
+use App\Http\Controllers\Backend\Client\ClientController;
 use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Backend\Product\ProductController;
-use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
-use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
+use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
+use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
+use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
-use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,4 +67,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('calendar', CalendarController::class);
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
+
+    Route::resource('client',ClientController::class);
 });
