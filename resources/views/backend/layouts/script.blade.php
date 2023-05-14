@@ -8,13 +8,7 @@
  <script src="{{ asset('backend/assets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
 
 
-
-
-
- <!-- Dashboard 1 init js-->
- <script src="{{ asset('backend/assets/js/pages/dashboard-1.init.js') }}"></script>
- <!-- TextArea -->
- <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
+ 
 
  <script src="{{ asset('backend/assets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
  <!-- App js-->
