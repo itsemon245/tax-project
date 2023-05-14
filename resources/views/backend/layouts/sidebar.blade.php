@@ -252,6 +252,28 @@
                         </ul>
                     </div>
                 </li>
+
+
+                
+                <li>
+                    <a href="#roleSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Clients</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="roleSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('client.create') }}">Create</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('client.index') }}">View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
             </ul>
 
         </div>

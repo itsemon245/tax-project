@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('father_name');
             $table->text('mother_name');
             $table->text('company_name');
-            $table->text('husband/wife_name');
+            $table->text('husband_wife_name');
             $table->text('present_address');
             $table->text('parmentat_address');
             $table->text('tin');

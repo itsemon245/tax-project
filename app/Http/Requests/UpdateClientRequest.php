@@ -11,7 +11,7 @@ class UpdateClientRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user() != null;
     }
 
     /**
@@ -22,7 +22,16 @@ class UpdateClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'client_name' =>['required'],
+            'father_name' =>['required'],
+            'mother_name' =>['required'],
+            'company_name' =>['required'],
+            'husband_wife_name' =>['required'],
+            'present_address' =>['required'],
+            'tin' =>['required'],
+            'circle' =>['required'],
+            'parmentat_address' =>['required'],
+            'zone' =>['required'],
         ];
     }
 }
