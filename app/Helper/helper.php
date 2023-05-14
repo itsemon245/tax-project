@@ -1,6 +1,7 @@
 <?php
 
-use Records;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -15,6 +16,13 @@ function useImage($image)
     }
 }
 
+/**
+ * Returns current timestamp with unique identifier
+ */
+function timestamp()
+{
+    return Carbon::now()->format('Y-m-d-H_m:s:u');
+}
 /**
  * Stores an image given an image request and a directory
  */
@@ -94,8 +102,11 @@ function socialItems(): array
 }
 
 
-
+/**
+ * Get records from the specified table with queries
+ */
 function getRecords($table = 'users', $queries = [], $limit = 10)
 {
-    return Records::get($table, $queries, $limit);
+    $records = DB::table($table)->where([$queries])->limit($limit)->get();
+    return $records;
 }
