@@ -135,7 +135,7 @@
 
 
     @push('customJs')
-        <script src="{{ asset('backend/assets/libs/tippy.js/tippy.all.min.js"') }}"></script>
+        <script src="{{ asset('backend/assets/libs/tippy.js/tippy.all.min.js') }}"></script>
         {{-- full calender plugin  --}}
         <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.7/index.global.min.js'></script>
         <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.7/index.global.min.js'></script>
@@ -143,122 +143,6 @@
         {{-- sweet alert2 --}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            // $(document).ready(function() {
-
-            //     var booking = $('#events').val()
-            //     booking = JSON.parse(booking);
-            //     var calendar = $('#calendar').fullCalendar({
-
-            //         header: {
-            //             left: 'prev,next, today',
-            //             right: 'title',
-            //         },
-            //         events: booking,
-            //         selectable: true,
-            //         selectHelper: true,
-            //         select: function(start, end, allDays) {
-            //             $('#eventModal').modal('toggle')
-            //         },
-            //         // editable: true,
-
-            //         // eventDrop: function(event) {
-            //         //     var id = event.id;
-            //         //     var start_date = moment(event.start).format('YYYY-MM-DD');
-            //         //     // var end_date = moment(event.end).format('YYYY-MM-DD');
-
-            //         //     console.log(id,start_date, end_date)
-
-            //         //     $.ajax({
-            //         //         headers: {
-            //         //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         //         },
-            //         //         url: "{{ route('calendar.destroy', '') }}" + '/' + id,
-            //         //         type: "PUT",
-            //         //         data: {
-            //         //             start_date,
-            //         //             // end_date
-            //         //         },
-            //         //         success: function(response) {
-            //         //             console.log(response)
-            //         //             if (response.success) {
-            //         //                 const Toast = Swal.mixin({
-            //         //                     toast: true,
-            //         //                     position: 'top-end',
-            //         //                     showConfirmButton: false,
-            //         //                     timer: 3000,
-            //         //                     timerProgressBar: true,
-            //         //                     didOpen: (toast) => {
-            //         //                         toast.addEventListener('mouseenter',
-            //         //                             Swal
-            //         //                             .stopTimer)
-            //         //                         toast.addEventListener('mouseleave',
-            //         //                             Swal
-            //         //                             .resumeTimer)
-            //         //                     }
-            //         //                 })
-
-            //         //                 Toast.fire({
-            //         //                     icon: 'success',
-            //         //                     title: 'Updated in successfully'
-            //         //                 })
-            //         //             }
-            //         //         },
-            //         //         error: function(error) {
-            //         //             console.log(error)
-            //         //         },
-            //         //     });
-            //         // },
-
-            //         eventClick: function(event) {
-            //             var eventId = event.id;
-
-            //             if (confirm('Do you want to delete this event?')) {
-            //                 $.ajax({
-            //                     headers: {
-            //                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //                     },
-            //                     url: "{{ route('calendar.destroy', '') }}" + '/' + eventId,
-            //                     method: 'DELETE',
-            //                     success: function(response) {
-
-            //                         if (response.success) {
-            //                             $('#calendar').fullCalendar('removeEvents', response.id)
-            //                             const Toast = Swal.mixin({
-            //                                 toast: true,
-            //                                 position: 'top-end',
-            //                                 showConfirmButton: false,
-            //                                 timer: 3000,
-            //                                 timerProgressBar: true,
-            //                                 didOpen: (toast) => {
-            //                                     toast.addEventListener('mouseenter',
-            //                                         Swal
-            //                                         .stopTimer)
-            //                                     toast.addEventListener('mouseleave',
-            //                                         Swal
-            //                                         .resumeTimer)
-            //                                 }
-            //                             })
-
-            //                             Toast.fire({
-            //                                 icon: 'success',
-            //                                 title: 'Deleted in successfully'
-            //                             })
-            //                         }
-
-
-            //                     },
-            //                     error: function(error) {
-            //                         console.log(error)
-            //                     },
-            //                 })
-            //             }
-
-            //         }
-
-            //     })
-            // })
-
-
             document.addEventListener('DOMContentLoaded', function() {
                 var myEvents = $('#events').val()
                 myEvents = JSON.parse(myEvents);
@@ -300,8 +184,8 @@
                         let startDate = date.toISOString()
                         startDate = startDate.replace('Z', '')
                         let id = info.event._def.publicId;
-                        let url = "{{ route('event.dragUpdate', ':id') }}"
-                        url = url.replace(":id", id)
+                        let url = `{{ route('event.dragUpdate', ':id') }}`
+                        url = url.replace(':id', id)
 
                         $.ajax({
                             headers: {
@@ -350,7 +234,12 @@
                         const service = $('#eventShowModal #service')
                         const description = $('#eventShowModal #description')
                         const editBtn = $('#editBtn')
-
+                        const deleteForm = $('#eventShowModal form')
+                        let id = info.event._def.publicId;
+                        let url = `{{ route('calendar.destroy', ':id') }}`
+                        url = url.replace(':id', id)
+                        //set form action to delete item
+                        deleteForm.attr('action', url)
                         //set content for the event
                         title.text(info.event.title)
                         client.text(info.event.extendedProps.client)
@@ -362,6 +251,7 @@
                         //set event listener for edit btn
                         editBtn.click(e => {
                             const title = $('#eventUpdateModal #eventTitle')
+                            const form = $('#eventUpdateModal form')
                             const client = $('#eventUpdateModal #client')
                             const service = $('#eventUpdateModal #service')
                             const description = $('#eventUpdateModal #description')
@@ -369,12 +259,14 @@
                             let date = new Date(info.event.start)
                             let startDate = date.toISOString()
                             startDate = startDate.replace('Z', '')
-                            // console.log(startDate);
+                            url = url.replace('destroy', 'update')
                             $('#eventShowModal').modal('toggle') //close modal to show event
 
+                            //populate the update form
+                            form.attr('action', url);
                             title.val(info.event.title)
+                            description.val(info.event.extendedProps.description)
                             startDateInput.val(startDate);
-                            console.log();
                             $('#eventUpdateModal').modal('toggle') //open modal to update event
                         })
                     }
