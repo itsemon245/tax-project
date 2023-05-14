@@ -22,7 +22,6 @@ class StoreBannerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // banner from rules
             'title'=>['required','max:255'],
             'sub_title'=>['required','max:255'],
             'button_link'=>['required','max:255'],

@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_docs', function (Blueprint $table) {
+        Schema::create('document_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('document_type_id');
-            $table->string('title');
-            $table->longText('images')->comment('File can be either image or document');
+            $table->string('doc_type_name');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_docs');
+        Schema::dropIfExists('document_types');
     }
 };

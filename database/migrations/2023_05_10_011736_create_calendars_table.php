@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('calendars', function (Blueprint $table) {
             $table->id();
-            $table->string('envent_name');
-            $table->dateTime('envent_start_date');
-            // $table->dateTime('event_end_date')->nullable();
-            $table->text('event_description');
+            $table->string('service')->nullable();
+            $table->string('client')->nullable();
+            $table->string('title');
+            $table->dateTime('start');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

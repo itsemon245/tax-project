@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\DocumentType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserDoc extends Model
 {
@@ -11,6 +12,10 @@ class UserDoc extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
+    }
+    public function documentType()
+    {
+        return $this->belongsTo(DocumentType::class);
     }
 }
