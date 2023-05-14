@@ -100,7 +100,6 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client = Client::findOrFail($client->id);
         $client->delete();
         $notification = [
             'message' => 'Client Deleted',
