@@ -15,7 +15,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <x-backend.form.select-input id="social" label="Social" name="social"
+                                    <x-backend.form.select-input id="selectize-optgroup" label="Social" name="social"
                                         placeholder="Select Platform" required>
                                         @foreach (socialItems() as $item)
                                             <option value="{{ json_encode($item) }}">
@@ -41,7 +41,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">All Sub-Categories</h4>
-                    <x-backend.table.basic >
+                    <x-backend.table.basic>
                         <thead>
                             <tr>
                                 <th>#</th>

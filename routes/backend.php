@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Client\ClientController;
 use App\Http\Controllers\Frontend\User\UserDocController;
+use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
@@ -58,7 +59,11 @@ Route::prefix('admin')->group(function () {
     Route::resource('user-doc-type',DocumentTypeController::class);
     Route::resource('map',MapController::class);
     Route::resource('role', RoleController::class);
+    Route::resource('invoice', InvoiceController::class);
 
+
+
+    //custom routes
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
     Route::POST('/get-users/{userType}', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
