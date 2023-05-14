@@ -1,4 +1,10 @@
 @extends('backend.layouts.app')
+@push('customCss')
+    {{-- quillJs editor css  --}}
+    <link href="{{ asset('backend/assets/libs/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
+    {{-- quillJs editor css  --}}
+@endpush
 @section('content')
     <!-- start page title -->
     <div class="row">
@@ -38,10 +44,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mt-1">
-                                                <label for="category" class="form-label">Category <span
-                                                        style="color:red;">*</span></label>
-                                                <select class="form-select" id="category" name="category"
-                                                    onchange="getSubCategories(this)">
+                                                <x-backend.form.select-input id="category" label="Category" name="category"
+                                                    placeholder="Choose Category..." onchange="getSubCategories(this)">
                                                     @forelse ($categories as $category)
                                                         <option value="{{ $category->id }}"
                                                             {{ $category->id === $product->product_category_id ? 'selected' : '' }}>
@@ -50,23 +54,17 @@
                                                     @empty
                                                         <option disabled>No Records Found!</option>
                                                     @endforelse
-                                                </select>
-                                                @error('category')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+                                                </x-backend.form.select-input>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mt-1">
-                                                <label for="sub-category" class="form-label">Sub Category <span
-                                                        style="color:red;">*</span></label>
-                                                <select class="form-select" id="sub-category" name="sub_category">
+                                                <x-backend.form.select-input id="sub-category" label="Sub Category"
+                                                    name="category" placeholder="Choose Category first..."
+                                                    name="sub_category">
                                                     <option selected value="{{ $product->product_sub_category_id }}">
                                                         {{ $product->product_sub_category_id }}</option>
-                                                </select>
-                                                @error('sub_category')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+                                                </x-backend.form.select-input>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -81,15 +79,14 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mt-1">
-                                                <label for="discount-type" class="form-label">Discount Type <span
-                                                        style="color:red;">*</span></label>
-                                                <select class="form-select" id="discount-type" name="discount_type">
+                                                <x-backend.form.select-input id="discount-type" label="Discount Type"
+                                                    required name="discount_type">
                                                     <option value="0"
                                                         {{ !$product->is_discount_fixed ? 'selected' : '' }}>Percentage
                                                     </option>
                                                     <option value="1"
                                                         {{ $product->is_discount_fixed ? 'selected' : '' }}>Fixed</option>
-                                                </select>
+                                                </x-backend.form.select-input>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -98,28 +95,32 @@
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
+                                            <x-backend.form.text-input label="REVIEWS" type="text" name="reviews"
+                                                value="{{ $product->reviews }}">
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
                                             <div class="mt-1">
-                                                <label for="most-populer" class="form-label">Most Popular <span
-                                                        style="color:red;">*</span></label>
-                                                <select class="form-select" id="most-populer" name="most_popular">
+                                                <x-backend.form.select-input id="most-populer" label="Most Popular" required
+                                                    name="most_popular">
                                                     <option value="0"
                                                         {{ !$product->is_most_popular ? 'selected' : '' }}>No</option>
                                                     <option value="1"
                                                         {{ $product->is_most_popular ? 'selected' : '' }}>Yes</option>
-                                                </select>
+                                                </x-backend.form.select-input>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mt-1">
-                                                <label for="status" class="form-label">Status <span
-                                                        style="color:red;">*</span></label>
-                                                <select class="form-select" name="status">
-                                                    <option value="1" {{ $product->status ? 'selected' : '' }}>Active
+                                                <x-backend.form.select-input id="status" label="Status" required
+                                                    name="status">
+                                                    <option value="1" {{ $product->status ? 'selected' : '' }}>
+                                                        Active
                                                     </option>
                                                     <option value="0" {{ !$product->status ? 'selected' : '' }}>
                                                         Deactive
                                                     </option>
-                                                </select>
+                                                </x-backend.form.select-input>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -168,10 +169,16 @@
             </div> <!-- end card -->
         </div><!-- end col-->
     </div>
+
+
     <!-- end row-->
 @endsection
 
-@push('customJs')
+@pushOnce('customJs')
+    {{-- quillJs Script  --}}
+    <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script>
+    {{-- quillJs Script  --}}
     <script>
         const descriptionAdd = () => {
             $("#description").val($('.ql-editor').html())
@@ -287,4 +294,4 @@
             });
         }
     </script>
-@endpush
+@endPushOnce

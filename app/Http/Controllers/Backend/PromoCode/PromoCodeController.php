@@ -15,7 +15,8 @@ class PromoCodeController extends Controller
      */
     public function index()
     {
-        //
+        $promos = PromoCode::with('user:id,name')->get();
+        return view('backend.promoCode.viewPormoCode', compact('promos'));
     }
 
     /**
@@ -31,7 +32,23 @@ class PromoCodeController extends Controller
      */
     public function store(StorePromoCodeRequest $request)
     {
-        //
+        $request->validated();
+        PromoCode::create(
+            [
+                'user_type' => $request->user_type,
+                'user_id' => $request->user_id,
+                'code' => $request->code,
+                'limit' => $request->limit,
+                'expired_at' => $request->expired_at
+            ]
+        );
+
+        return redirect()
+            ->route("promo-code.index")
+            ->with(array(
+                'message' => "Promo Code Created Successfully",
+                'alert-type' => 'success',
+            ));
     }
 
     /**
@@ -47,7 +64,7 @@ class PromoCodeController extends Controller
      */
     public function edit(PromoCode $promoCode)
     {
-        //
+        return view('backend.promoCode.editPromoCode', compact('promoCode'));
     }
 
     /**
@@ -55,7 +72,24 @@ class PromoCodeController extends Controller
      */
     public function update(UpdatePromoCodeRequest $request, PromoCode $promoCode)
     {
-        //
+        $request->validated();
+        PromoCode::find($promoCode->id)
+            ->update(
+                [
+                    'user_type' => $request->user_type,
+                    'user_id' => $request->user_id,
+                    'code' => $request->code,
+                    'limit' => $request->limit,
+                    'expired_at' => $request->expired_at
+                ]
+            );
+
+        return redirect()
+            ->route("promo-code.index")
+            ->with(array(
+                'message' => "Promo Code Updated Successfully",
+                'alert-type' => 'success',
+            ));
     }
 
     /**
@@ -63,7 +97,11 @@ class PromoCodeController extends Controller
      */
     public function destroy(PromoCode $promoCode)
     {
-        //
+        PromoCode::find($promoCode->id)->delete();
+        return back()->with(array(
+            'message' => "Promo Code Deleted Successfully",
+            'alert-type' => 'success',
+        ));
     }
 
     /**
@@ -71,7 +109,7 @@ class PromoCodeController extends Controller
      */
     public function getUsers($userType)
     {
-        $users = User::with('roles')->where('roles.name', $userType)->get();
+        $users = User::role($userType)->get(['id', 'name']);
         return $users;
     }
 }

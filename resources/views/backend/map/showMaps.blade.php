@@ -31,9 +31,9 @@
                 </div> <!-- end card-->
             </div> <!-- end col -->  
             @empty
-            <div class="col-md-12">
-                <div class="card">
-                    <h5>No data found.</h5>
+            <div class="col-md-6 mx-auto">
+                <div class="card p-3">
+                    <h5 class="text-center text-muted">No data found.</h5>
                 </div> <!-- end card-->
             </div> <!-- end col -->
             @endforelse

@@ -142,13 +142,10 @@
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <form action="{{ route('logout') }}" method="post">
-                        @csrf
-                    <button style="color: red;" href="" class="dropdown-item notify-item">
+                    <a style="color: red;" href="{{route('logout')}}" class="dropdown-item notify-item">
                         <i class="fe-log-out"></i>
                         <span>Logout</span>
-                    </button>
-                    </form>
+                    </a>
 
                 </div>
             </li>

@@ -11,7 +11,7 @@ class StorePromoCodeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StorePromoCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_type' => 'required',
+            'code' => 'required|max:10',
+            'limit' => 'required',
+            'expired_at' => 'required'
         ];
     }
 }

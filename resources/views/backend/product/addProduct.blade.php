@@ -1,4 +1,10 @@
 @extends('backend.layouts.app')
+@pushOnce('customCss')
+    {{-- quillJs editor css  --}}
+    <link href="{{ asset('backend/assets/libs/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
+    {{-- quillJs editor css  --}}
+@endpushOnce
 @section('content')
     <!-- start page title -->
     <div class="row">
@@ -35,7 +41,6 @@
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-
                                             <x-backend.form.select-input id="category" label="Category" name="category"
                                                 placeholder="Choose Category..." onchange="getSubCategories(this)">
                                                 @forelse ($categories as $category)
@@ -48,16 +53,6 @@
                                             </x-backend.form.select-input>
                                         </div>
                                         <div class="col-md-6">
-                                            {{-- <div class="mt-1">
-                                                <label for="sub-category" class="form-label">Sub Category <span
-                                                        style="color:red;">*</span></label>
-                                                <select class="form-select" id="sub-category" name="sub_category">
-                                                    <option selected disabled>Choose Category first...</option>
-                                                </select>
-                                                @error('sub_category')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div> --}}
                                             <x-backend.form.select-input id="sub-category" label="Sub Category"
                                                 name="category" placeholder="Choose Category first..." name="sub_category">
                                             </x-backend.form.select-input>
@@ -72,12 +67,11 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mt-1">
-                                                <label for="discount-type" class="form-label">Discount Type <span
-                                                        style="color:red;">*</span></label>
-                                                <select class="form-select" id="discount-type" name="discount_type">
+                                                <x-backend.form.select-input id="discount-type" label="Discount Type"
+                                                    required name="discount_type">
                                                     <option value="0" selected>Percentage</option>
                                                     <option value="1">Fixed</option>
-                                                </select>
+                                                </x-backend.form.select-input>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -85,13 +79,16 @@
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
+                                            <x-backend.form.text-input label="REVIEWS" type="text" name="reviews">
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
                                             <div class="mt-1">
-                                                <label for="most-populer" class="form-label">Most Popular <span
-                                                        style="color:red;">*</span></label>
-                                                <select class="form-select" id="most-populer" name="most_popular">
+                                                <x-backend.form.select-input id="most-populer" label="Most Popular" required
+                                                    name="most_popular">
                                                     <option value="0" selected>No</option>
                                                     <option value="1">Yes</option>
-                                                </select>
+                                                </x-backend.form.select-input>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -141,6 +138,10 @@
 @endsection
 
 @push('customJs')
+    {{-- quillJs Script  --}}
+    <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script>
+    {{-- quillJs Script  --}}
     <script>
         const descriptionAdd = () => {
             $("#description").val($('.ql-editor').html())

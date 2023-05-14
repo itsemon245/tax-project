@@ -10,15 +10,17 @@ use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Role\RoleController;
 use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\UserProfileController;
+use App\Http\Controllers\Backend\Client\ClientController;
 use App\Http\Controllers\Frontend\User\UserDocController;
+use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Product\ProductController;
-use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
-use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
+use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
+use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
+use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +54,16 @@ Route::prefix('admin')->group(function () {
     Route::resource('promo-code', PromoCodeController::class);
     Route::resource('user-doc', UserDocController::class);
     Route::resource('map', MapController::class);
-    Route::resource('role', RoleController::class);
 
+    Route::resource('user-doc',UserDocController::class);
+    Route::resource('user-doc-type',DocumentTypeController::class);
+    Route::resource('map',MapController::class);
+    Route::resource('role', RoleController::class);
+    Route::resource('invoice', InvoiceController::class);
+
+
+
+    //custom routes
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
     Route::POST('/get-users/{userType}', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
@@ -62,4 +72,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('calendar', CalendarController::class);
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
+
+    Route::resource('client',ClientController::class);
 });
