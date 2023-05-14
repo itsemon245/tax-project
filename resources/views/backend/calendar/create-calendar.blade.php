@@ -99,6 +99,9 @@
                     select: function(start, end, allDays) {
                         $('#eventModal').modal('toggle')
                     },
+
+                    
+
                     // editable: true,
 
                     // eventDrop: function(event) {
