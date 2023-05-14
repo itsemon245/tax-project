@@ -23,6 +23,4 @@
     @stack('customCss')
     <!-- Head js -->
     <script src="{{ asset('backend/assets/js/head.js') }}"></script>
-
-    @stack('CustomCssAndJs')
 </head>

@@ -1,8 +1,6 @@
 @extends('backend.layouts.app')
 
 @section('content')
-    @push('CustomCssAndJs')
-    @endpush
     <x-backend.ui.breadcrumbs :list="['Backend', 'Calender']" />
     {{-- {{dd($events)}} --}}
     <span class="btn btn-sm btn-primary waves-effect waves-light" title="I&#39;m a Tippy tooltip!" tabindex="0"
