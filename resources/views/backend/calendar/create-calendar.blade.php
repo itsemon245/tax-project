@@ -21,9 +21,9 @@
                 </div>
             </div>
         </div>
-        <!-- Modal -->
+        <!-- Modal for creating event -->
         <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
                     <form action="{{ route('calendar.store') }}" method="post">
@@ -50,7 +50,77 @@
                             </x-backend.form.select-input>
                             <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
                                 label="Start Date" />
-                            <x-backend.form.text-input name="event_desc" label="Event Description" />
+                            <x-backend.form.text-input name="event_description" label="Event Description" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for showing event -->
+        <div class="modal fade" id="eventShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-capitalize" id="eventTitle">Dummy Title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="px-4">
+                        <p class="mb-0">
+                            <span>With: </span>
+                            <span class="badge bg-success px-1 text-caplitalize" id="client">Client name</span>
+                        </p>
+                        <p>
+                            <span>Service: </span>
+                            <span class="badge bg-blue px-1 text-caplitalize" id="service">dummy service</span>
+                        </p>
+                        <p class="text-muted" id="description">
+                            dummy description
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <x-backend.ui.button id="deleteBtn" type="delete" action="" class="text-capitalize btn-sm" />
+                        <x-backend.ui.button class="btn-info text-capitalize btn-sm" id="editBtn">Edit
+                        </x-backend.ui.button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for updating event -->
+        <div class="modal fade" id="eventUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <form action="" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Update Event</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <x-backend.form.text-input id="eventTitle" name="event_name" label="Event Name" />
+                            <x-backend.form.select-input id="service" label="Services" name="service"
+                                placeholder="Select Service">
+                                <option value="service 1">Service 1</option>
+                                <option value="service 2">Service 2</option>
+                                <option value="service 3">Service 3</option>
+                            </x-backend.form.select-input>
+                            <x-backend.form.select-input id="client" label="Client" name="client"
+                                placeholder="Select Client">
+                                <option value="client 1">Client 1</option>
+                                <option value="client 2">Client 2</option>
+                                <option value="client 3">Service 3</option>
+                            </x-backend.form.select-input>
+                            <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
+                                label="Start Date" />
+                            <x-backend.form.text-input id="description" name="event_description"
+                                label="Event Description" />
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -201,12 +271,12 @@
                         $('#start-date').val(date);
                     },
                     events: myEvents,
-                    eventContent: function(arg) {
+                    eventContent: function(info) {
                         let client = 'Client Name';
                         let service = 'service';
-                        let title = arg.event.title
-                        let time = arg.timeText
-                        let bg = arg.isToday ? 'bg-danger' : 'bg-blue'
+                        let title = info.event.title
+                        let time = info.timeText
+                        let bg = info.isToday ? 'bg-danger' : 'bg-blue'
                         let html = `
                             <div class="w-100 text-light ${bg} p-1 rounded"
                             title="${client}" tabindex="0" data-plugin="tippy" data-tippy-placement="top">
@@ -273,6 +343,40 @@
                                 console.log(error)
                             },
                         });
+                    },
+                    eventClick: function(info) {
+                        const title = $('#eventShowModal #eventTitle')
+                        const client = $('#eventShowModal #client')
+                        const service = $('#eventShowModal #service')
+                        const description = $('#eventShowModal #description')
+                        const editBtn = $('#editBtn')
+
+                        //set content for the event
+                        title.text(info.event.title)
+                        client.text(info.event.extendedProps.client)
+                        service.text(info.event.extendedProps.service)
+                        description.text(info.event.extendedProps.description)
+
+                        $('#eventShowModal').modal('toggle') //open modal to show event
+
+                        //set event listener for edit btn
+                        editBtn.click(e => {
+                            const title = $('#eventUpdateModal #eventTitle')
+                            const client = $('#eventUpdateModal #client')
+                            const service = $('#eventUpdateModal #service')
+                            const description = $('#eventUpdateModal #description')
+                            const startDateInput = $('#eventUpdateModal #start-date')
+                            let date = new Date(info.event.start)
+                            let startDate = date.toISOString()
+                            startDate = startDate.replace('Z', '')
+                            // console.log(startDate);
+                            $('#eventShowModal').modal('toggle') //close modal to show event
+
+                            title.val(info.event.title)
+                            startDateInput.val(startDate);
+                            console.log();
+                            $('#eventUpdateModal').modal('toggle') //open modal to update event
+                        })
                     }
                 });
                 calendar.render();
