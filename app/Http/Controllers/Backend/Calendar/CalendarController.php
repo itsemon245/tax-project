@@ -101,9 +101,12 @@ class CalendarController extends Controller
      */
     public function destroy(Calendar $calendar)
     {
-        //delete calendar data
-        $event = Calendar::findOrFail($calendar->id);
-        $event->delete();
-        return response()->json(['success' => 'event deleted successfully', 'id' => $calendar->id]);
+        $calendar->delete();
+
+        $notification = [
+            'message' => 'Event Deleted',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
     }
 }
