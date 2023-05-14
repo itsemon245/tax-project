@@ -44,6 +44,7 @@
                     <hr class="my-3">
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end">
                         @auth
+                        
                             <a class="btn btn-dark" href="{{ route('logout') }}">Log out</a>
                         @else
                             <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
