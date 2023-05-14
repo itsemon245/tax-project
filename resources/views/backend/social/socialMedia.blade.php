@@ -41,7 +41,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">All Sub-Categories</h4>
-                    <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                    <x-backend.table.basic >
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -76,7 +76,7 @@
                                 </tr>
                             @endforelse
                         </tbody>
-                    </table>
+                    </x-backend.table.basic>
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->

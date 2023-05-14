@@ -1,4 +1,7 @@
 @extends('backend.layouts.app')
+@push('customCss')
+    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 @section('content')
     <!-- start page title -->
     <div class="row">
@@ -167,6 +170,7 @@
 @endsection
 
 @push('customJs')
+    <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script>
     <script>
         const descriptionAdd = () => {
             $("#description").val($('.ql-editor').html())
