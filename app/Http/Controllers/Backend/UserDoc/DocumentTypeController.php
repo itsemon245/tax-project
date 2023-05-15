@@ -56,7 +56,7 @@ class DocumentTypeController extends Controller
      */
     public function edit(DocumentType $documentType)
     {
-        dd($documentType);
+        // dd($documentType);
         return view('backend.userdoc.editDocType', compact('documentType'));
     }
 
