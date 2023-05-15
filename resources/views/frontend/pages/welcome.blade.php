@@ -15,8 +15,4 @@
     </x-frontend.info-section>
     <x-frontend.testimonial-section :$testimonials>
     </x-frontend.testimonial-section>
-
-    @push('footer')
-        <x-frontend.layouts.footer :socials="$socials" />
-    @endpush
 @endsection

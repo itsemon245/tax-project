@@ -32,13 +32,13 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request)
     {
         $client_store= new Client();
-        $client_store->client_name= $request->client_name;
+        $client_store->name= $request->client_name;
         $client_store->father_name= $request->father_name;
         $client_store->mother_name= $request->mother_name;
         $client_store->company_name= $request->company_name;
-        $client_store->husband_wife_name= $request->husband_wife_name;
+        $client_store->spouse_name= $request->husband_wife_name;
         $client_store->present_address= $request->present_address;
-        $client_store->parmentat_address= $request->parmentat_address;
+        $client_store->permanent_address= $request->parmentat_address;
         $client_store->tin= $request->tin;
         $client_store->circle= $request->circle;
         $client_store->zone= $request->zone;
@@ -74,13 +74,13 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        $client->client_name= $request->client_name;
+        $client->name= $request->client_name;
         $client->father_name= $request->father_name;
         $client->mother_name= $request->mother_name;
         $client->company_name= $request->company_name;
-        $client->husband_wife_name= $request->husband_wife_name;
+        $client->spouse_name= $request->husband_wife_name;
         $client->present_address= $request->present_address;
-        $client->parmentat_address= $request->parmentat_address;
+        $client->permanent_address= $request->parmentat_address;
         $client->tin= $request->tin;
         $client->circle= $request->circle;
         $client->zone= $request->zone;

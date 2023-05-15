@@ -2,32 +2,28 @@
 
 namespace App\Http\Controllers\Backend\Calendar;
 
+use Carbon\Carbon;
+use App\Models\Client;
 use App\Models\Calendar;
+use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
-use Carbon\Carbon;
 
 class CalendarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $calendars = Calendar::latest()->get();
-        return view('backend.calendar.view-calendar', compact('calendars'));
-    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $events = Calendar::latest()->get();
+        $events = Calendar::with('client')->latest()->get();
         $today = Carbon::now()->format('Y-m-d');
+        $clients = Client::get();
+        $services = Calendar::get('service');
         $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();
-        return view('backend.calendar.create-calendar', compact('events', 'currentEvents'));
+        return view('backend.calendar.create-calendar', compact('events', 'currentEvents', 'clients', 'services'));
     }
 
     /**
@@ -37,6 +33,8 @@ class CalendarController extends Controller
     {
         $event = new Calendar();
         $event->title = $request->event_name;
+        $event->client_id = $request->client;
+        $event->service = $request->service;
         $event->start = $request->start_date;
         $event->description = $request->event_description;
         $event->save();
@@ -46,21 +44,7 @@ class CalendarController extends Controller
         ];
         return back()->with($notification);
     }
-    /**
-     * Display the specified resource.
-     */
-    public function show(Calendar $calendar)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Calendar $calendar)
-    {
-        return view('backend.calendar.edit-calendar', compact('calendar'));
-    }
 
     /**
      * Update the specified resource in storage.
@@ -68,6 +52,8 @@ class CalendarController extends Controller
     public function update(UpdateCalendarRequest $request, Calendar $calendar)
     {
         $calendar->title = $request->event_name;
+        $calendar->client_id = $request->client;
+        $calendar->service = $request->service;
         $calendar->start = $request->start_date;
         $calendar->description = $request->event_description;
         $calendar->update();
