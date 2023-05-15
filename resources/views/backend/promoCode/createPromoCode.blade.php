@@ -15,17 +15,12 @@
                                 <x-backend.form.select-input id="user_type" label="User Type" name="user_type"
                                     onchange="getUsers(this)">
                                     <option selected value="all">All</option>
+                                    <option value="individual">Individual</option>
                                     <option value="partner">Partner</option>
                                     <option value="user">User</option>
                                 </x-backend.form.select-input>
                             </div>
                             <div class="col-md-4">
-                                <x-backend.form.select-input id="user_type" label="User Type" name="user_type"
-                                    onchange="getUsers(this)">
-                                    <option selected value="all">All</option>
-                                    <option value="partner">Partner</option>
-                                    <option value="user">User</option>
-                                </x-backend.form.select-input>
                                 <div class="mt-1">
                                     <label class="form-label">Select Partner/User</label> <br />
                                     <select id="selectize-select" class="form-control" name="user_id">
@@ -87,12 +82,14 @@
 
             const getUsers = (e) => {
                 const user_type = e.value
-                if (user_type === 'all') return;
                 user_type === 'partner' ?
                     $("#limit").val(10) :
                     $("#limit").val(1)
-                let url = "{{ route('getUsers', ':userType') }}"
-                url = url.replace(':userType', user_type)
+                if (user_type !== 'individual') {
+                    $("#selectize-select").html(`<option value="" selected>All</option>`)
+                    return
+                }
+                let url = "{{ route('getUsers') }}"
 
                 $.ajax({
                     type: 'POST',
@@ -105,10 +102,7 @@
                             `<option value="${user.id}">${user.name}</option>`).join(
                             '')
                         $("#selectize-select").html('')
-                        $("#selectize-select").html(
-                            `<option value="" selected>All ${user_type.charAt(0).toUpperCase() + user_type.slice(1)}</option>` +
-                            users
-                        )
+                        $("#selectize-select").html(users)
                     },
                     error: function(error) {
                         console.log(error)

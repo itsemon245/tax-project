@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('promo_codes', function (Blueprint $table) {
             $table->id();
-            $table->enum('user_type', ['all', 'user', 'partner'])->nullable();
+            $table->enum('user_type', ['all', 'individual', 'user', 'partner'])->nullable();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('code');
             $table->boolean('status')->default(1);
