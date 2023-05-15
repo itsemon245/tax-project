@@ -7,7 +7,6 @@ use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleStoreRequest;
-use App\Http\Requests\RoleUpdateRequest;
 use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
@@ -71,13 +70,14 @@ class RoleController extends Controller
             ]
         ]);
         $role->name = $request->role;
+        $role->updated_at = now();
         $role->syncPermissions($request->permissions);
         $role->update();
         $notification = [
             'message' => "Role Updated",
             'alert-type' => "success"
         ];
-        return back()->with($notification);
+        return redirect(route('role.index'))->with($notification);
     }
 
     /**

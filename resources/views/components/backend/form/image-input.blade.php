@@ -16,3 +16,9 @@
         <span class="text-danger">{{ $message }}</span>
     @enderror
 </div>
+
+@pushOnce('customJs')
+    {{-- Photo Preview for uploads --}}
+    <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
+    {{-- Photo Preview for uploads --}}
+@endPushOnce

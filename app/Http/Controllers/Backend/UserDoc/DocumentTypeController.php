@@ -15,7 +15,7 @@ class DocumentTypeController extends Controller
      */
     public function index()
     {
-        
+
         $doc_types = DocumentType::get();
         return view('backend.userdoc.createDocType', compact('doc_types'));
     }
@@ -54,9 +54,10 @@ class DocumentTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DocumentType $documentType)
+    public function edit($id)
     {
         // dd($documentType);
+        $documentType = DocumentType::findOrFail($id);
         return view('backend.userdoc.editDocType', compact('documentType'));
     }
 
@@ -65,7 +66,13 @@ class DocumentTypeController extends Controller
      */
     public function update(UpdateDocumentTypeRequest $request, DocumentType $documentType)
     {
-        //
+        $documentType->doc_type_name = $request->add_document_type;
+        $documentType->update();
+        $notification = array(
+            'message' => "Updated Successfully",
+            'alert-type' => 'success',
+        );
+        return redirect(route('user-doc-type.index'))->with($notification);
     }
 
     /**
@@ -73,6 +80,11 @@ class DocumentTypeController extends Controller
      */
     public function destroy(DocumentType $documentType)
     {
-        //
+        $documentType->delete();
+        $notification = array(
+            'message' => "Deleted Successfully",
+            'alert-type' => 'success',
+        );
+        return back()->with($notification);
     }
 }
