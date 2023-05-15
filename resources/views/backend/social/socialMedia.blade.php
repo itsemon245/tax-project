@@ -58,8 +58,7 @@
                                     <td>{{ $social_media->link }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('social-handle.edit', $social_media) }}"
-                                                class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
+                                            <x-backend.ui.button type="edit" href="{{ route('social-handle.edit', $social_media) }}" class="btn-sm" />
                                             <form action="{{ route('social-handle.destroy', $social_media->id) }}"
                                                 method="POST">
                                                 @csrf

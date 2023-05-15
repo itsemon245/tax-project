@@ -31,7 +31,7 @@
                 <a class="" href="#">Training</a>
             </li>
             <li class="sidebar-item">
-                <a class="" href="#">Book Store</a>
+                <a class="" href="{{route('books.view')}}">Book Store</a>
             </li>
             <li class="sidebar-item">
                 <a class="" href="#">JusAuditor</a>

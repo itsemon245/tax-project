@@ -17,6 +17,9 @@
                                     onchange="getUsers(this)">
                                     <option {{ $promoCode->user_type === 'all' ? 'selected' : '' }} value="all">All
                                     </option>
+                                    <option {{ $promoCode->user_type === 'individual' ? 'selected' : '' }}
+                                        value="individual">Individual
+                                    </option>
                                     <option {{ $promoCode->user_type === 'partner' ? 'selected' : '' }} value="partner">
                                         Partner</option>
                                     <option {{ $promoCode->user_type === 'user' ? 'selected' : '' }} value="user">User
@@ -29,7 +32,7 @@
                                     <select id="selectize-select" class="form-control" name="user_id">
                                         {!! $promoCode->user
                                             ? "<option value='{$promoCode->user->id}' selected>{$promoCode->user->name}</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
                                             : "<option value='' selected>All</option>" !!}
                                     </select>
                                 </div>
@@ -91,17 +94,14 @@
 
             const getUsers = (e) => {
                 const user_type = e.value
-                if (user_type === 'all') {
-                    $("#selectize-select").html('<option value="" selected>All</option>')
-                    return;
-                };
-
                 user_type === 'partner' ?
                     $("#limit").val(10) :
                     $("#limit").val(1);
-
-                let url = "{{ route('getUsers', ':userType') }}"
-                url = url.replace(':userType', user_type)
+                if (user_type !== 'individual') {
+                    $("#selectize-select").html('<option value="" selected>All</option>')
+                    return;
+                };
+                let url = "{{ route('getUsers') }}"
 
                 $.ajax({
                     type: 'POST',
@@ -111,13 +111,11 @@
                     },
                     success: function(data) {
                         const users = data.map(user =>
-                            `<option value="${user.id}">${user.name}</option>`).join(
-                            '')
+                            `<option value="${user.id}">${user.name}</option>`
+                        ).join('')
+
                         $("#selectize-select").html('')
-                        $("#selectize-select").html(
-                            `<option value="" selected>All ${user_type.charAt(0).toUpperCase() + user_type.slice(1)}</option>` +
-                            users
-                        )
+                        $("#selectize-select").html(users)
                     },
                     error: function(error) {
                         console.log(error)

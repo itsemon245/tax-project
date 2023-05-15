@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->text('client_name');
+            $table->text('name');
             $table->text('father_name');
             $table->text('mother_name');
             $table->text('company_name');
-            $table->text('husband_wife_name');
-            $table->text('present_address');
-            $table->text('parmentat_address');
+            $table->text('spouse_name');
+            $table->longText('present_address');
+            $table->longText('permanent_address');
             $table->text('tin');
             $table->text('circle');
             $table->text('zone');
