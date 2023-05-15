@@ -107,9 +107,9 @@ class PromoCodeController extends Controller
     /**
      * Get User According User Type
      */
-    public function getUsers($userType)
+    public function getUsers()
     {
-        $users = User::role($userType)->get(['id', 'name']);
+        $users = User::all(['id', 'name']);
         return $users;
     }
 }
