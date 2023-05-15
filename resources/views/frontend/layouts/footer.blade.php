@@ -37,7 +37,7 @@
                 <div class="d-flex flex-column align-items-center text-light">
                     <p class="mb-1" style="font-weight: 500;font-size:18px;">Stay Connected</p>
                     <div class="social-handles">
-                        @foreach ($socials as $social)
+                        @foreach (getRecords('social_handles') as $social)
                             <div class="d-flex gap-2 align-items-center">
                                 <span class="{{ $social->icon }}"></span>
                                 <a class="text-capitalize" href="{{ $social->link }}" target="_blank" rel="noopener noreferrer">{{ $social->name }}</a>

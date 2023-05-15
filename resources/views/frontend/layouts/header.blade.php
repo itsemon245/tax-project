@@ -29,7 +29,7 @@
                     <a class=" nav-link text-light" href="#">Training</a>
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="#">Book Store</a>
+                    <a class=" nav-link text-light" href="{{route('books.view')}}">Book Store</a>
                 </li>
                 <li class="nav-item custom-nav-item">
                     <a class=" nav-link text-light" href="#">JusAuditor</a>
