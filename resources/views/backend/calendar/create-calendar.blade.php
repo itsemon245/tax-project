@@ -36,15 +36,15 @@
                             <x-backend.form.text-input name="event_name" label="Event Name" />
                             <x-backend.form.select-input id="services" label="Services" name="service"
                                 placeholder="Select Service">
-                                <option value="service 1">Service 1</option>
-                                <option value="service 2">Service 2</option>
-                                <option value="service 3">Service 3</option>
+                                @foreach ($services as $service)
+                                    <option value="{{ $service->service }}">{{ $service->service }}</option>
+                                @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.select-input id="client" label="Client" name="client"
                                 placeholder="Select Client">
-                                <option value="client 1">Client 1</option>
-                                <option value="client 2">Client 2</option>
-                                <option value="client 3">Service 3</option>
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
                                 label="Start Date" />
@@ -97,23 +97,22 @@
                         @method('PUT')
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Update Event</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
                         <div class="modal-body">
                             <x-backend.form.text-input id="eventTitle" name="event_name" label="Event Name" />
                             <x-backend.form.select-input id="service" label="Services" name="service"
                                 placeholder="Select Service">
-                                <option value="service 1">Service 1</option>
-                                <option value="service 2">Service 2</option>
-                                <option value="service 3">Service 3</option>
+                                @foreach ($services as $service)
+                                    <option value="{{ $service->service }}">{{ $service->service }}</option>
+                                @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.select-input id="client" label="Client" name="client"
                                 placeholder="Select Client">
-                                <option value="client 1">Client 1</option>
-                                <option value="client 2">Client 2</option>
-                                <option value="client 3">Service 3</option>
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
                                 label="Start Date" />
@@ -154,19 +153,20 @@
                     },
                     events: myEvents,
                     eventContent: function(info) {
-                        let client = 'Client Name';
-                        let service = 'service';
+                        let client = info.event.extendedProps.client.name;
+                        let service = info.event.extendedProps.service;
                         let title = info.event.title
                         let time = info.timeText
                         let bg = info.isToday ? 'bg-danger' : 'bg-blue'
                         let html = `
-                            <div class="w-100 text-light ${bg} p-1 rounded"
-                            title="${client}" tabindex="0" data-plugin="tippy" data-tippy-placement="top">
-                                <div class="d-flex justify-content-end align-items-center">
-                                    <strong class="mx-auto">${title}</strong>
+                            <div class="w-100 text-light ${bg} rounded" style="padding: 3px;max-width:100%;" title="${client}">
+                                <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
+                                    <div>
+                                        <strong class="">${title}</strong>
+                                        <p class='text-light m-0 text-capitalize' style="text-align:left;">${service}</p>
+                                    </div>
                                     <sup class="">${time}</sup>
                                 </div>
-                                <p class='text-light mb-0'>${service}</p>
                             </div>
                             `
 
@@ -240,7 +240,7 @@
                         deleteForm.attr('action', url)
                         //set content for the event
                         title.text(info.event.title)
-                        client.text(info.event.extendedProps.client)
+                        client.text(info.event.extendedProps.client.name)
                         service.text(info.event.extendedProps.service)
                         description.text(info.event.extendedProps.description)
 
@@ -265,17 +265,28 @@
                             title.val(info.event.title)
                             description.val(info.event.extendedProps.description)
                             startDateInput.val(startDate);
-                            $('#eventUpdateModal').modal('toggle') //open modal to update event
+                            //select client and service in the select input
+                            triggerSelected(client.children(), info.event.extendedProps.client_id)
+                            triggerSelected(service.children(), info.event.extendedProps.service)
+                            setTimeout(() => {
+                                $('#eventUpdateModal').modal('toggle')
+                            }, 500); //open modal to update event
                         })
                     }
                 });
                 calendar.render();
+
+                function triggerSelected(array, value) {
+                    $.each(array, function(index, element) {
+                        element.setAttribute('selected', element.value == value)
+                    });
+                }
             });
         </script>
         <style>
-            .fc .fc-toolbar {
+            /* .fc .fc-toolbar {
                 display: inline-block !important;
-            }
+            } */
         </style>
     @endpush
 @endsection

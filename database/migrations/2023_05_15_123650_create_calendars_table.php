@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('calendars', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('client_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('service')->nullable();
-            $table->string('client')->nullable();
             $table->string('title');
             $table->dateTime('start');
             $table->text('description')->nullable();
