@@ -3,8 +3,6 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Backend', 'Calender']" />
     {{-- {{dd($events)}} --}}
-    <span class="btn btn-sm btn-primary waves-effect waves-light" title="I&#39;m a Tippy tooltip!" tabindex="0"
-        data-plugin="tippy" data-tippy-placement="top">Top</span>
     <input type="hidden" id="events" value="{{ $events }}">
     <x-backend.ui.section-card name="Calendar">
         {{-- calendar section  --}}
@@ -139,6 +137,11 @@
         <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.7/index.global.min.js"></script>
         {{-- sweet alert2 --}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        {{-- tippy js --}}
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var myEvents = $('#events').val()
@@ -146,12 +149,12 @@
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
+                    events: myEvents,
                     dateClick: function(info) {
                         let date = info.dateStr + "T00:00:00"
                         $('#eventModal').modal('toggle')
                         $('#start-date').val(date);
                     },
-                    events: myEvents,
                     eventContent: function(info) {
                         let client = info.event.extendedProps.client.name;
                         let service = info.event.extendedProps.service;
@@ -159,7 +162,7 @@
                         let time = info.timeText
                         let bg = info.isToday ? 'bg-danger' : 'bg-blue'
                         let html = `
-                            <div class="w-100 text-light ${bg} rounded" style="padding: 3px;max-width:100%;" title="${client}">
+                            <div id="myButton" data-tippy-content="Client: ${client}" class="w-100 text-light ${bg} rounded" style="padding: 3px;max-width:100%;">
                                 <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
                                     <div>
                                         <strong class="">${title}</strong>
@@ -177,10 +180,15 @@
                     editable: true,
 
                     eventDrop: function(info) {
-                        // console.log(info.event);
                         let date = new Date(info.event.start)
+                        let time = "T" + date.getHours() + ":" + date.getMinutes();
+                        if (date.getHours() < 6) {
+                            date.setDate(date.getDate() + 1)
+                        }
                         let startDate = date.toISOString()
-                        startDate = startDate.replace('Z', '')
+                        startDate = startDate.split('T')
+                        const newDate = startDate[0] + time;
+                        console.log(newDate);
                         let id = info.event._def.publicId;
                         let url = `{{ route('event.dragUpdate', ':id') }}`
                         url = url.replace(':id', id)
@@ -193,8 +201,7 @@
                             method: "patch",
                             data: {
                                 event_name: info.event.title,
-                                start_date: startDate,
-                                event_description: info.event.extendedProps.description
+                                start_date: newDate,
                             },
                             success: function(response) {
                                 console.log(response)
@@ -276,6 +283,10 @@
                 });
                 calendar.render();
 
+                tippy('#myButton', {
+                    animation: 'scale',
+                });
+
                 function triggerSelected(array, value) {
                     $.each(array, function(index, element) {
                         element.setAttribute('selected', element.value == value)
@@ -283,10 +294,5 @@
                 }
             });
         </script>
-        <style>
-            /* .fc .fc-toolbar {
-                display: inline-block !important;
-            } */
-        </style>
     @endpush
 @endsection

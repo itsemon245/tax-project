@@ -12,15 +12,6 @@ use App\Http\Requests\UpdateCalendarRequest;
 
 class CalendarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $calendars = Calendar::latest()->get();
-
-        return view('backend.calendar.view-calendar', compact('calendars'));
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -53,21 +44,7 @@ class CalendarController extends Controller
         ];
         return back()->with($notification);
     }
-    /**
-     * Display the specified resource.
-     */
-    public function show(Calendar $calendar)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Calendar $calendar)
-    {
-        return view('backend.calendar.edit-calendar', compact('calendar'));
-    }
 
     /**
      * Update the specified resource in storage.
