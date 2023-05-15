@@ -13,7 +13,25 @@
             <div class="col-md-2">
                 <p class="text-center text-primary h5 mb-0">Todays Events</p>
                 <div class="border-start border-top border-2 border-primary h-100 p-2 my-2">
-                    {{-- Current events --}}
+                    <div class="d-flex flex-column gap-1">
+                        @forelse ($currentEvents as $event)
+                            <div id="myButton" data-tippy-content="Client: {{ $event->client->name }}"
+                                class="w-100 text-light bg-danger rounded" style="padding: 5px;max-width:100%;">
+                                <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
+                                    <div>
+                                        <strong class="">{{ $event->title }}</strong>
+                                        <p class='text-light m-0 text-capitalize' style="text-align:left;">
+                                            {{ $event->service }}</p>
+                                    </div>
+                                    <div class="" style="font-size: 12px;">{{ Carbon\Carbon::parse($event->start)->format('h:m a') }}</div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-success text-center">
+                                <strong>No events for today</strong>
+                            </div>
+                        @endforelse
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,7 +68,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button class="btn btn-primary">Save changes</button>
+                            <button class="btn btn-primary">Create Event</button>
                         </div>
                     </form>
                 </div>
@@ -95,7 +113,8 @@
                         @method('PUT')
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Update Event</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
 
                         <div class="modal-body">
@@ -119,7 +138,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button class="btn btn-primary">Save changes</button>
+                            <button class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>
                 </div>
