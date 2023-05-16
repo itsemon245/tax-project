@@ -42,8 +42,8 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <x-backend.ui.button type="custom" href="{{ route('user-doc.show', $document) }}" class="btn-sm btn-info">View</x-backend.ui.button>
-                                        <x-backend.ui.button type="delete" action="#" class="btn-sm" />
+                                    <x-backend.ui.button type="custom" href="{{ route('user-doc-type.edit', $document->id) }}" class="btn-sm btn-info">View</x-backend.ui.button>
+                                        <x-backend.ui.button type="delete" action="#" class="btn-sm"></x-backend.ui.button>
                                 </div>
                             </td>
                         </tr>
