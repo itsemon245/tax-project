@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\Map\MapController;
+use App\Http\Controllers\Backend\Book\BookController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Role\RoleController;
@@ -74,4 +75,6 @@ Route::prefix('admin')->group(function () {
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
 
     Route::resource('client', ClientController::class);
+
+    Route::resource('book', BookController::class);
 });
