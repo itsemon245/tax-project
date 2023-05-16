@@ -136,6 +136,25 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#invoiceSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Invoice</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="invoiceSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('invoice.create') }}">
+                                    Create
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#appointmentSection" data-bs-toggle="collapse">
@@ -217,21 +236,10 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#calendarCodeSection" data-bs-toggle="collapse">
+                    <a href="{{ route('calendar.create') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> Time Tracking </span>
-                        <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="calendarCodeSection">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('calendar.create') }}">Create</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('calendar.index') }}">View</a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
 
 

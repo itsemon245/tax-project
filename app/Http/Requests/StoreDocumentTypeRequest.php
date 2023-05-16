@@ -22,7 +22,7 @@ class StoreDocumentTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'add_document_type'=>['required','max:50'],
+            'document_type' => "required|string|unique:document_types,name",
         ];
     }
 }

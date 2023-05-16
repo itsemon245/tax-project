@@ -1,4 +1,10 @@
 @extends('backend.layouts.app')
+@pushOnce('customCss')
+    {{-- quillJs editor css  --}}
+    <link href="{{ asset('backend/assets/libs/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
+    {{-- quillJs editor css  --}}
+@endpushOnce
 @section('content')
     <!-- start page title -->
     <div class="row">
@@ -132,6 +138,10 @@
 @endsection
 
 @push('customJs')
+    {{-- quillJs Script  --}}
+    <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script>
+    {{-- quillJs Script  --}}
     <script>
         const descriptionAdd = () => {
             $("#description").val($('.ql-editor').html())

@@ -1,12 +1,8 @@
 @extends('backend.layouts.app')
 
 @section('content')
-    @push('CustomCssAndJs')
-    @endpush
     <x-backend.ui.breadcrumbs :list="['Backend', 'Calender']" />
     {{-- {{dd($events)}} --}}
-    <span class="btn btn-sm btn-primary waves-effect waves-light" title="I&#39;m a Tippy tooltip!" tabindex="0"
-        data-plugin="tippy" data-tippy-placement="top">Top</span>
     <input type="hidden" id="events" value="{{ $events }}">
     <x-backend.ui.section-card name="Calendar">
         {{-- calendar section  --}}
@@ -17,7 +13,25 @@
             <div class="col-md-2">
                 <p class="text-center text-primary h5 mb-0">Todays Events</p>
                 <div class="border-start border-top border-2 border-primary h-100 p-2 my-2">
-                    {{-- Current events --}}
+                    <div class="d-flex flex-column gap-1">
+                        @forelse ($currentEvents as $event)
+                            <div id="myButton" data-tippy-content="Client: {{ $event->client->name }}"
+                                class="w-100 text-light bg-danger rounded" style="padding: 5px;max-width:100%;">
+                                <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
+                                    <div>
+                                        <strong class="">{{ $event->title }}</strong>
+                                        <p class='text-light m-0 text-capitalize' style="text-align:left;">
+                                            {{ $event->service }}</p>
+                                    </div>
+                                    <div class="" style="font-size: 12px;">{{ Carbon\Carbon::parse($event->start)->format('h:m a') }}</div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-success text-center">
+                                <strong>No events for today</strong>
+                            </div>
+                        @endforelse
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,15 +52,15 @@
                             <x-backend.form.text-input name="event_name" label="Event Name" />
                             <x-backend.form.select-input id="services" label="Services" name="service"
                                 placeholder="Select Service">
-                                <option value="service 1">Service 1</option>
-                                <option value="service 2">Service 2</option>
-                                <option value="service 3">Service 3</option>
+                                @foreach ($services as $service)
+                                    <option value="{{ $service }}">{{ $service }}</option>
+                                @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.select-input id="client" label="Client" name="client"
                                 placeholder="Select Client">
-                                <option value="client 1">Client 1</option>
-                                <option value="client 2">Client 2</option>
-                                <option value="client 3">Service 3</option>
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
                                 label="Start Date" />
@@ -54,7 +68,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button class="btn btn-primary">Save changes</button>
+                            <button class="btn btn-primary">Create Event</button>
                         </div>
                     </form>
                 </div>
@@ -107,15 +121,15 @@
                             <x-backend.form.text-input id="eventTitle" name="event_name" label="Event Name" />
                             <x-backend.form.select-input id="service" label="Services" name="service"
                                 placeholder="Select Service">
-                                <option value="service 1">Service 1</option>
-                                <option value="service 2">Service 2</option>
-                                <option value="service 3">Service 3</option>
+                                @foreach ($services as $service)
+                                    <option value="{{ $service }}">{{ $service }}</option>
+                                @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.select-input id="client" label="Client" name="client"
                                 placeholder="Select Client">
-                                <option value="client 1">Client 1</option>
-                                <option value="client 2">Client 2</option>
-                                <option value="client 3">Service 3</option>
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
                                 label="Start Date" />
@@ -124,7 +138,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button class="btn btn-primary">Save changes</button>
+                            <button class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>
                 </div>
@@ -142,6 +156,11 @@
         <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.7/index.global.min.js"></script>
         {{-- sweet alert2 --}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        {{-- tippy js --}}
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var myEvents = $('#events').val()
@@ -149,26 +168,27 @@
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
+                    events: myEvents,
                     dateClick: function(info) {
                         let date = info.dateStr + "T00:00:00"
                         $('#eventModal').modal('toggle')
                         $('#start-date').val(date);
                     },
-                    events: myEvents,
                     eventContent: function(info) {
-                        let client = 'Client Name';
-                        let service = 'service';
+                        let client = info.event.extendedProps.client.name;
+                        let service = info.event.extendedProps.service;
                         let title = info.event.title
                         let time = info.timeText
                         let bg = info.isToday ? 'bg-danger' : 'bg-blue'
                         let html = `
-                            <div class="w-100 text-light ${bg} p-1 rounded"
-                            title="${client}" tabindex="0" data-plugin="tippy" data-tippy-placement="top">
-                                <div class="d-flex justify-content-end align-items-center">
-                                    <strong class="mx-auto">${title}</strong>
+                            <div id="myButton" data-tippy-content="Client: ${client}" class="w-100 text-light ${bg} rounded" style="padding: 3px;max-width:100%;">
+                                <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
+                                    <div>
+                                        <strong class="">${title}</strong>
+                                        <p class='text-light m-0 text-capitalize' style="text-align:left;">${service}</p>
+                                    </div>
                                     <sup class="">${time}</sup>
                                 </div>
-                                <p class='text-light mb-0'>${service}</p>
                             </div>
                             `
 
@@ -179,10 +199,15 @@
                     editable: true,
 
                     eventDrop: function(info) {
-                        // console.log(info.event);
                         let date = new Date(info.event.start)
+                        let time = "T" + date.getHours() + ":" + date.getMinutes();
+                        if (date.getHours() < 6) {
+                            date.setDate(date.getDate() + 1)
+                        }
                         let startDate = date.toISOString()
-                        startDate = startDate.replace('Z', '')
+                        startDate = startDate.split('T')
+                        const newDate = startDate[0] + time;
+                        console.log(newDate);
                         let id = info.event._def.publicId;
                         let url = `{{ route('event.dragUpdate', ':id') }}`
                         url = url.replace(':id', id)
@@ -195,8 +220,7 @@
                             method: "patch",
                             data: {
                                 event_name: info.event.title,
-                                start_date: startDate,
-                                event_description: info.event.extendedProps.description
+                                start_date: newDate,
                             },
                             success: function(response) {
                                 console.log(response)
@@ -242,7 +266,7 @@
                         deleteForm.attr('action', url)
                         //set content for the event
                         title.text(info.event.title)
-                        client.text(info.event.extendedProps.client)
+                        client.text(info.event.extendedProps.client.name)
                         service.text(info.event.extendedProps.service)
                         description.text(info.event.extendedProps.description)
 
@@ -267,17 +291,27 @@
                             title.val(info.event.title)
                             description.val(info.event.extendedProps.description)
                             startDateInput.val(startDate);
-                            $('#eventUpdateModal').modal('toggle') //open modal to update event
+                            //select client and service in the select input
+                            triggerSelected(client.children(), info.event.extendedProps.client_id)
+                            triggerSelected(service.children(), info.event.extendedProps.service)
+                            setTimeout(() => {
+                                $('#eventUpdateModal').modal('toggle')
+                            }, 500); //open modal to update event
                         })
                     }
                 });
                 calendar.render();
+
+                tippy('#myButton', {
+                    animation: 'scale',
+                });
+
+                function triggerSelected(array, value) {
+                    $.each(array, function(index, element) {
+                        element.setAttribute('selected', element.value == value)
+                    });
+                }
             });
         </script>
-        <style>
-            .fc .fc-toolbar {
-                display: inline-block !important;
-            }
-        </style>
     @endpush
 @endsection

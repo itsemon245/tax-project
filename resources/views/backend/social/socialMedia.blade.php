@@ -15,7 +15,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <x-backend.form.select-input id="social" label="Social" name="social"
+                                    <x-backend.form.select-input id="selectize-optgroup" label="Social" name="social"
                                         placeholder="Select Platform" required>
                                         @foreach (socialItems() as $item)
                                             <option value="{{ json_encode($item) }}">
@@ -41,7 +41,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">All Sub-Categories</h4>
-                    <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                    <x-backend.table.basic>
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -58,8 +58,7 @@
                                     <td>{{ $social_media->link }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('social-handle.edit', $social_media) }}"
-                                                class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
+                                            <x-backend.ui.button type="edit" href="{{ route('social-handle.edit', $social_media) }}" class="btn-sm" />
                                             <form action="{{ route('social-handle.destroy', $social_media->id) }}"
                                                 method="POST">
                                                 @csrf
@@ -76,7 +75,7 @@
                                 </tr>
                             @endforelse
                         </tbody>
-                    </table>
+                    </x-backend.table.basic>
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->
