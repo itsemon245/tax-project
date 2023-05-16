@@ -55,9 +55,9 @@ Route::prefix('admin')->group(function () {
     Route::resource('user-doc', UserDocController::class);
     Route::resource('map', MapController::class);
 
-    Route::resource('user-doc',UserDocController::class);
-    Route::resource('user-doc-type',DocumentTypeController::class);
-    Route::resource('map',MapController::class);
+    Route::resource('user-doc', UserDocController::class);
+    Route::resource('user-doc-type', DocumentTypeController::class);
+    Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
     Route::resource('invoice', InvoiceController::class);
 
@@ -65,7 +65,7 @@ Route::prefix('admin')->group(function () {
 
     //custom routes
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
-    Route::POST('/get-users/{userType}', [PromoCodeController::class, 'getUsers'])->name('getUsers');
+    Route::POST('/get-users', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
     Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panle
 
@@ -73,5 +73,5 @@ Route::prefix('admin')->group(function () {
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
 
-    Route::resource('client',ClientController::class);
+    Route::resource('client', ClientController::class);
 });
