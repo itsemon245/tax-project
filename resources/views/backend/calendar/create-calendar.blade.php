@@ -53,7 +53,7 @@
                             <x-backend.form.select-input id="services" label="Services" name="service"
                                 placeholder="Select Service">
                                 @foreach ($services as $service)
-                                    <option value="{{ $service->service }}">{{ $service->service }}</option>
+                                    <option value="{{ $service }}">{{ $service }}</option>
                                 @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.select-input id="client" label="Client" name="client"
@@ -122,7 +122,7 @@
                             <x-backend.form.select-input id="service" label="Services" name="service"
                                 placeholder="Select Service">
                                 @foreach ($services as $service)
-                                    <option value="{{ $service->service }}">{{ $service->service }}</option>
+                                    <option value="{{ $service }}">{{ $service }}</option>
                                 @endforeach
                             </x-backend.form.select-input>
                             <x-backend.form.select-input id="client" label="Client" name="client"
