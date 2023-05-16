@@ -33,23 +33,33 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>
-                                        <span title="Title"><b>{{ Str::limit($product->title, 20, '...') }}</b></span><br>
-                                        <span title="Sub Title">{{ Str::limit($product->sub_title, 20, '...') }}</span><br>
-                                        <span title="Category"><b>{{ $product->productCategory->name }}</b></span><br>
-                                        <span title="Sub Category">{{ $product->productSubCategory->name }}</span><br>
-                                        <span title="Author"><b>{{ $product->user->name }}</b></span><br>
-                                        <span title="Rattings">{{ $product->ratting }}</span><br>
-                                        <span title="Most Popular">{!! $product->is_most_popular
-                                            ? "<span class='badge bg-success'>Yes</span>"
-                                            : "<span class='badge bg-danger'>No</span>" !!}</span><br>
-                                        <span title="Status">{!! $product->status
+                                        <span title="Title"><b>Title:
+                                                {{ Str::limit($product->title, 20, '...') }}</b></span><br>
+                                        <span class="text-muted" title="Sub Title">Sub
+                                            Title: {{ Str::limit($product->sub_title, 20, '...') }}</span><br>
+                                        <span class="text-muted" title="Category">Category:
+                                            {{ $product->productCategory->name }}</span><br>
+                                        <span class="text-muted" title="Sub Category">Sub Category:
+                                            {{ $product->productSubCategory->name }}</span><br>
+                                        <span class="text-muted" title="Author">Author:
+                                            {{ $product->user->name }}</span><br>
+                                        <span class="text-muted" title="Rattings">Rattings:
+                                            {{ $product->ratting }}</span><br>
+                                        <span class="text-muted" title="Most Popular">Most Popular:
+                                            {!! $product->is_most_popular
+                                                ? "<span class='badge bg-success'>Yes</span>"
+                                                : "<span class='badge bg-danger'>No</span>" !!}</span><br>
+                                        <span class="text-muted" title="Status">Status: {!! $product->status
                                             ? "<span class='badge bg-success'>Active</span>"
                                             : "<span class='badge bg-danger'>Deactive</span>" !!}</span><br>
-                                        <span title="Description">{!! $product->description !!}</span><br>
+                                        <span class="text-muted" title="Description">Description:
+                                            {!! $product->description !!}</span><br>
                                     </td>
                                     <td>
-                                        <span title="Price"><b>{{ $product->price }}৳</b></span><br>
-                                        <span title="Discount">
+                                        <span title="Price"><b>Price:
+                                                {{ $product->price }}৳</b></span><br>
+                                        <span class="text-muted" title="Discount">
+                                            Discount:
                                             {{ $product->discount }}{{ $product->is_discount_fixed ? '৳' : '%' }}
                                         </span><br>
                                     </td>
