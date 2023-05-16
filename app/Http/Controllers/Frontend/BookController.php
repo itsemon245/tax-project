@@ -9,6 +9,10 @@ class BookController extends Controller
 {
     public function index()
     {
-        return view('frontend.pages.books');
+        return view('frontend.pages.book.books');
+    }
+    public function show()
+    {
+        return view('frontend.pages.book.viewBook');
     }
 }

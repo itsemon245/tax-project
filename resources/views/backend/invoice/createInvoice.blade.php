@@ -1,131 +1,170 @@
 @extends('backend.layouts.app')
-
+@pushOnce('customCss')
+    {{-- quillJs editor css  --}}
+    <link href="{{ asset('backend/assets/libs/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
+    {{-- quillJs editor css  --}}
+@endPushOnce
 @section('content')
     <!-- start page title -->
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Invoice', 'Create']" />
     <!-- end page title -->
 
-    <x-backend.ui.section-card name="Create Invoice">
-    <form action="{{ route('map.store') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <div class="card-body">
-            <!-- Logo & title -->
-            <div class="clearfix">
-                <div class="float-start">
-                    <div class="auth-logo">
-                        <div class="logo logo-dark">
-                            <span class="logo-lg">
-                                <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="22">
-                            </span>
-                        </div>
-    
-                        <div class="logo logo-light">
-                            <span class="logo-lg">
-                                <img src="assets/images/logo-light.png" alt="" height="22">
-                            </span>
-                        </div>
-                    </div>
+    <x-backend.ui.section-card>
+        @php
+            $randomString = Str::random(13);
+        @endphp
+        <form action="{{ route('map.store') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="">
+                <div class="text-center mb-4">
+                    <h4>Create Invoice</h4>
                 </div>
-                <div class="float-end">
-                    <h4 class="m-0 d-print-none">Invoice</h4>
-                </div>
-            </div>
+                <div class="">
+                    <div class="row">
+                        {{-- select client --}}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="row align-items-center mb-2">
+                                <h4 class="col-4 col-md-5">Bill To</h4>
+                                <div class="col-8 col-md-7">
+                                    <x-backend.form.select-input id="client" name="client"
+                                        placeholder="Choose Client...">
+                                        <option value="">Client 1</option>
+                                    </x-backend.form.select-input>
+                                </div>
+                            </div>
+                            {{-- Reference no --}}
+                            <div class="row mb-2 align-items-center">
+                                <label for="reference" class="col-md-5">Reference:</label>
+                                <div class="col-md-7">
+                                    <x-backend.form.text-input id="reference" placeholder="Reference" name="reference" />
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mt-3">
-                        <p><b>Hello, Stanley Jones</b></p>
-                        <p class="text-muted">Thanks a lot because you keep purchasing our products. Our company
-                            promises to provide high quality products for you as well as outstanding
-                            customer service for every transaction. </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        {{-- select dates --}}
+                        <div class="col-md-6 col-lg-4 mx-auto">
+                            {{-- Issue Date --}}
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-4">Issue Date:</div>
+                                <div class="col-md-8 px-2">
+                                    <div class="text-dark border border-primary rounded p-1">
+                                        <strong class="m-0">
+                                            {{ Carbon\Carbon::now()->format('d M, Y') }}</strong>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {{-- Due Date --}}
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-4">Due Date:</div>
+                                <div class="col-md-8">
+                                    <x-backend.form.text-input type="date" name="due_date" />
+                                </div>
+                            </div>
+                        </div>
+                        {{-- enter other details --}}
+                        <div class="col-md-12 col-lg-4">
+
+                            {{-- Circle --}}
+                            <div class="row mb-2 align-items-center">
+                                <label for="circle" class="col-md-5">Circle:</label>
+                                <div class="col-md-7">
+                                    <x-backend.form.text-input id="circle" placeholder="Circle" name="circle" />
+
+                                </div>
+                            </div>
+                            {{-- Purpose --}}
+                            <div class="row mb-2 align-items-center">
+                                <label for="purpose" class="col-md-5">Purpose:</label>
+                                <div class="col-md-7">
+                                    <x-backend.form.select-input id="purpose" placeholder="Select Purpose" name="purpose">
+                                        <option value="">Purpose 1</option>
+                                    </x-backend.form.select-input>
+                                </div>
+                            </div>
+                            {{-- Payment Method --}}
+                            <div class="row mb-2 align-items-center">
+                                <label for="payment-method" class="col-md-5">Payment Method:</label>
+                                <div class="col-md-7">
+                                    <x-backend.form.select-input id="payment-method" placeholder="Select Payment Method"
+                                        name="payment_method">
+                                        <option selected value="">Cash</option>
+                                        <option value="">Bkash</option>
+                                        <option value="">Nagad</option>
+                                        <option value="">Bank</option>
+                                    </x-backend.form.select-input>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
                     </div>
+                    <!-- end row -->
 
-                </div><!-- end col -->
-                <div class="col-md-4 offset-md-2">
-                    <div class="mt-3 float-end">
-                        <p><strong>Order Date : </strong> <span class="float-end"> &nbsp;&nbsp;&nbsp;&nbsp; Jan 17, 2016</span></p>
-                        <p><strong>Order Status : </strong> <span class="float-end"><span class="badge bg-danger">Unpaid</span></span></p>
-                        <p><strong>Order No. : </strong> <span class="float-end">000028 </span></p>
+                    {{-- description --}}
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <label for="snow-editor" class="form-label">Description:</label>
+                            <div id="snow-editor" style="height: 200px;"></div>
+                            <textarea class="d-none" name="description" id="description"></textarea>
+                        </div><!-- end col -->
                     </div>
-                </div><!-- end col -->
-            </div>
-            <!-- end row -->
+                    <!-- end row -->
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="table-responsive">
-                        <table class="table mt-4 table-centered">
-                            <thead>
-                            <tr><th>#</th>
-                                <th>Item</th>
-                                <th style="width: 10%">Hours</th>
-                                <th style="width: 10%">Hours Rate</th>
-                                <th style="width: 10%" class="text-end">Total</th>
-                            </tr></thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <b>Web Design</b> <br>
-                                    2 Pages static website - my website
-                                </td>
-                                <td>22</td>
-                                <td>$30</td>
-                                <td class="text-end">$660.00</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>
-                                    <b>Software Development</b> <br>
-                                    Invoice editor software - AB'c Software
-                                </td>
-                                <td>112.5</td>
-                                <td>$35</td>
-                                <td class="text-end">$3937.50</td>
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </div> <!-- end table-responsive -->
-                </div> <!-- end col -->
-            </div>
-            <!-- end row -->
-
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="clearfix pt-5">
-                        <h6 class="text-muted">Notes:</h6>
-
-                        <small class="text-muted">
-                            All accounts are to be paid within 7 days from receipt of
-                            invoice. To be paid by cheque or credit card or direct payment
-                            online. If account is not paid within 7 days the credits details
-                            supplied as confirmation of work undertaken will be charged the
-                            agreed quoted fee noted above.
-                        </small>
-                    </div>
-                </div> <!-- end col -->
-                <div class="col-sm-6">
                     <div class="float-end">
-                        <p><b>Sub-total:</b> <span class="float-end">$4597.50</span></p>
-                        <p><b>Discount (10%):</b> <span class="float-end"> &nbsp;&nbsp;&nbsp; $459.75</span></p>
-                        <h3>$4137.75 USD</h3>
+                        {{-- Sub Total --}}
+                        <div class="row mb-2 align-items-center">
+                            <div class="col-md-4">Sub Total:</div>
+                            <div class="col-md-8">
+                                <input type="text" placeholder="Sub Total" class="form-control">
+                            </div>
+                        </div>
+                        {{-- Tax  --}}
+                        <div class="row mb-2 align-items-center">
+                            <div class="col-md-4">Tax:</div>
+                            <div class="col-md-8">
+                                <input type="text" placeholder="Tax" name="tax" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-2 align-items-center">
+                            <div class="col-md-4">Discount:</div>
+                            <div class="col-md-8">
+                                <input type="text" placeholder="Discount" name="discount" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-2 align-items-center">
+                            <h4 class="col-md-4">Total:</h4>
+                            <h4 class="col-md-8">
+                                Ammount
+                            </h4>
+                        </div>
+                        <input type="text" name="amount" value="140" hidden>
                     </div>
                     <div class="clearfix"></div>
-                </div> <!-- end col -->
-            </div>
-            <!-- end row -->
+                    <!-- end row -->
 
-            <div class="mt-4 mb-1">
-                <div class="text-end d-print-none">
-                    <a href="javascript:window.print()" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-printer me-1"></i> Print</a>
-                    <a href="#" class="btn btn-info waves-effect waves-light">Submit</a>
+                    <div class="mb-1">
+                        <div class="text-end">
+
+                            <x-backend.ui.button onclick="descriptionAdd()" class="btn-primary">Submit
+                            </x-backend.ui.button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+            </div>
+        </form>
     </x-backend.ui.section-card>
-    @push('customJs')
-        <script></script>
-    @endpush
+    @pushOnce('customJs')
+        {{-- quillJs Script  --}}
+        <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
+        <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script>
+        {{-- quillJs Script  --}}
+        <script>
+            const descriptionAdd = () => {
+                $("#description").val($('.ql-editor').html())
+                console.log($("#description").val());
+            }
+        </script>
+    @endPushOnce
 @endsection

@@ -5,12 +5,14 @@
     $class = $attributes->get('class');
     // $value = $attributes->has('value') ? $attributes->get('value') : old($name);
 @endphp
-<div class="mb-1">
-    <label class="labels text-uppercase" style="font-size: 14px;">{{ $label }}
-        @if ($required)
-            <span class="text-danger">*</span>
-        @endif
-    </label>
+<div class="">
+    @if ($label)
+        <label class="labels text-uppercase" style="font-size: 14px;">{{ $label }}
+            @if ($required)
+                <span class="text-danger">*</span>
+            @endif
+        </label>
+    @endif
     <input class="{{ 'form-control ' . $class }} @error($name)
         is-invalid
     @enderror"
