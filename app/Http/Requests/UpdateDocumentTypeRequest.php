@@ -11,7 +11,7 @@ class UpdateDocumentTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->user() !== null;
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdateDocumentTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'document_type' => 'required|string|unique:document_types,name'
         ];
     }
 }

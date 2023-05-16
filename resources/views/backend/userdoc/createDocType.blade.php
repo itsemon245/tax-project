@@ -11,16 +11,15 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title mb-1">Add Document Type</h4>
+                        <h4 class="header-title mb-1">Document Type</h4>
                         <div class="row">
                             <div class="col-lg-12">
-                                <form action="{{ route('user-doc-type.store') }}" method="POST">
+                                <form action="{{ route('document-type.store') }}" method="POST">
                                     @csrf
                                     <div>
-                                        <input type="text" id="simpleinput" name="add_document_type"
-                                            placeholder="Add Document Type"
+                                        <input type="text" id="simpleinput" name="document_type" placeholder="Certificate"
                                             class="form-control
-                                @error('add_document_type')
+                                @error('document_type')
                                 is-invalid
                                 @enderror
                                 ">
@@ -29,7 +28,7 @@
                                         @enderror
                                     </div>
                                     <div class="mt-1">
-                                        <x-backend.ui.button class="btn-primary btn-sm w-100">Add Document type
+                                        <x-backend.ui.button class="btn-primary btn-sm w-100">Create
                                         </x-backend.ui.button>
                                     </div>
                                 </form>
@@ -44,7 +43,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">All Document type</h4>
+                        <h4 class="header-title">All Document types</h4>
                         <x-backend.table.basic>
                             <thead>
                                 <tr>
@@ -54,18 +53,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($doc_types as $key => $doc_type)
+                                @forelse ($docTypes as $key => $type)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ ucwords($doc_type->doc_type_name) }}</td>
+                                        <td>{{ ucwords($type->name) }}</td>
                                         <td>
                                             {{-- {{ dd($doc_type) }} --}}
                                             <div class="btn-group">
                                                 <x-backend.ui.button type="edit"
-                                                    href="{{ route('user-doc-type.edit', $doc_type->id) }}"
-                                                    class="btn-sm" />
+                                                    href="{{ route('document-type.edit', $type->id) }}" class="btn-sm" />
                                                 <x-backend.ui.button type="delete"
-                                                    action="{{ route('user-doc-type.destroy', $doc_type->id) }}"
+                                                    action="{{ route('document-type.destroy', $type->id) }}"
                                                     class="btn-sm" />
                                             </div>
                                         </td>
