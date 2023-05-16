@@ -17,8 +17,9 @@ use App\Http\Controllers\Frontend\HomeController;
 |
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::prefix('/')->name('books.')->group(function () {
-    Route::get('/books', [BookController::class, 'index'])->name('view');
+Route::prefix('/books')->name('books.')->group(function () {
+    Route::get('/', [BookController::class, 'index'])->name('view');
+    Route::get('/book', [BookController::class, 'show'])->name('show');
 });
 
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
