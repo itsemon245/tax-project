@@ -14,7 +14,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -22,7 +22,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.invoice.createInvoice');
     }
 
     /**
