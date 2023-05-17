@@ -7,7 +7,7 @@
             <div class="carousel-inner mt-5 mb-5">
               <div class="carousel-item active " style="height: 300px;"> 
                 <div class="row h-100 ps-5">
-                    <div class="col-md-6 mt-3 h-100 bg-secondary bg-gradien" style="">
+                    <div class="col-md-6 mt-3 h-100" >
                         <p class="mt-3 ps-5">Tax Prepration course one</p>
                         <h4 class="mt-3 ps-5">A meaningful carrer starts here.</h4>
                         <p class="mt-3 ps-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam in maiores quidem iste animi natus earum magni. Autem, veritatis perspiciatis. Earum nobis provident quisquam nulla assumenda quam fugiat, voluptatem numquam eligendi, neque tenetur corrupti sed? Recusandae suscipit ullam libero</p>
@@ -110,7 +110,7 @@
             </iframe>
           </div>
           <div class="continer">
-            <div class="row bg-secondary bg-gradient">
+            <div class="row">
               <div class="col-md-6 mt-5 mb-4 d-flex justify-content-center text-center ">
                 <ul>
                   <h2>Tax Course Included:</h2>
