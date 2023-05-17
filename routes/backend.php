@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
+use App\Http\Controllers\Backend\Training\TrainingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,12 +55,12 @@ Route::prefix('admin')->group(function () {
     Route::resource('promo-code', PromoCodeController::class);
     Route::resource('user-doc', UserDocController::class);
     Route::resource('map', MapController::class);
-
     Route::resource('user-doc', UserDocController::class);
     Route::resource('document-type', DocumentTypeController::class);
     Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
     Route::resource('invoice', InvoiceController::class);
+    Route::resource('training', TrainingController::class);
 
 
 
@@ -74,4 +75,5 @@ Route::prefix('admin')->group(function () {
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
 
     Route::resource('client', ClientController::class);
+
 });

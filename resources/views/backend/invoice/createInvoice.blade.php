@@ -111,34 +111,52 @@
                     </div>
                     <!-- end row -->
 
-                    <div class="float-end">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-4">Amount:</div>
+                                <div class="col-md-8">
+                                    <x-backend.form.text-input type="text" placeholder="Amount" >
+                                </div>
+                            </div>
+                            {{-- Tax  --}}
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-4">Tax:</div>
+                                <div class="col-md-8">
+                                    <x-backend.form.text-input type="text" placeholder="Tax" name="tax" >
+                                </div>
+                            </div>
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-4">Discount:</div>
+                                <div class="col-md-8">
+                                    <x-backend.form.text-input type="text" placeholder="Discount" name="discount" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-4">Total:</div>
+                                <div class="col-md-8">
+                                    <x-backend.form.text-input type="text" placeholder="Total"  >
+                                </div>
+                            </div>
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-4">Instant Paid:</div>
+                                <div class="col-md-8">
+                                    <x-backend.form.text-input type="text" placeholder="Instant Paid" >
+                                </div>
+                            </div>
+                            <div class="row mb-2 align-items-center">
+                                <h4 class="col-md-4">Total:</h4>
+                                <h4 class="col-md-8">
+                                    Ammount
+                                </h4>
+                            </div>
+                            <input type="text" name="amount" value="140" hidden>
+                        </div>
                         {{-- Sub Total --}}
-                        <div class="row mb-2 align-items-center">
-                            <div class="col-md-4">Sub Total:</div>
-                            <div class="col-md-8">
-                                <input type="text" placeholder="Sub Total" class="form-control">
-                            </div>
-                        </div>
-                        {{-- Tax  --}}
-                        <div class="row mb-2 align-items-center">
-                            <div class="col-md-4">Tax:</div>
-                            <div class="col-md-8">
-                                <input type="text" placeholder="Tax" name="tax" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-2 align-items-center">
-                            <div class="col-md-4">Discount:</div>
-                            <div class="col-md-8">
-                                <input type="text" placeholder="Discount" name="discount" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-2 align-items-center">
-                            <h4 class="col-md-4">Total:</h4>
-                            <h4 class="col-md-8">
-                                Ammount
-                            </h4>
-                        </div>
-                        <input type="text" name="amount" value="140" hidden>
+
+
                     </div>
                     <div class="clearfix"></div>
                     <!-- end row -->
