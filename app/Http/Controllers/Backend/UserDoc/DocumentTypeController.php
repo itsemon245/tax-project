@@ -16,16 +16,8 @@ class DocumentTypeController extends Controller
     public function index()
     {
 
-        $doc_types = DocumentType::get();
-        return view('backend.userdoc.createDocType', compact('doc_types'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $docTypes = DocumentType::get();
+        return view('backend.userdoc.createDocType', compact('docTypes'));
     }
 
     /**
@@ -34,7 +26,7 @@ class DocumentTypeController extends Controller
     public function store(StoreDocumentTypeRequest $request)
     {
         $document_type = new DocumentType();
-        $document_type->doc_type_name = strtolower(Str::slug($request->add_document_type));
+        $document_type->name = strtolower($request->document_type);
         $document_type->save();
         $notification = array(
             'message' => "Added Successfully",
@@ -43,36 +35,27 @@ class DocumentTypeController extends Controller
         return back()->with($notification);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(DocumentType $documentType)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(DocumentType $documentType)
     {
-        // dd($documentType);
-        $documentType = DocumentType::findOrFail($id);
         return view('backend.userdoc.editDocType', compact('documentType'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDocumentTypeRequest $request, DocumentType $documentType)
+    public function update(DocumentType $documentType, UpdateDocumentTypeRequest $request)
     {
-        $documentType->doc_type_name = $request->add_document_type;
+        $documentType->name = str($request->document_type)->lower();
         $documentType->update();
         $notification = array(
             'message' => "Updated Successfully",
             'alert-type' => 'success',
         );
-        return redirect(route('user-doc-type.index'))->with($notification);
+        return redirect(route('document-type.index'))->with($notification);
     }
 
     /**

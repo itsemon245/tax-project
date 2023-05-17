@@ -32,7 +32,7 @@
                                     <select id="selectize-select" class="form-control" name="user_id">
                                         {!! $promoCode->user
                                             ? "<option value='{$promoCode->user->id}' selected>{$promoCode->user->name}</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
                                             : "<option value='' selected>All</option>" !!}
                                     </select>
                                 </div>
@@ -80,8 +80,12 @@
             };
 
             const generatePromoCode = (promoCode = "") => {
-                if (promoCode.length === 6 || promoCode.length > 6) {
-                    return promoCode;
+                if (promoCode === sessionStorage.getItem('promo') || promoCode.length > 6) {
+                    promoCode = ""
+                }
+                if (promoCode.length === 6) {
+                    sessionStorage.setItem('promo', promoCode)
+                    return promoCode
                 }
 
                 promoCode += getRandomChar(numberSet);

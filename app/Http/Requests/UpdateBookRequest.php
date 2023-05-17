@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDocumentTypeRequest extends FormRequest
+class UpdateBookRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,10 @@ class UpdateDocumentTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'document_type' => 'required|string|unique:document_types,name'
+            'book_title' => ['required'],
+            'author' => ['required'],
+            'book_desc' => ['required'],
+            'price' => ['required'],
         ];
     }
 }

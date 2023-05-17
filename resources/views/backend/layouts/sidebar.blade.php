@@ -136,6 +136,25 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#invoiceSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Invoice</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="invoiceSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('invoice.create') }}">
+                                    Create
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#appointmentSection" data-bs-toggle="collapse">
@@ -215,7 +234,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>  
+                </li>
                 <li>
                     <a href="{{ route('calendar.create') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
@@ -243,20 +262,38 @@
                 </li>
 
 
-                
+
                 <li>
-                    <a href="#roleSection" data-bs-toggle="collapse">
+                    <a href="#clientSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span>Clients</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="roleSection">
+                    <div class="collapse" id="clientSection">
                         <ul class="nav-second-level">
                             <li>
                                 <a href="{{ route('client.create') }}">Create</a>
                             </li>
                             <li>
                                 <a href="{{ route('client.index') }}">View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#bookSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Book</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="bookSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('book.create') }}">Create</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('book.index') }}">View</a>
                             </li>
                         </ul>
                     </div>
