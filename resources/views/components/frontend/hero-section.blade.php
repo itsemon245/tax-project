@@ -1,7 +1,8 @@
+@props(['banners'])
 <section class="">
     <div id="carouselExampleIndicators" class="carousel slide pointer-event" data-bs-ride="carousel">
         <ol class="carousel-indicators">
-            @foreach ($banners as $key => $banner)
+            @foreach ( $banners as $key => $banner)
                 <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ $key }}"
                     class="{{ $banners[0]->id === $banner->id ? 'active' : '' }}"
                     aria-current="{{ $banners[0]->id === $banner->id ? 'true' : 'false' }}"></li>

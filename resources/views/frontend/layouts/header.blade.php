@@ -32,7 +32,7 @@
                     <a class=" nav-link text-light" href="{{route('books.view')}}">Book Store</a>
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="#">JusAuditor</a>
+                    <a class=" nav-link text-light" href="{{route('about')}}">About Us</a>
                 </li>
                 <li class="nav-item custom-nav-item">
                     <a class=" nav-link text-light" href="#">Misc. Services</a>
@@ -53,7 +53,7 @@
                     <a class=" nav-link text-light" href="#">Services</a>
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="#">JusAuditor</a>
+                    <a class=" nav-link text-light" href="{{route('about')}}">About Us</a>
                 </li>
             </ul>
         </nav>
