@@ -26,7 +26,7 @@
                     <a class=" nav-link text-light" href="#">Services</a>
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="#">Training</a>
+                    <a class=" nav-link text-light" href="{{ route('training.index') }}">Training</a>
                 </li>
                 <li class="nav-item custom-nav-item">
                     <a class=" nav-link text-light" href="{{route('books.view')}}">Book Store</a>

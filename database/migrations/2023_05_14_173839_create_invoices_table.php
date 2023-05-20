@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('client_name');
-            $table->string('reference_no');
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('client_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->string('reference_no')->nullable();
             $table->string('circle')->nullable();
-            $table->string('note')->nullable();
-            $table->string('purpose');
-            $table->integer('amount');
+            $table->longText('description')->nullable();
+            $table->string('purpose')->nullable();
+            $table->integer('amount')->default(0);
             $table->integer('discount')->nullable();
             $table->integer('tax')->nullable();
             $table->timestamp('due_date')->nullable();
