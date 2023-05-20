@@ -116,20 +116,20 @@
                             <div class="row mb-2 align-items-center">
                                 <div class="col-md-4">Amount:</div>
                                 <div class="col-md-8">
-                                    <x-backend.form.text-input type="text" placeholder="Amount" >
+                                    <input type="text" placeholder="Amount" >
                                 </div>
                             </div>
                             {{-- Tax  --}}
                             <div class="row mb-2 align-items-center">
                                 <div class="col-md-4">Tax:</div>
                                 <div class="col-md-8">
-                                    <x-backend.form.text-input type="text" placeholder="Tax" name="tax" >
+                                    <input type="text" placeholder="Tax" name="tax" >
                                 </div>
                             </div>
                             <div class="row mb-2 align-items-center">
                                 <div class="col-md-4">Discount:</div>
                                 <div class="col-md-8">
-                                    <x-backend.form.text-input type="text" placeholder="Discount" name="discount" >
+                                    <input type="text" placeholder="Discount" name="discount" >
                                 </div>
                             </div>
                         </div>
@@ -137,13 +137,13 @@
                             <div class="row mb-2 align-items-center">
                                 <div class="col-md-4">Total:</div>
                                 <div class="col-md-8">
-                                    <x-backend.form.text-input type="text" placeholder="Total"  >
+                                    <input type="text" placeholder="Total"  >
                                 </div>
                             </div>
                             <div class="row mb-2 align-items-center">
                                 <div class="col-md-4">Instant Paid:</div>
                                 <div class="col-md-8">
-                                    <x-backend.form.text-input type="text" placeholder="Instant Paid" >
+                                    <input type="text" placeholder="Instant Paid" >
                                 </div>
                             </div>
                             <div class="row mb-2 align-items-center">
