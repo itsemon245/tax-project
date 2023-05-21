@@ -35,7 +35,7 @@
                     <a class=" nav-link text-light" href="{{route('about')}}">About Us</a>
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="#">Misc. Services</a>
+                    <a class=" nav-link text-light" href="{{route('misc.service')}}">Misc. Services</a>
                 </li>
             </ul>
         </nav>

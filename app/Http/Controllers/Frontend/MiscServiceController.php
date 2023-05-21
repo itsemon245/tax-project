@@ -9,6 +9,6 @@ class MiscServiceController extends Controller
 {
     public function index()
     {
-        return view('frontend.pages.miscService');
+        return view('frontend.pages.miscService.miscService');
     }
 }
