@@ -24,7 +24,7 @@
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus tempora et ipsam quo ullam exercitationem optio consequatur culpa omnis error, quidem magnam ut inventore natus minus rem, commodi earum suscipit vel minima voluptate numquam est. Labore nam rem voluptatem?</p>
         </div>
     </div>
-
+    <h3 class="d-flex justify-content-center mt-5">Lorem ipsum dolor sit amet.</h3>
     <x-frontend.info-section :title="$infos2[0]->title" class="text-danger text-capitalize">
         @foreach ($infos2 as $info)
             <x-frontend.info-card :$info />
