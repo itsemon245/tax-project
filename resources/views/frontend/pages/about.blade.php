@@ -13,17 +13,26 @@
     </div>
 
     {{-- Section --}}
-    <div class="row h-400 mx-5 border text-bg-secondary">
-        <div class="col-md-6">
-           <div class="p-5 col-md-12">
+    <div class="row h-400 mx-5 ">
+        <h3 class="mb-3 mt-5">Lorem ipsum dolor sit amet.</h3>
+        <div class="col-md-5 p-2 text-bg-secondary">
             <img src="{{ asset('frontend/assets/images/products/product-11.jpg') }}" style="width: 100%;height:200px;">
-           </div>
         </div>
-        <div class="col-md-6 p-5">
-            <h4>Lorem ipsum dolor sit amet.</h4>
+        <div class="col-md-7 p-5 text-bg-light">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus tempora et ipsam quo ullam exercitationem optio consequatur culpa omnis error, quidem magnam ut inventore natus minus rem, commodi earum suscipit vel minima voluptate numquam est. Labore nam rem voluptatem?</p>
         </div>
     </div>
+
+        {{-- Section --}}
+        <div class="row h-400 mx-5 ">
+            <h3 class="mb-3 mt-5">Lorem ipsum dolor sit amet.</h3>
+            <div class="col-md-5 p-2 text-bg-secondary">
+                <img src="{{ asset('frontend/assets/images/products/product-10.jpg') }}" style="width: 100%;height:200px;">
+            </div>
+            <div class="col-md-7 p-5 text-bg-light">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus tempora et ipsam quo ullam exercitationem optio consequatur culpa omnis error, quidem magnam ut inventore natus minus rem, commodi earum suscipit vel minima voluptate numquam est. Labore nam rem voluptatem?</p>
+            </div>
+        </div>
     <h3 class="d-flex justify-content-center mt-5">Lorem ipsum dolor sit amet.</h3>
     <x-frontend.info-section :title="$infos2[0]->title" class="text-danger text-capitalize">
         @foreach ($infos2 as $info)
