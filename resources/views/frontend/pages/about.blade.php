@@ -13,12 +13,12 @@
     </div>
 
     {{-- Section --}}
-    <div class="row h-400 mx-5 ">
+    <div class="row h-400 mx-5">
         <h3 class="mb-3 mt-5">Lorem ipsum dolor sit amet.</h3>
-        <div class="col-md-5 p-2 text-bg-secondary">
-            <img src="{{ asset('frontend/assets/images/products/product-11.jpg') }}" style="width: 100%;height:200px;">
+        <div class="col-md-4 px-2">
+            <img src="{{ asset('frontend/assets/images/products/product-11.jpg') }}" style="width: 100%;max-height:18rem;">
         </div>
-        <div class="col-md-7 p-5 text-bg-light">
+        <div class="col-md-8 p-5 text-bg-light">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus tempora et ipsam quo ullam exercitationem optio consequatur culpa omnis error, quidem magnam ut inventore natus minus rem, commodi earum suscipit vel minima voluptate numquam est. Labore nam rem voluptatem?</p>
         </div>
     </div>
@@ -26,10 +26,10 @@
         {{-- Section --}}
         <div class="row h-400 mx-5 ">
             <h3 class="mb-3 mt-5">Lorem ipsum dolor sit amet.</h3>
-            <div class="col-md-5 p-2 text-bg-secondary">
-                <img src="{{ asset('frontend/assets/images/products/product-10.jpg') }}" style="width: 100%;height:200px;">
+            <div class="col-md-4 px-2">
+                <img src="{{ asset('frontend/assets/images/products/product-10.jpg') }}" style="width: 100%;max-height:18rem;">
             </div>
-            <div class="col-md-7 p-5 text-bg-light">
+            <div class="col-md-8 p-5 text-bg-light">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus tempora et ipsam quo ullam exercitationem optio consequatur culpa omnis error, quidem magnam ut inventore natus minus rem, commodi earum suscipit vel minima voluptate numquam est. Labore nam rem voluptatem?</p>
             </div>
         </div>
