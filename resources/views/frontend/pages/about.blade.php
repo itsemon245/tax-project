@@ -30,7 +30,6 @@
                 earum suscipit vel minima voluptate numquam est. Labore nam rem voluptatem?</p>
         </div>
     </div>
-
     {{-- Section --}}
     <div class="row h-400 mx-5">
         <h3 class="mb-3 mt-5">Lorem ipsum dolor sit amet.</h3>
@@ -43,6 +42,25 @@
                 earum suscipit vel minima voluptate numquam est. Labore nam rem voluptatem?</p>
         </div>
     </div>
+
+    {{-- Lets discuss --}}
+    <div class="row mx-5 my-5 ">
+        <div class="col-md-6 px-2">
+            <img class="rounded" src="{{ asset('frontend/assets/images/small/img-6.jpg') }}" style="width: 100%;max-height:24rem;">
+        </div>
+        <div class="col-md-6 text-bg-primary p-5 rounded">
+            <h3 class="my-3">Let's Discuss your project</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque, pariatur. Ex, nobis. Ratione adipisci, nemo vitae dolore soluta cupiditate, optio officia, accusamus dignissimos unde quaerat? Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus tempora et ipsam quo ullam
+            </p>
+            <div class="mb-0 mt-2 text-light">
+                    <a href="" class="btn btn-light">
+                        <i class="fe-users"></i>
+                        TALK TO OUR EXPERTS
+                    </a>
+            </div>
+        </div>
+    </div>
+
     <h3 class="d-flex justify-content-center mt-5">Lorem ipsum dolor sit amet.</h3>
     <x-frontend.info-section :title="$infos2[0]->title" class="text-danger text-capitalize">
         @foreach ($infos2 as $info)
