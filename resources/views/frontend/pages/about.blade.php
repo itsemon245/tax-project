@@ -93,9 +93,15 @@
                                 <p class="mb-0"> +880 1885-518864</p>
                             </div>
                             <div class="d-flex mt-3 text-primary">
-                                <i class="fe-facebook me-3"></i>
-                                <i class="fe-twitter me-3"></i>
-                                <i class="fe-linkedin me-3"></i>
+                                <a href="#">
+                                    <i class="fe-facebook me-3"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fe-twitter me-3"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fe-linkedin me-3"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
