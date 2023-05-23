@@ -65,98 +65,59 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-12 px-4 px-md-4 px-lg-4">
-                    <div class="contact_wrapper text-white">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row justify-content-center align-items-center g-2">
-                                    <div class="col-md-1 col-2">
-                                        <div class="contact_info_thumb mx-auto">
-                                            <img src="{{ asset('frontend/assets/images/Group 120.png') }}" alt=""
-                                                class="d-inline-block contact_img">
-                                        </div>
+                    <div class="px-5 contact_wrapper text-white">
+                        <div class="">
+                            <div class="">
+                                <div class="d-flex gap-3 mb-2">
+                                    <div class="py-2 px-3 bg-primary rounded">
+                                        <span class="mdi mdi-email-outline text-light"></span>
                                     </div>
-                                    <div class="col-md-10 col-10">
-                                        <div class="contact_address px-3 pt-3">
-                                            <h4>Mail us at</h4>
-                                            <p>emdadctg@gmail.com</p>
+                                    <div class="">
+                                        <h4 class="mb-0">Mail us at</h4>
+                                        <p class="mb-0">emdadctg@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-3 mb-2">
+                                    <div class="py-2 px-3 bg-primary rounded">
+                                        <span class="mdi mdi-phone text-light"></span>
+                                    </div>
+                                    <div class="">
+                                        <h4 class="mb-0">Mail us at</h4>
+                                        <p class="mb-0">emdadctg@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-3 mb-5">
+                                    <div class="py-2 px-3 bg-primary rounded">
+                                        <span class="mdi mdi-whatsapp text-light"></span>
+                                    </div>
+                                    <div class="">
+                                        <h4 class="mb-0">Mail us at</h4>
+                                        <p class="mb-0">emdadctg@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-3 mb-2">
+                                    <div class="py-2 px-3 bg-primary rounded">
+                                        <span class="mdi mdi-web text-light" style="font-size:28px;"></span>
+                                    </div>
+                                    <div class="">
+                                        <h4 class="mb-0">Mail us at</h4>
+                                        <div class="mb-0">
+                                            <span class="mdi mdi-facebook"></span>
+                                            <span class="mdi mdi-youtube"></span>
+                                            <span class="mdi mdi-twitter"></span>
+                                            <span class="mdi mdi-linkedin"></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="row justify-content-center align-items-center g-2">
-                                    <div class="col-md-1 col-2">
-                                        <div class="contact_info_thumb mx-auto">
-                                            <img src="{{ asset('frontend/assets/images/Group 121.png') }}" alt=""
-                                                class="d-inline-block contact_img">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-10 col-10">
-                                        <div class="contact_address px-3 pt-3">
-                                            <h4>Call us</h4>
-                                            <p>emdadctg@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row justify-content-center align-items-center g-2">
-                                    <div class="col-md-1 col-2">
-                                        <div class="contact_info_thumb mx-auto">
-                                            <img src="{{ asset('frontend/assets/images/Group 123.png') }}" alt=""
-                                                class="d-inline-block contact_img">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-10 col-10">
-                                        <div class="contact_address px-3 pt-3">
-                                            <h4>Chat via whatsApp</h4>
-                                            <p>emdadctg@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row justify-content-center align-items-center g-2">
-                                    <div class="col-md-1 col-2">
-                                        <div class="contact_info_thumb mx-auto">
-                                            <img src="{{ asset('frontend/assets/images/Group 125.png') }}" alt=""
-                                                class="d-inline-block contact_img">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-10 col-10">
-                                        <div class="contact_address px-3 pt-3">
-                                            <h4>Follow us on</h4>
-                                            <div class="col-md-12">
-                                                <div class="row justify-content-center align-items-center g-2">
-                                                    <div class="col-md-3 col-3">
-                                                        <img src="{{ asset('frontend/assets/images/Vector (2).png') }}"
-                                                            alt="">
-                                                    </div>
-                                                    <div class="col-md-3 col-3">
-                                                        <img src="{{ asset('frontend/assets/images/Vector (1).png') }}"
-                                                            alt="">
-                                                    </div>
-                                                    <div class="col-md-3 col-3">
-                                                        <img src="{{ asset('frontend/assets/images/Vector.png') }}"
-                                                            alt="">
-                                                    </div>
-                                                    <div class="col-md-3 col-3">
-                                                        <img src="{{ asset('frontend/assets/images/Vector (3).png') }}"
-                                                            alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12 pt-lg-0 pt-md-3 pt-3 px-4 px-md-4 px-lg-0">
                     <div class="contact_form">
                         <h1 class="text-center">Let’s Talk</h1>
-                        <h2 class="text-center">You are quite important to us . We reply as soon as possible</h2>
+                        <h2 class="text-center" style="font-size:18px;">You are quite important to us . We reply as soon as possible</h2>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -182,15 +143,15 @@
                                     <input type="text" id="location" class="form-control" placeholder="Location">
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 mb-2">
                                 <div class="form-group">
                                     <label for="message">Message</label>
-                                    <textarea name="" class="form-control" id="message" placeholder="Message" cols="30" rows="5"></textarea>
+                                    <textarea name="" class="form-control" id="message" placeholder="Message" cols="30" rows="3"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6 pt-3">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <button class="form-conrtol submit_buttton">Submit</button>
+                                    <button class="btn btn-primary text-light">Submit</button>
                                 </div>
                             </div>
                         </div>
