@@ -59,31 +59,20 @@
 
     @push('customJs')
         <script>
-            const promoBox = document.getElementById('code');
-            const btn = document.getElementById('code_btn');
-            const numberSet = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
-            const getRandomChar = (dataset) => {
-                return dataset[Math.floor(Math.random() * dataset.length)];
-            };
-
-            const generatePromoCode = (promoCode = "") => {
-                if (promoCode === sessionStorage.getItem('promo') || promoCode.length > 6) {
-                    promoCode = ""
-                }
-                if (promoCode.length === 6) {
-                    sessionStorage.setItem('promo', promoCode)
-                    return promoCode
-                }
-
-                promoCode += getRandomChar(numberSet);
-                return generatePromoCode(promoCode);
-            }
-
-            btn.addEventListener('click', () => {
-                promoBox.value = generatePromoCode(promoBox.value);
+            const input = $('[name="code"]')
+            const generateBtn = $('#code_btn')
+            let userDefienedValue;
+            input.on('input', function(){
+                userDefienedValue = input.val().toLowerCase()
             })
-
+            generateBtn.click(function(){
+                let digits = Math.floor(Math.random()*(1000-10)+10)
+                if (!userDefienedValue) {
+                    userDefienedValue = "ta"
+                }
+                input.val(userDefienedValue+digits)
+            })
+            
             const getUsers = (e) => {
                 const user_type = e.value
                 user_type === 'partner' ?

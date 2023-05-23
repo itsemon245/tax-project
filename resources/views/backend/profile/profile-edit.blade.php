@@ -77,3 +77,6 @@
         </form>
     </x-backend.ui.section-card>
 @endsection
+@push('customJs')
+    <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
+@endpush

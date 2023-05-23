@@ -28,7 +28,8 @@ class UserProfileController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        return view('frontend.profile.profile-edit', compact('user'));
     }
 
     /**
