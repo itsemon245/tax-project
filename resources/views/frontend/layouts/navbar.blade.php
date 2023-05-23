@@ -72,7 +72,7 @@
                 </div>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="">Profile</a>
+                <a href="{{ route('user-profile.create') }}" class="">Profile</a>
             </li>
             <li class="sidebar-item">
                 <a class="" href="">My Product</a>
