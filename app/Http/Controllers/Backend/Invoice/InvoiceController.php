@@ -14,8 +14,8 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -36,9 +36,10 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Invoice $invoice)
+    public function show()
     {
-        //
+        
+     return view('backend.invoice.previewInvoice');
     }
 
     /**

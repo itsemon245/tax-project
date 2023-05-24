@@ -149,9 +149,13 @@
                                     Create
                                 </a>
                             </li>
+                            
                             <li>
-                                <a href="#">View</a>
+                                <a href="{{ route('invoice.show', 1) }}">
+                                View    
+                                </a>
                             </li>
+                            
                         </ul>
                     </div>
                 </li>
