@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Backend\Calendar;
 use Carbon\Carbon;
 use App\Models\Client;
 use App\Models\Calendar;
-use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
 
 class CalendarController extends Controller
 {
+    public function index()
+    {
+        $events = Calendar::with('client')->latest()->get();
+        return view('backend.calendar.viewEvents', compact('events'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -44,7 +48,13 @@ class CalendarController extends Controller
         ];
         return back()->with($notification);
     }
-
+    
+    public function edit(Calendar $calendar)
+    {
+        $clients = Client::get();
+        $services = Calendar::pluck('service')->unique();
+        return view('backend.calendar.updateEvent', compact('calendar', 'services', 'clients'));
+    }
 
     /**
      * Update the specified resource in storage.

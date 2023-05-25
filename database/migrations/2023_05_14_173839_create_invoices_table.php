@@ -13,17 +13,23 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('client_name');
-            $table->string('reference_no');
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('client_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->text('header_image')->nullable();
+            $table->string('reference_no')->nullable();
             $table->string('circle')->nullable();
-            $table->string('note')->nullable();
-            $table->string('purpose');
-            $table->integer('amount');
+            $table->longText('notes')->nullable();
+            $table->string('purpose')->nullable();
             $table->integer('discount')->nullable();
-            $table->integer('tax')->nullable();
-            $table->timestamp('due_date')->nullable();
+            $table->integer('sub_total')->default(0);
+            $table->integer('total')->default(0);
+            $table->integer('amount_paid')->default(0);
+            $table->integer('amount_due')->default(0);
+            $table->text('payment_note')->nullable();
+            $table->enum('payment_method',['cash', 'bkash', 'nagad', 'rocked', 'bank'])->nullable();
             $table->timestamp('payment_date')->nullable();
-            $table->enum('payment_method',['bkash', 'nagad','rocket', 'bank', 'cash'])->default('cash');
+            $table->timestamp('due_date')->default(now()->addDays(7)->format('Y-m-d'));
+            $table->timestamp('issue_date')->default(now()->format('Y-m-d'));
             $table->enum('status',['overdue', 'outstanding', 'draft', 'partial', 'sent', 'paid'])->default('draft');
             $table->timestamps();
         });

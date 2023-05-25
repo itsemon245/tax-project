@@ -59,6 +59,7 @@
 
     @push('customJs')
         <script>
+<<<<<<< HEAD
             const promoBox = document.getElementById('code');
             const btn = document.getElementById('code_btn');
             const numberSet = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -82,8 +83,22 @@
 
             btn.addEventListener('click', () => {
                 promoBox.value = generatePromoCode(promoBox.value);
+=======
+            const input = $('[name="code"]')
+            const generateBtn = $('#code_btn')
+            let userDefienedValue;
+            input.on('input', function(){
+                userDefienedValue = input.val().toLowerCase()
+>>>>>>> main
             })
-
+            generateBtn.click(function(){
+                let digits = Math.floor(Math.random()*(1000-10)+10)
+                if (!userDefienedValue) {
+                    userDefienedValue = "ta"
+                }
+                input.val(userDefienedValue+digits)
+            })
+            
             const getUsers = (e) => {
                 const user_type = e.value
                 user_type === 'partner' ?

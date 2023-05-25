@@ -34,7 +34,7 @@
                 <a class="" href="{{route('books.view')}}">Book Store</a>
             </li>
             <li class="sidebar-item">
-                <a class="" href="#">JusAuditor</a>
+                <a class="" href="{{route('about')}}">About Us</a>
             </li>
             <li class="sidebar-item">
                 <a class="" href="#">Misc. Services</a>
@@ -71,7 +71,9 @@
                     </a>
                 </div>
             </li>
-
+            <li class="sidebar-item">
+                <a href="{{ route('user-profile.create') }}" class="">Profile</a>
+            </li>
             <li class="sidebar-item">
                 <a class="" href="">My Product</a>
             </li>
