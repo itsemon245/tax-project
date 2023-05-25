@@ -35,6 +35,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" name="servicesData" value="{{$services}}">
         <!-- Modal for creating event -->
         <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -50,12 +51,10 @@
 
                         <div class="modal-body">
                             <x-backend.form.text-input name="event_name" label="Event Name" />
-                            <x-backend.form.select-input id="services" label="Services" name="service"
+                            <label for="services" class="form-label mb-0">Service</label>
+                            <select class="selectize" id="services" name="service"
                                 placeholder="Select Service">
-                                @foreach ($services as $service)
-                                    <option value="{{ $service }}">{{ $service }}</option>
-                                @endforeach
-                            </x-backend.form.select-input>
+                            </select>
                             <x-backend.form.select-input id="client" label="Client" name="client"
                                 placeholder="Select Client">
                                 @foreach ($clients as $client)
@@ -311,6 +310,21 @@
                         element.setAttribute('selected', element.value == value)
                     });
                 }
+            });
+        </script>
+
+        {{-- script for selectize to work --}}
+        <script>
+            let serviceString = $('[name="servicesData"]').val();
+            const services = JSON.parse(serviceString);
+            const selectize = $(".selectize").selectize({
+            persist: false,
+            maxItems: 1,
+            valueField: "service",
+            labelField: "service",
+            searchField: "service",
+            options: services,
+            create: true,
             });
         </script>
     @endpush
