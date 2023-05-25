@@ -25,9 +25,11 @@ return new class extends Migration
             $table->integer('total')->default(0);
             $table->integer('amount_paid')->default(0);
             $table->integer('amount_due')->default(0);
-            $table->longText('payment_details')->comment('a json object containing: amount, date, method, notes');
-            $table->timestamp('due_date')->nullable();
-            $table->timestamp('issue_date')->default(Carbon\Carbon::now()->format('Y-m-d'));
+            $table->text('payment_note')->nullable();
+            $table->enum('payment_method',['cash', 'bkash', 'nagad', 'rocked', 'bank'])->nullable();
+            $table->timestamp('payment_date')->nullable();
+            $table->timestamp('due_date')->default(now()->addDays(7)->format('Y-m-d'));
+            $table->timestamp('issue_date')->default(now()->format('Y-m-d'));
             $table->enum('status',['overdue', 'outstanding', 'draft', 'partial', 'sent', 'paid'])->default('draft');
             $table->timestamps();
         });

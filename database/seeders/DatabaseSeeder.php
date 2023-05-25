@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             SocialHandleSeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
+            ClientSeeder::class,
         ]);
     }
 }
