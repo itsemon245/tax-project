@@ -240,10 +240,21 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{ route('calendar.create') }}">
+                    <a href="#timeTracking" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Time Tracking </span>
+                        <span>Time Tracking</span>
+                        <span class="menu-arrow"></span>
                     </a>
+                    <div class="collapse" id="timeTracking">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('calendar.create') }}">Calendar</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('calendar.index') }}">View Events</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
 
