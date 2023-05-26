@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\AboutPageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\MiscServiceController;
 use App\Http\Controllers\Backend\Referee\RefereeController;
+use App\Http\Controllers\Frontend\ClientStudioController;
 use App\Http\Controllers\Frontend\ContactController;
 
 /*
@@ -32,3 +33,6 @@ Route::prefix('/books')->name('books.')->group(function () {
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
+
+
+Route::get('/client-studio', [ClientStudioController::class, 'index'])->name('client.studio');
