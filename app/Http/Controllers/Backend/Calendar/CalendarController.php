@@ -25,7 +25,7 @@ class CalendarController extends Controller
         $events = Calendar::with('client')->latest()->get();
         $today = Carbon::now()->format('Y-m-d');
         $clients = Client::get();
-        $services = Calendar::get('service')->unique();
+        $services = Calendar::get()->unique();
         $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();
         return view('backend.calendar.create-calendar', compact('events', 'currentEvents', 'clients', 'services'));
     }
@@ -63,7 +63,7 @@ class CalendarController extends Controller
     {
         $calendar->title = $request->event_name;
         $calendar->client_id = $request->client;
-        $calendar->service = $request->service;
+        $calendar->service = $request->service === null ? $calendar->service : $request->service;
         $calendar->start = $request->start_date;
         $calendar->description = $request->event_description;
         $calendar->update();
