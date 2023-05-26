@@ -31,20 +31,23 @@
                 <a class="" href="#">Training</a>
             </li>
             <li class="sidebar-item">
-                <a class="" href="{{route('books.view')}}">Book Store</a>
+                <a class="" href="{{ route('books.view') }}">Book Store</a>
             </li>
             <li class="sidebar-item">
-                <a class="" href="{{route('about')}}">About Us</a>
+                <a class="" href="{{ route('about') }}">About Us</a>
             </li>
             <li class="sidebar-item">
                 <a class="" href="#">Misc. Services</a>
+            </li>
+            <li class="sidebar-item">
+                <a class="" href="{{ route('client.studio') }}">Client Studio</a>
             </li>
             <li class="mt-auto mb-5">
                 <div class="">
                     <hr class="my-3">
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end">
                         @auth
-                        
+
                             <a class="btn btn-dark" href="{{ route('logout') }}">Log out</a>
                         @else
                             <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
@@ -99,7 +102,8 @@
                 <a class="" href="#">Payment History</a>
             </li>
             <li class="sidebar-item">
-                <a class="btn btn-success waves-effect waves-light" href="{{ route('user-doc.create') }}">Upload Documents</a>
+                <a class="btn btn-success waves-effect waves-light" href="{{ route('user-doc.create') }}">Upload
+                    Documents</a>
             </li>
             <li class="mt-auto mb-5">
                 <div class="">

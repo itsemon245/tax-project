@@ -29,13 +29,16 @@
                     <a class=" nav-link text-light" href="{{ route('training.index') }}">Training</a>
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="{{route('books.view')}}">Book Store</a>
+                    <a class=" nav-link text-light" href="{{ route('books.view') }}">Book Store</a>
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="{{route('about')}}">About Us</a>
+                    <a class=" nav-link text-light" href="{{ route('about') }}">About Us</a>
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="{{route('misc.service')}}">Misc. Services</a>
+                    <a class=" nav-link text-light" href="{{ route('misc.service') }}">Misc. Services</a>
+                </li>
+                <li class="nav-item custom-nav-item">
+                    <a class=" nav-link text-light" href="{{ route('client.studio') }}">Client Studio</a>
                 </li>
             </ul>
         </nav>
@@ -53,7 +56,7 @@
                     <a class=" nav-link text-light" href="#">Services</a>
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="{{route('about')}}">About Us</a>
+                    <a class=" nav-link text-light" href="{{ route('about') }}">About Us</a>
                 </li>
             </ul>
         </nav>
