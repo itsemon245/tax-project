@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Backend\Invoice;
 
+
+// use Barryvdh\DomPDF\PDF;
 use App\Models\InvoiceItem;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInvoiceItemRequest;
 use App\Http\Requests\UpdateInvoiceItemRequest;
+
 
 class InvoiceItemController extends Controller
 {
@@ -14,7 +18,7 @@ class InvoiceItemController extends Controller
      */
     public function index()
     {
-        //
+//
     }
 
     /**
@@ -22,7 +26,9 @@ class InvoiceItemController extends Controller
      */
     public function create()
     {
-        //
+        $pdf = Pdf::loadView('backend.invoice.dynamicInvoice');
+        return $pdf->stream();
+        // return view('backend.invoice.dynamicInvoice');
     }
 
     /**
