@@ -61,7 +61,8 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-lg-3 d-flex flex-lg-column flex-md-row align-items-center justify-content-center">
+                    <div
+                        class="col-lg-3 d-flex flex-lg-column flex-md-row flex-column align-items-center justify-content-center">
                         <div class="app_icon">
                             <img src="{{ asset('frontend/assets/images/Frame.png') }}" alt="" class="icon_thumbail">
                             <h2>Professional</h2>
