@@ -16,9 +16,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         
-=======
         //storing data test
 
         $discount = 10;
@@ -29,9 +27,6 @@ class InvoiceController extends Controller
         $invoice->circle = "circle";
         $invoice->notes = "notes";
         $invoice->purpose = "purpose";
-
-
-
         $invoice->discount = $discount;
         $invoice->due_date = now()->addDays(7)->format('Y-m-d');
         $invoice->save();
@@ -77,7 +72,6 @@ class InvoiceController extends Controller
         $invoice->amount_due = $invoice->total - $invoice->amount_paid;
         $invoice->save();
         dd($invoice);
->>>>>>> main
     }
 
 
