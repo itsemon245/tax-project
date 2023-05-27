@@ -1,54 +1,61 @@
 @extends('backend.layouts.app')
-@pushOnce('customCss')
-    {{-- quillJs editor css  --}}
-    <link href="{{ asset('backend/assets/libs/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
-    {{-- quillJs editor css  --}}
-@endPushOnce
+
 @section('content')
  
+ <!-- start page title -->
+ <x-backend.ui.breadcrumbs :list="['Dashboard', 'Invoice', 'Create']" />
+ <!-- end page title -->
 
-    <section class="container mt-4">
+ <x-backend.ui.section-card>
+    <section class="p-lg-3">
       <div>
-        <div class="d-flex justify-content-between">
-          <div>
-            <img class="mb-2" src="{{ asset('backend/assets/images/logo.jpg') }}" style="width: 8rem;">
-          </div>
-          <div>
-            <p class="mb-0">SOLID IT</p>
-            <p>+880163428395</p>
-          </div>
-        </div>
-        <div class="d-flex justify-content-between">
-          <div>
+        <div class="d-flex border mb-5">
+          <img class="mb-2" src="{{ asset('backend/assets/images/logo.jpg') }}" style="width: 100%; object-fit:cover; aspect-ratio:4/1;">
+        </div>    
+        <div class="row">
+          <div class="col-lg-3 col-md-4">
             <p class="mb-0 text-muted">Billed to</p>
-            <p class="mb-0 text-black">Noelle Lawson</p>
-            <p class="text-black">Roberts and Knight Trading</p>
+            
           </div>
-          <div>
+          <div class="col-lg-3 col-md-4">
             <div class="mb-3">
               <p class="mb-0">Date of Issue</p>
               <span class="text-black">1996-10-08</span>
             </div>
+          </div>
+          <div class="col-lg-3 col-md-4">
+            <div class="mb-3">
+              <p class="mb-0">Invoice Number</p>
+              <span  class="text-black">1</span>
+            </div>
+            
+          </div>
+          <div class="col-lg-3 col-md-4">
+            <div class="d-flex justify-content-end">
+              <p class="mb-0 ">Amount Due (USD) </br>
+                <span class="fs-1 fw-bold text-black">$7,938.00</span>
+              </p>
+              
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-4">
+            <p class="mb-0 text-black">Noelle Lawson</p>
+            <p class="text-black">Roberts and Knight Trading</p>
+          </div>
+          <div class="col-lg-3 col-md-4">
             <div>
               <p class="mb-0">Due Date</p>
               <span  class="text-black">1996-11-07</span>
             </div>
           </div>
-          <div>
-            <div class="mb-3">
-              <p class="mb-0">Invoice Number</p>
-              <span  class="text-black">1</span>
-            </div>
+          <div class="col-lg-3 col-md-4">
             <div>
-              <p class="mb-0">Reference</p>
-              <span  class="text-black">234</span>
-            </div>
+            <p class="mb-0">Reference</p>
+            <span  class="text-black">234</span>
           </div>
-          <div>
-            <p class="mb-0">Amount Due (USD)</p>
-            <span class="fs-1 fw-bold text-black">$7,938.00</span>
-          </div>
+        </div>
         </div>
       </div>
       <div class="border-top border-4 mt-5">
@@ -114,24 +121,14 @@
         <h5>Molestiae quia volup</h5>
       </div>
     </section>
+  </x-backend.ui.section-card>
 
 
 
 
 
 
-    @pushOnce('customJs')
-        {{-- quillJs Script  --}}
-        <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script>
-        {{-- quillJs Script  --}}
-        <script>
-            const descriptionAdd = () => {
-                $("#description").val($('.ql-editor').html())
-                console.log($("#description").val());
-            }
-        </script>
-    @endPushOnce
+   
 @endsection
 
 
