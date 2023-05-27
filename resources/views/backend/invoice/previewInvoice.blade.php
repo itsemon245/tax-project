@@ -55,7 +55,11 @@
                             <div class="col-md-5">Reference no:</div>
                             <div class="col-md-7">
                                 <input type="text" placeholder="Reference no..." name="reference"
+<<<<<<< HEAD
                                     value="{{ strtoupper($randomString) }}" class="form-control">
+=======
+                                    value="" class="form-control">
+>>>>>>> main
                             </div>
                         </div>
                         <div class="row mt-1">

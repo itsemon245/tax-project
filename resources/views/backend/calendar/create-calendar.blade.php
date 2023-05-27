@@ -35,6 +35,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" name="servicesData" value="{{$services}}">
         <!-- Modal for creating event -->
         <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -50,12 +51,12 @@
 
                         <div class="modal-body">
                             <x-backend.form.text-input name="event_name" label="Event Name" />
-                            <x-backend.form.select-input id="services" label="Services" name="service"
-                                placeholder="Select Service">
-                                @foreach ($services as $service)
-                                    <option value="{{ $service }}">{{ $service }}</option>
+
+                            <x-form.selectize id="service" name="service" placeholder="Select Service..." label="Service">
+                                @foreach ($services as $item)
+                                <option value="{{$item->service}}">{{$item->service}}</option>
                                 @endforeach
-                            </x-backend.form.select-input>
+                            </x-form.selectize>
                             <x-backend.form.select-input id="client" label="Client" name="client"
                                 placeholder="Select Client">
                                 @foreach ($clients as $client)
@@ -119,12 +120,14 @@
 
                         <div class="modal-body">
                             <x-backend.form.text-input id="eventTitle" name="event_name" label="Event Name" />
-                            <x-backend.form.select-input id="service" label="Services" name="service"
-                                placeholder="Select Service">
-                                @foreach ($services as $service)
-                                    <option value="{{ $service }}">{{ $service }}</option>
+                            
+                            <x-form.selectize id="service" name="service" placeholder="Select Service..." label="Service">
+                                @foreach ($services as $item)
+                                <option value="{{null}}" selected disabled>Select Service</option>
+                                <option value="{{$item->service}}">{{$item->service}}</option>
                                 @endforeach
-                            </x-backend.form.select-input>
+                            </x-form.selectize>
+                                      
                             <x-backend.form.select-input id="client" label="Client" name="client"
                                 placeholder="Select Client">
                                 @foreach ($clients as $client)
@@ -270,6 +273,7 @@
                         service.text(info.event.extendedProps.service)
                         description.text(info.event.extendedProps.description)
 
+
                         $('#eventShowModal').modal('toggle') //open modal to show event
 
                         //set event listener for edit btn
@@ -313,5 +317,6 @@
                 }
             });
         </script>
+
     @endpush
 @endsection

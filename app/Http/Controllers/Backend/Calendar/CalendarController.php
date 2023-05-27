@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Backend\Calendar;
 use Carbon\Carbon;
 use App\Models\Client;
 use App\Models\Calendar;
-use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
 
 class CalendarController extends Controller
 {
+    public function index()
+    {
+        $events = Calendar::with('client')->latest()->get();
+        return view('backend.calendar.viewEvents', compact('events'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -21,7 +25,7 @@ class CalendarController extends Controller
         $events = Calendar::with('client')->latest()->get();
         $today = Carbon::now()->format('Y-m-d');
         $clients = Client::get();
-        $services = Calendar::pluck('service')->unique();
+        $services = Calendar::get()->unique();
         $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();
         return view('backend.calendar.create-calendar', compact('events', 'currentEvents', 'clients', 'services'));
     }
@@ -44,7 +48,13 @@ class CalendarController extends Controller
         ];
         return back()->with($notification);
     }
-
+    
+    public function edit(Calendar $calendar)
+    {
+        $clients = Client::get();
+        $services = Calendar::pluck('service')->unique();
+        return view('backend.calendar.updateEvent', compact('calendar', 'services', 'clients'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -53,7 +63,7 @@ class CalendarController extends Controller
     {
         $calendar->title = $request->event_name;
         $calendar->client_id = $request->client;
-        $calendar->service = $request->service;
+        $calendar->service = $request->service === null ? $calendar->service : $request->service;
         $calendar->start = $request->start_date;
         $calendar->description = $request->event_description;
         $calendar->update();
