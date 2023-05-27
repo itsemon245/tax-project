@@ -97,7 +97,7 @@ class InvoiceController extends Controller
     public function show()
     {
         
-     return view('backend.invoice.previewInvoice');
+     return view('backend.invoice.dynamicInvoice');
     }
 
     /**

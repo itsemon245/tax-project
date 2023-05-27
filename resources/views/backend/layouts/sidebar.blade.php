@@ -149,11 +149,6 @@
                                     Create
                                 </a>
                             </li>
-<<<<<<< HEAD
-                            <li>
-                                <a href="#">View</a>
-                            </li>
-=======
                             
                             <li>
                                 <a href="{{ route('invoice.show', 1) }}">
@@ -161,7 +156,6 @@
                                 </a>
                             </li>
                             
->>>>>>> main
                         </ul>
                     </div>
                 </li>
