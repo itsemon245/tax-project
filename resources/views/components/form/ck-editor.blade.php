@@ -7,6 +7,7 @@
 @endPushOnce
 <label for="{{$id}}" class="form-label text-capitalize">{{$label}}</label>
 <textarea {{$attributes->merge()}}>
+    {{$slot}}
 </textarea>
 
 @pushOnce('customJs')
