@@ -1,110 +1,97 @@
+@php
+    $banners =getRecords('banners');
+@endphp
 @extends('frontend.layouts.app')
+
 @section('main')
-    <x-frontend.hero-section :banners="getRecords('banners')" />
-    <div class="row mt-4 mb-4">
+    <x-frontend.hero-section :banners="$banners" />
+    <div class="container">
         {{-- About us section --}}
-        <h3 class="d-flex justify-content-center mb-4">Import Regristrion Certificate.</h3>
-        <div class="col-md-11 d-flex justify-content-center mx-5">
-            <div class="text-bg-secondary p-4">
-                <h5 class="d-flex justify-content-left mx-5 p-3">Lorem ipsum dolor sit amet.</h5>
-                <p class="d-flex justify-content-left mx-5 p-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Odit repudiandae, nisi omnis fuga quis expedita, culpa ad beatae mollitia maxime commodi non? Excepturi
-                    omnis laborum voluptatem? Nobis adipisci eum eius ipsam deleniti ipsa delectus qui! Lorem ipsum dolor
-                    sit amet consectetur adipisicing elit. Beatae optio dignissimos natus molestiae ut dolorum cum quaerat
-                    ratione dolores soluta. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus maxime
-                    iusto dolore cumque repudiandae aperiam aspernatur. Eveniet deserunt nobis sit aspernatur incidunt
-                    tenetur, reiciendis numquam iusto. Velit perspiciatis neque ipsam.</p>
+        <section class="my-5">
+            <h3 class="text-center my-3">Import Regristrion Certificate.</h3>
+            <div class="">
+                <div class="bg-secondary p-3 rounded">
+                    <p class="d-flex justify-content-left p-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Odit repudiandae, nisi omnis fuga quis expedita, culpa ad beatae mollitia maxime commodi non? Excepturi
+                        omnis laborum voluptatem? Nobis adipisci eum eius ipsam deleniti ipsa delectus qui! Lorem ipsum dolor
+                        sit amet consectetur adipisicing elit. Beatae optio dignissimos natus molestiae ut dolorum cum quaerat
+                        ratione dolores soluta. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus maxime
+                        iusto dolore cumque repudiandae aperiam aspernatur. Eveniet deserunt nobis sit aspernatur incidunt
+                        tenetur, reiciendis numquam iusto. Velit perspiciatis neque ipsam.</p>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
 
 
 
-    {{-- Section --}}
-    <div class="row h-400 mx-5">
-        <div class="col-md-12">
-           <div class="row">
-            <div class="col-md-6">
-                {{-- Section one --}}
-                <div class="row border p-2 mb-4">
-                    <h4>Recurment Documents</h4>
-                    <div class="col-md-4 d-flex justify-content-center align-items-center">
-                        <img src="{{ asset('frontend/assets/images/bg-material.png') }}" height="50%" width="60%" alt="" srcset="">
-                    </div>
-                    <div class="col-md-8 border p-4 bg-secondary">
-                        <div class="row">
-                            <div class="col-md-6">
+        {{-- Sections --}}
+        <div class="row justify-content-center">
+
+            {{-- Price Section --}}
+            <div class="col-md-4 pt-1 d-sm-none mb-5">
+                <div class="card p-4 mt-4">
+                    <div class="px-3">
+                        <h1 class="p-4 text-success">$145</h1>
+                        <h4 class="px-4 mb-4">Save up to 10% with <span class="text-success text-bold">Subscribe to save</span></h4>
+                        <p class="px-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem corporis ratione neque officiis aspernatur enim voluptate perspiciatis. Quo, porro voluptatum?</p>
+                            <div class="px-4 text-muted mb-2 d-flex">
+                                <p class="me-3"><i class="mdi mdi-clock-time-three-outline"></i> 2 Days Delivery</p>
+                                <p><i class="mdi mdi-rotate-3d-variant"></i> 3 Revisions</p>
+                            </div>
+                            <div class="px-4">
                                 <ul>
-                                    <li>Tread LicenceLice</li>
-                                    <li>TIN Certificateicate</li>
-                                    <li>Tread Licence</li>
-                                    <li>TIN Certificate</li>
-                                    <li>Tread Licence</li>
-                                    <li>TIN Certificate</li>
+                                    <li>Lorem, ipsum dolor.</li>
+                                    <li>Lorem, ipsum dolor.</li>
                                 </ul>
+                                <a href="#"  class="w-100 d-flex justify-content-center mt-4 align-items-center btn btn-dark btn-sm">Continue<i class="mx-2 mdi mdi-arrow-collapse-right "></i></a>
                             </div>
-                            <div class="col-md-6">
-                                <ul>
-                                    <li>Tread Licence</li>
-                                    <li>TIN Certificate</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-- Section two --}}
-                <div class="row border p-2 mb-4">
-                    <h4>Govt. Fee</h4>
-                    <div class="col-md-4 d-flex justify-content-center align-items-center">
-                        <img src="{{ asset('frontend/assets/images/bg-material.png') }}" height="50%" width="60%" alt="" srcset="">
-                    </div>
-                    <div class="col-md-8 border p-4 bg-secondary">
-                        <table class="table table-striped">
-                            <thead>
-                              <tr>
-                                <th scope="col">Descriptions</th>
-                                <th scope="col">Fees</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>Lorem ipsum dolor sit.</td>
-                                <td>43</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem ipsum dolor sit.</td>
-                                <td>43</td>
-                              </tr>
-                              <tr>
-                                <td>Lorem ipsum dolor sit.</td>
-                                <td>43</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                    </div>
-                </div>
-                {{-- Section one --}}
-                <div class="row border p-2 mb-4">
-                    <h4>Remark</h4>
-                    <div class="col-md-4 d-flex justify-content-center align-items-center">
-                        <img src="{{ asset('frontend/assets/images/bg-material.png') }}" height="50%" width="60%" alt="" srcset="">
-                    </div>
-                        <div class="col-md-8 border p-4 bg-secondary">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <ul>
-                                        <li>Lorem ipsum dolor sit.</li>
-                                        <li>Lorem ipsum dolor sit.</li>
-                                    </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-            {{-- section  --}}
-            <div class="col-md-6">
-                <div class="px-3">
-                    <div class="card p-4">
+
+
+            <div class="col-md-8">
+                {{-- Left side content --}}
+                <div class="row justify-content-center">
+                    {{-- Section One --}}
+                    <div class="row mb-4 justify-content-sm-center gap-sm-3">
+                        <h4 class="col-sm-12 col-5 p-0">Recurment Documents</h4>
+                        <div class="col-sm-3 col-6 mb-3 mb-sm-0 p-0 flex-grow-1">
+                            <img class="w-100 rounded" src="{{ asset('frontend/assets/images/bg-material.png') }}" alt=""/>
+                        </div>
+                        <div class="col-sm-8 p-4 bg-secondary rounded">
+                            <p>
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                            </p>
+                        </div>
+                    </div>
+
+                        {{-- Section two --}}
+                    <div class="row mb-4 justify-content-sm-center gap-sm-3">
+                    <h4 class="col-sm-12 col-5 p-0">Recurment Documents</h4>
+                    <div class="col-sm-3 col-6 mb-3 mb-sm-0 p-0 flex-grow-1">
+                        <img class="w-100 rounded" src="{{ asset('frontend/assets/images/bg-material.png') }}" alt=""/>
+                    </div>
+                    <div class="col-sm-8 p-4 bg-secondary rounded">
+                        <p>
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt in modi aperiam ducimus, possimus tempore eaque nulla iure impedit ut.
+                        </p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Price Section --}}
+            <div class="col-md-4 pt-1 d-none d-sm-block">
+                    <div class="card p-4 mt-4">
                         <div class="px-3">
                             <h1 class="p-4 text-success">$145</h1>
                             <h4 class="px-4 mb-4">Save up to 10% with <span class="text-success text-bold">Subscribe to save</span></h4>
@@ -117,16 +104,14 @@
                                     <ul>
                                         <li>Lorem, ipsum dolor.</li>
                                         <li>Lorem, ipsum dolor.</li>
-                                        <li>Lorem, ipsum dolor.</li>
                                     </ul>
                                     <a href="#"  class="w-100 d-flex justify-content-center mt-4 align-items-center btn btn-dark btn-sm">Continue<i class="mx-2 mdi mdi-arrow-collapse-right "></i></a>
                                 </div>
                         </div>
                     </div>
-                </div>
             </div>
-           </div>
         </div>
+        
     </div>
     <section class="mt-5 py-5" style="background: #474646;">
         <h3 class="text-light text-center">Our Valuable Partners</h3>
