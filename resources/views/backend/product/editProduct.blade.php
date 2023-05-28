@@ -139,7 +139,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <x-form.ck-editor id="ck-editor" name="description" style="height: 300px;">
+                                            <x-form.ck-editor id="ck-editor" name="description">
                                             {!!$product->description!!}</x-form.ck-editor>
                                             <!-- end Snow-editor-->
                                         </div><!-- end col -->

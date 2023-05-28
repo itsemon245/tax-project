@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class CkEditor extends Component
 {
+    public $hasImage;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($hasImage = false)
     {
-        //
+        $this->hasImage = $hasImage;
     }
 
     /**

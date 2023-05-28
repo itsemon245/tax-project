@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="col-12">
                                             
-                                            <x-form.ck-editor id="ck-editor" name="description" style="height: 300px;"></x-form.ck-editor>
+                                            <x-form.ck-editor id="ck-editor" name="description"></x-form.ck-editor>
                                            
                                         </div><!-- end col -->
 

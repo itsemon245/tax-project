@@ -19,6 +19,7 @@ use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
+use App\Http\Controllers\Backend\CkEditor\CkEditorController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
@@ -81,3 +82,7 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('book', BookController::class);
 });
+
+
+//test routes
+Route::post('upload-image', [CkEditorController::class, 'uploadImage'])->name('upload.image');
