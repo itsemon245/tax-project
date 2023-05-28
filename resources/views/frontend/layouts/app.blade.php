@@ -22,7 +22,7 @@
         </a>
     </div>
     <div >
-        <a href="whatsapp://send?abid=phonenumber&text=Hello%2C%20World!" class=" p-3" >
+        <a href="https://wa.me/01885518864/?text=Hi Sam, Whatsup" class=" p-3" >
             <i class="mdi mdi-whatsapp"></i>
         </a>
     </div>
