@@ -10,20 +10,20 @@
 
 
 {{-- Chat bot --}}
-<div class="rounded-4 shadow-lg d-flex flex-column align-items-center w-10 bg-secondary mb-4 position-absolute position-fixed bottom-0 end-0">
+<div style="z-index: 3;" class=" rounded-4 shadow-lg d-flex flex-column align-items-center w-10 bg-secondary mb-4 position-absolute position-fixed top-50 end-0">
     <div>
         <a href="mailto:someone@example.com" class="p-3" >
-            <i class="mdi mdi-email fs-1"></i>
+            <i class="mdi mdi-email"></i>
         </a>
     </div>
     <div >
         <a href="tel:555-555-5555" class=" p-3" >
-            <i class="mdi mdi-phone fs-1"></i>
+            <i class="mdi mdi-phone"></i>
         </a>
     </div>
     <div >
         <a href="whatsapp://send?abid=phonenumber&text=Hello%2C%20World!" class=" p-3" >
-            <i class="mdi mdi-whatsapp fs-1"></i>
+            <i class="mdi mdi-whatsapp"></i>
         </a>
     </div>
 </div>
