@@ -15,4 +15,14 @@ class AboutPageController extends Controller
         $testimonials = Testimonial::get();
         return view('frontend.pages.about', compact('infos2','testimonials'));
     }
+    
+    public function aboutxyz()
+    {
+        return view('frontend.pages.about-xyz');
+    }
 }
+
+
+
+
+

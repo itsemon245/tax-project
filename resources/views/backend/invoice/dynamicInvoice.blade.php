@@ -13,49 +13,40 @@
           <img class="mb-2" src="{{ asset('backend/assets/images/logo.jpg') }}" style="width: 100%; object-fit:cover; aspect-ratio:4/1;">
         </div>    
         <div class="row">
-          <div class="col-lg-3 col-md-4">
+          <div class="col-sm-4 col-md-3">
             <p class="mb-0 text-muted">Billed to</p>
+            <p class="mb-0 text-black">Noelle Lawson</p>
+            <p class="text-black">Roberts and Knight Trading</p>
             
           </div>
-          <div class="col-lg-3 col-md-4">
+          <div class="col-sm-4 col-md-3">
             <div class="mb-3">
               <p class="mb-0">Date of Issue</p>
               <span class="text-black">1996-10-08</span>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-4">
-            <div class="mb-3">
-              <p class="mb-0">Invoice Number</p>
-              <span  class="text-black">1</span>
-            </div>
-            
-          </div>
-          <div class="col-lg-3 col-md-4">
-            <div class="d-flex justify-content-end">
-              <p class="mb-0 ">Amount Due (USD) </br>
-                <span class="fs-1 fw-bold text-black">$7,938.00</span>
-              </p>
-              
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-4">
-            <p class="mb-0 text-black">Noelle Lawson</p>
-            <p class="text-black">Roberts and Knight Trading</p>
-          </div>
-          <div class="col-lg-3 col-md-4">
             <div>
               <p class="mb-0">Due Date</p>
               <span  class="text-black">1996-11-07</span>
             </div>
           </div>
-          <div class="col-lg-3 col-md-4">
+          <div class="col-sm-4 col-md-3">
+            <div class="mb-3">
+              <p class="mb-0">Invoice Number</p>
+              <span  class="text-black">1</span>
+            </div>
             <div>
-            <p class="mb-0">Reference</p>
-            <span  class="text-black">234</span>
+              <p class="mb-0">Reference</p>
+              <span  class="text-black">234</span>
+            </div>
+            
           </div>
-        </div>
+          <div class="col-sm-12 col-md-3">
+            <div class="d-flex justify-content-end ">
+              <p class="mb-0">Amount Due (USD) </br>
+                <span class="fs-1 fw-bold text-black">$7,938.00</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="border-top border-4 mt-5">
