@@ -30,6 +30,7 @@ Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
     Route::get('/book', [BookController::class, 'show'])->name('show');
 });
+Route::get('refer-link', [RefereeController::class, 'refer_link'])->name('refer.link');
 
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 

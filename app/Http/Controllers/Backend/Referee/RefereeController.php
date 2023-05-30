@@ -64,4 +64,8 @@ class RefereeController extends Controller
     {
         //
     }
+    public function refer_link()
+    {
+        return view('frontend.pages.referee.refer-index');
+    }
 }
