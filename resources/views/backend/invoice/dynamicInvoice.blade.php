@@ -50,28 +50,33 @@
         </div>
       </div>
       <div class="border-top border-4 mt-5">
-        <div class="d-flex py-2 border-bottom border-2">
-          <div class="w-75">
-            <p class="mb-3">Description</p>
-            <span class="fs-4 text-black">server</span> <br />
-            <span class="text-black">Est duis enim volup</span>
-          </div>
-          <div class="d-flex justify-content-between w-25">
-            <div>
-              <p class="mb-4">Rate</p>
-              <span  class="text-black">$45.00</span> <br />
-              <span class="text-black">+hello</span>
-            </div>
-            <div>
-              <p class="mb-4">Qty</p>
-              <span  class="text-black">168</span>
-            </div>
-            <div>
-              <p class="mb-4">Line Total</p>
-              <span  class="text-black">$7,560.00</span>
-            </div>
-          </div>
-        </div>
+        <div class="table-responsive">
+          <table class="table table-striped mb-3">
+              <thead class="bg-light">
+                  <tr>
+                      <th>#</th>
+                      <th>Description</th>
+                      <th>Rate</th>
+                      <th>Qty</th>
+                      <th>Line Total</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th scope="row">1</th>
+                      <td>
+                        <div>
+                          <h5>Item Name</h5>
+                          <span class="text-muted">Item Description</span>
+                        </div>
+                      </td>
+                      <td>$12</td>
+                      <td>5</td>
+                      <td>$60</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div> <!-- end table-responsive-->
       </div>
       <div class="row">
         <div class="col-md-6"></div>
