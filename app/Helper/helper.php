@@ -29,7 +29,7 @@ function timestamp()
 function saveImage($image, $dir, $prefix = 'image')
 {
     $ext = $image->extension();
-    $name = $prefix . uniqid() . '.' . $ext;
+    $name = $prefix ."-". timestamp() . '.' . $ext;
     $path = $image->storeAs("uploads/$dir", $name, 'public');
     return $path;
 }

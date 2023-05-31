@@ -107,17 +107,16 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <label for="snow-editor" class="form-label">Description</label>
-                                            <div id="snow-editor" style="height: 300px;"></div>
-                                            <textarea class="d-none" name="description" id="description"></textarea>
+                                            
+                                            <x-form.ck-editor id="ck-editor" name="description"></x-form.ck-editor>
+                                           
                                         </div><!-- end col -->
 
 
 
                                         <div class="mt-3">
                                             <button type="submit"
-                                                class="btn btn-primary waves-effect waves-light profile-button"
-                                                onclick="descriptionAdd()">Create
+                                                class="btn btn-primary waves-effect waves-light profile-button">Create
                                                 Product</button>
                                         </div>
 
@@ -139,13 +138,10 @@
 
 @push('customJs')
     {{-- quillJs Script  --}}
-    <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script>
+    {{-- <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script> --}}
     {{-- quillJs Script  --}}
     <script>
-        const descriptionAdd = () => {
-            $("#description").val($('.ql-editor').html())
-        }
         const featureLength = () => {
             $('#packacgeFeaturesInputs').children().length < 2 ?
                 $("#removePackageFeatureBtn").addClass('d-none') :

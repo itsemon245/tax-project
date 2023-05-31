@@ -102,6 +102,27 @@
                     </div>
                 </li>
                 <li>
+                    <a href="#sidebarSerivces" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Services </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarSerivces">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('service-category.index') }}">
+                                    <span> Category </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('service-subcategory.index') }}">
+                                    <span> Sub-Category </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
                     <a href="#user-doc" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span>User Documents</span>
