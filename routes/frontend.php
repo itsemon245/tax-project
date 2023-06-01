@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\Referee\RefereeController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\Frontend\ClientStudioController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\FrontendAppoinmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,4 +40,9 @@ Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'
 
 
 Route::get('/client-studio', [ClientStudioController::class, 'index'])->name('client.studio');
+
+
+Route::get('page/appoinment', [FrontendAppoinmentController::class, 'create'])->name('page.appoinment');
+
 Route::get('/expert-profile', [ExpertController::class, 'index'])->name('expert.profile');
+
