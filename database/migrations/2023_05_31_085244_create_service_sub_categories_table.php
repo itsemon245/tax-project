@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('service_category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->text('name');
             $table->longText('image');
+            $table->longText('description');
             $table->timestamps();
         });
     }

@@ -111,7 +111,6 @@
                     </div>
                     <!-- end row -->
 
-<<<<<<< HEAD
                     <div class="float-end">
                         {{-- Sub Total --}}
                         <div class="row mb-2 align-items-center">
@@ -140,7 +139,6 @@
                             </h4>
                         </div>
                         <input type="text" name="amount" value="140" hidden>
-=======
                     <div class="row">
                         <div class="col-md-6">
                             <div class="row mb-2 align-items-center">
@@ -187,7 +185,6 @@
                         {{-- Sub Total --}}
 
 
->>>>>>> main
                     </div>
                     <div class="clearfix"></div>
                     <!-- end row -->
