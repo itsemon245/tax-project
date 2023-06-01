@@ -16,13 +16,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $banners = Banner::get();
         $appointmentSections = Appointment::get();
         $productCategory = ProductCategory::with('productSubCategories', "productSubCategories.products")->find(1);
         $infos1 = Info::where('section_id', 1)->get();
         $infos2 = Info::where('section_id', 2)->get();
         $testimonials = Testimonial::get();
         $socials = SocialHandle::get();
-        return view('frontend.pages.welcome', compact('banners', 'appointmentSections', 'infos1', 'infos2', 'socials', 'productCategory', 'testimonials'));
+        return view('frontend.pages.welcome', compact('appointmentSections', 'infos1', 'infos2', 'socials', 'productCategory', 'testimonials'));
     }
 }
