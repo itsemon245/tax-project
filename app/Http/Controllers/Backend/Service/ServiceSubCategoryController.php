@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Referee;
+namespace App\Http\Controllers\Backend\Service;
 
-use App\Models\Referee;
+use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreRefereeRequest;
-use App\Http\Requests\UpdateRefereeRequest;
+use App\Http\Requests\StoreServiceSubCategoryRequest;
+use App\Http\Requests\UpdateServiceSubCategoryRequest;
 
-class RefereeController extends Controller
+class ServiceSubCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('backend.service.subCategory');
     }
 
     /**
@@ -28,7 +28,7 @@ class RefereeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRefereeRequest $request)
+    public function store(StoreServiceSubCategoryRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class RefereeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Referee $referee)
+    public function show(ServiceSubCategory $serviceSubCategory)
     {
         //
     }
@@ -44,7 +44,7 @@ class RefereeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Referee $referee)
+    public function edit(ServiceSubCategory $serviceSubCategory)
     {
         //
     }
@@ -52,7 +52,7 @@ class RefereeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRefereeRequest $request, Referee $referee)
+    public function update(UpdateServiceSubCategoryRequest $request, ServiceSubCategory $serviceSubCategory)
     {
         //
     }
@@ -60,12 +60,8 @@ class RefereeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Referee $referee)
+    public function destroy(ServiceSubCategory $serviceSubCategory)
     {
         //
-    }
-    public function refer_link()
-    {
-        return view('frontend.pages.referee.refer-index');
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\AboutPageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\MiscServiceController;
 use App\Http\Controllers\Backend\Referee\RefereeController;
+use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\Frontend\ClientStudioController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\FrontendAppoinmentController;
@@ -31,6 +32,7 @@ Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
     Route::get('/book', [BookController::class, 'show'])->name('show');
 });
+Route::get('refer-link', [RefereeController::class, 'refer_link'])->name('refer.link');
 
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 
@@ -39,4 +41,8 @@ Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'
 
 Route::get('/client-studio', [ClientStudioController::class, 'index'])->name('client.studio');
 
+
 Route::get('page/appoinment', [FrontendAppoinmentController::class, 'create'])->name('page.appoinment');
+
+Route::get('/expert-profile', [ExpertController::class, 'index'])->name('expert.profile');
+

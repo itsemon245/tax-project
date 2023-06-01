@@ -19,10 +19,13 @@ use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
+use App\Http\Controllers\Backend\CkEditor\CkEditorController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
+use App\Http\Controllers\Backend\Service\ServiceCategoryController;
+use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\Training\TrainingController;
 
 /*
@@ -64,20 +67,21 @@ Route::prefix('admin')->group(function () {
     Route::resource('invoice', InvoiceController::class);
     Route::resource('invoice-item',InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
-
-
+    Route::resource('service-category',ServiceCategoryController::class);
+    Route::resource('service-subcategory', ServiceSubCategoryController::class);
 
     //custom routes
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
     Route::POST('/get-users', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
     Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panle
-
     Route::resource('calendar', CalendarController::class);
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
-
     Route::resource('client', ClientController::class);
-
     Route::resource('book', BookController::class);
 });
+
+
+//test routes
+Route::post('upload-image', [CkEditorController::class, 'uploadImage'])->name('upload.image');
