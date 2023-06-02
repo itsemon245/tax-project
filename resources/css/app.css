@@ -662,7 +662,46 @@ transform: rotate(60deg);
     font-size: 16px;
     color: #000000;
 }
+.nav-item{
+    transition: 0.4s ease-in-out;
+}
 
+li ul{
+    list-style: none;
+    top: 208%;
+    background-color: #192B31;
+    opacity: 0;
+}
+
+li ul li{
+    width: 200px;
+    padding: 10px 0!important;
+}
+li ul li:last-child{
+    padding-bottom: 20px!important;
+}
+
+li:hover ul{
+    opacity: 1!important;
+}
+.nav-item ul{
+    opacity: 0!important;
+}
+.nav-item:hover ul{
+    opacity: 1!important;
+}
+li:hover ul.sidebar_dropdown{
+    opacity: 1;
+    visibility: visible;
+}
+.sidebar_dropdown{
+    top: 100%;
+    background-color: #ECEFF1;
+    visibility: hidden;
+}
+.sidebar_dropdown li a{
+    color: #000 !important;
+}
 @media (max-width:426.99px){
    .tabs{
     margin: 2% 0;
@@ -703,3 +742,4 @@ transform: rotate(60deg);
         align-items: center;
     }
 }
+

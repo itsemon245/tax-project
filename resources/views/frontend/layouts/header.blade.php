@@ -22,8 +22,17 @@
                 <li class="nav-item custom-nav-item">
                     <a class=" nav-link text-light" href="#">Return Status</a>
                 </li>
-                <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="#">Services</a>
+                <li class="nav-item custom-nav-item position-relative">
+                    <a class="nav-link text-light" href="#">Services</a>
+                    <ul class="position-absolute">
+                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
+                                Service</a></li>
+                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
+                                Service</a></li>
+                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
+                                Service</a></li>
+                    </ul>
+
                 </li>
                 <li class="nav-item custom-nav-item">
                     <a class=" nav-link text-light" href="{{ route('training.index') }}">Training</a>
@@ -52,8 +61,16 @@
                 <li class="nav-item custom-nav-item">
                     <a class=" nav-link text-light" href="">Tax Products</a>
                 </li>
-                <li class="nav-item custom-nav-item">
+                <li class="nav-item custom-nav-item  position-relative">
                     <a class=" nav-link text-light" href="#">Services</a>
+                    <ul class="position-absolute">
+                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
+                                Service</a></li>
+                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
+                                Service</a></li>
+                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
+                                Service</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item custom-nav-item">
                     <a class=" nav-link text-light" href="{{ route('about') }}">About Us</a>
