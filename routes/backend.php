@@ -67,7 +67,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('invoice', InvoiceController::class);
     Route::resource('invoice-item',InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
-    Route::resource('service-category',ServiceCategoryController::class);
     Route::resource('service-subcategory', ServiceSubCategoryController::class);
 
     //custom routes
