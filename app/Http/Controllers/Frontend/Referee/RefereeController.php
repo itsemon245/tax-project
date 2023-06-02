@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Referee;
+namespace App\Http\Controllers\Frontend\Referee;
 
 use App\Models\Referee;
 use App\Http\Controllers\Controller;
@@ -14,7 +14,7 @@ class RefereeController extends Controller
      */
     public function index()
     {
-        //
+        return view('frontend.pages.referee.refer-index');
     }
 
     /**
@@ -63,9 +63,5 @@ class RefereeController extends Controller
     public function destroy(Referee $referee)
     {
         //
-    }
-    public function refer_link()
-    {
-        return view('frontend.pages.referee.refer-index');
     }
 }

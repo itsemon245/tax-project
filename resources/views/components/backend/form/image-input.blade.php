@@ -19,6 +19,15 @@
 
 @pushOnce('customJs')
     {{-- Photo Preview for uploads --}}
-    <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
+    <script>
+    
+    let inputImg = document.querySelector('#imagefile')
+    let image = document.querySelector('#liveImage')
+    let changeImage = (e) => {
+        let url = URL.createObjectURL(e.target.files[0])
+        image.src = url
+    }
+    inputImg.addEventListener('change', changeImage)
+    </script>
     {{-- Photo Preview for uploads --}}
 @endPushOnce

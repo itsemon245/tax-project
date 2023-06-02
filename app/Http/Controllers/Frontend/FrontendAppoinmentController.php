@@ -6,7 +6,7 @@ use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class FrontendAppoinmentController extends Controller
+class FrontendAppointmentController extends Controller
 {
     public function create()
     {
