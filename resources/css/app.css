@@ -521,3 +521,34 @@ footer .social-handles {
         padding: 0 4px;
     }
 } 
+#browse_section{
+        padding: 76px 0;
+}
+.browse_header{ 
+    font-family: 'Poppins',sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #000;
+    padding-right: 16px;
+}
+
+.line{
+    background-color: #B1AEAE;
+    width: 2px;
+}
+.circle_left {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #B1AEAE;
+    left: 20%;
+}
+.circle_right{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #B1AEAE;
+    right: 11%;
+}
