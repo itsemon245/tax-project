@@ -20,6 +20,11 @@
 
     
     {{-- Plugins link  --}}
+    <style>
+        .mdi{
+            font-size: 24px;
+        }
+    </style>
     @stack('customCss')
     <!-- Head js -->
     <script src="{{ asset('backend/assets/js/head.js') }}"></script>

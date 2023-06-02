@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use App\Models\Client;
 use App\Models\InvoiceItem;
 use Carbon\Carbon;
 
@@ -80,7 +81,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('backend.invoice.createInvoice');
+        $clients = Client::get();
+        return view('backend.invoice.createInvoice', compact('clients'));
     }
 
     /**

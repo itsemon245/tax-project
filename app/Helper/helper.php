@@ -115,3 +115,19 @@ function getRecords($table = 'users', $queries = [], $limit = 10)
     $records = DB::table($table)->where($queries)->limit($limit)->get();
     return $records;
 }
+
+
+
+/**
+ * Get count for any given table from database
+ */
+function countRecords($table = 'users', $queries = [])
+{
+    if (count($queries) > 0) {
+        if (!is_array($queries[0])) {
+            $queries = [$queries];
+        }
+    }
+    $count = DB::table($table)->where($queries)->count();
+    return $count;
+}

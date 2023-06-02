@@ -11,29 +11,42 @@
     <section class="p-lg-3">
       <div>
         <div class="d-flex border mb-5 justify-content-center">
-          <x-backend.form.image-input name="header_image" class="d-flex justify-content-center" style="aspect-ratio:4/1;object-fit:contain;" />
+          <x-backend.form.image-input name="header_image" :image="null" class="d-flex justify-content-center" style="aspect-ratio:4/1;object-fit:contain;" />
         </div>
         <div class="row">
           <div class="col-sm-4 col-md-3">
-            <p class="mb-0 text-muted">Billed to</p>
-            <p class="mb-0 text-black">Noelle Lawson</p>
-            <p class="text-black">Roberts and Knight Trading</p>
+            <div class="pe-5">
+              <x-form.selectize id="client" name="client"
+              placeholder="Select Client..." label="Bill To">
+              @foreach ($clients as $client)
+                  <option value="{{ $client->id }}">{{ $client->name }}</option>
+              @endforeach
+            </x-form.selectize>
 
+            </div>
           </div>
           <div class="col-sm-4 col-md-3">
             <div class="mb-3">
-              <p class="mb-0">Date of Issue</p>
-              <span class="text-black">1996-10-08</span>
+              <label for="issue-date" class="mb-0 d-block">Date of Issue</label>
+              <div class="d-flex align-items-center">
+                <input type="date" name="issue_date" id="issue-date" value="{{now()->format('Y-m-d')}}" hidden>
+                <span class="text-dark fw-bold"></span>
+                <span class="mdi mdi-calendar-outline text-dark ms-2" data-trigger="issue-date" style="cursor:pointer;"></span>
+              </div>
             </div>
-            <div>
-              <p class="mb-0">Due Date</p>
-              <span  class="text-black">1996-11-07</span>
+            <div class="mb-3">
+              <label for="issue-date" class="mb-0 d-block">Due Date</label>
+              <div class="d-flex align-items-center">
+                <input type="date" name="due_date" id="due-date" value="{{now()->addDays(7)->format('Y-m-d')}}" hidden>
+                <span class="text-dark fw-bold"></span>
+                <span class="mdi mdi-calendar-outline text-dark ms-2" data-trigger="due-date" style="cursor:pointer;"></span>
+              </div>
             </div>
           </div>
           <div class="col-sm-4 col-md-3">
             <div class="mb-3">
               <p class="mb-0">Invoice Number</p>
-              <span  class="text-black">1</span>
+              <span  class="text-black">{{countRecords('invoices')+1}}</span>
             </div>
             <div>
               <p class="mb-0">Reference</p>
@@ -120,13 +133,29 @@
     </section>
   </x-backend.ui.section-card>
 
-
-
-
-
-
-
 @endsection
+
+@pushOnce('customJs')
+    <script>
+      $(document).ready(function () {
+        function setDateValue() {
+            $('[type="date"]').each((i, el)=>{
+            $('[type="date"]').next().text(el.value)
+          })
+        }
+        setDateValue()
+
+        $('.mdi-calendar-outline').each((i, el)=>{
+          el.addEventListener('click', e=>{
+            $("#"+el.dataset.trigger).trigger('click');
+          })
+        })
+        
+
+
+      });
+    </script>
+@endPushOnce
 
 
 
