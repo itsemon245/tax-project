@@ -521,3 +521,225 @@ footer .social-handles {
         padding: 0 4px;
     }
 } 
+#browse_section{
+        padding: 76px 0;
+}
+.browse_header{ 
+    font-family: 'Poppins',sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #000;
+    padding-right: 16px;
+    padding-bottom: 20px;
+}
+
+.line{
+    background-color: #B1AEAE;
+    height: 2px;
+    width: 80%;
+    margin: 1%;
+    position: relative;
+}
+.circle_left {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #B1AEAE;
+    left: 0;
+    margin: -4px 0;
+}
+.circle_right{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #B1AEAE;
+    right: 0%;
+    margin: -4px 0;
+}
+.tabs{
+
+box-sizing: border-box!important;
+
+
+border: 1px solid #0891B2!important;
+border-radius: 13px!important;
+background: #D9D9D9!important;
+padding: 12px 32px;
+margin: 0 20px;
+font-family: 'Poppins';
+font-style: normal!important;
+font-weight: 600;
+font-size: 18px!important;
+line-height: 27px!important;
+
+color: #0891B2!important;
+}
+.tabs.active{
+    background: #BAE6FD!important;
+}
+.browse_thumbail{
+    width: 100%;
+    display: block;
+    padding: 0 16px;
+}
+.browse_card_name{
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 20px;
+color: #000000;
+}
+.browse_card_button{
+background: #22C55E;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 16px;
+border-color: transparent;
+padding: 8px 16px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+color: #FFFFFF;
+}
+.browse_card_exp{
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+color: #192B31;
+padding: 4px 0;
+}
+.browse_card_company{
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+color: #0891B2;
+}
+.browse_card_price{
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 20px;
+color: #000000;
+}
+.browse_card_cons{
+background: #38BDF8;
+border-radius: 5px;
+padding: 8px 16px;
+border-color:transparent;
+text-align: center;
+margin: 20px 0 4px;
+}
+.browse_card_view{
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+color: #38BDF8;
+display: block;}
+
+.browse_content_wrapper{
+filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+background: #F1EBEB;
+border-radius: 10px;
+border-color: transparent;
+padding: 16px 20px;
+margin: 32px 16px;
+}
+.mdi.rating{
+color: #FACC15;
+transform: rotate(60deg);
+}
+.browse_ratings{
+    text-align: center;
+    display: block;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #000000;
+}
+.nav-item{
+    transition: 0.4s ease-in-out;
+}
+
+li ul{
+    list-style: none;
+    top: 208%;
+    background-color: #192B31;
+    opacity: 0;
+}
+
+li ul li{
+    width: 200px;
+    padding: 10px 0!important;
+}
+li ul li:last-child{
+    padding-bottom: 20px!important;
+}
+
+li:hover ul{
+    opacity: 1!important;
+}
+.nav-item ul{
+    opacity: 0!important;
+}
+.nav-item:hover ul{
+    opacity: 1!important;
+}
+li:hover ul.sidebar_dropdown{
+    opacity: 1;
+    visibility: visible;
+}
+.sidebar_dropdown{
+    top: 100%;
+    background-color: #ECEFF1;
+    visibility: hidden;
+}
+.sidebar_dropdown li a{
+    color: #000 !important;
+}
+@media (max-width:426.99px){
+   .tabs{
+    margin: 2% 0;
+   }
+   .line {
+    background-color: #B1AEAE;
+    height: 2px;
+    width: 100%;
+    margin: 1%;
+    position: relative;
+    }
+    .center_sm{
+        display: flex;
+        align-items: center;
+    }
+    .line{
+        width: 100%;
+    }
+    .browse_header {
+    padding-right: 0px;
+    padding-bottom: 0px;
+    }
+}
+
+@media (max-width:768px) and (min-width: 427px){
+    .tabs {
+        margin: 0 4px;
+    }
+    .line{
+        width: 100%;
+    }
+    .browse_header {
+    padding-right: 0px;
+    padding-bottom: 0px;
+    }
+    .center_sm{
+        display: flex;
+        align-items: center;
+    }
+}
+

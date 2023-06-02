@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\MiscServiceController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\ExpertController;
+use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\ClientStudioController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\FrontendAppointmentController;
@@ -46,3 +47,4 @@ Route::get('page/appointment', [FrontendAppointmentController::class, 'create'])
 
 Route::get('/expert-profile', [ExpertController::class, 'index'])->name('expert.profile');
 
+Route::get('/browse-tax-expert', [BrowseTaxExpertController::class, 'index'])->name('browse.expert');

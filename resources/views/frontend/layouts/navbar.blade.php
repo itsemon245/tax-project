@@ -77,8 +77,16 @@
             <li class="sidebar-item">
                 <a href="{{ route('user-profile.create') }}" class="">Profile</a>
             </li>
-            <li class="sidebar-item">
+            <li class="sidebar-item position-relative">
                 <a class="" href="">My Product</a>
+                <ul class="position-absolute sidebar_dropdown">
+                    <li class="sidebar-item ps-3"><a href="">Audit
+                            Service</a></li>
+                    <li class="sidebar-item ps-3"><a href="">Audit
+                            Service</a></li>
+                    <li class="sidebar-item ps-3"><a href="">Audit
+                            Service</a></li>
+                </ul>
             </li>
             <li class="sidebar-item">
                 <a class="" href="#">My Taxes</a>
@@ -91,6 +99,7 @@
             </li>
             <li class="sidebar-item">
                 <a class="" href="#">Promo Code</a>
+
             </li>
             <li class="sidebar-item">
                 <a class="" href="#">Live Chat</a>
