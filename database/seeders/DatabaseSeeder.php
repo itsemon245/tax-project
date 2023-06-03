@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             ClientSeeder::class,
             ServiceCategorySeeder::class,
+            ServiceSubCategorySeeder::class,
         ]);
     }
 }

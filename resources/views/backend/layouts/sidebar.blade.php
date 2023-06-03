@@ -110,6 +110,7 @@
                     <div class="collapse" id="sidebarSerivces">
                         <ul class="nav-second-level">
                             <li>
+                          <li>
                                 <a href="{{ route('service-subcategory.index') }}">
                                     <span> Categories </span>
                                 </a>
@@ -165,13 +166,13 @@
                                     Create
                                 </a>
                             </li>
-                            
+
                             <li>
                                 <a href="{{ route('invoice.show', 1) }}">
-                                View    
+                                View
                                 </a>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </li>

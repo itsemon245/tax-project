@@ -14,10 +14,10 @@ class ServiceCategorySeeder extends Seeder
     public function run(): void
     {
         $names = [
-            'Service 1',
-            'Service 2',
-            'Service 3',
-            'Service 4',
+            'Tax Services',
+            'Vat Services',
+            'Misc. Services',
+            fake()->word(10)." Services",
         ];
         foreach ($names as $name) {
             ServiceCategory::create([
