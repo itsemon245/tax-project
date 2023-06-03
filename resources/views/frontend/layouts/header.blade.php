@@ -23,6 +23,7 @@
                         <li class="nav-item custom-nav-item dropdown-item"><a target="_blank" rel="noopener noreferrer" href="#" class="nav-link text-light">Tax Verification</a></li>
                     </ul>
                 </li>
+                {{-- tax services --}}
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                     <a class="nav-link text-light" href="#"> Tax Services</a>
                     <ul class="position-absolute dropdown ">
@@ -41,6 +42,7 @@
                     </ul>
 
                 </li>
+                {{-- vat services --}}
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                     <a class="nav-link text-light" href="#">VAT Services</a>
                     <ul class="position-absolute dropdown ">
@@ -50,7 +52,7 @@
                     </ul>
 
                 </li>
-               
+               {{-- misc. services --}}
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                     <a class="nav-link text-light" href="#">Misc. Services</a>
                     <ul class="position-absolute dropdown ">
@@ -67,7 +69,7 @@
                             <a href="" class="nav-link text-light">Import Registration Certificate</a>
                         </li>
                         <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">Trade Licence</a>
+                            <a href="" class="nav-link text-light">Trade Licence(CCC)</a>
                         </li>
                     </ul>
 
