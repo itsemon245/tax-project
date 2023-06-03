@@ -77,18 +77,18 @@
             <li class="sidebar-item">
                 <a href="{{ route('user-profile.create') }}" class="">Profile</a>
             </li>
-            <li class="sidebar-item position-relative">
+            <li class="sidebar-item">
                 <div class="d-flex justify-content-between align-items-center">
                     <a class="" href="">My Product</a>
-                    <span class="mdi mdi-chevron-down-box-outline" style="font-size: 20px; color: var(--bs-gray-600)"></span>
+                    <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#dropdown-click-target" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
                 </div>
                 
-                <ul class="position-absolute sidebar_dropdown">
-                    <li class="sidebar-item ps-3"><a href="">Audit
+                <ul class="dropdown-click" id="dropdown-click-target">
+                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Audit
                             Service</a></li>
-                    <li class="sidebar-item ps-3"><a href="">Audit
+                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Audit
                             Service</a></li>
-                    <li class="sidebar-item ps-3"><a href="">Audit
+                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Audit
                             Service</a></li>
                 </ul>
             </li>
@@ -137,6 +137,19 @@
 
 
 @push('customJs')
+{{-- for clickable dropdown --}}
+    <script>
+        $(document).ready(function () {
+            const trigger = $('.dropdown-click-trigger')
+            const dropdown= $(trigger.attr('data-target'))
+            dropdown.hide()
+            trigger.on('click', (e)=>{
+                dropdown.slideToggle()
+            })
+
+        });
+    </script>
+
     <script>
         const navLinks = document.querySelectorAll('.custom-nav-item');
         const activeLink = document.querySelector('.active-link');
