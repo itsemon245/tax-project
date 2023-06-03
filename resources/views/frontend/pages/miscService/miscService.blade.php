@@ -12,7 +12,7 @@
     {{-- industries section  --}}
     <x-frontend.industries-section />
 
-    {{-- Misc Services --}}
+    {{-- Services --}}
     <section class="px-lg-5 px-2 my-5">
         <div class="row mx-lg-5 mx-2">
             <div class="col-md-4 col-lg-3 col-sm-6">

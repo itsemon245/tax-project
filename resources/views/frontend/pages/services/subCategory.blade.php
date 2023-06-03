@@ -8,13 +8,10 @@
 @extends('frontend.layouts.app')
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
-    
-    {{-- Misc content --}}
-    <x-frontend.products-section :subCategories="$productCategory->productSubCategories" />
 
         {{-- Services --}}
     <section class="px-lg-5 px-2 my-5">
-        <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">Tax Services</h4>
+        <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">Services</h4>
         <div class="row mx-lg-5 mx-2">
             <div class="col-md-4 col-lg-3 col-sm-6">
                 <div class="d-flex flex-column align-items-center">

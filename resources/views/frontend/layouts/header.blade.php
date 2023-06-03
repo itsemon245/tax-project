@@ -25,7 +25,7 @@
                 </li>
                 {{-- tax services --}}
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="#"> Tax Services</a>
+                    <a class="nav-link text-light" href="{{route('taxService.page')}}"> Tax Services</a>
                     <ul class="position-absolute dropdown ">
                         <li class="nav-item custom-nav-item dropdown-item">
                             <a href="" class="nav-link text-light">Income Tax</a>
@@ -44,7 +44,7 @@
                 </li>
                 {{-- vat services --}}
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="#">VAT Services</a>
+                    <a class="nav-link text-light" href="{{route('serviceSub.page')}}">VAT Services</a>
                     <ul class="position-absolute dropdown ">
                         <li class="nav-item custom-nav-item dropdown-item">
                             <a href="" class="nav-link text-light">VAT Registration</a>
@@ -54,7 +54,7 @@
                 </li>
                {{-- misc. services --}}
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="#">Misc. Services</a>
+                    <a class="nav-link text-light" href="{{route('serviceSub.page')}}">Misc. Services</a>
                     <ul class="position-absolute dropdown ">
                         <li class="nav-item custom-nav-item dropdown-item">
                             <a href="" class="nav-link text-light">RJSC Company Registration</a>
@@ -76,7 +76,7 @@
                 </li>
                 
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="#">Training/Education</a>
+                    <a class="nav-link text-light" href="{{route('training.page')}}">Training/Education</a>
                     <ul class="position-absolute dropdown ">
                         <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Practical Income Tax Course</a></li>
                         <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">ITP Exam Preparation</a></li>
@@ -107,7 +107,7 @@
                     <a class="nav-link text-light" href="#">Services</a>
                     <ul class="position-absolute dropdown">
                         <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                            <a class="nav-link text-light" href="#"> Tax Services</a>
+                            <a class="nav-link text-light" href="{{route('taxService.page')}}"> Tax Services</a>
                             <ul class="position-absolute nested-dropdown ">
                                 <li class="nav-item custom-nav-item dropdown-item">
                                     <a href="" class="nav-link text-light">Income Tax</a>
@@ -125,7 +125,7 @@
         
                         </li>
                         <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                            <a class="nav-link text-light" href="#">VAT Services</a>
+                            <a class="nav-link text-light" href="{{route('serviceSub.page')}}">VAT Services</a>
                             <ul class="position-absolute nested-dropdown ">
                                 <li class="nav-item custom-nav-item dropdown-item">
                                     <a href="" class="nav-link text-light">VAT Registration</a>
@@ -135,7 +135,7 @@
                         </li>
                        
                         <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                            <a class="nav-link text-light" href="#">Misc. Services</a>
+                            <a class="nav-link text-light" href="{{route('serviceSub.page')}}">Misc. Services</a>
                             <ul class="position-absolute nested-dropdown ">
                                 <li class="nav-item custom-nav-item dropdown-item">
                                     <a href="" class="nav-link text-light">RJSC Company Registration</a>
@@ -158,7 +158,7 @@
                     </ul>
                 </li>
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="#">Training/Education</a>
+                    <a class="nav-link text-light" href="{{route('training.page')}}">Training/Education</a>
                     <ul class="position-absolute dropdown ">
                         <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Practical Income Tax Course</a></li>
                         <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">ITP Exam Preparation</a></li>
@@ -166,7 +166,7 @@
                 </li>
 
                 <li class="nav-item custom-nav-item ">
-                    <a class=" nav-link text-light" href="/">Book Store</a>
+                    <a class=" nav-link text-light" href="{{route('books.view')}}">Book Store</a>
                 </li>
             </ul>
         </nav>
@@ -196,7 +196,7 @@
                 <a class="nav-link text-light" href="#">Services</a>
                 <ul class="position-absolute dropdown">
                     <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                        <a class="nav-link text-light" href="#"> Tax Services</a>
+                        <a class="nav-link text-light" href="{{route('taxService.page')}}"> Tax Services</a>
                         <ul class="position-absolute nested-dropdown ">
                             <li class="nav-item custom-nav-item dropdown-item">
                                 <a href="" class="nav-link text-light">Income Tax</a>
@@ -214,7 +214,7 @@
     
                     </li>
                     <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                        <a class="nav-link text-light" href="#">VAT Services</a>
+                        <a class="nav-link text-light" href="{{route('serviceSub.page')}}">VAT Services</a>
                         <ul class="position-absolute nested-dropdown ">
                             <li class="nav-item custom-nav-item dropdown-item">
                                 <a href="" class="nav-link text-light">VAT Registration</a>
@@ -224,7 +224,7 @@
                     </li>
                    
                     <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                        <a class="nav-link text-light" href="#">Misc. Services</a>
+                        <a class="nav-link text-light" href="{{route('serviceSub.page')}}">Misc. Services</a>
                         <ul class="position-absolute nested-dropdown ">
                             <li class="nav-item custom-nav-item dropdown-item">
                                 <a href="" class="nav-link text-light">RJSC Company Registration</a>
@@ -247,7 +247,7 @@
                 </ul>
             </li>
             <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                <a class="nav-link text-light" href="#">Training/Education</a>
+                <a class="nav-link text-light" href="{{route('training.page')}}">Training/Education</a>
                 <ul class="position-absolute dropdown ">
                     <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Practical Income Tax Course</a></li>
                     <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">ITP Exam Preparation</a></li>
@@ -255,7 +255,7 @@
             </li>
 
             <li class="nav-item custom-nav-item ">
-                <a class=" nav-link text-light" href="/">Book Store</a>
+                <a class=" nav-link text-light" href="{{route('books.view')}}">Book Store</a>
             </li>
         </ul>
     </nav>
