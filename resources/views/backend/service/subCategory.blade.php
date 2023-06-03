@@ -7,7 +7,8 @@
     <x-backend.ui.section-card name="Service Sub Category">
 
         {{-- Select category option --}}
-        <form action="#" method="POST">
+        <form action="{{ route('service-subcategory.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -15,20 +16,21 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-1">
-                                        @csrf
                                         <label for="category" class="form-label">Select Service Category</label>
-                                        <select name="category_id" class="form-select"
+                                        <select name="category" class="form-select"
                                             id="category
-                                        @error('category_id')
+                                        @error('category')
                                         is-invalid
                                         @enderror
                                         ">
                                             <option selected disabled>Select</option>
-                                            {{-- @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endforeach --}}
+                                                <option value="categoryone">Categoryone</option>
+                                                <option value="categorytwo">Categorytwo</option>
+                                                <option value="categorythree">Categorythree</option>
+                                                <option value="categoryfour">Categoryfour</option>
+                                           
                                         </select>
-                                        @error('category_id')
+                                        @error('category')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -49,6 +51,14 @@
                                         @enderror
                                     </div>
                                 </div> <!-- end col -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <x-backend.form.image-input class="mt-3" name="image" />
+                                </div>
+                                <div class="col-md-6">
+                                    <x-form.ck-editor id="ck-editor" name="description"></x-form.ck-editor>
+                                </div>
                                 <div class="mt-1"><button class="btn btn-primary w-100 btn-sm profile-button"
                                         type="submit">Add Service Sub-Category</button>
                                 </div>

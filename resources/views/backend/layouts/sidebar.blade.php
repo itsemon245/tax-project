@@ -109,9 +109,10 @@
                     </a>
                     <div class="collapse" id="sidebarSerivces">
                         <ul class="nav-second-level">
+                            <li>
                           <li>
                                 <a href="{{ route('service-subcategory.index') }}">
-                                    <span> Sub-Category </span>
+                                    <span> Categories </span>
                                 </a>
                             </li>
                         </ul>

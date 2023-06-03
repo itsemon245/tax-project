@@ -11,7 +11,7 @@ class StoreServiceSubCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user() != null;
     }
 
     /**
@@ -21,8 +21,9 @@ class StoreServiceSubCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+        return[
+            'category' => ['required'],
+            'service_sub_category' => ['string', 'required', 'max:20', 'unique:product_sub_categories,name'],
         ];
     }
 }
