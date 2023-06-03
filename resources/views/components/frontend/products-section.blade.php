@@ -1,6 +1,9 @@
 <section class="mb-5">
     <div class="card-body container-fluid px-5">
-        <h2 class="header-title h4 my-4 text-center">Products</h2>
+        <h2 class="header-title h4 mt-4 text-center">Tax Products</h2>
+        <div class=" d-flex justify-content-center">
+            <p class="text-justify" style="max-width: 100ch; font-weight:500;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam est cumque molestiae iste eum! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat laborum nemo sed beatae in id veritatis placeat odit deleniti maiores!</p>
+        </div>
         <div class="container d-flex justify-content-center">
             <ul class="nav nav-pills navtab-bg" role="tablist">
                 @foreach ($subCategories as $item)
@@ -34,6 +37,5 @@
                 @endforeach
             </div>
         </div>
-
     </div>
 </section>
