@@ -702,6 +702,27 @@ transform: rotate(60deg);
     padding: .5rem;
 }
 
+/* Nested Dropdown */
+.nested-dropdown{
+    width: max-content;
+    opacity: 0;
+    visibility: hidden;
+    list-style: none;
+    padding: .5rem 1rem;
+    background-color: var(--bg-dark);
+    top: 0;
+    left: 110%;
+    transition: all 150ms ease-in;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.nested-dropdown-trigger:hover .nested-dropdown{
+    opacity: 1;
+    visibility: visible;
+}
+.nested-dropdown .dropdown-item{
+    padding: .5rem;
+}
+
 
 /* clickable dropdown */
 .dropdown-click{

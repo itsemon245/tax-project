@@ -95,12 +95,12 @@
                 </li>
                 
                 
-                <li class="nav-item custom-nav-item position-relative nested-dropdown-trigger">
+                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                     <a class="nav-link text-light" href="#">Services</a>
-                    <ul class="position-absolute nested-dropdown ">
-                        <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                    <ul class="position-absolute dropdown">
+                        <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
                             <a class="nav-link text-light" href="#"> Tax Services</a>
-                            <ul class="position-absolute dropdown ">
+                            <ul class="position-absolute nested-dropdown ">
                                 <li class="nav-item custom-nav-item dropdown-item">
                                     <a href="" class="nav-link text-light">Income Tax</a>
                                 </li>
@@ -116,9 +116,9 @@
                             </ul>
         
                         </li>
-                        <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                        <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
                             <a class="nav-link text-light" href="#">VAT Services</a>
-                            <ul class="position-absolute dropdown ">
+                            <ul class="position-absolute nested-dropdown ">
                                 <li class="nav-item custom-nav-item dropdown-item">
                                     <a href="" class="nav-link text-light">VAT Registration</a>
                                 </li>
@@ -126,9 +126,9 @@
         
                         </li>
                        
-                        <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                        <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
                             <a class="nav-link text-light" href="#">Misc. Services</a>
-                            <ul class="position-absolute dropdown ">
+                            <ul class="position-absolute nested-dropdown ">
                                 <li class="nav-item custom-nav-item dropdown-item">
                                     <a href="" class="nav-link text-light">RJSC Company Registration</a>
                                 </li>
@@ -157,7 +157,7 @@
                     </ul>
                 </li>
 
-                <li class="nav-item custom-nav-item active-link">
+                <li class="nav-item custom-nav-item ">
                     <a class=" nav-link text-light" href="/">Book Store</a>
                 </li>
             </ul>
