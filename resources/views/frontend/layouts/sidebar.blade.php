@@ -78,7 +78,11 @@
                 <a href="{{ route('user-profile.create') }}" class="">Profile</a>
             </li>
             <li class="sidebar-item position-relative">
-                <a class="" href="">My Product</a>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a class="" href="">My Product</a>
+                    <span class="mdi mdi-chevron-down-box-outline" style="font-size: 20px; color: var(--bs-gray-600)"></span>
+                </div>
+                
                 <ul class="position-absolute sidebar_dropdown">
                     <li class="sidebar-item ps-3"><a href="">Audit
                             Service</a></li>

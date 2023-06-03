@@ -112,7 +112,7 @@
 
 
 @pushOnce('customJs')
-    <script>
+    {{-- <script>
         $(document).ready(function () {
             const trigger = $('.dropdown-trigger')
             const dropdown = $('.dropdown')
@@ -129,5 +129,5 @@
                 }, 200);
             })
         });
-    </script>
+    </script> --}}
 @endPushOnce

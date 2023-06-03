@@ -666,24 +666,24 @@ transform: rotate(60deg);
 
 .dropdown{
     width: max-content;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
     list-style: none;
     padding: .5rem 1rem;
     background-color: var(--bg-dark);
     left: 0;
+    transition: all 150ms ease-in;
 }
-.dropdown.on-click{
-    background: none;
+.dropdown-trigger:hover .dropdown{
+    opacity: 1;
+    visibility: visible;
 }
 .dropdown .dropdown-item{
     padding: .5rem;
 }
-.dropdown.on-click .dropdown-item:hover{
+.dropdown .dropdown-item:hover{
     background-color: var(--bs-gray-200);
 }
-/* li ul li:last-child{
-    padding-bottom: 20px!important;
-} */
 
 li:hover ul.sidebar_dropdown{
     opacity: 1;

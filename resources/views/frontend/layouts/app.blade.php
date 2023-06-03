@@ -6,7 +6,7 @@
 <body class="">
     <!-- Page Heading -->
     @include('frontend.layouts.header')
-    @include('frontend.layouts.navbar')
+    @include('frontend.layouts.sidebar')
 
 
 {{-- Chat bot --}}
@@ -22,7 +22,7 @@
         </a>
     </div>
     <div >
-        <a href="https://wa.me/01885518864/?text=Hi Sam, Whatsup" class=" p-3" >
+        <a href="https://wa.me/+8801885518864/?text=Hi Sam, Whatsup" class=" p-3" >
             <i class="mdi mdi-whatsapp"></i>
         </a>
     </div>
