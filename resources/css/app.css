@@ -176,12 +176,10 @@ footer .social-handles {
     grid-template-columns: 1fr 1fr;
     column-gap: 16px;
 }
+/* Larger than tablet */
 @media (min-width: 920px) {
     .sidebar-2 {
         transform: translateX(0);
-    }
-    .app-logo{
-        width: 200px;
     }
     .tablet{
         display: none;
@@ -189,13 +187,17 @@ footer .social-handles {
     .laptop{
         display: block;
     }
-    
+    .app-logo{
+        display: block;
+    }
 }
+
 @media (min-width: 1440px) {
     header {
         padding: 18px 96px;
     }
 }
+/* up to larger devices like laptop */
 @media (max-width: 1230px) {
     .menu-btn {
         display: block;
@@ -208,11 +210,10 @@ footer .social-handles {
     .partner-btn-hide {
         display: none !important;
     }
-    .app-logo{
-        display: none;
-    }
+    
 }
-@media (max-width: 920px) {
+/* up to midium devices like tablet */
+@media (max-width: 960px) {
     .divider-vr {
         display: none;
     }
@@ -222,19 +223,31 @@ footer .social-handles {
     .laptop{
         display: none;
     }
-    
-}
-@media (max-width:700px){
-    .menu.show-tablet{
+    .app-logo{
         display: none;
     }
-    .menu.show-mobile{
+    
+    
+}
+.mobile{
+    display: none;
+}
+
+/* up to smaller devices mobile phones */
+@media (max-width:560px){
+    .tablet{
+        display: none;
+    }
+    .mobile{
         display: block;
         font-size: 13px;
     }
     .space-between{
         justify-content: space-between;
         margin-bottom: 5px;
+    }
+    .app-logo{
+        display: block;
     }
 }
 

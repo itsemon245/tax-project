@@ -60,6 +60,7 @@
     </div>
 
     {{-- Sidebar 2 -> user dashboard navigation --}}
+    @auth
     <div class="sidebar sidebar-2">
         <ul class="list-unstyled">
             <li class="p-1">
@@ -133,6 +134,7 @@
             </li>
         </ul>
     </div>
+    @endauth
 </nav>
 
 
