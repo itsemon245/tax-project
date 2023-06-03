@@ -22,14 +22,14 @@
                 <li class="nav-item custom-nav-item">
                     <a class=" nav-link text-light" href="#">Return Status</a>
                 </li>
-                <li class="nav-item custom-nav-item position-relative">
+                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                     <a class="nav-link text-light" href="#">Services</a>
-                    <ul class="position-absolute">
-                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
+                    <ul class="position-absolute dropdown ">
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Audit
                                 Service</a></li>
-                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Audit
                                 Service</a></li>
-                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Audit
                                 Service</a></li>
                     </ul>
 
@@ -109,3 +109,25 @@
         </ul>
     </nav>
 </header>
+
+
+@pushOnce('customJs')
+    <script>
+        $(document).ready(function () {
+            const trigger = $('.dropdown-trigger')
+            const dropdown = $('.dropdown')
+
+            dropdown.hide()
+
+
+            trigger.on('mouseenter', (e)=>{
+                dropdown.slideDown();
+            })
+            trigger.on('mouseleave', (e)=>{
+                setTimeout(() => {
+                    dropdown.slideUp();
+                }, 200);
+            })
+        });
+    </script>
+@endPushOnce

@@ -608,7 +608,7 @@ font-family: 'Poppins';
 font-style: normal;
 font-weight: 500;
 font-size: 16px;
-color: #192B31;
+color: var(--bg-dark);
 padding: 4px 0;
 }
 .browse_card_company{
@@ -662,34 +662,29 @@ transform: rotate(60deg);
     font-size: 16px;
     color: #000000;
 }
-.nav-item{
-    transition: 0.4s ease-in-out;
-}
 
-li ul{
+
+.dropdown{
+    width: max-content;
+    display: none;
     list-style: none;
-    top: 208%;
-    background-color: #192B31;
-    opacity: 0;
+    padding: .5rem 1rem;
+    background-color: var(--bg-dark);
+    left: 0;
 }
-
-li ul li{
-    width: 200px;
-    padding: 10px 0!important;
+.dropdown.on-click{
+    background: none;
 }
-li ul li:last-child{
+.dropdown .dropdown-item{
+    padding: .5rem;
+}
+.dropdown.on-click .dropdown-item:hover{
+    background-color: var(--bs-gray-200);
+}
+/* li ul li:last-child{
     padding-bottom: 20px!important;
-}
+} */
 
-li:hover ul{
-    opacity: 1!important;
-}
-.nav-item ul{
-    opacity: 0!important;
-}
-.nav-item:hover ul{
-    opacity: 1!important;
-}
 li:hover ul.sidebar_dropdown{
     opacity: 1;
     visibility: visible;
