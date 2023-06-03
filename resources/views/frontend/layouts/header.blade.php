@@ -7,73 +7,158 @@
                     <i class="mdi mdi-menu text-light"></i>
                 </button>
             </div>
-            <img style="max-width:200px;" src="{{ asset('frontend/assets/images/logo/app.png') }}" alt="Text Act Logo">
+            <img class="app-logo" style="width:120px;" src="{{ asset('frontend/assets/images/logo/app.png') }}" alt="Text Act Logo">
         </div>
 
         {{-- nav for large devices --}}
-        <nav class="mx-auto menu show-laptop">
+        <nav class="mx-auto menu laptop">
             <ul class="nav justify-content-center">
                 <li class="nav-item custom-nav-item active-link">
-                    <a class=" nav-link text-light" href="/">Home</a>
-                </li>
-                <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="">Tax Products</a>
-                </li>
-                <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="#">Return Status</a>
+                    <a class=" nav-link text-light" href="{{route('home')}}">Home</a>
                 </li>
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="#">Services</a>
+                    <a class="nav-link text-light" href="#">Return Status</a>
                     <ul class="position-absolute dropdown ">
-                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Audit
-                                Service</a></li>
-                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Audit
-                                Service</a></li>
-                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Audit
-                                Service</a></li>
+                        <li class="nav-item custom-nav-item dropdown-item"><a target="_blank" rel="noopener noreferrer" href="#" class="nav-link text-light">Income Tax Return Verification</a></li>
+                        <li class="nav-item custom-nav-item dropdown-item"><a target="_blank" rel="noopener noreferrer" href="#" class="nav-link text-light">Tax Verification</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                    <a class="nav-link text-light" href="#"> Tax Services</a>
+                    <ul class="position-absolute dropdown ">
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">Income Tax</a>
+                        </li>
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">Company Account & Audit</a>
+                        </li>
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">VAT</a>
+                        </li>
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">Registration & Licence</a>
+                        </li>
+                    </ul>
+
+                </li>
+                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                    <a class="nav-link text-light" href="#">VAT Services</a>
+                    <ul class="position-absolute dropdown ">
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">VAT Registration</a>
+                        </li>
+                    </ul>
+
+                </li>
+               
+                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                    <a class="nav-link text-light" href="#">Misc. Services</a>
+                    <ul class="position-absolute dropdown ">
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">RJSC Company Registration</a>
+                        </li>
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">Partnership Registration</a>
+                        </li>
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">Export Registration Certificate</a>
+                        </li>
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">Import Registration Certificate</a>
+                        </li>
+                        <li class="nav-item custom-nav-item dropdown-item">
+                            <a href="" class="nav-link text-light">Trade Licence</a>
+                        </li>
+                    </ul>
+
+                </li>
+                
+                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                    <a class="nav-link text-light" href="#">Training/Education</a>
+                    <ul class="position-absolute dropdown ">
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Practical Income Tax Course</a></li>
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">ITP Exam Preparation</a></li>
                     </ul>
 
                 </li>
                 <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="{{ route('training.index') }}">Training</a>
-                </li>
-                <li class="nav-item custom-nav-item">
                     <a class=" nav-link text-light" href="{{ route('books.view') }}">Book Store</a>
-                </li>
-                <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="{{ route('about') }}">About Us</a>
-                </li>
-                <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="{{ route('misc.service') }}">Misc. Services</a>
-                </li>
-                <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="{{ route('client.studio') }}">Client Studio</a>
                 </li>
             </ul>
         </nav>
 
         {{-- nav for medium devices --}}
-        <nav class="mx-auto menu show-tablet">
+        <nav class="mx-auto menu tablet">
             <ul class="nav justify-content-center">
                 <li class="nav-item custom-nav-item active-link">
                     <a class=" nav-link text-light" href="/">Home</a>
                 </li>
-                <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="">Tax Products</a>
-                </li>
-                <li class="nav-item custom-nav-item  position-relative">
-                    <a class=" nav-link text-light" href="#">Services</a>
-                    <ul class="position-absolute">
-                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
-                                Service</a></li>
-                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
-                                Service</a></li>
-                        <li class="nav-item custom-nav-item"><a href="" class="nav-link text-light">Audit
-                                Service</a></li>
+                
+                
+                <li class="nav-item custom-nav-item position-relative nested-dropdown-trigger">
+                    <a class="nav-link text-light" href="#">Services</a>
+                    <ul class="position-absolute nested-dropdown ">
+                        <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                            <a class="nav-link text-light" href="#"> Tax Services</a>
+                            <ul class="position-absolute dropdown ">
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">Income Tax</a>
+                                </li>
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">Company Account & Audit</a>
+                                </li>
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">VAT</a>
+                                </li>
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">Registration & Licence</a>
+                                </li>
+                            </ul>
+        
+                        </li>
+                        <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                            <a class="nav-link text-light" href="#">VAT Services</a>
+                            <ul class="position-absolute dropdown ">
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">VAT Registration</a>
+                                </li>
+                            </ul>
+        
+                        </li>
+                       
+                        <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                            <a class="nav-link text-light" href="#">Misc. Services</a>
+                            <ul class="position-absolute dropdown ">
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">RJSC Company Registration</a>
+                                </li>
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">Partnership Registration</a>
+                                </li>
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">Export Registration Certificate</a>
+                                </li>
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">Import Registration Certificate</a>
+                                </li>
+                                <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">Trade Licence</a>
+                                </li>
+                            </ul>
+        
+                        </li>
                     </ul>
                 </li>
-                <li class="nav-item custom-nav-item">
-                    <a class=" nav-link text-light" href="{{ route('about') }}">About Us</a>
+                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
+                    <a class="nav-link text-light" href="#">Education</a>
+                    <ul class="position-absolute dropdown ">
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">Practical Income Tax Course</a></li>
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="" class="nav-link text-light">ITP Exam Preparation</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item custom-nav-item active-link">
+                    <a class=" nav-link text-light" href="/">Book Store</a>
                 </li>
             </ul>
         </nav>
@@ -110,24 +195,3 @@
     </nav>
 </header>
 
-
-@pushOnce('customJs')
-    {{-- <script>
-        $(document).ready(function () {
-            const trigger = $('.dropdown-trigger')
-            const dropdown = $('.dropdown')
-
-            dropdown.hide()
-
-
-            trigger.on('mouseenter', (e)=>{
-                dropdown.slideDown();
-            })
-            trigger.on('mouseleave', (e)=>{
-                setTimeout(() => {
-                    dropdown.slideUp();
-                }, 200);
-            })
-        });
-    </script> --}}
-@endPushOnce
