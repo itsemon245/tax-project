@@ -44,7 +44,7 @@
                 </li>
                 {{-- vat services --}}
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="{{route('service.category', 1)}}">VAT Services</a>
+                    <a class="nav-link text-light" href="{{route('service.category', 2)}}">VAT Services</a>
                     <ul class="position-absolute dropdown ">
                         <li class="nav-item custom-nav-item dropdown-item">
                             <a href="" class="nav-link text-light">VAT Registration</a>
@@ -54,7 +54,7 @@
                 </li>
                {{-- misc. services --}}
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="{{route('service.category', 1)}}">Misc. Services</a>
+                    <a class="nav-link text-light" href="{{route('service.category', 3)}}">Misc. Services</a>
                     <ul class="position-absolute dropdown ">
                         <li class="nav-item custom-nav-item dropdown-item">
                             <a href="" class="nav-link text-light">RJSC Company Registration</a>
@@ -125,7 +125,7 @@
         
                         </li>
                         <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                            <a class="nav-link text-light" href="{{route('service.category', 1)}}">VAT Services</a>
+                            <a class="nav-link text-light" href="{{route('service.category', 2)}}">VAT Services</a>
                             <ul class="position-absolute nested-dropdown ">
                                 <li class="nav-item custom-nav-item dropdown-item">
                                     <a href="" class="nav-link text-light">VAT Registration</a>
@@ -135,7 +135,7 @@
                         </li>
                        
                         <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                            <a class="nav-link text-light" href="{{route('service.category', 1)}}">Misc. Services</a>
+                            <a class="nav-link text-light" href="{{route('service.category', 3)}}">Misc. Services</a>
                             <ul class="position-absolute nested-dropdown ">
                                 <li class="nav-item custom-nav-item dropdown-item">
                                     <a href="" class="nav-link text-light">RJSC Company Registration</a>
@@ -214,7 +214,7 @@
     
                     </li>
                     <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                        <a class="nav-link text-light" href="{{route('service.category', 1)}}">VAT Services</a>
+                        <a class="nav-link text-light" href="{{route('service.category', 2)}}">VAT Services</a>
                         <ul class="position-absolute nested-dropdown ">
                             <li class="nav-item custom-nav-item dropdown-item">
                                 <a href="" class="nav-link text-light">VAT Registration</a>
@@ -224,7 +224,7 @@
                     </li>
                    
                     <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                        <a class="nav-link text-light" href="{{route('service.category', 1)}}">Misc. Services</a>
+                        <a class="nav-link text-light" href="{{route('service.category', 3)}}">Misc. Services</a>
                         <ul class="position-absolute nested-dropdown ">
                             <li class="nav-item custom-nav-item dropdown-item">
                                 <a href="" class="nav-link text-light">RJSC Company Registration</a>

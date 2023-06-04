@@ -43,17 +43,17 @@
 
             <li class="sidebar-item">
                 <div class="d-flex justify-content-between align-items-center">
-                    <a class="" href="">Vat Services</a>
+                    <a class="" href="{{route('service.category', 2)}}">Vat Services</a>
                     <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#vat-services" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
                 </div>
                 <ul class="dropdown-click" id="vat-services">
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="{{route('service.category', 1)}}">VAT Registration</a></li>
+                    <li class="sidebar-item ps-3 dropdown-item"><a href="">VAT Registration</a></li>
                 </ul>
             </li>
 
             <li class="sidebar-item">
                 <div class="d-flex justify-content-between align-items-center">
-                    <a class="" href="{{route('service.category', 1)}}">Misc. Services</a>
+                    <a class="" href="{{route('service.category', 3)}}">Misc. Services</a>
                     <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#misc-services" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
                 </div>
                 

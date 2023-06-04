@@ -4,54 +4,33 @@
     $appointments= getRecords('appointments');
     $testimonials = getRecords('testimonials');
     $banners = getRecords('banners');
+    $isTaxServices = str(url()->current())->contains('service/category/1')
 @endphp
 @extends('frontend.layouts.app')
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
     
-    {{-- Misc content --}}
+    
+    {{-- show only when category is tax services --}}
+    @if ($isTaxServices)
     <x-frontend.products-section :subCategories="$productCategory->productSubCategories" />
+    @endif
 
         {{-- Services --}}
     <section class="px-lg-5 px-2 my-5">
-        <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">Tax Services</h4>
+        <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">{{$subCategories[0]->serviceCategory->name}}</h4>
         <div class="row mx-lg-5 mx-2">
+            @foreach ($subCategories as $sub)
             <div class="col-md-4 col-lg-3 col-sm-6">
                 <div class="d-flex flex-column align-items-center">
                     <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <h6>Summary</h6>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic fuga nam qui
-                        repellat ullam explicabo!</p>
+                        src="{{ useImage($sub->image) }}" alt="">
+                    <h6>{{$sub->name}}</h6>
+                    <p class="text-center">{{$sub->description}}</p>
                 </div>
             </div>
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <h6>Summary</h6>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic fuga nam qui
-                        repellat ullam explicabo!</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <h6>Summary</h6>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic fuga nam qui
-                        repellat ullam explicabo!</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <h6>Summary</h6>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic fuga nam qui
-                        repellat ullam explicabo!</p>
-                </div>
-            </div>
+            @endforeach
+            
         </div>
     </section>
     <x-frontend.appointment-section :sections="$appointments" />
