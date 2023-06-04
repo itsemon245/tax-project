@@ -48,7 +48,7 @@ Route::prefix('/books')->name('books.')->group(function () {
 
 Route::get('referrals', [RefereeController::class, 'index'])->name('referrals');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
-
+Route::get('training', [PageController::class, 'trainingPage'])->name('page.training');
 
 // user generated refer link
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
@@ -61,13 +61,11 @@ Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'
 Route::get('/expert-profile', [ExpertController::class, 'index'])->name('expert.profile');
 Route::get('/browse-tax-expert', [BrowseTaxExpertController::class, 'index'])->name('browse.expert');
 
-// these route will only be visible to 2nd navigation
+// these route will only be visible to 2nd navigation 
+// ! Do not put any new routes in this group
 Route::prefix('page')->name('page.')->controller(PageController::class)->group(function () {
     Route::get('/industries', 'industriesPage')->name('industries');
     Route::get('/about', 'aboutPage')->name('about');
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/appointment', 'appointmentPage')->name('appointment');
 });
-
-
-Route::get('training', [PageController::class, 'trainingPage'])->name('page.training');
