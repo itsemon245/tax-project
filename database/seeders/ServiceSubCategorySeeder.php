@@ -17,7 +17,6 @@ class ServiceSubCategorySeeder extends Seeder
             1=>fake('en_US')->word(10),
             2=>fake('en_US')->word(10),
             3=>fake('en_US')->word(10),
-            4=>fake('en_US')->word(10),
         ];
 
         foreach ($services as $key => $name) {

@@ -17,7 +17,6 @@ class ServiceCategorySeeder extends Seeder
             'Tax Services',
             'Vat Services',
             'Misc. Services',
-            fake()->word(10)." Services",
         ];
         foreach ($names as $name) {
             ServiceCategory::create([

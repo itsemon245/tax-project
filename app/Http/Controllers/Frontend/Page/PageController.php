@@ -11,4 +11,20 @@ class PageController extends Controller
     {
         return view('frontend.pages.training');
     }
+    public function industriesPage()
+    {
+        return view('frontend.pages.industries.industries');
+    }
+    public function clientStudioPage()
+    {
+        return view('frontend.pages.clientStudio.clientStudio');
+    }
+    public function appointmentPage()
+    {
+        return view('frontend.pages.appointment.create-appointment');
+    }
+    public function aboutPage()
+    {
+        return view('frontend.pages.about');
+    }
 }

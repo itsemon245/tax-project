@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\FrontendAppointmentController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use Spatie\Permission\Contracts\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,12 +30,12 @@ use App\Http\Controllers\Frontend\Page\ServicePageController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [AboutPageController::class, 'index'])->name('about');
-Route::get('/about-xyz', [AboutPageController::class, 'aboutxyz'])->name('aboutxyz');
-Route::get('/misc-services', [MiscServiceController::class, 'index'])->name('misc.service');
-Route::get('services/tax', [ServicePageController::class, 'taxService'])->name('taxService.page');
-Route::get('service/sub', [ServicePageController::class, 'serviceSub'])->name('serviceSub.page');
-Route::get('/industries', [IndustriesController::class, 'index'])->name('industries');
+
+Route::prefix('service')->name('service.')->controller(ServicePageController::class)->group(function () {
+    Route::get('category/{id}', 'subsUnderCategory')->name('category');
+    Route::get('sub/{id}', 'servicesUnderSub')->name('sub');
+    Route::get('service/{id}', 'service')->name('view');
+});
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
@@ -44,18 +45,29 @@ Route::prefix('/books')->name('books.')->group(function () {
 
 
 //  uncategorized pages
-Route::get('training', [PageController::class, 'trainingPage'])->name('training.page');
-Route::get('referrals', [RefereeController::class, 'index'])->name('referrals');
 
+Route::get('referrals', [RefereeController::class, 'index'])->name('referrals');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 
+
+// user generated refer link
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
 
-Route::get('/client-studio', [ClientStudioController::class, 'index'])->name('client.studio');
 
 
-Route::get('page/appointment', [FrontendAppointmentController::class, 'create'])->name('page.appoinment');
+
+
 
 Route::get('/expert-profile', [ExpertController::class, 'index'])->name('expert.profile');
-
 Route::get('/browse-tax-expert', [BrowseTaxExpertController::class, 'index'])->name('browse.expert');
+
+// these route will only be visible to 2nd navigation
+Route::prefix('page')->name('page.')->controller(PageController::class)->group(function () {
+    Route::get('/industries', 'industriesPage')->name('industries');
+    Route::get('/about', 'aboutPage')->name('about');
+    Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
+    Route::get('/appointment', 'appointmentPage')->name('appointment');
+});
+
+
+Route::get('training', [PageController::class, 'trainingPage'])->name('page.training');
