@@ -12,6 +12,7 @@ class ServicePageController extends Controller
 {
     public function subsUnderCategory($id)
     {
+        
         $productCategory = ProductCategory::with('productSubCategories', "productSubCategories.products")->find(1);
         $subCategories = ServiceSubCategory::where('service_category_id', $id)->with('serviceCategory')->get();
         return view('frontend.pages.services.subCategories', compact('productCategory', 'subCategories'));

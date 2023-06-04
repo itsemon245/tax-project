@@ -13,19 +13,34 @@ class ServiceSubCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $services = [
-            1=>fake('en_US')->word(10),
-            2=>fake('en_US')->word(10),
-            3=>fake('en_US')->word(10),
+        $categories = [
+            1 => [
+                "Income Tax",
+                "Company & Audit",
+                "VAT",
+                "Registration & License",
+            ],
+            2 => [
+                "VAT Registration"
+            ],
+            3 => [
+                "RJSC Company Registration",
+                "Partnership Registration",
+                "Export Registration Certificate",
+                "Import Registration Certificate",
+                "Trade License(CCC)",
+            ],
         ];
 
-        foreach ($services as $key => $name) {
-            ServiceSubCategory::create([
-                'service_category_id' => $key,
-                'name'=> $name,
-                'description'=> fake()->realText(),
-                'image'=> "https://picsum.photos/seed/$name/200"
-            ]);
+        foreach ($categories as $key => $subs) {
+            foreach ($subs as $name) {
+                ServiceSubCategory::create([
+                    'service_category_id' => $key,
+                    'name'=> $name,
+                    'description'=> fake()->realText(),
+                    'image'=> "https://picsum.photos/seed/$name/200"
+                ]);
+            }
         }
     }
 }

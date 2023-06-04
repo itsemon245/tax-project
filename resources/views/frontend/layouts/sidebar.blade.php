@@ -1,3 +1,6 @@
+@php
+     $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
+@endphp
 <nav class="relative">
     {{-- Sidebar 1-> page navigation --}}
     <div class="sidebar sidebar-1">
@@ -28,43 +31,20 @@
                     <li class="sidebar-item ps-3 dropdown-item"><a target="_blank" rel="noopener noreferrer" href="#" class="">Tax Verification</a></li>
                 </ul>
             </li>
+            @foreach ($categories as $category)
             <li class="sidebar-item">
                 <div class="d-flex justify-content-between align-items-center">
-                    <a class="" href="{{route('service.category', 1)}}">Tax Services</a>
-                    <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#tax-services" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
+                    <a class="" href="{{route('service.category', $category->id)}}">{{$category->name}}</a>
+                    <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#{{$category->id}}" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
                 </div>
-                <ul class="dropdown-click" id="tax-services">
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Income Tax</a></li>
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Company & Audit</a></li>
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">VAT</a></li>
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Registration & Licence</a></li>
+                <ul class="dropdown-click" id="{{$category->id}}">
+                    @foreach ($category->serviceSubCategories as $sub)
+                    <li class="sidebar-item ps-3 dropdown-item"><a href="">{{$sub->name}}</a></li>
+                    @endforeach
                 </ul>
             </li>
+            @endforeach
 
-            <li class="sidebar-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a class="" href="{{route('service.category', 2)}}">Vat Services</a>
-                    <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#vat-services" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
-                </div>
-                <ul class="dropdown-click" id="vat-services">
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">VAT Registration</a></li>
-                </ul>
-            </li>
-
-            <li class="sidebar-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a class="" href="{{route('service.category', 3)}}">Misc. Services</a>
-                    <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#misc-services" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
-                </div>
-                
-                <ul class="dropdown-click" id="misc-services">
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">RJSC Company Registration</a></li>
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Partnership Registration</a></li>
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Export Registration Certificate</a></li>
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Import Registration Certificate</a></li>
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Trade Licence(CCC)</a></li>
-                </ul>
-            </li>
             <li class="sidebar-item">
                 <div class="d-flex justify-content-between align-items-center">
                     <a class="" href="{{route('page.training')}}">Training/Education</a>

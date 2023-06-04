@@ -1,3 +1,6 @@
+@php
+    $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
+@endphp
 <header class="d-flex flex-column justify-items-center">
     <div class="d-flex align-items-center flex-grow-1 space-between">
         <div class="d-flex align-items-center">
@@ -23,57 +26,20 @@
                         <li class="nav-item custom-nav-item dropdown-item"><a target="_blank" rel="noopener noreferrer" href="#" class="nav-link text-light">Tax Verification</a></li>
                     </ul>
                 </li>
-                {{-- tax services --}}
+                {{-- Services Caegories --}}
+                @foreach ($categories as $category)
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="{{route('service.category', 1)}}"> Tax Services</a>
+                    <a class="nav-link text-light" href="{{route('service.category', $category->id)}}">{{$category->name}}</a>
                     <ul class="position-absolute dropdown ">
+                        @foreach ($category->serviceSubCategories as $subs)
                         <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">Income Tax</a>
+                            <a href="" class="nav-link text-light">{{$subs->name}}</a>
                         </li>
-                        <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">Company Account & Audit</a>
-                        </li>
-                        <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">VAT</a>
-                        </li>
-                        <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">Registration & Licence</a>
-                        </li>
+                        @endforeach
                     </ul>
 
                 </li>
-                {{-- vat services --}}
-                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="{{route('service.category', 2)}}">VAT Services</a>
-                    <ul class="position-absolute dropdown ">
-                        <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">VAT Registration</a>
-                        </li>
-                    </ul>
-
-                </li>
-               {{-- misc. services --}}
-                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
-                    <a class="nav-link text-light" href="{{route('service.category', 3)}}">Misc. Services</a>
-                    <ul class="position-absolute dropdown ">
-                        <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">RJSC Company Registration</a>
-                        </li>
-                        <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">Partnership Registration</a>
-                        </li>
-                        <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">Export Registration Certificate</a>
-                        </li>
-                        <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">Import Registration Certificate</a>
-                        </li>
-                        <li class="nav-item custom-nav-item dropdown-item">
-                            <a href="" class="nav-link text-light">Trade Licence(CCC)</a>
-                        </li>
-                    </ul>
-
-                </li>
+                @endforeach
                 
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                     <a class="nav-link text-light" href="{{route('page.training')}}">Training/Education</a>
@@ -106,55 +72,19 @@
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                     <a class="nav-link text-light" href="#">Services</a>
                     <ul class="position-absolute dropdown">
+                        @foreach ($categories as $category)
                         <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                            <a class="nav-link text-light" href="{{route('service.category', 1)}}"> Tax Services</a>
+                            <a class="nav-link text-light" href="{{route('service.category', $category->id)}}">{{$category->name}}</a>
                             <ul class="position-absolute nested-dropdown ">
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">Income Tax</a>
+                               @foreach ($category->serviceSubCategories as $sub)
+                               <li class="nav-item custom-nav-item dropdown-item">
+                                    <a href="" class="nav-link text-light">{{$sub->name}}</a>
                                 </li>
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">Company Account & Audit</a>
-                                </li>
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">VAT</a>
-                                </li>
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">Registration & Licence</a>
-                                </li>
+                               @endforeach
                             </ul>
-        
                         </li>
-                        <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                            <a class="nav-link text-light" href="{{route('service.category', 2)}}">VAT Services</a>
-                            <ul class="position-absolute nested-dropdown ">
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">VAT Registration</a>
-                                </li>
-                            </ul>
-        
-                        </li>
-                       
-                        <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                            <a class="nav-link text-light" href="{{route('service.category', 3)}}">Misc. Services</a>
-                            <ul class="position-absolute nested-dropdown ">
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">RJSC Company Registration</a>
-                                </li>
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">Partnership Registration</a>
-                                </li>
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">Export Registration Certificate</a>
-                                </li>
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">Import Registration Certificate</a>
-                                </li>
-                                <li class="nav-item custom-nav-item dropdown-item">
-                                    <a href="" class="nav-link text-light">Trade Licence</a>
-                                </li>
-                            </ul>
-        
-                        </li>
+                        @endforeach
+                        
                     </ul>
                 </li>
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
@@ -195,55 +125,18 @@
             <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                 <a class="nav-link text-light" href="#">Services</a>
                 <ul class="position-absolute dropdown">
+                    @foreach ($categories as $category)
                     <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                        <a class="nav-link text-light" href="{{route('service.category', 1)}}"> Tax Services</a>
+                        <a class="nav-link text-light" href="{{route('service.category', $category->id)}}">{{$category->name}}</a>
                         <ul class="position-absolute nested-dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">Income Tax</a>
+                           @foreach ($category->serviceSubCategories as $sub)
+                           <li class="nav-item custom-nav-item dropdown-item">
+                                <a href="" class="nav-link text-light">{{$sub->name}}</a>
                             </li>
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">Company Account & Audit</a>
-                            </li>
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">VAT</a>
-                            </li>
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">Registration & Licence</a>
-                            </li>
+                           @endforeach
                         </ul>
-    
                     </li>
-                    <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                        <a class="nav-link text-light" href="{{route('service.category', 2)}}">VAT Services</a>
-                        <ul class="position-absolute nested-dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">VAT Registration</a>
-                            </li>
-                        </ul>
-    
-                    </li>
-                   
-                    <li class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger">
-                        <a class="nav-link text-light" href="{{route('service.category', 3)}}">Misc. Services</a>
-                        <ul class="position-absolute nested-dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">RJSC Company Registration</a>
-                            </li>
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">Partnership Registration</a>
-                            </li>
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">Export Registration Certificate</a>
-                            </li>
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">Import Registration Certificate</a>
-                            </li>
-                            <li class="nav-item custom-nav-item dropdown-item">
-                                <a href="" class="nav-link text-light">Trade Licence</a>
-                            </li>
-                        </ul>
-    
-                    </li>
+                    @endforeach
                 </ul>
             </li>
             <li class="nav-item custom-nav-item position-relative dropdown-trigger">
