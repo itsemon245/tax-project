@@ -1,5 +1,6 @@
 @php
      $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
+     $isPageV2 = str(url()->current())->contains('page');
 @endphp
 <nav class="relative">
     {{-- Sidebar 1-> page navigation --}}
@@ -18,59 +19,83 @@
                 </div>
             </li>
 
-            <li class="sidebar-item {{ request()->routeIs('home') ? 'active' : '' }}">
-                <a class="" href="/">Home</a>
-            </li>
-            <li class="sidebar-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a class="" href="">Return Status</a>
-                    <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#return-status" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
-                </div>
-                <ul class="dropdown-click" id="return-status">
-                    <li class="sidebar-item ps-3 dropdown-item"><a target="_blank" rel="noopener noreferrer" href="#" class="">Income Tax Return Verification</a></li>
-                    <li class="sidebar-item ps-3 dropdown-item"><a target="_blank" rel="noopener noreferrer" href="#" class="">Tax Verification</a></li>
-                </ul>
-            </li>
-            @foreach ($categories as $category)
-            <li class="sidebar-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a class="" href="{{route('service.category', $category->id)}}">{{$category->name}}</a>
-                    <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#{{$category->id}}" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
-                </div>
-                <ul class="dropdown-click" id="{{$category->id}}">
-                    @foreach ($category->serviceSubCategories as $sub)
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">{{$sub->name}}</a></li>
-                    @endforeach
-                </ul>
-            </li>
-            @endforeach
+            @if (!$isPageV2)
+                <li class="sidebar-item {{ request()->routeIs('home') ? 'active' : '' }}">
+                    <a class="" href="/">Home</a>
+                </li>
+                <li class="sidebar-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="" href="">Return Status</a>
+                        <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#return-status" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
+                    </div>
+                    <ul class="dropdown-click" id="return-status">
+                        <li class="sidebar-item ps-3 dropdown-item"><a target="_blank" rel="noopener noreferrer" href="#" class="">Income Tax Return Verification</a></li>
+                        <li class="sidebar-item ps-3 dropdown-item"><a target="_blank" rel="noopener noreferrer" href="#" class="">Tax Verification</a></li>
+                    </ul>
+                </li>
+                @foreach ($categories as $category)
+                <li class="sidebar-item {{ request()->routeIs('service.category', $category->id) ? 'active' : '' }}">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="" href="{{route('service.category', $category->id)}}">{{$category->name}}</a>
+                        <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#category-{{$category->id}}" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
+                    </div>
+                    <ul class="dropdown-click" id="category-{{$category->id}}">
+                        @foreach ($category->serviceSubCategories as $sub)
+                        <li class="sidebar-item ps-3 dropdown-item {{ request()->routeIs('service.sub', $sub->id) ? 'active' : '' }}"><a href="">{{$sub->name}}</a></li>
+                        @endforeach
+                    </ul>
+                </li>
+                @endforeach
+                <li class="sidebar-item {{ request()->routeIs('page.industries') ? 'active' : '' }}">
+                    <a class="" href="{{ route('page.industries') }}">Account & Audit</a>
+                </li>
+                <li class="sidebar-item {{ request()->routeIs('page.training') ? 'active' : '' }}">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="" href="{{route('page.training')}}">Training/Education</a>
+                        <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#training-education" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
+                    </div>
+                    <ul class="dropdown-click" id="training-education">
+                        <li class="sidebar-item ps-3 dropdown-item"><a href="">Practical Income Tax Course</a></li>
+                        <li class="sidebar-item ps-3 dropdown-item"><a href="">ITP Exam Preparation</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-item {{ request()->routeIs('books.view') ? 'active' : '' }}">
+                    <a class="" href="{{ route('books.view') }}">Book Store</a>
+                </li>
+            @else
+                <li class="sidebar-item {{ request()->routeIs('page.industries') ? 'active' : '' }}">
+                    <a class="" href="{{route('page.industries')}}">Industries</a>
+                </li>
+                @foreach ($categories as $category)
+                <li class="sidebar-item {{ request()->routeIs('service.category', $category->id) ? 'active' : '' }}">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="" href="{{route('service.category', $category->id)}}">{{$category->name}}</a>
+                        <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#category-{{$category->id}}" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
+                    </div>
+                    <ul class="dropdown-click" id="category-{{$category->id}}">
+                        @foreach ($category->serviceSubCategories as $sub)
+                        <li class="sidebar-item ps-3 dropdown-item {{ request()->routeIs('service.sub', $sub->id) ? 'active' : '' }}"><a href="">{{$sub->name}}</a></li>
+                        @endforeach
+                    </ul>
+                </li>
+                @endforeach
+                <li class="sidebar-item {{ request()->routeIs('page.about') ? 'active' : '' }}">
+                    <a class="" href="{{ route('page.about') }}">About Us</a>
+                </li>
+                <li class="sidebar-item {{ request()->routeIs('page.client.studio') ? 'active' : '' }}">
+                    <a class="" href="{{route('page.client.studio')}}">Client Studio</a>
+                </li>
+                
+                <li class="sidebar-item {{ request()->routeIs('page.appintment') ? 'active' : '' }}">
+                    <a class="" href="{{ route('page.appointment') }}">Appointment</a>
+                </li>
+            @endif
 
-            <li class="sidebar-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a class="" href="{{route('page.training')}}">Training/Education</a>
-                    <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#training-education" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
-                </div>
-                <ul class="dropdown-click" id="training-education">
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">Practical Income Tax Course</a></li>
-                    <li class="sidebar-item ps-3 dropdown-item"><a href="">ITP Exam Preparation</a></li>
-                </ul>
-            </li>
-            <li class="sidebar-item">
-                <a class="" href="{{ route('books.view') }}">Book Store</a>
-            </li>
-            <li class="sidebar-item">
-                <a class="" href="{{ route('page.about') }}">About Us</a>
-            </li>
-            
-            <li class="sidebar-item">
-                <a class="" href="{{ route('page.client.studio') }}">Client Studio</a>
-            </li>
             <li class="mt-auto mb-5">
                 <div class="">
                     <hr class="my-3">
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end">
                         @auth
-
                             <a class="btn btn-dark" href="{{ route('logout') }}">Log out</a>
                         @else
                             <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
@@ -136,11 +161,7 @@
                 <div class="">
                     <hr class="my-3">
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end">
-                        @auth
                             <a class="btn btn-dark" href="{{ route('logout') }}">Log Out</a>
-                        @else
-                            <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
-                        @endauth
                         <a class="btn btn-secondary" href="">Become a partner</a>
                     </div>
                 </div>

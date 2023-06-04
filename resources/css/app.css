@@ -38,6 +38,10 @@ header {
 .sidebar {
     z-index: 40;
 }
+.sidebar-item.active{
+    background-color: var(--bs-gray-100);
+    border-bottom: 2px solid var(--primary);
+}
 .nav .custom-nav-item a {
     padding: 0;
     cursor:pointer;
@@ -157,8 +161,9 @@ main {
 .sidebar-item:hover {
     background: var(--bs-gray-300);
 }
-.sidebar .active {
-    background: var(--primary);
+.sidebar.active {
+    background-color: var(--bs-gray-100);
+    border-bottom: 2px solid var(--primary);
 }
 .sidebar .sidebar-item a {
     text-decoration: none;
