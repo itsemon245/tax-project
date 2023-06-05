@@ -52,6 +52,20 @@ function updateFile($file, $old_path, $dir,  $prefix = "image")
 }
 
 /**
+ * Deletes a file given its path from database
+ * 
+ * Deletes only form public disks
+ */
+function deleteFile($path)
+{
+    $deleted =false;
+    $path = 'public/' . $path;
+    if (Storage::exists($path)) {
+        $deleted = Storage::delete($path);
+    }
+    return $deleted;
+}
+/**
  * An Array for social media platform data
  */
 function socialItems(): array

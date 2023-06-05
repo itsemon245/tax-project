@@ -44,9 +44,9 @@ class ServiceSubCategoryController extends Controller
     public function store(StoreServiceSubCategoryRequest $request)
     {
         $subCategory = new ServiceSubCategory();
-        $subCategory->service_category = $request->category;
-        $subCategory->name = $request->service_sub_category;
-        $subCategory->image = saveImage($request->image, 'service/subCategory', 'sub-category'); //This will return "uploads/avatar/user-image-154xxxxx.png"
+        $subCategory->service_category_id = $request->service_category_id;
+        $subCategory->name = $request->name;
+        $subCategory->image = saveImage($request->image, 'service/sub-categories', 'sub-category'); //This will return "uploads/avatar/user-image-154xxxxx.png"
         $subCategory->description = $request->description;
         $subCategory->save();
         $notification = array(
@@ -67,24 +67,43 @@ class ServiceSubCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ServiceSubCategory $serviceSubCategory)
+    public function edit($subId)
     {
-        //
+        $subCategory = ServiceSubCategory::findOrFail($subId);
+        return view('backend.service.editSubCategory', compact('subCategory'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateServiceSubCategoryRequest $request, ServiceSubCategory $serviceSubCategory)
+    public function update(UpdateServiceSubCategoryRequest $request, $subId)
     {
-        //
+        $subCategory = ServiceSubCategory::findOrFail($subId);
+        $subCategory->service_category_id = $request->service_category_id;
+        $subCategory->name = $request->name;
+        $oldImagePath = $subCategory->image;
+        $subCategory->image = updateFile($request->image, $oldImagePath, 'service/sub-categories', 'sub-category-image');
+        $subCategory->description = $request->description;
+        $subCategory->update();
+        $notification = array(
+            'message' => "Updated Successfully",
+            'alert-type' => 'success',
+        );
+        return back()->with($notification);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ServiceSubCategory $serviceSubCategory)
+    public function destroy($subId)
     {
-        //
+        $subCategory = ServiceSubCategory::findOrFail($subId);
+        deleteFile($subCategory->image);
+        $subCategory->delete();
+       $notification = array(
+        'message' => "Deleted Successfully",
+        'alert-type' => 'success',
+        );
+        return back()->with($notification);
     }
 }

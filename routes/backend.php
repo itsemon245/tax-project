@@ -88,7 +88,7 @@ Route::prefix('admin')->group(function () {
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
     Route::POST('/get-users', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
-    Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panle
+    Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panel
     Route::resource('calendar', CalendarController::class);
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');

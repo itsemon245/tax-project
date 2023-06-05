@@ -11,7 +11,7 @@ class UpdateServiceSubCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user() != null;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateServiceSubCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'description' => 'required',
+            'service_category_id' => 'required'
         ];
     }
 }
