@@ -16,9 +16,9 @@
             @foreach ($services as $service)
             <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
                 <div class="d-flex flex-column align-items-center border">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
+                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
                         src="{{ useImage($service->image) }}" alt="">
-                    <a class="text-black text-capitalize" href="{{route('service.view', $service->id)}}"><h6>{{$service->title}}</h6></a>
+                    <a class="text-dark text-capitalize" href="{{route('service.view', $service->id)}}"><h6>{{$service->title}}</h6></a>
                     <p class="text-center">
                         {{$service->intro}}
                     </p>
