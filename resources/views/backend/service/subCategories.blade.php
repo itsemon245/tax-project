@@ -2,12 +2,12 @@
 
 
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Service', 'Sub-Category', "Create"]" />
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Service', 'Sub Categories']" />
 
-    <x-backend.ui.section-card name="Service Sub Category">
+    <x-backend.ui.section-card name="Service Sub Categories">
 
         {{-- Select category option --}}
-        <form action="{{ route('service-subcategory.store') }}" method="POST" enctype="multipart/form-data">
+        {{-- <form action="{{ route('service-subcategory.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-12">
@@ -35,7 +35,6 @@
                                         @enderror
                                     </div>
                                 </div> <!-- end col -->
-                                {{-- Add sub-category --}}
                                 <div class="col-lg-6">
                                     <div>
                                         <label for="service_sub_category" class="form-label">Sub-Category</label>
@@ -67,41 +66,50 @@
                     </div> <!-- end card -->
                 </div>
             </div>
-        </form>
+        </form> --}}
         {{-- Show all categories table --}}
-        <div class="row">
-            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">All Service Sub-Categories</h4>
                         <x-backend.table.basic>
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Category</th>
-                                    <th>Sub-Category</th>
-                                    <th>Time</th>
+                                    <th>Sub Category</th>
+                                    <th>Sub Category Actions</th>
+                                    <th>Available Services</th>
+                                    <th>Service Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($subCategories as $key => $subCategory)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td>{{ $subCategory->service_category }}</td>
-                                    <td>{{ $subCategory->name }}</td>
-                                    <td>{{ $subCategory->created_at->diffForHumans() }}</td>
+                                    <td>
+                                        <strong>{{ $subCategory->name }}</strong>
+                                    </td>
+                                    <td>
+                                        <x-backend.ui.button type="edit" class="btn-primary text-capitalize" href="{{route('service-subcategory.edit', $subCategory->id)}}"></x-backend.ui.button>
+                                        <x-backend.ui.button type="delete" class="btn-primary text-capitalize" action="{{route('service-subcategory.destroy', $subCategory->id)}}"></x-backend.ui.button>
+                                    </td>
+                                    <td>
+                                       <span class="badge bg-primary text-capitalize" style="font-size: 15px;"> {{count($subCategory->services)}} services</span>
+                                       
+                                    </td>
+                                    <td>
+                                        <x-backend.ui.button type="custom" class="btn-success text-capitalize" href="{{route('service.create', $subCategory->id)}}">Create New</x-backend.ui.button>
+                                        <x-backend.ui.button type="custom" class="btn-primary text-capitalize" href="{{route('service.index', $subCategory->id)}}">View All</x-backend.ui.button>
+                                        
+                                    </td>
                                 </tr>  
                                 @empty
                                 <tr>
-                                    <td colspan="100%"><span>No data found.</span></td>
+                                    <td colspan="4"><span>No data found.</span></td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </x-backend.table.basic>
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
-            </div><!-- end col-->
-        </div>
 
     </x-backend.ui.section-card>
 

@@ -9,6 +9,18 @@ use App\Http\Requests\UpdateServiceSubCategoryRequest;
 
 class ServiceSubCategoryController extends Controller
 {
+
+
+
+
+    /**
+     * Display a listing of the resource depending on category
+     */
+    public function showAll($id)
+    {
+        $subCategories = ServiceSubCategory::with('services')->where('service_category_id', $id)->get();
+        return view('backend.service.subCategories' , compact('subCategories'));
+    }
     /**
      * Display a listing of the resource.
      */
