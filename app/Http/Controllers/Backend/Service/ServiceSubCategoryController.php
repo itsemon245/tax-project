@@ -43,14 +43,14 @@ class ServiceSubCategoryController extends Controller
      */
     public function store(StoreServiceSubCategoryRequest $request)
     {
-        $subCategory = new ServicesubCategory();
+        $subCategory = new ServiceSubCategory();
         $subCategory->service_category = $request->category;
         $subCategory->name = $request->service_sub_category;
-        $subCategory->image = saveImage($request->image, 'subcaterogy', 'image'); //This will return "uploads/avatar/user-image-154xxxxx.png"
+        $subCategory->image = saveImage($request->image, 'service/subCategory', 'sub-category'); //This will return "uploads/avatar/user-image-154xxxxx.png"
         $subCategory->description = $request->description;
         $subCategory->save();
         $notification = array(
-            'message' => "Added Successfully",
+            'message' => "Created Successfully",
             'alert-type' => 'success',
         );
         return back()->with($notification);
