@@ -9,8 +9,8 @@ class ServiceCategory extends Model
 {
     use HasFactory;
 
-    public function serviceSubCategories()
-    {
-        return $this->hasMany(ServiceSubCategory::class);
-    }
+    // public function serviceSubCategories()
+    // {
+    //     return $this->hasMany(ServiceSubCategory::class);
+    // }
 }

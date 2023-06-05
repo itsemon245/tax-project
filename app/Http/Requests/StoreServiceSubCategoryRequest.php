@@ -23,7 +23,9 @@ class StoreServiceSubCategoryRequest extends FormRequest
     {
         return[
             'category' => ['required'],
-            'service_sub_category' => ['string', 'required', 'max:20', 'unique:product_sub_categories,name'],
+            'service_sub_category' => ['string', 'required', 'max:20', 'unique:service_sub_categories,name'],
+            'image' => ['required'],
+            'description' => ['string','required', 'max:500'],
         ];
     }
 }

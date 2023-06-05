@@ -24,10 +24,10 @@
                                         @enderror
                                         ">
                                             <option selected disabled>Select</option>
-                                                <option value="categoryone">Categoryone</option>
-                                                <option value="categorytwo">Categorytwo</option>
-                                                <option value="categorythree">Categorythree</option>
-                                                <option value="categoryfour">Categoryfour</option>
+                                                <option value="Categoryon">Categoryone</option>
+                                                <option value="Categorytwo">Categorytwo</option>
+                                                <option value="Categorythree">Categorythree</option>
+                                                <option value="Categoryfour">Categoryfour</option>
                                            
                                         </select>
                                         @error('category')
@@ -78,21 +78,24 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Sub-Category</th>
                                     <th>Category</th>
+                                    <th>Sub-Category</th>
                                     <th>Time</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Lorem.</td>
-                                        <td>Lorem, ipsum.</td>
-                                        <td>04:44 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="100%"><span>No data found.</span></td>
-                                    </tr>
+                                @forelse ($subCategories as $key => $subCategory)
+                                <tr>
+                                    <td>{{ ++$key }}</td>
+                                    <td>{{ $subCategory->service_category }}</td>
+                                    <td>{{ $subCategory->name }}</td>
+                                    <td>{{ $subCategory->created_at->diffForHumans() }}</td>
+                                </tr>  
+                                @empty
+                                <tr>
+                                    <td colspan="100%"><span>No data found.</span></td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </x-backend.table.basic>
                     </div> <!-- end card body-->
