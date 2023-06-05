@@ -34,14 +34,17 @@
                     </ul>
                 </li>
                 @foreach ($categories as $category)
-                <li class="sidebar-item {{ request()->routeIs('service.category', $category->id) ? 'active' : '' }}">
+                <li class="sidebar-item {{url()->current() == url("/service/category/$category->id") ? "active" : "" }}
+                    @foreach ($category->serviceSubCategories as $sub)
+                        {{url()->current() == url("/service/sub/$sub->id") ? "active" : "" }}
+                    @endforeach ">
                     <div class="d-flex justify-content-between align-items-center">
                         <a class="" href="{{route('service.category', $category->id)}}">{{$category->name}}</a>
                         <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light" data-target="#category-{{$category->id}}" style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
                     </div>
                     <ul class="dropdown-click" id="category-{{$category->id}}">
                         @foreach ($category->serviceSubCategories as $sub)
-                        <li class="sidebar-item ps-3 dropdown-item {{ request()->routeIs('service.sub', $sub->id) ? 'active' : '' }}"><a href="">{{$sub->name}}</a></li>
+                        <li class="sidebar-item ps-3 dropdown-item"><a href="">{{$sub->name}}</a></li>
                         @endforeach
                     </ul>
                 </li>
