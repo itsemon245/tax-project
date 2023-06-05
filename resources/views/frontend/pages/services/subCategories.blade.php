@@ -25,7 +25,7 @@
                 <div class="d-flex flex-column align-items-center">
                     <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
                         src="{{ useImage($sub->image) }}" alt="">
-                    <h6>{{$sub->name}}</h6>
+                    <a href="{{route('service.sub', $sub->id)}}"><h6>{{$sub->name}}</h6></a>
                     <p class="text-center">{{$sub->description}}</p>
                 </div>
             </div>

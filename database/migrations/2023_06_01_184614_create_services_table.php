@@ -18,9 +18,13 @@ return new class extends Migration
             $table->text('title');
             $table->mediumText('intro');
             $table->longText('description');
-            $table->integer('price');
-            $table->integer('discount');
+            $table->integer('price')->nullable();
+            $table->longText('price_description')->nullable();
+            $table->integer('discount')->default(0);
+            $table->boolean('is_discount_fixed')->default(false);
+            $table->timestamp('delivery_date')->default(now()->addDays(3)->format("Y-m-d"));
             $table->decimal('rating');
+            $table->text('reviews');
             $table->json('sections')->comment('{title:"title, image: "image", description: "description"}');
             $table->timestamps();
         });

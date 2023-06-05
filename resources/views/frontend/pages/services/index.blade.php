@@ -11,44 +11,38 @@
 
         {{-- Services --}}
     <section class="px-lg-5 px-2 my-5">
-        <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">Services</h4>
+        <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">{{$services[0]->serviceSubCategory->name}}</h4>
         <div class="row mx-lg-5 mx-2">
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center">
+            @foreach ($services as $service)
+            <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
+                <div class="d-flex flex-column align-items-center border">
                     <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <h6>Summary</h6>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic fuga nam qui
-                        repellat ullam explicabo!</p>
+                        src="{{ useImage($service->image) }}" alt="">
+                    <a class="text-black text-capitalize" href="{{route('service.view', $service->id)}}"><h6>{{$service->title}}</h6></a>
+                    <p class="text-center">
+                        {{$service->intro}}
+                    </p>
+                    
+                </div>
+                <div class="bg-primary px-3 d-flex align-items-center justify-content-between">
+                    <div class="d-inline-flex gap-2">
+                        <div class="d-inline-flex">
+                            <span class="mdi mdi-star" style="color: yellow;"></span>
+                            <span class="mdi mdi-star" style="color: yellow;"></span>
+                            <span class="mdi mdi-star" style="color: yellow;"></span>
+                            <span class="mdi mdi-star" style="color: yellow;"></span>
+                            <span class="mdi mdi-star" style="color: yellow;"></span>
+                        </div>
+
+                        <div class="d-inline-flex align-items-center">
+                            <span class="mdi mdi-account"></span>
+                            <span>{{$service->reviews}}</span>
+                        </div>
+                    </div>
+                    <span style="font-weight: 500;"> Tk. {{$service->price}}/-</span>
                 </div>
             </div>
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <h6>Summary</h6>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic fuga nam qui
-                        repellat ullam explicabo!</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <h6>Summary</h6>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic fuga nam qui
-                        repellat ullam explicabo!</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <h6>Summary</h6>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic fuga nam qui
-                        repellat ullam explicabo!</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
     <x-frontend.appointment-section :sections="$appointments" />

@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             ServiceCategorySeeder::class,
             ServiceSubCategorySeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }
