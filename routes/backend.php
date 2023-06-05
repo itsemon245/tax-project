@@ -74,7 +74,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('service-subcategory', ServiceSubCategoryController::class);
     // custom routes for service only for spacial purpose
     Route::prefix('service')->name('service.')->group(function () {
-        Route::get('category/{id}', [ServiceSubCategoryController::class, 'showAll'])->name('subs.view');
+        Route::get('category/{categoryId}', [ServiceSubCategoryController::class, 'showAll'])->name('subs.view');
+        Route::get('sub/create/{categoryId}', [ServiceSubCategoryController::class, 'create'])->name('subs.create');
         Route::get('create/{subCategoryId}', [ServiceController::class, 'create'])->name('create');
         Route::get('view/{subCategoryId}', [ServiceController::class, 'index'])->name('index');
         Route::get('store/', [ServiceController::class, 'store'])->name('store');

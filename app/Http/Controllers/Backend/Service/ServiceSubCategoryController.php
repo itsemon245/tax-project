@@ -16,10 +16,10 @@ class ServiceSubCategoryController extends Controller
     /**
      * Display a listing of the resource depending on category
      */
-    public function showAll($id)
+    public function showAll($categoryId)
     {
-        $subCategories = ServiceSubCategory::with('services')->where('service_category_id', $id)->get();
-        return view('backend.service.subCategories' , compact('subCategories'));
+        $subCategories = ServiceSubCategory::with('services')->where('service_category_id', $categoryId)->get();
+        return view('backend.service.subCategories' , compact('subCategories','categoryId'));
     }
     /**
      * Display a listing of the resource.
@@ -33,9 +33,9 @@ class ServiceSubCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($categoryId)
     {
-        //
+        return view('backend.service.createSubCategory', compact('categoryId'));
     }
 
     /**
