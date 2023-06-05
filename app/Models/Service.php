@@ -13,4 +13,8 @@ class Service extends Model
     {
         return $this->belongsTo(ServiceSubCategory::class);
     }
+    public function serviceCategory()
+    {
+        return $this->belongsTo(ServiceCategory::class);
+    }
 }
