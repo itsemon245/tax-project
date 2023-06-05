@@ -14,7 +14,8 @@ class ServiceSubCategoryController extends Controller
      */
     public function index()
     {
-        return view('backend.service.subCategory');
+        $subCategories = ServiceSubCategory::get();
+        return view('backend.service.subCategory' , compact('subCategories'));
     }
 
     /**
@@ -30,10 +31,17 @@ class ServiceSubCategoryController extends Controller
      */
     public function store(StoreServiceSubCategoryRequest $request)
     {
-
-        $SubCategory = new ServiceSubCategory();
-        $SubCategory->image = saveImage($request->image, 'avatar', 'user-image'); //This will return "uploads/avatar/user-image-154xxxxx.png"
-        $SubCategory->save();
+        $subCategory = new ServicesubCategory();
+        $subCategory->service_category = $request->category;
+        $subCategory->name = $request->service_sub_category;
+        $subCategory->image = saveImage($request->image, 'subcaterogy', 'image'); //This will return "uploads/avatar/user-image-154xxxxx.png"
+        $subCategory->description = $request->description;
+        $subCategory->save();
+        $notification = array(
+            'message' => "Added Successfully",
+            'alert-type' => 'success',
+        );
+        return back()->with($notification);
     }
 
     /**

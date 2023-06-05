@@ -31,8 +31,6 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             ClientSeeder::class,
-            ServiceCategorySeeder::class,
-            ServiceSubCategorySeeder::class,
         ]);
     }
 }
