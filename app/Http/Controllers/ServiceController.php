@@ -15,6 +15,7 @@ class ServiceController extends Controller
     public function index($subCategoryId)
     {
         $services = Service::with(['serviceSubCategory', 'serviceCategory'])->where('service_sub_category_id', $subCategoryId)->get();
+        // dd($services);
         return view('backend.service.viewServices', compact("services"));
     }
 
@@ -64,6 +65,12 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        Service::find($service->id)->delete();
+        return redirect()
+            ->back()
+            ->with(array(
+                'message' => "Service Deleted Successfully",
+                'alert-type' => 'success',
+            ));
     }
 }

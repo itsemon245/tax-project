@@ -32,4 +32,8 @@ class PageController extends Controller
     {
         return view('frontend.pages.about');
     }
+    public function becomePartnerPage()
+    {
+        return view('frontend.pages.becomePartner');
+    }
 }
