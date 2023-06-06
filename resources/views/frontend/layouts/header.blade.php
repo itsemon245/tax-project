@@ -158,7 +158,7 @@
         {{-- btns --}}
         <div class="">
             <div class="d-flex align-items-center gap-3 justify-content-end">
-                <a class="btn btn-secondary rounded-1 partner-btn-hide" href="">Become a partner</a>
+                <a class="btn btn-secondary rounded-1 partner-btn-hide" href="{{ route('page.become.partner') }}">Become a partner</a>
                 @auth
                     <div id="sidebar-2" class="d-flex align-items-center menu-btn">
                         <span class="mdi mdi-account-outline text-light" style="font-size: 32px"></span>

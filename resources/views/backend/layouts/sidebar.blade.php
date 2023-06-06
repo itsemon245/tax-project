@@ -109,12 +109,16 @@
                     </a>
                     <div class="collapse" id="sidebarSerivces">
                         <ul class="nav-second-level">
-                            <li>
+                            @php
+                                $categories = getRecords('service_categories')
+                            @endphp
+                          @foreach ($categories as $category)
                           <li>
-                                <a href="{{ route('service-subcategory.index') }}">
-                                    <span> Categories </span>
-                                </a>
-                            </li>
+                            <a href="{{ route('service.subs.view', $category->id) }}">
+                                <span>{{$category->name}}</span>
+                            </a>
+                        </li>
+                          @endforeach
                         </ul>
                     </div>
                 </li>

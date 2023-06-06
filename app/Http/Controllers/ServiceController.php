@@ -5,23 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Service;
+use App\Models\ServiceSubCategory;
 
 class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($subCategoryId)
     {
-        //
+        $services = Service::with(['serviceSubCategory', 'serviceCategory'])->where('service_sub_category_id', $subCategoryId)->get();
+        // dd($services);
+        return view('backend.service.viewServices', compact("services"));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($subCategoryId)
     {
-        //
+        $subCategory = ServiceSubCategory::find($subCategoryId);
+        return view('backend.service.createService', compact('subCategory'));
     }
 
     /**
@@ -61,6 +65,12 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        Service::find($service->id)->delete();
+        return redirect()
+            ->back()
+            ->with(array(
+                'message' => "Service Deleted Successfully",
+                'alert-type' => 'success',
+            ));
     }
 }
