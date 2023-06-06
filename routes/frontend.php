@@ -68,4 +68,5 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/about', 'aboutPage')->name('about');
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/appointment', 'appointmentPage')->name('appointment');
+    Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
 });

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rules\Unique;
 
 return new class extends Migration
 {
@@ -17,6 +18,9 @@ return new class extends Migration
             $table->string('user_name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
+            $table->string('nid')->unique()->nullable();
+            $table->string('dob')->nullable();
+            $table->longText('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->longText('image_url')->nullable();
             $table->longText('refer_link');
