@@ -13,10 +13,20 @@ class ProductCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ["Tax Products", "JusAuditor"];
+        $categories = [
+            [
+                "name"=> "Standard Package (tax)",
+                "description" => fake()->realText(200),
+            ], 
+            [
+                "name"=> "Tax Packages",
+                "description" => fake()->realText(200),
+            ], 
+        ];
         foreach ($categories as $category) {
             ProductCategory::create([
-                'name' => $category
+                'name' => $category['name'],
+                'description' => $category['description']
             ]);
         }
     }

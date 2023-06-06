@@ -8,13 +8,13 @@ use Illuminate\View\Component;
 
 class ProductsSection extends Component
 {
-    public $subCategories;
+    public $productCategory;
     /**
      * Create a new component instance.
      */
-    public function __construct($subCategories)
+    public function __construct($productCategory)
     {
-        $this->subCategories = $subCategories;
+        $this->productCategory = $productCategory;
     }
 
     /**
