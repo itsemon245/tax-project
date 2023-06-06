@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Frontend\Page;
 
-use App\Http\Controllers\Controller;
+use App\Models\Info;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PageController extends Controller
 {
@@ -19,9 +21,12 @@ class PageController extends Controller
     {
         return view('frontend.pages.clientStudio.clientStudio');
     }
-    public function appointmentPage()
+    public function appointmentPage(bool $isPhysical)
     {
-        return view('frontend.pages.appointment.create-appointment');
+        $banners = getRecords('banners');
+        $infos1 = Info::where('section_id', 1)->get();
+        $testimonials = Testimonial::get();
+        return view('frontend.pages.appointment.makeAppointment', compact('banners','infos1','testimonials', 'isPhysical'));
     }
     public function aboutPage()
     {

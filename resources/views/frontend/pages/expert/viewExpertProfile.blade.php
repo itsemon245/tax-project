@@ -1,7 +1,3 @@
-@php
-    $infos1 = getRecords('infos', ['section_id', 1]);
-    $infos2 = getRecords('infos', ['section_id', 2]);
-@endphp
 @extends('frontend.layouts.app')
 @section('main')
     <section class="py-3 px-3" style="background: var(--bs-gray-100);">

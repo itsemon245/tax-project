@@ -28,8 +28,8 @@
                                 {{$item->description}}
                             </div>
                             <div class="d-flex gap-5 align-items-center flex-wrap">
-                                <a class="btn btn-primary text-capitalize" href="#">Make
-                                    appointment</a>
+                                <button class="btn btn-primary text-capitalize">Make
+                                    appointment</button>
                                 <div>
                                     <a class="text-capitalize a d-flex align-items-center gap-2" href="#">
                                         <span class="mdi mdi-map-marker-outline  text-primary"></span>

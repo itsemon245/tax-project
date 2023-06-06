@@ -3,7 +3,7 @@
 @endphp
 <div class="product-card" style="min-height: 420px;">
     @if ($product->is_most_popular)
-        <div class="product-type bg-blue p-2 text-light text-center h5 mb-0" style="font-weight: 600">{{$product->product_category_id}}</div>
+        <div class="product-type bg-blue p-2 text-light text-center h5 mb-0" style="font-weight: 600">Most Popular</div>
     @endif
     <div class="product-content px-4 py-2">
         <h2 class="text-uppercase mb-0" style="font-weight: 500;">
