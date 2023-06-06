@@ -66,10 +66,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
     Route::resource('invoice', InvoiceController::class);
-    Route::resource('invoice-item',InvoiceItemController::class);
+    Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
-    
-    
+
+
     //service related routes
     Route::resource('service-subcategory', ServiceSubCategoryController::class);
     // custom routes for service only for spacial purpose
@@ -81,7 +81,7 @@ Route::prefix('admin')->group(function () {
         Route::get('store/', [ServiceController::class, 'store'])->name('store');
         Route::get('edit/{id}', [ServiceController::class, 'edit'])->name('edit');
         Route::get('update/{id}', [ServiceController::class, 'update'])->name('update');
-        Route::get('destroy/{id}', [ServiceController::class, 'destroy'])->name('destroy');
+        Route::DELETE('destroy/{service}', [ServiceController::class, 'destroy'])->name('destroy');
     });
 
     //custom routes
