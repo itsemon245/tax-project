@@ -20,23 +20,22 @@
     {{$slot}}
 </textarea>
 
-@pushOnce('customJs')
+@push('customJs')
     <script>
+       $(document).ready(function () {
         CKEDITOR.ClassicEditor.create(document.getElementById("{{$id}}"), {
+
                 // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
                 toolbar: {
                     items: [
-                        'heading', '|',
-                        'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
-                        'bulletedList', 'numberedList', 'todoList', '|',
-                        'outdent', 'indent', '|',
-                        'undo', 'redo',
-                        '-',
-                        'fontSize', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-                        'alignment', '|',
-                        'link', '{{$hasImage ? "uploadImage" : ""}}', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
-                        'specialCharacters', 'horizontalLine', 'pageBreak',
-                    ],
+                                'heading', '|',
+                                'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                                'bulletedList', 'numberedList', 'todoList', '|',
+                                'undo', 'redo', '|',
+                                'fontSize', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                                'link', 'blockQuote', 'insertTable', '|',
+                                'outdent', 'indent', 'alignment','horizontalLine',
+                            ],
                     shouldNotGroupWhenFull: true
                 },
                 // Changing the language of the interface requires loading the language file using the <script> tag.
@@ -140,10 +139,11 @@
                 ckfinder: {
                     // The URL that the images are uploaded to.
                     uploadUrl: '{{route("upload.image").'?_token='.csrf_token()}}',
-                }
+                },
         })
         .then(response=> console.log(response))
         .catch(err=> console.log(err));
+       });
     </script>
-@endPushOnce
+@endPush
 
