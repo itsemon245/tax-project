@@ -22,8 +22,7 @@
                     rows="8"></textarea>
                 </label>
                 <div class="mt-3 mb-3">
-                    <button class="btn btn-primary profile-button" type="submit">Update
-                        Profile
+                    <button class="btn btn-primary profile-button" type="submit">Submit
                     </button>
                 </div>
             </div>
