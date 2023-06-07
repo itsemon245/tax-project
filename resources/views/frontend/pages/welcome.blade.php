@@ -21,6 +21,29 @@
     </section>
     
     <x-frontend.appointment-section :sections="$appointmentSections" />
+
+
+    <!-- Center modal content -->
+    <div class="modal fade" id="appointmentTypeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" id="myCenterModalLabel">Choose Appointment Type</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center gap-5 p-5">
+                    <a href="{{route('appointment.make', 1)}}" class="border shadow d-inline-flex flex-column align-items-center rounded p-2 gap-2">
+                        <img src="{{asset('backend/assets/images/small/img-1.jpg')}}" class="rounded" style="width:120px;aspect-ratio:1/0.9;" alt="">
+                        <h6 class="mb-0 text-dark" style="font-family: 'Poppins">Physical</h6>
+                    </a>
+                    <a href="{{route('appointment.make', 0)}}" class="border shadow d-inline-flex flex-column align-items-center rounded p-2 gap-2">
+                        <img src="{{asset('backend/assets/images/small/img-1.jpg')}}" class="rounded" style="width:120px;aspect-ratio:1/0.9;" alt="">
+                        <h6 class="mb-0 text-dark" style="font-family: 'Poppins">Virtual</h6>
+                    </a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <x-frontend.info-section :title="$infos1[0]->title" class="text-capitalize">
         @foreach ($infos1 as $info)
             <x-frontend.info-card :$info />

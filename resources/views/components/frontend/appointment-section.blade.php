@@ -28,8 +28,8 @@
                                 {{$item->description}}
                             </div>
                             <div class="d-flex gap-5 align-items-center flex-wrap">
-                                <button class="btn btn-primary text-capitalize">Make
-                                    appointment</button>
+                                 <!-- Center modal -->
+                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appointmentTypeModal">Make Appointment</button>
                                 <div>
                                     <a class="text-capitalize a d-flex align-items-center gap-2" href="#">
                                         <span class="mdi mdi-map-marker-outline  text-primary"></span>
