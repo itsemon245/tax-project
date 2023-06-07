@@ -78,7 +78,7 @@ Route::prefix('admin')->group(function () {
         Route::get('sub/create/{categoryId}', [ServiceSubCategoryController::class, 'create'])->name('subs.create');
         Route::get('create/{subCategoryId}', [ServiceController::class, 'create'])->name('create');
         Route::get('view/{subCategoryId}', [ServiceController::class, 'index'])->name('index');
-        Route::get('store/', [ServiceController::class, 'store'])->name('store');
+        Route::POST('store/', [ServiceController::class, 'store'])->name('store');
         Route::get('edit/{id}', [ServiceController::class, 'edit'])->name('edit');
         Route::get('update/{id}', [ServiceController::class, 'update'])->name('update');
         Route::DELETE('destroy/{service}', [ServiceController::class, 'destroy'])->name('destroy');
