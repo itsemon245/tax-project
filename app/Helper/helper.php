@@ -29,7 +29,7 @@ function timestamp()
 function saveImage($image, $dir, $prefix = 'image')
 {
     $ext = $image->extension();
-    $name = $prefix ."-". timestamp() . '.' . $ext;
+    $name = $prefix . "-" . timestamp() . '.' . $ext;
     $path = $image->storeAs("uploads/$dir", $name, 'public');
     return $path;
 }
@@ -58,7 +58,7 @@ function updateFile($file, $old_path, $dir,  $prefix = "image")
  */
 function deleteFile($path)
 {
-    $deleted =false;
+    $deleted = false;
     $path = 'public/' . $path;
     if (Storage::exists($path)) {
         $deleted = Storage::delete($path);
