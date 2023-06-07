@@ -33,7 +33,31 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        //
+        $jsonSection = $this->createJsonFile($request->sections_titles, $request->sections_descriptions, $request->sections_images);
+        Service::create(
+            [
+                "service_category_id" => $request->service_category_id,
+                "service_sub_category_id" => $request->service_sub_category_id,
+                "title" => $request->title,
+                "intro" => $request->intro,
+                "description" => $request->description,
+                "price" => $request->price,
+                "price_description" => $request->price_description,
+                "discount" => $request->discount,
+                "is_discount_fixed" => $request->discount_type,
+                "delivery_date" => $request->delivery_date,
+                "rating" => $request->ratting,
+                "reviews" => $request->reviews,
+                "sections" => json_encode($jsonSection),
+            ]
+        );
+
+        return redirect()
+            ->route("service.index", $request->service_sub_category_id)
+            ->with(array(
+                'message' => "Service Created Successfully",
+                'alert-type' => 'success',
+            ));
     }
 
     /**
@@ -49,7 +73,8 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        //
+        $service = Service::find($service->id);
+        return view('backend.service.editService', compact('service'));
     }
 
     /**
@@ -72,5 +97,23 @@ class ServiceController extends Controller
                 'message' => "Service Deleted Successfully",
                 'alert-type' => 'success',
             ));
+    }
+
+    public function createJsonFile($titles, $descriptions, $images)
+    {
+        $sections = [];
+        foreach ($titles as $index => $title) {
+            array_push(
+                $sections,
+                (object)
+                [
+                    'title'         => $title,
+                    'description'   => $descriptions[$index],
+                    'image'         => isset($images[$index]) ? saveImage($images[$index], 'service', 'service') : ''
+                ]
+            );
+        }
+
+        return $sections;
     }
 }
