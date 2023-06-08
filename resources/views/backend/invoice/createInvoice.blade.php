@@ -1,6 +1,22 @@
 
 @extends('backend.layouts.app')
 
+@pushOnce('customCss')
+    <style>
+      
+      input[type="date"]{
+        letter-spacing: 2px;
+        border: none;
+        padding: 0.2rem 0.1rem;
+      }
+      input[type="date"]:focus{
+        border-radius: 5px;
+      }
+      input[type="date"]:hover{
+        cursor: pointer;
+      }
+    </style>
+@endPushOnce
 @section('content')
 
  <!-- start page title -->
@@ -16,12 +32,13 @@
         <div class="row">
           <div class="col-sm-4 col-md-3">
             <div class="pe-5">
-              <x-form.selectize id="client" name="client"
+              <x-form.selectize class="mb-1" id="client" name="client"
               placeholder="Select Client..." label="Bill To" :canCreate="false">
               @foreach ($clients as $client)
                   <option value="{{ $client->id }}">{{ $client->name }}</option>
               @endforeach
             </x-form.selectize>
+            <a href="{{route('client.create')}}" class="text-blue" style="font-weight: 500;">Create New Client</a>
 
             </div>
           </div>
@@ -29,17 +46,13 @@
             <div class="mb-3">
               <label for="issue-date" class="mb-0 d-block">Date of Issue</label>
               <div class="d-flex align-items-center">
-                <input type="date" name="issue_date" id="issue-date" value="{{now()->format('Y-m-d')}}" hidden>
-                <span class="text-dark fw-bold"></span>
-                <span class="mdi mdi-calendar-outline text-dark ms-2" data-trigger="issue-date" style="cursor:pointer;"></span>
+                <input type="date" name="issue_date" id="issue-date" value="{{now()->format('Y-m-d')}}" >
               </div>
             </div>
             <div class="mb-3">
               <label for="issue-date" class="mb-0 d-block">Due Date</label>
               <div class="d-flex align-items-center">
-                <input type="date" name="due_date" id="due-date" value="{{now()->addDays(7)->format('Y-m-d')}}" hidden>
-                <span class="text-dark fw-bold"></span>
-                <span class="mdi mdi-calendar-outline text-dark ms-2" data-trigger="due-date" style="cursor:pointer;"></span>
+                <input type="date" name="due_date" id="due-date" value="{{now()->addDays(7)->format('Y-m-d')}}">
               </div>
             </div>
           </div>
@@ -138,18 +151,7 @@
 @pushOnce('customJs')
     <script>
       $(document).ready(function () {
-        function setDateValue() {
-            $('[type="date"]').each((i, el)=>{
-            $('[type="date"]').next().text(el.value)
-          })
-        }
-        setDateValue()
-
-        $('.mdi-calendar-outline').each((i, el)=>{
-          el.addEventListener('click', e=>{
-            $("#"+el.dataset.trigger).trigger('click');
-          })
-        })
+        
         
 
 
