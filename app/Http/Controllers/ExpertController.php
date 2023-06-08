@@ -6,13 +6,17 @@ use Illuminate\Http\Request;
 
 class ExpertController extends Controller
 {
-    public function index()
+    public function profile()
     {
-        return view('frontend.pages.expert.viewExpertProfile');
+        return view('frontend.pages.expert.profile');
     }
 
     public function categories()
     {
-        return view('frontend.pages.expert.viewCategories');
+        return view('frontend.pages.expert.categories');
+    }
+    public function browse()
+    {
+        return view('frontend.pages.expert.browse');
     }
 }

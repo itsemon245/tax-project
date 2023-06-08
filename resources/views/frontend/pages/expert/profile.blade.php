@@ -2,12 +2,12 @@
 @section('main')
     <section class="py-3 px-3" style="background: var(--bs-gray-100);">
         <div class="container shadow p-3 rounded-3 bg-white">
-            <div class="row">
+            <div class="row align-items-start">
                 <div class="col-md-3">
-                    <img class="rounded-4" src="{{ asset('frontend/assets/images/ps.avif') }}" alt="Expert"
-                        style="width: 100%; max-height: 300px; object-fit: cover;">
+                    <img class="rounded-3" src="{{ asset('backend/assets/images/users/user-3.jpg') }}" alt="Expert"
+                        style="width: 100%; aspect-ratio:1/1; object-fit:contain;">
                 </div>
-                <div class="col-md-6 p-3">
+                <div class="col-md-6">
                     <h2><b>Dr. Ekramul Haque</b></h2>
                     <p class="m-0 text-muted">MBBS</p>
                     <p class="m-0 text-muted">Psychiatry Darmotology</p>

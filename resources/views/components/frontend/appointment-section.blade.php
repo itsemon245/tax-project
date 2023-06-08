@@ -37,7 +37,7 @@
                                     </a>
                                 </div>
                                 <div>
-                                    <a class="text-capitalize a d-flex align-items-center gap-2" href="#">
+                                    <a class="text-capitalize a d-flex align-items-center gap-2" href="{{route('expert.categories')}}">
                                         <img src="{{ asset('frontend/assets/icons/tax-expert-icon.svg') }}"
                                             alt="">
                                         Tax Expert
