@@ -34,10 +34,16 @@
                                     </x-backend.form.select-input>
                             </div>
                             <div class="col-lg-4 col-md-6 col-12 mb-2">
+                                    @if ($isPhysical)
                                     <x-backend.form.select-input label="Location" name="location" placeholder="Location">
                                         <option value="">Doctor</option>
                                         <option value="">Developer</option>
                                     </x-backend.form.select-input>
+                                    @else
+                                    <x-backend.form.select-input label="Location" name="location" placeholder="Location" disabled>
+                                       
+                                    </x-backend.form.select-input>
+                                    @endif
                             </div>
                             <div class="col-lg-12 col-md-6 col-12 mb-2">
                                     <x-backend.form.text-input label="Subject" name="subject" type="text" placeholder="Subject" />

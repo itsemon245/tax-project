@@ -33,11 +33,11 @@
                 </div>
                 <div class="modal-body d-flex justify-content-center gap-5 p-5">
                     <a href="{{route('appointment.make', 1)}}" class="border shadow d-inline-flex flex-column align-items-center rounded p-2 gap-2">
-                        <img src="{{asset('backend/assets/images/small/img-1.jpg')}}" class="rounded" style="width:120px;aspect-ratio:1/0.9;" alt="">
+                        <img src="{{asset('frontend/assets/images/physical-appointment.png')}}" class="rounded" style="width:120px;aspect-ratio:1/0.9;" alt="">
                         <h6 class="mb-0 text-dark" style="font-family: 'Poppins">Physical</h6>
                     </a>
                     <a href="{{route('appointment.make', 0)}}" class="border shadow d-inline-flex flex-column align-items-center rounded p-2 gap-2">
-                        <img src="{{asset('backend/assets/images/small/img-1.jpg')}}" class="rounded" style="width:120px;aspect-ratio:1/0.9;" alt="">
+                        <img src="{{asset('frontend/assets/images/virtual-appointment.png')}}" class="rounded" style="width:120px;aspect-ratio:1/0.9;" alt="">
                         <h6 class="mb-0 text-dark" style="font-family: 'Poppins">Virtual</h6>
                     </a>
                 </div>

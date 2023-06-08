@@ -53,10 +53,11 @@ Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'
 
 
 
-
-Route::get('/expert-categories', [ExpertController::class, 'categories'])->name('expert.categories');
-Route::get('/expert-profile', [ExpertController::class, 'index'])->name('expert.profile');
-Route::get('/browse-tax-expert', [BrowseTaxExpertController::class, 'index'])->name('browse.expert');
+Route::controller(ExpertController::class)->prefix('expert')->name('expert.')->group(function () {
+    Route::get('/categories', 'categories')->name('categories');
+    Route::get('/browse', 'browse')->name('browse');
+    Route::get('/profile', 'profile')->name('profile');
+});
 
 // these route will only be visible to 2nd navigation 
 // ! Do not put any new routes in this group
