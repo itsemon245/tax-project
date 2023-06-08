@@ -1,11 +1,11 @@
 @extends('frontend.layouts.app')
 @section('main')
     <section class="py-3 px-3" style="background: var(--bs-gray-100);">
-        <div class="container shadow p-3 rounded-3 bg-white">
+        <div class="container shadow p-3 rounded-3 bg-white mt-5">
             <div class="row align-items-start">
-                <div class="col-md-3">
-                    <img class="rounded-3" src="{{ asset('backend/assets/images/users/user-3.jpg') }}" alt="Expert"
-                        style="width: 100%; aspect-ratio:1/1; object-fit:contain;">
+                <div class="col-md-3 mb-3 mb-md-0">
+                    <img class="rounded-3 w-100" src="{{ asset('backend/assets/images/users/user-3.jpg') }}" alt="Expert"
+                        style="aspect-ratio:1/1; object-fit:contain;">
                 </div>
                 <div class="col-md-6">
                     <h2><b>Dr. Ekramul Haque</b></h2>
