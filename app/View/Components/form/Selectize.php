@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class Selectize extends Component
 {
+    public $canCreate;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($canCreate = true)
     {
-        //
+        $this->canCreate = $canCreate;
     }
 
     /**

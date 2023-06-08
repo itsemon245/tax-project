@@ -1,9 +1,11 @@
+@props([
+    'canCreate' => true,
+])
 @php
     $name = $attributes->get('name');
     $id = $attributes->get('id');
     $label = $attributes->get('label');
 @endphp
-
 @if ($label)
 <label for="{{$id}}" class="mb-0">{{$label}}</label>
 @endif
@@ -33,6 +35,6 @@
     {{-- Selectize end --}}
 
     <script>
-        $('.selectize').selectize({ sortField: 'text', maxItems:1, create: true, })
+        $('.selectize').selectize({ sortField: 'text', maxItems:1, create: '{{$canCreate}}', })
     </script>
 @endPushOnce

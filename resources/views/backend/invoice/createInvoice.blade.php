@@ -17,7 +17,7 @@
           <div class="col-sm-4 col-md-3">
             <div class="pe-5">
               <x-form.selectize id="client" name="client"
-              placeholder="Select Client..." label="Bill To">
+              placeholder="Select Client..." label="Bill To" :canCreate="false">
               @foreach ($clients as $client)
                   <option value="{{ $client->id }}">{{ $client->name }}</option>
               @endforeach
