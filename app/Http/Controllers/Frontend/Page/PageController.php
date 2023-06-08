@@ -6,6 +6,7 @@ use App\Models\Info;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ServiceSubCategory;
 
 class PageController extends Controller
 {
@@ -15,7 +16,8 @@ class PageController extends Controller
     }
     public function industriesPage()
     {
-        return view('frontend.pages.industries.industries');
+        $subCategories = ServiceSubCategory::with('serviceCategory')->where('service_category_id', 3)->get();
+        return view('frontend.pages.industries.industries', compact('subCategories'));
     }
     public function clientStudioPage()
     {
