@@ -4,67 +4,24 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
         <div id="carouselExampleFade" class="border-bottom carousel slide carousel-fade" data-bs-ride="carousel"> 
-            <div class="carousel-inner mt-5 mb-5">
-              <div class="carousel-item active " style="height: 300px;"> 
-                <div class="row h-100 ps-5">
-                    <div class="col-md-6 mt-3 h-100" >
-                        <p class="mt-3 ps-5">Tax Prepration course one</p>
-                        <h4 class="mt-3 ps-5">A meaningful carrer starts here.</h4>
-                        <p class="mt-3 ps-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam in maiores quidem iste animi natus earum magni. Autem, veritatis perspiciatis. Earum nobis provident quisquam nulla assumenda quam fugiat, voluptatem numquam eligendi, neque tenetur corrupti sed? Recusandae suscipit ullam libero</p>
-                        <div class="ps-5">
-                          <x-backend.ui.button class="btn-success d-block">Enroll in our tax one</x-backend.ui.button>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mt-4 pt-5">
-                        <img src="{{ asset('backend/assets/images/products/product-3.png') }}" style="width: 300px;height:180px;">
-                      </div>
+            
+          <div class="mt-4" style="height: 300px;"> 
+            <div class="row h-100 ps-5">
+                <div class="col-md-6 mt-3 h-100" >
+                    <p class="mt-3 ps-5">Tax Prepration course one</p>
+                    <h4 class="mt-3 ps-5">A meaningful carrer starts here.</h4>
+                    <p class="mt-3 ps-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam in maiores quidem iste animi natus earum magni. Autem, veritatis perspiciatis. Earum nobis provident quisquam nulla assumenda quam fugiat, voluptatem numquam eligendi, neque tenetur corrupti sed? Recusandae suscipit ullam libero</p>
+                    <div class="ps-5">
+                      <x-backend.ui.button class="btn-success d-block">Enroll in our tax one</x-backend.ui.button>
                     </div>
                 </div>
-              </div>
-              <div class="carousel-item" style="height: 300px;"> 
-                <div class="row ps-5 h-100">
-                    <div class="col-md-6 mt-3 h-100">
-                        <p class="mt-3 ps-5">Tax Prepration course two</p>
-                        <h4 class="mt-3 ps-5">A meaningful carrer starts here.</h4>
-                        <p  class="mt-3 ps-5 overflow-hidden">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam in maiores quidem iste animi natus earum magni. Autem, veritatis perspiciatis. Earum nobis provident quisquam nulla assumenda quam fugiat, voluptatem numquam eligendi, neque tenetur corrupti sed? Recusandae suscipit ullam libero repe</p>
-                      <div class="ps-5">
-                        <x-backend.ui.button class="btn-success d-block">Enroll in our tax two</x-backend.ui.button>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mt-5 pt-5">
-                        <img src="{{ asset('backend/assets/images/products/product-2.png') }}" style="width: 300px;height:180px;">
-                      </div>
-                    </div>
+                <div class="col-md-6">
+                  <div class="mt-4 pt-5">
+                    <img src="{{ asset('backend/assets/images/products/product-3.png') }}" style="width: 300px;height:180px;">
+                  </div>
                 </div>
-              </div>
-              <div class="carousel-item" style="height: 300px;"> 
-                <div class="row ps-5 h-100">
-                    <div class="col-md-6 mt-3 h-100" style="">
-                        <p class="mt-3 ps-5">Tax Prepration course three</p>
-                        <h4 class="mt-3 ps-5">A meaningful carrer starts here.</h4>
-                        <p class="mt-3 ps-5 overflow-hidden">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam in maiores quidem iste animi natus earum magni. Autem, veritatis perspiciatis. Earum nobis provident quisquam nulla assumenda quam fugiat, voluptatem numquam eligendi, neque tenetur corrupti sed? Recusandae suscipit ullam lib</p>
-                      <div class="ps-5">
-                        <x-backend.ui.button class="btn-success d-block">Enroll in our tax three</x-backend.ui.button>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mt-4 pt-5">
-                        <img src="{{ asset('backend/assets/images/products/product-1.png') }}" style="width: 300px;height:180px;">
-                      </div>
-                    </div>
-                </div>
-              </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+          </div>
           </div>
 
           <div class="row ">

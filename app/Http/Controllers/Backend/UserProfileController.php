@@ -63,19 +63,20 @@ class UserProfileController extends Controller
     public function update(UserProfileUpdateRequest $request, $id)
     {
             $userData = User::findOrFail($id);
-            $userData->name = $request->name;
-            $userData->email = $request->email;
-            $userData->user_name = $request->user_name;
-            $userData->phone = $request->phone;
-            $old_path = $userData->image_url;
-            $userData->image_url = updateFile($request->profile_img, $old_path,'profile','user-image');
-            $userData->save();
-    
-            $notification = array(
-                'message' => "Profile Updated",
-                'alert-type' => 'success',
-            );
-            return back()->with($notification);
+                $userData->name = $request->name;
+                $userData->email = $request->email;
+                $userData->user_name = $request->user_name;
+                $userData->phone = $request->phone;
+                $old_path = $userData->image_url;
+                $userData->image_url = updateFile($request->profile_img, $old_path,'profile','user-image');
+                $userData->save();
+        
+                $notification = array(
+                    'message' => "Profile Updated",
+                    'alert-type' => 'success',
+                );
+                return back()->with($notification);
+
         
     }
 
@@ -92,12 +93,6 @@ class UserProfileController extends Controller
      */
     public function changePassword(Request $request)
     {
-        //     $request->validate([
-        //     'old_password' => 'required|string',
-        //     'new_password' => 'required|string',
-        //     'confirm_new_password' => 'required|string|same:new_password',
-
-        // ])
         
         $user = auth()->user();
         $isValid = Hash::check($request->old_password, $user->password);
@@ -115,6 +110,31 @@ class UserProfileController extends Controller
                 );
             }
             return back()->with($notification);
+    }
+
+    //User profile to become a partner profile method
+    public function userToBecomePartner(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'phone' => 'required|string|max:11|min:11',
+            'nid' => 'required|max:17|min:10',
+            'dob' => 'required',
+            'address' => 'required|max:400|min:150',
+
+        ]);
+        $userData = User::findOrFail($id);
+        $userData->name = $request->name;
+        $userData->nid = $request->nid;
+        $userData->dob = $request->dob;
+        $userData->phone = $request->phone;
+        $userData->address = $request->address;
+        $userData->save();
+        $notification = array(
+            'message' => "Profile Updated",
+            'alert-type' => 'success',
+        );
+        return back()->with($notification);
     }
 
 }
