@@ -6,6 +6,9 @@
 @endphp
 <div class="">
     <label for="{{$id}}">
+        @if ($attributes->has('label'))
+            <span class="form-label text-capitalize">{{$attributes->get('label')}}</span>
+        @endif
         <input id="{{$id}}" class="{{$id}}" name="{{ $name }}" type="file" hidden>
         <img {{ $attributes->class("w-100 border border-2 border-primary")->merge() }} id="live-{{$id}}"
             src="{{ $image ? useImage($image) : asset('images/Placeholder_view_vector.svg.png') }}">

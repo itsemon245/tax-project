@@ -74,6 +74,29 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="color" class="form-label my-3"><b>SECTIONS</b></label>
+
+                                @foreach (json_decode($service->sections) as $key=> $section)
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mt-1">
+                                            <x-backend.form.text-input label="Section Title {{++$key}}" type="text" name="sections_titles[]"
+                                                value="{{ $section->title }}">
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="mt-1">
+                                            <x-form.ck-editor id="section-editor-{{$key}}" name="sections_descriptions[]" placeholder="Price Description"
+                                                label="Section Description {{$key}}" label="Section Image {{$key}}">
+                                                {!! $section->description !!}
+                                            </x-form.ck-editor>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"> 
+                                        <x-backend.form.image-input label="Section Image {{$key}}" name="sections_images[]" id="section-image-{{$key}}" :image="$section->image" />
+                                        
+                                    </div>
+                                </div>
+                                @endforeach
                                 <div id="packacgeFeaturesInputs"></div>
                                 <div class="d-flex align-items-center justify-content-center">
                                     <div class="icon-item mx-1 mt-3" style="cursor: pointer" onclick="addPackageFeature()"
@@ -297,66 +320,6 @@
                 })
                 featureLength()
             }
-
-            const printPackageFeature = () => {
-                itemCount++
-                const inputs = [];
-                @forelse (json_decode($service->sections) as $section)
-                    inputs.push(`
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mt-1">
-                                <label for=section-title${itemCount} class="form-label">Section Title ${itemCount}</label>
-                            <input type='text' name="sections_titles[]" placeholder="Section Title" class="form-control" value="{{ $section->title }}" />
-                            </div>
-                            <div class="mt-1">
-                                <label for="section-editor-${itemCount}" class="form-label">Section Description ${itemCount}</label>
-                                <textarea id="section-editor-${itemCount}" name="sections_descriptions[]" placeholder="Section Description">
-                                    {!! $section->description !!}
-                                </textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-6">  
-                            <label for="section-image-${itemCount}">
-                                    <p>Section Image ${itemCount}</p>
-                                    <input id="section-image-${itemCount}" type="file" name="sections_images[]" hidden>
-                                    <img class="w-100 border border-2 border-primary" id="live-${itemCount}"
-                                        src="{{ useImage($section->image) }}">
-                            </label>
-                            <p class="mt-2" id="note-${itemCount}">
-                                <span class="text-danger" style="font-weight: 500;">*</span>Accepted files : <span class="text-success" style="font-weight: 500;">jpg, png, svg, webp up to 5 MB</span> 
-                            </p>
-                        </div>
-                    </div>
-            `)
-                @empty
-                    inputs.push(`
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mt-1">
-                                <label for=section-title${itemCount} class="form-label">Section Title ${itemCount}</label>
-                            <input type='text' name="sections_titles[]" placeholder="Section Title" class="form-control"/>
-                            </div>
-                            <div class="mt-1">
-                                <label for="section-editor-${itemCount}" class="form-label">Section Description ${itemCount}</label>
-                                <textarea id="section-editor-${itemCount}" name="sections_descriptions[]" placeholder="Section Description">
-                                </textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-6">  
-                            <label for="section-image-${itemCount}">
-                                    <p>Section Image ${itemCount}</p>
-                                    <input id="section-image-${itemCount}" type="file" name="sections_images[]" hidden>
-                                    <img class="w-100 border border-2 border-primary" id="live-${itemCount}"
-                                        src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
-                            </label>
-                            <p class="mt-2" id="note-${itemCount}">
-                                <span class="text-danger" style="font-weight: 500;">*</span>Accepted files : <span class="text-success" style="font-weight: 500;">jpg, png, svg, webp up to 5 MB</span> 
-                            </p>
-                        </div>
-                    </div>
-            `)
-                @endforelse
 
                 $('#packacgeFeaturesInputs').append(inputs)
                 CKEDITOR.ClassicEditor.create(document.getElementById(`section-editor-${itemCount}`), {
