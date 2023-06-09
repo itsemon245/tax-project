@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Frontend\Page;
 use App\Models\Info;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\ServiceSubCategory;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
