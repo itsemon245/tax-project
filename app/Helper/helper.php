@@ -29,7 +29,7 @@ function timestamp()
 function saveImage($image, $dir, $prefix = 'image')
 {
     $ext = $image->extension();
-    $name = $prefix ."-". timestamp() . '.' . $ext;
+    $name = $prefix . "-" . timestamp() . '.' . $ext;
     $path = $image->storeAs("uploads/$dir", $name, 'public');
     return $path;
 }
@@ -51,6 +51,20 @@ function updateFile($file, $old_path, $dir,  $prefix = "image")
     return $new_path;
 }
 
+/**
+ * Deletes a file given its path from database
+ * 
+ * Deletes only form public disks
+ */
+function deleteFile($path)
+{
+    $deleted = false;
+    $path = 'public/' . $path;
+    if (Storage::exists($path)) {
+        $deleted = Storage::delete($path);
+    }
+    return $deleted;
+}
 /**
  * An Array for social media platform data
  */

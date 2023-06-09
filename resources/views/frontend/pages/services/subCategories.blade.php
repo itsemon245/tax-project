@@ -1,10 +1,5 @@
 @php
-    $infos1 = getRecords('infos', ['section_id', 1]);
-    $infos2 = getRecords('infos', ['section_id', 2]);
-    $appointments= getRecords('appointments');
-    $testimonials = getRecords('testimonials');
-    $banners = getRecords('banners');
-    $isTaxServices = str(url()->current())->contains('service/category/1')
+    
 @endphp
 @extends('frontend.layouts.app')
 @section('main')
@@ -12,8 +7,8 @@
     
     
     {{-- show only when category is tax services --}}
-    @if ($isTaxServices)
-    <x-frontend.products-section :subCategories="$productCategory->productSubCategories" />
+    @if ($productCategory)
+    <x-frontend.products-section :productCategory="$productCategory" />
     @endif
 
         {{-- Services --}}

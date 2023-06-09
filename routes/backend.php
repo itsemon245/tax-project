@@ -2,6 +2,7 @@
 
 use App\Models\Map;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\Map\MapController;
@@ -16,17 +17,17 @@ use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
+use App\Http\Controllers\Backend\CkEditor\CkEditorController;
+use App\Http\Controllers\Backend\Training\TrainingController;
+use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
-use App\Http\Controllers\Backend\CkEditor\CkEditorController;
-use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
+use App\Http\Controllers\Backend\Service\ServiceCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
-use App\Http\Controllers\Backend\Service\ServiceCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
-use App\Http\Controllers\Backend\Training\TrainingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,18 +66,33 @@ Route::prefix('admin')->group(function () {
     Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
     Route::resource('invoice', InvoiceController::class);
-    Route::resource('invoice-item',InvoiceItemController::class);
+    Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
+
+
+    //service related routes
     Route::resource('service-subcategory', ServiceSubCategoryController::class);
+    // custom routes for service only for spacial purpose
+    Route::prefix('service')->name('service.')->group(function () {
+        Route::get('category/{categoryId}', [ServiceSubCategoryController::class, 'showAll'])->name('subs.view');
+        Route::get('sub/create/{categoryId}', [ServiceSubCategoryController::class, 'create'])->name('subs.create');
+        Route::get('create/{subCategoryId}', [ServiceController::class, 'create'])->name('create');
+        Route::get('view/{subCategoryId}', [ServiceController::class, 'index'])->name('index');
+        Route::POST('store/', [ServiceController::class, 'store'])->name('store');
+        Route::get('edit/{service}', [ServiceController::class, 'edit'])->name('edit');
+        Route::PUT('update/{id}', [ServiceController::class, 'update'])->name('update');
+        Route::DELETE('destroy/{service}', [ServiceController::class, 'destroy'])->name('destroy');
+    });
 
     //custom routes
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
     Route::POST('/get-users', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
-    Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panle
+    Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panel
     Route::resource('calendar', CalendarController::class);
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
+    Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become');//User profile to become a partner update
     Route::resource('client', ClientController::class);
     Route::resource('book', BookController::class);
 });

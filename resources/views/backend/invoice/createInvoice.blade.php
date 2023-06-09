@@ -1,6 +1,35 @@
 
 @extends('backend.layouts.app')
 
+@pushOnce('customCss')
+    <style>
+      
+      input[type="date"]{
+        letter-spacing: 2px;
+        border: none;
+        padding: 0.2rem 0.1rem;
+      }
+      input[type="date"]:focus{
+        border-radius: 5px;
+      }
+      input[type="date"]:hover{
+        cursor: pointer;
+      }
+
+      input{
+        border: none;
+        border-radius: 5px;
+        display: block;
+        background: none;
+      }
+      textarea{
+        border: none;
+        border-radius: 5px;
+        display: block;
+        background: none;
+      }
+    </style>
+@endPushOnce
 @section('content')
 
  <!-- start page title -->
@@ -16,12 +45,13 @@
         <div class="row">
           <div class="col-sm-4 col-md-3">
             <div class="pe-5">
-              <x-form.selectize id="client" name="client"
-              placeholder="Select Client..." label="Bill To">
+              <x-form.selectize class="mb-1" id="client" name="client"
+              placeholder="Select Client..." label="Bill To" :canCreate="false">
               @foreach ($clients as $client)
                   <option value="{{ $client->id }}">{{ $client->name }}</option>
               @endforeach
             </x-form.selectize>
+            <a href="{{route('client.create')}}" class="text-blue" style="font-weight: 500;">Create New Client</a>
 
             </div>
           </div>
@@ -29,28 +59,24 @@
             <div class="mb-3">
               <label for="issue-date" class="mb-0 d-block">Date of Issue</label>
               <div class="d-flex align-items-center">
-                <input type="date" name="issue_date" id="issue-date" value="{{now()->format('Y-m-d')}}" hidden>
-                <span class="text-dark fw-bold"></span>
-                <span class="mdi mdi-calendar-outline text-dark ms-2" data-trigger="issue-date" style="cursor:pointer;"></span>
+                <input type="date" name="issue_date" id="issue-date" value="{{now()->format('Y-m-d')}}" >
               </div>
             </div>
             <div class="mb-3">
               <label for="issue-date" class="mb-0 d-block">Due Date</label>
               <div class="d-flex align-items-center">
-                <input type="date" name="due_date" id="due-date" value="{{now()->addDays(7)->format('Y-m-d')}}" hidden>
-                <span class="text-dark fw-bold"></span>
-                <span class="mdi mdi-calendar-outline text-dark ms-2" data-trigger="due-date" style="cursor:pointer;"></span>
+                <input type="date" name="due_date" id="due-date" value="{{now()->addDays(7)->format('Y-m-d')}}">
               </div>
             </div>
           </div>
           <div class="col-sm-4 col-md-3">
             <div class="mb-3">
-              <p class="mb-0">Invoice Number</p>
+              <p class="mb-0 form-label">Invoice Number</p>
               <span  class="text-black">{{countRecords('invoices')+1}}</span>
             </div>
             <div>
-              <p class="mb-0">Reference</p>
-              <span  class="text-black">234</span>
+              <label class="mb-0" for="reference">Reference</label>
+              <input type="text" id="reference" name="reference" value="000">
             </div>
 
           </div>
@@ -64,32 +90,44 @@
         </div>
       </div>
       <div class="border-top border-4 mt-5">
-        <div class="table-responsive">
-          <table class="table table-striped mb-3">
+        <div class="table-responsive mb-3">
+          <table class="table table-striped">
               <thead class="bg-light">
                   <tr>
                       <th>#</th>
                       <th>Description</th>
                       <th>Rate</th>
                       <th>Qty</th>
-                      <th>Line Total</th>
+                      <th>Total</th>
                   </tr>
               </thead>
               <tbody>
-                  <tr>
+                  <tr id="row-0">
                       <th scope="row">1</th>
                       <td>
                         <div>
-                          <h5>Item Name</h5>
-                          <span class="text-muted">Item Description</span>
+                          <input aria-label="item-name" name="item_names[]" type="text" value="Item Name" />
+                          <input aria-label="item-descriptions" name="item_descriptions[]" type="text" placeholder="Item Description (optional)" />
                         </div>
                       </td>
-                      <td>$12</td>
-                      <td>5</td>
-                      <td>$60</td>
+                      <td>
+                        <span class="me-2">Tk</span>
+                        <input aria-label="item-rate" id="item-rate-0" data-index="0" name="item_rates[]" type="text"  placeholder="00" class="d-inline-block" style="width: 6rem;" />
+                      </td>
+                      <td>
+                        <input aria-label="item-rate" id="item-qty-0" data-index="0" name="item_qtys[]" type="text" placeholder="1" class="d-inline-block" style="width: 3rem;" />
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-start">
+                          <span class="me-2">Tk</span>
+                          <input aria-label="item-rate" id="item-total-0" data-index="0" name="item_totals[]" type="text" value="0" placeholder="00" class="d-inline-block" style="width: 7rem;" disabled />
+                          <span id="item-delete-btn-0" data-index="0" class="mdi mdi-trash-can-outline item-delete-btn" style="cursor: pointer;"></span>
+                        </div>
+                      </td>
                   </tr>
               </tbody>
           </table>
+          <button id="item-add-btn" type="button" class="w-100 p-1 fw-bold rounded rounded-3" style="background: none; border: 2px solid rgb(172, 170, 170);">Add New Item</button>
       </div> <!-- end table-responsive-->
       </div>
       <div class="row">
@@ -123,13 +161,13 @@
         <p class="text-start text-black">$5030</p>
       </div>
       <div>
-        <p class="mb-0">Notes</p>
-        <h5 >Assumenda distinctio</h5>
+        <label class="mb-0" for="note">Notes</label>
+        <textarea id="note" name="note" placeholder="Write a note here(Optional)" cols="30" rows="3"></textarea>
       </div>
-      <div class="mt-5">
+      {{-- <div class="mt-5">
         <p class="mb-0">Terms</p>
         <h5>Molestiae quia volup</h5>
-      </div>
+      </div> --}}
     </section>
   </x-backend.ui.section-card>
 
@@ -138,20 +176,86 @@
 @pushOnce('customJs')
     <script>
       $(document).ready(function () {
-        function setDateValue() {
-            $('[type="date"]').each((i, el)=>{
-            $('[type="date"]').next().text(el.value)
-          })
-        }
-        setDateValue()
+        let itemCount = 0;
+        const itemAddBtn = $('#item-add-btn')
+        let rates = $("input[name='item_rates[]']")
+        let qtys = $("input[name='item_qtys[]']")
 
-        $('.mdi-calendar-outline').each((i, el)=>{
-          el.addEventListener('click', e=>{
-            $("#"+el.dataset.trigger).trigger('click');
-          })
+        //set event listeners for initial item
+        setEventListenerFor(rates)
+        setEventListenerFor(qtys)
+        setDeleteEvent();
+
+        itemAddBtn.click(e=>{
+          itemCount++;
+          $('tbody').append(newItem(itemCount));
+          
+          //assign latest items again
+          rates = $("input[name='item_rates[]']")
+          qtys = $("input[name='item_qtys[]']")
+
+          //set eventlisters for appended items
+          setEventListenerFor(rates)
+          setEventListenerFor(qtys)
+          setDeleteEvent();
         })
         
 
+        function newItem(itemNo) { 
+          return `
+          <tr id="row-${itemNo}">
+            <th scope="row">${itemNo+1}</th>
+            <td>
+              <div>
+                <input aria-label="item-name" name="item_names[]" type="text" value="Item Name" />
+                <input aria-label="item-descriptions" name="item_descriptions[]" type="text" placeholder="Item Description (optional)" />
+              </div>
+            </td>
+            <td>
+              <span>Tk</span>
+              <input aria-label="Item Rate" id="item-rate-${itemNo}" data-index="${itemNo}" name="item_rates[]" type="text" placeholder="00" class="d-inline-block" style="width: 6rem;" />
+            </td>
+            <td>
+              <input aria-label="Item Quantity" id="item-qty-${itemNo}" data-index="${itemNo}" name="item_qtys[]" type="text" placeholder="1" class="d-inline-block" style="width: 3rem;" />
+            </td>
+            <td>
+              <div class="d-flex align-items-start">
+                <span class="me-2">Tk</span>
+                <input aria-label="item-rate" id="item-total-${itemNo}" data-index="${itemNo}" name="item_totals[]" type="text" value="0" placeholder="00" class="d-inline-block" style="width: 7rem;" disabled />
+                <span id="item-delete-btn-${itemNo}" data-index="${itemNo}" class="mdi mdi-trash-can-outline item-delete-btn" style="cursor: pointer;"></span>
+              </div>
+            </td>
+          </tr>
+          `
+        }
+
+        function setDeleteEvent(){
+          const itemDeleteBtns = $('.item-delete-btn')
+          itemDeleteBtns.each((i, el)=>{
+            const row = $(`#row-${el.dataset.index}`)
+            el.addEventListener('click', e=>{
+              row.remove();
+              itemCount--;
+            })
+          })
+        }
+        
+        //set event listeners given a jquery list
+        function setEventListenerFor(elements){
+          elements.each((i, el)=>{
+          el.addEventListener('input', (e)=>{
+            let index = e.target.dataset.index
+            let rate = $(`#item-rate-${index}`).val() == "" ? 1 : parseInt($(`#item-rate-${index}`).val())
+            let qty = $(`#item-qty-${index}`).val() == "" ? 1 : parseInt($(`#item-qty-${index}`).val())
+            let total = rate * qty;
+            console.log(rate, qty);
+            
+
+            //set the total in total input value
+            $(`#item-total-${index}`).val(total)
+          })
+        })
+        }
 
       });
     </script>

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Frontend\Page;
 
-use App\Http\Controllers\Controller;
+use App\Models\Info;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use App\Models\ServiceSubCategory;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -13,18 +17,27 @@ class PageController extends Controller
     }
     public function industriesPage()
     {
-        return view('frontend.pages.industries.industries');
+        $subCategories = ServiceSubCategory::with('serviceCategory')->where('service_category_id', 3)->get();
+        return view('frontend.pages.industries.industries', compact('subCategories'));
     }
     public function clientStudioPage()
     {
         return view('frontend.pages.clientStudio.clientStudio');
     }
-    public function appointmentPage()
+    public function appointmentPage(bool $isPhysical)
     {
-        return view('frontend.pages.appointment.create-appointment');
+        $banners = getRecords('banners');
+        $infos1 = Info::where('section_id', 1)->get();
+        $testimonials = Testimonial::get();
+        return view('frontend.pages.appointment.makeAppointment', compact('banners','infos1','testimonials', 'isPhysical'));
     }
     public function aboutPage()
     {
         return view('frontend.pages.about');
+    }
+    public function becomePartnerPage()
+    {
+        $user = Auth::user();
+        return view('frontend.pages.becomePartner', compact('user'));
     }
 }

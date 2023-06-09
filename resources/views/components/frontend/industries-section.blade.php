@@ -1,7 +1,7 @@
 <section class="py-5 row px-lg-5 px-2">
     <h3 class="text-center">Industries We Serve</h3>
     <div class="d-flex justify-content-center">
-        <p class="text-justify" style="max-width:1200px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. A numquam inventore consectetur? Dolores sed at atque non repellat consequatur aperiam. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab voluptas rerum tenetur dolores officia veritatis reprehenderit blanditiis earum culpa laboriosam.</p>
+        <p class="text-justify" style="max-width:1000px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. A numquam inventore consectetur? Dolores sed at atque non repellat consequatur aperiam. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab voluptas rerum tenetur dolores officia veritatis reprehenderit blanditiis earum culpa laboriosam.</p>
     </div>
     <div class="d-flex justify-content-center">
         <div class="bg-light rounded-3 p-3 mx-lg-5 mx-2">

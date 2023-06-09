@@ -21,11 +21,10 @@ class StoreServiceSubCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return[
-            'category' => ['required'],
-            'service_sub_category' => ['string', 'required', 'max:20', 'unique:service_sub_categories,name'],
-            'image' => ['required'],
-            'description' => ['string','required', 'max:500'],
+        return[ 
+            'name' => ['string', 'required', 'unique:service_sub_categories,name'],
+            'image' => ['required', 'image', 'max:50120'],
+            'description' => ['string','required',],
         ];
     }
 }

@@ -70,7 +70,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -169,7 +169,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -202,7 +202,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -235,7 +235,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -272,7 +272,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -305,7 +305,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -338,7 +338,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -371,7 +371,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -404,7 +404,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -441,7 +441,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -474,7 +474,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -507,7 +507,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -540,7 +540,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -577,7 +577,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -610,7 +610,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -643,7 +643,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -676,7 +676,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -709,7 +709,7 @@
                                             <button class="browse_card_cons">
                                                 Consultation
                                             </button>
-                                            <a href="" class="browse_card_view">View Profile</a>
+                                            <a href="{{route('expert.profile')}}" class="browse_card_view">View Profile</a>
                                         </div>
                                     </div>
                                 </div>

@@ -28,8 +28,8 @@
                                 {{$item->description}}
                             </div>
                             <div class="d-flex gap-5 align-items-center flex-wrap">
-                                <a class="btn btn-primary text-capitalize" href="#">Make
-                                    appointment</a>
+                                 <!-- Center modal -->
+                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appointmentTypeModal">Make Appointment</button>
                                 <div>
                                     <a class="text-capitalize a d-flex align-items-center gap-2" href="#">
                                         <span class="mdi mdi-map-marker-outline  text-primary"></span>
@@ -37,7 +37,7 @@
                                     </a>
                                 </div>
                                 <div>
-                                    <a class="text-capitalize a d-flex align-items-center gap-2" href="#">
+                                    <a class="text-capitalize a d-flex align-items-center gap-2" href="{{route('expert.categories')}}">
                                         <img src="{{ asset('frontend/assets/icons/tax-expert-icon.svg') }}"
                                             alt="">
                                         Tax Expert

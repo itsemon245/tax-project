@@ -448,19 +448,14 @@ footer .social-handles {
 
 .app_header_content h2{
     font-family: 'Poppins',sans-serif;
-    font-weight: 700;
-    font-size: 36px;
+    font-weight: 600;
+    font-size: 24px;
     color: #000;
 }
 
-.app_header_content p{
-    font-family: 'Poppins',sans-serif;
-    font-weight: 500;
-    font-size: 32px;
-    color: #000;
-}
+
 .app_content_thumabil {
-    padding: 40px 48px 0px;
+    padding: 2rem;
     text-align: center;
     margin: 0 auto;
     background-color: #D9D9D9;
@@ -469,16 +464,11 @@ footer .social-handles {
     font-family: 'Poppins',sans-serif;
     font-weight: 500;
     font-size: 18px;
-    padding: 16px 0;
     color: #000;
 }
 .app_content_thumabil img{
     display: block;
-    width: 100%;
-}
-#app_content{
-    margin: 0 auto;
-    padding-bottom: 40px;
+    max-width: 120px;
 }
 .icon_thumbail{
     width: 70%;
@@ -492,7 +482,7 @@ footer .social-handles {
 .app_icon h2{
     font-family: 'Poppins',sans-serif;
     font-weight: 500;
-    font-size: 24px;
+    font-size: 18px;
     color: #060606;
 }
 .app_main{
