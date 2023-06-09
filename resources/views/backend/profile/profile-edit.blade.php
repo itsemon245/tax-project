@@ -51,7 +51,7 @@
 
 
                         <div class="col-md-6">
-                            <x-backend.form.text-input name="user_name" label="Username" :value="$user->user_name" disabled />
+                            <x-backend.form.text-input name="user_name" label="Username" :value="$user->user_name" />
                         </div>
 
 
@@ -63,8 +63,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email"
-                                disabled />
+                            <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email" />
                         </div>
                         <div class="mt-3">
                             <button class="btn btn-primary profile-button" type="submit">Update
@@ -78,5 +77,20 @@
     </x-backend.ui.section-card>
 @endsection
 @push('customJs')
-    <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
+    {{-- Photo Preview for uploads --}}
+    <script>
+        $(document).ready(function() {
+
+            const inputs = $('#imagefile')
+
+            inputs.each((i, input) => {
+                input.addEventListener('change', e => {
+                    const image = document.querySelector('#liveImage')
+                    const url = URL.createObjectURL(e.target.files[0])
+                    image.src = url
+                })
+            })
+        });
+    </script>
+    {{-- Photo Preview for uploads --}}
 @endpush

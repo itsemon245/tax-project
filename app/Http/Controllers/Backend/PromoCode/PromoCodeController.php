@@ -47,12 +47,12 @@ class PromoCodeController extends Controller
             ]
         );
 
-        $user = User::find(Auth::user()->id); // Replace with the user you want to notify
+        $user = User::find($request->user_id); // Replace with the user you want to notify
         $user->notify(new PromoCodeNotification());
 
 
         $store_notification = new UserNotification();
-        $store_notification->user_id = Auth::user()->id;
+        $store_notification->user_id = $request->user_id;
         $store_notification->title = 'New PromoCode Create by ' . Auth::user()->name;
         $store_notification->message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit mauris ut tristique laoreet. Sed eu hendrerit dolor';
         $store_notification->image = Auth::user()->image_url;
