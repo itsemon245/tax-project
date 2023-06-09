@@ -24,8 +24,8 @@ class UserProfileUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'user_name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'max:11', 'min:11'],
-            'profile_img' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'phone' => ['required', 'max:20', 'min:11'],
+            'profile_img' => ['image', 'max:2048'],
             'email' => ['required', 'email', 'max:255'],
         ];
     }

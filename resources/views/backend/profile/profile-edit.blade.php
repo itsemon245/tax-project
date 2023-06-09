@@ -58,7 +58,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <x-backend.form.text-input type='number' name="phone" label="Contact Number"
+                            <x-backend.form.text-input type='text' name="phone" label="Contact Number"
                                 :value="$user->phone" required />
                         </div>
 
@@ -78,5 +78,17 @@
     </x-backend.ui.section-card>
 @endsection
 @push('customJs')
-    <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
+   {{-- Photo Preview for uploads --}}
+   <script>
+    $(document).ready(function () {
+        
+        const input = $("#imagefile")
+        input.on('change', e =>{
+            const image = document.querySelector('#liveImage')
+            const url = URL.createObjectURL(e.target.files[0])
+            image.src = url
+        })
+    });
+    </script>
+    {{-- Photo Preview for uploads --}}
 @endpush

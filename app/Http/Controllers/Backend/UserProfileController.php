@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\backend\UserProfileUpdateRequest;
 
 class UserProfileController extends Controller
@@ -62,6 +60,7 @@ class UserProfileController extends Controller
      */
     public function update(UserProfileUpdateRequest $request, $id)
     {
+        // dd($request->all());
             $userData = User::findOrFail($id);
             $userData->name = $request->name;
             $userData->email = $request->email;
@@ -92,14 +91,14 @@ class UserProfileController extends Controller
      */
     public function changePassword(Request $request)
     {
-        //     $request->validate([
-        //     'old_password' => 'required|string',
-        //     'new_password' => 'required|string',
-        //     'confirm_new_password' => 'required|string|same:new_password',
+            $request->validate([
+            'old_password' => 'required|string',
+            'new_password' => 'required|string',
+            'confirm_new_password' => 'required|string|same:new_password',
 
-        // ])
+            ]);
         
-        $user = auth()->user();
+        $user = User::findOrFail(auth()->id());
         $isValid = Hash::check($request->old_password, $user->password);
         $notification = array(
             'message' => "Password Changed Successfully",
