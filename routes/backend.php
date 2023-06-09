@@ -92,6 +92,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('calendar', CalendarController::class);
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
+    Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become');//User profile to become a partner update
     Route::resource('client', ClientController::class);
     Route::resource('book', BookController::class);
 });

@@ -23,10 +23,11 @@ class UserProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'user_name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'max:11', 'min:11'],
-            'profile_img' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'user_name' => ['required', 'string', 'max:255'],
+            'profile_img' => ['mimes:jpeg,png,jpg,gif,svg', 'max:5048'],
             'email' => ['required', 'email', 'max:255'],
+
         ];
     }
 }
