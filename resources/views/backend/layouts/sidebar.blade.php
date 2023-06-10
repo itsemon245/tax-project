@@ -334,6 +334,23 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#videoSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Video</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="videoSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('video.create') }}">Create</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('video.index') }}">View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
 
             </ul>
