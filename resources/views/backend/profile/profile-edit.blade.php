@@ -51,7 +51,7 @@
 
 
                         <div class="col-md-6">
-                            <x-backend.form.text-input name="user_name" label="Username" :value="$user->user_name" required />
+                            <x-backend.form.text-input name="user_name" label="Username" :value="$user->user_name" disabled />
                         </div>
 
 
@@ -64,7 +64,7 @@
 
                         <div class="col-md-6">
                             <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email"
-                                required />
+                                disabled />
                         </div>
                         <div class="mt-3">
                             <button class="btn btn-primary profile-button" type="submit">Update

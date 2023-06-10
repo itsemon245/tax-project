@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Frontend\Page;
 use App\Models\Info;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\ServiceSubCategory;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -36,6 +37,7 @@ class PageController extends Controller
     }
     public function becomePartnerPage()
     {
-        return view('frontend.pages.becomePartner');
+        $user = Auth::user();
+        return view('frontend.pages.becomePartner', compact('user'));
     }
 }
