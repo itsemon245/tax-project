@@ -28,6 +28,7 @@ use App\Http\Controllers\Backend\Service\ServiceCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
+use App\Http\Controllers\Backend\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('invoice', InvoiceController::class);
     Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
+    Route::resource('video', VideoController::class);
 
 
     //service related routes
