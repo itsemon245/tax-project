@@ -113,6 +113,14 @@
                       <td>
                         <span class="me-2">Tk</span>
                         <input aria-label="item-rate" id="item-rate-0" data-index="0" name="item_rates[]" type="text"  placeholder="00" class="d-inline-block" style="width: 6rem;" />
+                        <a id="tax-picker-0" tabindex="0" class="text-blue tax-picker" role="button">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <p class="mb-0">
+                              <span class="mdi mdi-plus fs-5"></span>Taxes
+                            </p>
+                          </div>
+                          <div id="tax-picker-container-0"></div> 
+                        </a>
                       </td>
                       <td>
                         <input aria-label="item-qty" id="item-qty-0" data-index="0" name="item_qtys[]" type="text" placeholder="1" class="d-inline-block" style="width: 3rem;" />
@@ -121,7 +129,7 @@
                         <div class="d-flex align-items-start">
                           <span class="me-2">Tk</span>
                           <input aria-label="item-total" id="item-total-0" data-index="0" name="item_totals[]" type="text" value="0" placeholder="00" class="d-inline-block" style="width: 7rem;" disabled />
-                          <span id="item-delete-btn-0" data-index="0" class="mdi mdi-trash-can-outline item-delete-btn" style="cursor: pointer;"></span>
+                          <span id="item-delete-btn-0" data-index="0" class="mdi mdi-trash-can-outline text-danger item-delete-btn" style="cursor: pointer;"></span>
                         </div>
                       </td>
                   </tr>
@@ -140,7 +148,7 @@
               </div>
               <a id="discount-picker" tabindex="0" class="text-blue" role="button">
                 <div class="d-flex justify-content-between align-items-center">
-                  <p>
+                  <p class="mb-0">
                     <span class="mdi mdi-plus fs-5"></span> Add Discount
                   </p>
                 </div>
@@ -197,6 +205,8 @@
         let qtys = $("input[name='item_qtys[]']")
         let subTotal = 0
 
+
+        // discount popover starts
         const discountPicker = $('#discount-picker')
         const popoverOptions = {
           trigger: 'focus-within',
@@ -207,22 +217,23 @@
           title: 'Add Discount',
           sanitize:false,
           content: `
-            <div class="p-2">
-              <div class='d-flex justify-content-center align-items-center mb-2'>
-                <div>
-                  <input type="text" class="text-end border p-1 d-inline-block w-25 me-2" name="discount" placeholder="0" value='0'/>
-                  <span class="text-dark fs-5">Tk or %</span>
-                </div>
-                <button id="add-discount" type="button" class="btn btn-success rounded rounded-3">Add</button>
+            <div style="max-width:20ch;">
+              <div class="d-flex justify-content-center align-items-center gap-1 mb-2">
+                  <input type="text" class="text-center border p-1 d-inline-block w-50" name="discount" placeholder="0" value='0'/>
+                  <span class="text-dark fs-5 fw-bold">Tk or %</span>
               </div>
-                <p class="mb-0 fs-6"><sup class="text-danger fw-bold">*</sup>Put % in the end if the discount is not fixed</p>
+              <p class="fs-6"><sup class="text-danger fw-bold">*</sup>Put % in the end if the discount is not fixed</p>
+              <div class='d-flex align-items-center gap-3'>
+                <button id="close-discount" type="button" class="btn btn-soft-success btn-sm rounded rounded-3">Close</button>
+                <button id="add-discount" type="button" class="btn btn-success rounded btn-sm rounded-3">Add</button>
+              </div>
+
             </div>
           `,
         }
         // discount popover
         const discountPopover = new bootstrap.Popover(discountPicker, popoverOptions)
-
-      //  event listener for elements inside popover
+        //  event listener for elements inside popover
         discountPicker.on('inserted.bs.popover', function () {
           $('#add-discount').click(()=>{
             let value = $("[name='discount']").val();
@@ -233,18 +244,22 @@
             const discount = isPercentage ? (subTotal * value/100) : value;
             const discountLabel = discountPicker.children()[0]
             discountLabel.innerHTML = `
-            <p>
+            <span>
               Discount
-            </p>
+            </span>
             <span class="text-danger"> - ${discount} Tk</span>
             `
             discountPopover.hide()
-          
+          })
+
+          $('#close-discount').click(()=>{
+            discountPopover.hide()
           })
         })
+        // discount popover ends
 
-
-       
+        //taxpopover for initial item
+        addTaxPopOver()
 
 
         //set event listeners for initial item
@@ -256,6 +271,9 @@
           itemCount++;
           let item = newItem(itemCount)
           $('#table-body').append(item);
+
+          // add tax popover for newitems
+          addTaxPopOver()
           
           //assign latest items again
           rates = $("input[name='item_rates[]']")
@@ -281,7 +299,15 @@
             </td>
             <td>
               <span class="me-2">Tk</span>
-              <input aria-label="Item Rate" id="item-rate-${itemNo}" data-index="${itemNo}" name="item_rates[]" type="text" placeholder="00" class="d-inline-block" style="width: 6rem;" />
+              <input aria-label="item-rate" id="item-rate-${itemNo}" data-index="${itemNo}" name="item_rates[]" type="text"  placeholder="00" class="d-inline-block" style="width: 6rem;" />
+              <a id="tax-picker-${itemNo}" tabindex="0" class="text-blue tax-picker" role="button">
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="mb-0">
+                    <span class="mdi mdi-plus fs-5"></span>Taxes
+                  </p>
+                </div>
+                <div id="tax-picker-container-${itemNo}"></div> 
+              </a>
             </td>
             <td>
               <input aria-label="Item Quantity" id="item-qty-${itemNo}" data-index="${itemNo}" name="item_qtys[]" type="text" placeholder="1" class="d-inline-block" style="width: 3rem;" />
@@ -290,7 +316,7 @@
               <div class="d-flex align-items-start">
                 <span class="me-2">Tk</span>
                 <input aria-label="item-rate" id="item-total-${itemNo}" data-index="${itemNo}" name="item_totals[]" type="text" value="0" placeholder="00" class="d-inline-block" style="width: 7rem;" disabled />
-                <span id="item-delete-btn-${itemNo}" data-index="${itemNo}" class="mdi mdi-trash-can-outline item-delete-btn" style="cursor: pointer;"></span>
+                <span id="item-delete-btn-${itemNo}" data-index="${itemNo}" class="mdi mdi-trash-can-outline text-danger item-delete-btn" style="cursor: pointer;"></span>
               </div>
             </td>
           </tr>
@@ -334,6 +360,84 @@
             subTotal=+value
           })
           subTotalElement.val(subTotal)
+         }
+
+
+
+
+         function addTaxPopOver(){
+          // tax popover starts
+          const taxPickers = $('.tax-picker')
+          // tax popover
+          taxPickers.each((i, taxPicker)=>{
+            const taxPopover = new bootstrap.Popover(taxPicker, {
+              trigger: 'focus-within',
+              placement:'bottom',
+              fallbackPlacements: ['bottom', 'top', 'left', 'right'],
+              html: true,
+              container: $(`#tax-picker-container-${i}`),
+              title: 'Add Taxes',
+              sanitize:false,
+              content: `
+                <div style='max-width:350px;'>
+                  <div id="tax-list">
+                    <div class="row"> 
+                      <div class="col-3 px-1">
+                        <label class="form-label mb-0">Rate</label>
+                        <div class="d-flex">
+                          <input type="text" class="w-100 border border-1 text-center rounded-0 rounded-start" placeholder="0" value='0' aria-label="Rate" aria-describedby="tax-addon1">
+                          <span class="bg-light rounded-0 rounded-end p-1 d-flex justify-content-center align-items-center text-dark fw-bold fs-5" id="tax-addon1">%</span>
+                        </div>
+                      </div>
+                      <div class="col-4 p-0 pe-1">
+                        <label class="form-label mb-0">Name</label>
+                        <input type="text" class="w-100 border border-1 text-center p-1" placeholder="Tax Name" aria-label="Tax Name">
+                      </div>
+                      <div class="col-3 p-0 pe-1">
+                        <label class="form-label mb-0">Number</label>
+                        <input type="text" class="w-100 border border-1 text-center p-1" placeholder="Number" aria-label="Tax Number">
+                      </div>
+                      <div class="col-2 p-0 pe-1 align-self-end">
+                        <span class="mdi mdi-trash-can-outline text-danger"></span>
+                      </div>                         
+                    </div>
+                  </div>
+                  <button type='button' class='border-1 rounded mt-1 bg-transparent w-100 fw-bold'>Add a line</button>
+                  <div class='d-flex align-items-center gap-3 mt-2'>
+                    <button id="close-tax" type="button" class="btn btn-soft-success btn-sm rounded rounded-3">Close</button>
+                    <button id="add-tax" type="button" class="btn btn-success rounded btn-sm rounded-3">Add</button>
+                  </div>
+
+                </div>
+              `,
+            })
+
+            //  event listener for elements inside popover
+            taxPicker.addEventListener('inserted.bs.popover', function () {
+              $('#add-tax').click(()=>{
+                let value = $("[name='discount']").val();
+                const isPercentage = value.indexOf('%') > 0;
+                value = isPercentage ? value.slice(0,value.indexOf('%')) : value;
+                value = parseFloat(value)
+                const subTotal = parseFloat($("[name='sub_total']").val());
+                const discount = isPercentage ? (subTotal * value/100) : value;
+                const discountLabel = discountPicker.children()[0]
+                discountLabel.innerHTML = `
+                <span>
+                  Discount
+                </span>
+                <span class="text-danger"> - ${discount} Tk</span>
+                `
+                taxPopover.hide()
+              })
+
+              $('#close-tax').click(()=>{
+                taxPopover.hide()
+              })
+            })
+          
+          })
+          // tax popover ends
          }
       });
     </script>
