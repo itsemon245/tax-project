@@ -101,7 +101,7 @@
                       <th>Total</th>
                   </tr>
               </thead>
-              <tbody>
+              <tbody id="table-body">
                   <tr id="row-0">
                       <th scope="row">1</th>
                       <td>
@@ -115,12 +115,12 @@
                         <input aria-label="item-rate" id="item-rate-0" data-index="0" name="item_rates[]" type="text"  placeholder="00" class="d-inline-block" style="width: 6rem;" />
                       </td>
                       <td>
-                        <input aria-label="item-rate" id="item-qty-0" data-index="0" name="item_qtys[]" type="text" placeholder="1" class="d-inline-block" style="width: 3rem;" />
+                        <input aria-label="item-qty" id="item-qty-0" data-index="0" name="item_qtys[]" type="text" placeholder="1" class="d-inline-block" style="width: 3rem;" />
                       </td>
                       <td>
                         <div class="d-flex align-items-start">
                           <span class="me-2">Tk</span>
-                          <input aria-label="item-rate" id="item-total-0" data-index="0" name="item_totals[]" type="text" value="0" placeholder="00" class="d-inline-block" style="width: 7rem;" disabled />
+                          <input aria-label="item-total" id="item-total-0" data-index="0" name="item_totals[]" type="text" value="0" placeholder="00" class="d-inline-block" style="width: 7rem;" disabled />
                           <span id="item-delete-btn-0" data-index="0" class="mdi mdi-trash-can-outline item-delete-btn" style="cursor: pointer;"></span>
                         </div>
                       </td>
@@ -132,15 +132,30 @@
       </div>
       <div class="row">
         <div class="col-md-6"></div>
-        <div class="col-md-6 border-bottom border-dark">
-            <div class="d-flex gap-5 justify-content-end ">
-                <p class="text-end text-black">Subtotal</p>
-                <p class="text-end text-black">7,560.00</p>
+        <div class="col-md-6 d-flex justify-content-end border-bottom border-2 p-2">
+            <div>
+              <div class="d-flex justify-content-between align-items-center gap-3">
+                <label class="form-label mb-0">Subtotal</label>
+                <input id="sub-total" type="text" class="text-end" name="sub_total" placeholder="00.00" value="450"/>
               </div>
-              <div class="d-flex gap-5 justify-content-end ">
-                <p class="text-end text-black">hello(5%) <br>  <span> #asdflkjsdf</span></p>
-                <p class="text-start text-black">378.00</p>
+              <a id="discount-picker" tabindex="0" class="text-blue" role="button">
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>
+                    <span class="mdi mdi-plus fs-5"></span> Add Discount
+                  </p>
+                </div>
+                <div id="discount-picker-container"></div> 
+              </a>
+              <div id="tax-list text-dark fs-5">
+                <div class="d-flex justify-content-between align-items-center gap-3 ">
+                  <div>
+                    <p class="mb-0 text-black">tax name</p>
+                    <p class="mb-0 fs-6">#tax note</p>
+                  </div>
+                  <span class="text-success"> + 12 Tk</span>
+                </div>
               </div>
+            </div>
         </div>
       </div>
       <div class="row">
@@ -180,6 +195,57 @@
         const itemAddBtn = $('#item-add-btn')
         let rates = $("input[name='item_rates[]']")
         let qtys = $("input[name='item_qtys[]']")
+        let subTotal = 0
+
+        const discountPicker = $('#discount-picker')
+        const popoverOptions = {
+          trigger: 'focus-within',
+          placement:'bottom',
+          fallbackPlacements: ['bottom', 'top', 'left', 'right'],
+          html: true,
+          container: $(`#discount-picker-container`),
+          title: 'Add Discount',
+          sanitize:false,
+          content: `
+            <div class="p-2">
+              <div class='d-flex justify-content-center align-items-center mb-2'>
+                <div>
+                  <input type="text" class="text-end border p-1 d-inline-block w-25 me-2" name="discount" placeholder="0" value='0'/>
+                  <span class="text-dark fs-5">Tk or %</span>
+                </div>
+                <button id="add-discount" type="button" class="btn btn-success rounded rounded-3">Add</button>
+              </div>
+                <p class="mb-0 fs-6"><sup class="text-danger fw-bold">*</sup>Put % in the end if the discount is not fixed</p>
+            </div>
+          `,
+        }
+        // discount popover
+        const discountPopover = new bootstrap.Popover(discountPicker, popoverOptions)
+
+      //  event listener for elements inside popover
+        discountPicker.on('inserted.bs.popover', function () {
+          $('#add-discount').click(()=>{
+            let value = $("[name='discount']").val();
+            const isPercentage = value.indexOf('%') > 0;
+            value = isPercentage ? value.slice(0,value.indexOf('%')) : value;
+            value = parseFloat(value)
+            const subTotal = parseFloat($("[name='sub_total']").val());
+            const discount = isPercentage ? (subTotal * value/100) : value;
+            const discountLabel = discountPicker.children()[0]
+            discountLabel.innerHTML = `
+            <p>
+              Discount
+            </p>
+            <span class="text-danger"> - ${discount} Tk</span>
+            `
+            discountPopover.hide()
+          
+          })
+        })
+
+
+       
+
 
         //set event listeners for initial item
         setEventListenerFor(rates)
@@ -188,7 +254,8 @@
 
         itemAddBtn.click(e=>{
           itemCount++;
-          $('tbody').append(newItem(itemCount));
+          let item = newItem(itemCount)
+          $('#table-body').append(item);
           
           //assign latest items again
           rates = $("input[name='item_rates[]']")
@@ -201,6 +268,7 @@
         })
         
 
+        //funtion for returning new item markup
         function newItem(itemNo) { 
           return `
           <tr id="row-${itemNo}">
@@ -212,7 +280,7 @@
               </div>
             </td>
             <td>
-              <span>Tk</span>
+              <span class="me-2">Tk</span>
               <input aria-label="Item Rate" id="item-rate-${itemNo}" data-index="${itemNo}" name="item_rates[]" type="text" placeholder="00" class="d-inline-block" style="width: 6rem;" />
             </td>
             <td>
@@ -243,20 +311,30 @@
         //set event listeners given a jquery list
         function setEventListenerFor(elements){
           elements.each((i, el)=>{
-          el.addEventListener('input', (e)=>{
-            let index = e.target.dataset.index
-            let rate = $(`#item-rate-${index}`).val() == "" ? 1 : parseInt($(`#item-rate-${index}`).val())
-            let qty = $(`#item-qty-${index}`).val() == "" ? 1 : parseInt($(`#item-qty-${index}`).val())
-            let total = rate * qty;
-            console.log(rate, qty);
-            
-
-            //set the total in total input value
-            $(`#item-total-${index}`).val(total)
+            el.addEventListener('input', (e)=>{
+              let index = e.target.dataset.index
+              let rate = $(`#item-rate-${index}`).val() == "" ? 1 : parseFloat($(`#item-rate-${index}`).val())
+              let qty = $(`#item-qty-${index}`).val() == "" ? 1 : parseInt($(`#item-qty-${index}`).val())
+              let total = rate * qty;
+              
+              //set the total in total input value
+              $(`#item-total-${index}`).val(total)  
+              //trigger subtotal calculation handler
+              calculateSubTotal();
+            })
           })
-        })
         }
-
+        function calculateSubTotal() { 
+          let totals = $("input[name='item_qtys[]']")
+          let subTotalElement = $('#sub-total')
+          let subTotal = 0
+          totals.each((i, el)=>{
+            let value = parseFloat(el.value);
+            console.log(value);
+            subTotal=+value
+          })
+          subTotalElement.val(subTotal)
+         }
       });
     </script>
 @endPushOnce
