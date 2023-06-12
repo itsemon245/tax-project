@@ -28,6 +28,38 @@
         display: block;
         background: none;
       }
+
+      .tax-wrapper{
+        position: relative;
+      }
+      .tax-container{
+        position: absolute;
+        background: var(--ct-white);
+        width: 320px;
+        border-radius: 10px;
+        border: 2px solid var(--ct-gray-300);
+        overflow: visible;
+        top: -20px;
+        left: 60px;
+      }
+      .tax-container > .title{
+        background: var(--ct-light);
+        margin: 0 0 .5rem;
+        padding: .5rem;
+        position: relative;
+        border-radius: 10px 10px 0 0;
+      }
+      .tax-container > .title::before{
+        content: '';
+
+        border-top: .5rem solid transparent;
+        border-right: 1rem solid var(--ct-gray-300);
+        border-bottom: .5rem solid transparent; */
+        bottom: 0;
+        left: -1rem;
+        position: absolute;
+      }
+
     </style>
 @endPushOnce
 @section('content')
@@ -112,15 +144,48 @@
                       </td>
                       <td>
                         <span class="me-2">Tk</span>
-                        <input aria-label="item-rate" id="item-rate-0" data-index="0" name="item_rates[]" type="text"  placeholder="00" class="d-inline-block" style="width: 6rem;" />
-                        <a id="tax-picker-0" tabindex="0" class="text-blue tax-picker" role="button">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0">
-                              <span class="mdi mdi-plus fs-5"></span>Taxes
-                            </p>
-                          </div>
-                          <div id="tax-picker-container-0"></div> 
-                        </a>
+                        <input aria-label="item-rate" class="d-inline-block"  id="item-rate-0" data-index="0" name="item_rates[]" type="text"  placeholder="00" style="width: 6rem;" />
+                        <div class="tax-wrapper">
+                          <a id="tax-picker-0" data-toggle="#tax-picker-container-0" class="text-blue tax-picker" tabindex="0"  role="button" >
+                            <div class="d-flex justify-content-between align-items-center">
+                              <p class="mb-0">
+                                <span class="mdi mdi-plus fs-5"></span>Taxes
+                              </p>
+                            </div>
+                          </a>
+                          <div id="tax-picker-container-0" class="tax-container invisible">
+                            <h5 class="title">Add Taxes</h5>
+                              <div class="px-2">
+                                <div id="tax-list-0">
+                                  <div class="d-flex align-items-center gap-1 mb-2"> 
+                                    <div class="w-50">
+                                      <label class="form-label mb-0">Rate</label>
+                                      <div class="d-flex">
+                                        <input type="text" name="taxe-rates-0[]" class="w-100 border border-1 text-center rounded-0 rounded-start" placeholder="0" value='0' aria-label="Rate" aria-describedby="tax-addon1">
+                                        <span class="bg-light rounded-0 rounded-end p-1 d-flex justify-content-center align-items-center text-dark fw-bold fs-5" id="tax-addon1">%</span>
+                                      </div>
+                                    </div>
+                                    <div class="">
+                                      <label class="form-label mb-0">Name</label>
+                                      <input type="text" name="tax-names-0[]" class="w-100 border border-1 text-center p-1" placeholder="Tax Name" aria-label="Tax Name">
+                                    </div>
+                                    <div class="w-50">
+                                      <label class="form-label mb-0">Number</label>
+                                      <input type="text" name="tax-numbers-0[]" class="w-100 border border-1 text-center p-1" placeholder="Number" aria-label="Tax Number">
+                                    </div>
+                                    <div class="align-self-end">
+                                      <span id="tax-item-0-delete-0" class="mdi mdi-trash-can-outline text-danger"></span>
+                                    </div>                         
+                                  </div>
+                                </div>
+                                <button id="new-tax-field-0" type='button' class='border-1 rounded bg-transparent w-100 fw-bold'>Add a line</button>
+                                <div class='d-flex justify-content-center align-items-center gap-2 mt-2'>
+                                  <button id="close-tax" type="button" class="btn btn-soft-success btn-sm rounded rounded-3">Close</button>
+                                  <button id="add-tax" type="button" class="btn btn-success rounded btn-sm rounded-3">Add</button>
+                                </div>
+                              </div>
+                          </div> 
+                        </div>
                       </td>
                       <td>
                         <input aria-label="item-qty" id="item-qty-0" data-index="0" name="item_qtys[]" type="text" placeholder="1" class="d-inline-block" style="width: 3rem;" />
@@ -258,8 +323,16 @@
         })
         // discount popover ends
 
-        //taxpopover for initial item
-        addTaxPopOver()
+       //
+       const taxPickers = $('.tax-picker')
+       taxPickers.each((i, el)=>{
+        const container = $(el.dataset.toggle)
+        container.slideUp();
+        el.addEventListener('click', e=>{
+          container.removeClass('invisible');
+          container.slideToggle();
+        })
+       })
 
 
         //set event listeners for initial item
@@ -272,8 +345,6 @@
           let item = newItem(itemCount)
           $('#table-body').append(item);
 
-          // add tax popover for newitems
-          addTaxPopOver()
           
           //assign latest items again
           rates = $("input[name='item_rates[]']")
@@ -380,30 +451,30 @@
               sanitize:false,
               content: `
                 <div style='max-width:350px;'>
-                  <div id="tax-list">
-                    <div class="row"> 
+                  <div id="tax-list-${i}">
+                    <div class="row mb-2"> 
                       <div class="col-3 px-1">
                         <label class="form-label mb-0">Rate</label>
                         <div class="d-flex">
-                          <input type="text" class="w-100 border border-1 text-center rounded-0 rounded-start" placeholder="0" value='0' aria-label="Rate" aria-describedby="tax-addon1">
+                          <input type="text" class="w-100 name="taxe-rates-${i}[]" border border-1 text-center rounded-0 rounded-start" placeholder="0" value='0' aria-label="Rate" aria-describedby="tax-addon1">
                           <span class="bg-light rounded-0 rounded-end p-1 d-flex justify-content-center align-items-center text-dark fw-bold fs-5" id="tax-addon1">%</span>
                         </div>
                       </div>
                       <div class="col-4 p-0 pe-1">
                         <label class="form-label mb-0">Name</label>
-                        <input type="text" class="w-100 border border-1 text-center p-1" placeholder="Tax Name" aria-label="Tax Name">
+                        <input type="text" name="tax-names-${i}[]" class="w-100 border border-1 text-center p-1" placeholder="Tax Name" aria-label="Tax Name">
                       </div>
                       <div class="col-3 p-0 pe-1">
                         <label class="form-label mb-0">Number</label>
-                        <input type="text" class="w-100 border border-1 text-center p-1" placeholder="Number" aria-label="Tax Number">
+                        <input type="text" name="tax-numbers-${i}[]" class="w-100 border border-1 text-center p-1" placeholder="Number" aria-label="Tax Number">
                       </div>
                       <div class="col-2 p-0 pe-1 align-self-end">
-                        <span class="mdi mdi-trash-can-outline text-danger"></span>
+                        <span id="tax-item-${i}-delete-0" class="mdi mdi-trash-can-outline text-danger"></span>
                       </div>                         
                     </div>
                   </div>
-                  <button type='button' class='border-1 rounded mt-1 bg-transparent w-100 fw-bold'>Add a line</button>
-                  <div class='d-flex align-items-center gap-3 mt-2'>
+                  <button id="new-tax-field-${i}" type='button' class='border-1 rounded bg-transparent w-100 fw-bold'>Add a line</button>
+                  <div class='d-flex justify-content-center align-items-center gap-2 mt-2'>
                     <button id="close-tax" type="button" class="btn btn-soft-success btn-sm rounded rounded-3">Close</button>
                     <button id="add-tax" type="button" class="btn btn-success rounded btn-sm rounded-3">Add</button>
                   </div>
@@ -414,20 +485,39 @@
 
             //  event listener for elements inside popover
             taxPicker.addEventListener('inserted.bs.popover', function () {
-              $('#add-tax').click(()=>{
-                let value = $("[name='discount']").val();
-                const isPercentage = value.indexOf('%') > 0;
-                value = isPercentage ? value.slice(0,value.indexOf('%')) : value;
-                value = parseFloat(value)
-                const subTotal = parseFloat($("[name='sub_total']").val());
-                const discount = isPercentage ? (subTotal * value/100) : value;
-                const discountLabel = discountPicker.children()[0]
-                discountLabel.innerHTML = `
-                <span>
-                  Discount
-                </span>
-                <span class="text-danger"> - ${discount} Tk</span>
+              let newLine = $('#new-tax-field-'+i);
+              let taxItemCount = 0;
+              const newField = () => `
+                    <div class="row mb-2"> 
+                      <div class="col-3 px-1">
+                        <label class="form-label mb-0">Rate</label>
+                        <div class="d-flex">
+                          <input type="text" class="w-100 name="taxe-rates-${itemCount}[]" border border-1 text-center rounded-0 rounded-start" placeholder="0" value='0' aria-label="Rate" aria-describedby="tax-addon1">
+                          <span class="bg-light rounded-0 rounded-end p-1 d-flex justify-content-center align-items-center text-dark fw-bold fs-5" id="tax-addon1">%</span>
+                        </div>
+                      </div>
+                      <div class="col-4 p-0 pe-1">
+                        <label class="form-label mb-0">Name</label>
+                        <input type="text" name="tax-names-${itemCount}[]" class="w-100 border border-1 text-center p-1" placeholder="Tax Name" aria-label="Tax Name">
+                      </div>
+                      <div class="col-3 p-0 pe-1">
+                        <label class="form-label mb-0">Number</label>
+                        <input type="text" name="tax-numbers-${itemCount}[]" class="w-100 border border-1 text-center p-1" placeholder="Number" aria-label="Tax Number">
+                      </div>
+                      <div class="col-2 p-0 pe-1 align-self-end">
+                        <span id="tax-item-${itemCount}-delete-${taxItemCount}" class="mdi mdi-trash-can-outline text-danger"></span>
+                      </div>                         
+                    </div>
                 `
+              newLine.click(e=>{
+                taxItemCount++;
+                $('#tax-list-'+i).append(newField())
+              })
+
+
+
+              $('#add-tax').click(()=>{
+                //
                 taxPopover.hide()
               })
 
