@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\EditVideoRequest;
-use App\Http\Requests\VideoRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use App\Http\Requests\VideoRequest;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\EditVideoRequest;
+use Illuminate\Support\Facades\Storage;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 
 class VideoController extends Controller
 {
@@ -34,12 +37,11 @@ class VideoController extends Controller
     public function store(VideoRequest $request)
     {
         $data = $request->validated();
-        $videoURL  = $this->upload_video($data['video']);
 
         Video::create(
             [
                 "title"       => $data['title'],
-                "video"       => $videoURL,
+                "video"       => $data['video'],
                 "description" => $request->description
             ]
         );
@@ -50,14 +52,6 @@ class VideoController extends Controller
                 'message'    => "Video Created Successfully",
                 'alert-type' => 'success',
             ));
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -75,21 +69,12 @@ class VideoController extends Controller
     public function update(EditVideoRequest $request, string $id)
     {
         $validateData = $request->validated();
-        if (!empty($validateData['video'])) {
-            $videoURL  = $this->upload_video($validateData['video']);
-            $data = [
-                "title"       => $validateData['title'],
-                "video"       => $videoURL,
-                "description" => $request->description
-            ];
-        } else {
-            $data = [
-                "title"       => $validateData['title'],
-                "description" => $request->description
-            ];
-        }
+        Video::find($id)->update([
+            "title"       => $validateData['title'],
+            "video"       => $validateData['video'],
+            "description" => $request->description
+        ]);
 
-        Video::find($id)->update($data);
         return redirect()
             ->route("video.index")
             ->with(array(
@@ -110,12 +95,34 @@ class VideoController extends Controller
         ));
     }
 
-    private function upload_video($videoFile)
+    public function videoUpload(Request $request)
     {
-        $video     = $videoFile;
-        $videoName = $video->getClientOriginalName();
-        $path      = public_path() . '/uploads/videos';
-        $video->move($path, $videoName);
-        return URL::asset("/uploads/videos/{$videoName}");
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+        if (!$receiver->isUploaded()) {
+            // file not uploaded
+        }
+
+        $fileReceived = $receiver->receive(); // receive file
+        if ($fileReceived->isFinished()) { // file uploading is complete / all chunks are uploaded
+            $file = $fileReceived->getFile(); // get file
+            $extension = $file->getClientOriginalExtension();
+            $fileName = md5(time()) . '.' . $extension; // a unique file name
+
+            $filePath  = public_path() . '/uploads/videos';
+            $file->move($filePath, $fileName);
+            $path = URL::asset("/uploads/videos/{$fileName}");
+
+            return [
+                'path' => $path,
+                'filename' => $fileName
+            ];
+        }
+
+        // otherwise return percentage informatoin
+        $handler = $fileReceived->handler();
+        return [
+            'done' => $handler->getPercentageDone(),
+            'status' => true
+        ];
     }
 }
