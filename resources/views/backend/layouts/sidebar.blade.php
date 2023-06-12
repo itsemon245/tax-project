@@ -102,6 +102,22 @@
                     </div>
                 </li>
                 <li>
+                    <a href="#sidebarAboutPage" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> About Page</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarAboutPage">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('about.create') }}">Create
+
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
                     <a href="#sidebarSerivces" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> Services </span>
