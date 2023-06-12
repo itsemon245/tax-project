@@ -23,7 +23,7 @@ class EditVideoRequest extends FormRequest
     {
         return [
             'title'=> 'required',
-            'video'=> 'mimes:mp4,wmv,avi'
+            'video'=> 'required'
         ];
     }
 }
