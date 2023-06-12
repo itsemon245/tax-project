@@ -23,6 +23,7 @@ use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
+use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
@@ -70,6 +71,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
     Route::resource('video', VideoController::class);
+    Route::resource('partner-section', PartnerSectionController::class);
 
 
     //service related routes
