@@ -1,5 +1,6 @@
 @php
     $banners =getRecords('banners');
+    $partners = getRecords('partner_sections');
 @endphp
 @extends('frontend.layouts.app')
 
@@ -75,38 +76,42 @@
             <div class="media-scroller snaps-inline">
 
                 {{-- Patner section is starting --}}
+                @foreach ($partners as $partner)
                 <div class="media-elements">
                     <div class="d-flex align-items-center gap-3 p-3" style="width: 100%;">
                         <div>
                             <img class="border image rounded-circle"
-                                src="{{ asset('backend/assets/images/users/user-8.jpg') }}" alt="">
+                                src="{{useImage($partner->image) ==! null ? 'useImage($partner->image)' : 'https://api.dicebear.com/6.x/bottts/png' }}" alt="">
 
                         </div>
                         <div>
-                            <h3 class="mb-0">Mr. Md Parvez</h3>
-                            <small class="mb-0 text-muted">Web Developer</small>
+                            <h3 class="mb-0">{{ $partner->name }}</h3>
+                            <small class="mb-0 text-muted">{{ $partner->designation }}</small>
                             <div class="d-flex mb-0 mt-2 text-primary">
+                               <a href="mailto:{{ $partner->email }}">
                                 <p class="me-2 mb-0"><i class="fe-mail"></i></p>
-                                <p class="mb-0">pj.parvez45@gmail.com</p>
+                                <p class="mb-0">{{ $partner->email }}</p>
+                               </a>
                             </div>
                             <div class="d-flex text-primary">
                                <p class="me-2 mb-0"> <i class="fe-phone"></i></p>
-                                <p class="mb-0"> +880 1885-518864</p>
+                                <p class="mb-0">{{ $partner->phone }}</p>
                             </div>
                             <div class="d-flex mt-3 text-primary">
-                                <a href="#">
+                                <a href="{{ $partner->facebook }}">
                                     <i class="fe-facebook me-3"></i>
                                 </a>
-                                <a href="#">
+                                <a href="{{ $partner->twitter }}">
                                     <i class="fe-twitter me-3"></i>
                                 </a>
-                                <a href="#">
+                                <a href="{{ $partner->linkedin }}">
                                     <i class="fe-linkedin me-3"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
 
             </div>
             <span id="prev" class="ti-arrow-circle-right custom-icon"></span>
