@@ -7,7 +7,9 @@
     $label = $attributes->get('label');
 @endphp
 @if ($label)
-<label for="{{$id}}" class="mb-0">{{$label}}</label>
+<label for="{{$id}}" class="mb-0">{{$label}} @if ($attributes->has('required'))
+    <span class="ms-1 text-danger">*</span>
+@endif</label>
 @endif
 <select multiple {{ $attributes->merge(['class' => 'selectize text-capitalize'])->merge() }}>
     {{$slot}}
