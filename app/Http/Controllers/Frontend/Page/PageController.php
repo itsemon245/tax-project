@@ -38,6 +38,10 @@ class PageController extends Controller
     public function becomePartnerPage()
     {
         $user = Auth::user();
-        return view('frontend.pages.becomePartner', compact('user'));
+        if($user == null){
+            return view('backend.auth.login');
+        }else{
+            return view('frontend.pages.becomePartner', compact('user'));
+        }
     }
 }
