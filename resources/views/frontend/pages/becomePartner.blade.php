@@ -62,7 +62,7 @@
                         <div id="progressbarwizard">
                     
                             <div class="d-flex justify-content-center">
-                                <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-3 w-100" role="tablist">
+                                <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
                                     <li class="nav-item" role="presentation">
                                         <a href="#account-2" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 active" aria-selected="true" role="tab" tabindex="-1">
                                             <i class="mdi mdi-account-circle"></i>
@@ -87,9 +87,9 @@
                         
                             <div class="tab-content ">
                     
-                                {{-- <div id="bar" class="progress my-3" style="height: 7px;">
+                                <div id="bar" class="progress my-3" style="height: 7px;">
                                     <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
-                                </div> --}}
+                                </div>
                         
                                 <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
                                     <div class="row">
