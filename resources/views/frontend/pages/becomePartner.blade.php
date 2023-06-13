@@ -132,6 +132,8 @@
         $(document).ready(function() {
             let account = $('#account-2');
             let profile = $('#profile-tab-2');
+            account.addClass('active');
+            profile.removeClass('active');
         });
     </script>
 @endpush
