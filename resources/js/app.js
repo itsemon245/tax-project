@@ -1,7 +1,9 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
+//for vue components
+import { createApp } from 'vue';
+import Invoice from './Vue/InvoiceApp.vue'
 
-window.Alpine = Alpine;
+const app = createApp(Invoice);
 
-Alpine.start();
+app.mount('#invoice-vue-app');
