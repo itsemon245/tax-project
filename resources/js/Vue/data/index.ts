@@ -12,23 +12,27 @@ interface InvoiceItem {
         number: number | null;
     }>;
 }
+
+export const item: InvoiceItem = {
+    id: 0,
+    name: "Item Name",
+    description: null,
+    rate: 0,
+    qty: 1,
+    total: 0,
+    taxes: [
+        {
+            id: 0,
+            rate: null,
+            name: null,
+            number: null,
+        },
+    ],
+}
 const InvoiceItems : Array<InvoiceItem>  = [
     {
-        id: 1,
-        name: "Item Name",
-        description: null,
-        rate: 0,
-        qty: 1,
-        total: 0,
-        taxes: [
-            {
-                id: 1,
-                rate: null,
-                name: null,
-                number: null,
-            },
-        ],
-    },
+        ...item
+    }
 ];
 
 

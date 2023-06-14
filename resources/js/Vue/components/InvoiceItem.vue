@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <th scope="row">{{ item?.id }}</th>
+        <th scope="row">{{ item?.id + 1 }}</th>
         <td>
             <div>
                 <input aria-label="item-name" name="item_names[]" type="text" :value="item.name" />
@@ -47,10 +47,10 @@
                                     placeholder="Number" :value="tax.number" aria-label="Tax Number">
                             </div>
                             <div class="align-self-end">
-                                <span id="tax-item-0-delete-0" class="mdi mdi-trash-can-outline text-danger"></span>
+                                <span  @click="$emit('deleteTaxItem', item.id, tax.id)" class="mdi mdi-trash-can-outline text-danger"></span>
                             </div>
                         </div>
-                        <button id="add-item" type='button' class='border-1 rounded bg-transparent w-100 fw-bold'>Add a
+                        <button @click="$emit('addTaxItem', item.id)" type='button' class='border-1 rounded bg-transparent w-100 fw-bold'>Add a
                             line</button>
                         <div class='d-flex justify-content-center align-items-center gap-2 mt-2'>
                             <button @click="toggleTaxPicker" type="button"
@@ -80,7 +80,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 const props = defineProps(['item'])
-defineEmits(['deleteItem'])
+defineEmits(['deleteItem', 'deleteTaxItem', 'addTaxItem'])
 
 const isTaxActive = ref(false)
 
