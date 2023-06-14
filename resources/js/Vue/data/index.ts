@@ -1,18 +1,35 @@
-export default [
+interface InvoiceItem {
+    id: number;
+    name: string | null;
+    description: null | string;
+    rate: number | null;
+    qty: number;
+    total: number;
+    taxes: Array<{
+        id: number | null;
+        rate: number | null;
+        name: string | null;
+        number: number | null;
+    }>;
+}
+const InvoiceItems : Array<InvoiceItem>  = [
     {
         id: 1,
-        itemName: "item-name",
-        itemDesc: "item-description",
-        itemRate: 0,
-        itemQty: 1,
-        itemTotal: 0,
-        itemTaxes: [
+        name: "Item Name",
+        description: null,
+        rate: 0,
+        qty: 1,
+        total: 0,
+        taxes: [
             {
                 id: 1,
-                rate: "rate",
-                name: "name",
-                number: "number",
+                rate: null,
+                name: null,
+                number: null,
             },
         ],
     },
 ];
+
+
+export default InvoiceItems

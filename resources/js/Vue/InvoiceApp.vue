@@ -12,10 +12,10 @@
                     </tr>
                 </thead>
                 <tbody id="table-body">
-                    <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item"></InvoiceItem>
+                    <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item" @delete-item="deleteInvoiceItem"></InvoiceItem>
                 </tbody>
             </table>
-            <button id="item-add-btn" type="button" class="w-100 p-1 fw-bold rounded rounded-3" style="background: none; border: 2px solid rgb(172, 170, 170);">Add New Item</button>
+            <button @click="addNewItem" id="item-add-btn" type="button" class="w-100 p-1 fw-bold rounded rounded-3" style="background: none; border: 2px solid rgb(172, 170, 170);">Add New Item</button>
         </div> 
     </div><!-- end table-responsive-->
 
@@ -77,9 +77,29 @@ import InvoiceItem from './components/InvoiceItem.vue';
 import data from './data';
 
 const invoiceItems = ref(data)
+const newItem = {...data[0]}
 
+
+const addNewItem = () =>{
+  newItem.id = invoiceItems.value.length + 1
+  invoiceItems.value.push(newItem)
+}
+
+const deleteInvoiceItem = (id: number)=>{
+//delete the current index
+invoiceItems.value.splice(id-1, 1)
+
+//rewrite the ids in ascending order
+invoiceItems.value.map((item, i)=>{
+  item.id = i+1
+  console.log(item);
+  
+})
+}
 onMounted(()=>{
   // console.log(invoiceItems.value[0].id);
+
+  
   
 })
 
