@@ -153,10 +153,10 @@
                               </p>
                             </div>
                           </a>
-                          <div id="tax-picker-container-0" class="tax-container invisible">
+                          <div id="tax-picker-container-0" class="tax-container">
                             <h5 class="title">Add Taxes</h5>
                               <div class="px-2">
-                                <div id="tax-list-0">
+                                <div id="tax-list">
                                   <div class="d-flex align-items-center gap-1 mb-2"> 
                                     <div class="w-50">
                                       <label class="form-label mb-0">Rate</label>
@@ -178,7 +178,7 @@
                                     </div>                         
                                   </div>
                                 </div>
-                                <button id="new-tax-field-0" type='button' class='border-1 rounded bg-transparent w-100 fw-bold'>Add a line</button>
+                                <button id="add-item" type='button' class='border-1 rounded bg-transparent w-100 fw-bold'>Add a line</button>
                                 <div class='d-flex justify-content-center align-items-center gap-2 mt-2'>
                                   <button id="close-tax" type="button" class="btn btn-soft-success btn-sm rounded rounded-3">Close</button>
                                   <button id="add-tax" type="button" class="btn btn-success rounded btn-sm rounded-3">Add</button>
@@ -323,16 +323,51 @@
         })
         // discount popover ends
 
-       //
-       const taxPickers = $('.tax-picker')
-       taxPickers.each((i, el)=>{
-        const container = $(el.dataset.toggle)
-        container.slideUp();
-        el.addEventListener('click', e=>{
-          container.removeClass('invisible');
-          container.slideToggle();
+        setTaxListener()
+       //add eventlisteners for tax picker
+       function setTaxListener(){
+        const taxPickers = $('.tax-picker')
+        const containers = $('.tax-container').hide()
+        taxPickers.each((i, el)=>{
+          const container = $(el.dataset.toggle)
+          el.addEventListener('click', e=>{
+            container.fadeToggle();
+            const taxList = $(el.dataset.toggle+' #tax-list')
+            const addItem = $(el.dataset.toggle+' #add-item')
+            const addTax = $(el.dataset.toggle+' #add-tax')
+            const closeTax = $(el.dataset.toggle+' #close-tax')
+
+            // addItem.click(e=>{
+            //   const newTaxItem = `
+            //   <div class="d-flex align-items-center gap-1 mb-2"> 
+            //     <div class="w-50">
+            //       <label class="form-label mb-0">Rate</label>
+            //       <div class="d-flex">
+            //         <input type="text" name="taxe-rates-0[]" class="w-100 border border-1 text-center rounded-0 rounded-start" placeholder="0" value='0' aria-label="Rate" aria-describedby="tax-addon1">
+            //         <span class="bg-light rounded-0 rounded-end p-1 d-flex justify-content-center align-items-center text-dark fw-bold fs-5" id="tax-addon1">%</span>
+            //       </div>
+            //     </div>
+            //     <div class="">
+            //       <label class="form-label mb-0">Name</label>
+            //       <input type="text" name="tax-names-0[]" class="w-100 border border-1 text-center p-1" placeholder="Tax Name" aria-label="Tax Name">
+            //     </div>
+            //     <div class="w-50">
+            //       <label class="form-label mb-0">Number</label>
+            //       <input type="text" name="tax-numbers-0[]" class="w-100 border border-1 text-center p-1" placeholder="Number" aria-label="Tax Number">
+            //     </div>
+            //     <div class="align-self-end">
+            //       <span id="tax-item-0-delete-0" class="mdi mdi-trash-can-outline text-danger"></span>
+            //     </div>                         
+            //   </div>
+            //   `
+            //   taxList.append(newTaxItem)
+            // })
+            
+
+          })
         })
-       })
+       }
+       
 
 
         //set event listeners for initial item
@@ -354,6 +389,7 @@
           setEventListenerFor(rates)
           setEventListenerFor(qtys)
           setDeleteEvent();
+          setTaxListener();
         })
         
 
@@ -371,14 +407,47 @@
             <td>
               <span class="me-2">Tk</span>
               <input aria-label="item-rate" id="item-rate-${itemNo}" data-index="${itemNo}" name="item_rates[]" type="text"  placeholder="00" class="d-inline-block" style="width: 6rem;" />
-              <a id="tax-picker-${itemNo}" tabindex="0" class="text-blue tax-picker" role="button">
-                <div class="d-flex justify-content-between align-items-center">
-                  <p class="mb-0">
-                    <span class="mdi mdi-plus fs-5"></span>Taxes
-                  </p>
-                </div>
-                <div id="tax-picker-container-${itemNo}"></div> 
-              </a>
+              <div class="tax-wrapper">
+                <a id="tax-picker-${itemNo}" data-toggle="#tax-picker-container-${itemNo}" class="text-blue tax-picker" tabindex="0"  role="button" >
+                  <div class="d-flex justify-content-between align-items-center">
+                    <p class="mb-0">
+                      <span class="mdi mdi-plus fs-5"></span>Taxes
+                    </p>
+                  </div>
+                </a>
+                <div id="tax-picker-container-${itemNo}" class="tax-container">
+                  <h5 class="title">Add Taxes</h5>
+                    <div class="px-2">
+                      <div id="tax-list-0">
+                        <div class="d-flex align-items-center gap-1 mb-2"> 
+                          <div class="w-50">
+                            <label class="form-label mb-0">Rate</label>
+                            <div class="d-flex">
+                              <input type="text" name="taxe-rates-${itemNo}[]" class="w-100 border border-1 text-center rounded-0 rounded-start" placeholder="0" value='0' aria-label="Rate" aria-describedby="tax-addon1">
+                              <span class="bg-light rounded-0 rounded-end p-1 d-flex justify-content-center align-items-center text-dark fw-bold fs-5" id="tax-addon1">%</span>
+                            </div>
+                          </div>
+                          <div class="">
+                            <label class="form-label mb-0">Name</label>
+                            <input type="text" name="tax-names-${itemNo}[]" class="w-100 border border-1 text-center p-1" placeholder="Tax Name" aria-label="Tax Name">
+                          </div>
+                          <div class="w-50">
+                            <label class="form-label mb-0">Number</label>
+                            <input type="text" name="tax-numbers-${itemNo}[]" class="w-100 border border-1 text-center p-1" placeholder="Number" aria-label="Tax Number">
+                          </div>
+                          <div class="align-self-end">
+                            <span id="tax-item-0-delete-0" class="mdi mdi-trash-can-outline text-danger"></span>
+                          </div>                         
+                        </div>
+                      </div>
+                      <button id="new-item" type='button' class='border-1 rounded bg-transparent w-100 fw-bold'>Add a line</button>
+                      <div class='d-flex justify-content-center align-items-center gap-2 mt-2'>
+                        <button id="close-tax" type="button" class="btn btn-soft-success btn-sm rounded rounded-3">Close</button>
+                        <button id="add-tax" type="button" class="btn btn-success rounded btn-sm rounded-3">Add</button>
+                      </div>
+                    </div>
+                </div> 
+              </div>
             </td>
             <td>
               <input aria-label="Item Quantity" id="item-qty-${itemNo}" data-index="${itemNo}" name="item_qtys[]" type="text" placeholder="1" class="d-inline-block" style="width: 3rem;" />
