@@ -1,31 +1,31 @@
 interface InvoiceItem {
     id: number;
-    name: string | null;
-    description: null | string;
-    rate: number | null;
+    name: string | undefined | null;
+    description: undefined | null | string;
+    rate: number | undefined | null;
     qty: number;
     total: number;
     taxes: Array<{
-        id: number | null;
-        rate: number | null;
-        name: string | null;
-        number: number | null;
+        id: number | undefined | null;
+        rate: number | undefined | null;
+        name: string | undefined | null;
+        number: number | undefined | null;
     }>;
 }
 
 export const item: InvoiceItem = {
     id: 0,
     name: "Item Name",
-    description: null,
+    description: undefined,
     rate: 0,
     qty: 1,
     total: 0,
     taxes: [
         {
             id: 0,
-            rate: null,
-            name: null,
-            number: null,
+            rate: undefined,
+            name: undefined,
+            number: undefined,
         },
     ],
 }

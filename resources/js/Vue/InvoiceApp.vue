@@ -84,7 +84,7 @@ const invoiceItems = ref(data)
 
 
 const addNewItem = () => {
-  const newItem = {...item}
+  const newItem = { ...item }
   newItem.id = invoiceItems.value.length
 
   invoiceItems.value.push(newItem)
@@ -106,9 +106,17 @@ const deleteInvoiceItem = (id: number) => {
 }
 
 const addNewTaxItem = (id: number) => {
-  const newTaxItem = {...item.taxes[0]}
-  newTaxItem.id = invoiceItems.value[id].taxes.length
-  invoiceItems.value[id].taxes.push(newTaxItem)
+  // const newItem = { ...item }
+  const newItem = JSON.parse(JSON.stringify(invoiceItems.value[id]))
+  const newTaxItem = {
+    id: newItem.taxes.length,
+    rate:0,
+    name:undefined,
+    number:0
+  }
+  newItem.taxes.push(newTaxItem)
+  invoiceItems.value.splice(id, 1, newItem)
+  
 }
 
 
@@ -118,7 +126,6 @@ const deleteTaxItem = (id: number, taxId: number) => {
   //remap tax ids
   invoiceItems.value[id].taxes.map((item, i) => {
     item.id = i
-    console.log(item);
 
   })
 }

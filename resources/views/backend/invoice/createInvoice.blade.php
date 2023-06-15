@@ -59,9 +59,16 @@
             border-top: .5rem solid transparent;
             border-right: 1rem solid var(--ct-gray-300);
             border-bottom: .5rem solid transparent;
-            */ bottom: 0;
+            bottom: 0;
             left: -1rem;
             position: absolute;
+        }
+
+        .tax-container .close-icon{
+            top: -.5rem;
+            right: -.7rem;
+            position: absolute;
+            z-index: 2;
         }
     </style>
 @endPushOnce
