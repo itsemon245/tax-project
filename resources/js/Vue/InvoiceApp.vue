@@ -53,42 +53,43 @@
   <div class="row">
     <div class="col-md-6"></div>
     <div class="col-md-6 border-bottom border-dark">
-      <div class="d-flex gap-5 justify-content-end">
-        <p class="text-end text-black">Total</p>
-        <p class="text-start text-black">40930.00</p>
+      <div class="d-flex my-1 gap-5 justify-content-end">
+        <label class="form-label mb-0">Total</label>
+        <input type="text" class="text-end" name="total" placeholder="00.00" v-model="total" />
       </div>
-      <div class="d-flex gap-5 justify-content-end">
-        <p class="text-end text-black">Amount Paid</p>
-        <p class="text-start text-black">0.00</p>
+      <div class="d-flex my-1 gap-5 justify-content-end">
+        <label class="form-label mb-0">Amount Paid</label>
+        <input type="text" class="text-end" name="total" placeholder="00.00" v-model="paid" />
       </div>
     </div>
   </div>
-  <div class="d-flex justify-content-end gap-5">
-    <p class="text-end text-black">Amount Due (USD)</p>
-    <p class="text-start text-black">$5030</p>
+  <div class="d-flex my-1 justify-content-end gap-5">
+    <label class="form-label mb-0">Amount Due </label>
+        <input type="text" class="text-end" name="due" placeholder="00.00" v-model="due" />
   </div>
   <div>
     <label class="mb-0" for="note">Notes</label>
-    <textarea id="note" name="note" placeholder="Write a note here(Optional)" cols="30" rows="3"></textarea>
+    <textarea id="note" name="note" placeholder="Write a note here(Optional)" cols="30" rows="3" v-model="notes"></textarea>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, toRefs, watch } from 'vue';
 import InvoiceItem from './components/InvoiceItem.vue';
 import { useInvoice } from './composables/useInvoice';
+import { useAccounts } from './composables/useAccounts';
 
 
 const { invoiceItems, addNewItem } = useInvoice()
-const subTotal = ref(0)
+const {subTotal, total, discount, paid, due, notes} = useAccounts()
 
 watch(invoiceItems, (newItems) => {
-      let sum = 0;
-      newItems.forEach((item) => {
-        sum += item.total;
-      });
-      subTotal.value = sum;
-    }, { deep: true });
+  let sum = 0;
+  newItems.forEach((item) => {
+    sum += item.total;
+  });
+  subTotal.value = sum;
+}, { deep: true });
 
 
 
