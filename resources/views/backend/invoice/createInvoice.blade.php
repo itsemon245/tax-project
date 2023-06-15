@@ -138,10 +138,6 @@
 
             </div>
 
-            {{-- <div class="mt-5">
-      <p class="mb-0">Terms</p>
-      <h5>Molestiae quia volup</h5>
-    </div> --}}
         </section>
 
     </x-backend.ui.section-card>

@@ -12,8 +12,7 @@
           </tr>
         </thead>
         <tbody id="table-body">
-          <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item" @delete-item="deleteInvoiceItem"
-            @add-tax-item="addNewTaxItem" @delete-tax-item="deleteTaxItem">
+          <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item">
           </InvoiceItem>
         </tbody>
       </table>
@@ -29,7 +28,7 @@
       <div>
         <div class="d-flex justify-content-between align-items-center gap-3">
           <label class="form-label mb-0">Subtotal</label>
-          <input id="sub-total" type="text" class="text-end" name="sub_total" placeholder="00.00" value="450" />
+          <input type="text" class="text-end" name="sub_total" placeholder="00.00" v-model="subTotal" />
         </div>
         <a id="discount-picker" tabindex="0" class="text-blue" role="button">
           <div class="d-flex justify-content-between align-items-center">
@@ -75,60 +74,24 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref, watch } from 'vue';
 import InvoiceItem from './components/InvoiceItem.vue';
-import data, { item } from './data';
-
-const invoiceItems = ref(data)
+import { useInvoice } from './composables/useInvoice';
 
 
+const { invoiceItems, addNewItem } = useInvoice()
+const subTotal = ref(0)
 
-const addNewItem = () => {
-  const newItem = { ...item }
-  newItem.id = invoiceItems.value.length
-
-  invoiceItems.value.push(newItem)
-  console.log(invoiceItems.value.length);
-
-}
-
-
-const deleteInvoiceItem = (id: number) => {
-  //delete the current index
-  invoiceItems.value.splice(id, 1)
-
-  //rewrite the ids in ascending order
-  invoiceItems.value.map((item, i) => {
-    item.id = i
-    console.log(item);
-
-  })
-}
-
-const addNewTaxItem = (id: number) => {
-  // const newItem = { ...item }
-  const newItem = JSON.parse(JSON.stringify(invoiceItems.value[id]))
-  const newTaxItem = {
-    id: newItem.taxes.length,
-    rate:0,
-    name:undefined,
-    number:0
-  }
-  newItem.taxes.push(newTaxItem)
-  invoiceItems.value.splice(id, 1, newItem)
-  
-}
+watch(invoiceItems, (newItems) => {
+      let sum = 0;
+      newItems.forEach((item) => {
+        sum += item.total;
+      });
+      subTotal.value = sum;
+    }, { deep: true });
 
 
-const deleteTaxItem = (id: number, taxId: number) => {
-  //delete the current index
-  invoiceItems.value[id].taxes.splice(taxId, 1)
-  //remap tax ids
-  invoiceItems.value[id].taxes.map((item, i) => {
-    item.id = i
 
-  })
-}
 </script>
 
 <style lang="css" scoped></style>

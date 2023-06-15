@@ -2,7 +2,7 @@ interface InvoiceItem {
     id: number;
     name: string | undefined | null;
     description: undefined | null | string;
-    rate: number | undefined | null;
+    rate: number;
     qty: number;
     total: number;
     taxes: Array<{
@@ -11,6 +11,7 @@ interface InvoiceItem {
         name: string | undefined | null;
         number: number | undefined | null;
     }>;
+    isTaxActive: boolean;
 }
 
 export const item: InvoiceItem = {
@@ -28,6 +29,7 @@ export const item: InvoiceItem = {
             number: undefined,
         },
     ],
+    isTaxActive: false
 }
 const InvoiceItems : Array<InvoiceItem>  = [
     {
