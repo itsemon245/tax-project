@@ -98,32 +98,19 @@ const {
     invoiceItems,
     deleteInvoiceItem,
     addNewTaxItem,
-    deleteTaxItem } = useInvoice()
+    deleteTaxItem,
+    calcTaxes,
+    toggleTaxPicker } = useInvoice()
 
 
-const toggleTaxPicker = (id: number) => {
-    invoiceItems.value[id].isTaxActive = !invoiceItems.value[id].isTaxActive
-}
-const calcTaxes = (id: number) => {
-    let totalTax = 0;
-    let totalPrice = invoiceItems.value[id].total;
-    invoiceItems.value[id].taxes.forEach(tax => {
-        let rate = tax.rate as number / 100;
-        totalTax += totalPrice * rate;
-    });
-    invoiceItems.value[id].tax = parseFloat(totalTax.toFixed(2))
-    toggleTaxPicker(id)
-}
+
+
 
 onMounted(() => {
     watch([() => props.item.rate, () => props.item.qty], () => {
         props.item.total = props.item.rate * props.item.qty
     })
-    watch(invoiceItems, (newItems) => {
-        newItems.forEach((item) => {
-            calcTaxes(item.id)
-        });
-    })
+
 })
 
 

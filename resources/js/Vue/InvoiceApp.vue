@@ -146,7 +146,7 @@ import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';
 
 
-const { invoiceItems, addNewItem } = useInvoice()
+const { invoiceItems, addNewItem,calcTaxes } = useInvoice()
 const { subTotal, total, discount, paid, due, notes } = useAccounts()
 const isDiscountAdded = ref(false)
 const totalTax = ref(0)
@@ -190,8 +190,13 @@ onMounted(() => {
     due.value = total.value - paid.value
     const dueDom = document.querySelector('#amount-due-vue') as Element
     dueDom.innerHTML = due.value + ' Tk'
-
   })
+
+  watch(invoiceItems, (newItems) => {
+        newItems.forEach((item) => {
+            calcTaxes(item.id)
+        });
+    })
 
 })
 
