@@ -70,6 +70,40 @@
             position: absolute;
             z-index: 2;
         }
+
+        .discount-wrapper {
+            position: relative;
+        }
+        .discount-container {
+            position: absolute;
+            background: var(--ct-white);
+            width: 200px;
+            border-radius: 10px;
+            border: 2px solid var(--ct-gray-300);
+            overflow: visible;
+            top: -20px;
+            left: 60px;
+        }
+
+        .discount-container>.title {
+            background: var(--ct-light);
+            margin: 0 0 .5rem;
+            padding: .5rem;
+            position: relative;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .discount-container>.title::before {
+            content: '';
+
+            border-top: .5rem solid transparent;
+            border-right: 1rem solid var(--ct-gray-300);
+            border-bottom: .5rem solid transparent;
+            bottom: 0;
+            left: -1rem;
+            position: absolute;
+        }
+
     </style>
 @endPushOnce
 @section('content')
@@ -79,6 +113,8 @@
 
     <x-backend.ui.section-card>
         <section class="p-lg-3">
+            <form action="{{route('invoice.store')}}" method="post" enctype="multipart/form-data">
+                @csrf
             <div>
                 <div class="d-flex border mb-5 justify-content-center">
                     <x-backend.form.image-input name="header_image" :image="null" class="d-flex justify-content-center"
@@ -137,6 +173,10 @@
             <div id="invoice-vue-app">
 
             </div>
+
+            <button type="submit" class="btn btn-primary waves-effect waves-light mt-2">Submit</button>
+
+        </form>
 
         </section>
 

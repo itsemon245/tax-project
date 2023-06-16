@@ -1,5 +1,4 @@
-import { ref, onMounted, onUnmounted, toRefs } from 'vue'
-import data, { item } from '../data';
+import { ref,toRefs } from 'vue'
 
 export function useAccounts(){
     const accounts = ref({
@@ -7,6 +6,8 @@ export function useAccounts(){
         discount: {
           percentage: 0,
           amount: 0,
+          isActive: false,
+          isFixed: false
         },
         total: 0,
         paid: 0,

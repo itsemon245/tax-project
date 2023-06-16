@@ -22,66 +22,135 @@
   </div><!-- end table-responsive-->
 
 
-  <div class="row">
-    <div class="col-md-6"></div>
-    <div class="col-md-6 d-flex justify-content-end border-bottom border-2 p-2">
-      <div>
-        <div class="d-flex justify-content-between align-items-center gap-3">
-          <label class="form-label mb-0">Subtotal</label>
-          <input type="text" class="text-end" name="sub_total" placeholder="00.00" v-model="subTotal" />
+  <div class="row justify-content-between">
+    <div class="col-md-5">
+      <h4 class="">Amount Details:</h4>
+      <div class="row align-items-center justify-content-between">
+        <label class="col-4 form-label mb-0">Sub Total:</label>
+        <div class="col-5">
+          <input type="text" class="text-end p-1 d-inline-block" style="width: calc(100% - 1.5rem);" name="sub_total" placeholder="00.00" v-model="subTotal" />
+          <span class="ms-1">Tk</span>
         </div>
-        <a id="discount-picker" tabindex="0" class="text-blue" role="button">
-          <div class="d-flex justify-content-between align-items-center">
-            <p class="mb-0">
-              <span class="mdi mdi-plus fs-5"></span> Add Discount
-            </p>
-          </div>
-          <div id="discount-picker-container"></div>
+      </div>
+
+      <div class="discount-wrapper">
+        <a v-if="!isDiscountAdded" @click="toggleDiscount" class="text-blue p-1 d-inline-block" tabindex="0" role="button">
+            <span class="mdi mdi-tag-plus-outline fs-5"> Add Discount</span>
         </a>
-        <div id="tax-list text-dark fs-5">
-          <div class="d-flex justify-content-between align-items-center gap-3 ">
-            <div>
-              <p class="mb-0 text-black">tax name</p>
-              <p class="mb-0 fs-6">#tax note</p>
+        <a v-else @click="toggleDiscount" class="text-blue p-1" tabindex="0" role="button">
+          <div class="d-flex justify-content-between align-items-center">
+                <span  class="mdi mdi-tag-edit-outline fs-5"> Change Discount</span>
+                <span class="p-0 text-success">{{ discount.amount }} Tk</span>
+          </div>
+        </a>
+        <div class="discount-container" :class="{ 'd-none': !discount.isActive }">
+          <h5 class="title">Add Discount</h5>
+          <div class="px-2">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="row w-75 mx-auto">
+                <label class="form-label mb-0 p-0">Discount</label>
+                <div class="col-5 p-0">
+                  <input type="text" name="discount"
+                    class="w-100 border-top border-bottom border-start border-1 text-center rounded-0 rounded-start h-100 "
+                    placeholder="0" v-model="discount.amount" aria-label="Rate" aria-describedby="tax-addon1">
+                </div>
+                <div class="col-3 p-0 py-1 ps-1 align-self-center border-end border-top border-bottom "
+                  style="background: var(--ct-gray-200);">
+                  <span class="mdi p-0 text-success"
+                    :class="[discount.isFixed ? 'mdi-currency-bdt' : 'mdi-percent-outline']"
+                    style="font-size: 18px;"></span>
+                </div>
+                <div class="col-4 bg-blue p-0 py-1 ps-2 align-self-center border rounded-end" @click="toggleDiscountType">
+                  <span class="mdi mdi-swap-horizontal p-0 text-white " style="font-size: 18px;cursor: pointer;"></span>
+                </div>
+                <div class="col-12">
+                  <div class='d-flex justify-content-center align-items-center gap-2 my-3'>
+                    <button @click="toggleDiscount" type="button" class="btn btn-soft-info py-1">Close</button>
+                    <button @click="calcDiscount" type='button' class='btn btn-success py-1'>Add</button>
+                  </div>
+                </div>
+              </div>
+
             </div>
-            <span class="text-success"> + 12 Tk</span>
+
+
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6"></div>
-    <div class="col-md-6 border-bottom border-dark">
-      <div class="d-flex my-1 gap-5 justify-content-end">
-        <label class="form-label mb-0">Total</label>
-        <input type="text" class="text-end" name="total" placeholder="00.00" v-model="total" />
+      <ul class="list-unstyled  mb-2">
+        <li>
+          <div class="row mb-1 align-items-center justify-content-between">
+            <p class="col-8 form-label mb-0">Tax Name(<span class="fs-6 fw-light p-0">#tax-number</span>)</p>
+            <span class="col-4 text-end p-0">tax rate Tk</span>
+          </div>
+        </li>
+      </ul>
+      <div class="row mb-2 align-items-center justify-content-between border-top border-2">
+        <label class="col-4 form-label mb-0">Total</label>
+        <input type="text" class="col-6 text-end p-1" name="total" placeholder="00.00" v-model="total" />
       </div>
-      <div class="d-flex my-1 gap-5 justify-content-end">
-        <label class="form-label mb-0">Amount Paid</label>
-        <input type="text" class="text-end" name="total" placeholder="00.00" v-model="paid" />
+
+      <div>
+        <label class="mb-0" for="note">Notes</label>
+        <textarea class="w-100" name="note" placeholder="Write a note here(Optional)" rows="3" v-model="notes"></textarea>
       </div>
     </div>
-  </div>
-  <div class="d-flex my-1 justify-content-end gap-5">
-    <label class="form-label mb-0">Amount Due </label>
-        <input type="text" class="text-end" name="due" placeholder="00.00" v-model="due" />
-  </div>
-  <div>
-    <label class="mb-0" for="note">Notes</label>
-    <textarea id="note" name="note" placeholder="Write a note here(Optional)" cols="30" rows="3" v-model="notes"></textarea>
+    <div class="col-md-5">
+      <h4 class="">Payment Details:</h4>
+      <div class="d-flex my-1 gap-2 align-items-center mb-2">
+        <select name="payment_method" class="form-select text-capitalize w-50">
+          <option selected disabled>Select Payment Method</option>
+          <option value="cash">Cash</option>
+          <option value="bkash">Bkash</option>
+          <option value="nagad">Nagad</option>
+          <option value="rocket">Rocket</option>
+          <option value="card">Card</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <label class="mb-0" for="note">Payment Note</label>
+        <textarea class="border border-2 w-100" name="payment_note"
+          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'" rows="4"></textarea>
+      </div>
+
+      <div class="row mb-2 align-items-center">
+        <label class="col-4 form-label mb-0">Total</label>
+        <input type="text" class="col-6 p-1" name="total" placeholder="00.00" v-model="total" />
+      </div>
+      <div class="row mb-2 align-items-center">
+        <label class="col-4 form-label mb-0">Amount Paid</label>
+        <input type="text" class="col-6 p-1" name="total" placeholder="00.00" v-model="paid" />
+      </div>
+      <div class="row mb-2 align-items-center">
+        <label class="col-4 form-label mb-0">Amount Due </label>
+        <input type="text" class="col-6 p-1" name="due" placeholder="00.00" v-model="due" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs, watch } from 'vue';
+import { ref, watch } from 'vue';
 import InvoiceItem from './components/InvoiceItem.vue';
 import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';
 
 
 const { invoiceItems, addNewItem } = useInvoice()
-const {subTotal, total, discount, paid, due, notes} = useAccounts()
+const { subTotal, total, discount, paid, due, notes } = useAccounts()
+const isDiscountAdded = ref(false)
+
+const toggleDiscount = () => {
+  discount.value.isActive = !discount.value.isActive
+}
+const toggleDiscountType = () => {
+  discount.value.isFixed = !discount.value.isFixed
+}
+const calcDiscount = () =>{
+  discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount /100;
+  isDiscountAdded.value = true
+  toggleDiscount()
+}
 
 watch(invoiceItems, (newItems) => {
   let sum = 0;

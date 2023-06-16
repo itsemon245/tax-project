@@ -20,14 +20,31 @@ class InvoiceController extends Controller
         
         //storing data test
 
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $clients = Client::get();
+        return view('backend.invoice.createInvoice', compact('clients'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreInvoiceRequest $request)
+    {
+        dd($request->all());
+        
         $discount = 10;
         $invoice = new Invoice();
         $invoice->client_id = 1;
         $invoice->header_image = "https://picsum.photos/seed/picsum/200/300";
         $invoice->reference_no = "245";
-        $invoice->circle = "circle";
         $invoice->notes = "notes";
-        $invoice->purpose = "purpose";
         $invoice->discount = $discount;
         $invoice->due_date = now()->addDays(7)->format('Y-m-d');
         $invoice->save();
@@ -73,24 +90,6 @@ class InvoiceController extends Controller
         $invoice->amount_due = $invoice->total - $invoice->amount_paid;
         $invoice->save();
         dd($invoice);
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $clients = Client::get();
-        return view('backend.invoice.createInvoice', compact('clients'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreInvoiceRequest $request)
-    {
-        //
     }
 
     /**
