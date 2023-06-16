@@ -12,6 +12,7 @@ interface InvoiceItem {
         number: number | undefined | null;
     }>;
     isTaxActive: boolean;
+    tax: number
 }
 
 export const item: InvoiceItem = {
@@ -29,7 +30,8 @@ export const item: InvoiceItem = {
             number: undefined,
         },
     ],
-    isTaxActive: false
+    isTaxActive: false,
+    tax: 0
 }
 const InvoiceItems : Array<InvoiceItem>  = [
     {

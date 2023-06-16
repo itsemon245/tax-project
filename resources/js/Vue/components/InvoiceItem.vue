@@ -26,7 +26,8 @@
                     </div>
                     <h5 class="title">Add Taxes</h5>
                     <div class="px-2">
-                        <div v-for="tax in props.item.taxes" :key="tax.id as number" class="d-flex align-items-center gap-1 mb-2">
+                        <div v-for="tax in props.item.taxes" :key="tax.id as number"
+                            class="d-flex align-items-center gap-1 mb-2">
                             <div class="w-50">
                                 <label class="form-label mb-0">Rate</label>
                                 <div class="d-flex">
@@ -55,12 +56,13 @@
                                     class="mdi mdi-trash-can-outline text-danger" style="cursor: pointer;"></span>
                             </div>
                         </div>
-
+                        <button @click="addNewTaxItem(props.item.id)" type='button'
+                            class='btn btn-soft-light text-dark py-1 w-100 border border-2 rounded'>Add New Tax</button>
                         <div class='d-flex justify-content-center align-items-center gap-2 my-3'>
                             <button @click="toggleTaxPicker(props.item.id)" type="button"
                                 class="btn btn-soft-info py-1">Close</button>
-                            <button @click="addNewTaxItem(props.item.id)" type='button' class='btn btn-success py-1'>Add
-                                New</button>
+                            <button @click="calcTaxes(props.item.id)" type='button'
+                                class='btn btn-success py-1'>Add</button>
                         </div>
                     </div>
                 </div>
@@ -85,12 +87,11 @@
 <script setup lang="ts">
 import CloseIcon from './icons/CloseIcon.vue';
 import { useInvoice } from '../composables/useInvoice';
-import { watch} from 'vue';
+import { computed, onMounted, toRaw, watch } from 'vue';
 
 
 
 const props = defineProps(['item'])
-
 
 
 const {
@@ -103,10 +104,27 @@ const {
 const toggleTaxPicker = (id: number) => {
     invoiceItems.value[id].isTaxActive = !invoiceItems.value[id].isTaxActive
 }
+const calcTaxes = (id: number) => {
+    let totalTax = 0;
+    let totalPrice = invoiceItems.value[id].total;
+    invoiceItems.value[id].taxes.forEach(tax => {
+        let rate = tax.rate as number / 100;
+        totalTax += totalPrice * rate;
+    });
+    invoiceItems.value[id].tax = parseFloat(totalTax.toFixed(2))
+    toggleTaxPicker(id)
+}
 
-    watch([()=> props.item.rate, ()=>props.item.qty],() => {
-      props.item.total = props.item.rate * props.item.qty
+onMounted(() => {
+    watch([() => props.item.rate, () => props.item.qty], () => {
+        props.item.total = props.item.rate * props.item.qty
     })
+    watch(invoiceItems, (newItems) => {
+        newItems.forEach((item) => {
+            calcTaxes(item.id)
+        });
+    })
+})
 
 
 </script>

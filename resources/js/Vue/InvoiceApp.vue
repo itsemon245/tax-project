@@ -27,20 +27,21 @@
       <h4 class="">Amount Details:</h4>
       <div class="row align-items-center justify-content-between">
         <label class="col-4 form-label mb-0">Sub Total:</label>
-        <div class="col-5">
-          <input type="text" class="text-end p-1 d-inline-block" style="width: calc(100% - 1.5rem);" name="sub_total" placeholder="00.00" v-model="subTotal" />
-          <span class="ms-1">Tk</span>
+        <div class="col-5 p-0">
+          <input type="text" class="text-end p-1 d-inline-block fw-bold" style="width: calc(100% - 1rem);" name="sub_total"
+            placeholder="00.00" v-model="subTotal" />
+          <span class="">Tk</span>
         </div>
       </div>
 
       <div class="discount-wrapper">
-        <a v-if="!isDiscountAdded" @click="toggleDiscount" class="text-blue p-1 d-inline-block" tabindex="0" role="button">
-            <span class="mdi mdi-tag-plus-outline fs-5"> Add Discount</span>
+        <a v-if="!isDiscountAdded" @click="toggleDiscount" class="text-blue d-inline-block" tabindex="0" role="button">
+          <span class="mdi mdi-tag-plus-outline fs-5"> Add Discount</span>
         </a>
-        <a v-else @click="toggleDiscount" class="text-blue p-1" tabindex="0" role="button">
-          <div class="d-flex justify-content-between align-items-center">
-                <span  class="mdi mdi-tag-edit-outline fs-5"> Change Discount</span>
-                <span class="p-0 text-success">{{ discount.amount }} Tk</span>
+        <a v-else @click="toggleDiscount" class="text-blue" tabindex="0" role="button">
+          <div class="d-flex justify-content-between align-items-center p-0 w-100">
+            <span class="mdi mdi-tag-edit-outline fs-5 p-0"> Change Discount</span>
+            <span class="p-0 text-success fw-bold" style="margin-right: -.6rem;"> - {{ discount.amount }} Tk</span>
           </div>
         </a>
         <div class="discount-container" :class="{ 'd-none': !discount.isActive }">
@@ -77,14 +78,22 @@
           </div>
         </div>
       </div>
-      <ul class="list-unstyled  mb-2">
-        <li>
-          <div class="row mb-1 align-items-center justify-content-between">
-            <p class="col-8 form-label mb-0">Tax Name(<span class="fs-6 fw-light p-0">#tax-number</span>)</p>
-            <span class="col-4 text-end p-0">tax rate Tk</span>
+      <div class="mb-2">
+        <div class="row mb-1 align-items-center justify-content-between">
+          <p class="col-8 mb-0">
+          <div class="">
+            Taxes:
+            <div v-for="item in invoiceItems" class="d-flex gap-1 flex-wrap">
+              <div v-for="tax in item.taxes">
+                <div  v-show="totalTax > 0">{{tax.name}}(<span class="fs-6 fw-light p-0">#{{ tax.number }}</span>), </div>
+              </div>
+              <div  v-show="totalTax === 0">No taxes Added</div>
+            </div>
           </div>
-        </li>
-      </ul>
+          </p>
+          <span v-show="totalTax > 0" class="col-4 text-end p-0 text-danger fw-bold">+ {{ totalTax }} Tk</span>
+        </div>
+      </div>
       <div class="row mb-2 align-items-center justify-content-between border-top border-2">
         <label class="col-4 form-label mb-0">Total</label>
         <input type="text" class="col-6 text-end p-1" name="total" placeholder="00.00" v-model="total" />
@@ -119,7 +128,7 @@
       </div>
       <div class="row mb-2 align-items-center">
         <label class="col-4 form-label mb-0">Amount Paid</label>
-        <input type="text" class="col-6 p-1" name="total" placeholder="00.00" v-model="paid" />
+        <input type="text" class="col-6 p-1" name="paid" placeholder="00.00" v-model="paid" />
       </div>
       <div class="row mb-2 align-items-center">
         <label class="col-4 form-label mb-0">Amount Due </label>
@@ -139,15 +148,15 @@ import { useAccounts } from './composables/useAccounts';
 const { invoiceItems, addNewItem } = useInvoice()
 const { subTotal, total, discount, paid, due, notes } = useAccounts()
 const isDiscountAdded = ref(false)
-
+const totalTax = ref(0)
 const toggleDiscount = () => {
   discount.value.isActive = !discount.value.isActive
 }
 const toggleDiscountType = () => {
   discount.value.isFixed = !discount.value.isFixed
 }
-const calcDiscount = () =>{
-  discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount /100;
+const calcDiscount = () => {
+  discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount / 100;
   isDiscountAdded.value = true
   toggleDiscount()
 }
@@ -158,7 +167,25 @@ watch(invoiceItems, (newItems) => {
     sum += item.total;
   });
   subTotal.value = sum;
-}, { deep: true });
+}, {deep: true});
+
+watch(invoiceItems, (newItems) => {
+  let sum = 0;
+  newItems.forEach((item) => {
+    sum += item.tax;
+  });
+  totalTax.value = sum;
+  console.log(totalTax.value);
+  
+}, {deep: true})
+
+watch([totalTax,subTotal,discount], ()=>[
+  total.value = subTotal.value + totalTax.value - discount.value.amount
+])
+watch([total, paid], ()=>[
+  due.value = total.value - paid.value
+])
+
 
 
 
