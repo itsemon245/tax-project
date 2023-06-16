@@ -15,11 +15,8 @@ class ClientStudioController extends Controller
     public function index()
     {
         $data = ClientStudio::latest()->get();
-
-
         return view('backend.clientStudio.client-studio-index', compact('data'));
     }
-
     /**
      * Show the form for creating a new resource.
      */

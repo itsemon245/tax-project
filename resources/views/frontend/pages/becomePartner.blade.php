@@ -57,6 +57,8 @@
             <h4 class="title-header mb-3 text-center">Become Partner Progress</h4>
         
             <form method="POST" action="{{ route('user-profile.update.become', $user->id) }}" class="">
+                $@csrf
+                @method("PUT")
                 <div class="d-flex justify-content-center">
                     <div style="max-width: 650px;" class="px-md-0 px-2">
                         <div id="progressbarwizard">
@@ -97,13 +99,13 @@
                                             <x-backend.form.text-input label="Full Name" name='name' :value="$user->name" placeholder="John Doe" required />
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Username" name='username' :value="$user->user_name" required />
+                                            <x-backend.form.text-input label="Username" name='username' disabled :value="$user->user_name" required />
                                         </div>
+                                            <div class="col-md-6">
+                                                <x-backend.form.text-input label="Phone No." name='phone' :value="$user->phone" required />
+                                            </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Email" name='email' :value="$user->email" required />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <x-backend.form.text-input label="Phone No." name='phone' :value="$user->phone"required />
+                                            <x-backend.form.text-input label="Email" name='email' disabled :value="$user->email" required />
                                         </div>
                                         
                                     </div> <!-- end row -->
@@ -135,7 +137,7 @@
                                         <div class="col-12">
                                             <label class="form-label" for="address">Address</label>
                                             <div class="">
-                                                <textarea name="address" id="address" class="form-control" placeholder="{{"House No.,\nStreet No.,\nPost Office"}}" cols="30" required="" rows="4"></textarea>
+                                                <textarea name="address" id="address" class="form-control" placeholder="{{"House No:,\nStreet No:,\nPost Office:"}}" cols="30" required="" rows="4"></textarea>
                                             </div>
                                         </div>
                                     </div> <!-- end row -->
@@ -269,7 +271,7 @@
                     const isLast = $('#finish').hasClass('active');
                 console.log(isLast);
                 if (isLast) {
-                    const submitBtn = `<button class="btn btn-primary">Submit</button>`
+                    const submitBtn = `<button type="submit" class="btn btn-primary">Submit</button>`
                     nextBtn.html(submitBtn)
                 }
                 }, 100);

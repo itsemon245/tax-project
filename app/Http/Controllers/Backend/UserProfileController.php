@@ -134,7 +134,7 @@ class UserProfileController extends Controller
         $userData->dob = $request->dob;
         $userData->phone = $request->phone;
         $userData->address = $request->address;
-        $userData->save();
+        $userData->update();
         $notification = array(
             'message' => "Profile Updated",
             'alert-type' => 'success',
