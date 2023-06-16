@@ -211,6 +211,27 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#clientStudio" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Client Studio</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="clientStudio">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('client-studio.index') }}">
+                                    Create
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('client-studio.create') }}">
+                                    View
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#appointmentSection" data-bs-toggle="collapse">

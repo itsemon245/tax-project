@@ -25,6 +25,7 @@ use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
+use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
@@ -74,6 +75,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('video', VideoController::class);
     Route::resource('partner-section', PartnerSectionController::class);
     Route::resource('about', AboutController::class);
+    Route::resource('client-studio', ClientStudioController::class);
 
 
     //service related routes
