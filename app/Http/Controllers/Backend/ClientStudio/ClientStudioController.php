@@ -15,9 +15,9 @@ class ClientStudioController extends Controller
     public function index()
     {
         $data = ClientStudio::latest()->get();
-        foreach()
-        $datum = $data[0]->description;
-        return view('backend.clientStudio.client-studio-index', compact('datum'));
+
+
+        return view('backend.clientStudio.client-studio-index', compact('data'));
     }
 
     /**
@@ -61,7 +61,7 @@ class ClientStudioController extends Controller
      */
     public function edit(ClientStudio $clientStudio)
     {
-        //
+        return view('backend.clientStudio.client-studio-edit', compact('clientStudio'));
     }
 
     /**
@@ -69,7 +69,17 @@ class ClientStudioController extends Controller
      */
     public function update(UpdateClientStudioRequest $request, ClientStudio $clientStudio)
     {
-        //
+        $oldImagePath = $clientStudio->image;
+        $clientStudio->description = $request->description;
+        $clientStudio->image = updateFile($request->image, $oldImagePath,'client-studio', 'client-studio-img');
+        $clientStudio->title = $request->title;
+        $clientStudio->count = $request->count;
+        $clientStudio->update();
+        $notification = array(
+            'message' => "Updated Successfully",
+            'alert-type' => 'success',
+        );
+        return back()->with($notification);
     }
 
     /**
@@ -77,6 +87,11 @@ class ClientStudioController extends Controller
      */
     public function destroy(ClientStudio $clientStudio)
     {
-        //
+        $clientStudio->delete();
+        $notification = array(
+            'message' => "Deleted Successfully",
+            'alert-type' => 'success',
+        );
+        return back()->with($notification);
     }
 }

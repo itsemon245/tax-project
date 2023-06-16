@@ -1,11 +1,7 @@
 @extends('backend.layouts.app')
-
-
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Backend', 'Client Studio', 'View', 'All']" />
-
     <x-backend.ui.section-card name="Client Studios">
-
         <x-backend.table.basic>
             <thead>
                 <tr>
@@ -15,7 +11,6 @@
                     <th>Action</th>
                 </tr>
             </thead>
-
             <tbody>
                 @forelse ($data as $key=>$datum)
                 <tr>
@@ -23,8 +18,10 @@
                     <td>{{ useImage($datum->image) }}</td>
                     <td>{{ $datum->title }}</td>
                     <td>
-                        <x-backend.ui.button type="edit" href="#" class="btn-sm" />
-                        <x-backend.ui.button type="delete" action="#" class="btn-sm" />
+                        <div class="btn-group">
+                            <x-backend.ui.button type="edit" href="{{ route('client-studio.edit', $datum->id) }}" class="btn-sm" />
+                            <x-backend.ui.button type="delete" action="{{route('client-studio.destroy', $datum->id)}}" class="btn-sm" />
+                        </div>
                     </td>
                 </tr>
                 @empty
@@ -36,11 +33,7 @@
                 @endforelse
             </tbody>
         </x-backend.table.basic>
-
-
     </x-backend.ui.section-card>
-
-
     @push('customJs')
         <script></script>
     @endpush

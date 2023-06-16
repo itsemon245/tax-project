@@ -1,11 +1,11 @@
 @extends('backend.layouts.app')
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Backend', 'Client Studio', 'Create']" />
-    <x-backend.ui.section-card name="Client Studio">
+    <x-backend.ui.breadcrumbs :list="['Backend', 'Client Studio', 'Edit']" />
+    <x-backend.ui.section-card name="Client Edit">
 
-        <form action="{{ route('client-studio.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('client-studio.update', $clientStudio->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
-
+            @method('PUT')
             {{-- rest of the fields goes down here --}}
             <div class="container rounded bg-white py-3 px-4">
                 <div class="row">
@@ -14,17 +14,22 @@
                             <div class="col-md-12">
                                 <x-form.ck-editor id="ck-editor1" name="description" placeholder="Description"
                                     label="Description">
+                                    {{ $clientStudio->description }}
                                 </x-form.ck-editor>
                             </div>
                             <div class="col-md-12">
                                 <div class="row">
                                     <h5 class="mt-3">Client card section</h5>
                                     <div class="col-md-5">
-                                        <x-backend.form.image-input class="mt-1" name="image" />
+                                        @if ($clientStudio->image ==! null)
+                                        <img src="{{ $clientStudio->image }}" alt="" srcset=""> 
+                                        @else
+                                        <x-backend.form.image-input class="mt-1" name="image" />  
+                                        @endif
                                     </div>
                                     <div class="col-md-7 mt-3">
-                                        <x-backend.form.text-input label="Title" type="text" class="mb-3"  name="title" required /> 
-                                        <x-backend.form.text-input label="Count" placeholder="Input count number" type="number"  name="count" required /> 
+                                        <x-backend.form.text-input label="Title" type="text" class="mb-3" :value="$clientStudio->title"  name="title" required /> 
+                                        <x-backend.form.text-input label="Count" placeholder="Input count number" type="number" :value="$clientStudio->count"  name="count" required /> 
                                     </div>
                                     <x-backend.ui.button class="btn-primary mt-2 w-100 btn-sm">Submit</x-backend.ui.button>
                                 </div>

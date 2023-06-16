@@ -11,7 +11,7 @@ class UpdateClientStudioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user() != null;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateClientStudioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'description' => ['required', 'max:600'],
+            'image' => ['required', 'max:3000','image'],
+            'title' => ['required', 'string'],
+            'count' => ['required'],
         ];
     }
 }
