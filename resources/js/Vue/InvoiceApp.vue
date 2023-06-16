@@ -28,8 +28,8 @@
       <div class="row align-items-center justify-content-between">
         <label class="col-4 form-label mb-0">Sub Total:</label>
         <div class="col-5 p-0">
-          <input type="text" class="text-end p-1 d-inline-block fw-bold" style="width: calc(100% - 1rem);" name="sub_total"
-            placeholder="00.00" v-model="subTotal" />
+          <input type="text" class="text-end p-1 d-inline-block fw-bold" style="width: calc(100% - 1rem);"
+            name="sub_total" placeholder="00.00" v-model="subTotal" />
           <span class="">Tk</span>
         </div>
       </div>
@@ -85,9 +85,10 @@
             Taxes:
             <div v-for="item in invoiceItems" class="d-flex gap-1 flex-wrap">
               <div v-for="tax in item.taxes">
-                <div  v-show="totalTax > 0">{{tax.name}}(<span class="fs-6 fw-light p-0">#{{ tax.number }}</span>), </div>
+                <div v-show="totalTax > 0">{{ tax.name }}(<span class="fs-6 fw-light p-0">#{{ tax.number }}</span>),
+                </div>
               </div>
-              <div  v-show="totalTax === 0">No taxes Added</div>
+              <div v-show="totalTax === 0">No taxes Added</div>
             </div>
           </div>
           </p>
@@ -139,7 +140,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import InvoiceItem from './components/InvoiceItem.vue';
 import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';
@@ -149,6 +150,9 @@ const { invoiceItems, addNewItem } = useInvoice()
 const { subTotal, total, discount, paid, due, notes } = useAccounts()
 const isDiscountAdded = ref(false)
 const totalTax = ref(0)
+
+
+
 const toggleDiscount = () => {
   discount.value.isActive = !discount.value.isActive
 }
@@ -161,31 +165,35 @@ const calcDiscount = () => {
   toggleDiscount()
 }
 
-watch(invoiceItems, (newItems) => {
-  let sum = 0;
-  newItems.forEach((item) => {
-    sum += item.total;
-  });
-  subTotal.value = sum;
-}, {deep: true});
+onMounted(() => {
+  watch(invoiceItems, (newItems) => {
+    let sum = 0;
+    newItems.forEach((item) => {
+      sum += item.total;
+    });
+    subTotal.value = sum;
+  }, { deep: true });
 
-watch(invoiceItems, (newItems) => {
-  let sum = 0;
-  newItems.forEach((item) => {
-    sum += item.tax;
-  });
-  totalTax.value = sum;
-  console.log(totalTax.value);
-  
-}, {deep: true})
+  watch(invoiceItems, (newItems) => {
+    let sum = 0;
+    newItems.forEach((item) => {
+      sum += item.tax;
+    });
+    totalTax.value = sum;
 
-watch([totalTax,subTotal,discount], ()=>[
-  total.value = subTotal.value + totalTax.value - discount.value.amount
-])
-watch([total, paid], ()=>[
-  due.value = total.value - paid.value
-])
+  }, { deep: true })
 
+  watch([totalTax, subTotal, discount], () => [
+    total.value = subTotal.value + totalTax.value - discount.value.amount
+  ])
+  watch([total, paid], () => {
+    due.value = total.value - paid.value
+    const dueDom = document.querySelector('#amount-due-vue') as Element
+    dueDom.innerHTML = due.value + ' Tk'
+
+  })
+
+})
 
 
 
