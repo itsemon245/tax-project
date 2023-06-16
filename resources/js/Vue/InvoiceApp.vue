@@ -35,10 +35,10 @@
       </div>
 
       <div class="discount-wrapper">
-        <a v-if="!isDiscountAdded" @click="toggleDiscount" class="text-blue d-inline-block" tabindex="0" role="button">
+        <a v-if="!discount.amount" @click="toggleDiscount" class="text-blue d-inline-block" tabindex="0" role="button">
           <span class="mdi mdi-tag-plus-outline fs-5"> Add Discount</span>
         </a>
-        <a v-else @click="toggleDiscount" class="text-blue" tabindex="0" role="button">
+        <a v-else="discount.amount" @click="toggleDiscount" class="text-blue" tabindex="0" role="button">
           <div class="d-flex justify-content-between align-items-center p-0 w-100">
             <span class="mdi mdi-tag-edit-outline fs-5 p-0"> Change Discount</span>
             <span class="p-0 text-success fw-bold" style="margin-right: -.6rem;"> - {{ discount.amount }} Tk</span>
@@ -146,9 +146,8 @@ import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';
 
 
-const { invoiceItems, addNewItem,calcTaxes } = useInvoice()
+const { invoiceItems, addNewItem, calcTaxes } = useInvoice()
 const { subTotal, total, discount, paid, due, notes } = useAccounts()
-const isDiscountAdded = ref(false)
 const totalTax = ref(0)
 
 
@@ -161,7 +160,6 @@ const toggleDiscountType = () => {
 }
 const calcDiscount = () => {
   discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount / 100;
-  isDiscountAdded.value = true
   toggleDiscount()
 }
 
@@ -183,20 +181,21 @@ onMounted(() => {
 
   }, { deep: true })
 
-  watch([totalTax, subTotal, discount], () => [
+  watch([totalTax, subTotal, discount], () => {
     total.value = subTotal.value + totalTax.value - discount.value.amount
-  ])
+  }, {deep: true})
   watch([total, paid], () => {
     due.value = total.value - paid.value
+    due.value = parseFloat(due.value.toFixed(2))
     const dueDom = document.querySelector('#amount-due-vue') as Element
     dueDom.innerHTML = due.value + ' Tk'
   })
 
   watch(invoiceItems, (newItems) => {
-        newItems.forEach((item) => {
-            calcTaxes(item.id)
-        });
-    })
+    newItems.forEach((item) => {
+      calcTaxes(item.id)
+    });
+  })
 
 })
 
