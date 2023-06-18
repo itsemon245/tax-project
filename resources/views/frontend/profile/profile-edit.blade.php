@@ -74,7 +74,19 @@
 </form>
 @endsection
 @push('customJs')
-    <script src="{{ asset('backend/assets/js/instandphotochange.js') }}"></script>
+   {{-- Photo Preview for uploads --}}
+   <script>
+    $(document).ready(function () {
+        
+        const input = $("#imagefile")
+        input.on('change', e =>{
+            const image = document.querySelector('#liveImage')
+            const url = URL.createObjectURL(e.target.files[0])
+            image.src = url
+        })
+    });
+    </script>
+    {{-- Photo Preview for uploads --}}
 @endpush
 
 

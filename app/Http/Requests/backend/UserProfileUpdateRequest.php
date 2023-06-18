@@ -21,11 +21,19 @@ class UserProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = auth()->id();
         return [
             'name' => ['required', 'string', 'max:255'],
+<<<<<<< HEAD
             'phone' => ['required', 'min:11'],
             'user_name' => ['required', 'string', 'max:255'],
             'profile_img' => ['mimes:jpeg,png,jpg,gif,svg', 'max:5048'],
+=======
+            'user_name' => ['required', 'string', 'max:255', "unique:users,user_name,$id"],
+            'phone' => ['required', 'max:20', 'min:11'],
+            'profile_img' => ['image', 'max:2048'],
+            'email' => ['required', 'email', 'max:255', "unique:users,email,$id"],
+>>>>>>> d85c75049872ec5223a3cfbc7a60b30c108392e7
 
         ];
     }

@@ -51,19 +51,27 @@
 
 
                         <div class="col-md-6">
+<<<<<<< HEAD
                             <x-backend.form.text-input name="user_name" label="Username" :value="$user->user_name" />
+=======
+                            <x-backend.form.text-input name="user_name" label="Username" :value="$user->user_name" required />
+>>>>>>> d85c75049872ec5223a3cfbc7a60b30c108392e7
                         </div>
 
 
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <x-backend.form.text-input type='number' name="phone" label="Contact Number"
+                            <x-backend.form.text-input type='text' name="phone" label="Contact Number"
                                 :value="$user->phone" required />
                         </div>
 
                         <div class="col-md-6">
+<<<<<<< HEAD
                             <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email" />
+=======
+                            <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email" required/>
+>>>>>>> d85c75049872ec5223a3cfbc7a60b30c108392e7
                         </div>
                         <div class="mt-3">
                             <button class="btn btn-primary profile-button" type="submit">Update
@@ -77,6 +85,7 @@
     </x-backend.ui.section-card>
 @endsection
 @push('customJs')
+<<<<<<< HEAD
     {{-- Photo Preview for uploads --}}
     <script>
         $(document).ready(function() {
@@ -91,6 +100,19 @@
                 })
             })
         });
+=======
+   {{-- Photo Preview for uploads --}}
+   <script>
+    $(document).ready(function () {
+        
+        const input = $("#imagefile")
+        input.on('change', e =>{
+            const image = document.querySelector('#liveImage')
+            const url = URL.createObjectURL(e.target.files[0])
+            image.src = url
+        })
+    });
+>>>>>>> d85c75049872ec5223a3cfbc7a60b30c108392e7
     </script>
     {{-- Photo Preview for uploads --}}
 @endpush

@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\backend\UserProfileUpdateRequest;
 
 class UserProfileController extends Controller
@@ -61,6 +59,7 @@ class UserProfileController extends Controller
      */
     public function update(UserProfileUpdateRequest $request, $id)
     {
+<<<<<<< HEAD
         $userData = User::findOrFail($id);
         $userData->name = $request->name;
         $userData->email = $request->email;
@@ -69,6 +68,23 @@ class UserProfileController extends Controller
         $old_path = $userData->image_url;
         $userData->image_url = saveImage($request->profile_img, 'profile', 'user-image');
         $userData->save();
+=======
+        // dd($request->all());
+            $userData = User::findOrFail($id);
+                $userData->name = $request->name;
+                $userData->email = $request->email;
+                $userData->user_name = $request->user_name;
+                $userData->phone = $request->phone;
+                $old_path = $userData->image_url;
+                $userData->image_url = updateFile($request->profile_img, $old_path,'profile','user-image');
+                $userData->save();
+        
+                $notification = array(
+                    'message' => "Profile Updated",
+                    'alert-type' => 'success',
+                );
+                return back()->with($notification);
+>>>>>>> d85c75049872ec5223a3cfbc7a60b30c108392e7
 
         $notification = array(
             'message' => "Profile Updated",
@@ -90,8 +106,19 @@ class UserProfileController extends Controller
      */
     public function changePassword(Request $request)
     {
+<<<<<<< HEAD
 
         $user = auth()->user();
+=======
+            $request->validate([
+            'old_password' => 'required|string',
+            'new_password' => 'required|string',
+            'confirm_new_password' => 'required|string|same:new_password',
+
+            ]);
+        
+        $user = User::findOrFail(auth()->id());
+>>>>>>> d85c75049872ec5223a3cfbc7a60b30c108392e7
         $isValid = Hash::check($request->old_password, $user->password);
         $notification = array(
             'message' => "Password Changed Successfully",

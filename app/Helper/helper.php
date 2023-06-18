@@ -42,11 +42,14 @@ function updateFile($file, $old_path, $dir,  $prefix = "image")
 {
     $new_path = $old_path;
     $path = 'public/' . $old_path;
-    if ($file) {
+    $fileExists = Storage::exists($path);
+    if ($fileExists) {
+       if ($file) {
         $new_path = saveImage($file, $dir, $prefix);
-        if (Storage::exists($path)) {
-            $deleted = Storage::delete($path);
-        }
+        Storage::delete($path);
+       }
+    } else{
+        $new_path = saveImage($file, $dir, $prefix);
     }
     return $new_path;
 }
