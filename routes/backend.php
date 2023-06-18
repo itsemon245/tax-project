@@ -5,12 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\SocialHandleController;
+use App\Http\Controllers\Backend\VideoController;
 use App\Http\Controllers\Backend\Map\MapController;
 use App\Http\Controllers\Backend\Book\BookController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Role\RoleController;
 use App\Http\Controllers\Backend\Hero\BannerController;
+use App\Http\Controllers\Backend\Pages\AboutController;
 use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Client\ClientController;
 use App\Http\Controllers\Frontend\User\UserDocController;
@@ -23,13 +25,13 @@ use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
-use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
-use App\Http\Controllers\Backend\VideoController;
+use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +74,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('training', TrainingController::class);
     Route::resource('video', VideoController::class);
     Route::resource('partner-section', PartnerSectionController::class);
+    Route::resource('about', AboutController::class);
+    Route::resource('client-studio', ClientStudioController::class);
 
 
     //service related routes
@@ -99,6 +103,7 @@ Route::prefix('admin')->group(function () {
     Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become');//User profile to become a partner update
     Route::resource('client', ClientController::class);
     Route::resource('book', BookController::class);
+    Route::POST('upload-large-video', [VideoController::class, 'videoUpload'])->name('video.upload'); //Uploading Video file
 });
 
 

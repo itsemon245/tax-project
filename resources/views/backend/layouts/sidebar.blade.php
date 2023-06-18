@@ -102,6 +102,22 @@
                     </div>
                 </li>
                 <li>
+                    <a href="#sidebarAboutPage" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> About Page</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarAboutPage">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('about.create') }}">Create
+
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
                     <a href="#sidebarSerivces" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> Services </span>
@@ -192,6 +208,27 @@
                                 </a>
                             </li>
 
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#clientStudio" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Client Studio</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="clientStudio">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('client-studio.index') }}">
+                                    Create
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('client-studio.create') }}">
+                                    View
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

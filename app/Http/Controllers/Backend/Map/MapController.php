@@ -37,8 +37,8 @@ class MapController extends Controller
         $maps->image = saveImage($request->map_image, 'map', 'maps-image'); 
         $maps->save();
         $notification = array(
-            'message' => "Password Didn't Match",
-            'alert-type' => 'danger',
+            'message' => "Added Successfully",
+            'alert-type' => 'success',
         );
         return back()->with($notification);
     }
