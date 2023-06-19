@@ -7,6 +7,7 @@ use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
+use App\Models\ClientStudio;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -22,7 +23,10 @@ class PageController extends Controller
     }
     public function clientStudioPage()
     {
-        return view('frontend.pages.clientStudio.clientStudio');
+        $data = ClientStudio::get();
+        $description = $data[0]->description;
+
+        return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description'));
     }
     public function appointmentPage(bool $isPhysical)
     {
