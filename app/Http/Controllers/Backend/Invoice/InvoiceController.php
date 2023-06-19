@@ -57,20 +57,6 @@ class InvoiceController extends Controller
             'due_date' => $request->due_date,
             'issue_date' => $request->issue_date,
         ]);
-        // $invoice->client_id = $request->client;
-        // $invoice->header_image = $header_image;
-        // $invoice->reference_no = $request->reference;
-        // $invoice->note = $request->note;
-        // $invoice->discount = $request->discount;
-        // $invoice->sub_total = $request->sub_total;
-        // $invoice->total = $request->total;
-        // $invoice->amount_paid = $request->paid;
-        // $invoice->amount_due = $request->due;
-        // $invoice->payment_note = $request->payment_note;
-        // $invoice->payment_method = $request->payment_method;
-        // $invoice->due_date = $request->due_date;
-        // $invoice->issue_date = $request->issue_date;
-        // $invoice->save();
 
 
         //invoice Items
