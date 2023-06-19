@@ -76,6 +76,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('partner-section', PartnerSectionController::class);
     Route::resource('about', AboutController::class);
     Route::resource('client-studio', ClientStudioController::class);
+    Route::resource('review', ReviewController::class);
 
 
     //service related routes
