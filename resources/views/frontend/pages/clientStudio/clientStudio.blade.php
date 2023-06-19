@@ -59,7 +59,7 @@
                         amet consectetur adipisicing elit. Iusto doloribus tempora et ipsam quo ullam
                     </p>
                     <div class="mb-0 mt-2 text-light">
-                        <a href="" class="btn btn-light">
+                        <a href="{{route('contact.create')}}" class="btn btn-light">
                             <i class="fe-users"></i>
                             TALK TO OUR EXPERTS
                         </a>
