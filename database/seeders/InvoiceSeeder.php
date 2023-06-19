@@ -26,7 +26,8 @@ class InvoiceSeeder extends Seeder
             'amount_due' => fake()->numberBetween(1000,10000),
             'payment_note' => fake()->realText(),
             'payment_method' => fake()->randomElement(['cash', 'bkash', 'nagad', 'rocket', 'bank', 'card']),
-            'due_date' => fake()->date(),
+            'payment_date' => now()->addDays(3)->format('Y-m-d'),
+            'due_date' => now()->addDays(7)->format('Y-m-d'),
             'issue_date' => now()->format('Y-m-d'),
         ]);
     }
