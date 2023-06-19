@@ -30,7 +30,11 @@ class InvoiceController extends Controller
     public function create()
     {
         $clients = Client::get();
-        return view('backend.invoice.createInvoice', compact('clients'));
+        $invoiceImage = null;
+        if (countRecords('invoices') > 0) {
+            $invoiceImage = Invoice::first()->header_image;
+        }
+        return view('backend.invoice.createInvoice', compact('clients', 'invoiceImage'));
     }
 
     /**
@@ -38,9 +42,10 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-        $header_image = saveImage($request->header_image,'invoice', 'header-image');
-        if (countRecords('invoices') > 0) {
-           $header_image = Invoice::find(1)->header_image ? Invoice::find(1)->header_image : saveImage($request->header_image,'invoices', 'header-image');
+        if ($request->hasFile('header_image')) {
+            $header_image = saveImage($request->image, 'invoices', 'invoice');
+        }else{
+            $header_image = Invoice::first()->header_image;
         }
         $invoice = Invoice::create([
             'client_id' => $request->client,
