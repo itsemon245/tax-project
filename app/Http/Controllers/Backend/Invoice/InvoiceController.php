@@ -38,25 +38,39 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-        $header_image = '';
+        $header_image = saveImage($request->header_image,'invoice', 'header-image');
         if (countRecords('invoices') > 0) {
-           $header_image =  Invoice::findOrFail(1)->header_image ? Invoice::findOrFail(1)->header_image : saveImage($request->header_image,'invoice', 'header-image');
+           $header_image = Invoice::find(1)->header_image ? Invoice::find(1)->header_image : saveImage($request->header_image,'invoices', 'header-image');
         }
-        $invoice = new Invoice();
-        $invoice->client_id = $request->client;
-        $invoice->header_image = $header_image;
-        $invoice->reference_no = $request->reference;
-        $invoice->note = $request->note;
-        $invoice->discount = $request->discount;
-        $invoice->sub_total = $request->sub_total;
-        $invoice->total = $request->total;
-        $invoice->amount_paid = $request->paid;
-        $invoice->amount_due = $request->due;
-        $invoice->payment_note = $request->payment_note;
-        $invoice->payment_method = $request->payment_method;
-        $invoice->due_date = $request->due_date;
-        $invoice->issue_date = $request->issue_date;
-        $invoice->save();
+        $invoice = Invoice::create([
+            'client_id' => $request->client,
+            'header_image' => $header_image,
+            'reference_no' => $request->reference,
+            'note' => $request->note,
+            'discount' => $request->discount,
+            'sub_total' => $request->sub_total,
+            'total' => $request->total,
+            'amount_paid' => $request->paid,
+            'amount_due' => $request->due,
+            'payment_note' => $request->payment_note,
+            'payment_method' => $request->payment_method,
+            'due_date' => $request->due_date,
+            'issue_date' => $request->issue_date,
+        ]);
+        // $invoice->client_id = $request->client;
+        // $invoice->header_image = $header_image;
+        // $invoice->reference_no = $request->reference;
+        // $invoice->note = $request->note;
+        // $invoice->discount = $request->discount;
+        // $invoice->sub_total = $request->sub_total;
+        // $invoice->total = $request->total;
+        // $invoice->amount_paid = $request->paid;
+        // $invoice->amount_due = $request->due;
+        // $invoice->payment_note = $request->payment_note;
+        // $invoice->payment_method = $request->payment_method;
+        // $invoice->due_date = $request->due_date;
+        // $invoice->issue_date = $request->issue_date;
+        // $invoice->save();
 
 
         //invoice Items

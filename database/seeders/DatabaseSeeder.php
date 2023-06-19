@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             ServiceCategorySeeder::class,
             ServiceSubCategorySeeder::class,
             ServiceSeeder::class,
+            InvoiceSeeder::class,
         ]);
     }
 }
