@@ -25,7 +25,6 @@ return new class extends Migration
             $table->integer('amount_due')->default(0);
             $table->text('payment_note')->nullable();
             $table->enum('payment_method',['cash', 'bkash', 'nagad', 'rocket', 'bank', 'card'])->nullable();
-            $table->longText('payment_note')->nullable();
             $table->timestamp('payment_date')->nullable();
             $table->timestamp('due_date')->default(now()->addDays(7)->format('Y-m-d'));
             $table->timestamp('issue_date')->default(now()->format('Y-m-d'));

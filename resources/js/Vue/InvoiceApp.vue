@@ -177,13 +177,20 @@ onMounted(() => {
     newItems.forEach((item) => {
       sum += item.tax;
     });
-    totalTax.value = sum;
+    totalTax.value = parseInt(sum.toFixed(2));
 
   }, { deep: true })
 
   watch([totalTax, subTotal, discount], () => {
     total.value = subTotal.value + totalTax.value - discount.value.amount
   }, {deep: true})
+
+  watch([subTotal], () => {
+    if (subTotal.value !== 0) {
+      discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount / 100;
+    }
+  }, {deep: true})
+
   watch([total, paid], () => {
     due.value = total.value - paid.value
     due.value = parseFloat(due.value.toFixed(2))

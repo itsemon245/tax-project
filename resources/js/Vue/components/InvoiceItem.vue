@@ -109,6 +109,7 @@ const {
 onMounted(() => {
     watch([() => props.item.rate, () => props.item.qty], () => {
         props.item.total = props.item.rate * props.item.qty
+        calcTaxes(props.item.id)
     })
 
 })

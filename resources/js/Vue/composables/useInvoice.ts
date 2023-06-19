@@ -10,8 +10,9 @@ export function useInvoice() {
     // a composable can update its managed state over time.
 
     const addNewItem = () => {
-        const newItem = { ...item };
+        const newItem = JSON.parse(JSON.stringify(item));
         newItem.id = invoiceItems.value.length;
+        newItem.taxes.pop()
 
         invoiceItems.value.push(newItem);
     };
