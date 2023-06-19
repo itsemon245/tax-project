@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('invoice_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->text('name');
-            $table->mediumText('description');
+            $table->mediumText('description')->nullable();
             $table->integer('rate');
             $table->integer('qty');
             $table->integer('total');
-            $table->longText('taxes')->comment('a json object that includes tax rate, tax name, tax note, isApplied');
+            $table->longText('taxes')->comment('a json object that includes tax rate, tax name, tax number');
             $table->timestamps();
         });
     }

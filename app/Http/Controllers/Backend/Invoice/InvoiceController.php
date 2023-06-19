@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Backend\Invoice;
 
+use Carbon\Carbon;
+use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
+use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
-use App\Models\Client;
-use App\Models\InvoiceItem;
-use Carbon\Carbon;
 
 class InvoiceController extends Controller
 {
@@ -20,59 +21,6 @@ class InvoiceController extends Controller
         
         //storing data test
 
-        $discount = 10;
-        $invoice = new Invoice();
-        $invoice->client_id = 1;
-        $invoice->header_image = "https://picsum.photos/seed/picsum/200/300";
-        $invoice->reference_no = "245";
-        $invoice->circle = "circle";
-        $invoice->notes = "notes";
-        $invoice->purpose = "purpose";
-        $invoice->discount = $discount;
-        $invoice->due_date = now()->addDays(7)->format('Y-m-d');
-        $invoice->save();
-
-        //<--invoice items calculation-->
-        $taxes = [
-            [
-                'name' => 'tax 1',
-                'rate' => 5,
-                'note' => 'tax 1 note',
-                'isApplied' => true,
-            ],
-            [
-                'name' => 'tax 2',
-                'rate' => 10,
-                'note' => 'tax 2 note',
-                'isApplied' => false,
-            ],
-        ];
-        $totalTax = 0; //in percentage
-        foreach ($taxes as $tax) {
-            $totalTax += $tax['rate'];
-        }
-        $rate = 220;
-        $qty = 2;
-        $subTotal = ($rate * $qty) + ($rate * $qty)*$totalTax/100; //add taxes
-        $invoiceItem = InvoiceItem::create([
-            'invoice_id'=> $invoice->id,
-            'name'=> 'service 1',
-            'description'=> 'service 1 description',
-            'rate'=> $rate,
-            'qty'=> $qty,
-            'total' => $subTotal,
-            'taxes'=> json_encode($taxes),
-        ]);
-        //<!--invoice item calculation -->
-
-
-        //invoice calculation
-        $invoice->sub_total = $subTotal;
-        $invoice->total = $invoice->sub_total - ($invoice->sub_total * $discount/100);//subtract discount
-        $invoice->amount_paid = 200;
-        $invoice->amount_due = $invoice->total - $invoice->amount_paid;
-        $invoice->save();
-        dd($invoice);
     }
 
 
@@ -82,7 +30,11 @@ class InvoiceController extends Controller
     public function create()
     {
         $clients = Client::get();
-        return view('backend.invoice.createInvoice', compact('clients'));
+        $invoiceImage = null;
+        if (countRecords('invoices') > 0) {
+            $invoiceImage = Invoice::first()->header_image;
+        }
+        return view('backend.invoice.createInvoice', compact('clients', 'invoiceImage'));
     }
 
     /**
@@ -90,7 +42,53 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-        //
+        if ($request->hasFile('header_image')) {
+            $header_image = saveImage($request->image, 'invoices', 'invoice');
+        }else{
+            $header_image = Invoice::first()->header_image;
+        }
+        $invoice = Invoice::create([
+            'client_id' => $request->client,
+            'header_image' => $header_image,
+            'reference_no' => $request->reference,
+            'note' => $request->note,
+            'discount' => $request->discount,
+            'sub_total' => $request->sub_total,
+            'total' => $request->total,
+            'amount_paid' => $request->paid,
+            'amount_due' => $request->due,
+            'payment_note' => $request->payment_note,
+            'payment_method' => $request->payment_method,
+            'due_date' => $request->due_date,
+            'issue_date' => $request->issue_date,
+        ]);
+
+
+        //invoice Items
+        foreach ($request->item_names as $key => $name) {
+            // taxes
+            $taxes = [];
+            foreach ($request["tax-$key-names"] as $id => $name) {
+                $array = [
+                    'name'=> $request["tax-$key-names"][$id],
+                    'rate'=> $request["tax-$key-rates"][$id],
+                    'number'=> $request["tax-$key-numbers"][$id],
+                ];
+                array_push($taxes, $array);
+            }
+            $item = [
+                'invoice_id'=> $invoice->id,
+                'name'=> $request['item_names'][$key],
+                'description'=> $request['item_descriptions'][$key],
+                'rate'=> $request['item_rates'][$key],
+                'qty'=> $request['item_qtys'][$key],
+                'total' => $request['item_rates'][$key] * $request['item_qtys'][$key],
+                'taxes'=> json_encode($taxes),
+            ];
+            $invoiceItem = InvoiceItem::create($item);
+        }
+
+        return view('backend.invoice.createInvoice');
     }
 
     /**

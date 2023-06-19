@@ -17,6 +17,7 @@
     <link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
     <!-- icons -->
     <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    @vite(['resources/js/app.js'])
 
     
     {{-- Plugins link  --}}
