@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class About extends Model
+class AboutSection extends Model
 {
     use HasFactory;
-    protected $guarded=[];
     
-    public function aboutSection()
+    public function about()
     {
-        return $this->hasMany(AboutSection::class);
+        return $this->belongsTo(About::class);
     }
 }

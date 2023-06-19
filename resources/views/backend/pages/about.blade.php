@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="">
                                 <x-form.ck-editor id="ck-editor1" name="description" placeholder="Description"
-                                    label="Description">
+                                    label="Description" required>
                                 </x-form.ck-editor>
                             </div>
                             <div class="col-md-12">
@@ -34,8 +34,9 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <button type="submit"
-                                    class="btn btn-primary waves-effect waves-light profile-button">Create Page</button>
+                                <button
+                                    class="btn btn-primary waves-effect waves-light profile-button submit_data">Create
+                                    Page</button>
                             </div>
 
 
@@ -65,11 +66,11 @@
                     <div class="col-md-6">
                         <div class="mt-1">
                             <label for=section-title${itemCount} class="form-label">Section Title ${itemCount}</label>
-                           <input type='text' name="sections_titles[]" placeholder="Section Title" class="form-control" />
+                           <input type='text' name="sections_titles[]" placeholder="Section Title" class="form-control"  required/>
                         </div>
                         <div class="mt-1">
                             <label for="section-editor-${itemCount}" class="form-label">Section Description ${itemCount}</label>
-                            <textarea id="section-editor-${itemCount}" name="sections_descriptions[]" placeholder="Section Description">
+                            <textarea id="section-editor-${itemCount}" name="sections_descriptions[]" placeholder="Section Description" required>
                                 
                             </textarea>
                         </div>
@@ -77,7 +78,7 @@
                     <div class="col-md-6">  
                         <label for="section-image-${itemCount}">
                                 <p>Section Image ${itemCount}</p>
-                                <input id="section-image-${itemCount}" type="file" name="sections_images[]" hidden>
+                                <input id="section-image-${itemCount}" type="file" name="sections_images[]" hidden required>
                                 <img class="w-100 border border-2 border-primary" id="live-${itemCount}"
                                     src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
                         </label>
@@ -252,6 +253,12 @@
                 $("#packacgeFeaturesInputs").find(".row:last").remove()
                 featureLength()
             }
+
+            // $('.submit_data').on('click', function(e) {
+            //     e.preventDefault()
+            //     var description = $('#ck-editor1').text();
+            //     console.log(description)
+            // })
         </script>
     @endpush
 @endsection

@@ -6,6 +6,8 @@ use App\Models\About;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAboutRequest;
 use App\Http\Requests\UpdateAboutRequest;
+use App\Models\AboutSection;
+use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
@@ -14,7 +16,6 @@ class AboutController extends Controller
      */
     public function index()
     {
-        
     }
 
     /**
@@ -28,9 +29,31 @@ class AboutController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAboutRequest $request)
+    public function store(Request $request)
     {
-        //
+        //dd($request->sections_images);
+
+        $store_about = new About();
+        $store_about->description = $request->description;
+        
+        $sections=[];
+        foreach ($request->sections_titles as $key=> $item) {
+            $array= [            
+                 'title'=>$request->sections_titles[$key],
+                 'description'=>$request->sections_descriptions[$key],
+                 'image'=> saveImage($request->sections_images[$key], 'about', 'about'),
+            ];
+             array_push($sections,  $array);
+        }
+        $store_about->sections= json_encode($sections);
+        $store_about->save();
+        $notification = [
+            'message' => 'About us Created',
+            'alert-type' => 'success',
+        ];
+        return redirect()
+            ->back()
+            ->with($notification);
     }
 
     /**
@@ -38,7 +61,6 @@ class AboutController extends Controller
      */
     public function show(About $about)
     {
-        //
     }
 
     /**
