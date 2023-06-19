@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Backend\PromoCode;
 use App\Models\User;
 use App\Models\PromoCode;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePromoCodeRequest;
 use App\Http\Requests\UpdatePromoCodeRequest;
+use App\Models\UserNotification;
+use App\Notifications\PromoCodeNotification;
+use Illuminate\Notifications\Notification;
 
 class PromoCodeController extends Controller
 {
@@ -32,7 +36,7 @@ class PromoCodeController extends Controller
      */
     public function store(StorePromoCodeRequest $request)
     {
-        $request->validated();
+
         PromoCode::create(
             [
                 'user_type' => $request->user_type,
@@ -43,6 +47,16 @@ class PromoCodeController extends Controller
             ]
         );
 
+        $user = User::find($request->user_id); // Replace with the user you want to notify
+        $user->notify(new PromoCodeNotification());
+
+
+        $store_notification = new UserNotification();
+        $store_notification->user_id = $request->user_id;
+        $store_notification->title = 'New PromoCode Create by ' . Auth::user()->name;
+        $store_notification->message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit mauris ut tristique laoreet. Sed eu hendrerit dolor';
+        $store_notification->image = Auth::user()->image_url;
+        $store_notification->save();
         return redirect()
             ->route("promo-code.index")
             ->with(array(

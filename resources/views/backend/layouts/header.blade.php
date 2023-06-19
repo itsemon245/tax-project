@@ -1,16 +1,21 @@
 @php
-    $user_id= auth()->user();
-    $user= App\Models\User::find($user_id->id);
+    $user_id = auth()->user();
+    $user = App\Models\User::find($user_id->id);
+    
+    $notifications = App\Models\UserNotification::where('user_id', Auth::user()->id)->get();
+    $countNoti = App\Models\UserNotification::where('user_id', Auth::user()->id)->count();
+    
 @endphp
 
 <div class="navbar-custom">
     <div class="container-fluid">
         <ul class="list-unstyled topnav-menu float-end mb-0">
 
-            
+
 
             <li class="dropdown d-none d-lg-inline-block">
-                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen" href="#">
+                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen"
+                    href="#">
                     <i class="fe-maximize noti-icon"></i>
                 </a>
             </li>
@@ -18,9 +23,10 @@
 
 
             <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#"
+                    role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="fe-bell noti-icon"></i>
-                    <span class="badge bg-danger rounded-circle noti-icon-badge">9</span>
+                    <span class="badge bg-danger rounded-circle noti-icon-badge">{{ $countNoti }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-lg">
 
@@ -37,17 +43,24 @@
 
                     <div class="noti-scroll" data-simplebar>
 
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item active">
-                            <div class="notify-icon">
-                                <img src="{{ asset('backend/assets/images/users/user-1.jpg') }}" class="img-fluid rounded-circle" alt="" /> </div>
-                            <p class="notify-details">Cristina Pride</p>
-                            <p class="text-muted mb-0 user-msg">
-                                <small>Hi, How are you? What about our next meeting</small>
-                            </p>
-                        </a>
 
-                        <!-- item-->
+                        @forelse ($notifications as $notify)
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                                <div class="notify-icon">
+                                    {{-- <img src="{{ useImage($notify->image_url) ?? '' }}" class="img-fluid rounded-circle"
+                                        alt="" /> --}}
+                                </div>
+                                <p class="notify-details">{{ $notify->title }}</p>
+                                <p class="text-muted mb-0 user-msg">
+                                    <small>{{ $notify->message }}</small>
+                                </p>
+                            </a>
+
+                        @empty
+                        @endforelse
+
+                        {{-- <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon bg-primary">
                                 <i class="mdi mdi-comment-account-outline"></i>
@@ -60,7 +73,9 @@
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="notify-icon">
-                                <img src="{{ asset('backend/assets/images/users/user-4.jpg') }}" class="img-fluid rounded-circle" alt="" /> </div>
+                                <img src="{{ asset('backend/assets/images/users/user-4.jpg') }}"
+                                    class="img-fluid rounded-circle" alt="" />
+                            </div>
                             <p class="notify-details">Karen Robinson</p>
                             <p class="text-muted mb-0 user-msg">
                                 <small>Wow ! this admin looks good and awesome design</small>
@@ -96,7 +111,7 @@
                                 <b>Admin</b>
                                 <small class="text-muted">13 days ago</small>
                             </p>
-                        </a>
+                        </a> --}}
                     </div>
 
                     <!-- All-->
@@ -109,10 +124,12 @@
             </li>
 
             <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ useImage($user->image_url) ? useImage($user->image_url) :'https://api.dicebear.com/6.x/initials/svg?seed='. auth()->user()->name }}" alt="user-image" class="rounded-circle">
+                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
+                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                    <img src="{{ useImage($user->image_url) ? useImage($user->image_url) : 'https://api.dicebear.com/6.x/initials/svg?seed=' . auth()->user()->name }}"
+                        alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ms-1">
-                        {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i> 
+                        {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -121,9 +138,9 @@
                         <i class="fe-user"></i>
                         <span>Profile</span>
                     </a>
-                    
+
                     <!-- item-->
-                    <a href="{{ route('user-profile.edit',auth()->id()) }}" class="dropdown-item notify-item">
+                    <a href="{{ route('user-profile.edit', auth()->id()) }}" class="dropdown-item notify-item">
                         <i class="fe-lock"></i>
                         <span>Change Password</span>
                     </a>
@@ -142,7 +159,7 @@
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <a style="color: red;" href="{{route('logout')}}" class="dropdown-item notify-item">
+                    <a style="color: red;" href="{{ route('logout') }}" class="dropdown-item notify-item">
                         <i class="fe-log-out"></i>
                         <span>Logout</span>
                     </a>
@@ -150,7 +167,7 @@
                 </div>
             </li>
 
-            
+
 
         </ul>
 
@@ -194,7 +211,7 @@
                     </div>
                 </a>
                 <!-- End mobile menu toggle-->
-            </li>   
+            </li>
 
         </ul>
         <div class="clearfix"></div>

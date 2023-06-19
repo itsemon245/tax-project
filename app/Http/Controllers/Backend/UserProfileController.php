@@ -16,9 +16,8 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-            $user = Auth::user();
-            return view('backend.profile.profile-edit', compact('user'));
-        
+        $user = Auth::user();
+        return view('backend.profile.profile-edit', compact('user'));
     }
 
     /**
@@ -60,7 +59,6 @@ class UserProfileController extends Controller
      */
     public function update(UserProfileUpdateRequest $request, $id)
     {
-        // dd($request->all());
             $userData = User::findOrFail($id);
                 $userData->name = $request->name;
                 $userData->email = $request->email;
@@ -76,7 +74,11 @@ class UserProfileController extends Controller
                 );
                 return back()->with($notification);
 
-        
+        $notification = array(
+            'message' => "Profile Updated",
+            'alert-type' => 'success',
+        );
+        return back()->with($notification);
     }
 
 
@@ -106,15 +108,15 @@ class UserProfileController extends Controller
             'alert-type' => 'success',
         );
         if ($isValid) {
-                $user->password = Hash::make($request->confirm_new_password);
-                $user->save();
-            } else {
-                $notification = array(
-                    'message' => "Password Didn't Match",
-                    'alert-type' => 'danger',
-                );
-            }
-            return back()->with($notification);
+            $user->password = Hash::make($request->confirm_new_password);
+            $user->save();
+        } else {
+            $notification = array(
+                'message' => "Password Didn't Match",
+                'alert-type' => 'danger',
+            );
+        }
+        return back()->with($notification);
     }
 
     //User profile to become a partner profile method
@@ -141,5 +143,4 @@ class UserProfileController extends Controller
         );
         return back()->with($notification);
     }
-
 }

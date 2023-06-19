@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class About extends Model
+class UserNotification extends Model
 {
     use HasFactory;
-    protected $guarded=[];
-    
-    public function aboutSection()
+    public function user()
     {
-        return $this->hasMany(AboutSection::class);
+        return $this->belongsTo(User::class);
     }
 }
