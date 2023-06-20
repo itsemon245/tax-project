@@ -105,7 +105,18 @@
                                             </div>
 
                                             <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
-                                                <div class="">hello World</div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <x-backend.form.select-input class="mb-3" name="location" label="Choose Location" placeholder="Choose Location...">
+                                                            <option value="">Agrabad, Chattagram</option>
+                                                            <option value="">Andarkella, Chattagram</option>
+                                                        </x-backend.form.select-input>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118103.47450132135!2d91.73746698943835!3d22.32591352860032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30acd8a64095dfd3%3A0x5015cc5bcb6905d9!2z4Kaa4Kaf4KeN4Kaf4KaX4KeN4Kaw4Ka-4Kau!5e0!3m2!1sbn!2sbd!4v1687279949135!5m2!1sbn!2sbd" height="450" class="w-100 rounded shadow-sm" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                             <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
                                                 <div class="">hello World</div>
