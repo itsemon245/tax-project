@@ -2,12 +2,20 @@
 
 
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'About', 'Create']" />
-
+    @if ($row)
+        <x-backend.ui.breadcrumbs :list="['Frontend', 'About', 'Edit']" />
+    @else
+        <x-backend.ui.breadcrumbs :list="['Frontend', 'About', 'Create']" />
+    @endif
     <x-backend.ui.section-card name="About Us">
 
-        <form action="{{ route('about.store') }}" method="POST" enctype="multipart/form-data">
+        <form
+            action=" @if ($row) {{ route('about.update', $row->id) }} @else {{ route('about.store') }} @endif"
+            method="POST" enctype="multipart/form-data">
             @csrf
+            @isset($row)
+                @method('PUT')
+            @endisset
 
             {{-- rest of the fields goes down here --}}
             <div class="container rounded bg-white py-3 px-4">
@@ -16,7 +24,7 @@
                         <div class="row">
                             <div class="">
                                 <x-form.ck-editor id="ck-editor1" name="description" placeholder="Description"
-                                    label="Description" required>
+                                    label="Description" required>{!! $row->description !!}
                                 </x-form.ck-editor>
                             </div>
                             <div class="col-md-12">
@@ -34,8 +42,7 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <button
-                                    class="btn btn-primary waves-effect waves-light profile-button submit_data">Create
+                                <button class="btn btn-primary waves-effect waves-light profile-button submit_data">Create
                                     Page</button>
                             </div>
 
@@ -66,7 +73,7 @@
                     <div class="col-md-6">
                         <div class="mt-1">
                             <label for=section-title${itemCount} class="form-label">Section Title ${itemCount}</label>
-                           <input type='text' name="sections_titles[]" placeholder="Section Title" class="form-control"  required/>
+                           <input type='text' name="sections_titles[]" placeholder="Section Title" class="form-control"  required />
                         </div>
                         <div class="mt-1">
                             <label for="section-editor-${itemCount}" class="form-label">Section Description ${itemCount}</label>
