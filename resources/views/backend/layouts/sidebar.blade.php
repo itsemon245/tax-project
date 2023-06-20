@@ -126,15 +126,15 @@
                     <div class="collapse" id="sidebarSerivces">
                         <ul class="nav-second-level">
                             @php
-                                $categories = getRecords('service_categories')
+                                $categories = getRecords('service_categories');
                             @endphp
-                          @foreach ($categories as $category)
-                          <li>
-                            <a href="{{ route('service.subs.view', $category->id) }}">
-                                <span>{{$category->name}}</span>
-                            </a>
-                        </li>
-                          @endforeach
+                            @foreach ($categories as $category)
+                                <li>
+                                    <a href="{{ route('service.subs.view', $category->id) }}">
+                                        <span>{{ $category->name }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </li>
@@ -204,7 +204,7 @@
 
                             <li>
                                 <a href="{{ route('invoice.show', 1) }}">
-                                View
+                                    View
                                 </a>
                             </li>
 
@@ -399,6 +399,23 @@
                             </li>
                             <li>
                                 <a href="{{ route('video.index') }}">View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#expertProfile" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Expert Profile</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="expertProfile">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('expert-profile.create') }}">Create</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('expert-profile.index') }}">View</a>
                             </li>
                         </ul>
                     </div>

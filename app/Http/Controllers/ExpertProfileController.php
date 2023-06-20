@@ -13,7 +13,7 @@ class ExpertProfileController extends Controller
      */
     public function index()
     {
-        //
+        return view("backend.expertProfile.viewExpertProfile");
     }
 
     /**
@@ -21,7 +21,7 @@ class ExpertProfileController extends Controller
      */
     public function create()
     {
-        //
+        return view("backend.expertProfile.createExpertProfile");
     }
 
     /**
