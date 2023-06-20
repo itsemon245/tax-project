@@ -57,7 +57,7 @@
             <h4 class="title-header mb-3 text-center">Become Partner Progress</h4>
         
             <form method="POST" action="{{ route('user-profile.update.become', $user->id) }}" class="">
-                $@csrf
+                @csrf
                 @method("PUT")
                 <div class="d-flex justify-content-center">
                     <div style="max-width: 650px;" class="px-md-0 px-2">
@@ -164,7 +164,7 @@
                                 </div>
                 
                                 <ul class="list-unstyled d-flex justify-content-md-start justify-content-between gap-3 mb-0 wizard">
-                                    <li class="previous">
+                                    <li class="previous" id="prev-btn">
                                         <a href="javascript: void(0);" class="btn btn-dark">Previous</a>
                                     </li>
                                     <li class="next" id="next-btn">
@@ -276,38 +276,13 @@
                 }
                 }, 100);
             })
+            const prevBtn = $('#prev-btn')
+            prevBtn.click(()=>{
+                const submitBtn = `<a href="javascript: void(0);" class="btn btn-primary">Next</a>`
+                nextBtn.html(submitBtn)
+            })
 
 
-
-            // function setData(id, district = '' canCreate=false) { 
-            //     let param = id+'s'
-            //     if (district !== '') {
-            //         param = 'division/'+district
-            //     }
-            //     const settings = {
-            //         async: true,
-            //         crossDomain: true,
-            //         url: `https://bdapi.p.rapidapi.com/v1.1/${param}`,
-            //         method: 'GET',
-            //         headers: {
-            //             'X-RapidAPI-Key': '3fdd0dc0f2mshcea4717a7ec6a05p1e2854jsn1bce68040ab7',
-            //             'X-RapidAPI-Host': 'bdapi.p.rapidapi.com'
-            //         }
-            //     };
-            //     $.ajax(settings).done(function (res) {
-            //             const data = res.data
-            //             console.log(data);
-            //             $('#'+id).selectize({
-            //             maxItems: 1,
-            //             valueField: id,
-            //             labelField: id,
-            //             searchField: id,
-            //             options: data,
-            //             create: canCreate
-            //             });
-                    
-            //     });
-            // }
 
                 
         });
