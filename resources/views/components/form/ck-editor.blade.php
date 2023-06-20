@@ -141,7 +141,6 @@
                     uploadUrl: '{{route("upload.image").'?_token='.csrf_token()}}',
                 },
         })
-        .then(response=> console.log(response))
         .catch(err=> console.log(err));
        });
     </script>
