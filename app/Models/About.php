@@ -10,8 +10,4 @@ class About extends Model
     use HasFactory;
     protected $guarded=[];
     
-    public function aboutSection()
-    {
-        return $this->hasMany(AboutSection::class);
-    }
 }
