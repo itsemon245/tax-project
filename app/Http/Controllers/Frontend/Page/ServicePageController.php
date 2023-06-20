@@ -20,11 +20,12 @@ class ServicePageController extends Controller
         $isTaxServices = str(url()->current())->contains('service/category/1');
         $productCategory = null;
         if ($isTaxServices) {
-            $productCategory = ProductCategory::with('productSubCategories', "productSubCategories.products")->where('id', 2)->first();
+            $productCategory = ProductCategory::with('productSubCategories', "productSubCategories.products")->find(2);
         }
+        // dd($productCategory->productSubCategories);
         // dd($productCategory->productSubCategories[0]->products);
         $subCategories = ServiceSubCategory::where('service_category_id', $id)->with('serviceCategory')->get();
-        return view('frontend.pages.services.subCategories', compact('productCategory', 'subCategories', 'appointments', 'testimonials', 'banners', 'infos1', 'infos2'));
+        return view('frontend.pages.services.subCategories', compact('productCategory','isTaxServices', 'subCategories', 'appointments', 'testimonials', 'banners', 'infos1', 'infos2'));
     }
 
     public function servicesUnderSub($id)
