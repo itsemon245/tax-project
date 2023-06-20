@@ -32,6 +32,7 @@ use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\ExpertProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +78,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('about', AboutController::class);
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('review', ReviewController::class);
+    Route::resource('expert-profile', ExpertProfileController::class);
 
 
     //service related routes
@@ -101,7 +103,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('calendar', CalendarController::class);
     Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
     Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
-    Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become');//User profile to become a partner update
+    Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become'); //User profile to become a partner update
     Route::resource('client', ClientController::class);
     Route::resource('book', BookController::class);
     Route::POST('upload-large-video', [VideoController::class, 'videoUpload'])->name('video.upload'); //Uploading Video file
