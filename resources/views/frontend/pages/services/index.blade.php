@@ -12,7 +12,8 @@
         .custom-grid {
             display: grid;
             max-width: 100%;
-            grid-template-columns: repeat(auto-fit, minmax(205px, 1fr) );
+            width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
             justify-content: center;
             align-items: center;
         }
@@ -27,14 +28,16 @@
         <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">{{$services[0]->serviceSubCategory->name}}</h4>
         <div class="custom-grid px-3 gap-3">
             @foreach ($services as $service)
-            <div class="">
-                <div class="d-flex flex-column align-items-center border">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
-                        src="{{ useImage($service->image) }}" alt="">
+            <div class="shadow">
+                <div class="d-flex flex-column align-items-center border p-3">
+                    <a href="{{route('service.view', $service->id)}}">
+                        <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
+                            src="{{ useImage($service->image) }}" alt="">
+                    </a>
                     <a class="text-dark text-capitalize" href="{{route('service.view', $service->id)}}"><h6>{{$service->title}}</h6></a>
-                    <p class="text-center">
+                    <a href="{{route('service.view', $service->id)}}" class="text-center text-muted">
                         {{$service->intro}}
-                    </p>
+                    </a>
                     
                 </div>
                 <div class="bg-primary px-3 d-flex align-items-center justify-content-between">

@@ -9,9 +9,9 @@
                 @foreach ($productCategory->productSubCategories as $item)
                     <li class="nav-item" role="presentation">
                         <a href="#{{ $item->name }}" data-bs-toggle="tab"
-                            aria-expanded="{{ $item->id === 1 ? 'true' : 'false' }}"
-                            aria-selected="{{ $item->id === 1 ? 'true' : 'false' }}" role="tab"
-                            class="text-capitalize nav-link {{ $item->id === 1 ? 'active' : '' }}" tabindex="-1">
+                            aria-expanded="{{ $item->id === 1||$item->id === 2 ? 'true' : 'false' }}"
+                            aria-selected="{{ $item->id === 1||$item->id === 2 ? 'true' : 'false' }}" role="tab"
+                            class="text-capitalize nav-link {{ $item->id === 1||$item->id === 2 ? 'active' : '' }}" tabindex="-1">
                             {{ $item->name }}
                         </a>
                     </li>
@@ -21,12 +21,16 @@
         <div class="container-fluid">
             <div class="tab-content">
                 @foreach ($productCategory->productSubCategories as $subCategory)
-                    <div class="tab-pane {{ $subCategory->id === 1 ? 'active' : '' }}" id="{{ $subCategory->name }}"
+                    <div class="tab-pane {{ $subCategory->id === 1 || $subCategory->id === 2  ? 'active' : '' }}" id="{{ $subCategory->name }}"
                         role="tabpanel">
                         <div class="product-wrapper">
                             @php
                                 $fillteredProducts = $subCategory->products->filter(function ($product) {
-                                    return $product->product_category_id === 1;
+                                    if (request()->routeIs('home')) {
+                                        return $product->product_category_id === 1;
+                                    }else {
+                                        return $product->product_category_id === 2;
+                                    }
                                 });
                             @endphp
                             @foreach ($fillteredProducts as $product)

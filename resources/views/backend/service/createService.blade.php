@@ -122,7 +122,7 @@
                     <div class="col-md-6">  
                         <label for="section-image-${itemCount}">
                                 <p>Section Image ${itemCount}</p>
-                                <input id="section-image-${itemCount}" type="file" name="sections_images[]" hidden>
+                                <input id="section-image-${itemCount}" class="custom-input" data-index="${itemCount}" type="file" name="sections_images[]" hidden>
                                 <img class="w-100 border border-2 border-primary" id="live-${itemCount}"
                                     src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
                         </label>
@@ -280,11 +280,13 @@
                 })
 
 
-                const input = document.querySelector(`#section-image-${itemCount}`)
-                input.addEventListener('change', e => {
-                    const image = document.querySelector(`#live-${itemCount}`)
-                    const url = URL.createObjectURL(e.target.files[0])
-                    image.src = url
+                const imageInputs = $('.custom-input')
+                imageInputs.each((i, input) => {
+                    input.addEventListener('change', e => {
+                        const image = document.querySelector('#live-'+e.target.dataset.index)
+                        const url = URL.createObjectURL(e.target.files[0])
+                        image.src = url
+                    })
                 })
 
 

@@ -44,8 +44,9 @@ class ProductSeeder extends Seeder
                 ]);
             }
         }
+        $subCategories2 = [2, 4, 6, 8];
         foreach ($products as $product) {
-            foreach ($subCategories as $subId) {
+            foreach ($subCategories2 as $subId) {
                 Product::factory(1)->create([
                     ...$product,
                     'product_category_id' => 2,
