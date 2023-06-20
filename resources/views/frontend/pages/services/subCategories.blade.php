@@ -17,11 +17,13 @@
         <div class="row mx-lg-5 mx-2">
             @foreach ($subCategories as $sub)
             <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
-                        src="{{ useImage($sub->image) }}" alt="">
+                <div class="d-flex flex-column align-items-center border rounded shadow p-2">
+                    <a href="{{ route('service.sub', $sub->id) }}">
+                        <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
+                            src="{{ useImage($sub->image) }}" alt="">
+                    </a>
                     <a class="text-dark text-capitalize" href="{{route('service.sub', $sub->id)}}"><h6>{{$sub->name}}</h6></a>
-                    <p class="text-center text-muted">{{$sub->description}}</p>
+                    <a href="{{route('service.sub', $sub->id)}}" class="text-center text-muted">{{$sub->description}}</a>
                 </div>
             </div>
             @endforeach
