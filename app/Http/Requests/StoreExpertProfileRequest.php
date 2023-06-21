@@ -11,7 +11,7 @@ class StoreExpertProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreExpertProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name"          => 'required',
+            "post"          => 'required',
+            "description"   => 'required',
+            "experience"    => 'required',
+            "join_date"     => 'required',
+            "availability"  => 'required',
+            "image"         => 'required|mimes:png,jpg,webp,jpeg',
         ];
     }
 }

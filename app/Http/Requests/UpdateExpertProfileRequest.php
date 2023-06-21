@@ -11,7 +11,7 @@ class UpdateExpertProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,15 @@ class UpdateExpertProfileRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return
+            [
+                "name"          => 'required',
+                "post"          => 'required',
+                "description"   => 'required',
+                "experience"    => 'required',
+                "join_date"     => 'required',
+                "availability"  => 'required',
+                "image"         => 'mimes:png,jpg,webp,jpeg',
+            ];;
     }
 }
