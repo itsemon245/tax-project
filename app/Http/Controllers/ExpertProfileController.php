@@ -66,7 +66,8 @@ class ExpertProfileController extends Controller
      */
     public function edit(ExpertProfile $expertProfile)
     {
-        //
+        $profile = ExpertProfile::find($expertProfile->id);
+        return view("backend.expertProfile.editExpertProfile", compact('profile'));
     }
 
     /**
@@ -74,7 +75,30 @@ class ExpertProfileController extends Controller
      */
     public function update(UpdateExpertProfileRequest $request, ExpertProfile $expertProfile)
     {
-        //
+        $data = (object) $request->validated();
+        $body = [
+            'name'          => $data->name,
+            'post'          => $data->post,
+            'bio'           => $request->bio,
+            'experience'    => $data->experience,
+            'join_date'     => $data->join_date,
+            'availability'  => $data->availability,
+            'at_a_glance'   => $request->at_a_glance,
+            'description'   => $data->description,
+        ];
+        if (isset($data->image) && !empty($data->image)) {
+            $body['image'] = saveImage($data->image, 'expertProfile', 'expertProfile');
+        }
+
+        ExpertProfile::find($expertProfile->id)
+            ->update($body);
+
+        return redirect()
+            ->route("expert-profile.index")
+            ->with(array(
+                'message'    => "Expert Profile Updated Successfully",
+                'alert-type' => 'success',
+            ));
     }
 
     /**
@@ -82,6 +106,11 @@ class ExpertProfileController extends Controller
      */
     public function destroy(ExpertProfile $expertProfile)
     {
-        //
+        ExpertProfile::find($expertProfile->id)->delete();
+        return back()
+            ->with(array(
+                'message'    => "Expert Profile Deleted Successfully",
+                'alert-type' => 'success',
+            ));
     }
 }
