@@ -13,7 +13,8 @@ class ExpertProfileController extends Controller
      */
     public function index()
     {
-        return view("backend.expertProfile.viewExpertProfile");
+        $profiles = ExpertProfile::all();
+        return view("backend.expertProfile.viewExpertProfile", compact('profiles'));
     }
 
     /**
@@ -29,7 +30,27 @@ class ExpertProfileController extends Controller
      */
     public function store(StoreExpertProfileRequest $request)
     {
-        //
+        $data = (object) $request->validated();
+        ExpertProfile::create(
+            [
+                'name'          => $data->name,
+                'post'          => $data->post,
+                'bio'           => $request->bio,
+                'image'         => saveImage($data->image, 'expertProfile', 'expertProfile'),
+                'experience'    => $data->experience,
+                'join_date'     => $data->join_date,
+                'availability'  => $data->availability,
+                'at_a_glance'   => $request->at_a_glance,
+                'description'   => $data->description,
+            ]
+        );
+
+        return redirect()
+            ->route("expert-profile.index")
+            ->with(array(
+                'message'    => "Expert Profile Created Successfully",
+                'alert-type' => 'success',
+            ));
     }
 
     /**
