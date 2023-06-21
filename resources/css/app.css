@@ -3,6 +3,9 @@
     --bg-dark: #192b31;
     font-size: 15px;
 }
+html{
+    overflow-x: hidden;
+}
 *,
 body {
     box-sizing: border-box;

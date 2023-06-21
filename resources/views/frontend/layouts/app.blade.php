@@ -3,30 +3,31 @@
 
 <x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" />
 
-<body class="">
+<body class="w-100">
     <!-- Page Heading -->
     @include('frontend.layouts.header')
     @include('frontend.layouts.sidebar')
 
 
-{{-- Chat bot --}}
-<div style="z-index: 3;" class=" rounded-4 shadow-lg d-flex flex-column align-items-center w-10 bg-secondary mb-4 position-absolute position-fixed top-50 end-0">
-    <div>
-        <a href="mailto:someone@example.com" class="p-3" >
-            <i class="mdi mdi-email"></i>
+    {{-- Chat bot --}}
+    <aside style="z-index: 50; top:50%; right:0;transform: translateY(-50%);border-radius: 0.5rem 0 0 0.5rem;max-width:max-content;" class="w-100 d-flex flex-column shadow bg-light border border-primary position-fixed">
+        <a href="mailto:someone@example.com" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+            <span class="mdi mdi-email"></span>
         </a>
-    </div>
-    <div >
-        <a href="tel:555-555-5555" class=" p-3" >
-            <i class="mdi mdi-phone"></i>
+        <a href="tel:555-555-5555" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+            <span class="mdi mdi-phone"></span>
         </a>
-    </div>
-    <div >
-        <a href="https://wa.me/+8801885518864/?text=Hi Sam, Whatsup" class=" p-3" >
-            <i class="mdi mdi-whatsapp"></i>
+        <a href="https://wa.me/+8801885518864/?text=Hi Sam, Whatsup" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+            <span class="mdi mdi-whatsapp"></span>
         </a>
-    </div>
-</div>
+    </aside>
+
+
+    <aside style="z-index: 50; top:calc(100dvh - 13%); right:5%;transform: translateY(-50%);max-width:max-content;cursor: pointer;" class=" px-3 py-2 rounded-circle shadow bg-primary border border-primary position-fixed">
+        <div class="" style="transform:rotateY(180deg)">
+            <span style="" class="mdi mdi-chat text-white fs-4"></span>
+        </div>
+    </aside>
 
     <!-- Page Content -->
     <main class="">
