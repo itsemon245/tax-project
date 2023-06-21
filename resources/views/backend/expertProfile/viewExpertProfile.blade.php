@@ -14,43 +14,51 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Video</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
+                                    <th>Profile Details</th>
+                                    <th>Profile Descriptions</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                {{-- @foreach ($videos as $key => $video)
+                                @foreach ($profiles as $key => $profile)
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>
-                                            <video width="320" height="240" controls>
-                                                <source src="{{ $video->video }}" type="video/mp4">
-                                            </video>
+                                            <span><b>Name:
+                                                    {{ $profile->name }}</b></span><br>
+                                            <span class="text-muted">Post: {{ $profile->post }}</span><br>
+                                            <span class="text-muted">Join Date:
+                                                {{ $profile->join_date }}</span><br>
+                                            <span class="text-muted">Experience:
+                                                {{ $profile->experience }} Years</span><br>
+                                            <span class="text-muted">Availability:
+                                                {{ $profile->availability }}</span><br>
                                         </td>
                                         <td>
-                                            {{ Str::limit($video->title, 20, '...') }}
-                                            <br>
-                                            <span class="text-muted" title="Status">Status: {!! $video->status
-                                                ? "<span class='badge bg-success'>Active</span>"
-                                                : "<span class='badge bg-danger'>Deactive</span>" !!}</span>
+                                            <span class="text-muted">Bio: {!! Str::limit($profile->bio, 100, '...') !!}</span><br>
+                                            <span class="text-muted">Description: {!! Str::limit($profile->description, 100, '...') !!}</span><br>
+                                            <span class="text-muted">At a Glance: {!! $profile->at_a_glance !!}</span>
                                         </td>
-                                        <td>{!! Str::limit($video->description, 100, '...') !!}</td>
                                         <td>
-                                            <a href="{{ route('video.edit', $video->id) }}"
+                                            <img src="{{ useImage($profile->image) }}" alt="image" width="80px"
+                                                loading="lazy" class="mb-2" />
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('expert-profile.edit', $profile->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
-                                            <button onclick='deleteVideo("videoDelete-{{ $video->id }}")'
+                                            <button onclick='deleteProfile("profileDelete-{{ $profile->id }}")'
                                                 class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
-                                            <form class="d-none" id="videoDelete-{{ $video->id }}"
-                                                action="{{ Route('video.destroy', $video->id) }}" method="post">
+                                            <form class="d-none" id="profileDelete-{{ $profile->id }}"
+                                                action="{{ Route('expert-profile.destroy', $profile->id) }}"
+                                                method="post">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </x-backend.table.basic>
 
@@ -64,7 +72,7 @@
 
     @push('customJs')
         <script>
-            const deleteVideo = id => {
+            const deleteProfile = id => {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
