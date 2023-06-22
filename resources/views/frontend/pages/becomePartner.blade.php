@@ -56,7 +56,7 @@
 
             <h4 class="title-header mb-3 text-center">Become Partner Progress</h4>
         
-            <form method="POST" action="{{ route('user-profile.update.become', $user->id) }}" class="">
+            <form method="POST" action="{{ route('user-profile.update.become', $user->id) }}" >
                 @csrf
                 @method("PUT")
                 <div class="d-flex justify-content-center">
@@ -96,16 +96,16 @@
                                 <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Full Name" name='name' :value="$user->name" placeholder="John Doe" required />
+                                            <x-backend.form.text-input label="Full Name" name='name' :value="$user->name" required placeholder="John Doe"  />
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Username" name='username' disabled :value="$user->user_name" required />
+                                            <x-backend.form.text-input label="Username" name='username' disabled :value="$user->user_name"  />
                                         </div>
                                             <div class="col-md-6">
-                                                <x-backend.form.text-input label="Phone No." name='phone' :value="$user->phone" required />
+                                                <x-backend.form.text-input label="Phone No." required name='phone' :value="$user->phone"  />
                                             </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Email" name='email' disabled :value="$user->email" required />
+                                            <x-backend.form.text-input label="Email" name='email' disabled :value="$user->email"  />
                                         </div>
                                         
                                     </div> <!-- end row -->
@@ -115,7 +115,7 @@
                                     <div class="row">
                                         <div class="col-md-6 col-lg-4">
                                             <label for="division">Division <span class="text-danger">*</span></label>
-                                            <select class="selectize" id="division" name="division" placeholder="Select Division..." required>
+                                            <select class="selectize" id="division" name="division" required placeholder="Select Division..." >
                                                 <option disabled selected>Select Division</option>
                                                 @foreach ($data as $item)
                                                 <option class="divisions" value="{{$item['division']}}">{{$item['division']}}</option>
@@ -124,20 +124,20 @@
                                         </div>
                                         <div class="col-md-6 col-lg-4">
                                             <label for="district">District <span class="text-danger">*</span></label>
-                                            <select id="district" name="district" placeholder="Select District..." required>
+                                            <select id="district" name="district" required placeholder="Select District..." >
                                                 <option disabled selected>Select Division First</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-lg-4">
                                             <label for="thana">Thana <span class="text-danger">*</span></label>
-                                            <select id="thana" name="thana" placeholder="Select Thana..." required>
+                                            <select id="thana" name="thana" required placeholder="Select Thana..." >
                                                 <option disabled selected>Select District First</option>
                                             </select>
                                         </div>
                                         <div class="col-12">
                                             <label class="form-label" for="address">Address</label>
                                             <div class="">
-                                                <textarea name="address" id="address" class="form-control" placeholder="{{"House No:,\nStreet No:,\nPost Office:"}}" cols="30" required="" rows="4"></textarea>
+                                                <textarea name="address" id="address" class="form-control" required placeholder="{{"House No:,\nStreet No:,\nPost Office:"}}" cols="30" ="" rows="4"></textarea>
                                             </div>
                                         </div>
                                     </div> <!-- end row -->
