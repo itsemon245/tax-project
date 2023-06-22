@@ -6,7 +6,7 @@
 
     <x-backend.ui.section-card name="Expert Section">
 
-        <form action="{{ route('video.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('expert-profile.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -22,7 +22,7 @@
                     </x-form.ck-editor>
                 </div>
                 <div class="col-md-6">
-                    <x-form.ck-editor id="ck-editor1" name="description" placeholder="description" label="Description">
+                    <x-form.ck-editor id="ck-editor2" name="description" placeholder="description" label="Description">
                     </x-form.ck-editor>
                 </div>
                 <div class="col-md-6">
@@ -37,14 +37,13 @@
                     <x-backend.form.text-input label="Availability Date" required type="text" name="availability"
                         placeholder="Sat-Fri(08:00AM-11:55PM)">
                     </x-backend.form.text-input>
-                </div>
-                <div class="col-md-6">
-                    <x-form.ck-editor id="ck-editor1" name="at_a_glance" placeholder="Sat-Fri(08:00AM-11:55PM)"
+                    <br>
+                    <x-form.ck-editor id="ck-editor3" name="at_a_glance" placeholder="Sat-Fri(08:00AM-11:55PM)"
                         label="At a Glance">
                     </x-form.ck-editor>
                 </div>
                 <div class="col-md-6 mt-3">
-                    <x-backend.form.image-input name="hero_image" />
+                    <x-backend.form.image-input name="image" />
                 </div>
                 <div class="col-md-612">
                     <x-backend.ui.button type="submit" class="btn-primary mt-2">Create</x-backend.ui.button>
