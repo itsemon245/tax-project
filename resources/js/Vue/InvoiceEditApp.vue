@@ -108,19 +108,15 @@
     <div class="col-md-5">
       <h4 class="">Payment Details:</h4>
       <div class="d-flex my-1 gap-2 align-items-center mb-2">
-        <select name="payment_method" class="form-select text-capitalize w-50">
+        <select name="payment_method" class="form-select text-capitalize w-50" v-model="paymentMethod">
           <option selected disabled>Select Payment Method</option>
-          <option value="cash">Cash</option>
-          <option value="bkash">Bkash</option>
-          <option value="nagad">Nagad</option>
-          <option value="rocket">Rocket</option>
-          <option value="card">Card</option>
+          <option v-for="option of options" :value="option" class="text-capitalize">{{option}}</option>
         </select>
       </div>
       <div class="mb-2">
         <label class="mb-0" for="note">Payment Note</label>
         <textarea class="border border-2 w-100" name="payment_note"
-          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'" rows="4"></textarea>
+          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'" rows="4">{{ paymentNote }}</textarea>
       </div>
 
       <div class="row mb-2 align-items-center">
@@ -144,13 +140,16 @@ import { onMounted, ref, watch } from 'vue';
 import InvoiceItem from './components/InvoiceItem.vue';
 import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';
-
+import axios from 'axios'
 
 const { invoiceItems, addNewItem, calcTaxes } = useInvoice()
 const { subTotal, total, discount, paid, due, notes } = useAccounts()
 const totalTax = ref(0)
-
-
+const paymentMethod = ref('')
+const paymentNote = ref('')
+const options = ref([
+  'cash', 'bkash', 'nagad', 'rocket', 'bank', 'card'
+])
 
 const toggleDiscount = () => {
   discount.value.isActive = !discount.value.isActive
@@ -163,7 +162,64 @@ const calcDiscount = () => {
   toggleDiscount()
 }
 
+
 onMounted(() => {
+  const id = document.querySelector('#invoice-id')?.innerHTML
+  const url = 'http://localhost:8000/admin/get-invoice-data/' + id
+
+  axios.get(url)
+    .then(response => {
+      // console.log(response.data.items);
+      
+      const items = response.data.items.map(item => {
+        
+        const taxItems = JSON.parse(item.taxes)
+        let taxes = taxItems.map(tax=>{
+          let taxId = 0;
+          return {
+            id: taxId++,
+            name: tax.name,
+            rate:tax.rate,
+            number:tax.number
+          }
+        })
+        
+        
+        return {
+          id: item.id-1,
+          name: item.name,
+          description: item.description,
+          rate: item.rate,
+          qty: item.qty,
+          total: item.rate * item.qty,
+          taxes: taxes,
+          isTaxActive: false,
+          tax: 0
+        }
+      })
+      invoiceItems.value = items
+      invoiceItems.value.forEach(item => {
+        calcTaxes(item.id)
+      });
+      subTotal.value = response.data.subTotal
+      discount.value = {
+        amount: response.data.discount,
+        isFixed: true,
+        percentage: 0,
+        isActive: false
+      }
+      total.value = response.data.total
+      notes.value = response.data.note
+      paid.value = response.data.amountPaid
+      due.value = response.data.amountDue
+      paymentNote.value = response.data.paymentNote
+      paymentMethod.value = response.data.paymentMethod
+    })
+    .catch(error => {
+      console.log(error);
+    })
+
+
   watch(invoiceItems, (newItems) => {
     let sum = 0;
     newItems.forEach((item) => {
@@ -183,13 +239,13 @@ onMounted(() => {
 
   watch([totalTax, subTotal, discount], () => {
     total.value = subTotal.value + totalTax.value - discount.value.amount
-  }, {deep: true})
+  }, { deep: true })
 
   watch([subTotal], () => {
     if (subTotal.value !== 0) {
       discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount / 100;
     }
-  }, {deep: true})
+  }, { deep: true })
 
   watch([total, paid], () => {
     due.value = total.value - paid.value
@@ -203,7 +259,6 @@ onMounted(() => {
       calcTaxes(item.id)
     });
   })
-
 })
 
 

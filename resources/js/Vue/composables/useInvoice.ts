@@ -62,8 +62,7 @@ export function useInvoice() {
     };
 
     const toggleTaxPicker = (id: number) => {
-        invoiceItems.value[id].isTaxActive =
-            !invoiceItems.value[id].isTaxActive;
+        invoiceItems.value[id].isTaxActive = !invoiceItems.value[id].isTaxActive;
     };
 
     // expose managed state as return value
