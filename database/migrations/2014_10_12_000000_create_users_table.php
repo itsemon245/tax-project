@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('user_name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
-            $table->string('nid')->unique()->nullable();
-            $table->string('dob')->nullable();
+            $table->string('division')->nullable();
+            $table->string('district')->nullable();
+            $table->string('thana')->nullable();
             $table->longText('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->longText('image_url')->nullable();
