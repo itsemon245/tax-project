@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Resources\InvoiceResource;
 
 class InvoiceController extends Controller
 {
@@ -18,9 +19,8 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        
-        //storing data test
-
+        $invoices = Invoice::with('client')->latest()->get();
+        return view('backend.invoice.viewAll', compact('invoices'));
     }
 
 
@@ -94,10 +94,16 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Invoice $invoice)
     {
-        
-     return view('backend.invoice.dynamicInvoice');
+        $clients = Client::get();
+     return view('backend.invoice.viewOne', compact('invoice', 'clients'));
+    }
+
+    function getInvoiceData($id) {
+        $invoice = Invoice::with('invoiceItems')->find($id);
+        $content = new InvoiceResource($invoice);
+        return response($content);
     }
 
     /**

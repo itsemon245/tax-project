@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('post');
-            $table->longText('bio');
+            $table->longText('bio')->nullable();
             $table->string('image');
             $table->integer('experience');
             $table->string('join_date');
             $table->string('availability');
-            $table->longText('at_a_glance');
+            $table->longText('at_a_glance')->nullable();
             $table->longText('description');
             $table->timestamps();
         });

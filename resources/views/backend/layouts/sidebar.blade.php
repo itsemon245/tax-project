@@ -203,8 +203,8 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('invoice.show', 1) }}">
-                                    View
+                                <a href="{{ route('invoice.index') }}">
+                                    View All
                                 </a>
                             </li>
 
