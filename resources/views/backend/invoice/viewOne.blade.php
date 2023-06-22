@@ -117,7 +117,7 @@
                 @csrf
             <div>
                 <div class="d-flex border mb-5 justify-content-center">
-                    <x-backend.form.image-input name="header_image" :image="$invoiceImage" class="d-flex justify-content-center"
+                    <x-backend.form.image-input name="header_image" :image="$invoice->header_image" class="d-flex justify-content-center"
                         style="aspect-ratio:4/1;object-fit:contain;" />
                 </div>
                 <div class="row">
@@ -170,7 +170,7 @@
                 </div>
             </div>
 
-            <div id="invoice-create-app">
+            <div id="invoice-edit-app">
 
             </div>
 
