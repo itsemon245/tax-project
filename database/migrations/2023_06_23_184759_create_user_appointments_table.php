@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('user_appointments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('map_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->text('name');
+            $table->text('email');
+            $table->text('phone');
+            $table->text('district');
+            $table->text('thana');
+            $table->text('date');
+            $table->text('time');
+            $table->boolean('isApproved')->default(false);
             $table->timestamps();
         });
     }

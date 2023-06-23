@@ -9,58 +9,28 @@ use App\Models\UserAppointment;
 class UserAppointmentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreUserAppointmentRequest $request)
     {
-        //
+        // dd($request->all());
+        $appointment = UserAppointment::create([
+            "date" => $request->date,
+            "time" => $request->time,
+            "name" => $request->name,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "district" => $request->district,
+            "thana" => $request->thana,
+            "map_id" => $request->location,
+            "user_id" => $request->user_id,
+        ]);
+        $alert = [
+            'alert-type' => 'Success', 
+            'message' => 'Appointment Request Submitted'
+        ];
+        return back()->with($alert);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(UserAppointment $userAppointment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(UserAppointment $userAppointment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUserAppointmentRequest $request, UserAppointment $userAppointment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(UserAppointment $userAppointment)
-    {
-        //
-    }
+    
 }

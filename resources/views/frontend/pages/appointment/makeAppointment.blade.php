@@ -7,7 +7,7 @@
         <div class="container">
             <h2 class="text-center py-3">Make Appointment</h2>
 
-            <form method="POST" action="" class="">
+            <form method="POST" action="{{ route('user-appointment.store') }}" class="">
                 @csrf
                 <div class="d-flex justify-content-center">
                     <div class="w-100" style="max-width: 650px;" class="px-md-0 px-2">
@@ -25,6 +25,10 @@
                                             </a>
                                         </li>
                                     @endif
+
+                                    @auth
+                                        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                                    @endauth
                                     <li class="nav-item" role="presentation">
                                         <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab"
                                             class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
@@ -97,11 +101,11 @@
                                 <div class="tab-pane my-3" id="tab-3" role="tabpanel">
                                     <div class="row">
                                         <x-backend.form.text-input type='text' class="mb-2" label="Name"
-                                            name="name" required />
+                                            name="name" :value="auth()->user() !== null ? auth()->user()->name : ''" required />
                                         <x-backend.form.text-input type='text' class="mb-2" label="Email"
-                                            name="email" required />
+                                            name="email" :value="auth()->user() !== null ? auth()->user()->email : ''" required />
                                         <x-backend.form.text-input type='text' class="mb-2" label="Phone"
-                                            name="phone" required />
+                                            name="phone" :value="auth()->user() !== null ? auth()->user()->phone : ''" required />
                                         <div class="d-flex align-items-center justify-content-between gap-3">
                                             <div class="flex-grow-1">
                                                 <label for="district">District <span class="text-danger">*</span></label>
