@@ -7,7 +7,7 @@
 @endphp
 <div class="">
     @if ($label)
-        <label class="form-label mt-2 mb-0" style="font-size: 14px;">{{ $label }}
+        <label class="form-label mb-0" style="font-size: 14px;">{{ $label }}
             @if ($required)
                 <span class="text-danger">*</span>
             @endif

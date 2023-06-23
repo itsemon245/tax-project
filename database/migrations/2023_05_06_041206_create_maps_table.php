@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('maps', function (Blueprint $table) {
             $table->id();
-            $table->longText('link');
+            $table->text('location');
             $table->longText('address');
-            $table->longText('image');
+            $table->longText('src');
             $table->timestamps();
             $table->softDeletes();
         });

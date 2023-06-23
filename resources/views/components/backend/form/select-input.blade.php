@@ -3,7 +3,6 @@
     $id = $attributes->get('id');
     $label = $attributes->get('label');
     $required = $attributes->get('required');
-    $value = $attributes->has('value') ? $attributes->get('value') : null;
     $placeholder = $attributes->get('placeholder');
 @endphp
 

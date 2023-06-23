@@ -7,6 +7,7 @@
     $id = $attributes->get('id');
     $label = $attributes->has('label') ? $attributes->get('label') : $attributes->get('name');
     $placeholder = $attributes->has('placeholder') ? $attributes->get('placeholder') : $attributes->get('name');
+    $required = $attributes->get('required');
 @endphp
 @pushOnce('customCss')
     {{-- Classic build --}}
@@ -15,7 +16,9 @@
     {{-- Super Build  --}}
     <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/super-build/ckeditor.js"></script>
 @endPushOnce
-<label for="{{$id}}" class="form-label text-capitalize">{{$label}}</label>
+<label for="{{$id}}" class="form-label text-capitalize mb-0">{{$label}} @if ($required)
+    <span class="text-danger">*</span>
+@endif</label>
 <textarea {{$attributes->merge()}}>
     {{$slot}}
 </textarea>

@@ -29,11 +29,13 @@
                     @foreach ($about_sections as $about_section)
                         {{-- Sections --}}
                         <div class="row mb-4 justify-content-sm-center gap-sm-3">
-                            <h4 class="col-sm-12 col-5 p-0">{!!$about_sections[0]['title'] ?? '' !!}</h4>
+                            <h4 class="col-sm-12 col-5 p-0">{{ $about_sections[0]['title'] ?? '' }}</h4>
                             <div class="col-sm-3 col-6 mb-3 mb-sm-0 p-0 flex-grow-1">
-                                <img class="w-100 rounded"
-                                    src="{{ $about_sections[0]['image'] ? useImage($about_sections[0]['image']) : asset('frontend/assets/images/bg-material.png') }}"
-                                    alt="" />
+                                @isset($about_sections[0]['image'])
+                                    <img class="w-100 rounded"
+                                        src="{{ $about_sections[0]['image'] == true ? useImage($about_sections[0]['image']) : asset('frontend/assets/images/bg-material.png') }}"
+                                        alt="" />
+                                @endisset
                             </div>
                             <div class="col-sm-8 p-4 bg-secondary rounded">
                                 <p>

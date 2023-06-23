@@ -13,8 +13,10 @@
                     <i class="mdi mdi-menu text-light"></i>
                 </button>
             </div>
+           <a href="{{route('home')}}">
             <img class="app-logo" style="width:100px;" src="{{ asset('frontend/assets/images/logo/app.png') }}"
-                alt="Text Act Logo">
+            alt="Text Act Logo">
+           </a>
         </div>
 
         @if (!$isPageV2)
@@ -139,6 +141,9 @@
 
             <nav class="mx-auto menu d-none d-sm-inline-block">
                 <ul class="nav justify-content-center">
+                    <li class="nav-item custom-nav-item {{ request()->routeIs('home') ? 'active-link' : '' }}">
+                        <a class=" nav-link text-light" href="{{ route('home') }}">Home</a>
+                    </li>
                     <li
                         class="nav-item custom-nav-item {{ request()->routeIs('page.industries') ? 'active-link' : '' }}">
                         <a class=" nav-link text-light" href="{{ route('page.industries') }}">Industries</a>
@@ -177,9 +182,12 @@
                         class="nav-item custom-nav-item {{ request()->routeIs('page.client.studio') ? 'active-link' : '' }}">
                         <a class=" nav-link text-light" href="{{ route('page.client.studio') }}">Client Studio</a>
                     </li>
-                    <li
-                        class="nav-item custom-nav-item {{ request()->routeIs('page.appointment') ? 'active-link' : '' }}">
-                        <a class=" nav-link text-light" href="{{ route('page.appointment') }}">Appointment</a>
+                    <li class="nav-item custom-nav-item position-relative dropdown-trigger {{ str(url()->current())->contains("/make-appointment") ? 'active-link' : '' }}">
+                        <a class="nav-link text-light" href="javascript:void()">Appointment</a>
+                        <ul class="position-absolute dropdown ">
+                            <li class="nav-item custom-nav-item dropdown-item {{ request()->routeIs('appointment.make', 1) ? 'active-link' : '' }}"><a href="{{route('appointment.make', 1)}}" class="nav-link text-light">Physical</a></li>
+                            <li class="nav-item custom-nav-item dropdown-item {{ request()->routeIs('appointment.make', 0) ? 'active-link' : '' }}"><a href="{{route('appointment.make', 0)}}" class="nav-link text-light">Virtual</a></li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -293,9 +301,12 @@
                     class="nav-item custom-nav-item {{ request()->routeIs('page.client.studio') ? 'active-link' : '' }}">
                     <a class=" nav-link text-light" href="{{ route('page.client.studio') }}">Client Studio</a>
                 </li>
-                <li
-                    class="nav-item custom-nav-item {{ request()->routeIs('page.appointment') ? 'active-link' : '' }}">
-                    <a class=" nav-link text-light" href="{{ route('page.appointment') }}">Appointment</a>
+                <li class="nav-item custom-nav-item position-relative dropdown-trigger {{ str(url()->current())->contains("/make-appointment") ? 'active-link' : '' }}">
+                    <a class="nav-link text-light" href="javascript:void()">Appointment</a>
+                    <ul class="position-absolute dropdown ">
+                        <li class="nav-item custom-nav-item dropdown-item {{ request()->routeIs('appointment.make', 1) ? 'active-link' : '' }}"><a href="{{route('appointment.make', 1)}}" class="nav-link text-light">Physical</a></li>
+                        <li class="nav-item custom-nav-item dropdown-item {{ request()->routeIs('appointment.make', 0) ? 'active-link' : '' }}"><a href="{{route('appointment.make', 0)}}" class="nav-link text-light">Virtual</a></li>
+                    </ul>
                 </li>
             </ul>
         </nav>
