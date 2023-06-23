@@ -50,6 +50,7 @@
                 ]
 ];
 @endphp
+
 @extends('frontend.layouts.app')
 @section('main')
        <div class="container my-3">
