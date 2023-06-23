@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="">
                                 <x-form.ck-editor id="ck-editor1" name="description" placeholder="Description"
-                                    label="Description" required>{!! $row->description !!}
+                                    label="Description" required>{!! $row->description ??  ' ' !!}
                                 </x-form.ck-editor>
                             </div>
                             <div class="col-md-12">
