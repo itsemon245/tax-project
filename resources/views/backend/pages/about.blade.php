@@ -76,11 +76,11 @@
                     <div class="col-md-6">
                         <div class="mt-1">
                             <label for=section-title${itemCount} class="form-label">Section Title ${itemCount}</label>
-                           <input type='text' name="sections_titles[]" placeholder="Section Title" class="form-control"  />
+                           <input type='text' name="sections_titles[]" placeholder="Section Title" required class="form-control"  />
                         </div>
                         <div class="mt-1">
                             <label for="section-editor-${itemCount}" class="form-label">Section Description ${itemCount}</label>
-                            <textarea id="section-editor-${itemCount}" name="sections_descriptions[]" placeholder="Section Description">
+                            <textarea id="section-editor-${itemCount}" name="sections_descriptions[]" required placeholder="Section Description">
                                 
                             </textarea>
                         </div>
