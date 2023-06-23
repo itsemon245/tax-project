@@ -267,8 +267,8 @@
                     <div class="collapse" id="map-section">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('map.index') }}">Create</a>
-                                <a href="{{ route('map.create') }}">
+                                <a href="{{ route('map.create') }}">Create</a>
+                                <a href="{{ route('map.index') }}">
                                     View All
                                 </a>
                             </li>

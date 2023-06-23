@@ -14,7 +14,8 @@ class MapController extends Controller
      */
     public function index()
     {
-        return view('backend.map.map');
+        $maps = Map::all();
+        return view('backend.map.showMaps', compact('maps'));
     }
 
     /**
@@ -22,8 +23,7 @@ class MapController extends Controller
      */
     public function create()
     {
-        $maps = Map::all();
-        return view('backend.map.showMaps', compact('maps'));
+        return view('backend.map.map');
     }
 
     /**
@@ -31,16 +31,20 @@ class MapController extends Controller
      */
     public function store(StoreMapRequest $request)
     {
-        $maps = new Map();
-        $maps->link = $request->link;
-        $maps->address = $request->address;
-        $maps->image = saveImage($request->map_image, 'map', 'maps-image'); 
-        $maps->save();
+        // dd($request->iframe_link);
+        $pattern = '/https:\/\/www\.google\.com\/maps\/embed/i';
+        $src = preg_grep($pattern, explode('"', $request->iframe_link))[1];
+        // dd($src);
+        $map = new Map();
+        $map->location = $request->location;
+        $map->address = $request->address;
+        $map->src = $src; 
+        $map->save();
         $notification = array(
             'message' => "Added Successfully",
             'alert-type' => 'success',
         );
-        return back()->with($notification);
+        return redirect(route('map.index'))->with($notification);
     }
 
     /**
@@ -48,7 +52,7 @@ class MapController extends Controller
      */
     public function show(Map $map)
     {
-        return view('backend.map.showSingleMap', compact('map'));
+       
 
     }
 
@@ -57,7 +61,7 @@ class MapController extends Controller
      */
     public function edit(Map $map)
     {
-        //
+        return view('backend.map.editMap', compact('map'));
     }
 
     /**
@@ -65,7 +69,17 @@ class MapController extends Controller
      */
     public function update(UpdateMapRequest $request, Map $map)
     {
-        //
+        $pattern = '/https:\/\/www\.google\.com\/maps\/embed/i';
+        $src = preg_grep($pattern, explode('"', $request->iframe_link))[1];
+        $map->location = $request->location;
+        $map->address = $request->address;
+        $map->src = $src; 
+        $map->update();
+        $notification = array(
+            'message' => "Updated Successfully",
+            'alert-type' => 'success',
+        );
+        return redirect(route('map.index'))->with($notification);
     }
 
     /**
@@ -78,7 +92,7 @@ class MapController extends Controller
             'message' => "Deleted Successfully",
             'alert-type' => 'success',
         );
-        return back()->with($notification);
+        return redirect(route('map.index'))->with($notification);
 
     }
 
