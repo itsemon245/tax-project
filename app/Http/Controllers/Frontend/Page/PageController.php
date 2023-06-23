@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
 use App\Models\ClientStudio;
+use App\Models\Map;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -30,10 +31,14 @@ class PageController extends Controller
     }
     public function appointmentPage(bool $isPhysical)
     {
+        $maps = [];
+        if ($isPhysical) {
+            $maps = Map::get();
+        }
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->get();
         $testimonials = Testimonial::get();
-        return view('frontend.pages.appointment.makeAppointment', compact('banners','infos1','testimonials', 'isPhysical'));
+        return view('frontend.pages.appointment.makeAppointment', compact('banners','infos1','testimonials', 'isPhysical', 'maps'));
     }
     public function aboutPage()
     {
