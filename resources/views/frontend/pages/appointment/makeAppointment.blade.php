@@ -67,7 +67,8 @@
                                                 Which office do you prefer?
                                             </h4>
                                             <div class="col-12">
-                                                <input type="hidden" name="" id="maps-data" value="{{json_encode($maps)}}" >
+                                                <input type="hidden" name="" id="maps-data"
+                                                    value="{{ json_encode($maps) }}">
                                                 <x-backend.form.select-input id="location" class="mb-3" name="location"
                                                     label="Choose Location" placeholder="Choose Location..." required>
                                                     @foreach ($maps as $map)
@@ -76,11 +77,9 @@
                                                 </x-backend.form.select-input>
                                             </div>
                                             <div class="col-12">
-                                                <iframe id="map"
-                                                    src="{{$maps[0]->src}}"
-                                                    height="450" class="w-100 rounded shadow-sm" style="border:0;"
-                                                    allowfullscreen="" loading="lazy"
-                                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                                <iframe id="map" src="{{ $maps[0]->src }}" height="450"
+                                                    class="w-100 rounded shadow-sm" style="border:0;" allowfullscreen=""
+                                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                             </div>
 
                                         </div>
@@ -238,7 +237,13 @@
                     email = e.target.value
                 })
                 $("input[name='date']").on('input', e => {
-                    date = e.target.value
+                    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Agust',
+                        'September', 'October', 'November', 'December'
+                    ]
+                    let newDate = new Date(e.target.value)
+                    date = `${newDate.getDate()} ${months[newDate.getMonth()]}, ${newDate.getFullYear()}`
+
+                    console.log(date);
                 })
                 $("input[name='time']").on('input', e => {
                     time = e.target.value
@@ -248,28 +253,37 @@
 
 
 
-                const location = $('#location')
-                const mapsData = JSON.parse($('#maps-data').val())
-                location.on('input', e => {
-                    const mapId = parseInt(e.target.value)
-                    office =  mapsData.filter(item => item.id===mapId)[0]
-                    console.log(office);
-                    const url = office.src
-                    $('#map').attr('src', url)
-                })
-                
-                
+                if (parseInt('{{ $isPhysical }}')) {
+                    const location = $('#location')
+                    const mapsData = JSON.parse($('#maps-data').val())
+                    location.on('input', e => {
+                        const mapId = parseInt(e.target.value)
+                        office = mapsData.filter(item => item.id === mapId)[0]
+                        console.log(office);
+                        const url = office.src
+                        $('#map').attr('src', url)
+                    })
+
+                }
+
                 const nextBtn = $('#next-btn')
-               
-               
+
+
                 nextBtn.click(() => {
 
                     setTimeout(() => {
                         const isLast = $('#finish').hasClass('active');
-                        const officeBody = `<p class="fw-bold>${office.location}</p>
-                                            <div>${office.address}</div>`
+                        const officeBody = ` <div class="card">
+                                                <div class="card-header fs-5">Office</div>
+                                                <div class="card-body" id="address-body">
+                                                    <p class='fw-bold mb-1'>${office.location ? office.location : 'Please Select Office Location'}</p>
+                                                    <div class="text-muted">${office.address ? office.address : ''}</div>
+                                                </div>
+                                            </div>
+                                    `
                         if (isLast) {
-                            console.log(office);
+                            const submitBtn =
+                                `<button type="submit" class="btn btn-primary">Submit</button>`
                             const html = `
                             <div class="card">
                                 <p class="card-header text-center">Appointment Details</p>
@@ -287,22 +301,15 @@
                                         </p>
                                     </div>
                                     <p class="text-darkp-2 p-2 border bg-light rounded"><span
-                                            class="fw-bold">Time: </span>${date}, ${time}</p>
-                                    <div class="card">
-                                        <div class="card-header fs-5">Office</div>
-                                        <div class="card-body" id="address-body">
-                                            
-                                        </div>
-                                    </div>
+                                            class="fw-bold">Date: </span>${date} <span
+                                            class="fw-bold">Time: </span>${time}</p>
+                                   ${parseInt('{{ $isPhysical }}') ? officeBody : ''}
                                 </div>
                             </div>`
+
+
                             $('#finish').html(html)
-                            console.log($('#address-body').html(officeBody));
-                            $('#address-body').html(officeBody)
-                            const submitBtn =
-                                `<button type="submit" class="btn btn-primary">Submit</button>`
                             nextBtn.html(submitBtn)
-                            
                         }
                     }, 100);
                 })
