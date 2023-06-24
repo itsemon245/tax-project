@@ -29,12 +29,12 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $user = User::with('authentications')->where('email', $request->email)->get();
-        
+        $notification = [];
         $count_user = count($user[0]->authentications);
         if($count_user > 2){
             $notification = array(
-                'message' => "Already logged in at 3 places! Logout anyone and try again.",
-                'alert-type' => 'danger',
+                'message' => "Can't log in into more then 3 devices at once",
+                'alert-type' => 'error',
             );
             return back()->with($notification);
         }else{
