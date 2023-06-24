@@ -1,14 +1,7 @@
- <!-- Vendor js -->
- <script src="{{ asset('backend/assets/js/vendor.min.js') }}"></script>
-
- <!-- App js -->
- <script src="{{ asset('backend/assets/js/app.min.js') }}"></script>
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
- <script>
+<script>
     const Toast = Swal.mixin({
         toast: true,
-        position: 'top',
+        position: 'top-end',
         showConfirmButton: false,
         timer: 1500,
         timerProgressBar: true,

@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMapRequest extends FormRequest
+class UpdateAuthenticationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->user() !== null;
+        return false;
     }
 
     /**
@@ -22,9 +22,7 @@ class StoreMapRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'location' => ['string', 'required'],
-            'address' => ['string', 'required'],
-            'iframe_link' => ['required', 'string', 'regex:/https:\/\/www\.google\.com\/maps\/embed/i'],
+            //
         ];
     }
 }

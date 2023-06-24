@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Frontend\Page;
 
 use App\Models\Info;
+use App\Models\About;
 use App\Models\Testimonial;
+use App\Models\ClientStudio;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
-use App\Models\ClientStudio;
+use App\Models\Map;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -30,14 +32,21 @@ class PageController extends Controller
     }
     public function appointmentPage(bool $isPhysical)
     {
+        $maps = [];
+        if ($isPhysical) {
+            $maps = Map::get();
+        }
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->get();
         $testimonials = Testimonial::get();
-        return view('frontend.pages.appointment.makeAppointment', compact('banners','infos1','testimonials', 'isPhysical'));
+        return view('frontend.pages.appointment.makeAppointment', compact('banners','infos1','testimonials', 'isPhysical', 'maps'));
     }
     public function aboutPage()
     {
-        return view('frontend.pages.about');
+        $about_data= About::skip(0)->first();
+        $about_sections= json_decode($about_data->sections,true);
+       // dd($about_sections);
+        return view('frontend.pages.about',compact('about_data','about_sections'));
     }
     public function becomePartnerPage()
     {

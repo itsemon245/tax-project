@@ -159,10 +159,11 @@
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <a style="color: red;" href="{{ route('logout') }}" class="dropdown-item notify-item">
-                        <i class="fe-log-out"></i>
-                        <span>Logout</span>
-                    </a>
+                    <form action="{{ route('logout') }}" method="get">
+                        @csrf
+                        <input type="hidden"  name="auth_id" class="d-none" value="{{ auth()->id() }}" >
+                        <x-backend.ui.button class="text-danger">Log out</x-backend.ui.button>
+                        </form>
 
                 </div>
             </li>

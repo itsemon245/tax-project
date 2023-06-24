@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="">
                                 <x-form.ck-editor id="ck-editor1" name="description" placeholder="Description"
-                                    label="Description" required>{!! $row->description !!}
+                                    label="Description" required>{{ $row->description ??  ' ' }}
                                 </x-form.ck-editor>
                             </div>
                             <div class="col-md-12">
@@ -42,8 +42,11 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <button class="btn btn-primary waves-effect waves-light profile-button submit_data">Create
-                                    Page</button>
+                                <button class="btn btn-primary waves-effect waves-light profile-button submit_data">@if ($row)
+                                    Update Page
+                                @else
+                                Create  Page
+                                @endif </button>
                             </div>
 
 
@@ -73,11 +76,11 @@
                     <div class="col-md-6">
                         <div class="mt-1">
                             <label for=section-title${itemCount} class="form-label">Section Title ${itemCount}</label>
-                           <input type='text' name="sections_titles[]" placeholder="Section Title" class="form-control"  required />
+                           <input type='text' name="sections_titles[]" placeholder="Section Title" required class="form-control"  />
                         </div>
                         <div class="mt-1">
                             <label for="section-editor-${itemCount}" class="form-label">Section Description ${itemCount}</label>
-                            <textarea id="section-editor-${itemCount}" name="sections_descriptions[]" placeholder="Section Description" required>
+                            <textarea id="section-editor-${itemCount}" name="sections_descriptions[]" required placeholder="Section Description">
                                 
                             </textarea>
                         </div>
@@ -85,7 +88,7 @@
                     <div class="col-md-6">  
                         <label for="section-image-${itemCount}">
                                 <p>Section Image ${itemCount}</p>
-                                <input id="section-image-${itemCount}" type="file" name="sections_images[]" hidden required>
+                                <input id="section-image-${itemCount}" type="file" name="sections_images[]" required hidden>
                                 <img class="w-100 border border-2 border-primary" id="live-${itemCount}"
                                     src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
                         </label>

@@ -11,7 +11,7 @@ class UpdateMapRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user() !== null;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateMapRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'location' => ['string', 'required'],
+            'address' => ['string', 'required'],
+            'iframe_link' => ['required', 'string', 'regex:/https:\/\/www\.google\.com\/maps\/embed/i'],
         ];
     }
 }

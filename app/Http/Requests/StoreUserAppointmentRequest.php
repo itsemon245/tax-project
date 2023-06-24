@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMapRequest extends FormRequest
+class StoreUserAppointmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->user() !== null;
+        return true;
     }
 
     /**
@@ -22,9 +22,14 @@ class StoreMapRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'location' => ['string', 'required'],
-            'address' => ['string', 'required'],
-            'iframe_link' => ['required', 'string', 'regex:/https:\/\/www\.google\.com\/maps\/embed/i'],
+            'location' => 'sometimes',
+            'date' => 'required|date',
+            'time' => 'required',
+            'name'=> 'required|string|max:255',
+            'email'=> 'required|email|max:255',
+            'phone'=> 'required|string|max:14',
+            'district'=> 'required|string',
+            'thana'=> 'required|string',
         ];
     }
 }
