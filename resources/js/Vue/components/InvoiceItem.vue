@@ -4,7 +4,7 @@
         <td>
             <div>
                 <input aria-label="item-name" name="item_names[]" type="text" v-model="props.item.name" />
-                <input aria-label="item-descriptions" name="item_descriptions[]" type="text"
+                <input aria-label="item-descriptions" v-model="props.item.description" name="item_descriptions[]" type="text"
                     placeholder="Item Description (optional)" />
             </div>
         </td>
@@ -95,7 +95,6 @@ const props = defineProps(['item'])
 
 
 const {
-    invoiceItems,
     deleteInvoiceItem,
     addNewTaxItem,
     deleteTaxItem,

@@ -15,14 +15,16 @@
 
                             <div class="d-flex justify-content-center">
                                 <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <a href="#account-2" data-bs-toggle="tab" data-toggle="tab"
-                                            class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 active"
-                                            aria-selected="true" role="tab" tabindex="-1">
-                                            <i class="mdi mdi-map-marker"></i>
-                                            <span class="d-none d-sm-inline">Location</span>
-                                        </a>
-                                    </li>
+                                    @if ($isPhysical)
+                                        <li class="nav-item" role="presentation">
+                                            <a href="#account-2" data-bs-toggle="tab" data-toggle="tab"
+                                                class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 active"
+                                                aria-selected="true" role="tab" tabindex="-1">
+                                                <i class="mdi mdi-map-marker"></i>
+                                                <span class="d-none d-sm-inline">Location</span>
+                                            </a>
+                                        </li>
+                                    @endif
                                     <li class="nav-item" role="presentation">
                                         <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab"
                                             class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
@@ -58,28 +60,32 @@
                                         style="width: 25%;"></div>
                                 </div>
 
-                                <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
-                                    <div class="row">
-                                        <h4 class="text-center mb-2">
-                                            Which office do you prefer?
-                                        </h4>
-                                        <div class="col-12">
-                                            <x-backend.form.select-input id="location" class="mb-3" name="location"
-                                                label="Choose Location" placeholder="Choose Location..." required>
-                                                <option value="">Agrabad, Chattagram</option>
-                                                <option value="">Andarkella, Chattagram</option>
-                                            </x-backend.form.select-input>
-                                        </div>
-                                        <div class="col-12">
-                                            <iframe id="map"
-                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118103.47450132135!2d91.73746698943835!3d22.32591352860032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30acd8a64095dfd3%3A0x5015cc5bcb6905d9!2z4Kaa4Kaf4KeN4Kaf4KaX4KeN4Kaw4Ka-4Kau!5e0!3m2!1sbn!2sbd!4v1687279949135!5m2!1sbn!2sbd"
-                                                height="450" class="w-100 rounded shadow-sm" style="border:0;"
-                                                allowfullscreen="" loading="lazy"
-                                                referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                        </div>
+                                @if ($isPhysical)
+                                    <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
+                                        <div class="row">
+                                            <h4 class="text-center mb-2">
+                                                Which office do you prefer?
+                                            </h4>
+                                            <div class="col-12">
+                                                <input type="hidden" name="" id="maps-data" value="{{json_encode($maps)}}" >
+                                                <x-backend.form.select-input id="location" class="mb-3" name="location"
+                                                    label="Choose Location" placeholder="Choose Location..." required>
+                                                    @foreach ($maps as $map)
+                                                        <option value="{{ $map->id }}">{{ $map->location }}</option>
+                                                    @endforeach
+                                                </x-backend.form.select-input>
+                                            </div>
+                                            <div class="col-12">
+                                                <iframe id="map"
+                                                    src="{{$maps[0]->src}}"
+                                                    height="450" class="w-100 rounded shadow-sm" style="border:0;"
+                                                    allowfullscreen="" loading="lazy"
+                                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                            </div>
 
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                                 <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
                                     <h4 class="text-center mb-2">
                                         Which time works best for you?
@@ -155,7 +161,7 @@
         <script src="{{ asset('frontend/assets/js/form-wizard.init.js') }}"></script>
         <script>
             $(document).ready(function() {
-                let office = ''
+                let office = {}
                 let date = ''
                 let time = ''
                 let name = ''
@@ -243,19 +249,27 @@
 
 
                 const location = $('#location')
-                const map = $('#map')
-                location.on('change', e => {
-                    office = e.target.value
-                    const url =
-                        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116834.13673771205!2d90.41928169999998!3d23.780636450000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2z4Kai4Ka-4KaV4Ka-!5e0!3m2!1sbn!2sbd!4v1687322980688!5m2!1sbn!2sbd"
-                    map.attr('src', url)
+                const mapsData = JSON.parse($('#maps-data').val())
+                location.on('input', e => {
+                    const mapId = parseInt(e.target.value)
+                    office =  mapsData.filter(item => item.id===mapId)[0]
+                    console.log(office);
+                    const url = office.src
+                    $('#map').attr('src', url)
                 })
+                
+                
                 const nextBtn = $('#next-btn')
+               
+               
                 nextBtn.click(() => {
-                    
+
                     setTimeout(() => {
                         const isLast = $('#finish').hasClass('active');
+                        const officeBody = `<p class="fw-bold>${office.location}</p>
+                                            <div>${office.address}</div>`
                         if (isLast) {
+                            console.log(office);
                             const html = `
                             <div class="card">
                                 <p class="card-header text-center">Appointment Details</p>
@@ -276,18 +290,19 @@
                                             class="fw-bold">Time: </span>${date}, ${time}</p>
                                     <div class="card">
                                         <div class="card-header fs-5">Office</div>
-                                        <div class="card-body">
-                                            <p class="fw-bold">Agrabad</p>
-                                            <p>Sufia Bazar, Chomohoni, Chattagram</p>
-                                            <p>Phone No: 01643-4259548</p>
+                                        <div class="card-body" id="address-body">
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>`
+                            $('#finish').html(html)
+                            console.log($('#address-body').html(officeBody));
+                            $('#address-body').html(officeBody)
                             const submitBtn =
                                 `<button type="submit" class="btn btn-primary">Submit</button>`
                             nextBtn.html(submitBtn)
-                            $('#finish').html(html)
+                            
                         }
                     }, 100);
                 })

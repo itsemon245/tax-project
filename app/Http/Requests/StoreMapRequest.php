@@ -22,9 +22,9 @@ class StoreMapRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'link' => ['string', 'required','unique:maps,link'],
-            'address' => ['string', 'required', 'max:600'],
-            'map_image' => ['required'],
+            'location' => ['string', 'required'],
+            'address' => ['string', 'required'],
+            'iframe_link' => ['required', 'string', 'regex:/https:\/\/www\.google\.com\/maps\/embed/i'],
         ];
     }
 }

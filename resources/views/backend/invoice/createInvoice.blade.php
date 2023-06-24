@@ -170,7 +170,7 @@
                 </div>
             </div>
 
-            <div id="invoice-vue-app">
+            <div id="invoice-create-app">
 
             </div>
 

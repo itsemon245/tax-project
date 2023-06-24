@@ -11,6 +11,11 @@ class Client extends Model
 
     public function calendars()
     {
-        return $this->hasMany(Calendars::class);
+        return $this->hasMany(Calendar::class);
     }
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
 }
