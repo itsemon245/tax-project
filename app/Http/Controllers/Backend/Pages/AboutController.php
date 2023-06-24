@@ -82,11 +82,18 @@ class AboutController extends Controller
         
         $sections=[];
         foreach ($request->sections_titles as $key=> $item) {
-            $array= [            
-                 'title'=>$request->sections_titles[$key],
-                 'description'=>$request->sections_descriptions[$key],
-                 'image'=> saveImage($request->sections_images[$key], 'about', 'about'),
-            ];
+            if(($request->sections_images!= null)){
+                $array= [            
+                     'title'=>$request->sections_titles[$key],
+                     'description'=>$request->sections_descriptions[$key],
+                     'image'=> saveImage($request->sections_images[$key], 'about', 'about'),
+                ];
+            }else{
+                $array= [            
+                    'title'=>$request->sections_titles[$key],
+                    'description'=>$request->sections_descriptions[$key],
+               ];
+            }
              array_push($sections,  $array);
         }
         $store_about->sections= json_encode($sections);
