@@ -50,12 +50,6 @@ class AuthenticatedSessionController extends Controller
 
     }
 
-    public function auth_destroy(Request $request)
-    {
-        $data = Authentication::where('user_id', $request->id)->first();
-        dd($request);
-    }
-
 
 
     /**
@@ -63,10 +57,14 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        if(Auth::guard('web')->logout()){
+        $data = Authentication::where('user_id', $request->auth_id)->first();
+        if($data != null){
+            $data->delete();
+            Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             return redirect('/');
         }
+
     }
 }
