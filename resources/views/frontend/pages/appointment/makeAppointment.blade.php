@@ -7,7 +7,7 @@
         <div class="container">
             <h2 class="text-center py-3">Make Appointment</h2>
 
-            <form method="POST" action="" class="">
+            <form method="POST" action="{{ route('user-appointment.store') }}" class="">
                 @csrf
                 <div class="d-flex justify-content-center">
                     <div class="w-100" style="max-width: 650px;" class="px-md-0 px-2">
@@ -25,6 +25,10 @@
                                             </a>
                                         </li>
                                     @endif
+
+                                    @auth
+                                        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                                    @endauth
                                     <li class="nav-item" role="presentation">
                                         <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab"
                                             class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
@@ -67,7 +71,8 @@
                                                 Which office do you prefer?
                                             </h4>
                                             <div class="col-12">
-                                                <input type="hidden" name="" id="maps-data" value="{{json_encode($maps)}}" >
+                                                <input type="hidden" name="" id="maps-data"
+                                                    value="{{ json_encode($maps) }}">
                                                 <x-backend.form.select-input id="location" class="mb-3" name="location"
                                                     label="Choose Location" placeholder="Choose Location..." required>
                                                     @foreach ($maps as $map)
@@ -76,11 +81,9 @@
                                                 </x-backend.form.select-input>
                                             </div>
                                             <div class="col-12">
-                                                <iframe id="map"
-                                                    src="{{$maps[0]->src}}"
-                                                    height="450" class="w-100 rounded shadow-sm" style="border:0;"
-                                                    allowfullscreen="" loading="lazy"
-                                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                                <iframe id="map" src="{{ $maps[0]->src }}" height="450"
+                                                    class="w-100 rounded shadow-sm" style="border:0;" allowfullscreen=""
+                                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                             </div>
 
                                         </div>
@@ -98,11 +101,11 @@
                                 <div class="tab-pane my-3" id="tab-3" role="tabpanel">
                                     <div class="row">
                                         <x-backend.form.text-input type='text' class="mb-2" label="Name"
-                                            name="name" required />
+                                            name="name" :value="auth()->user() !== null ? auth()->user()->name : ''" required />
                                         <x-backend.form.text-input type='text' class="mb-2" label="Email"
-                                            name="email" required />
+                                            name="email" :value="auth()->user() !== null ? auth()->user()->email : ''" required />
                                         <x-backend.form.text-input type='text' class="mb-2" label="Phone"
-                                            name="phone" required />
+                                            name="phone" :value="auth()->user() !== null ? auth()->user()->phone : ''" required />
                                         <div class="d-flex align-items-center justify-content-between gap-3">
                                             <div class="flex-grow-1">
                                                 <label for="district">District <span class="text-danger">*</span></label>
@@ -238,7 +241,13 @@
                     email = e.target.value
                 })
                 $("input[name='date']").on('input', e => {
-                    date = e.target.value
+                    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Agust',
+                        'September', 'October', 'November', 'December'
+                    ]
+                    let newDate = new Date(e.target.value)
+                    date = `${newDate.getDate()} ${months[newDate.getMonth()]}, ${newDate.getFullYear()}`
+
+                    console.log(date);
                 })
                 $("input[name='time']").on('input', e => {
                     time = e.target.value
@@ -248,28 +257,37 @@
 
 
 
-                const location = $('#location')
-                const mapsData = JSON.parse($('#maps-data').val())
-                location.on('input', e => {
-                    const mapId = parseInt(e.target.value)
-                    office =  mapsData.filter(item => item.id===mapId)[0]
-                    console.log(office);
-                    const url = office.src
-                    $('#map').attr('src', url)
-                })
-                
-                
+                if (parseInt('{{ $isPhysical }}')) {
+                    const location = $('#location')
+                    const mapsData = JSON.parse($('#maps-data').val())
+                    location.on('input', e => {
+                        const mapId = parseInt(e.target.value)
+                        office = mapsData.filter(item => item.id === mapId)[0]
+                        console.log(office);
+                        const url = office.src
+                        $('#map').attr('src', url)
+                    })
+
+                }
+
                 const nextBtn = $('#next-btn')
-               
-               
+
+
                 nextBtn.click(() => {
 
                     setTimeout(() => {
                         const isLast = $('#finish').hasClass('active');
-                        const officeBody = `<p class="fw-bold>${office.location}</p>
-                                            <div>${office.address}</div>`
+                        const officeBody = ` <div class="card">
+                                                <div class="card-header fs-5">Office</div>
+                                                <div class="card-body" id="address-body">
+                                                    <p class='fw-bold mb-1'>${office.location ? office.location : 'Please Select Office Location'}</p>
+                                                    <div class="text-muted">${office.address ? office.address : ''}</div>
+                                                </div>
+                                            </div>
+                                    `
                         if (isLast) {
-                            console.log(office);
+                            const submitBtn =
+                                `<button type="submit" class="btn btn-primary">Submit</button>`
                             const html = `
                             <div class="card">
                                 <p class="card-header text-center">Appointment Details</p>
@@ -287,22 +305,15 @@
                                         </p>
                                     </div>
                                     <p class="text-darkp-2 p-2 border bg-light rounded"><span
-                                            class="fw-bold">Time: </span>${date}, ${time}</p>
-                                    <div class="card">
-                                        <div class="card-header fs-5">Office</div>
-                                        <div class="card-body" id="address-body">
-                                            
-                                        </div>
-                                    </div>
+                                            class="fw-bold">Date: </span>${date} <span
+                                            class="fw-bold">Time: </span>${time}</p>
+                                   ${parseInt('{{ $isPhysical }}') ? officeBody : ''}
                                 </div>
                             </div>`
+
+
                             $('#finish').html(html)
-                            console.log($('#address-body').html(officeBody));
-                            $('#address-body').html(officeBody)
-                            const submitBtn =
-                                `<button type="submit" class="btn btn-primary">Submit</button>`
                             nextBtn.html(submitBtn)
-                            
                         }
                     }, 100);
                 })
