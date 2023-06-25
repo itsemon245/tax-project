@@ -71,7 +71,38 @@
             </div>
 
         </div>
+    </div>
 </form>
+    <div class="row align-itmes-center mx-5 my-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-10 container">
+            Login session:
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Device</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @forelse ($data as $datum)
+                <tr>
+                    <th scope="row">1</th>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>john@example.com</td>
+                  </tr>
+                @empty
+                    <tr>
+                        <td>Session clear</td>
+                    </tr>
+                @endforelse
+              </tbody>
+            </table>
+          </div>
+    </div>
 @endsection
 @push('customJs')
    {{-- Photo Preview for uploads --}}
