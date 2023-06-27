@@ -30,30 +30,27 @@ class PageController extends Controller
 
         return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description'));
     }
-    public function appointmentPage(bool $isPhysical)
+    public function appointmentPage()
     {
-        $maps = [];
-        if ($isPhysical) {
-            $maps = Map::get();
-        }
+        $maps = Map::get();
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->get();
         $testimonials = Testimonial::get();
-        return view('frontend.pages.appointment.makeAppointment', compact('banners','infos1','testimonials', 'isPhysical', 'maps'));
+        return view('frontend.pages.appointment.makeAppointment', compact('banners', 'infos1', 'testimonials', 'maps'));
     }
     public function aboutPage()
     {
-        $about_data= About::skip(0)->first();
-        $about_sections= json_decode($about_data->sections,true);
-       // dd($about_sections);
-        return view('frontend.pages.about',compact('about_data','about_sections'));
+        $about_data = About::skip(0)->first();
+        $about_sections = json_decode($about_data->sections, true);
+        // dd($about_sections);
+        return view('frontend.pages.about', compact('about_data', 'about_sections'));
     }
     public function becomePartnerPage()
     {
         $user = Auth::user();
-        if($user == null){
+        if ($user == null) {
             return view('backend.auth.login');
-        }else{
+        } else {
             return view('frontend.pages.becomePartner', compact('user'));
         }
     }

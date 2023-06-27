@@ -1,6 +1,14 @@
 @extends('frontend.layouts.app')
 
 @section('main')
+    @pushOnce('customCss')
+        <style>
+            .selected {
+                background: var(--bs-primary);
+                color: var(--bs-dark);
+            }
+        </style>
+    @endPushOnce
     <x-frontend.hero-section :banners="$banners" />
 
     <div class="bg-white pb-5 pt-3">
@@ -15,16 +23,15 @@
 
                             <div class="d-flex justify-content-center">
                                 <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
-                                    @if ($isPhysical)
-                                        <li class="nav-item" role="presentation">
-                                            <a href="#account-2" data-bs-toggle="tab" data-toggle="tab"
-                                                class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 active"
-                                                aria-selected="true" role="tab" tabindex="-1">
-                                                <i class="mdi mdi-map-marker"></i>
-                                                <span class="d-none d-sm-inline">Location</span>
-                                            </a>
-                                        </li>
-                                    @endif
+
+                                    <li class="nav-item" role="presentation">
+                                        <a href="#account-2" data-bs-toggle="tab" data-toggle="tab"
+                                            class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 active"
+                                            aria-selected="true" role="tab" tabindex="-1">
+                                            <i class="mdi mdi-map-marker"></i>
+                                            <span class="d-none d-sm-inline">Location</span>
+                                        </a>
+                                    </li>
 
                                     @auth
                                         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
@@ -64,31 +71,53 @@
                                         style="width: 25%;"></div>
                                 </div>
 
-                                @if ($isPhysical)
-                                    <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
-                                        <div class="row">
-                                            <h4 class="text-center mb-2">
-                                                Which office do you prefer?
-                                            </h4>
-                                            <div class="col-12">
-                                                <input type="hidden" name="" id="maps-data"
-                                                    value="{{ json_encode($maps) }}">
-                                                <x-backend.form.select-input id="location" class="mb-3" name="location"
-                                                    label="Choose Location" placeholder="Choose Location..." required>
-                                                    @foreach ($maps as $map)
-                                                        <option value="{{ $map->id }}">{{ $map->location }}</option>
-                                                    @endforeach
-                                                </x-backend.form.select-input>
-                                            </div>
-                                            <div class="col-12">
-                                                <iframe id="map" src="{{ $maps[0]->src }}" height="450"
-                                                    class="w-100 rounded shadow-sm" style="border:0;" allowfullscreen=""
-                                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                            </div>
-
+                                <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
+                                    <input type="hidden" name="" id="maps-data" value="{{json_encode($maps)}}">
+                                    <div class="row justify-content-between">
+                                        <h4 class="text-center mb-2">
+                                            Which office do you prefer?
+                                        </h4>
+                                        <div class="col-6">
+                                            <label for="appointment-input" class="row mb-1">
+                                                <div id="appointment-type"
+                                                    class="border rounded p-3 appointment-type selected appointment">
+                                                    <h4>Together in Office</h4>
+                                                    <p class="text-muted mb-0">Work with a tax pro at a tax office near you.
+                                                        We are committed to helping you file your taxes in a way that's easy
+                                                        and safe for you.</p>
+                                                </div>
+                                                <input type="radio" name="is_physical" data-effected="#appointment-type" data-cards=".appointment" id="appointment-input" value="{{true}}" hidden>
+                                            </label>
+                                            <label for="appointment-input-2" class="row mb-1">
+                                                <div id="appointment-type-2"
+                                                    class="border bg-light rounded p-3 appointment-type selected appointment">
+                                                    <h4>Virtually</h4>
+                                                    <p class="text-muted mb-0">Get expert tax filing help anywhere, anyway
+                                                    </p>
+                                                </div>
+                                                <input type="radio" name="is_physical" value="{{false}}"
+                                                    data-effected="#appointment-type-2" data-cards=".appointment" id="appointment-input-2" hidden>
+                                            </label>
                                         </div>
+                                        <div class="col-5 location-selector">
+                                            @foreach ($maps as $map)
+                                                <label for="location-input-{{ $map->id }}" class="row mb-1">
+                                                    <div id="location-{{ $map->id }}"
+                                                        class="border rounded p-3 map location {{$maps[0]->id === $map->id ? 'selected': 'bg-light'}}">
+                                                        <h5>{{ $map->location }}</h5>
+                                                        <p class="text-muted mb-0">{{ $map->address }}</p>
+                                                    </div>
+                                                    <input type="radio" name="location"
+                                                        data-effected="#location-{{ $map->id }}"
+                                                        data-cards=".location"
+                                                        id="location-input-{{ $map->id }}"
+                                                        value="{{ $map->id }}" hidden>
+                                                </label>
+                                            @endforeach
+                                        </div>
+
                                     </div>
-                                @endif
+                                </div>
                                 <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
                                     <h4 class="text-center mb-2">
                                         Which time works best for you?
@@ -254,21 +283,27 @@
                 })
 
 
+                $('input[type="radio"]').each(function(i, input) {
+                    input.addEventListener('input', function() {
+                        if (this.id==='appointment-input-2') {
+                            $('.location-selector').hide()
+                        }else{
+                            $('.location-selector').show()
+                        }
+                        const itemToEffect = $(input.dataset.effected)
+                        const cards = $(input.dataset.cards)
+                        cards.addClass('bg-light')
+                        itemToEffect.removeClass('bg-light');
+                        itemToEffect.addClass('selected');
 
-
-
-                if (parseInt('{{ $isPhysical }}')) {
-                    const location = $('#location')
-                    const mapsData = JSON.parse($('#maps-data').val())
-                    location.on('input', e => {
-                        const mapId = parseInt(e.target.value)
+                       if (this.name=='location') {
+                        const mapsData = JSON.parse($('#maps-data').val())
+                        const mapId = parseInt(this.value)
                         office = mapsData.filter(item => item.id === mapId)[0]
-                        console.log(office);
-                        const url = office.src
-                        $('#map').attr('src', url)
+                       }
                     })
+                })
 
-                }
 
                 const nextBtn = $('#next-btn')
 
@@ -307,7 +342,6 @@
                                     <p class="text-darkp-2 p-2 border bg-light rounded"><span
                                             class="fw-bold">Date: </span>${date} <span
                                             class="fw-bold">Time: </span>${time}</p>
-                                   ${parseInt('{{ $isPhysical }}') ? officeBody : ''}
                                 </div>
                             </div>`
 
