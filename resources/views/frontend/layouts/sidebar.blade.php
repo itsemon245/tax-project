@@ -99,12 +99,14 @@
                     <hr class="my-3">
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end">
                         @auth
-                        <form action="{{ route('logout') }}" method="get">
+                        <div>
+                            <form action="{{ route('logout') }}" method="get">
                             @csrf
                             <input type="hidden"  name="auth_id" class="d-none" value="{{ auth()->id() }}" >
                             <x-backend.ui.button class="btn btn-dark">Log out</x-backend.ui.button>
                             </form>
                         @else
+                        </div>
                             <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
                         @endauth
                         <a class="btn btn-secondary" href="">Become a partner</a>
