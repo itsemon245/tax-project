@@ -193,7 +193,7 @@
         <script src="{{ asset('frontend/assets/js/form-wizard.init.js') }}"></script>
         <script>
             $(document).ready(function() {
-                let office = {}
+                let office = JSON.parse($('#maps-data').val())[0];//set the first map as default office
                 let date = ''
                 let time = ''
                 let name = ''
@@ -286,8 +286,10 @@
                 $('input[type="radio"]').each(function(i, input) {
                     input.addEventListener('input', function() {
                         if (this.id==='appointment-input-2') {
+                            $('.location-selector input').attr('disabled', true)
                             $('.location-selector').hide()
                         }else{
+                            $('.location-selector input').attr('disabled', false)
                             $('.location-selector').show()
                         }
                         const itemToEffect = $(input.dataset.effected)
