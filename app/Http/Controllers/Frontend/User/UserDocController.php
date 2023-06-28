@@ -18,7 +18,7 @@ class UserDocController extends Controller
     public function index()
     {
         // $upload_documents = UserDoc::with('user')->get();
-        return view('backend.userdoc.viewAll');
+        return view('frontend.userdoc.viewAll');
     }
     
     /**
