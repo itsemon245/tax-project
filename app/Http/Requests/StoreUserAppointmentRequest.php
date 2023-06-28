@@ -22,12 +22,13 @@ class StoreUserAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'is_physical' => 'required',
             'location' => 'sometimes',
             'date' => 'required|date',
             'time' => 'required',
             'name'=> 'required|string|max:255',
             'email'=> 'required|email|max:255',
-            'phone'=> 'required|string|max:14',
+            'phone'=> 'required|string|max:15',
             'district'=> 'required|string',
             'thana'=> 'required|string',
         ];

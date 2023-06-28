@@ -41,7 +41,7 @@ Route::prefix('/books')->name('books.')->group(function () {
 
 //  uncategorized pages
 
-Route::get('/make-appointment/{isPhysical}', [PageController::class, 'appointmentPage'])->name('appointment.make');
+Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referrals');

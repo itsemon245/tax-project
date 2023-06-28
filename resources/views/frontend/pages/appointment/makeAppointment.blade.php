@@ -1,6 +1,41 @@
+@php
+    $dates = [
+        now()
+            ->addDays(1)
+            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+        now()
+            ->addDays(2)
+            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+        now()
+            ->addDays(3)
+            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+        now()
+            ->addDays(4)
+            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+        now()
+            ->addDays(5)
+            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+        now()
+            ->addDays(6)
+            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+        now()
+            ->addDays(7)
+            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+    ];
+@endphp
+
+
 @extends('frontend.layouts.app')
 
 @section('main')
+    @pushOnce('customCss')
+        <style>
+            .selected {
+                background: var(--bs-primary);
+                color: var(--bs-dark);
+            }
+        </style>
+    @endPushOnce
     <x-frontend.hero-section :banners="$banners" />
 
     <div class="bg-white pb-5 pt-3">
@@ -10,21 +45,20 @@
             <form method="POST" action="{{ route('user-appointment.store') }}" class="">
                 @csrf
                 <div class="d-flex justify-content-center">
-                    <div class="w-100" style="max-width: 650px;" class="px-md-0 px-2">
+                    <div class="w-100" style="max-width: 720px;" class="px-md-0 px-2">
                         <div id="progressbarwizard">
 
                             <div class="d-flex justify-content-center">
                                 <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
-                                    @if ($isPhysical)
-                                        <li class="nav-item" role="presentation">
-                                            <a href="#account-2" data-bs-toggle="tab" data-toggle="tab"
-                                                class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 active"
-                                                aria-selected="true" role="tab" tabindex="-1">
-                                                <i class="mdi mdi-map-marker"></i>
-                                                <span class="d-none d-sm-inline">Location</span>
-                                            </a>
-                                        </li>
-                                    @endif
+
+                                    <li class="nav-item" role="presentation">
+                                        <a href="#account-2" data-bs-toggle="tab" data-toggle="tab"
+                                            class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 active"
+                                            aria-selected="true" role="tab" tabindex="-1">
+                                            <i class="mdi mdi-map-marker"></i>
+                                            <span class="d-none d-sm-inline">Location</span>
+                                        </a>
+                                    </li>
 
                                     @auth
                                         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
@@ -64,59 +98,122 @@
                                         style="width: 25%;"></div>
                                 </div>
 
-                                @if ($isPhysical)
-                                    <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
-                                        <div class="row">
-                                            <h4 class="text-center mb-2">
-                                                Which office do you prefer?
-                                            </h4>
-                                            <div class="col-12">
-                                                <input type="hidden" name="" id="maps-data"
-                                                    value="{{ json_encode($maps) }}">
-                                                <x-backend.form.select-input id="location" class="mb-3" name="location"
-                                                    label="Choose Location" placeholder="Choose Location..." required>
-                                                    @foreach ($maps as $map)
-                                                        <option value="{{ $map->id }}">{{ $map->location }}</option>
-                                                    @endforeach
-                                                </x-backend.form.select-input>
-                                            </div>
-                                            <div class="col-12">
-                                                <iframe id="map" src="{{ $maps[0]->src }}" height="450"
-                                                    class="w-100 rounded shadow-sm" style="border:0;" allowfullscreen=""
-                                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                            </div>
+                                <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
+                                    <input type="hidden" name="" id="maps-data" value="{{ json_encode($maps) }}">
+                                    <div class="row justify-content-between">
+                                        <h4 class="text-center mb-2">
+                                            Which office do you prefer?
+                                        </h4>
+                                        <div class="col-6">
+                                            <label for="appointment-input" class="row mb-1" style="cursor: pointer;">
+                                                <div id="appointment-type"
+                                                    class="border rounded p-3 appointment-type selected appointment">
+                                                    <h4>Together in Office</h4>
+                                                    <p class="text-muted mb-0">Work with a tax pro at a tax office near you.
+                                                        We are committed to helping you file your taxes in a way that's easy
+                                                        and safe for you.</p>
+                                                </div>
+                                                <input type="radio" class="location-input" name="is_physical"
+                                                    data-effected="#appointment-type" data-cards=".appointment"
+                                                    id="appointment-input" value="{{ true }}" hidden checked>
+                                            </label>
+                                            <label for="appointment-input-2" class="row mb-1" style="cursor: pointer;">
+                                                <div id="appointment-type-2"
+                                                    class="border bg-light rounded p-3 appointment-type selected appointment">
+                                                    <h4>Virtually</h4>
+                                                    <p class="text-muted mb-0">Get expert tax filing help anywhere, anyway
+                                                    </p>
+                                                </div>
+                                                <input type="radio" class="location-input" name="is_physical"
+                                                    value="{{ false }}" data-effected="#appointment-type-2"
+                                                    data-cards=".appointment" id="appointment-input-2" hidden>
+                                            </label>
+                                        </div>
+                                        <div class="col-5 location-selector">
+                                            @foreach ($maps as $map)
+                                                <label for="location-input-{{ $map->id }}" class="row mb-1"
+                                                    style="cursor: pointer;">
+                                                    <div id="location-{{ $map->id }}"
+                                                        class="border rounded p-3 map location {{ $maps[0]->id === $map->id ? 'selected' : 'bg-light' }}">
+                                                        <h5>{{ $map->location }}</h5>
+                                                        <p class="text-muted mb-0">{{ $map->address }}</p>
+                                                    </div>
+                                                    <input type="radio" name="location" class="location-input"
+                                                        data-effected="#location-{{ $map->id }}"
+                                                        data-cards=".location" id="location-input-{{ $map->id }}"
+                                                        value="{{ $map->id }}" hidden @if ($maps[0]->id === $map->id)
+                                                            checked
+                                                        @endif>
+                                                </label>
+                                            @endforeach
+                                        </div>
 
+                                    </div>
+                                </div>
+                                <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-6 selected-location">
+                                            <h4>Location</h4>
+                                            <iframe src="{{ $maps[0]->src }}" class="w-100 border shadow rounded mb-2"
+                                                height="300" loading="lazy"
+                                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                            <div class="border rounded p-3 map bg-light">
+                                                <h5>{{ $maps[0]->location }}<span
+                                                        class="text-muted fs-6">(selected)</span></h5>
+                                                <p class="text-muted mb-0">{{ $maps[0]->address }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 time-selector">
+                                            <h4>What time works best for you?</h4>
+                                            <div class="border rounded p-3" style="overflow-y: scroll; height:400px;">
+                                                @php
+                                                    $i = 0;
+                                                @endphp
+                                                @foreach ($dates as $date => $times)
+                                                    @php
+                                                        $i++;
+                                                    @endphp
+                                                    <div class="mb-3">
+                                                        <div class="fw-bold">{{ $date }}
+                                                        </div>
+
+                                                        <div class="d-flex flex-wrap gap-2 ps-2">
+                                                            @foreach ($times as $key => $time)
+                                                                <label class="time-label rounded border p-2 {{($key === 0 && $i === 1) ? 'selected': 'bg-light'}}">
+                                                                    {{ $time }}
+                                                                    <input class="time-input " type="radio"
+                                                                        name="time" data-date="{{ $date }}"
+                                                                        value="{{ $time }}"
+                                                                        @if ($key === 0 && $i === 1) checked @endif>
+                                                                </label>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
-                                @endif
-                                <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
-                                    <h4 class="text-center mb-2">
-                                        Which time works best for you?
-                                    </h4>
-                                    <x-backend.form.text-input type='date' class="mb-2" label="Choose Date"
-                                        name="date" required />
-                                    <x-backend.form.text-input type='time' class="mb-2" label="Choose Time"
-                                        name="time" required />
                                 </div>
                                 <div class="tab-pane my-3" id="tab-3" role="tabpanel">
                                     <div class="row">
-                                        <x-backend.form.text-input type='text' class="mb-2" label="Name"
-                                            name="name" :value="auth()->user() !== null ? auth()->user()->name : ''" required />
-                                        <x-backend.form.text-input type='text' class="mb-2" label="Email"
-                                            name="email" :value="auth()->user() !== null ? auth()->user()->email : ''" required />
-                                        <x-backend.form.text-input type='text' class="mb-2" label="Phone"
-                                            name="phone" :value="auth()->user() !== null ? auth()->user()->phone : ''" required />
+                                        <x-backend.form.text-input type='text' class="mb-2 user-info" label="Name"
+                                            name="name" data-target="#push-name" :value="auth()->user() !== null ? auth()->user()->name : ''" required />
+                                        <x-backend.form.text-input type='text' class="mb-2 user-info" label="Email"
+                                            name="email" data-target="#push-email" :value="auth()->user() !== null ? auth()->user()->email : ''" required />
+                                        <x-backend.form.text-input type='text' class="mb-2 user-info" label="Phone"
+                                            name="phone" data-target="#push-phone" :value="auth()->user() !== null ? auth()->user()->phone : ''" required />
                                         <div class="d-flex align-items-center justify-content-between gap-3">
                                             <div class="flex-grow-1">
                                                 <label for="district">District <span class="text-danger">*</span></label>
-                                                <select class="w-100" id="district" name="district"
-                                                    placeholder="Select District..." required>
+                                                <select class="w-100 user-info" id="district" name="district"
+                                                    data-target="#push-district" placeholder="Select District..."
+                                                    required>
                                                 </select>
                                             </div>
                                             <div class="flex-grow-1">
                                                 <label for="thana">Thana <span class="text-danger">*</span></label>
-                                                <select class="w-100" id="thana" name="thana"
-                                                    placeholder="Select Thana..." required>
+                                                <select class="w-100 user-info" id="thana" name="thana"
+                                                    data-target="#push-thana" placeholder="Select Thana..." required>
                                                     <option disabled selected>Select District First</option>
                                                 </select>
                                             </div>
@@ -125,7 +222,41 @@
 
                                 </div>
                                 <div class="tab-pane my-3" id="finish" role="tabpanel">
-                                    <!-- Will be rendered using js -->
+                                    <div class="card">
+                                        <p class="card-header text-center">Appointment Details</p>
+                                        <div class="card-body px-5">
+                                            <p class="text-dark p-2 border bg-light rounded"><span class="fw-bold">Name:
+                                                </span><span id="push-name"></span></p>
+                                            <p class="text-dark p-2 border bg-light rounded"><span class="fw-bold">Email:
+                                                </span><span id="push-email"></span></p>
+                                            <p class="text-darkp-2 p-2 border bg-light rounded"><span
+                                                    class="fw-bold">Phone: </span><span id="push-phone"></span></p>
+                                            <div class="row p-2 border bg-light rounded mb-3 w-100 mx-0">
+                                                <p class="col-6 text-dark mb-0"><span class="fw-bold">District:
+                                                    </span><span id="push-district"></span></p>
+                                                <p class="col-6 text-dark mb-0"><span class="fw-bold">Thana: </span><span
+                                                        id="push-thana"></span></p>
+                                            </div>
+                                            <div class="row p-2 border bg-light rounded mb-3 w-100 mx-0">
+                                                <p class="col-6 text-dark mb-0"><span class="fw-bold">Date:
+                                                    </span><span id="push-date"></span></p>
+                                                <p class="col-6 text-dark mb-0"><span class="fw-bold">Time: </span><span
+                                                        id="push-time"></span></p>
+                                            </div>
+                                            <input type="date" id="push-date-value" name="date" hidden>
+                                            <div id="office-body">
+                                                <div class="card">
+                                                    <div class="card-header fs-5">Office</div>
+                                                    <div class="card-body" id="address-body">
+                                                        <p class='fw-bold mb-1' id="">{{ $maps[0]->location }}
+                                                        </p>
+                                                        <div class="text-muted" id="">{!! $maps[0]->address !!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <ul
@@ -164,15 +295,13 @@
         <script src="{{ asset('frontend/assets/js/form-wizard.init.js') }}"></script>
         <script>
             $(document).ready(function() {
-                let office = {}
-                let date = ''
-                let time = ''
-                let name = ''
-                let email = ''
-                let phone = ''
-                let district = ''
-                let thana = ''
+                //set the first map as default office
+                let office = JSON.parse($('#maps-data').val())[0];
+                const nextBtn = $('#next-btn')
+                const prevBtn = $('#prev-btn')
 
+
+                // initialize selectize for thana and district
                 let districtSelctize = $('#district').selectize({
                     maxItems: 1,
                     sortField: 'text',
@@ -190,6 +319,7 @@
                     searchField: ['thana', 'id'],
                 });
 
+                // options for fetching divisions
                 const settings = {
                     async: true,
                     crossDomain: true,
@@ -201,6 +331,7 @@
                     }
                 };
 
+                //fetch divisions
                 $.ajax(settings).done(function(response) {
                     const data = response.data;
                     console.log(data);
@@ -211,7 +342,8 @@
 
                     //set eventlistenr for district select
                     $('#district').on('input', e => {
-                        district = e.target.value
+                        const target = $(e.target.dataset.target)
+                        target.text(e.target.value)
                         // grab ups based on district
                         const UP = data.filter(item => item.district === e.target.value)[0].upazilla
                         const upazillas = UP.map(item => {
@@ -228,96 +360,93 @@
                     })
                 });
 
+                //on thana change
                 thanaSelect.on('input', e => {
-                    thana = e.target.value
-                })
-                $("input[name='name']").on('input', e => {
-                    name = e.target.value
-                })
-                $("input[name='phone']").on('input', e => {
-                    phone = e.target.value
-                })
-                $("input[name='email']").on('input', e => {
-                    email = e.target.value
-                })
-                $("input[name='date']").on('input', e => {
-                    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Agust',
-                        'September', 'October', 'November', 'December'
-                    ]
-                    let newDate = new Date(e.target.value)
-                    date = `${newDate.getDate()} ${months[newDate.getMonth()]}, ${newDate.getFullYear()}`
-
-                    console.log(date);
-                })
-                $("input[name='time']").on('input', e => {
-                    time = e.target.value
+                    const target = $(e.target.dataset.target)
+                    target.text(e.target.value)
                 })
 
-
-
-
-
-                if (parseInt('{{ $isPhysical }}')) {
-                    const location = $('#location')
-                    const mapsData = JSON.parse($('#maps-data').val())
-                    location.on('input', e => {
-                        const mapId = parseInt(e.target.value)
-                        office = mapsData.filter(item => item.id === mapId)[0]
-                        console.log(office);
-                        const url = office.src
-                        $('#map').attr('src', url)
+                //on userinfo change
+                $('.user-info').each((i, item) => {
+                    item.addEventListener('input', e => {
+                        const target = $(e.target.dataset.target)
+                        target.text(e.target.value)
                     })
+                })
 
-                }
+                //on location click
+                $('.location-input[type="radio"]').each(function(i, input) {
+                    input.addEventListener('input', function() {
+                        if (this.id === 'appointment-input-2') {
+                            $('.location-selector input').attr('disabled', true)
+                            $('.location-selector').hide()
+                            $('.selected-location').hide()
+                            $('#office-body').hide()
+                            $('.time-selector').removeClass('col-md-6')
+                        } else {
+                            $('.location-selector input').attr('disabled', false)
+                            $('.location-selector').show()
+                            $('.selected-location').show()
+                            $('#office-body').show()
+                            $('.time-selector').addClass('col-md-6')
+                        }
+                        const itemToEffect = $(input.dataset.effected)
+                        const cards = $(input.dataset.cards)
+                        cards.addClass('bg-light')
+                        itemToEffect.removeClass('bg-light');
+                        itemToEffect.addClass('selected');
 
-                const nextBtn = $('#next-btn')
+                        if (this.name == 'location') {
+                            const mapsData = JSON.parse($('#maps-data').val())
+                            const mapId = parseInt(this.value)
+                            office = mapsData.filter(item => item.id === mapId)[0]
+                            $('.selected-location iframe').attr('src', office.src)
+                            $('#address-body').html(`
+                            <p class='fw-bold mb-1' id="">${office.location}</p>
+                            <div class="text-muted" id="">${office.address}</div>
+                            `)
+                        }
+                    })
+                })
+                // on time click
+                $('.time-input').each((i, input) => {
+                    if (i === 0) {
+                        let date = input.dataset.date
+                        let time = input.value
+                        let dateValue = new Date(date)
+                        dateValue = dateValue.toISOString().split('T')[0]
+                        $('#push-date').text(date)
+                        $('#push-time').text(time)
+                        $('#push-date-value').val(dateValue)
+                    }
+                    input.addEventListener('input', e => {
+                        const parent = $(input).parent();
+                        $('.time-label').addClass('bg-light')
+                        parent.removeClass('bg-light');
+                        parent.addClass('selected');
+                        const date = e.target.dataset.date
+                        const time = e.target.value
+                        let dateValue = new Date(date)
+                        dateValue = dateValue.toISOString().split('T')[0]
+                        $('#push-date').text(date)
+                        $('#push-time').text(time)
+                        $('#push-date-value').val(dateValue)
+                    })
+                })
 
-
+                // on next btn click
                 nextBtn.click(() => {
-
                     setTimeout(() => {
+                        // check if the tab is last
                         const isLast = $('#finish').hasClass('active');
-                        const officeBody = ` <div class="card">
-                                                <div class="card-header fs-5">Office</div>
-                                                <div class="card-body" id="address-body">
-                                                    <p class='fw-bold mb-1'>${office.location ? office.location : 'Please Select Office Location'}</p>
-                                                    <div class="text-muted">${office.address ? office.address : ''}</div>
-                                                </div>
-                                            </div>
-                                    `
+
                         if (isLast) {
                             const submitBtn =
                                 `<button type="submit" class="btn btn-primary">Submit</button>`
-                            const html = `
-                            <div class="card">
-                                <p class="card-header text-center">Appointment Details</p>
-                                <div class="card-body px-5">
-                                    <p class="text-dark p-2 border bg-light rounded"><span
-                                            class="fw-bold">Name: </span>${name}</p>
-                                    <p class="text-dark p-2 border bg-light rounded"><span
-                                            class="fw-bold">Email: </span>${email}</p>
-                                    <p class="text-darkp-2 p-2 border bg-light rounded"><span
-                                            class="fw-bold">Phone: </span>${phone}</p>
-                                    <div class="d-flex gap-3 p-2 border bg-light rounded mb-2">
-                                        <p class="text-dark mb-0"><span class="fw-bold">District:
-                                            </span>${district}</p>
-                                        <p class="text-dark mb-0"><span class="fw-bold">Thana: </span>${thana}
-                                        </p>
-                                    </div>
-                                    <p class="text-darkp-2 p-2 border bg-light rounded"><span
-                                            class="fw-bold">Date: </span>${date} <span
-                                            class="fw-bold">Time: </span>${time}</p>
-                                   ${parseInt('{{ $isPhysical }}') ? officeBody : ''}
-                                </div>
-                            </div>`
-
-
-                            $('#finish').html(html)
                             nextBtn.html(submitBtn)
                         }
                     }, 100);
                 })
-                const prevBtn = $('#prev-btn')
                 prevBtn.click(() => {
                     const submitBtn = `<a href="javascript: void(0);" class="btn btn-primary">Next</a>`
                     nextBtn.html(submitBtn)

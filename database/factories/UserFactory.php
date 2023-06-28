@@ -18,15 +18,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $userName= fake()->userName();
         return [
             'name' => fake()->name(),
-            'user_name' => fake()->name(),
-            'phone' => fake()->name(),
+            'user_name' => $userName,
+            'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'), // password
             'remember_token' => Str::random(10),
-            'refer_link' => Str::random(10),
+            'refer_link' => route('refer.link', $userName),
         ];
     }
 
