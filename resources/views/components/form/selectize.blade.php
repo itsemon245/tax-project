@@ -35,8 +35,10 @@
     referrerpolicy="no-referrer"
     ></script>
     {{-- Selectize end --}}
+@endPushOnce
 
+@push('customJs')
     <script>
         $('.selectize').selectize({ sortField: 'text', maxItems:1, create: '{{$canCreate}}', })
     </script>
-@endPushOnce
+@endpush

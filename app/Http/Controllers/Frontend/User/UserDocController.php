@@ -26,9 +26,8 @@ class UserDocController extends Controller
      */
     public function create()
     {
-        $doc_types = DocumentType::get();
-        $upload_documents = UserDoc::with('user')->with('documentType')->get();
-        return view('frontend.userdoc.uploadDoc', compact('upload_documents','doc_types'));
+        $names = UserDoc::distinct()->get('name');
+        return view('frontend.userdoc.uploadDoc', compact('names'));
     }
 
     /**
@@ -36,21 +35,9 @@ class UserDocController extends Controller
      */
     public function store(StoreUserDocRequest $request)
     {
-        $doc_type = DocumentType::where('id', $request->document_type)->first();
         $images = array();
         $user_id = auth()->id();
         $imageFiles = $request->file('gallery_images');
-        $dir = 'user-' . $user_id . '/documents/' . $doc_type->doc_type_name;
-        $prefix = Str::slug($request->title);
-        if($imageFiles){
-            foreach ($imageFiles as $image) {
-                $path = saveImage($image, $dir, $prefix);
-                array_push($images, $path);
-   
-            }
-
-        }
-
         $upload_document = new UserDoc();
         $upload_document->user_id = $user_id;
         $upload_document->document_type_id = $request->document_type;
