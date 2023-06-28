@@ -22,7 +22,8 @@ return new class extends Migration
             $table->text('thana');
             $table->text('date');
             $table->text('time');
-            $table->boolean('isApproved')->default(false);
+            $table->boolean('is_physical');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

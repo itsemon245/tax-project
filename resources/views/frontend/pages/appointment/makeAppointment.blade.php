@@ -105,7 +105,7 @@
                                             Which office do you prefer?
                                         </h4>
                                         <div class="col-6">
-                                            <label for="appointment-input" class="row mb-1">
+                                            <label for="appointment-input" class="row mb-1" style="cursor: pointer;">
                                                 <div id="appointment-type"
                                                     class="border rounded p-3 appointment-type selected appointment">
                                                     <h4>Together in Office</h4>
@@ -113,34 +113,37 @@
                                                         We are committed to helping you file your taxes in a way that's easy
                                                         and safe for you.</p>
                                                 </div>
-                                                <input type="radio" name="is_physical" data-effected="#appointment-type"
-                                                    data-cards=".appointment" id="appointment-input"
-                                                    value="{{ true }}" hidden>
+                                                <input type="radio" class="location-input" name="is_physical"
+                                                    data-effected="#appointment-type" data-cards=".appointment"
+                                                    id="appointment-input" value="{{ true }}" hidden checked>
                                             </label>
-                                            <label for="appointment-input-2" class="row mb-1">
+                                            <label for="appointment-input-2" class="row mb-1" style="cursor: pointer;">
                                                 <div id="appointment-type-2"
                                                     class="border bg-light rounded p-3 appointment-type selected appointment">
                                                     <h4>Virtually</h4>
                                                     <p class="text-muted mb-0">Get expert tax filing help anywhere, anyway
                                                     </p>
                                                 </div>
-                                                <input type="radio" name="is_physical" value="{{ false }}"
-                                                    data-effected="#appointment-type-2" data-cards=".appointment"
-                                                    id="appointment-input-2" hidden>
+                                                <input type="radio" class="location-input" name="is_physical"
+                                                    value="{{ false }}" data-effected="#appointment-type-2"
+                                                    data-cards=".appointment" id="appointment-input-2" hidden>
                                             </label>
                                         </div>
                                         <div class="col-5 location-selector">
                                             @foreach ($maps as $map)
-                                                <label for="location-input-{{ $map->id }}" class="row mb-1">
+                                                <label for="location-input-{{ $map->id }}" class="row mb-1"
+                                                    style="cursor: pointer;">
                                                     <div id="location-{{ $map->id }}"
                                                         class="border rounded p-3 map location {{ $maps[0]->id === $map->id ? 'selected' : 'bg-light' }}">
                                                         <h5>{{ $map->location }}</h5>
                                                         <p class="text-muted mb-0">{{ $map->address }}</p>
                                                     </div>
-                                                    <input type="radio" name="location"
+                                                    <input type="radio" name="location" class="location-input"
                                                         data-effected="#location-{{ $map->id }}"
                                                         data-cards=".location" id="location-input-{{ $map->id }}"
-                                                        value="{{ $map->id }}" hidden>
+                                                        value="{{ $map->id }}" hidden @if ($maps[0]->id === $map->id)
+                                                            checked
+                                                        @endif>
                                                 </label>
                                             @endforeach
                                         </div>
@@ -163,14 +166,26 @@
                                         <div class="col-md-6 time-selector">
                                             <h4>What time works best for you?</h4>
                                             <div class="border rounded p-3" style="overflow-y: scroll; height:400px;">
+                                                @php
+                                                    $i = 0;
+                                                @endphp
                                                 @foreach ($dates as $date => $times)
+                                                    @php
+                                                        $i++;
+                                                    @endphp
                                                     <div class="mb-3">
-                                                        <h5>{{ $date }}</h5>
+                                                        <div class="fw-bold">{{ $date }}
+                                                        </div>
+
                                                         <div class="d-flex flex-wrap gap-2 ps-2">
-                                                            @foreach ($times as $time)
-                                                                <div class="bg-light rounded border p-2">
+                                                            @foreach ($times as $key => $time)
+                                                                <label class="time-label rounded border p-2 {{($key === 0 && $i === 1) ? 'selected': 'bg-light'}}">
                                                                     {{ $time }}
-                                                                </div>
+                                                                    <input class="time-input " type="radio"
+                                                                        name="time" data-date="{{ $date }}"
+                                                                        value="{{ $time }}"
+                                                                        @if ($key === 0 && $i === 1) checked @endif>
+                                                                </label>
                                                             @endforeach
                                                         </div>
                                                     </div>
@@ -216,16 +231,19 @@
                                                 </span><span id="push-email"></span></p>
                                             <p class="text-darkp-2 p-2 border bg-light rounded"><span
                                                     class="fw-bold">Phone: </span><span id="push-phone"></span></p>
-                                            <div class="d-flex gap-3 p-2 border bg-light rounded mb-2">
-                                                <p class="text-dark mb-0"><span class="fw-bold">District:
+                                            <div class="row p-2 border bg-light rounded mb-3 w-100 mx-0">
+                                                <p class="col-6 text-dark mb-0"><span class="fw-bold">District:
                                                     </span><span id="push-district"></span></p>
-                                                <p class="text-dark mb-0"><span class="fw-bold">Thana: </span><span
+                                                <p class="col-6 text-dark mb-0"><span class="fw-bold">Thana: </span><span
                                                         id="push-thana"></span></p>
                                             </div>
-                                            <p class="text-darkp-2 p-2 border bg-light rounded fw-bold">
-                                                Date: <span id="push-date"></span>
-                                                Time: <span id="push-time"></span>
-                                            </p>
+                                            <div class="row p-2 border bg-light rounded mb-3 w-100 mx-0">
+                                                <p class="col-6 text-dark mb-0"><span class="fw-bold">Date:
+                                                    </span><span id="push-date"></span></p>
+                                                <p class="col-6 text-dark mb-0"><span class="fw-bold">Time: </span><span
+                                                        id="push-time"></span></p>
+                                            </div>
+                                            <input type="date" id="push-date-value" name="date" hidden>
                                             <div id="office-body">
                                                 <div class="card">
                                                     <div class="card-header fs-5">Office</div>
@@ -357,7 +375,7 @@
                 })
 
                 //on location click
-                $('input[type="radio"]').each(function(i, input) {
+                $('.location-input[type="radio"]').each(function(i, input) {
                     input.addEventListener('input', function() {
                         if (this.id === 'appointment-input-2') {
                             $('.location-selector input').attr('disabled', true)
@@ -388,6 +406,31 @@
                             <div class="text-muted" id="">${office.address}</div>
                             `)
                         }
+                    })
+                })
+                // on time click
+                $('.time-input').each((i, input) => {
+                    if (i === 0) {
+                        let date = input.dataset.date
+                        let time = input.value
+                        let dateValue = new Date(date)
+                        dateValue = dateValue.toISOString().split('T')[0]
+                        $('#push-date').text(date)
+                        $('#push-time').text(time)
+                        $('#push-date-value').val(dateValue)
+                    }
+                    input.addEventListener('input', e => {
+                        const parent = $(input).parent();
+                        $('.time-label').addClass('bg-light')
+                        parent.removeClass('bg-light');
+                        parent.addClass('selected');
+                        const date = e.target.dataset.date
+                        const time = e.target.value
+                        let dateValue = new Date(date)
+                        dateValue = dateValue.toISOString().split('T')[0]
+                        $('#push-date').text(date)
+                        $('#push-time').text(time)
+                        $('#push-date-value').val(dateValue)
                     })
                 })
 
