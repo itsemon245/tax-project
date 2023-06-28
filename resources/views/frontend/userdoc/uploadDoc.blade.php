@@ -14,7 +14,7 @@
                     </x-form.selectize>
                 </div>
                 <label class="mb-2">Select Documents</label>
-                    <x-backend.form.image-input name='images[]' />
+                    <x-form.file-pond/>
                 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
             </div>
         </div>
