@@ -1,7 +1,5 @@
 @extends('frontend.layouts.app')
 @section('main')
-{{-- jquery script start --}}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     
         {{-- form start --}}

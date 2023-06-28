@@ -144,7 +144,7 @@
                 <a class="" href="#">My Taxes</a>
             </li>
             <li class="sidebar-item">
-                <a class="" href="#">Document</a>
+                <a class="" href="{{route('user-doc.index')}}">My Documents</a>
             </li>
             <li class="sidebar-item">
                 <a class="" href="#">Notificaion</a>
