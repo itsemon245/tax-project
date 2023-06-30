@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
+use Carbon\Carbon;
 use App\Models\UserDoc;
 use Illuminate\Support\Str;
+use App\Models\DocumentType;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreUserDocRequest;
 use App\Http\Requests\UpdateUserDocRequest;
-use App\Models\DocumentType;
-use Carbon\Carbon;
 
 class UserDocController extends Controller
 {
@@ -35,14 +36,21 @@ class UserDocController extends Controller
      */
     public function store(StoreUserDocRequest $request)
     {
-        // dd($request->fileponds);
-        $images = array();
+
+        $images = [];
+        $files = $request->fileponds;
+        foreach ($files as $file) {
+            $tempFile = 'temp/'.$file;
+            $mainFile = 'public/'.$file;
+            if (Storage::exists($tempFile)) {
+                Storage::move($tempFile, $mainFile);
+                $images[]=$file;
+            }
+        }
         $user_id = auth()->id();
-        $imageFiles = $request->file('gallery_images');
         $upload_document = new UserDoc();
         $upload_document->user_id = $user_id;
-        $upload_document->document_type_id = $request->document_type;
-        $upload_document->title = $request->title;
+        $upload_document->name = $request->name;
         $upload_document->images = json_encode($images);
         $upload_document->save();
         $notification = array(

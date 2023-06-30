@@ -73,18 +73,12 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
 });
 
 
-// Route for filepond chunk upload
+// Route for filepond upload
 Route::post('/upload', function (Request $request) {
-
-    $filePath = storage_path('app/temp/filepond');
-
     $files = $request->fileponds;
-    // Save the chunk data to disk
     $paths = [];
     foreach ($files as $key => $file) {
-        $ext = $file->extension();
-        $name = str($file->getClientOriginalName())->slug().".$ext";
-        $paths[] = $file->move($filePath, $name);
+        $paths[] = saveImage($file, "uploads/filepond",'', 'temp');
     }
     $pathString = implode(",",$paths);
     return response($pathString, 200, [
