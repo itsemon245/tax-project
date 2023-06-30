@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\AppointmentController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +70,24 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/appointment', 'appointmentPage')->name('appointment');
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
+});
+
+
+// Route for filepond chunk upload
+Route::post('/upload', function (Request $request) {
+
+    $filePath = storage_path('app/temp/filepond');
+
+    $files = $request->fileponds;
+    // Save the chunk data to disk
+    $paths = [];
+    foreach ($files as $key => $file) {
+        $ext = $file->extension();
+        $name = str($file->getClientOriginalName())->slug().".$ext";
+        $paths[] = $file->move($filePath, $name);
+    }
+    $pathString = implode(",",$paths);
+    return response($pathString, 200, [
+        'content_type' => 'text/plain'
+    ]);
 });

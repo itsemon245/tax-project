@@ -21,7 +21,7 @@
     </style>
 @endPushOnce
 
-<input type="file" class="filepond" name="filepond" multiple data-allow-reorder="true" data-max-file-size="5MB">
+<input type="file" class="filepond" name="fileponds[]" multiple data-allow-reorder="true" data-max-file-size='5MB'>
 
 
 
@@ -44,7 +44,32 @@
         // Select the file input and use 
         // create() to turn it into a pond
         $('.filepond').each((i, input) => {
-            FilePond.create(input);
+            const pond = FilePond.create(input, {
+                allowMultiple: false,
+                allowImagePreview: true,
+                allowImageExifOrientation: true,
+                allowImageCrop: true,
+                allowReorder: true,
+                server: {
+                    url: '/upload',
+                    process: {
+                        url: '/',
+                        method: 'POST',
+                        headers:{
+                            'X-CSRF-TOKEN': '{{csrf_token()}}',
+                        },
+                    },
+                    revert: {
+                        url: '/',
+                        method: 'DELETE',
+                    },
+                    restore: {
+                        url: '/',
+                        method: 'POST',
+                    },
+                    fetch: null,
+                },
+            });
         })
     </script>
 @endPushOnce

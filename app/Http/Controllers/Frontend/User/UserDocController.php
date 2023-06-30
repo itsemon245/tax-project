@@ -35,6 +35,7 @@ class UserDocController extends Controller
      */
     public function store(StoreUserDocRequest $request)
     {
+        // dd($request->fileponds);
         $images = array();
         $user_id = auth()->id();
         $imageFiles = $request->file('gallery_images');
