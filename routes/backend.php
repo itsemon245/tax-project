@@ -33,6 +33,8 @@ use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 use App\Http\Controllers\ExpertProfileController;
+use App\Http\Controllers\Frontend\User\MyDocumentController;
+use App\Models\MyDocument;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,7 +81,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('review', ReviewController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
-
+    Route::resource('my-docs',MyDocumentController::class);
 
     //service related routes
     Route::resource('service-subcategory', ServiceSubCategoryController::class);

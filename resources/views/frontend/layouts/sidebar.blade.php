@@ -138,7 +138,7 @@
                 <a class="" href="#">My Taxes</a>
             </li>
             <li class="sidebar-item">
-                <a class="" href="#">Document</a>
+                <a class="" href="{{route('my-docs.index')}}">My Document</a>
             </li>
             <li class="sidebar-item">
                 <a class="" href="#">Notificaion</a>
