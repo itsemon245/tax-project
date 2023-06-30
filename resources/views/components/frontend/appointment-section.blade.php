@@ -29,7 +29,7 @@
                             </div>
                             <div class="d-flex gap-5 align-items-center flex-wrap">
                                  <!-- Center modal -->
-                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#appointmentTypeModal">Make Appointment</button>
+                                <a class="btn btn-primary waves-effect waves-light" href="{{route('appointment.make')}}">Make Appointment</a>
                                 <div>
                                     <a class="text-capitalize a d-flex align-items-center gap-2" href="#">
                                         <span class="mdi mdi-map-marker-outline  text-primary"></span>

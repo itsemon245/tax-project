@@ -99,8 +99,14 @@
                     <hr class="my-3">
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end">
                         @auth
-                            <a class="btn btn-dark" href="{{ route('logout') }}">Log out</a>
+                        <div>
+                            <form action="{{ route('logout') }}" method="get">
+                            @csrf
+                            <input type="hidden"  name="auth_id" class="d-none" value="{{ auth()->id() }}" >
+                            <x-backend.ui.button class="btn btn-dark">Log out</x-backend.ui.button>
+                            </form>
                         @else
+                        </div>
                             <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
                         @endauth
                         <a class="btn btn-secondary" href="">Become a partner</a>
@@ -164,7 +170,11 @@
                 <div class="">
                     <hr class="my-3">
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end">
-                            <a class="btn btn-dark" href="{{ route('logout') }}">Log Out</a>
+                        <form action="{{ route('logout') }}" method="get">
+                            @csrf
+                            <input type="hidden"  name="auth_id" class="d-none" value="{{ auth()->id() }}" >
+                            <x-backend.ui.button class="btn btn-dark">Log out</x-backend.ui.button>
+                            </form>
                         <a class="btn btn-secondary" href="">Become a partner</a>
                     </div>
                 </div>

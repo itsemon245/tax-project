@@ -420,6 +420,29 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#reviews" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Reviews</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="reviews">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('review.index', 'package') }}">Package Reviews</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('review.index', 'service') }}">Service Reviews</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('review.index', 'book') }}">Book Reviews</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('review.index', 'expert-profile') }}">Expert Reviews</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
 
             </ul>

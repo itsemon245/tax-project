@@ -4,13 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Frontend\AppointmentController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use App\Http\Controllers\Frontend\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,8 @@ Route::prefix('/books')->name('books.')->group(function () {
 
 //  uncategorized pages
 
-Route::get('/make-appointment/{isPhysical}', [PageController::class, 'appointmentPage'])->name('appointment.make');
+Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
+Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referrals');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');

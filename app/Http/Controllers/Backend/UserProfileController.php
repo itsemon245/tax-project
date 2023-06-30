@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Authentication;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,8 @@ class UserProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('backend.profile.profile-edit', compact('user'));
+        $data = Authentication::where('user_id', $user->id)->first();
+        return view('backend.profile.profile-edit', compact('user', 'data'));
     }
 
     /**
@@ -122,19 +124,21 @@ class UserProfileController extends Controller
     //User profile to become a partner profile method
     public function userToBecomePartner(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'phone' => 'required|string|max:11|min:11',
-            'nid' => 'required|max:17|min:10',
-            'dob' => 'required',
-            'address' => 'required|max:400|min:150',
+        // $request->validate([
+        //     'name' => 'required|string',
+        //     'phone' => 'required|string|max:11|min:11',
+        //     'division' => 'required',
+        //     'district' => 'required',
+        //     'thana' => 'required',
+        //     'address' => 'required|max:400|min:150',
 
-        ]);
+        // ]);
         $userData = User::findOrFail($id);
         $userData->name = $request->name;
-        $userData->nid = $request->nid;
-        $userData->dob = $request->dob;
         $userData->phone = $request->phone;
+        $userData->division = $request->division;
+        $userData->district = $request->district;
+        $userData->thana = $request->thana;
         $userData->address = $request->address;
         $userData->update();
         $notification = array(
