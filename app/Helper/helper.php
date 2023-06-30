@@ -21,16 +21,22 @@ function useImage($image)
  */
 function timestamp()
 {
-    return Carbon::now()->format('Y-m-d-H_m:s:u');
+    return Carbon::now()->format('Y-m-d-H-m:s:u');
 }
 /**
  * Stores an image given an image request and a directory
+ *
+ * @param string $prefix is empty 
+ * getClientOriginalName will be used
  */
-function saveImage($image, $dir, $prefix = 'image')
+function saveImage($image, string $dir, string $prefix = '', string $disk = 'public')
 {
+    if ($prefix === '') {
+        $prefix = str($image->getClientOriginalName())->slug();
+    }
     $ext = $image->extension();
     $name = $prefix . "-" . timestamp() . '.' . $ext;
-    $path = $image->storeAs("uploads/$dir", $name, 'public');
+    $path = $image->storeAs("uploads/$dir", $name, $disk);
     return $path;
 }
 
