@@ -14,7 +14,7 @@ class MyDocumentController extends Controller
      */
     public function index()
     {
-        return view('frontend.userdoc.myDoc');
+        return view('frontend.userdoc.userDoc');
     }
 
     /**
