@@ -28,26 +28,39 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $user = User::with('authentications')->where('email', $request->email)->get();
-        $notification = [];
-        $count_user = count($user[0]->authentications);
-        if($count_user > 2){
-            $notification = array(
-                'message' => "Can't log in into more then 3 devices at once",
+        $userExists = User::with('authentications')->where('email', $request->email)->first();
+        $loginCount = null;
+
+        // if user doesn't exists
+        if (!$userExists) {
+            $alert = array(
+                'message' => "User doesn't exists",
                 'alert-type' => 'error',
             );
-            return back()->with($notification);
-        }else{
-            $store = new Authentication();
-            $store->user_id = $user[0]->id;
-            $store->login_status = 1;
-            $store->login_time = Carbon::now();
-            $store->save();
-            $request->authenticate();
-            $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
-        }
+            return back()->with($alert);
+        } else {
+            $loginCount = $userExists->authentications()->count();
+            // if user is logged in more than 3 devices
+            if ($loginCount < 3) {
+                
+                $request->authenticate();
+                $request->session()->regenerate();
 
+                $store = new Authentication();
+                $store->user_id = auth()->id();
+                $store->login_status = 1;
+                $store->login_time = Carbon::now();
+                $store->save();
+
+                return redirect()->intended(RouteServiceProvider::HOME);
+            } else {
+                $alert = array(
+                    'message' => "Can't log in into more then 3 devices at once",
+                    'alert-type' => 'error',
+                );
+                return back()->with($alert);
+            }
+        }
     }
 
 
@@ -58,13 +71,12 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         $data = Authentication::where('user_id', $request->auth_id)->first();
-        if($data != null){
+        if ($data != null) {
             $data->delete();
-            Auth::guard('web')->logout();
+            Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             return redirect('/');
         }
-
     }
 }
