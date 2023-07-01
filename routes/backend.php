@@ -79,6 +79,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('about', AboutController::class);
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
+    Route::resource('my-docs',MyDocumentController::class);
 
     Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function(){
         Route::get('/{slug}', 'index')->name('index');
