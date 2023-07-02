@@ -1,7 +1,3 @@
-@php
-    $banners = getRecords('banners');
-    $partners = getRecords('partner_sections');
-@endphp
 
 @extends('frontend.layouts.app')
 
@@ -11,7 +7,6 @@
             #myDocumnets {
                 padding: 60px 0;
                 font-family: 'Poppins', sans-serif;
-                ;
             }
 
             h1.myDocsHead {
@@ -55,7 +50,6 @@
             }
         </style>
     @endpush
-    <x-frontend.hero-section :banners="$banners" />
 
     <div id="myDocumnets">
         <div class="container">

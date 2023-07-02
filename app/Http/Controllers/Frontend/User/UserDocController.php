@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Frontend\User;
 
 use Carbon\Carbon;
 use App\Models\UserDoc;
-use Illuminate\Support\Str;
-use App\Models\DocumentType;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreUserDocRequest;
@@ -19,7 +17,7 @@ class UserDocController extends Controller
     public function index()
     {
         // $upload_documents = UserDoc::with('user')->get();
-        return view('frontend.userdoc.viewAll');
+        return view('frontend.userdoc.userDoc');
     }
     
     /**

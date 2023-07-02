@@ -67,7 +67,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('promo-code', PromoCodeController::class);
     Route::resource('user-doc', UserDocController::class);
     Route::resource('map', MapController::class);
-    Route::resource('user-doc', UserDocController::class);
     Route::resource('document-type', DocumentTypeController::class);
     Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
@@ -79,7 +78,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('about', AboutController::class);
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
-    Route::resource('my-docs',MyDocumentController::class);
 
     Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function(){
         Route::get('/{slug}', 'index')->name('index');

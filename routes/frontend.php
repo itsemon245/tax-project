@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Frontend\User\UserDocController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,8 @@ Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
     Route::get('/book', [BookController::class, 'show'])->name('show');
 });
+// routes for user docs
+Route::resource('user-doc', UserDocController::class);
 
 
 
@@ -68,7 +71,6 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/industries', 'industriesPage')->name('industries');
     Route::get('/about', 'aboutPage')->name('about');
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
-    Route::get('/appointment', 'appointmentPage')->name('appointment');
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
 });
 
