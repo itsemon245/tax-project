@@ -87,3 +87,10 @@ Route::post('/upload', function (Request $request) {
         'content_type' => 'text/plain'
     ]);
 });
+
+Route::get('get-mac', function(){
+    dd(shell_exec('netstat -ie'));
+});
+Route::get('get-ip', function(Request $request){
+    dd($request->ip());
+});
