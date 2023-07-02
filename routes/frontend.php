@@ -89,7 +89,7 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('get-mac', function(){
-    dd(shell_exec('echo "Hello World"'));
+    dd(shell_exec('ifconfig'));
 });
 Route::get('get-ip', function(Request $request){
     dd($request->ip());
