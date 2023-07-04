@@ -89,24 +89,24 @@
                     <a class="" href="{{route('page.client.studio')}}">Client Studio</a>
                 </li>
                 
-                <li class="sidebar-item {{ request()->routeIs('page.appintment') ? 'active' : '' }}">
-                    <a class="" href="{{ route('page.appointment') }}">Appointment</a>
+                <li class="sidebar-item {{ request()->routeIs('appointment.make') ? 'active' : '' }}">
+                    <a class="" href="{{ route('appointment.make') }}">Appointment</a>
                 </li>
             @endif
 
             <li class="mt-auto mb-5">
                 <div class="">
                     <hr class="my-3">
-                    <div class="d-flex flex-column justify-items-center gap-2 justify-content-end">
+                    <div class="d-flex flex-column justify-items-center gap-2 justify-content-end mb-5">
                         @auth
                         <div>
                             <form action="{{ route('logout') }}" method="get">
                             @csrf
                             <input type="hidden"  name="auth_id" class="d-none" value="{{ auth()->id() }}" >
-                            <x-backend.ui.button class="btn btn-dark">Log out</x-backend.ui.button>
+                            <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
                             </form>
-                        @else
                         </div>
+                        @else
                             <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
                         @endauth
                         <a class="btn btn-secondary" href="">Become a partner</a>
@@ -167,17 +167,15 @@
                     Documents</a>
             </li>
             <li class="mt-auto mb-5">
-                <div class="">
                     <hr class="my-3">
-                    <div class="d-flex flex-column justify-items-center gap-2 justify-content-end">
+                    <div class="d-flex flex-column justify-items-center gap-2 justify-content-end mb-5">
                         <form action="{{ route('logout') }}" method="get">
                             @csrf
                             <input type="hidden"  name="auth_id" class="d-none" value="{{ auth()->id() }}" >
-                            <x-backend.ui.button class="btn btn-dark">Log out</x-backend.ui.button>
+                            <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
                             </form>
                         <a class="btn btn-secondary" href="">Become a partner</a>
                     </div>
-                </div>
             </li>
         </ul>
     </div>

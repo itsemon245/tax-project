@@ -13,10 +13,10 @@
                     <i class="mdi mdi-menu text-light"></i>
                 </button>
             </div>
-           <a href="{{route('home')}}">
-            <img class="app-logo" style="width:100px;" src="{{ asset('frontend/assets/images/logo/app.png') }}"
-            alt="Text Act Logo">
-           </a>
+            <a href="{{ route('home') }}">
+                <img class="app-logo" style="width:100px;" src="{{ asset('frontend/assets/images/logo/app.png') }}"
+                    alt="Text Act Logo">
+            </a>
         </div>
 
         @if (!$isPageV2)
@@ -182,13 +182,11 @@
                         class="nav-item custom-nav-item {{ request()->routeIs('page.client.studio') ? 'active-link' : '' }}">
                         <a class=" nav-link text-light" href="{{ route('page.client.studio') }}">Client Studio</a>
                     </li>
-                    <li class="nav-item custom-nav-item position-relative dropdown-trigger {{ str(url()->current())->contains("/make-appointment") ? 'active-link' : '' }}">
-                        <a class="nav-link text-light" href="javascript:void()">Appointment</a>
-                        <ul class="position-absolute dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item {{ request()->routeIs('appointment.make', 1) ? 'active-link' : '' }}"><a href="{{route('appointment.make', 1)}}" class="nav-link text-light">Physical</a></li>
-                            <li class="nav-item custom-nav-item dropdown-item {{ request()->routeIs('appointment.make', 0) ? 'active-link' : '' }}"><a href="{{route('appointment.make', 0)}}" class="nav-link text-light">Virtual</a></li>
-                        </ul>
+                    <li
+                        class="nav-item custom-nav-item {{ request()->routeIs('appointment.make') ? 'active-link' : '' }}">
+                        <a class=" nav-link text-light" href="{{ route('appointment.make') }}">Appointment</a>
                     </li>
+
                 </ul>
             </nav>
 
@@ -197,7 +195,8 @@
         {{-- btns --}}
         <div class="">
             <div class="d-flex align-items-center gap-3 justify-content-end">
-                <a class="btn btn-secondary rounded-1 partner-btn-hide" href="{{ route('page.become.partner') }}">Become a partner</a>
+                <a class="btn btn-secondary rounded-1 partner-btn-hide"
+                    href="{{ route('page.become.partner') }}">Become a partner</a>
                 @auth
                     <div id="sidebar-2" class="d-flex align-items-center menu-btn">
                         <span class="mdi mdi-account-outline text-light" style="font-size: 32px"></span>
@@ -301,12 +300,9 @@
                     class="nav-item custom-nav-item {{ request()->routeIs('page.client.studio') ? 'active-link' : '' }}">
                     <a class=" nav-link text-light" href="{{ route('page.client.studio') }}">Client Studio</a>
                 </li>
-                <li class="nav-item custom-nav-item position-relative dropdown-trigger {{ str(url()->current())->contains("/make-appointment") ? 'active-link' : '' }}">
-                    <a class="nav-link text-light" href="javascript:void()">Appointment</a>
-                    <ul class="position-absolute dropdown ">
-                        <li class="nav-item custom-nav-item dropdown-item {{ request()->routeIs('appointment.make', 1) ? 'active-link' : '' }}"><a href="{{route('appointment.make', 1)}}" class="nav-link text-light">Physical</a></li>
-                        <li class="nav-item custom-nav-item dropdown-item {{ request()->routeIs('appointment.make', 0) ? 'active-link' : '' }}"><a href="{{route('appointment.make', 0)}}" class="nav-link text-light">Virtual</a></li>
-                    </ul>
+                <li
+                    class="nav-item custom-nav-item {{ request()->routeIs('appointment.make') ? 'active-link' : '' }}">
+                    <a class=" nav-link text-light" href="{{ route('appointment.make') }}">Appointment</a>
                 </li>
             </ul>
         </nav>
