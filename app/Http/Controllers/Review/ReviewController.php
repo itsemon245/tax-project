@@ -31,7 +31,9 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request)
     {
-        //
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
@@ -55,7 +57,9 @@ class ReviewController extends Controller
      */
     public function update(UpdateReviewRequest $request, Review $review)
     {
-        //
+        // return response()->json([
+        //     'success' => true
+        // ]);
     }
 
     /**
