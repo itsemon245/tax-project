@@ -47,6 +47,166 @@
                         </div>
                     </div>
                 </div>
+                {{-- Comment Section starts --}}
+                <div class="container">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-4 card-body">
+                                <div class="container mt-5">
+                                    <div class=" mt-5 container text-center">
+                                        <h3 class="mt-5">4.5<span>/5</span></h3>
+                                        <div>
+                                            <div class="rating d-inline-block">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star filled"></i>
+                                            </div>
+                                        </div>
+                                        <p>296 Ratings</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8 container">
+                                <div class="card-body container">
+                                    <div class="rating-star">
+                                        <h5>5 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" style="width:65%"></div>
+                                        </div>
+                                        <h6>65%</h6>
+                                    </div>
+                                    <div class="rating-star">
+                                        <h5>4 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" style="width:26%"></div>
+                                        </div>
+                                        <h6>26%</h6>
+                                    </div>
+                                    <div class="rating-star">
+                                        <h5>3 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" style="width:5%"></div>
+                                        </div>
+                                        <h6>5%</h6>
+                                    </div>
+                                    <div class="rating-star">
+                                        <h5>2 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" style="width:2%"></div>
+                                        </div>
+                                        <h6>2%</h6>
+                                    </div>
+                                    <div class="rating-star mb-0">
+                                        <h5>1 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger" style="width:1%"></div>
+                                        </div>
+                                        <h6>1%</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                     
+                    <div class="card container">
+                        <h3 class="container mt-3">Recent Reviews</h3>
+                        <div class="container card-body">
+                            <div class="container d-flex">
+                                <div class="review-img">
+                                    <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img" width="60px" height="60px" class=" rounded-circle shadow-4-strong d-block"></a>
+                                </div>
+                                <div class="review-name-group">
+                                    <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span> 
+                                    <span class="text-muted">
+                                        <div class="rating d-inline-block">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star filled"></i>
+                                        </div>    
+                                    </span></h5>
+                                    <p class="container text-muted">I have been in treatment all my life For extrinsic asthma. As spring pollen are big triggers, I really depend on antihistamines and Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be healthy difference in price.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card-body container">
+                                <div class="container d-flex">
+                                    <div class="review-img">
+                                        <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img" width="60px" height="60px" class=" rounded-circle shadow-4-strong d-block"></a>
+                                    </div>
+                                    <div class="review-name-group">
+                                        <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span> 
+                                        <span class="text-muted">
+                                            <div class="rating d-inline-block">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star filled"></i>
+                                            </div>    
+                                        </span></h5>
+                                        <p class="container text-muted">I have been in treatment all my life For extrinsic asthma. As spring pollen are big triggers, I really depend on antihistamines and Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be healthy difference in price.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card-body container">
+                                <div class="container d-flex">
+                                    <div class="review-img">
+                                        <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img" width="60px" height="60px" class=" rounded-circle shadow-4-strong d-block"></a>
+                                    </div>
+                                    <div class="review-name-group">
+                                        <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span> 
+                                        <span class="text-muted">
+                                            <div class="rating d-inline-block">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star filled"></i>
+                                            </div>    
+                                        </span></h5>
+                                        <p class="container text-muted">I have been in treatment all my life For extrinsic asthma. As spring pollen are big triggers, I really depend on antihistamines and Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be healthy difference in price.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="container card-body">
+                            <h3 class="mt-2">Input Your Review</h3>
+                            <div class="review-coment-group">
+                                <form action="javascript:;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="rating ">
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star "></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <textarea class="form-control" rows="7" id="comment" name="text"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="review-submit mt-3">
+                                            <button type="button" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
