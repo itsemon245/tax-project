@@ -12,7 +12,7 @@
             <h3 class="text-center my-3">About Us</h3>
             <div class="">
                 <div class="bg-secondary p-3 rounded">
-                    <p class="d-flex justify-content-left p-3">{!! $about_data->description ?? ' ' !!}</p>
+                    <p class="d-flex justify-content-left p-3">{!! $about_data->description ?? '<p class="text-center pb-3">No Data</p>' !!}</p>
                 </div>
             </div>
         </section>
@@ -26,24 +26,27 @@
                 {{-- Left side content --}}
                 <div class="row justify-content-center">
 
-                    @foreach ($about_sections as $about_section)
-                        {{-- Sections --}}
-                        <div class="row mb-4 justify-content-sm-center gap-sm-3">
-                            <h4 class="col-sm-12 col-5 p-0">{{ $about_sections[0]['title'] ?? '' }}</h4>
-                            <div class="col-sm-3 col-6 mb-3 mb-sm-0 p-0 flex-grow-1">
-                                @isset($about_sections[0]['image'])
-                                    <img class="w-100 rounded"
-                                        src="{{ $about_sections[0]['image'] == true ? useImage($about_sections[0]['image']) : asset('frontend/assets/images/bg-material.png') }}"
-                                        alt="" />
-                                @endisset
+                    @if ($about_sections > 0)
+                        @foreach ($about_sections as $about_section)
+                            {{-- Sections --}}
+                            <div class="row mb-4 justify-content-sm-center gap-sm-3">
+                                <h4 class="col-sm-12 col-5 p-0">{{ $about_sections[0]['title'] ?? '' }}</h4>
+                                <div class="col-sm-3 col-6 mb-3 mb-sm-0 p-0 flex-grow-1">
+                                    @isset($about_sections[0]['image'])
+                                        <img class="w-100 rounded"
+                                            src="{{ $about_sections[0]['image'] == true ? useImage($about_sections[0]['image']) : asset('frontend/assets/images/bg-material.png') }}"
+                                            alt="" />
+                                    @endisset
+                                </div>
+                                <div class="col-sm-8 p-4 bg-secondary rounded">
+                                    <p>
+                                        {!! $about_sections[0]['description'] ?? '' !!}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="col-sm-8 p-4 bg-secondary rounded">
-                                <p>
-                                    {!! $about_sections[0]['description'] ?? '' !!}
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
+
 
                 </div>
             </div>
