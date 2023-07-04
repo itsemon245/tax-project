@@ -100,7 +100,7 @@
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end mb-5">
                         @auth
                         <div>
-                            <form action="{{ route('logout') }}" method="get">
+                            <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <input type="hidden"  name="auth_id" class="d-none" value="{{ auth()->id() }}" >
                             <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
@@ -169,7 +169,7 @@
             <li class="mt-auto mb-5">
                     <hr class="my-3">
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end mb-5">
-                        <form action="{{ route('logout') }}" method="get">
+                        <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <input type="hidden"  name="auth_id" class="d-none" value="{{ auth()->id() }}" >
                             <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
