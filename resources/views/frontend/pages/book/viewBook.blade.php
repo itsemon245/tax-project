@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 {{-- Comment Section starts --}}
-                <div class="container">
+                <div class="container mt-3">
                     <div class="card">
                         <div class="row">
                             <div class="col-md-4 card-body">
