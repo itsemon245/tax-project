@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Review;
+namespace App\Http\Controllers\Review;
 
 use App\Models\Review;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
+use Illuminate\Http\Request;
+use Illuminate\Http\Request as HttpRequest;
 
 class ReviewController extends Controller
 {
@@ -29,10 +31,13 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreReviewRequest $request)
+    public function store(Request $request)
     {
+        $comment= $request->comment;
+        $rating= $request->rating;
         return response()->json([
-            'success' => true
+            'success' => true,
+            'message'=>'Review submitted successfully',
         ]);
     }
 
