@@ -146,10 +146,10 @@
                                 <div class="card-body">
                                     <div class="col-lg-12">
                                         <ul class="preview_details">
-                                            <li><a href=""> Preview Document </a></li>
-                                            <li><a href="">View Details</a></li>
-                                            <li><a href="">View Details</a></li>
-                                            <li><a href="">View Details</a></li>
+                                            <li><a href=""> Preview document </a></li>
+                                            <li><a href="">View details</a></li>
+                                            <li><a href="">Move to another year</a></li>
+                                            <li><a href="">Delete document</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -163,8 +163,8 @@
                         <h2 class="pt-3 px-3">Upload Tips:</h2>
                         <ul class="tips_details px-3">
                             <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
+                            <li>Only upload your prior year tax return here. We will ask for other forms later</li>
+                            <li>Make sure your pdf isn't password protected</li>
                         </ul>
                     </div>
                 </div>

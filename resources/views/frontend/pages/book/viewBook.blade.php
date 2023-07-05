@@ -1,5 +1,12 @@
 @extends('frontend.layouts.app')
 @section('main')
+    @push('customCSS')
+        <style>
+            .yellow {
+                color: yellow;
+            }
+        </style>
+    @endpush
     <section class="py-md-5 my-5 ">
         <div class="container px-2">
             <div class="row mb-24">
@@ -108,37 +115,18 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                     
+                    </div>
                     <div class="card container">
                         <h3 class="container mt-3">Recent Reviews</h3>
                         <div class="container card-body">
                             <div class="container d-flex">
                                 <div class="review-img">
-                                    <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img" width="60px" height="60px" class=" rounded-circle shadow-4-strong d-block"></a>
+                                    <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}"
+                                            alt="img" width="60px" height="60px"
+                                            class=" rounded-circle shadow-4-strong d-block"></a>
                                 </div>
                                 <div class="review-name-group">
-                                    <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span> 
-                                    <span class="text-muted">
-                                        <div class="rating d-inline-block">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star filled"></i>
-                                        </div>    
-                                    </span></h5>
-                                    <p class="container text-muted">I have been in treatment all my life For extrinsic asthma. As spring pollen are big triggers, I really depend on antihistamines and Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be healthy difference in price.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="card-body container">
-                                <div class="container d-flex">
-                                    <div class="review-img">
-                                        <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img" width="60px" height="60px" class=" rounded-circle shadow-4-strong d-block"></a>
-                                    </div>
-                                    <div class="review-name-group">
-                                        <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span> 
+                                    <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span>
                                         <span class="text-muted">
                                             <div class="rating d-inline-block">
                                                 <i class="fas fa-star"></i>
@@ -146,9 +134,40 @@
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star filled"></i>
-                                            </div>    
-                                        </span></h5>
-                                        <p class="container text-muted">I have been in treatment all my life For extrinsic asthma. As spring pollen are big triggers, I really depend on antihistamines and Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be healthy difference in price.</p>
+                                            </div>
+                                        </span>
+                                    </h5>
+                                    <p class="container text-muted">I have been in treatment all my life For extrinsic
+                                        asthma. As spring pollen are big triggers, I really depend on antihistamines and
+                                        Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
+                                        healthy difference in price.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card-body container">
+                                <div class="container d-flex">
+                                    <div class="review-img">
+                                        <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}"
+                                                alt="img" width="60px" height="60px"
+                                                class=" rounded-circle shadow-4-strong d-block"></a>
+                                    </div>
+                                    <div class="review-name-group">
+                                        <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span>
+                                            <span class="text-muted">
+                                                <div class="rating d-inline-block">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                </div>
+                                            </span>
+                                        </h5>
+                                        <p class="container text-muted">I have been in treatment all my life For extrinsic
+                                            asthma. As spring pollen are big triggers, I really depend on antihistamines and
+                                            Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
+                                            healthy difference in price.</p>
                                     </div>
                                 </div>
                             </div>
@@ -157,20 +176,27 @@
                             <div class="card-body container">
                                 <div class="container d-flex">
                                     <div class="review-img">
-                                        <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img" width="60px" height="60px" class=" rounded-circle shadow-4-strong d-block"></a>
+                                        <a href="profile.html"><img
+                                                src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img"
+                                                width="60px" height="60px"
+                                                class=" rounded-circle shadow-4-strong d-block"></a>
                                     </div>
                                     <div class="review-name-group">
-                                        <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span> 
-                                        <span class="text-muted">
-                                            <div class="rating d-inline-block">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star filled"></i>
-                                            </div>    
-                                        </span></h5>
-                                        <p class="container text-muted">I have been in treatment all my life For extrinsic asthma. As spring pollen are big triggers, I really depend on antihistamines and Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be healthy difference in price.</p>
+                                        <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span>
+                                            <span class="text-muted">
+                                                <div class="rating d-inline-block">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                </div>
+                                            </span>
+                                        </h5>
+                                        <p class="container text-muted">I have been in treatment all my life For extrinsic
+                                            asthma. As spring pollen are big triggers, I really depend on antihistamines and
+                                            Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
+                                            healthy difference in price.</p>
                                     </div>
                                 </div>
                             </div>
@@ -185,11 +211,13 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <div class="rating ">
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <i class="far fa-star "></i>
+                                                    <i class="far fa-star" id="star1" data-id={{ 1 }}></i>
+                                                    <i class="far fa-star" id="star2" data-id={{ 2 }}></i>
+                                                    <i class="far fa-star" id="star3" data-id={{ 3 }}></i>
+                                                    <i class="far fa-star" id="star4" data-id={{ 4 }}></i>
+                                                    <i class="far fa-star" id="star5" data-id={{ 5 }}></i>
+                                                    <input type="hidden" class="form-control raitng" value="1"
+                                                        name="raitings">
                                                 </div>
                                             </div>
                                         </div>
@@ -199,7 +227,7 @@
                                             </div>
                                         </div>
                                         <div class="review-submit mt-3">
-                                            <button type="button" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary buttonSubmit">Submit</button>
                                         </div>
                                     </div>
                                 </form>
@@ -210,4 +238,78 @@
             </div>
         </div>
     </section>
+
+    @push('customJs')
+        <script>
+            $("#star1").click(function() {
+                $("#star1").css("color", "black").removeClass("bigstar");
+                $("#star1").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+            $("#star2").click(function() {
+                $("#star2").css("color", "black").removeClass("bigstar");
+                $("#star1,#star2").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+            $("#star3").click(function() {
+                $("#star3").css("color", "black").removeClass("bigstar");
+                $("#star1,#star2,#star3").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+            $("#star4").click(function() {
+                $("#star4").css("color", "black").removeClass("bigstar");
+                $("#star1,#star2,#star3,#star4").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+            $("#star5").click(function() {
+                $("#star5").css("color", "black").removeClass("bigstar");
+                $("#star1,#star2,#star3,#star4,#star5").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+        </script>
+
+        <script>
+            $('.fa-star').on('click', function() {
+                var id = $(this).data('id');
+                $('.raitng').val(id)
+            })
+        </script>
+
+        <script>
+           
+
+            var buttonSubmit = $('.buttonSubmit');
+            buttonSubmit.on('click', function(e) {
+                e.preventDefault();
+                var comment = $('#comment').val();
+                var rating = $('.raitng').val();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    method: "post",
+                    url: "{{ route('review.store', 'book') }}",
+                    data: {
+                        "comment": comment,
+                        'rating': rating,
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            Toast.fire({
+                                icon: "success",
+                                title: response.message
+                            })
+                        }else{
+                            Toast.fire({
+                                icon: "error",
+                                title: response.message
+                            })
+                        }
+                    },
+                });
+            })
+        </script>
+    @endpush
 @endsection
