@@ -141,6 +141,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
+// @ts-ignore
 import InvoiceItem from './components/InvoiceItem.vue';
 import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';

@@ -110,13 +110,14 @@
       <div class="d-flex my-1 gap-2 align-items-center mb-2">
         <select name="payment_method" class="form-select text-capitalize w-50" v-model="paymentMethod">
           <option selected disabled>Select Payment Method</option>
-          <option v-for="option of options" :value="option" class="text-capitalize">{{option}}</option>
+          <option v-for="option of options" :value="option" class="text-capitalize">{{ option }}</option>
         </select>
       </div>
       <div class="mb-2">
         <label class="mb-0" for="note">Payment Note</label>
         <textarea class="border border-2 w-100" name="payment_note"
-          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'" rows="4">{{ paymentNote }}</textarea>
+          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'"
+          rows="4">{{ paymentNote }}</textarea>
       </div>
 
       <div class="row mb-2 align-items-center">
@@ -136,7 +137,8 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
+import { onBeforeMount, onMounted, ref, watch } from 'vue';
+// @ts-ignore
 import InvoiceItem from './components/InvoiceItem.vue';
 import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';
@@ -169,51 +171,25 @@ onMounted(() => {
 
   axios.get(url)
     .then(response => {
-      // console.log(response.data.items);
-      
-      const items = response.data.items.map(item => {
-        
-        const taxItems = JSON.parse(item.taxes)
-        let taxes = taxItems.map(tax=>{
-          let taxId = 0;
-          return {
-            id: taxId++,
-            name: tax.name,
-            rate:tax.rate,
-            number:tax.number
-          }
-        })
-        
-        
-        return {
-          id: item.id-1,
-          name: item.name,
-          description: item.description,
-          rate: item.rate,
-          qty: item.qty,
-          total: item.rate * item.qty,
-          taxes: taxes,
-          isTaxActive: false,
-          tax: 0
-        }
-      })
+
+      const items = response.data.invoiceItems
+      const invoice = response.data.invoice
+
       invoiceItems.value = items
-      invoiceItems.value.forEach(item => {
-        calcTaxes(item.id)
-      });
-      subTotal.value = response.data.subTotal
+
+      subTotal.value = invoice.subTotal
       discount.value = {
-        amount: response.data.discount,
+        amount: invoice.discount,
         isFixed: true,
         percentage: 0,
         isActive: false
       }
-      total.value = response.data.total
-      notes.value = response.data.note
-      paid.value = response.data.amountPaid
-      due.value = response.data.amountDue
-      paymentNote.value = response.data.paymentNote
-      paymentMethod.value = response.data.paymentMethod
+      total.value = invoice.total
+      notes.value = invoice.note
+      paid.value = invoice.amountPaid
+      due.value = invoice.amountDue
+      paymentNote.value = invoice.paymentNote
+      paymentMethod.value = invoice.paymentMethod
     })
     .catch(error => {
       console.log(error);
@@ -254,13 +230,14 @@ onMounted(() => {
     dueDom.innerHTML = due.value + ' Tk'
   })
 
-  watch(invoiceItems, (newItems) => {
+  
+})
+
+watch(invoiceItems, (newItems) => {
     newItems.forEach((item) => {
       calcTaxes(item.id)
     });
   })
-})
-
 
 
 </script>

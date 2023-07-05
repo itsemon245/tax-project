@@ -37,8 +37,6 @@
                                         <td>
                                             <x-backend.ui.button type="custom" href="{{ route('invoice.show', $invoice->id) }}"
                                                 class="btn-sm btn-dark">View</x-backend.ui.button>
-                                            <x-backend.ui.button type="edit" href="{{ route('invoice.edit', $invoice->id) }}"
-                                                class="btn-sm" />
                                             <x-backend.ui.button type="delete"
                                                 action="{{ route('invoice.destroy', $invoice->id) }}" class="btn-sm" />
                                         </td>

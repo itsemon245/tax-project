@@ -8,9 +8,11 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\InvoiceResource;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
-use App\Http\Resources\InvoiceResource;
+use App\Http\Resources\InvoiceItemCollection;
+use App\Http\Resources\InvoiceItemResource;
 
 class InvoiceController extends Controller
 {
@@ -101,9 +103,12 @@ class InvoiceController extends Controller
     }
 
     function getInvoiceData($id) {
-        $invoice = Invoice::with('invoiceItems')->find($id);
-        $content = new InvoiceResource($invoice);
-        return response($content);
+        $invoice = new InvoiceResource(Invoice::find($id));
+        $invoiceItems = new InvoiceItemCollection(InvoiceItem::where('invoice_id', $id)->get());
+        return response()->json([
+            'invoice'=> $invoice,
+            'invoiceItems'=>$invoiceItems,
+        ]);
     }
 
     /**

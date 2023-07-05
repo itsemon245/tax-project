@@ -4,8 +4,8 @@
         <td>
             <div>
                 <input aria-label="item-name" name="item_names[]" type="text" v-model="props.item.name" />
-                <input aria-label="item-descriptions" v-model="props.item.description" name="item_descriptions[]" type="text"
-                    placeholder="Item Description (optional)" />
+                <input aria-label="item-descriptions" v-model="props.item.description" name="item_descriptions[]"
+                    type="text" placeholder="Item Description (optional)" />
             </div>
         </td>
         <td>
@@ -78,16 +78,17 @@
                 <input aria-label="item-total" id="item-total-0" data-index="0" name="item_totals[]" type="text"
                     v-model="props.item.total" placeholder="00" class="d-inline-block" style="width: 7rem;" disabled />
                 <span @click="deleteInvoiceItem(props.item.id)" data-index="0"
-                    class="mdi mdi-trash-can-outline text-danger item-delete-btn"></span>
+                    class="mdi mdi-trash-can-outline text-danger item-delete-btn" style="cursor:pointer;"></span>
             </div>
         </td>
     </tr>
 </template>
 
 <script setup lang="ts">
+// @ts-ignore
 import CloseIcon from './icons/CloseIcon.vue';
 import { useInvoice } from '../composables/useInvoice';
-import { computed, onMounted, toRaw, watch } from 'vue';
+import { watch } from 'vue';
 
 
 
@@ -103,14 +104,9 @@ const {
 
 
 
-
-
-onMounted(() => {
-    watch([() => props.item.rate, () => props.item.qty], () => {
-        props.item.total = props.item.rate * props.item.qty
-        calcTaxes(props.item.id)
-    })
-
+watch([() => props.item.rate, () => props.item.qty], () => {
+    props.item.total = props.item.rate * props.item.qty
+    calcTaxes(props.item.id)
 })
 
 

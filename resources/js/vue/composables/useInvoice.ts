@@ -3,9 +3,9 @@ import { ref, onMounted, onUnmounted } from "vue";
 import data, { item } from "../data";
 
 // by convention, composable function names start with "use"
+export const  invoiceItems = ref(data);
 export function useInvoice() {
     // state encapsulated and managed by the composable
-    const invoiceItems = ref(data);
 
     // a composable can update its managed state over time.
 
@@ -18,6 +18,7 @@ export function useInvoice() {
     };
 
     const deleteInvoiceItem = (id: number) => {
+        
         //delete the current index
         invoiceItems.value.splice(id, 1);
 
@@ -28,7 +29,7 @@ export function useInvoice() {
     };
 
     const addNewTaxItem = (id: number) => {
-        // const newItem = { ...item }
+
         const newItem = JSON.parse(JSON.stringify(invoiceItems.value[id]));
         const newTaxItem = {
             id: newItem.taxes.length,
