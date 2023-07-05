@@ -42,3 +42,24 @@
     <x-frontend.testimonial-section :testimonials="$testimonials">
     </x-frontend.testimonial-section>
 @endsection
+
+@pushOnce('customJs')
+    <script>
+        $(document).ready(function () {
+            const submit = () => {
+                $.ajax({
+                    type: "post",
+                    url: "{{route('review.store', 'book')}}",
+                    headers: {
+                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+                    }
+                    success: function (response) {
+                       console.log(response);
+                    }
+                });
+            }
+
+            $('#submit-btn').click(submit)
+        });
+    </script>
+@endPushOnce

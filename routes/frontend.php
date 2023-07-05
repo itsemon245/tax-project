@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\Frontend\BookController;
@@ -9,11 +10,11 @@ use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\AppointmentController;
+use App\Http\Controllers\Backend\Review\ReviewController;
+use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Frontend\User\UserDocController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,16 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/about', 'aboutPage')->name('about');
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
+});
+
+// Review Routes
+Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function(){
+    Route::get('/{slug}', 'index')->name('index');
+    Route::get('/{slug}/create', 'create')->name('create');
+    Route::get('/{slug}/store', 'store')->name('store');
+    Route::get('/{slug}/edit', 'edit')->name('edit');
+    Route::get('/{slug}/update', 'update')->name('update');
+    Route::get('/{slug}/destroy', 'destroy')->name('destroy');
 });
 
 

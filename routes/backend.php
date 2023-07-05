@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Map;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UiElementController;
@@ -16,7 +15,6 @@ use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\Pages\AboutController;
 use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Client\ClientController;
-use App\Http\Controllers\Backend\Review\ReviewController;
 use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Product\ProductController;
@@ -28,7 +26,6 @@ use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
-use App\Http\Controllers\Backend\Service\ServiceCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
@@ -79,14 +76,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
 
-    Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function(){
-        Route::get('/{slug}', 'index')->name('index');
-        Route::get('/{slug}/create', 'create')->name('create');
-        Route::get('/{slug}/store', 'store')->name('store');
-        Route::get('/{slug}/edit', 'edit')->name('edit');
-        Route::get('/{slug}/update', 'update')->name('update');
-        Route::get('/{slug}/destroy', 'destroy')->name('destroy');
-    });
 
     //service related routes
     Route::resource('service-subcategory', ServiceSubCategoryController::class);
