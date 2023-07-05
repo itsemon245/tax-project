@@ -1,5 +1,9 @@
 <template>
-  <div class="border-top border-4 mt-5">
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-success waves-effect waves-light rounded-3 shadow mb-2"
+      @click="toggleEditMode">{{ editBtn }}</button>
+  </div>
+  <div class="border-top border-4">
     <div class="table-responsive mb-3">
       <table class="table table-striped">
         <thead class="bg-light">
@@ -16,7 +20,7 @@
           </InvoiceItem>
         </tbody>
       </table>
-      <button @click="addNewItem" id="item-add-btn" type="button" class="w-100 p-1 fw-bold rounded rounded-3"
+      <button v-show="isEditMode" @click="addNewItem" id="item-add-btn" type="button" class="w-100 p-1 fw-bold rounded rounded-3"
         style="background: none; border: 2px solid rgb(172, 170, 170);">Add New Item</button>
     </div>
   </div><!-- end table-responsive-->
@@ -137,13 +141,19 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
+import $ from "jquery";
 // @ts-ignore
 import InvoiceItem from './components/InvoiceItem.vue';
 import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';
 import axios from 'axios'
 
+const isEditMode = ref(false);
+
+const editBtn = computed(() => {
+  return isEditMode.value ? 'Cancel' : 'Edit'
+})
 const { invoiceItems, addNewItem, calcTaxes } = useInvoice()
 const { subTotal, total, discount, paid, due, notes } = useAccounts()
 const totalTax = ref(0)
@@ -163,9 +173,25 @@ const calcDiscount = () => {
   discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount / 100;
   toggleDiscount()
 }
-
-
+const toggleEditMode = () => {
+  isEditMode.value = !isEditMode.value
+  $('#submit-btn').toggleClass('d-none')
+}
+const toggleInputs = (mode) =>{
+  $('#submit-form').prop('disabled', mode)
+    $('input').prop('disabled', mode)
+    $('select').prop('disabled', mode)
+    $('.selectize').prop('disabled', mode)
+    $('textarea').prop('disabled', mode)
+}
 onMounted(() => {
+  toggleInputs(isEditMode)
+  watch(isEditMode, (newVal) => {
+    toggleInputs(!newVal)
+    
+  })
+
+
   const id = document.querySelector('#invoice-id')?.innerHTML
   const url = 'http://localhost:8000/admin/get-invoice-data/' + id
 
@@ -230,14 +256,14 @@ onMounted(() => {
     dueDom.innerHTML = due.value + ' Tk'
   })
 
-  
+
 })
 
 watch(invoiceItems, (newItems) => {
-    newItems.forEach((item) => {
-      calcTaxes(item.id)
-    });
-  })
+  newItems.forEach((item) => {
+    calcTaxes(item.id)
+  });
+})
 
 
 </script>

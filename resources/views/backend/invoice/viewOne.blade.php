@@ -113,7 +113,7 @@
 
     <x-backend.ui.section-card>
         <section class="p-lg-3">
-            <form action="{{ route('invoice.store') }}" method="post" enctype="multipart/form-data">
+            <form id="submit-form" action="{{ route('invoice.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <img src="" alt="">
@@ -176,7 +176,7 @@
 
                 </div>
 
-                <button type="submit" class="btn btn-primary waves-effect waves-light mt-2">Submit</button>
+                <button id="submit-btn" type="submit" class="btn btn-primary waves-effect waves-light mt-2 rounded-3 shadow d-none">Update</button>
 
             </form>
 
