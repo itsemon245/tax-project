@@ -1,152 +1,122 @@
 @extends('frontend.layouts.app')
 @section('main')
     {{-- contact header start --}}
-    <div id="contact_header">
-        <div class="container">
-            <div class="row">
-                <div class="contact_content">
-                    <h2>Let’s Discuss your Project</h2>
-                    <h3>Which office do you prefer?</h3>
-                </div>
-            </div>
-        </div>
+    <div class="text-center my-5">
+        <h2>Let’s Discuss your Project</h2>
+        <h3>Which office do you prefer?</h3>
     </div>
-    {{-- contact end --}}
-    {{-- contact details start --}}
+
     <div id="contact_details">
         <div class="container">
-            <div class="row m-auto">
-                <div class="col-lg-6 col-md-12 pt-lg-0 order-lg-1 pt-md-3 contact_image order-md-1">
-                    <div class="contact_thumb">
-                        <img src="{{ asset('frontend/assets/images/Rectangle 28.png') }}" alt="" class="contact_map">
-                    </div>
+            <div class="row" style="flex-direction: row-reverse;">
+
+                <div class="col-lg-6 mb-3 mb-lg-0">
+                    <embed style='object-fit:cover;' src="{{ $maps[0]->src }}" class="border w-100 rounded-3 shadow-sm h-100" />
                 </div>
-                <div class="col-lg-6 col-md-12 order-lg-0 pt-3 pt-md-0 pt-lg-0 order-md-0 position-relative">
-                    <div class="contact_info">
-                        <div class="row">
-                            <div class="col-md-12 pb-4">
-                                <h4>42, Hamilton, PKWY</h4>
-                                <h5>Brooklyn, NY</h5>
-                                <h6>+88016-43428395</h6>
-                                <p>By appointment</p>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <a href="#" class="office">Office Details</a>
+
+                <div class="col-lg-6">
+                    <div id="office-details" class="rounded-3 shadow-sm border w-100 bg-light p-3">
+                        @foreach ($maps as $key => $map)
+                            <div class="p-3 mb-4">
+                                <h4>{{ $map->location }}</h4>
+                                <div class="mb-3">{!! $map->address !!}</div>
+                                <div class="d-flex gap-5">
+                                    <div>
+                                        <a href="#" class="text-dark fw-bold"
+                                            style="text-decoration: underline!important;">Office
+                                            Details</a>
                                     </div>
-                                    <div class="col-md-6">
-                                        <a href="#" class="appointment">Make Appointment</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="sperator" />
-                            <div class="col-md-12 pt-4">
-                                <h4>42, Hamilton, PKWY</h4>
-                                <h5>Brooklyn, NY</h5>
-                                <h6>+88016-43428395</h6>
-                                <p>By appointment</p>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <a href="#" class="office-2">Office Details</a>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <a href="#" class="appointment-2">Make Appointment</a>
+                                    <div>
+                                        <a href="{{ route('appointment.make') }}" class="text-dark fw-bold"
+                                            style="text-decoration: underline!important;">Make
+                                            Appointment</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            @if ($key + 1 !== count($maps))
+                                <hr class="bg-light">
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    {{-- contact details end --}}
-    {{-- contact info start --}}
-    <div id="contact_us">
-        <div class="container">
+            <hr class="bg-light my-5 p-0">
             <div class="row">
-                <div class="col-lg-6 col-md-12 px-4 px-md-4 px-lg-4">
-                    <div class="px-5 contact_wrapper text-white">
-                        <div class="">
+                <div class="col-lg-6 mb-3 mb-lg-0">
+                    <div id="contact-info" class="px-5 rounded-3 bg-gradient text-light p-5 h-100" style="background: #0891B2;">
+                        <div class="d-flex gap-3 mb-2">
+                            <div class="py-2 px-3 bg-primary rounded">
+                                <span class="mdi mdi-email-outline text-light"></span>
+                            </div>
                             <div class="">
-                                <div class="d-flex gap-3 mb-2">
-                                    <div class="py-2 px-3 bg-primary rounded">
-                                        <span class="mdi mdi-email-outline text-light"></span>
-                                    </div>
-                                    <div class="">
-                                        <h4 class="mb-0">Mail us at</h4>
-                                        <p class="mb-0">emdadctg@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-3 mb-2">
-                                    <div class="py-2 px-3 bg-primary rounded">
-                                        <span class="mdi mdi-phone text-light"></span>
-                                    </div>
-                                    <div class="">
-                                        <h4 class="mb-0">Mail us at</h4>
-                                        <p class="mb-0">emdadctg@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-3 mb-5">
-                                    <div class="py-2 px-3 bg-primary rounded">
-                                        <span class="mdi mdi-whatsapp text-light"></span>
-                                    </div>
-                                    <div class="">
-                                        <h4 class="mb-0">Mail us at</h4>
-                                        <p class="mb-0">emdadctg@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-3 mb-2">
-                                    <div class="py-2 px-3 bg-primary rounded">
-                                        <span class="mdi mdi-web text-light" style="font-size:28px;"></span>
-                                    </div>
-                                    <div class="">
-                                        <h4 class="mb-0">Mail us at</h4>
-                                        <div class="mb-0">
-                                            <span class="mdi mdi-facebook"></span>
-                                            <span class="mdi mdi-youtube"></span>
-                                            <span class="mdi mdi-twitter"></span>
-                                            <span class="mdi mdi-linkedin"></span>
-                                        </div>
-                                    </div>
+                                <h4 class="mb-0">Mail us at</h4>
+                                <p class="mb-0">emdadctg@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-3 mb-2">
+                            <div class="py-2 px-3 bg-primary rounded">
+                                <span class="mdi mdi-phone text-light"></span>
+                            </div>
+                            <div class="">
+                                <h4 class="mb-0">Mail us at</h4>
+                                <p class="mb-0">emdadctg@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-3 mb-5">
+                            <div class="py-2 px-3 bg-primary rounded">
+                                <span class="mdi mdi-whatsapp text-light"></span>
+                            </div>
+                            <div class="">
+                                <h4 class="mb-0">Mail us at</h4>
+                                <p class="mb-0">emdadctg@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-3 mb-2">
+                            <div class="py-2 px-3 bg-primary rounded">
+                                <span class="mdi mdi-web text-light" style="font-size:28px;"></span>
+                            </div>
+                            <div class="">
+                                <h4 class="mb-0">Mail us at</h4>
+                                <div class="mb-0">
+                                    <span class="mdi mdi-facebook"></span>
+                                    <span class="mdi mdi-youtube"></span>
+                                    <span class="mdi mdi-twitter"></span>
+                                    <span class="mdi mdi-linkedin"></span>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12 pt-lg-0 pt-md-3 pt-3 px-4 px-md-4 px-lg-0">
-                    <div class="contact_form">
-                        <h1 class="text-center">Let’s Talk</h1>
-                        <h2 class="text-center" style="font-size:18px;">You are quite important to us . We reply as soon as possible</h2>
+                <div class="col-lg-6">
+                    <div id="contact-form" class="bg-light p-4 rounded-3 h-100">
+                        <h5 class="text-center">Let’s Talk</h5>
+                        <h6 class="text-center mb-3">You are quite important to us . We reply as soon as
+                            possible</h6>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" id="name" class="form-control" placeholder="Name">
-                                </div>
+                                <x-backend.form.text-input id="name" type="text" name="name" label="Name"
+                                    required />
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" id="email" class="form-control" placeholder="Email">
-                                </div>
+                                <x-backend.form.text-input id="email" type="email" name="email" label="Email"
+                                    required />
                             </div>
-                            <div class="col-md-6 py-md-3 py-0">
-                                <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input type="number" id="phone" class="form-control" placeholder="Phone">
-                                </div>
+                            <div class="col-md-6">
+                                <x-backend.form.text-input id="phone" type="tel" name="phone" label="Phone" />
                             </div>
-                            <div class="col-md-6 py-md-3 py-0">
-                                <div class="form-group">
-                                    <label for="location">Location</label>
-                                    <input type="text" id="location" class="form-control" placeholder="Location">
-                                </div>
+                            <div class="col-md-6">
+                                <x-backend.form.text-input id="location" type="text" name="location" label="Location" />
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="form-group">
-                                    <label for="message">Message</label>
-                                    <textarea name="" class="form-control" id="message" placeholder="Message" cols="30" rows="3"></textarea>
+                                    <label for="message">Message</label><span class="text-danger">*</span>
+                                    <textarea name="message" class="form-control" id="message" placeholder="Message" cols="30" rows="3"
+                                        required></textarea>
+                                    @error('message')
+                                        <span>
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -160,7 +130,4 @@
             </div>
         </div>
     </div>
-    {{-- contact info end --}}
-    @push('customJs')
-    @endpush
 @endsection

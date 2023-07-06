@@ -5,7 +5,7 @@
     $class = $attributes->get('class');
     // $value = $attributes->has('value') ? $attributes->get('value') : old($name);
 @endphp
-<div class="">
+<div class="mb-2">
     @if ($label)
         <label class="form-label mb-0" style="font-size: 14px;">{{ $label }}
             @if ($required)

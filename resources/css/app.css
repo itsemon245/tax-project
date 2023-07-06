@@ -357,11 +357,6 @@ footer .social-handles {
 .contact_img{
     width: 100%;
 }
-.contact_wrapper{
-    background-color: #0891B2;
-    padding: 72px 20px;
-    border-radius: 10px;
-}
 .contact_address h4, .contact_address p{
     font-family: 'Poppins',sans-serif;
     font-size: 20px;

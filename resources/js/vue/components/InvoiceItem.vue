@@ -4,8 +4,8 @@
         <td>
             <div>
                 <input aria-label="item-name" name="item_names[]" type="text" v-model="props.item.name" />
-                <input aria-label="item-descriptions" v-model="props.item.description" name="item_descriptions[]" type="text"
-                    placeholder="Item Description (optional)" />
+                <input aria-label="item-descriptions" v-model="props.item.description" name="item_descriptions[]"
+                    type="text" placeholder="Item Description (optional)" />
             </div>
         </td>
         <td>
@@ -59,10 +59,12 @@
                         <button @click="addNewTaxItem(props.item.id)" type='button'
                             class='btn btn-soft-light text-dark py-1 w-100 border border-2 rounded'>Add New Tax</button>
                         <div class='d-flex justify-content-center align-items-center gap-2 my-3'>
-                            <button @click="toggleTaxPicker(props.item.id)" type="button"
-                                class="btn btn-soft-info py-1">Close</button>
-                            <button @click="calcTaxes(props.item.id)" type='button'
-                                class='btn btn-success py-1'>Add</button>
+                            <button @click="toggleTaxPicker(props.item.id)" type="button" class="btn btn-soft-info py-1"
+                                style="cursor: pointer;">Close</button>
+                            <button @click="() => {
+                                calcTaxes(props.item.id)
+                                toggleTaxPicker(props.item.id)
+                            }" type='button' class='btn btn-success py-1' style="cursor: pointer;">Add</button>
                         </div>
                     </div>
                 </div>
@@ -77,21 +79,29 @@
                 <span class="me-2">Tk</span>
                 <input aria-label="item-total" id="item-total-0" data-index="0" name="item_totals[]" type="text"
                     v-model="props.item.total" placeholder="00" class="d-inline-block" style="width: 7rem;" disabled />
-                <span @click="deleteInvoiceItem(props.item.id)" data-index="0"
-                    class="mdi mdi-trash-can-outline text-danger item-delete-btn"></span>
+                <span @click="deleteInvoiceItem(props.item.id, isEditMode)" data-index="0"
+                    class="mdi mdi-trash-can-outline text-danger item-delete-btn" style="cursor:pointer;"></span>
             </div>
         </td>
     </tr>
 </template>
 
 <script setup lang="ts">
+// @ts-ignore
 import CloseIcon from './icons/CloseIcon.vue';
 import { useInvoice } from '../composables/useInvoice';
-import { computed, onMounted, toRaw, watch } from 'vue';
+import InvoiceItems, { InvoiceItem } from '../data';
+import { onMounted, watch } from 'vue';
 
+interface Props {
+    item: InvoiceItem,
+    isEditMode?: boolean
+}
 
-
-const props = defineProps(['item'])
+const props = withDefaults(defineProps<Props>(), {
+    isEditMode: false
+}
+)
 
 
 const {
@@ -102,15 +112,9 @@ const {
     toggleTaxPicker } = useInvoice()
 
 
-
-
-
-onMounted(() => {
-    watch([() => props.item.rate, () => props.item.qty], () => {
-        props.item.total = props.item.rate * props.item.qty
-        calcTaxes(props.item.id)
-    })
-
+watch([() => props.item.rate, () => props.item.qty], () => {
+    props.item.total = props.item.rate * props.item.qty
+    calcTaxes(props.item.id)
 })
 
 

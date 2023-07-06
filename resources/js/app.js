@@ -2,8 +2,8 @@ import './bootstrap';
 
 //for vue components
 import { createApp } from 'vue';
-import InvoiceCreateApp from './Vue/InvoiceCreateApp.vue'
-import InvoiceEditApp from './Vue/InvoiceEditApp.vue'
+import InvoiceCreateApp from './vue/InvoiceCreateApp.vue'
+import InvoiceEditApp from './vue/InvoiceEditApp.vue'
 
 const invoiceCreateApp = createApp(InvoiceCreateApp);
 const invoiceEditApp = createApp(InvoiceEditApp);

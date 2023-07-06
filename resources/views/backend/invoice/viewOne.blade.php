@@ -113,8 +113,9 @@
 
     <x-backend.ui.section-card>
         <section class="p-lg-3">
-            <form action="{{ route('invoice.store') }}" method="post" enctype="multipart/form-data">
+            <form id="submit-form" action="{{ route('invoice.update', $invoice->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('PATCH')
                 <div>
                     <img src="" alt="">
                     <div class="d-flex border mb-5 justify-content-center">
@@ -141,13 +142,13 @@
                                 <label for="issue-date" class="mb-0 d-block">Date of Issue</label>
                                 <div class="d-flex align-items-center">
                                     <input type="date" name="issue_date" id="issue-date"
-                                        value="{{ $invoice->issue_date }}">
+                                        value="{{ Carbon\Carbon::parse($invoice->issue_date)->format('Y-m-d') }}">
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="issue-date" class="mb-0 d-block">Due Date</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="date" name="due_date" id="due-date" value="{{ $invoice->due_date }}">
+                                    <input type="date" name="due_date" id="due-date" value="{{ Carbon\Carbon::parse($invoice->due_date)->format('Y-m-d') }}">
                                 </div>
                             </div>
                         </div>
@@ -176,7 +177,7 @@
 
                 </div>
 
-                <button type="submit" class="btn btn-primary waves-effect waves-light mt-2">Submit</button>
+                <button id="submit-btn" type="submit" class="btn btn-primary waves-effect waves-light mt-2 rounded-3 shadow d-none">Update</button>
 
             </form>
 

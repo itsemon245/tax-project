@@ -41,9 +41,21 @@ class PageController extends Controller
     public function aboutPage()
     {
         $about_data = About::skip(0)->first();
-        $about_sections = json_decode($about_data->sections, true);
-        // dd($about_sections);
-        return view('frontend.pages.about', compact('about_data', 'about_sections'));
+        if($about_data > 0){
+            $about_sections = json_decode($about_data->sections, true);
+            return view('frontend.pages.about', compact('about_data', 'about_sections'));
+        }else{
+            $about_sections=null;
+            return view('frontend.pages.about', compact('about_data', 'about_sections'));
+        }
+    }
+    function officePage() {
+        $maps = Map::get();
+        return view('frontend.pages.office', compact('maps'));
+    }
+    function contactPage() {
+        $maps = Map::get();
+        return view('frontend.pages.contact', compact('maps'));
     }
     public function becomePartnerPage()
     {

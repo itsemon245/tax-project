@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\Frontend\BookController;
@@ -9,11 +10,11 @@ use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\AppointmentController;
+use App\Http\Controllers\Review\ReviewController;
+use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Frontend\User\UserDocController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,7 @@ Route::prefix('service')->name('service.')->controller(ServicePageController::cl
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
-    Route::get('/book', [BookController::class, 'show'])->name('show');
+    Route::get('/book/{book}', [BookController::class, 'show'])->name('show');
 });
 // routes for user docs
 Route::resource('user-doc', UserDocController::class);
@@ -48,8 +49,9 @@ Route::resource('user-doc', UserDocController::class);
 Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
-Route::get('/referrals', [RefereeController::class, 'index'])->name('referrals');
-Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
+Route::get('/contact', [PageController::class, 'contactPage'])->name('contact');
+Route::get('/office', [PageController::class, 'officePage'])->name('office');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 
 // user generated refer link
@@ -72,6 +74,16 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/about', 'aboutPage')->name('about');
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
+});
+
+// Review Routes
+Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function(){
+    Route::get('/{slug}', 'index')->name('index');
+    Route::get('/{slug}/create', 'create')->name('create');
+    Route::post('/{slug}/store', 'store')->name('store');
+    Route::get('/{slug}/edit', 'edit')->name('edit');
+    Route::get('/{slug}/update', 'update')->name('update');
+    Route::get('/{slug}/destroy', 'destroy')->name('destroy');
 });
 
 

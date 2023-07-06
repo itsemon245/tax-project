@@ -1,5 +1,9 @@
 <template>
-  <div class="border-top border-4 mt-5">
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-success waves-effect waves-light rounded-3 shadow mb-2"
+      @click="toggleEditMode">{{ editBtn }}</button>
+  </div>
+  <div class="border-top border-4">
     <div class="table-responsive mb-3">
       <table class="table table-striped">
         <thead class="bg-light">
@@ -12,12 +16,13 @@
           </tr>
         </thead>
         <tbody id="table-body">
-          <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item">
+          <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item" :is-edit-mode="isEditMode">
           </InvoiceItem>
         </tbody>
       </table>
-      <button @click="addNewItem" id="item-add-btn" type="button" class="w-100 p-1 fw-bold rounded rounded-3"
-        style="background: none; border: 2px solid rgb(172, 170, 170);">Add New Item</button>
+      <button v-show="isEditMode" @click="addNewItem" id="item-add-btn" type="button"
+        class="w-100 p-1 fw-bold rounded rounded-3" style="background: none; border: 2px solid rgb(172, 170, 170);">Add
+        New Item</button>
     </div>
   </div><!-- end table-responsive-->
 
@@ -108,19 +113,16 @@
     <div class="col-md-5">
       <h4 class="">Payment Details:</h4>
       <div class="d-flex my-1 gap-2 align-items-center mb-2">
-        <select name="payment_method" class="form-select text-capitalize w-50">
+        <select name="payment_method" class="form-select text-capitalize w-50" v-model="paymentMethod">
           <option selected disabled>Select Payment Method</option>
-          <option value="cash">Cash</option>
-          <option value="bkash">Bkash</option>
-          <option value="nagad">Nagad</option>
-          <option value="rocket">Rocket</option>
-          <option value="card">Card</option>
+          <option v-for="option of options" :value="option" class="text-capitalize">{{ option }}</option>
         </select>
       </div>
       <div class="mb-2">
         <label class="mb-0" for="note">Payment Note</label>
         <textarea class="border border-2 w-100" name="payment_note"
-          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'" rows="4"></textarea>
+          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'"
+          rows="4">{{ paymentNote }}</textarea>
       </div>
 
       <div class="row mb-2 align-items-center">
@@ -140,17 +142,27 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
+import $ from "jquery";
+// @ts-ignore
 import InvoiceItem from './components/InvoiceItem.vue';
 import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';
+import axios from 'axios'
 
+const isEditMode = ref(false);
 
+const editBtn = computed(() => {
+  return isEditMode.value ? 'Cancel' : 'Edit'
+})
 const { invoiceItems, addNewItem, calcTaxes } = useInvoice()
 const { subTotal, total, discount, paid, due, notes } = useAccounts()
 const totalTax = ref(0)
-
-
+const paymentMethod = ref('')
+const paymentNote = ref('')
+const options = ref([
+  'cash', 'bkash', 'nagad', 'rocket', 'bank', 'card'
+])
 
 const toggleDiscount = () => {
   discount.value.isActive = !discount.value.isActive
@@ -162,8 +174,66 @@ const calcDiscount = () => {
   discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount / 100;
   toggleDiscount()
 }
-
+const toggleEditMode = () => {
+  isEditMode.value = !isEditMode.value
+  $('#submit-btn').toggleClass('d-none')
+}
+const toggleInputs = (isEditMode) => {
+  let mode = !isEditMode
+  console.log(mode);
+  $('#submit-form').prop('disabled', mode)
+  $('input').prop('disabled', mode)
+  $('select').prop('disabled', mode)
+  $('.selectize').prop('disabled', mode)
+  $('textarea').prop('disabled', mode)
+}
 onMounted(() => {
+ 
+  watch(isEditMode, (newVal) => {
+    toggleInputs(newVal)
+  })
+
+
+  const id = document.querySelector('#invoice-id')?.innerHTML
+  const url = 'http://localhost:8000/admin/get-invoice-data/' + id
+
+  axios.get(url)
+    .then(response => {
+
+      const items = response.data.invoiceItems.map((item, i) => {
+        return {
+          id: i,
+          ...item
+        }
+      })
+
+      const invoice = response.data.invoice
+
+      invoiceItems.value = items
+      
+
+      subTotal.value = invoice.subTotal
+      discount.value = {
+        amount: invoice.discount,
+        isFixed: true,
+        percentage: 0,
+        isActive: false
+      }
+      total.value = invoice.total
+      notes.value = invoice.note
+      paid.value = invoice.amountPaid
+      due.value = invoice.amountDue
+      paymentNote.value = invoice.paymentNote
+      paymentMethod.value = invoice.paymentMethod
+    })
+    .catch(error => {
+      console.log(error);
+    }).finally(()=>{
+      toggleInputs(!isEditMode)
+    })
+
+    
+
   watch(invoiceItems, (newItems) => {
     let sum = 0;
     newItems.forEach((item) => {
@@ -183,13 +253,13 @@ onMounted(() => {
 
   watch([totalTax, subTotal, discount], () => {
     total.value = subTotal.value + totalTax.value - discount.value.amount
-  }, {deep: true})
+  }, { deep: true })
 
   watch([subTotal], () => {
     if (subTotal.value !== 0) {
       discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount / 100;
     }
-  }, {deep: true})
+  }, { deep: true })
 
   watch([total, paid], () => {
     due.value = total.value - paid.value
@@ -198,14 +268,14 @@ onMounted(() => {
     dueDom.innerHTML = due.value + ' Tk'
   })
 
-  watch(invoiceItems, (newItems) => {
-    newItems.forEach((item) => {
-      calcTaxes(item.id)
-    });
-  })
 
 })
 
+watch(invoiceItems, (newItems) => {
+  newItems.forEach((item) => {
+    calcTaxes(item.id)
+  });
+})
 
 
 </script>

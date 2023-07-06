@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             InvoiceSeeder::class,
             InvoiceItemSeeder::class,
             MapSeeder::class,
+            BookSeeder::class,
         ]);
     }
 }

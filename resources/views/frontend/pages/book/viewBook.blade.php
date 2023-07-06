@@ -1,5 +1,12 @@
 @extends('frontend.layouts.app')
 @section('main')
+    @push('customCSS')
+        <style>
+            .yellow {
+                color: yellow;
+            }
+        </style>
+    @endpush
     <section class="py-md-5 my-5 ">
         <div class="container px-2">
             <div class="row mb-24">
@@ -47,7 +54,281 @@
                         </div>
                     </div>
                 </div>
+                {{-- Comment Section starts --}}
+                <div class="container mt-3">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-4 card-body">
+                                <div class="container mt-5">
+                                    <div class=" mt-5 container text-center">
+                                        <h3 class="mt-5">4.5<span>/5</span></h3>
+                                        <div>
+                                            <div class="rating d-inline-block">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star filled"></i>
+                                            </div>
+                                        </div>
+                                        <p>296 Ratings</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8 container">
+                                <div class="card-body container">
+                                    <div class="rating-star">
+                                        <h5>5 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" style="width:65%"></div>
+                                        </div>
+                                        <h6>65%</h6>
+                                    </div>
+                                    <div class="rating-star">
+                                        <h5>4 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" style="width:26%"></div>
+                                        </div>
+                                        <h6>26%</h6>
+                                    </div>
+                                    <div class="rating-star">
+                                        <h5>3 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" style="width:5%"></div>
+                                        </div>
+                                        <h6>5%</h6>
+                                    </div>
+                                    <div class="rating-star">
+                                        <h5>2 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" style="width:2%"></div>
+                                        </div>
+                                        <h6>2%</h6>
+                                    </div>
+                                    <div class="rating-star mb-0">
+                                        <h5>1 Stars</h5>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger" style="width:1%"></div>
+                                        </div>
+                                        <h6>1%</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card container client-reviews">
+                        <h3 class="container mt-3">Recent Reviews</h3>
+                        {{-- <div class="container card-body">
+                            <div class="container d-flex">
+                                <div class="review-img">
+                                    <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}"
+                                            alt="img" width="60px" height="60px"
+                                            class=" rounded-circle shadow-4-strong d-block"></a>
+                                </div>
+                                <div class="review-name-group">
+                                    <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span>
+                                        <span class="text-muted">
+                                            <div class="rating d-inline-block">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star filled"></i>
+                                            </div>
+                                        </span>
+                                    </h5>
+                                    <p class="container text-muted">I have been in treatment all my life For extrinsic
+                                        asthma. As spring pollen are big triggers, I really depend on antihistamines and
+                                        Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
+                                        healthy difference in price.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card-body container">
+                                <div class="container d-flex">
+                                    <div class="review-img">
+                                        <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}"
+                                                alt="img" width="60px" height="60px"
+                                                class=" rounded-circle shadow-4-strong d-block"></a>
+                                    </div>
+                                    <div class="review-name-group">
+                                        <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span>
+                                            <span class="text-muted">
+                                                <div class="rating d-inline-block">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                </div>
+                                            </span>
+                                        </h5>
+                                        <p class="container text-muted">I have been in treatment all my life For extrinsic
+                                            asthma. As spring pollen are big triggers, I really depend on antihistamines and
+                                            Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
+                                            healthy difference in price.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div> --}}
+                           
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="container card-body">
+                            <h3 class="mt-2">Input Your Review</h3>
+                            <div class="review-coment-group">
+                                <form action="javascript:;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="rating ">
+                                                    <i class="far fa-star" id="star1" data-id={{ 1 }}></i>
+                                                    <i class="far fa-star" id="star2" data-id={{ 2 }}></i>
+                                                    <i class="far fa-star" id="star3" data-id={{ 3 }}></i>
+                                                    <i class="far fa-star" id="star4" data-id={{ 4 }}></i>
+                                                    <i class="far fa-star" id="star5" data-id={{ 5 }}></i>
+                                                    <input type="hidden" class="form-control raitng" value=""
+                                                        name="raitings">
+                                                        <div id="rating-error"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <textarea class="form-control" rows="7" id="comment" name="text"></textarea>
+                                            </div>
+                                            <div id="comment-error"></div>
+                                        </div>
+                                        <div class="review-submit mt-3">
+                                            <button type="submit" class="btn btn-primary buttonSubmit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    @push('customJs')
+        <script>
+            $("#star1").click(function() {
+                $("#star1").css("color", "black").removeClass("bigstar");
+                $("#star1").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+            $("#star2").click(function() {
+                $("#star2").css("color", "black").removeClass("bigstar");
+                $("#star1,#star2").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+            $("#star3").click(function() {
+                $("#star3").css("color", "black").removeClass("bigstar");
+                $("#star1,#star2,#star3").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+            $("#star4").click(function() {
+                $("#star4").css("color", "black").removeClass("bigstar");
+                $("#star1,#star2,#star3,#star4").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+            $("#star5").click(function() {
+                $("#star5").css("color", "black").removeClass("bigstar");
+                $("#star1,#star2,#star3,#star4,#star5").css("color", "#FFC700");
+                $(this).addClass("bigstar");
+            });
+        </script>
+
+        <script>
+            $('.fa-star').on('click', function() {
+                var id = $(this).data('id');
+                $('.raitng').val(id)
+            })
+        </script>
+
+        <script>
+           
+
+            var buttonSubmit = $('.buttonSubmit');
+            buttonSubmit.on('click', function(e) {
+                e.preventDefault();
+                var comment = $('#comment').val();
+                var rating = $('.raitng').val();
+                console.log(rating);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    method: "post",
+                    url: "{{ route('review.store', 'book') }}",
+                    data: {
+                        'item_id': '{{ $book->id }}',
+                        "comment": comment,
+                        'rating': rating,
+                    },
+                    success: function(response) {
+                        if (response.success) {
+
+                            var review= ` <div class="card-body container">
+                                <div class="container d-flex">
+                                    <div class="review-img">
+                                        <span><img
+                                                src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img"
+                                                width="60px" height="60px"
+                                                class=" rounded-circle shadow-4-strong d-block"></span>
+                                    </div>
+                                    <div class="review-name-group">
+                                        <h5><span>Teri Jennings</span> <span> | 11 months age | </span>
+                                            <span class="text-muted">
+                                                <div class="rating d-inline-block">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                </div>
+                                            </span>
+                                        </h5>
+                                        <p class="container text-muted">I have been in treatment all my life For extrinsic
+                                            asthma. As spring pollen are big triggers, I really depend on antihistamines and
+                                            Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
+                                            healthy difference in price.</p>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                            $('.client-reviews').append(review)
+
+                            Toast.fire({
+                                icon: "success",
+                                title: response.message
+                            })
+                            console.log(response);
+                        }else{
+                            Toast.fire({
+                                icon: "error",
+                                title: response.message
+                            })
+                        }
+                    },
+                    error: function(err){
+                        let errors = err.responseJSON.errors
+                        if (errors.rating) {
+                            $('#rating-error').html(`<span class="text-danger">${errors.rating}</span>`)
+                        }
+                        if (errors.comment) {
+                            $('#comment-error').html(`<span class="text-danger">${errors.comment}</span>`)
+                        }
+                    }
+                });
+            })
+        </script>
+    @endpush
 @endsection

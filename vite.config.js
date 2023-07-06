@@ -19,7 +19,11 @@ export default defineConfig({
                     includeAbsolute:false
                 },
                 compilerOptions:{
-                    
+                    "paths": {
+                        "@/*": [
+                          "/resources/js/vue/*" // set path `@/*` as alias of `src/*`
+                        ],
+                      },
                 }
             }
         })
