@@ -34,12 +34,20 @@ class ReviewController extends Controller
      */
     public function store(Request $request, $slug)
     {
+
+        $user_id = auth()->user()->hasRole('user') ? auth()->id() : null;
+
+        $avatar = $user_id ? auth()->user()->name : $request->avatar;
+        $name = $user_id ? auth()->user()->image_url : $request->name;
+        
         if(auth()->user()){
             $item = Str::snake($slug);
             $comment= $request->comment;
             $rating= $request->rating;
             $review = Review::create([
-                'user_id' => auth()->id(),
+                'user_id' => $user_id,
+                'name' => $name,
+                'avatar' => $avatar,
                 $item ."_id" => $request->item_id,
                 'comment' => $comment,
                 'rating' => $rating,

@@ -295,6 +295,8 @@
                         'item_id': '{{ $book->id }}',
                         "comment": comment,
                         'rating': rating,
+                        'name': 'Test Name',
+                        'avatar': 'Test Avatar',
                     },
                     success: function(response) {
                         if (response.success) {

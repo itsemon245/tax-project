@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->text('title');
-            $table->string('author');
-            $table->text('description');
-            $table->string('sample_pdf')->nullable();
-            $table->string('pdf');
-            $table->string('thumbail');
-            $table->string('price');
+            $table->text('author')->nullable();
+            $table->longText('description');
+            $table->longText('sample_pdf')->nullable();
+            $table->longText('pdf');
+            $table->longText('thumbnail');
+            $table->decimal('price', 8, 2);
             $table->timestamps();
         });
     }

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('service_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('book_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('expert_profile_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->text('avatar');
-            $table->text('name');
+            $table->text('avatar')->nullable();
+            $table->text('name')->nullable();
             $table->longText('comment');
             $table->enum('rating', [0,1,2,3,4,5]);
             $table->timestamps();
