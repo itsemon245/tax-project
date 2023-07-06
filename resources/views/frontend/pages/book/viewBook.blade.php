@@ -116,9 +116,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card container">
+                    <div class="card container client-reviews">
                         <h3 class="container mt-3">Recent Reviews</h3>
-                        <div class="container card-body">
+                        {{-- <div class="container card-body">
                             <div class="container d-flex">
                                 <div class="review-img">
                                     <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}"
@@ -172,34 +172,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="card-body container">
-                                <div class="container d-flex">
-                                    <div class="review-img">
-                                        <a href="profile.html"><img
-                                                src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img"
-                                                width="60px" height="60px"
-                                                class=" rounded-circle shadow-4-strong d-block"></a>
-                                    </div>
-                                    <div class="review-name-group">
-                                        <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span>
-                                            <span class="text-muted">
-                                                <div class="rating d-inline-block">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                </div>
-                                            </span>
-                                        </h5>
-                                        <p class="container text-muted">I have been in treatment all my life For extrinsic
-                                            asthma. As spring pollen are big triggers, I really depend on antihistamines and
-                                            Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
-                                            healthy difference in price.</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div> --}}
+                           
                         </div>
                     </div>
                     <div class="card">
@@ -301,6 +275,37 @@
                     },
                     success: function(response) {
                         if (response.success) {
+
+                            var review= ` <div class="card-body container">
+                                <div class="container d-flex">
+                                    <div class="review-img">
+                                        <span><img
+                                                src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img"
+                                                width="60px" height="60px"
+                                                class=" rounded-circle shadow-4-strong d-block"></span>
+                                    </div>
+                                    <div class="review-name-group">
+                                        <h5><span>Teri Jennings</span> <span> | 11 months age | </span>
+                                            <span class="text-muted">
+                                                <div class="rating d-inline-block">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                </div>
+                                            </span>
+                                        </h5>
+                                        <p class="container text-muted">I have been in treatment all my life For extrinsic
+                                            asthma. As spring pollen are big triggers, I really depend on antihistamines and
+                                            Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
+                                            healthy difference in price.</p>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                            $('.client-reviews').append(review)
+
                             Toast.fire({
                                 icon: "success",
                                 title: response.message

@@ -1,4 +1,3 @@
-
 @extends('frontend.layouts.app')
 
 @section('main')
@@ -32,7 +31,7 @@
             .preview_details a {
                 color: white;
                 display: block;
-                padding: 17px 0;
+                padding: 13px 0;
             }
 
             .myDocs_alert {
@@ -47,6 +46,24 @@
 
             .tips_details li {
                 padding: 17px 0 !important;
+            }
+
+            .cardDetails {
+                top: -45px;
+                left: 18px;
+                display: none;
+            }
+
+            .cardDetails1 {
+                top: -45px;
+                left: 18px;
+                display: none;
+            }
+
+            .cross-icon {
+                position: absolute;
+                right: 20px;
+                top: 20px;
             }
         </style>
     @endpush
@@ -97,9 +114,9 @@
                     </div>
                 </div>
 
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="row">
-                        <div class="col-lg-4 mt-5">
+                        <div class="col-lg-4 mt-5 position-relative">
                             <div class="card pt-3">
                                 <div class="card-body">
                                     <div class="col-lg-12">
@@ -114,13 +131,40 @@
                                             <p>Jun 4, 2023</p>
                                         </div>
                                         <div class="icon">
-                                            <span><i class="fas fa-ellipsis-h"></i></span>
+                                            <span><i class="fas fa-ellipsis-h show-tab"></i></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+
+
+                            <div class="col-lg-11 col-md-12 col-11 mt-5 position-absolute cardDetails">
+                                <div class="card text_card pt-3">
+                                    <div class="card-body">
+
+                                        <div class="cross-icon">
+                                            <span class="mdi mdi-close close-tab"></span>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <ul class="preview_details">
+                                                <li><a href="">Preview document </a></li>
+                                                <li><a href="">View details</a></li>
+                                                <li><a href="">Move to another year</a></li>
+                                                <li><a href="">Delete document</a></li>
+                                            </ul>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="col-lg-4 mt-5">
+                        <div class="col-lg-4 mt-5 position-relative">
                             <div class="card pt-3">
                                 <div class="card-body">
                                     <div class="col-lg-12">
@@ -135,40 +179,82 @@
                                             <p>Jun 4, 2023</p>
                                         </div>
                                         <div class="icon">
-                                            <span><i class="fas fa-ellipsis-h"></i></span>
+                                            <span><i class="fas fa-ellipsis-h show-tab1"></i></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 mt-5">
-                            <div class="card text_card pt-3">
-                                <div class="card-body">
-                                    <div class="col-lg-12">
-                                        <ul class="preview_details">
-                                            <li><a href=""> Preview document </a></li>
-                                            <li><a href="">View details</a></li>
-                                            <li><a href="">Move to another year</a></li>
-                                            <li><a href="">Delete document</a></li>
-                                        </ul>
+
+                            
+                            <div class="col-lg-11 col-md-12 col-11 mt-5 position-absolute cardDetails1">
+                                <div class="card text_card pt-3">
+                                    <div class="card-body">
+
+                                        <div class="cross-icon">
+                                            <span class="mdi mdi-close close-tab1"></span>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <ul class="preview_details">
+                                                <li><a href="">Preview document </a></li>
+                                                <li><a href="">View details</a></li>
+                                                <li><a href="">Move to another year</a></li>
+                                                <li><a href="">Delete document</a></li>
+                                            </ul>
+
+
+
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
+
                         </div>
+
+                        <div class="col-lg-4 pt-5">
+                            <div class="myDocs_alert px-3 pt-3">
+                                <h2 class="pt-3 px-3">Upload Tips:</h2>
+                                <ul class="tips_details px-3">
+                                    <li>Lorem ipsum dolor sit amet.</li>
+                                    <li>Only upload your prior year tax return here. We will ask for other forms later</li>
+                                    <li>Make sure your pdf isn't password protected</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
                     </div>
+
                 </div>
 
-                <div class="col-lg-4 pt-5">
-                    <div class="myDocs_alert px-3 pt-3">
-                        <h2 class="pt-3 px-3">Upload Tips:</h2>
-                        <ul class="tips_details px-3">
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Only upload your prior year tax return here. We will ask for other forms later</li>
-                            <li>Make sure your pdf isn't password protected</li>
-                        </ul>
-                    </div>
-                </div>
+
+
             </div>
         </div>
     </div>
+
+    @push('customJs')
+        <script>
+            var closeTab = $('.close-tab');
+            closeTab.click(function(){
+                $('.cardDetails').hide();
+            })
+
+            var closeTab = $('.show-tab');
+            closeTab.click(function(){
+                $('.cardDetails').show();
+            })
+        </script>
+         <script>
+            var closeTab = $('.close-tab1');
+            closeTab.click(function(){
+                $('.cardDetails1').hide();
+            })
+
+            var closeTab = $('.show-tab1');
+            closeTab.click(function(){
+                $('.cardDetails1').show();
+            })
+        </script>
+    @endpush
 @endsection
