@@ -49,6 +49,10 @@ class PageController extends Controller
             return view('frontend.pages.about', compact('about_data', 'about_sections'));
         }
     }
+    function officePage() {
+        $maps = Map::get();
+        return view('frontend.pages.office', compact('maps'));
+    }
     public function becomePartnerPage()
     {
         $user = Auth::user();

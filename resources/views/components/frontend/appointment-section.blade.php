@@ -31,7 +31,7 @@
                                  <!-- Center modal -->
                                 <a class="btn btn-primary waves-effect waves-light" href="{{route('appointment.make')}}">Make Appointment</a>
                                 <div>
-                                    <a class="text-capitalize a d-flex align-items-center gap-2" href="#">
+                                    <a class="text-capitalize a d-flex align-items-center gap-2" href="{{route('office')}}">
                                         <span class="mdi mdi-map-marker-outline  text-primary"></span>
                                         Our Office
                                     </a>

@@ -50,7 +50,7 @@ Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->nam
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referrals');
-Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+Route::get('/office', [PageController::class, 'officePage'])->name('office');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 
 // user generated refer link
