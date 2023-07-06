@@ -113,8 +113,9 @@
 
     <x-backend.ui.section-card>
         <section class="p-lg-3">
-            <form id="submit-form" action="{{ route('invoice.store') }}" method="post" enctype="multipart/form-data">
+            <form id="submit-form" action="{{ route('invoice.update', $invoice->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('PATCH')
                 <div>
                     <img src="" alt="">
                     <div class="d-flex border mb-5 justify-content-center">

@@ -28,7 +28,7 @@ class InvoiceItemResource extends JsonResource
             $taxes[] = $tax;
         }
         return [
-            'id' => $this->id - 1,
+            'baseId' => $this->id,
             'name'=> $this->name,
             'description'=> $this->description,
             'rate' => $this->rate,

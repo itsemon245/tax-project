@@ -1,5 +1,6 @@
-interface InvoiceItem {
+export interface InvoiceItem {
     id: number;
+    baseId?: number;
     name: string | undefined | null;
     description: undefined | null | string;
     rate: number;

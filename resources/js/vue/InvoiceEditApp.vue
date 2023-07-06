@@ -16,12 +16,13 @@
           </tr>
         </thead>
         <tbody id="table-body">
-          <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item">
+          <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item" :is-edit-mode="isEditMode">
           </InvoiceItem>
         </tbody>
       </table>
-      <button v-show="isEditMode" @click="addNewItem" id="item-add-btn" type="button" class="w-100 p-1 fw-bold rounded rounded-3"
-        style="background: none; border: 2px solid rgb(172, 170, 170);">Add New Item</button>
+      <button v-show="isEditMode" @click="addNewItem" id="item-add-btn" type="button"
+        class="w-100 p-1 fw-bold rounded rounded-3" style="background: none; border: 2px solid rgb(172, 170, 170);">Add
+        New Item</button>
     </div>
   </div><!-- end table-responsive-->
 
@@ -177,18 +178,19 @@ const toggleEditMode = () => {
   isEditMode.value = !isEditMode.value
   $('#submit-btn').toggleClass('d-none')
 }
-const toggleInputs = (mode) =>{
+const toggleInputs = (isEditMode) => {
+  let mode = !isEditMode
+  console.log(mode);
   $('#submit-form').prop('disabled', mode)
-    $('input').prop('disabled', mode)
-    $('select').prop('disabled', mode)
-    $('.selectize').prop('disabled', mode)
-    $('textarea').prop('disabled', mode)
+  $('input').prop('disabled', mode)
+  $('select').prop('disabled', mode)
+  $('.selectize').prop('disabled', mode)
+  $('textarea').prop('disabled', mode)
 }
 onMounted(() => {
-  toggleInputs(isEditMode)
+ 
   watch(isEditMode, (newVal) => {
-    toggleInputs(!newVal)
-    
+    toggleInputs(newVal)
   })
 
 
@@ -198,10 +200,17 @@ onMounted(() => {
   axios.get(url)
     .then(response => {
 
-      const items = response.data.invoiceItems
+      const items = response.data.invoiceItems.map((item, i) => {
+        return {
+          id: i,
+          ...item
+        }
+      })
+
       const invoice = response.data.invoice
 
       invoiceItems.value = items
+      
 
       subTotal.value = invoice.subTotal
       discount.value = {
@@ -219,8 +228,11 @@ onMounted(() => {
     })
     .catch(error => {
       console.log(error);
+    }).finally(()=>{
+      toggleInputs(!isEditMode)
     })
 
+    
 
   watch(invoiceItems, (newItems) => {
     let sum = 0;

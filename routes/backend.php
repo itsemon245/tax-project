@@ -93,6 +93,7 @@ Route::prefix('admin')->group(function () {
 
     //custom routes
     Route::get('get-invoice-data/{id}',[InvoiceController::class, 'getInvoiceData']); 
+    Route::delete('/invoice-item/delete/{id}',[InvoiceController::class, 'deleteInvoiceItem']); 
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
     Route::POST('/get-users', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
