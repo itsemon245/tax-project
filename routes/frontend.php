@@ -37,7 +37,7 @@ Route::prefix('service')->name('service.')->controller(ServicePageController::cl
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
-    Route::get('/book', [BookController::class, 'show'])->name('show');
+    Route::get('/book/{book}', [BookController::class, 'show'])->name('show');
 });
 // routes for user docs
 Route::resource('user-doc', UserDocController::class);
