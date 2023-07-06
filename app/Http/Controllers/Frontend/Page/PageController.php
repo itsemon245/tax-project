@@ -53,6 +53,10 @@ class PageController extends Controller
         $maps = Map::get();
         return view('frontend.pages.office', compact('maps'));
     }
+    function contactPage() {
+        $maps = Map::get();
+        return view('frontend.pages.contact', compact('maps'));
+    }
     public function becomePartnerPage()
     {
         $user = Auth::user();

@@ -6,15 +6,15 @@
             <div class="container">
                 <div class="row" style="flex-direction: row-reverse;">
 
-                    <div class="col-lg-6 mb-sm-4 mb-lg-0">
-                        <embed id="map" src="{{ $maps[0]->src }}" height="400"
-                            class="border w-100 rounded-3 shadow-sm" />
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                        <embed style='object-fit:cover;' src="{{ $maps[0]->src }}"
+                            class="border w-100 h-100 rounded-3 shadow-sm " />
                     </div>
 
                     <div class="col-lg-6 ">
-                        <div id="office-details" class="rounded-3 shadow-sm border w-100 bg-light p-3">
+                        <div class="rounded-3 shadow-sm border w-100 h-100 bg-light p-3">
                             @foreach ($maps as $key => $map)
-                                <div class="p-5 mb-4">
+                                <div class="p-3 mb-4">
                                     <h4>{{ $map->location }}</h4>
                                     <div class="mb-3">{!! $map->address !!}</div>
                                     <div class="d-flex gap-5">
@@ -43,10 +43,5 @@
 @endsection
 
 @push('customJs')
-    <script>
-        $(document).ready(function() {
-            let height = $('#office-details').innerHeight()
-            $('#map').attr('height', height)
-        });
-    </script>
+   
 @endpush

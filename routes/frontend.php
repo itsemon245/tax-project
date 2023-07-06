@@ -50,6 +50,7 @@ Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->nam
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
+Route::get('/contact', [PageController::class, 'contactPage'])->name('contact');
 Route::get('/office', [PageController::class, 'officePage'])->name('office');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 
