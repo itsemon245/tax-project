@@ -216,8 +216,9 @@
                                                     <i class="far fa-star" id="star3" data-id={{ 3 }}></i>
                                                     <i class="far fa-star" id="star4" data-id={{ 4 }}></i>
                                                     <i class="far fa-star" id="star5" data-id={{ 5 }}></i>
-                                                    <input type="hidden" class="form-control raitng" value="1"
+                                                    <input type="hidden" class="form-control raitng" value=""
                                                         name="raitings">
+                                                        <div id="rating-error"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -225,6 +226,7 @@
                                             <div class="form-group">
                                                 <textarea class="form-control" rows="7" id="comment" name="text"></textarea>
                                             </div>
+                                            <div id="comment-error"></div>
                                         </div>
                                         <div class="review-submit mt-3">
                                             <button type="submit" class="btn btn-primary buttonSubmit">Submit</button>
@@ -283,6 +285,7 @@
                 e.preventDefault();
                 var comment = $('#comment').val();
                 var rating = $('.raitng').val();
+                console.log(rating);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -312,6 +315,15 @@
                             })
                         }
                     },
+                    error: function(err){
+                        let errors = err.responseJSON.errors
+                        if (errors.rating) {
+                            $('#rating-error').html(`<span class="text-danger">${errors.rating}</span>`)
+                        }
+                        if (errors.comment) {
+                            $('#comment-error').html(`<span class="text-danger">${errors.comment}</span>`)
+                        }
+                    }
                 });
             })
         </script>

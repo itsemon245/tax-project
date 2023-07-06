@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
 use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Validation\ValidationException;
 
 class ReviewController extends Controller
 {
@@ -35,6 +36,17 @@ class ReviewController extends Controller
     public function store(Request $request, $slug)
     {
 
+        try {
+            $request->validate([
+                'rating'=>'required|integer|max:255',
+                'comment'=> 'required|string|max:255',
+            ]);
+        } catch (ValidationException $exception) {
+
+            return response()->json([
+                'errors' => $exception->errors(),
+            ], 422);
+        }
         $user_id = auth()->user()->hasRole('user') ? auth()->id() : null;
 
         $avatar = $user_id ? auth()->user()->name : $request->avatar;
