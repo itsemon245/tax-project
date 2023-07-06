@@ -292,6 +292,7 @@
                     method: "post",
                     url: "{{ route('review.store', 'book') }}",
                     data: {
+                        'item_id': '{{ $book->id }}',
                         "comment": comment,
                         'rating': rating,
                     },
@@ -301,6 +302,7 @@
                                 icon: "success",
                                 title: response.message
                             })
+                            console.log(response);
                         }else{
                             Toast.fire({
                                 icon: "error",

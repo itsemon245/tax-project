@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Book;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class BookController extends Controller
 {
@@ -11,8 +12,8 @@ class BookController extends Controller
     {
         return view('frontend.pages.book.books');
     }
-    public function show()
+    public function show(Book $book)
     {
-        return view('frontend.pages.book.viewBook');
+        return view('frontend.pages.book.viewBook',compact('book'));
     }
 }
