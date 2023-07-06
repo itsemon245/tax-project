@@ -49,7 +49,7 @@ Route::resource('user-doc', UserDocController::class);
 Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
-Route::get('/referrals', [RefereeController::class, 'index'])->name('referrals');
+Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
 Route::get('/office', [PageController::class, 'officePage'])->name('office');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 
