@@ -17,11 +17,12 @@ class BookFactory extends Factory
     public function definition(): array
     {
         $text = fake()->realText(15);
+        $description = fake()->realText(300);
         $seed = str($text)->slug();
         return [
             'title'=> $text,
-            'author'=> $text,
-            'description'=> $text,
+            'author'=> fake()->name(),
+            'description'=> $description,
             'sample_pdf'=> $text,
             'pdf'=> $text,
             'thumbnail'=> "https://picsum.photos/seed/$seed/1080/350",

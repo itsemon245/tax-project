@@ -30,4 +30,60 @@
     <!-- Scripts -->
     <script src="{{ asset('frontend/assets/jquery/jquery.min.js') }}"></script>
     @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
+
+    <style>
+        /* Range Slider */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+        }
+
+        .range-slider,
+        .range-slider>.progress {
+            height: 5px;
+            border-radius: 5px;
+            background-color: #ddd;
+        }
+
+        .range-slider {
+            background-color: #ddd;
+            position: relative;
+        }
+
+        .range-slider>.progress {
+            background-color: var(--primary);
+            position: absolute;
+            left: 0%;
+            right: 0%;
+        }
+
+        .range-slider-input>input {
+            position: absolute;
+            top: -5px;
+            height: 5px;
+            width: 100%;
+            pointer-events: none;
+            background: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            height: 17px;
+            width: 17px;
+            border-radius: 50%;
+            pointer-events: auto;
+            -webkit-appearance: none;
+            background: var(--primary);
+        }
+
+        input[type="range"]::-moz-slider-thumb {
+            height: 17px;
+            width: 17px;
+            border-radius: 50%;
+            pointer-events: auto;
+            -moz-appearance: none;
+            background: var(--primary);
+        }
+    </style>
 </head>

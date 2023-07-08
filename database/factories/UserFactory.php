@@ -22,6 +22,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'user_name' => $userName,
+            'image_url' => "https://api.dicebear.com/6.x/initials/svg?seed=$userName",
             'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
