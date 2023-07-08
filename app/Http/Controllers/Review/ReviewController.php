@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
+use App\Http\Resources\ReviewResource;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -51,8 +52,8 @@ class ReviewController extends Controller
         if (auth()->user()) {
             $user_id = auth()->user()->hasRole('user') ? auth()->id() : null;
 
-            $avatar = $user_id ? auth()->user()->name : $request->avatar;
-            $name = $user_id ? auth()->user()->image_url : $request->name;
+            $avatar = $user_id ? auth()->user()->image_url : $request->avatar;
+            $name = $user_id ? auth()->user()->name : $request->name;
 
             $item = Str::snake($slug);
             $comment = $request->comment;
@@ -65,6 +66,8 @@ class ReviewController extends Controller
                 'comment' => $comment,
                 'rating' => $rating,
             ]);
+            $review = new ReviewResource($review);
+
             return response()->json([
                 'success' => true,
                 'data' => $review,
