@@ -116,102 +116,75 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card container client-reviews">
-                        <h3 class="container mt-3">Recent Reviews</h3>
-                        {{-- <div class="container card-body">
-                            <div class="container d-flex">
-                                <div class="review-img">
-                                    <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}"
-                                            alt="img" width="60px" height="60px"
-                                            class=" rounded-circle shadow-4-strong d-block"></a>
-                                </div>
-                                <div class="review-name-group">
-                                    <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span>
-                                        <span class="text-muted">
-                                            <div class="rating d-inline-block">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star filled"></i>
+                    <div class="card client-reviews p-3">
+                        <h3 class="mt-3">Recent Reviews</h3>
+                        @forelse ($book->reviews as $review)
+                            <div class="card-body">
+                                <div class="d-flex gap-3 align-items-start">
+                                    <img src="{{ useImage($review->avatar) }}" alt="img" width="64px" height="64px"
+                                        class=" rounded-circle shadow-4-strong d-block">
+                                    <div>
+                                        <div class="mb-2">
+                                            <h5 class="mb-0">{{ $review->name }}</h5>
+                                            <small>{{ Carbon\Carbon::parse($review->created_at)->diffForHumans() }}</small>
+                                            <div class="rating">
+                                                @foreach (range(1, 5) as $rating)
+                                                    @php
+                                                        $color = $rating > $review->rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)';
+                                                    @endphp
+                                                    <span class="fas fa-star" style="color: {{ $color }};"></span>
+                                                @endforeach
                                             </div>
-                                        </span>
-                                    </h5>
-                                    <p class="container text-muted">I have been in treatment all my life For extrinsic
-                                        asthma. As spring pollen are big triggers, I really depend on antihistamines and
-                                        Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
-                                        healthy difference in price.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="card-body container">
-                                <div class="container d-flex">
-                                    <div class="review-img">
-                                        <a href="profile.html"><img src="{{ asset('frontend/assets/images/bg-auth.jpg') }}"
-                                                alt="img" width="60px" height="60px"
-                                                class=" rounded-circle shadow-4-strong d-block"></a>
-                                    </div>
-                                    <div class="review-name-group">
-                                        <h5><a href="profile.html">Teri Jennings</a> <span> | 11 months age | </span>
-                                            <span class="text-muted">
-                                                <div class="rating d-inline-block">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                </div>
-                                            </span>
-                                        </h5>
-                                        <p class="container text-muted">I have been in treatment all my life For extrinsic
-                                            asthma. As spring pollen are big triggers, I really depend on antihistamines and
-                                            Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
-                                            healthy difference in price.</p>
+                                        </div>
+                                        <p class="text-muted">{{ $review->comment }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div> --}}
-                           
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="container card-body">
-                            <h3 class="mt-2">Input Your Review</h3>
-                            <div class="review-coment-group">
-                                <form action="javascript:;">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <div class="rating ">
-                                                    <i class="far fa-star" id="star1" data-id={{ 1 }}></i>
-                                                    <i class="far fa-star" id="star2" data-id={{ 2 }}></i>
-                                                    <i class="far fa-star" id="star3" data-id={{ 3 }}></i>
-                                                    <i class="far fa-star" id="star4" data-id={{ 4 }}></i>
-                                                    <i class="far fa-star" id="star5" data-id={{ 5 }}></i>
-                                                    <input type="hidden" class="form-control raitng" value=""
-                                                        name="raitings">
-                                                        <div id="rating-error"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <textarea class="form-control" rows="7" id="comment" name="text"></textarea>
-                                            </div>
-                                            <div id="comment-error"></div>
-                                        </div>
-                                        <div class="review-submit mt-3">
-                                            <button type="submit" class="btn btn-primary buttonSubmit">Submit</button>
-                                        </div>
-                                    </div>
-                                </form>
+                        @empty
+                            <div class="text-center text-muted mb-2 no-review">
+                                No reviews to be found
                             </div>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="container card-body">
+                    <h3 class="mt-2">Input Your Review</h3>
+                    <div class="review-coment-group">
+                        <form action="javascript:;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="rating ">
+                                            <i class="far fa-star" id="star1" data-id={{ 1 }}></i>
+                                            <i class="far fa-star" id="star2" data-id={{ 2 }}></i>
+                                            <i class="far fa-star" id="star3" data-id={{ 3 }}></i>
+                                            <i class="far fa-star" id="star4" data-id={{ 4 }}></i>
+                                            <i class="far fa-star" id="star5" data-id={{ 5 }}></i>
+                                            <input type="hidden" class="form-control raitng" value=""
+                                                name="raitings">
+                                            <div id="rating-error"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="7" id="comment" name="text"></textarea>
+                                    </div>
+                                    <div id="comment-error"></div>
+                                </div>
+                                <div class="review-submit mt-3">
+                                    <button type="submit" class="btn btn-primary buttonSubmit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
         </div>
     </section>
 
@@ -252,7 +225,7 @@
         </script>
 
         <script>
-           
+
 
             var buttonSubmit = $('.buttonSubmit');
             buttonSubmit.on('click', function(e) {
@@ -275,35 +248,32 @@
                     },
                     success: function(response) {
                         if (response.success) {
+                            let data = response.data
+                            let icons = '';
+                            for (let i = 1; i < 6; i++) {
+                                let color = i > data.rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)'
+                                icons += `\n<span class="fas fa-star" style="color:${color};"></span>`
+                            }
 
-                            var review= ` <div class="card-body container">
-                                <div class="container d-flex">
-                                    <div class="review-img">
-                                        <span><img
-                                                src="{{ asset('frontend/assets/images/bg-auth.jpg') }}" alt="img"
-                                                width="60px" height="60px"
-                                                class=" rounded-circle shadow-4-strong d-block"></span>
-                                    </div>
-                                    <div class="review-name-group">
-                                        <h5><span>Teri Jennings</span> <span> | 11 months age | </span>
-                                            <span class="text-muted">
-                                                <div class="rating d-inline-block">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                </div>
-                                            </span>
-                                        </h5>
-                                        <p class="container text-muted">I have been in treatment all my life For extrinsic
-                                            asthma. As spring pollen are big triggers, I really depend on antihistamines and
-                                            Allegra Generic, from Curist, is as effective as Brand Allegra. And a very be
-                                            healthy difference in price.</p>
+                            var review = ` <div class="card-body">
+                                <div class="d-flex gap-3 align-items-start">
+                                    <img src="${data.avatar}" alt="img"
+                                        width="64px" height="64px" class=" rounded-circle shadow-4-strong d-block">
+                                    <div>
+                                        <div class="mb-2">
+                                            <h5 class="mb-0">${data.name}</h5>
+                                            <small>${data.createdAt}</small>
+                                            <div class="rating">
+                                                ${icons}
+                                            </div>
+                                        </div>
+                                        <p class="text-muted">${data.comment}
+                                        </p>
                                     </div>
                                 </div>
                             </div>`;
 
+                            $('.no-review').remove()
                             $('.client-reviews').append(review)
 
                             Toast.fire({
@@ -311,14 +281,14 @@
                                 title: response.message
                             })
                             console.log(response);
-                        }else{
+                        } else {
                             Toast.fire({
                                 icon: "error",
                                 title: response.message
                             })
                         }
                     },
-                    error: function(err){
+                    error: function(err) {
                         let errors = err.responseJSON.errors
                         if (errors.rating) {
                             $('#rating-error').html(`<span class="text-danger">${errors.rating}</span>`)

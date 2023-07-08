@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
+use App\Http\Resources\ReviewResource;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -38,8 +39,8 @@ class ReviewController extends Controller
 
         try {
             $request->validate([
-                'rating'=>'required|integer|max:255',
-                'comment'=> 'required|string|max:255',
+                'rating' => 'required|integer|max:255',
+                'comment' => 'required|string|max:255',
             ]);
         } catch (ValidationException $exception) {
 
@@ -47,33 +48,36 @@ class ReviewController extends Controller
                 'errors' => $exception->errors(),
             ], 422);
         }
-        $user_id = auth()->user()->hasRole('user') ? auth()->id() : null;
 
-        $avatar = $user_id ? auth()->user()->name : $request->avatar;
-        $name = $user_id ? auth()->user()->image_url : $request->name;
-        
-        if(auth()->user()){
+        if (auth()->user()) {
+            $user_id = auth()->user()->hasRole('user') ? auth()->id() : null;
+
+            $avatar = $user_id ? auth()->user()->image_url : $request->avatar;
+            $name = $user_id ? auth()->user()->name : $request->name;
+
             $item = Str::snake($slug);
-            $comment= $request->comment;
-            $rating= $request->rating;
+            $comment = $request->comment;
+            $rating = $request->rating;
             $review = Review::create([
                 'user_id' => $user_id,
                 'name' => $name,
                 'avatar' => $avatar,
-                $item ."_id" => $request->item_id,
+                $item . "_id" => $request->item_id,
                 'comment' => $comment,
                 'rating' => $rating,
             ]);
+            $review = new ReviewResource($review);
+
             return response()->json([
                 'success' => true,
                 'data' => $review,
-                'message'=>'Review submitted successfully',
+                'message' => 'Review submitted successfully',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'success' => false,
                 'data' => null,
-                'message'=>'Login Please!',
+                'message' => 'Login Please!',
             ]);
         }
     }
@@ -83,7 +87,6 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        
     }
 
     /**
