@@ -11,41 +11,49 @@
         <div class="container px-2">
             <div class="row mb-24">
                 <div class="col-md-4 mb-3 mb-md-0">
-                    <img style="object-fit: cover;" class="rounded w-100 h-100" src="{{ useImage($book->thumbnail) }}"
+                    <img style="object-fit: cover;" class="rounded w-100 h-100 border" src="{{ useImage($book->thumbnail) }}"
                         alt="" />
                 </div>
                 <div class="col-md-8">
-                    <div class="w-100 h-100">
-                        <div class="mb-10 pb-10">
-                            <h1 class="mt-2 mb-6 mw-xl text-capitalize">{{ $book->title }}</h1>
-                            <span class="badge bg-success mb-3">Author: {{ $book->author }}</span>
-
-                            <p class="mb-8 h3 text-primary">
-                                <span>{{ $book->price }} Tk.</span>
-                                {{-- <span class="fw-normal  text-decoration-line-through" style="font-size: 16px;">{{$book->}}</span> --}}
+                    <div class="w-100 h-100 p-3">
+                        <div class="">
+                            <h5 class="text-capitalize fs-3 mb-0">{{ $book->title }}</h5>
+                            <span class="">by </span> <i style="font-weight: 500;">{{ $book->author }}</i>
+                            <p class="mb-3 fw-bold fs-5">
+                                Price:
+                                <span class="text-dark" style="font-weight: 500;"> {{ $book->price }}</span>
+                                <span class="mdi mdi-currency-bdt text-dark"></span>
                             </p>
-
-                            <p class="mw-2xl">
+                            <p class="mw-2xl mb-5">
                                 {{ $book->description }}
                             </p>
                         </div>
-                        <div class="row my-5">
-                            <div class="col-md-6 mb-2">
-                                <x-backend.ui.button type="custom" href=""
-                                    class="btn-success text-light py-md-2 d-flex align-items-center justify-content-center gap-4">
-                                    <span class="mdi mdi-download"></span>
-                                    <span>Download Sample</span>
-                                </x-backend.ui.button>
+                        <div class="d-flex gap-3">
+                            <x-backend.ui.button type="custom" href=""
+                                class="btn-success text-light px-3 py-2 d-inline-flex align-items-center justify-content-center gap-2">
+                                <span class="mdi mdi-cart-outline"></span>
+                                <span style="font-weight: 500;">Buy Now</span>
+                            </x-backend.ui.button>
 
-                            </div>
-                            <div class="col-md-6">
-                                <x-backend.ui.button type="custom" href=""
-                                    class="btn-primary text-light py-md-2 d-flex align-items-center justify-content-center gap-4">
-                                    <span class="mdi mdi-cart-outline"></span>
-                                    <span>Add to cart</span>
-                                </x-backend.ui.button>
-                            </div>
+                            <x-backend.ui.button type="custom" href="" style="background: var(--bs-gray-400);"
+                                class="text-dark py-2 px-3 d-inline-flex align-items-center justify-content-center gap-2">
+                                <span class="mdi mdi-download"></span>
+                                <span style="font-weight: 500;">Download Sample</span>
+                            </x-backend.ui.button>
                         </div>
+                    </div>
+                </div>
+                <div class="p-3 mt-3">
+                    <h5>Description:</h5>
+                    <div class="text-muted">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, rerum ipsum aliquid voluptates
+                        architecto provident amet nemo. Temporibus dolorum qui impedit tempore vel repudiandae totam
+                        tenetur. Maiores, et, tempore nam quae deleniti corrupti sit blanditiis debitis dicta autem id
+                        dolorem doloremque magni amet consequuntur dolores eveniet distinctio natus quia repudiandae.
+                        Temporibus corrupti doloribus, repellat, itaque totam rerum asperiores iusto enim quisquam, vero
+                        quaerat! Expedita laudantium ipsam obcaecati placeat commodi libero quae eveniet labore illo
+                        voluptatem soluta consequuntur, aliquid quia iusto, dolore odit ipsum eos, corrupti quos sapiente?
+                        Sit consequuntur voluptatum recusandae ullam ipsa maxime ea, enim officiis earum, dignissimos sint?
                     </div>
                 </div>
             </div>
@@ -55,6 +63,7 @@
                     <div class="col-md-4">
                         <div class="card p-3 w-100 h-100">
                             <div class="card-body">
+                                <h5>Rating</h5>
                                 <div class="d-flex justify-content-center">
                                     <div>
                                         <h5 class="mb-0 fw-bold text-center">4.5 <span>out of 5</span></h5>
@@ -93,10 +102,10 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card p-3 w-100 h-100">
-                            <h5 class="">Write a review</h5>
                             <div class="card-body">
+                                <h5 class="text-center">Write a review</h5>
                                 <label class="mb-0 form-text fs-6">Give a rating</label>
-                                <div class="rating mb-2">
+                                <div class="rating mb-3">
                                     <i class="fas fa-star input-star fs-5"
                                         style="color: var(--bs-gray-400);cursor: pointer;" data-index="1"></i>
                                     <i class="fas fa-star input-star fs-5"
@@ -111,7 +120,7 @@
                                     <input type="hidden" value="{{ $book->id }}" name="item_id">
                                     <div id="rating-error"></div>
                                 </div>
-                                <div class="mb-2">
+                                <div class="mb-3">
                                     <textarea class="form-control" rows="3" id="comment" name="comment" placeholder="Describe your experience"></textarea>
                                     <div id="comment-error"></div>
                                 </div>
@@ -121,34 +130,37 @@
                     </div>
                 </div>
                 <div class="card p-3">
-                    <h4 class="">Recent Reviews</h4>
-                    <div class="card-body review-list">
-                        @forelse ($reviews as $review)
-                            <div class="d-flex gap-3 align-items-start border p-3 rounded-3 mb-3">
-                                <img src="{{ useImage($review->avatar) }}" alt="img" width="48px" height="48px"
-                                    class=" rounded-circle shadow-4-strong d-block">
-                                <div>
-                                    <div class="mb-2">
-                                        <h5 class="mb-0">{{ $review->name }}</h5>
-                                        <small>{{ Carbon\Carbon::parse($review->created_at)->diffForHumans() }}</small>
-                                        <div class="rating">
-                                            @foreach (range(1, 5) as $rating)
-                                                @php
-                                                    $color = $rating > $review->rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)';
-                                                @endphp
-                                                <span class="fas fa-star" style="color: {{ $color }};"></span>
-                                            @endforeach
+                    <div class="card-body">
+                        <h4 class="">Recent Reviews</h4>
+                        <div class="review-list">
+                            @forelse ($reviews as $review)
+                                <div class="d-flex gap-3 align-items-start border p-3 rounded-3 mb-3">
+                                    <img src="{{ useImage($review->avatar) }}" alt="img" width="48px"
+                                        height="48px" class=" rounded-circle shadow-4-strong d-block">
+                                    <div>
+                                        <div class="mb-2">
+                                            <h5 class="mb-0">{{ $review->name }}</h5>
+                                            <small>{{ Carbon\Carbon::parse($review->created_at)->diffForHumans() }}</small>
+                                            <div class="rating">
+                                                @foreach (range(1, 5) as $rating)
+                                                    @php
+                                                        $color = $rating > $review->rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)';
+                                                    @endphp
+                                                    <span class="fas fa-star" style="color: {{ $color }};"></span>
+                                                @endforeach
+                                            </div>
                                         </div>
+                                        <p class="text-muted mb-0">{{ $review->comment }}
+                                        </p>
                                     </div>
-                                    <p class="text-muted mb-0">{{ $review->comment }}
-                                    </p>
                                 </div>
-                            </div>
-                        @empty
-                            <div class="text-center text-muted mb-2 no-review">
-                                No reviews to be found
-                            </div>
-                        @endforelse
+                            @empty
+                                <div class="text-center text-muted mb-2 no-review">
+                                    No reviews to be found
+                                </div>
+                            @endforelse
+                        </div>
+
                     </div>
                 </div>
             </div>
