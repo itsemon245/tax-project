@@ -13,9 +13,9 @@ class BookController extends Controller
     {
         return view('frontend.pages.book.books');
     }
-    public function show(int $book)
+    public function show(Book $book)
     {
-        $book = Book::with('reviews')->find($book);
-        return view('frontend.pages.book.viewBook',compact('book'));
+        $reviews = Review::where('book_id', $book->id)->latest()->get();
+        return view('frontend.pages.book.viewBook',compact('book', 'reviews'));
     }
 }
