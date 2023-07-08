@@ -5,13 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\AppointmentController;
-use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\Frontend\User\UserDocController;
+use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
@@ -74,16 +75,16 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
 });
+// these route will only be visible to Courses navigation 
+// ! Do not put any new routes in this group
+Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
+    Route::get('index', 'index')->name('index');
+    Route::get('{course}/show', 'show')->name('show');
+    Route::get('case-study', 'caseStudy')->name('caseStudy');
+});
 
 // Review Routes
-Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function(){
-    Route::get('/{slug}', 'index')->name('index');
-    Route::get('/{slug}/create', 'create')->name('create');
-    Route::post('/{slug}/store', 'store')->name('store');
-    Route::get('/{slug}/edit', 'edit')->name('edit');
-    Route::get('/{slug}/update', 'update')->name('update');
-    Route::get('/{slug}/destroy', 'destroy')->name('destroy');
-});
+Route::post('review/{slug}/store', [ReviewController::class, 'store'])->name('review.store');
 
 
 // Route for filepond upload
@@ -91,17 +92,17 @@ Route::post('/upload', function (Request $request) {
     $files = $request->fileponds;
     $paths = [];
     foreach ($files as $key => $file) {
-        $paths[] = saveImage($file, "uploads/filepond",'', 'temp');
+        $paths[] = saveImage($file, "uploads/filepond", '', 'temp');
     }
-    $pathString = implode(",",$paths);
+    $pathString = implode(",", $paths);
     return response($pathString, 200, [
         'content_type' => 'text/plain'
     ]);
 });
 
-Route::get('get-mac', function(){
+Route::get('get-mac', function () {
     dd(shell_exec('netstat -ie'));
 });
-Route::get('get-ip', function(Request $request){
+Route::get('get-ip', function (Request $request) {
     dd($request->ip());
 });

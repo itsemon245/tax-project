@@ -1,6 +1,7 @@
 @php
     $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
     $isPageV2 = str(url()->current())->contains('page');
+    $isCoursePage = str(url()->current())->contains('course');
     
 @endphp
 <header class="d-flex flex-column justify-items-center">
@@ -19,7 +20,7 @@
             </a>
         </div>
 
-        @if (!$isPageV2)
+        @if (!$isPageV2 && !$isCoursePage)
             {{-- nav for large devices --}}
             <nav class="mx-auto menu laptop">
                 <ul class="nav justify-content-center">
@@ -61,13 +62,11 @@
                     </li>
 
                     <li
-                        class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('page.training') ? 'active-link' : '' }}">
-                        <a class="nav-link text-light" href="{{ route('page.training') }}">Training/Education</a>
+                        class="nav-item custom-nav-item position-relative dropdown-trigger">
+                        <a class="nav-link text-light" href="{{ route('course.index') }}">Training/Education</a>
                         <ul class="position-absolute dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item"><a href=""
+                            <li class="nav-item custom-nav-item dropdown-item"><a href="{{route('course.show', 1)}}"
                                     class="nav-link text-light">Practical Income Tax Course</a></li>
-                            <li class="nav-item custom-nav-item dropdown-item"><a href=""
-                                    class="nav-link text-light">ITP Exam Preparation</a></li>
                         </ul>
 
                     </li>
@@ -136,9 +135,34 @@
                     </li>
                 </ul>
             </nav>
+        @elseif ($isCoursePage)
+            <nav class="mx-auto menu d-none d-sm-inline-block">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item custom-nav-item {{ request()->routeIs('home') ? 'active-link' : '' }}">
+                        <a class=" nav-link text-light" href="{{ route('home') }}">Home</a>
+                    </li>
+                    <li
+                        class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('course.index') ? 'active-link' : '' }}">
+                        <a class="nav-link text-light" href="{{ route('course.index') }}">Courses</a>
+                        <ul class="position-absolute dropdown ">
+                            <li class="nav-item custom-nav-item dropdown-item"><a href="{{route('course.show', 1)}}"
+                                    class="nav-link text-light">Practical Income Tax Course</a></li>
+                        </ul>
+
+                    </li>
+                    <li
+                        class="nav-item custom-nav-item">
+                        <a class=" nav-link text-light" href="">Case Study Lab</a>
+                    </li>
+                   
+                    <li class="nav-item custom-nav-item {{ request()->routeIs('books.view') ? 'active-link' : '' }}">
+                        <a class=" nav-link text-light" href="{{ route('books.view') }}">Book Store</a>
+                    </li>
+
+                </ul>
+            </nav>
         @else
             {{-- nav for large devices --}}
-
             <nav class="mx-auto menu d-none d-sm-inline-block">
                 <ul class="nav justify-content-center">
                     <li class="nav-item custom-nav-item {{ request()->routeIs('home') ? 'active-link' : '' }}">
@@ -209,7 +233,7 @@
         </div>
     </div>
 
-    @if (!$isPageV2)
+    @if (!$isPageV2 && !$isCoursePage)
         {{-- nav for smaller devices --}}
         <nav class="mx-auto menu mobile">
             <ul class="nav justify-content-center">
@@ -244,13 +268,11 @@
                     </ul>
                 </li>
                 <li
-                    class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('page.training') ? 'active-link' : '' }}">
-                    <a class="nav-link text-light" href="{{ route('page.training') }}">Training/Education</a>
+                    class="nav-item custom-nav-item position-relative dropdown-trigger">
+                    <a class="nav-link text-light" href="{{ route('course.index') }}">Training/Education</a>
                     <ul class="position-absolute dropdown ">
-                        <li class="nav-item custom-nav-item dropdown-item"><a href=""
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="{{route('course.show', 1)}}"
                                 class="nav-link text-light">Practical Income Tax Course</a></li>
-                        <li class="nav-item custom-nav-item dropdown-item"><a href=""
-                                class="nav-link text-light">ITP Exam Preparation</a></li>
                     </ul>
                 </li>
 
