@@ -3,14 +3,12 @@
     <div class="d-flex justify-content-center">
         <div class="container">
             <div class="row">
-                <div class="container">
                     <p class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. A
                         numquam inventore consectetur? Dolores sed at atque non repellat consequatur aperiam. Lorem
                         ipsum dolor, sit
                         amet consectetur adipisicing elit. Ab voluptas rerum tenetur dolores officia veritatis
                         reprehenderit
                         blanditiis earum culpa laboriosam.</p>
-                </div>
                 @foreach (range(1, 6) as $key)
                     <div class="col-md-4 col-sm-6 mb-3">
                         <div class="border bg-light w-100 px-0 px-md-3 px-lg-5 py-3 rounded">
