@@ -154,3 +154,21 @@ function countRecords($table = 'users', $queries = [])
     $count = DB::table($table)->where($queries)->count();
     return $count;
 }
+
+
+/**
+ * Returns an image url from picsum.photos
+ * 
+ */
+function picsum(string $seed = null,int $width= 720, int $height = null ) {
+    if (!$height) {
+        $height = $width;
+    }
+    if (!$seed) {
+        $picsum = "https://picsum.photos/$width/$height";
+    }else{
+        $picsum = "https://picsum.photos/seed/$seed/$width/$height";
+    }
+
+    return $picsum;
+}

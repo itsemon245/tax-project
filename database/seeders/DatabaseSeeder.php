@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\CaseStudyPage;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -39,6 +41,7 @@ class DatabaseSeeder extends Seeder
             InvoiceItemSeeder::class,
             MapSeeder::class,
             BookSeeder::class,
+            CaseStudyPageSeeder::class,
         ]);
     }
 }
