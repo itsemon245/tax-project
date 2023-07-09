@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('avatar')->nullable();
             $table->text('name')->nullable();
             $table->longText('comment');
-            $table->enum('rating', [0,1,2,3,4,5]);
+            $table->enum('rating', [1,2,3,4,5]);
             $table->timestamps();
         });
     }

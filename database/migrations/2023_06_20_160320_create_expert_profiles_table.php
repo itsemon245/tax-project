@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('expert_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('post');
+            $table->text('name');
+            $table->text('post');
             $table->longText('bio')->nullable();
-            $table->string('image');
+            $table->text('image');
             $table->integer('experience');
-            $table->string('join_date');
+            $table->date('join_date');
             $table->string('availability');
             $table->longText('at_a_glance')->nullable();
             $table->longText('description');

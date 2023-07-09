@@ -64,7 +64,7 @@ Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'
 
 Route::controller(ExpertController::class)->prefix('expert')->name('expert.')->group(function () {
     Route::get('/browse', 'browse')->name('browse');
-    Route::get('/profile', 'profile')->name('profile');
+    Route::get('/profile/{id}', 'profile')->name('profile');
 });
 
 // these route will only be visible to 2nd navigation 
