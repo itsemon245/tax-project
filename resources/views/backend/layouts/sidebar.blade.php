@@ -72,12 +72,12 @@
                             <li>
                                 <a href="{{ route('product.index') }}">View Products</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="{{ route('product-category.index') }}">Category</a>
                             </li>
                             <li>
                                 <a href="{{ route('product-subcategory.index') }}">Sub-Category</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>

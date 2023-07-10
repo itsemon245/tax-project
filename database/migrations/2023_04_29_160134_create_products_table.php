@@ -21,8 +21,6 @@ return new class extends Migration
             $table->integer('discount')->nullable();
             $table->json('package_features')->comment('user custom package features including text colors');
             $table->enum('type', ['Silver', 'Gold', 'Platinum', 'Exclusive']);
-            $table->integer('ratting')->nullable();
-            $table->string('reviews')->nullable();
             $table->longText('description')->nullable();
             $table->boolean('is_discount_fixed')->default(false)->comment('true = Discount is fixed, false = Discount is percentage');
             $table->boolean('is_most_popular')->default(false)->comment('true = This Product is most popular, false = This Product is not most popular');

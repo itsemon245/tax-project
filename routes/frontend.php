@@ -85,6 +85,7 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
 
 // Review Routes
 Route::post('review/{slug}/store', [ReviewController::class, 'store'])->name('review.store');
+Route::post('review/{slug}/index', [ReviewController::class, 'index'])->name('review.index');
 
 
 // Route for filepond upload
