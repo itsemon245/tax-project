@@ -62,7 +62,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('social-handle', SocialHandleController::class);
     Route::resource('ui-element', UiElementController::class);
     Route::resource('promo-code', PromoCodeController::class);
-    Route::resource('user-doc', UserDocController::class);
+    Route::resource('user-docs', UserDocController::class);
     Route::resource('map', MapController::class);
     Route::resource('document-type', DocumentTypeController::class);
     Route::resource('map', MapController::class);

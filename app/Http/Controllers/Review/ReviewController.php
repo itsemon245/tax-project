@@ -40,7 +40,7 @@ class ReviewController extends Controller
         try {
             $request->validate([
                 'rating' => 'required|integer|max:255',
-                'comment' => 'required|string|max:255',
+                'comment' => 'required|string',
             ]);
         } catch (ValidationException $exception) {
 
@@ -50,11 +50,10 @@ class ReviewController extends Controller
         }
 
         if (auth()->user()) {
-            $user_id = auth()->user()->hasRole('user') ? auth()->id() : null;
+            $user_id = auth()->id();
 
-            $avatar = $user_id ? auth()->user()->image_url : $request->avatar;
-            $name = $user_id ? auth()->user()->name : $request->name;
-
+            $avatar = auth()->user()->image_url;
+            $name = auth()->user()->name;
             $item = Str::snake($slug);
             $comment = $request->comment;
             $rating = $request->rating;

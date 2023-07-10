@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
-    <x-frontend.products-section :productCategory="$productCategory" />
+    <x-frontend.products-section :products="$products" />
 
     <section class="px-lg-5 px-2 my-5">
         <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">{{ $subCategories[0]->serviceCategory->name }}

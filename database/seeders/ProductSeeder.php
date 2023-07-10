@@ -17,42 +17,38 @@ class ProductSeeder extends Seeder
                 'title' => 'Free',
                 'sub_title' => 'Free expert assist included',
                 'discount' => 100,
-                'is_discount_fixed' => false
+                'is_discount_fixed' => false,
+                'type' => 'Silver'
             ],
             [
                 'title' => 'Deluxe',
-                'sub_title' => 'Free expert assist included'
+                'sub_title' => 'Free expert assist included',
+                'type' => 'Gold'
             ],
             [
                 'title' => 'Premium',
-                'sub_title' => 'Free expert assist included'
+                'sub_title' => 'Free expert assist included',
+                'type' => 'Platinum'
             ],
             [
                 'title' => 'Family Bundle',
-                'sub_title' => 'Free expert assist included'
+                'sub_title' => 'Free expert assist included',
+                'type' => 'Exclusive'
             ],
         ];
 
-        $subCategories = [1, 3, 5, 7];
-
-        foreach ($products as $product) {
-            foreach ($subCategories as $subId) {
-                Product::factory(1)->create([
+            foreach ($products as $product) {
+                Product::factory(4)->create([
                     ...$product,
                     'product_category_id' => 1,
-                    'product_sub_category_id' => $subId,
                 ]);
             }
-        }
-        $subCategories2 = [2, 4, 6, 8];
-        foreach ($products as $product) {
-            foreach ($subCategories2 as $subId) {
-                Product::factory(1)->create([
+            foreach ($products as $product) {
+                Product::factory(4)->create([
                     ...$product,
                     'product_category_id' => 2,
-                    'product_sub_category_id' => $subId,
                 ]);
             }
-        }
+
     }
 }

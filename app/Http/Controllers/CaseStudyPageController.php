@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCourseRequest;
-use App\Http\Requests\UpdateCourseRequest;
-use App\Models\Course;
+use App\Http\Requests\StoreCaseStudyPageRequest;
+use App\Http\Requests\UpdateCaseStudyPageRequest;
+use App\Models\CaseStudyPage;
 
-class CourseController extends Controller
+class CaseStudyPageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCourseRequest $request)
+    public function store(StoreCaseStudyPageRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show(CaseStudyPage $caseStudyPage)
     {
         //
     }
@@ -43,7 +43,7 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course)
+    public function edit(CaseStudyPage $caseStudyPage)
     {
         //
     }
@@ -51,7 +51,7 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCourseRequest $request, Course $course)
+    public function update(UpdateCaseStudyPageRequest $request, CaseStudyPage $caseStudyPage)
     {
         //
     }
@@ -59,7 +59,7 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
+    public function destroy(CaseStudyPage $caseStudyPage)
     {
         //
     }

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductSubCategory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CaseStudyPage>
  */
-class ProductSubCategoryFactory extends Factory
+class CaseStudyPageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,11 +16,8 @@ class ProductSubCategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->realText(10);
         return [
-            'name' => $name,
-            'product_category_id' => fake()->numberBetween(0, 3),
+            //
         ];
-        
     }
 }

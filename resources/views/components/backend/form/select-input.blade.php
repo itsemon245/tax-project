@@ -6,9 +6,9 @@
     $placeholder = $attributes->get('placeholder');
 @endphp
 
-<div class="">
+<div class="mb-2">
     @if ($label)
-        <label for="{{ $id }}" class="form-label">{{ $label }}
+        <label for="{{ $id }}" class="form-label mb-0">{{ $label }}
             @if ($required)
                 <span class="text-danger">*</span>
             @endif

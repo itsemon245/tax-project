@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ExpertProfile;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class ExpertProfileSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        ExpertProfile::factory(10)->create();
     }
 }

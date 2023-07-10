@@ -14,8 +14,9 @@
             <div class="mx-auto">
                 <h2 class="my-3" style="font-size:30px;font-weight:600;">Category-A</h2>
                 <div class="row">
+                    @foreach ($books as $book)
                     <div class="col-lg-3 col-md-6">
-                        <a href="{{ route('books.show', 1) }}">
+                        <a href="{{ route('books.show', $book->id) }}">
                             <div>
                                 <div
                                     class="d-grid grid-cols-1 mw-md mx-auto pb-10 px-10 bg-primary border border-3 border-gray-800 rounded overflow-hidden">
@@ -56,6 +57,7 @@
                             </div>
                         </a>
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>

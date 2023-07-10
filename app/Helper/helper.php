@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Set Image given a img from database
@@ -154,3 +155,48 @@ function countRecords($table = 'users', $queries = [])
     $count = DB::table($table)->where($queries)->count();
     return $count;
 }
+
+
+/**
+ * Returns an image url from picsum.photos
+ * 
+ */
+function picsum(string $seed = null,int $width= 720, int $height = null ) {
+    if (!$height) {
+        $height = $width;
+    }
+    if (!$seed) {
+        $picsum = "https://picsum.photos/$width/$height";
+    }else{
+        $picsum = "https://picsum.photos/seed/$seed/$width/$height";
+    }
+
+    return $picsum;
+}
+
+
+ /**
+     * Returns an array to query for reviews star count
+     */
+    function reviewsAndStarCounts(): array
+    {
+        $array = [
+            'reviews',
+            'reviews as reviews_5star' => function (Builder $query) {
+                $query->where('rating', 5);
+            },
+            'reviews as reviews_4star' => function (Builder $query) {
+                $query->where('rating', 4);
+            },
+            'reviews as reviews_3star' => function (Builder $query) {
+                $query->where('rating', 3);
+            },
+            'reviews as reviews_2star' => function (Builder $query) {
+                $query->where('rating', 2);
+            },
+            'reviews as reviews_1star' => function (Builder $query) {
+                $query->where('rating', 1);
+            },
+        ];
+        return $array;
+    }
