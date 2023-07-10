@@ -31,7 +31,6 @@ class ProductFactory extends Factory
             }
         ]';
         return [
-            "product_sub_category_id" => fake()->numberBetween(1, 4),
             "product_category_id" => fake()->numberBetween(1, 2),
             "user_id" => 1,
             "title" => fake()->realText(15),
@@ -40,6 +39,7 @@ class ProductFactory extends Factory
             "discount" => fake()->numberBetween(1, 40),
             "is_discount_fixed" => fake()->randomElement([true, false]),
             "is_most_popular" => fake()->randomElement([true, false]),
+            "type" => fake()->randomElement(['Silver', 'Gold', 'Platinum', 'Exclusive']),
             "package_features" => $packageFeat,
             "description" => fake()->realText(50),
             "status" => fake()->randomElement([true, false]),

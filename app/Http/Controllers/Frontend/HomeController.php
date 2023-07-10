@@ -12,6 +12,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -19,6 +20,7 @@ class HomeController extends Controller
     {
         $appointmentSections = Appointment::get();
         $productCategory = ProductCategory::with('productSubCategories', "productSubCategories.products")->find(1);
+        $products = Product::withAvg('reviews', 'rating')->withCount('reviews')->where(['product_category_id' => 1])->get();
         $subCategories = ServiceSubCategory::where('service_category_id', 1)->with('serviceCategory')->get();
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->get();

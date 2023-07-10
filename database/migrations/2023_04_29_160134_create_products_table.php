@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_category_id')->constrained('product_categories')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('product_sub_category_id')->constrained('product_sub_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');
             $table->string('sub_title')->nullable();
             $table->integer('price')->nullable();
             $table->integer('discount')->nullable();
             $table->json('package_features')->comment('user custom package features including text colors');
+            $table->enum('type', ['Silver', 'Gold', 'Platinum', 'Exclusive']);
             $table->integer('ratting')->nullable();
             $table->string('reviews')->nullable();
             $table->longText('description')->nullable();
