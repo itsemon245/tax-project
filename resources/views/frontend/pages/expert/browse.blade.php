@@ -120,28 +120,34 @@
                 </div>
                 <div class="col-lg-9">
                     <div class="row mt-0">
-                        @foreach (range(1, 6) as $key)
+                        @foreach ($experts as $expert)
                             <div class="col-md-6">
                                 <div class="browse_content_wrapper">
                                     <div class="d-flex">
                                         <div class="col-lg-5">
-                                            <img src="{{ asset('frontend/assets/images/Plugin icon - 1.png') }}"
-                                                alt="" class="browse_thumbail">
+                                            <img src="{{ useImage($expert->image) }}" alt=""
+                                                class="browse_thumbail">
                                             <div class="rating text-center">
                                                 <span class="mdi mdi-star rating"></span>
                                                 <span class="mdi mdi-star rating"></span>
                                                 <span class="mdi mdi-star rating"></span>
                                                 <span class="mdi mdi-star rating"></span>
                                                 <span class="mdi mdi-star rating"></span>
-                                                <span class="browse_ratings">
-                                                    4.3 ratings
-                                                </span>
+                                                @isset($expert->reviews_avg_rating)
+                                                    <span class="browse_ratings">
+                                                        {{ $expert->reviews_avg_rating }} ratings
+                                                    </span>
+                                                @else
+                                                    <span class="browse_ratings">
+                                                        No Reviews Yet
+                                                    </span>
+                                                @endisset
                                             </div>
                                         </div>
                                         <div class="col-lg-7">
-                                            <h2 class="browse_card_name">Ms. Marry Jane</h2>
-                                            <button class="browse_card_button">Tax Expert</button>
-                                            <h4 class="browse_card_exp">Experience: 10 years</h4>
+                                            <h2 class="browse_card_name">{{ $expert->name }}</h2>
+                                            <span class="badge bg-success p-2">{{ $expert->post }}</span>
+                                            <h4 class="browse_card_exp">Experience: {{ $expert->experience }} years</h4>
                                             <h5 class="browse_card_company">Business, Individual,Company</h5>
                                             <p class="browse_card_price">Fee: 500/-</p>
                                         </div>
@@ -150,7 +156,7 @@
                                         <button class="browse_card_cons">
                                             Consultation
                                         </button>
-                                        <a href="{{ route('expert.profile', 1) }}" class="browse_card_view">View
+                                        <a href="{{ route('expert.profile', $expert->id) }}" class="browse_card_view">View
                                             Profile</a>
                                     </div>
                                 </div>
