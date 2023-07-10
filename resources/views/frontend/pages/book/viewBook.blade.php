@@ -59,7 +59,7 @@
             </div>
            
             <div class="mt-3">
-                <x-review-section :item-id="1" :reviews="$reviews" :slug="'book'"/>
+                <x-review-section :item="$book" :reviews="$reviews" :slug="'book'"/>
             </div>
 
 

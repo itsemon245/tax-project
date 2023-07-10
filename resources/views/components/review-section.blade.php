@@ -26,7 +26,7 @@
                     <div class="bars">
                         @foreach (range(5, 1) as $key)
                             @php
-                                $progress = round($item["reviews_".$key."star"]/$item->reviews_count * 100);
+                                $progress = $item->reviews_count ? round($item["reviews_".$key."star"]/$item->reviews_count * 100) : 0;
                             @endphp
                             <div class="row align-items-center justify-content-start">
                                 <div class="col-10">
