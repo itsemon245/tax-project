@@ -11,10 +11,8 @@
         </h2>
         <h5 class="" style="font-weight: 300;">
             <span class="badge bg-danger" style="font-weight: 400;">
-                {{ explode(' ' , $product->sub_title)[0] }}
-            </span> {{
-                join(" ",array_slice(explode(' ' , $product->sub_title), 1))
-            }}
+                {{ explode(' ', $product->sub_title)[0] }}
+            </span> {{ join(' ', array_slice(explode(' ', $product->sub_title), 1)) }}
         </h5>
         <h3 class="product-price mb-0">
             Tk. {{ Str::lower($product->title) !== 'free' ? $product->price : '0.' }}
@@ -29,16 +27,15 @@
             <div class="cta d-flex flex-column align-items-center">
                 <button class="btn btn-success text-light w-100" style="font-weight: 600">Start
                     Now</button>
-                <div class="rating">
-                    <p class="text-muted float-start me-1 mb-0">
-                        <span class="mdi mdi-star text-warning"></span>
-                        <span class="mdi mdi-star text-warning"></span>
-                        <span class="mdi mdi-star text-warning"></span>
-                        <span class="mdi mdi-star text-warning"></span>
-                        <span class="mdi mdi-star text-warning"></span>
-                    </p>
+                <div class="rating mt-2">
+                    @foreach (range(1, 5) as $rating)
+                        @php
+                            $color = $rating > $product->reviews_avg_rating ? 'var(--bs-gray-400)' : 'var(--bs-yellow)';
+                        @endphp
+                        <span class="fas fa-star" style="color: {{ $color }};"></span>
+                    @endforeach
                     <p class="text-center mb-0">
-                        <a href="" class="text-muted">( 36 Reviews )</a>
+                        <a href="" class="text-muted">( {{$product->reviews_count}} Reviews )</a>
                     </p>
                 </div>
             </div>

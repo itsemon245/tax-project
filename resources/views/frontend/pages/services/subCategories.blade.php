@@ -7,8 +7,8 @@
     
     
     {{-- show only when category is tax services --}}
-    @if ($productCategory)
-    <x-frontend.products-section :productCategory="$productCategory" />
+    @if ($products)
+    <x-frontend.products-section :products="$products" />
     @endif
 
         {{-- Services --}}
