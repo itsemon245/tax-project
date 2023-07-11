@@ -20,8 +20,6 @@ class BookController extends Controller
         $book = Book::withAvg('reviews', 'rating')
         ->withCount(reviewsAndStarCounts())
         ->find($book);
-
-        dd($book);
         $reviews = Review::where('book_id', $book->id)->latest()->get();
         return view('frontend.pages.book.viewBook',compact('book', 'reviews'));
     }
