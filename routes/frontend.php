@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpertController;
+use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
@@ -80,14 +81,18 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
 Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
     Route::get('index', 'index')->name('index');
     Route::get('{course}/show', 'show')->name('show');
-    Route::get('case-study', 'caseStudy')->name('caseStudy');
+    Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
+        Route::get('/', 'caseStudy')->name('page');
+        Route::get('index/{package_id}', 'index')->name('index');
+        Route::get('index/{case_study_id}', 'show')->name('show');
+    });
 });
+
+
 
 // Review Routes
 Route::post('review/{slug}/store', [ReviewController::class, 'store'])->name('review.store');
 Route::post('review/{slug}/index', [ReviewController::class, 'index'])->name('review.index');
-
-
 // Route for filepond upload
 Route::post('/upload', function (Request $request) {
     $files = $request->fileponds;

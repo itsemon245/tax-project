@@ -17,7 +17,5 @@ class CourseController extends Controller
         return view('frontend.pages.course.view');
     }
 
-    function caseStudy() {
-        return view('frontend.pages.course.caseStudy');
-    }
+   
 }
