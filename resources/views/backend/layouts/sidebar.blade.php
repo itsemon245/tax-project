@@ -212,6 +212,23 @@
                     </div>
                 </li>
                 <li>
+                    <a href="#user-appointmentSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>User Appointments</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="user-appointmentSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('user-appointments.index') }}">
+                                    View All
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li>
                     <a href="#clientStudio" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span>Client Studio</span>

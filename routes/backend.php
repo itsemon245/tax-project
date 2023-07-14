@@ -31,6 +31,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\Backend\UserAppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,7 @@ Route::prefix('admin')->group(function () {
         Route::PUT('update/{id}', [ServiceController::class, 'update'])->name('update');
         Route::DELETE('destroy/{service}', [ServiceController::class, 'destroy'])->name('destroy');
     });
+    Route::get('user-appointments/index', [UserAppointmentController::class, 'index'])->name('user-appointments.index');
 
     //custom routes
     Route::get('get-invoice-data/{id}',[InvoiceController::class, 'getInvoiceData']); 
