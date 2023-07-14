@@ -43,14 +43,14 @@
                             <strong class="d-block">Date:
                                 {{ Carbon\Carbon::parse($appointment->date)->format('d M, Y') }}</strong>
                             <strong class="d-block">Time: {{ $appointment->time }}</strong>
-                           
+
                         </td>
                         <td>
                             @if ($appointment->is_completed)
-                            <span class="badge bg-soft-success text-success p-1 fs-6">Completed</span>
-                        @else
-                            <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
-                        @endif
+                                <span class="badge bg-soft-success text-success p-1 fs-6">Completed</span>
+                            @else
+                                <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
+                            @endif
                         </td>
                         @isset($appointment->map_id)
                             <td>
@@ -68,13 +68,25 @@
                             </td>
                         @endisset
                         <td>
-                            <form action="{{ route('user-appointments.approve', $appointment->id) }}" method="post">
+                            <form action="{{ route('user-appointments.complete', $appointment->id) }}" method="post"
+                                class="d-inline-block">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    Approve
+                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm">
+                                    <span class="mdi mdi-check-all fs-5"></span>
+                                    <span class="fs-6">Mark as completed</span>
                                 </button>
                             </form>
+                            <form action="{{ route('user-appointments.destroy', $appointment->id) }}" method="post"
+                                class="d-inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Delete
+                                </button>
+                            </form>
+
+
                         </td>
                     </tr>
                 @empty

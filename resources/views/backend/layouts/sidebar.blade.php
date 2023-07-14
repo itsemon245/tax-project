@@ -221,7 +221,17 @@
                         <ul class="nav-second-level">
                             <li>
                                 <a href="{{ route('user-appointments.index') }}">
-                                    View All
+                                    Pending For Approval
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user-appointments.approved') }}">
+                                   Approved
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user-appointments.completed') }}">
+                                   Completed
                                 </a>
                             </li>
 

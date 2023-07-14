@@ -91,11 +91,21 @@ Route::prefix('admin')->group(function () {
         Route::PUT('update/{id}', [ServiceController::class, 'update'])->name('update');
         Route::DELETE('destroy/{service}', [ServiceController::class, 'destroy'])->name('destroy');
     });
-    Route::get('user-appointments/index', [UserAppointmentController::class, 'index'])->name('user-appointments.index');
+    Route::prefix('user-appointments')
+        ->name('user-appointments.')
+        ->controller(UserAppointmentController::class)
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('approved', 'approvedList')->name('approved');
+            Route::get('completed/', 'completedList')->name('completed');
+            Route::patch('approve/{id}', 'approve')->name('approve');
+            Route::patch('complete/{id}', 'complete')->name('complete');
+            Route::delete('destroy/{id}', 'destroy')->name('destroy');
+        });
 
     //custom routes
-    Route::get('get-invoice-data/{id}',[InvoiceController::class, 'getInvoiceData']); 
-    Route::delete('/invoice-item/delete/{id}',[InvoiceController::class, 'deleteInvoiceItem']); 
+    Route::get('get-invoice-data/{id}', [InvoiceController::class, 'getInvoiceData']);
+    Route::delete('/invoice-item/delete/{id}', [InvoiceController::class, 'deleteInvoiceItem']);
     Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
     Route::POST('/get-users', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
