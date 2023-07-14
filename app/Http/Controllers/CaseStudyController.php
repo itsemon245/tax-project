@@ -12,22 +12,14 @@ class CaseStudyController extends Controller
         return view('frontend.pages.course.caseStudy');
     }
 
-    public function packageCategories()
+    public function index()
     {
         return view('frontend.pages.course.caseStudyPackegeCategories');
     }
 
-    public function packageCategory()
-    {
-        return view('frontend.pages.course.caseStudySingleCategory');
-    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -50,7 +42,7 @@ class CaseStudyController extends Controller
      */
     public function show(CaseStudyPage $caseStudyPage)
     {
-        //
+        return view('frontend.pages.course.caseStudySingleCategory');
     }
 
     /**
