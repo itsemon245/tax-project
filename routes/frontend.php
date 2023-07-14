@@ -83,8 +83,11 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
     Route::get('{course}/show', 'show')->name('show');
     Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
         Route::get('/', 'caseStudy')->name('page');
-        Route::get('{package_id}/categories', 'packageCategories')->name('package.categories');
-        Route::get('{category_id}/category/show', 'packageCategory')->name('category.show');
+        // Route::get('{package_id}/categories', 'packageCategories')->name('package.categories');
+        // Route::get('{category_id}/category/show', 'packageCategory')->name('category.show');
+
+        Route::get('index/{package_id}', 'index')->name('index');
+        Route::get('show/{case_study_id}', 'show')->name('show');
     });
 });
 
