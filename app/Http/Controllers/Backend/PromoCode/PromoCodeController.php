@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePromoCodeRequest;
 use App\Http\Requests\UpdatePromoCodeRequest;
+use App\Mail\PromoCodeCreated;
+use App\Mail\TestMail;
 use App\Models\UserNotification;
 use App\Notifications\PromoCodeNotification;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Mail;
 
 class PromoCodeController extends Controller
 {
@@ -36,7 +39,6 @@ class PromoCodeController extends Controller
      */
     public function store(StorePromoCodeRequest $request)
     {
-
         // dd($request->all());
         PromoCode::create(
             [
@@ -67,16 +69,17 @@ class PromoCodeController extends Controller
                 break;
         }
         foreach ($users as $user) {
-            $user->notify(new PromoCodeNotification());
+            Mail::to('mojahid@wisedev.xyz')
+            ->queue(new TestMail());
         }
 
 
-        $store_notification = new UserNotification();
-        $store_notification->user_id = $request->user_id;
-        $store_notification->title = 'New PromoCode Create by ' . Auth::user()->name;
-        $store_notification->message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit mauris ut tristique laoreet. Sed eu hendrerit dolor';
-        $store_notification->image = Auth::user()->image_url;
-        $store_notification->save();
+        // $store_notification = new UserNotification();
+        // $store_notification->user_id = $request->user_id;
+        // $store_notification->title = 'New PromoCode Create by ' . Auth::user()->name;
+        // $store_notification->message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit mauris ut tristique laoreet. Sed eu hendrerit dolor';
+        // $store_notification->image = Auth::user()->image_url;
+        // $store_notification->save();
         return redirect()
             ->route("promo-code.index")
             ->with(array(
