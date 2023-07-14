@@ -23,7 +23,7 @@ class StorePromoCodeRequest extends FormRequest
     {
         return [
             'user_type' => 'required',
-            'code' => 'required|max:10',
+            'code' => 'required|max:20|unique:promo_codes,code',
             'limit' => 'required',
             'expired_at' => 'required'
         ];

@@ -37,6 +37,7 @@ class PromoCodeController extends Controller
     public function store(StorePromoCodeRequest $request)
     {
 
+        // dd($request->all());
         PromoCode::create(
             [
                 'user_type' => $request->user_type,
@@ -47,8 +48,27 @@ class PromoCodeController extends Controller
             ]
         );
 
-        $user = User::find($request->user_id); // Replace with the user you want to notify
-        $user->notify(new PromoCodeNotification());
+        $users = []; // Replace with the user you want to notify
+        switch ($request->user_type) {
+            case 'all':
+                $users = User::get();
+                break;
+            case 'partner':
+                $users = User::role('partner')->get();
+                break;
+            case 'user':
+                $users = User::role('user')->get();
+                break;
+            case 'individual':
+                $users = User::where('id', $request->user_id)->get();
+                break;
+
+            default:
+                break;
+        }
+        foreach ($users as $user) {
+            $user->notify(new PromoCodeNotification());
+        }
 
 
         $store_notification = new UserNotification();
@@ -123,7 +143,7 @@ class PromoCodeController extends Controller
      */
     public function getUsers()
     {
-        $users = User::all(['id', 'name']);
+        $users = User::all();
         return $users;
     }
 }
