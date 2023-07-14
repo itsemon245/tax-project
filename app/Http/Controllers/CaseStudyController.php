@@ -11,6 +11,16 @@ class CaseStudyController extends Controller
     function caseStudy() {
         return view('frontend.pages.course.caseStudy');
     }
+
+    public function packageCategories()
+    {
+        return view('frontend.pages.course.caseStudyPackegeCategories');
+    }
+
+    public function packageCategory()
+    {
+        return view('frontend.pages.course.caseStudySingleCategory');
+    }
     /**
      * Display a listing of the resource.
      */
