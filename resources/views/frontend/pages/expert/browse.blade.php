@@ -1,6 +1,78 @@
 @extends('frontend.layouts.app')
 
 @section('main')
+    <style>
+        /* Range Slider */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+        }
+
+        .range-slider,
+        .range-slider>.progress {
+            height: 5px;
+            border-radius: 5px;
+            background-color: #ddd;
+        }
+
+        .range-slider {
+            background-color: #ddd;
+            position: relative;
+        }
+
+        .range-slider>.progress {
+            background-color: var(--primary);
+            position: absolute;
+            left: 0%;
+            right: 0%;
+        }
+
+        .range-slider-input>input {
+            position: absolute;
+            top: -5px;
+            height: 5px;
+            width: 100%;
+            pointer-events: none;
+            background: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            height: 17px;
+            width: 17px;
+            border-radius: 50%;
+            pointer-events: auto;
+            -webkit-appearance: none;
+            background: var(--primary);
+        }
+
+        input[type="range"]::-moz-slider-thumb {
+            height: 17px;
+            width: 17px;
+            border-radius: 50%;
+            pointer-events: auto;
+            -moz-appearance: none;
+            background: var(--primary);
+        }
+
+        .filter-btn-box {
+            display: none;
+            padding: 10px;
+            background: #F1EBEB;
+        }
+
+        @media (max-width: 992px) {
+            .expert-filter {
+                display: none;
+            }
+
+            .filter-btn-box {
+                display: inline-block
+            }
+        }
+    </style>
+
     @php
         $banners = getRecords('banners');
         $testimonials = getRecords('testimonials');
@@ -19,6 +91,13 @@
             </div>
             <div class="row">
                 <div class="col-lg-3">
+                    <div class="filter-btn-box shadow mb-3">
+                        <button class="browse_card_cons" style="background: none;margin: 0; padding: 0;"
+                            onclick="setFilterVissible()">
+                            <span><i class="fa-solid fa-bars-filter"></i></span>
+                            <h4 class="browse_header" style="margin: 0; padding: 0;">Filter</h4>
+                        </button>
+                    </div>
                     <div class="expert-filter p-3" style="background: #F1EBEB; border-radius: 10px">
                         <div class="filters">
                             <div class="price-filter my-2">
@@ -174,44 +253,15 @@
 
 @push('customJs')
     <script>
-        // rangeInputs.forEach(input => {
-        //     input.addEventListener("input", e => {
-        //         let minVal = parseInt(rangeInputs[0].value)
-        //         let maxVal = parseInt(rangeInputs[1].value)
+        const setFilterVissible = () => {
+            const filter = document.querySelector(".expert-filter")
 
-        //         if ((maxVal - minVal >= priceGap) && maxVal <= 100000) {
-        //             if (e.target.dataset.key === "input-min") {
-        //                 rangeSliderInputs[0].value = minVal
-        //                 progress.style.left = (minVal / rangeSliderInputs[0].max) * 100 + "%"
-        //             } else {
-        //                 rangeSliderInputs[1].value = maxVal
-        //                 progress.style.right = 100 - (maxVal / rangeSliderInputs[1].max) * 100 + "%"
-        //             }
-        //         } else {
-        //             console.log('first')
-        //         }
-
-        //     })
-        // });
-
-        // rangeSliderInputs.forEach(input => {
-        //     input.addEventListener("input", e => {
-        //         let minVal = parseInt(rangeSliderInputs[0].value)
-        //         let maxVal = parseInt(rangeSliderInputs[1].value)
-
-        //         if (maxVal - minVal < priceGap) {
-        //             e.target.className === "range-min" ?
-        //                 rangeSliderInputs[0].value = maxVal - priceGap :
-        //                 rangeSliderInputs[1].value = minVal - priceGap
-        //         } else {
-        //             rangeInputs[0].value = minVal
-        //             rangeInputs[1].value = maxVal
-        //             progress.style.left = (minVal / rangeSliderInputs[0].max) * 100 + "%"
-        //             progress.style.right = 100 - (maxVal / rangeSliderInputs[1].max) * 100 + "%"
-        //         }
-
-        //     })
-        // });
+            if (filter.style.display === "none") {
+                filter.style.display = "block";
+            } else {
+                filter.style.display = "none";
+            }
+        }
 
         const rangeSlider = (rangeSliderInputs, rangeInputs, progress, priceGap) => {
             rangeInputs.forEach(input => {

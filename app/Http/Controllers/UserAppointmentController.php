@@ -23,7 +23,7 @@ class UserAppointmentController extends Controller
             "district" => $request->district,
             "thana" => $request->thana,
             "map_id" => $request->location,
-            "is_physical" => $request->is_physical,
+            "is_physical" => $request->is_physical ? $request->is_physical : false,
             "user_id" => $request->user_id,
         ]);
         $alert = [

@@ -25,8 +25,8 @@
 
         <div class="d-flex justify-content-center my-2">
             <div class="cta d-flex flex-column align-items-center">
-                <button class="btn btn-success text-light w-100" style="font-weight: 600">Start
-                    Now</button>
+                <a href="{{route('product.choose', $product->id)}}" class="btn btn-success text-light w-100" style="font-weight: 600">Start
+                    Now</a>
                 <div class="rating mt-2">
                     @foreach (range(1, 5) as $rating)
                         @php

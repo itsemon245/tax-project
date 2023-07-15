@@ -6,15 +6,20 @@ use App\Http\Requests\StoreCaseStudyPageRequest;
 use App\Http\Requests\UpdateCaseStudyPageRequest;
 use App\Models\CaseStudyPage;
 
-class CaseStudyPageController extends Controller
+class CaseStudyController extends Controller
 {
+    function caseStudy() {
+        return view('frontend.pages.course.caseStudy');
+    }
+
+    public function index()
+    {
+        return view('frontend.pages.course.caseStudyPackegeCategories');
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -37,7 +42,7 @@ class CaseStudyPageController extends Controller
      */
     public function show(CaseStudyPage $caseStudyPage)
     {
-        //
+        return view('frontend.pages.course.caseStudySingleCategory');
     }
 
     /**
