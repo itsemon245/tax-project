@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
@@ -35,6 +36,9 @@ Route::prefix('service')->name('service.')->controller(ServicePageController::cl
     Route::get('category/{id}', 'subsUnderCategory')->name('category');
     Route::get('sub/{id}', 'servicesUnderSub')->name('sub');
     Route::get('service/{id}', 'service')->name('view');
+});
+Route::prefix('product')->name('product.')->controller(ProductPageController::class)->group(function () {
+    Route::get('{id}/choose', 'choose')->name('choose');
 });
 
 Route::prefix('/books')->name('books.')->group(function () {
