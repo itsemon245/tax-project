@@ -45,6 +45,9 @@
                     </label>
                 @endforeach
             </div>
+            <h2 class="text-center mt-5">
+                Payment form Ekhange hobe naki side a hobe?
+            </h2>
 
         </div>
     </div>
