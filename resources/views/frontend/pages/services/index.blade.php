@@ -4,6 +4,7 @@
     $appointments = getRecords('appointments');
     $testimonials = getRecords('testimonials');
     $banners = getRecords('banners');
+    
 @endphp
 @extends('frontend.layouts.app')
 
@@ -15,8 +16,6 @@
             justify-content: space-between;
             align-items: center;
         }
-
-
     </style>
 @endPushOnce
 @section('main')
@@ -46,13 +45,7 @@
                         <div class="bg-primary p-2 custom-grid">
 
                             <a href="{{ route('review.item', ['service', $service->id]) }}" class="mb-1">
-                                <span class="text-dark">{{ $service->reviews_avg_rating }}</span>
-                                @foreach (range(1, 5) as $rating)
-                                    @php
-                                        $color = $rating > $service->reviews_avg_rating ? 'var(--bs-gray-400)' : 'var(--bs-yellow)';
-                                    @endphp
-                                    <span class="fas fa-star" style="color: {{ $color }};"></span>
-                                @endforeach
+                                <x-avg-review-stars :avg="$service->reviews_avg_rating" />
                             </a>
 
                             <strong>Price </strong>

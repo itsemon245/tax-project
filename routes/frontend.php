@@ -116,6 +116,10 @@ Route::post('/upload', function (Request $request) {
     ]);
 });
 
+Route::get('test', function () {
+    return view('test');
+});
+
 Route::get('get-mac', function () {
     dd(shell_exec('netstat -ie'));
 });
