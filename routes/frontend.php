@@ -98,8 +98,11 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
 
 
 // Review Routes
-Route::post('review/{slug}/store', [ReviewController::class, 'store'])->name('review.store');
-Route::post('review/{slug}/index', [ReviewController::class, 'index'])->name('review.index');
+Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function () {
+    Route::get('/{slug}/{id}', 'itemReview')->name('item');
+    Route::post('/{slug}/index', 'index')->name('index');
+    Route::post('/{slug}/store', 'store')->name('store');
+});
 // Route for filepond upload
 Route::post('/upload', function (Request $request) {
     $files = $request->fileponds;
@@ -111,6 +114,10 @@ Route::post('/upload', function (Request $request) {
     return response($pathString, 200, [
         'content_type' => 'text/plain'
     ]);
+});
+
+Route::get('test', function () {
+    return view('test');
 });
 
 Route::get('get-mac', function () {
