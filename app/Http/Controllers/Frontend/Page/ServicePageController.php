@@ -29,7 +29,7 @@ class ServicePageController extends Controller
 
     public function servicesUnderSub($id)
     {
-        $services = Service::where('service_sub_category_id', $id)->with('serviceSubCategory')->get();
+        $services = Service::where('service_sub_category_id', $id)->with('serviceSubCategory')->withAvg('reviews', 'rating')->withCount('reviews')->get();
         return view('frontend.pages.services.index', compact('services'));
     }
 

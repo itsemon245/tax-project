@@ -35,7 +35,7 @@
                         <span class="fas fa-star" style="color: {{ $color }};"></span>
                     @endforeach
                     <p class="text-center mb-0">
-                        <a href="" class="text-muted">( {{$product->reviews_count}} Reviews )</a>
+                        <a href="{{route('review.item', ['product', $product->id])}}" class="text-muted">( {{$product->reviews_count}} Reviews )</a>
                     </p>
                 </div>
             </div>

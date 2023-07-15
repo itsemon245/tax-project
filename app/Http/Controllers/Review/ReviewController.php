@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
 use App\Http\Resources\ReviewResource;
+use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -21,6 +23,30 @@ class ReviewController extends Controller
     {
         // dd($slug);
         return view('backend.review.index', compact('slug'));
+    }
+
+    function itemReview(string $slug, int $id)
+    {
+        $column = Str::snake($slug . '_id');
+        $reviews = Review::where($column, $id)->latest()->get();
+        switch ($column) {
+            case 'product_id':
+                $item = Product::withAvg('reviews', 'rating')
+                    ->withCount(reviewsAndStarCounts())
+                    ->find($id);
+                break;
+            case 'service_id':
+                $item = Service::withAvg('reviews', 'rating')
+                    ->withCount(reviewsAndStarCounts())
+                    ->find($id);
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+        return view('frontend.pages.itemReview', compact('reviews', 'item', 'slug'));
     }
 
     /**
@@ -52,16 +78,16 @@ class ReviewController extends Controller
         if (auth()->user()) {
             $user_id = auth()->id();
 
-            $avatar = auth()->user()->image_url;
-            $name = auth()->user()->name;
-            $item = Str::snake($slug);
+            $avatar = $request->image ? $request->image : auth()->user()->image_url;
+            $name = $request->name ? $request->name : auth()->user()->name;
             $comment = $request->comment;
             $rating = $request->rating;
+            $column = Str::snake($slug . '_id');
             $review = Review::create([
                 'user_id' => $user_id,
                 'name' => $name,
                 'avatar' => $avatar,
-                $item . "_id" => $request->item_id,
+                $column => $request->item_id,
                 'comment' => $comment,
                 'rating' => $rating,
             ]);

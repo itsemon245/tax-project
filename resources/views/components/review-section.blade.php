@@ -153,6 +153,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
+                    console.log(response);
                     if (response.success) {
                         let data = response.data
                         let icons = '';
