@@ -100,11 +100,11 @@
 
                                 <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
 
-                                    <div class="row justify-content-between">
-                                        <h4 class="text-center mb-2">
-                                            What time works best for you?
-                                        </h4>
-                                        <div class="col-6">
+                                    <div class="row justify-content-between px-2">
+                                        <div class="col-md-6 mb-3">
+                                            <h4 class="col-12">
+                                                What time works best for you?
+                                            </h4>
                                             <a href="{{ route('appointment.make') }}" for="appointment-input"
                                                 class="row mb-1 text-dark" style="cursor: pointer;">
                                                 <d id="appointment-type"
@@ -131,7 +131,8 @@
                                                     data-cards=".appointment" id="appointment-input-2" hidden checked>
                                             </a>
                                         </div>
-                                        <div class="col-md-5 time-selector">
+                                        <div class="col-md-6 time-selector">
+                                            <h4>What time works best for you?</h4>
                                             <div class="border rounded p-3" style="overflow-y: scroll; height:400px;">
                                                 @php
                                                     $i = 0;
@@ -149,7 +150,7 @@
                                                                 <label
                                                                     class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
                                                                     {{ $time }}
-                                                                    <input class="time-input " type="radio" name="time"
+                                                                    <input class="time-input " hidden type="radio" name="time"
                                                                         data-date="{{ $date }}"
                                                                         value="{{ $time }}"
                                                                         @if ($key === 0 && $i === 1) checked @endif>

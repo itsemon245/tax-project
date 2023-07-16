@@ -101,10 +101,10 @@
                                 <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
                                     <input type="hidden" name="" id="maps-data" value="{{ json_encode($maps) }}">
                                     <div class="row justify-content-between">
-                                        <h4 class="text-center mb-2">
-                                            Which office do you prefer?
-                                        </h4>
-                                        <div class="col-6">
+                                        <div class="col-md-6 mb-3">
+                                            <h4 class="text-center mb-2">
+                                                Choose Appointment Type
+                                            </h4>
                                             <a href="{{ route('appointment.make') }}" for="appointment-input"
                                                 class="row mb-1" style="cursor: pointer;">
                                                 <d id="appointment-type"
@@ -131,22 +131,28 @@
                                                     data-cards=".appointment" id="appointment-input-2" hidden>
                                             </a>
                                         </div>
-                                        <div class="col-5 location-selector">
-                                            @foreach ($maps as $map)
-                                                <label for="location-input-{{ $map->id }}" class="row mb-1"
-                                                    style="cursor: pointer;">
-                                                    <div id="location-{{ $map->id }}"
-                                                        class="border rounded p-3 map location {{ $maps[0]->id === $map->id ? 'selected' : 'bg-light' }}">
-                                                        <h5>{{ $map->location }}</h5>
-                                                        <p class="text-muted mb-0">{{ $map->address }}</p>
-                                                    </div>
-                                                    <input type="radio" name="location" class="location-input"
-                                                        data-effected="#location-{{ $map->id }}"
-                                                        data-cards=".location" id="location-input-{{ $map->id }}"
-                                                        value="{{ $map->id }}" hidden
-                                                        @if ($maps[0]->id === $map->id) checked @endif>
-                                                </label>
-                                            @endforeach
+                                        <div class="col-md-5 location-selector">
+                                            <h4 class="text-center mb-2">
+                                                Which Office Do You Prefer?
+                                            </h4>
+                                            <div class="row">
+                                                @foreach ($maps as $map)
+                                                    <label for="location-input-{{ $map->id }}" class="col-md-12 col-6 mb-md-1"
+                                                        style="cursor: pointer;">
+                                                        <div id="location-{{ $map->id }}"
+                                                            class="border rounded p-3 map location {{ $maps[0]->id === $map->id ? 'selected' : 'bg-light' }}">
+                                                            <h5>{{ $map->location }}</h5>
+                                                            <p class="text-muted mb-0">{{ $map->address }}</p>
+                                                        </div>
+                                                        <input type="radio" name="location" class="location-input"
+                                                            data-effected="#location-{{ $map->id }}"
+                                                            data-cards=".location"
+                                                            id="location-input-{{ $map->id }}"
+                                                            value="{{ $map->id }}" hidden
+                                                            @if ($maps[0]->id === $map->id) checked @endif>
+                                                    </label>
+                                                @endforeach
+                                            </div>
                                         </div>
 
                                     </div>
@@ -183,7 +189,7 @@
                                                                 <label
                                                                     class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
                                                                     {{ $time }}
-                                                                    <input class="time-input " type="radio"
+                                                                    <input class="time-input " hidden type="radio"
                                                                         name="time" data-date="{{ $date }}"
                                                                         value="{{ $time }}"
                                                                         @if ($key === 0 && $i === 1) checked @endif>
@@ -228,11 +234,17 @@
                                         <p class="card-header text-center">Appointment Details</p>
                                         <div class="card-body px-5">
                                             <p class="text-dark p-2 border bg-light rounded"><span class="fw-bold">Name:
-                                                </span><span id="push-name">{{auth()->user()? auth()->user()->name : ''}}</span></p>
+                                                </span><span
+                                                    id="push-name">{{ auth()->user() ? auth()->user()->name : '' }}</span>
+                                            </p>
                                             <p class="text-dark p-2 border bg-light rounded"><span class="fw-bold">Email:
-                                                </span><span id="push-email">{{auth()->user()? auth()->user()->email : ''}}</span></p>
+                                                </span><span
+                                                    id="push-email">{{ auth()->user() ? auth()->user()->email : '' }}</span>
+                                            </p>
                                             <p class="text-darkp-2 p-2 border bg-light rounded"><span
-                                                    class="fw-bold">Phone: </span><span id="push-phone">{{auth()->user()? auth()->user()->phone : ''}}</span></p>
+                                                    class="fw-bold">Phone: </span><span
+                                                    id="push-phone">{{ auth()->user() ? auth()->user()->phone : '' }}</span>
+                                            </p>
                                             <div class="row p-2 border bg-light rounded mb-3 w-100 mx-0">
                                                 <p class="col-6 text-dark mb-0"><span class="fw-bold">District:
                                                     </span><span id="push-district"></span></p>
