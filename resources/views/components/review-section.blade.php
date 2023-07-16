@@ -10,15 +10,7 @@
                     <h5>Rating</h5>
                     <div class="d-flex justify-content-center">
                         <div>
-                            <h5 class="mb-0 fw-bold text-center">{{$avgRating}} <span>out of 5</span></h5>
-                            <div class="rating d-inline-block">
-                                @foreach (range(1, 5) as $rating)
-                                        @php
-                                            $color = $rating > $avgRating ? 'var(--bs-gray-400)' : 'var(--bs-yellow)';
-                                        @endphp
-                                        <span class="fas fa-star" style="color: {{ $color }};"></span>
-                                    @endforeach
-                            </div>
+                            <x-avg-review-stars :avg="$item->reviews_avg_rating" />
                             <p class="text-center">{{$item->reviews_count}} Reviews</p>
                         </div>
                     </div>
