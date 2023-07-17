@@ -38,6 +38,13 @@ class PageController extends Controller
         $testimonials = Testimonial::get();
         return view('frontend.pages.appointment.makeAppointment', compact('banners', 'infos1', 'testimonials', 'maps'));
     }
+    public function appointmentVirtual()
+    {
+        $banners = getRecords('banners');
+        $infos1 = Info::where('section_id', 1)->get();
+        $testimonials = Testimonial::get();
+        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('banners', 'infos1', 'testimonials'));
+    }
     public function aboutPage()
     {
         $about_data = About::skip(0)->first();

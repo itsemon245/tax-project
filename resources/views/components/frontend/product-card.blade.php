@@ -25,17 +25,16 @@
 
         <div class="d-flex justify-content-center my-2">
             <div class="cta d-flex flex-column align-items-center">
-                <button class="btn btn-success text-light w-100" style="font-weight: 600">Start
-                    Now</button>
+                <a href="{{ route('product.choose', $product->id) }}" class="btn btn-success text-light w-100"
+                    style="font-weight: 600">Start
+                    Now</a>
                 <div class="rating mt-2">
-                    @foreach (range(1, 5) as $rating)
-                        @php
-                            $color = $rating > $product->reviews_avg_rating ? 'var(--bs-gray-400)' : 'var(--bs-yellow)';
-                        @endphp
-                        <span class="fas fa-star" style="color: {{ $color }};"></span>
-                    @endforeach
+                    <a href="{{ route('review.item', ['product', $product->id]) }}" class="mb-1">
+                        <x-avg-review-stars :avg="$product->reviews_avg_rating" />
+                    </a>
                     <p class="text-center mb-0">
-                        <a href="" class="text-muted">( {{$product->reviews_count}} Reviews )</a>
+                        <a href="{{ route('review.item', ['product', $product->id]) }}" class="text-muted">(
+                            {{ $product->reviews_count }} Reviews )</a>
                     </p>
                 </div>
             </div>

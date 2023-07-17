@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePromoCodeRequest extends FormRequest
+class UpdateProjectDiscussionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +22,7 @@ class StorePromoCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_type' => 'required',
-            'code' => 'required|max:20|unique:promo_codes,code',
-            'limit' => 'required',
-            'expired_at' => 'required'
+            //
         ];
     }
 }

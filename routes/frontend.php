@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
 use App\Http\Controllers\MCQController;
+use App\Http\Controllers\ProjectDiscussionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +39,12 @@ Route::prefix('service')->name('service.')->controller(ServicePageController::cl
     Route::get('sub/{id}', 'servicesUnderSub')->name('sub');
     Route::get('service/{id}', 'service')->name('view');
 });
+Route::prefix('product')->name('product.')->controller(ProductPageController::class)->group(function () {
+    Route::get('{id}/choose', 'choose')->name('choose');
+});
+
+//Project Dicsussion CRUD
+Route::resource('project-disussion', ProjectDiscussionController::class);
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
@@ -50,6 +58,7 @@ Route::resource('user-doc', UserDocController::class);
 //  uncategorized pages
 
 Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
+Route::get('/make-appointment/virtual', [PageController::class, 'appointmentVirtual'])->name('appointment.virtual');
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
@@ -82,18 +91,22 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
 Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
     Route::get('index', 'index')->name('index');
     Route::get('{course}/show', 'show')->name('show');
+    Route::get('videos', 'videos')->name('videos');
     Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
         Route::get('/', 'caseStudy')->name('page');
-        Route::get('{package_id}/categories', 'packageCategories')->name('package.categories');
-        Route::get('{category_id}/category/show', 'packageCategory')->name('category.show');
+        Route::get('index/{package_id}', 'index')->name('index');
+        Route::get('show/{case_study_id}', 'show')->name('show');
     });
 });
 
 
 
 // Review Routes
-Route::post('review/{slug}/store', [ReviewController::class, 'store'])->name('review.store');
-Route::post('review/{slug}/index', [ReviewController::class, 'index'])->name('review.index');
+Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function () {
+    Route::get('/{slug}/{id}', 'itemReview')->name('item');
+    Route::post('/{slug}/index', 'index')->name('index');
+    Route::post('/{slug}/store', 'store')->name('store');
+});
 // Route for filepond upload
 Route::post('/upload', function (Request $request) {
     $files = $request->fileponds;
@@ -105,6 +118,10 @@ Route::post('/upload', function (Request $request) {
     return response($pathString, 200, [
         'content_type' => 'text/plain'
     ]);
+});
+
+Route::get('test', function () {
+    return view('test');
 });
 
 Route::get('get-mac', function () {

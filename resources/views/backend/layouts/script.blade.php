@@ -5,8 +5,8 @@
  <script src="{{ asset('backend/assets/js/app.min.js') }}"></script>
 
 
-@stack('selectizeCDN')
+ @stack('selectizeCDN')
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @stack('customJs')
  {{-- sweet alert2 --}}
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  @include('backend.layouts.alert')

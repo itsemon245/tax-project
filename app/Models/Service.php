@@ -12,21 +12,7 @@ class Service extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [
-        'service_category_id',
-        'service_sub_category_id',
-        'title',
-        'intro',
-        'description',
-        'price',
-        'price_description',
-        'discount',
-        'is_discount_fixed',
-        'rating',
-        'delivery_date',
-        'reviews',
-        'sections'
-    ];
+    protected $guarded = [];
 
     public function serviceSubCategory()
     {
@@ -35,5 +21,9 @@ class Service extends Model
     public function serviceCategory()
     {
         return $this->belongsTo(ServiceCategory::class);
+    }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }

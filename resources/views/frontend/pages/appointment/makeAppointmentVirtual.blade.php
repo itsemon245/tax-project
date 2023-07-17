@@ -63,14 +63,14 @@
                                     @auth
                                         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                                     @endauth
-                                    <li class="nav-item" role="presentation">
+                                    {{-- <li class="nav-item" role="presentation">
                                         <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab"
                                             class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
                                             aria-selected="false" role="tab">
                                             <i class="mdi mdi-calendar-clock"></i>
                                             <span class="d-none d-sm-inline">Date & Time</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item" role="presentation">
                                         <a href="#tab-3" data-bs-toggle="tab" data-toggle="tab"
                                             class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
@@ -99,16 +99,16 @@
                                 </div>
 
                                 <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
-                                    <input type="hidden" name="" id="maps-data" value="{{ json_encode($maps) }}">
-                                    <div class="row justify-content-between">
+
+                                    <div class="row justify-content-between px-2">
                                         <div class="col-md-6 mb-3">
-                                            <h4 class="text-center mb-2">
-                                                Choose Appointment Type
+                                            <h4 class="col-12">
+                                                What time works best for you?
                                             </h4>
                                             <a href="{{ route('appointment.make') }}" for="appointment-input"
-                                                class="row mb-1" style="cursor: pointer;">
+                                                class="row mb-1 text-dark" style="cursor: pointer;">
                                                 <d id="appointment-type"
-                                                    class="border rounded p-3 appointment-type selected appointment">
+                                                    class="border bg-light rounded p-3 appointment-type appointment">
                                                     <h4>Together in Office</h4>
                                                     <p class="text-muted mb-0">Work with a tax pro at a tax office near you.
                                                         We are committed to helping you file your taxes in a way that's easy
@@ -116,59 +116,20 @@
                                                 </d>
                                                 <input type="radio" class="location-input" name="is_physical"
                                                     data-effected="#appointment-type" data-cards=".appointment"
-                                                    id="appointment-input" value="{{ true }}" hidden checked>
+                                                    id="appointment-input" value="{{ true }}" hidden>
                                             </a>
                                             <a href="{{ route('appointment.virtual') }}" for="appointment-input-2"
                                                 class="row mb-1" style="cursor: pointer;">
                                                 <div id="appointment-type-2"
-                                                    class="border bg-light rounded p-3 appointment-type selected appointment">
+                                                    class="border rounded p-3 appointment-type selected appointment">
                                                     <h4>Virtually</h4>
                                                     <p class="text-muted mb-0">Get expert tax filing help anywhere, anyway
                                                     </p>
                                                 </div>
                                                 <input type="radio" class="location-input" name="is_physical"
                                                     value="{{ false }}" data-effected="#appointment-type-2"
-                                                    data-cards=".appointment" id="appointment-input-2" hidden>
+                                                    data-cards=".appointment" id="appointment-input-2" hidden checked>
                                             </a>
-                                        </div>
-                                        <div class="col-md-5 location-selector">
-                                            <h4 class="text-center mb-2">
-                                                Which Office Do You Prefer?
-                                            </h4>
-                                            <div class="row">
-                                                @foreach ($maps as $map)
-                                                    <label for="location-input-{{ $map->id }}" class="col-md-12 col-6 mb-md-1"
-                                                        style="cursor: pointer;">
-                                                        <div id="location-{{ $map->id }}"
-                                                            class="border rounded p-3 map location {{ $maps[0]->id === $map->id ? 'selected' : 'bg-light' }}">
-                                                            <h5>{{ $map->location }}</h5>
-                                                            <p class="text-muted mb-0">{{ $map->address }}</p>
-                                                        </div>
-                                                        <input type="radio" name="location" class="location-input"
-                                                            data-effected="#location-{{ $map->id }}"
-                                                            data-cards=".location"
-                                                            id="location-input-{{ $map->id }}"
-                                                            value="{{ $map->id }}" hidden
-                                                            @if ($maps[0]->id === $map->id) checked @endif>
-                                                    </label>
-                                                @endforeach
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col-md-6 selected-location">
-                                            <h4>Location</h4>
-                                            <iframe src="{{ $maps[0]->src }}" class="w-100 border shadow rounded mb-2"
-                                                height="300" loading="lazy"
-                                                referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                            <div class="border rounded p-3 map bg-light">
-                                                <h5>{{ $maps[0]->location }}<span
-                                                        class="text-muted fs-6">(selected)</span></h5>
-                                                <p class="text-muted mb-0">{{ $maps[0]->address }}</p>
-                                            </div>
                                         </div>
                                         <div class="col-md-6 time-selector">
                                             <h4>What time works best for you?</h4>
@@ -189,8 +150,8 @@
                                                                 <label
                                                                     class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
                                                                     {{ $time }}
-                                                                    <input class="time-input " hidden type="radio"
-                                                                        name="time" data-date="{{ $date }}"
+                                                                    <input class="time-input " hidden type="radio" name="time"
+                                                                        data-date="{{ $date }}"
                                                                         value="{{ $time }}"
                                                                         @if ($key === 0 && $i === 1) checked @endif>
                                                                 </label>
@@ -200,6 +161,7 @@
                                                 @endforeach
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="tab-pane my-3" id="tab-3" role="tabpanel">
@@ -258,7 +220,7 @@
                                                         id="push-time"></span></p>
                                             </div>
                                             <input type="date" id="push-date-value" name="date" hidden>
-                                            <div id="office-body">
+                                            {{-- <div id="office-body">
                                                 <div class="card">
                                                     <div class="card-header fs-5">Office</div>
                                                     <div class="card-body" id="address-body">
@@ -268,7 +230,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -310,7 +272,6 @@
         <script>
             $(document).ready(function() {
                 //set the first map as default office
-                let office = JSON.parse($('#maps-data').val())[0];
                 const nextBtn = $('#next-btn')
                 const prevBtn = $('#prev-btn')
 
@@ -388,28 +349,39 @@
                 })
 
                 //on location click
-                $('.location-input[type="radio"]').each(function(i, input) {
-                    input.addEventListener('input', function() {
-                        const itemToEffect = $(input.dataset.effected)
-                        const cards = $(input.dataset.cards)
-                        cards.addClass('bg-light')
-                        itemToEffect.removeClass('bg-light');
-                        itemToEffect.addClass('selected');
+                // $('.location-input[type="radio"]').each(function(i, input) {
+                //     input.addEventListener('input', function() {
+                //         if (this.id === 'appointment-input-2') {
+                //             $('.location-selector input').attr('disabled', true)
+                //             $('.location-selector').hide()
+                //             $('.selected-location').hide()
+                //             $('#office-body').hide()
+                //             $('.time-selector').removeClass('col-md-6')
+                //         } else {
+                //             $('.location-selector input').attr('disabled', false)
+                //             $('.location-selector').show()
+                //             $('.selected-location').show()
+                //             $('#office-body').show()
+                //             $('.time-selector').addClass('col-md-6')
+                //         }
+                //         const itemToEffect = $(input.dataset.effected)
+                //         const cards = $(input.dataset.cards)
+                //         cards.addClass('bg-light')
+                //         itemToEffect.removeClass('bg-light');
+                //         itemToEffect.addClass('selected');
 
-                        if (this.name == 'location') {
-                            const mapsData = JSON.parse($('#maps-data').val())
-                            const mapId = parseInt(input.value)
-                            office = mapsData.filter(item => item.id === mapId)[0]
-                            $('.selected-location iframe').attr('src', office.src)
-                            $('.selected-location h5').html(office.location +
-                                "<span class='text-muted'>(selected)</span>")
-                            $('#address-body').html(`
-                            <p class='fw-bold mb-1' id="">${office.location}</p>
-                            <div class="text-muted" id="">${office.address}</div>
-                            `)
-                        }
-                    })
-                })
+                //         if (this.name == 'location') {
+                //             const mapsData = JSON.parse($('#maps-data').val())
+                //             const mapId = parseInt(this.value)
+                //             office = mapsData.filter(item => item.id === mapId)[0]
+                //             $('.selected-location iframe').attr('src', office.src)
+                //             $('#address-body').html(`
+        //             <p class='fw-bold mb-1' id="">${office.location}</p>
+        //             <div class="text-muted" id="">${office.address}</div>
+        //             `)
+                //         }
+                //     })
+                // })
                 // on time click
                 $('.time-input').each((i, input) => {
                     if (i === 0) {
