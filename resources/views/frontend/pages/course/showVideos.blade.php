@@ -6,9 +6,11 @@
     </div>
     <div class="col-md-12">
         <div class="p-2 ratio ratio-16x9">
-            <video width="400" controls>
+            <iframe width="400" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            {{-- <video width="400" controls>
                 <source src="https://www.youtube.com/watch?v=T5jeY8qmne4" type="video/mp4">
-              </video>
+              </video> --}}
         </div>
         <div class="row p-3">
             <div class="col-md-12">
