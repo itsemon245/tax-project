@@ -1,11 +1,10 @@
-<
 @extends('frontend.layouts.app')
 @section('main')
-<div class="container row">
+<div class="container row mx-auto">
     <div class="col-md-12 mt-3">
         <h3 class="py-2 px-2">Welcome to Our Video course</h3>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-12">
         <div class="p-2 ratio ratio-16x9">
             <video width="400" controls>
                 <source src="https://www.youtube.com/watch?v=T5jeY8qmne4" type="video/mp4">
@@ -26,9 +25,14 @@
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a href="#discussion" data-bs-toggle="tab" aria-expanded="false" class="nav-link active" aria-selected="true" role="tab" tabindex="-1">
+                            <a href="#discussion" data-bs-toggle="tab" aria-expanded="false" class="nav-link" aria-selected="true" role="tab" tabindex="-1">
                                Discussion
                             </a>
+                        </li>
+                        <li class="nav-item" role="presentation" >
+                            <a href="#courseContent" data-bs-toggle="tab" aria-expanded="false" class="nav-link active" aria-selected="true" role="tab" tabindex="-1">
+                                Course Content
+                             </a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -128,34 +132,52 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane active" id="discussion" role="tabpanel">
-                            This is discussion tab .
+                        <div class="tab-pane" id="discussion" role="tabpanel">
+                            <div class="row">
+                                <form action="#" method="post">
+                                    <div class= "col-md-12">
+                                        <textarea name="" placeholder="Input your discussion content" cols="30" rows="10" class="form-control"></textarea>
+                                        <x-backend.ui.button class="btn-primary btn-sm mt-2">Submit</x-backend.ui.button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane active" id="courseContent" role="tabpanel">
+                            <div class="col-md-12">
+                                <div class="p-2 overflow-auto" style="height: 650px;" >
+                                    @foreach (range(1, 8) as $item)
+                                        <div class="mb-3">
+                                            <a href="#">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="p-2">
+                                                            <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" >
+                                                                <label class="form-check-label" for="flexCheckDisabled">
+                                                                  12. | This is more videos
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <h4 class="bg-primary p-2 text-white">Course Content</h4>
-        <div class="p-2 overflow-auto" style="height: 650px;" >
-            @foreach (range(1, 8) as $item)
-            <a href="#">
-                <div class="card">
-                    <div class="row card-doby">
-                        <div class="col-md-4">
-                            <img style="object-fit: cover;" class="rounded w-100 h-100 border" src="https://picsum.photos/seed/random/300"
-                            alt="" />
-                        </div>
-                        <div class="col-md-8 p-2">
-                            <h4>Lorem ipsum</h4>
-                            <small>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit.</small>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            @endforeach
-        </div>
-    </div>
+
 </div>
 @endsection
+
+
+
+
+
+
+
+
