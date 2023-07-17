@@ -92,39 +92,42 @@
                         <h5 class="text-center">Let’s Talk</h5>
                         <h6 class="text-center mb-3">You are quite important to us . We reply as soon as
                             possible</h6>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <x-backend.form.text-input id="name" type="text" name="name" label="Name"
-                                    required />
-                            </div>
-                            <div class="col-md-6">
-                                <x-backend.form.text-input id="email" type="email" name="email" label="Email"
-                                    required />
-                            </div>
-                            <div class="col-md-6">
-                                <x-backend.form.text-input id="phone" type="tel" name="phone" label="Phone" />
-                            </div>
-                            <div class="col-md-6">
-                                <x-backend.form.text-input id="location" type="text" name="location" label="Location" />
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <div class="form-group">
-                                    <label for="message">Message</label><span class="text-danger">*</span>
-                                    <textarea name="message" class="form-control" id="message" placeholder="Message" cols="30" rows="3"
-                                        required></textarea>
-                                    @error('message')
-                                        <span>
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
+                        <form action="{{ route('project-disussion.store') }}" method="post">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <x-backend.form.text-input id="name" type="text" name="name" label="Name"
+                                        required />
+                                </div>
+                                <div class="col-md-6">
+                                    <x-backend.form.text-input id="email" type="email" name="email" label="Email"
+                                        required />
+                                </div>
+                                <div class="col-md-6">
+                                    <x-backend.form.text-input id="phone" type="tel" name="phone" label="Phone" />
+                                </div>
+                                <div class="col-md-6">
+                                    <x-backend.form.text-input id="location" type="text" name="location" label="Location" />
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-group">
+                                        <label for="message">Message</label><span class="text-danger">*</span>
+                                        <textarea name="message" class="form-control" id="message" placeholder="Message" cols="30" rows="3"
+                                            required></textarea>
+                                        @error('message')
+                                            <span>
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary text-light">Submit</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <button class="btn btn-primary text-light">Submit</button>
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

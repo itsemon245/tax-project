@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\ProjectDiscussionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,9 @@ Route::prefix('service')->name('service.')->controller(ServicePageController::cl
 Route::prefix('product')->name('product.')->controller(ProductPageController::class)->group(function () {
     Route::get('{id}/choose', 'choose')->name('choose');
 });
+
+//Project Dicsussion CRUD
+Route::resource('project-disussion', ProjectDiscussionController::class);
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
@@ -86,11 +90,9 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
 Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
     Route::get('index', 'index')->name('index');
     Route::get('{course}/show', 'show')->name('show');
+    Route::get('videos', 'videos')->name('videos');
     Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
         Route::get('/', 'caseStudy')->name('page');
-        // Route::get('{package_id}/categories', 'packageCategories')->name('package.categories');
-        // Route::get('{category_id}/category/show', 'packageCategory')->name('category.show');
-
         Route::get('index/{package_id}', 'index')->name('index');
         Route::get('show/{case_study_id}', 'show')->name('show');
     });

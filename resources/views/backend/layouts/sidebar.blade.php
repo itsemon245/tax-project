@@ -81,7 +81,6 @@
                         </ul>
                     </div>
                 </li>
-
                 <li>
                     <a href="#sidebarHeroSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
@@ -100,6 +99,12 @@
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li>
+                    <a href="{{ route('project-disussion.index') }}">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Project Discussion</span>
+                    </a>
                 </li>
                 <li>
                     <a href="#sidebarAboutPage" data-bs-toggle="collapse">

@@ -17,5 +17,10 @@ class CourseController extends Controller
         return view('frontend.pages.course.view');
     }
 
+    public function videos()
+    {
+        return view('frontend.pages.course.showVideos');
+    }
+
    
 }
