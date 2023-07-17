@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\ProjectDiscussionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,9 @@ Route::prefix('service')->name('service.')->controller(ServicePageController::cl
 Route::prefix('product')->name('product.')->controller(ProductPageController::class)->group(function () {
     Route::get('{id}/choose', 'choose')->name('choose');
 });
+
+//Project Dicsussion CRUD
+Route::resource('project-disussion', ProjectDiscussionController::class);
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
