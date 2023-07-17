@@ -1,7 +1,6 @@
 @extends('backend.layouts.app')
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Backend', 'Project Discussion', 'List']" />
-
 <x-backend.ui.section-card name="Project Discussion List">
         <div class="row">
             <div class="col-12">
