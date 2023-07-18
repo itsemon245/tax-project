@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ProjectDiscussionController;
 
 /*
@@ -129,3 +130,5 @@ Route::get('get-mac', function () {
 Route::get('get-ip', function (Request $request) {
     dd($request->ip());
 });
+
+Route::GET('/test-mcq', [MCQController::class, 'index'])->name('mcq.test');
