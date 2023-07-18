@@ -14,6 +14,16 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->text('name');
+            $table->longText('description');
+            $table->decimal('price', 8, 2);
+            $table->longText('preview');
+            $table->mediumText('page_title');
+            $table->json('page_card_1')->comment('{title: title, description:description}');
+            $table->json('page_card_exam')->comment('{title: title, description:description}');
+            $table->json('page_learn_more')->comment('{title: string, description:string, images: array[]}');
+            $table->mediumText('includes');
+            $table->mediumText('graduates_receive');
+            $table->json('topics')->comment('{title: string, description:string, lists: array[]}');
             $table->timestamps();
         });
     }

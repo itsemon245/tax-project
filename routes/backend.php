@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UiElementController;
@@ -15,9 +16,11 @@ use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\Pages\AboutController;
 use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Client\ClientController;
+use App\Http\Controllers\Backend\Course\CourseController;
 use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Product\ProductController;
+use App\Http\Controllers\Backend\UserAppointmentController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\CkEditor\CkEditorController;
 use App\Http\Controllers\Backend\Training\TrainingController;
@@ -31,7 +34,6 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
-use App\Http\Controllers\Backend\UserAppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +78,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('about', AboutController::class);
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
+    Route::resource('course', CourseController::class);
 
 
     //service related routes
