@@ -12,7 +12,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">Course Info</div>
+                            <div class="card-header py-1" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Course Info</span>
+                                    <span class="mdi mdi-chevron-down"></span>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -43,7 +48,12 @@
                     </div>
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">Cards Section</div>
+                            <div class="card-header py-1" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Cards Section</span>
+                                    <span class="mdi mdi-chevron-down"></span>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="row">
                                     @foreach (range(1, 2) as $key)
@@ -69,7 +79,12 @@
                     </div>
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">Learn More Section</div>
+                            <div class="card-header py-1" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Learn More Section</span>
+                                    <span class="mdi mdi-chevron-down"></span>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -96,7 +111,38 @@
                     </div>
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">Explore Topic Section</div>
+                            <div class="card-header py-1" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Feature Section</span>
+                                    <span class="mdi mdi-chevron-down"></span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <x-form.ck-editor id="course-includes" label="Course Includes"
+                                            name="course_includes" placeholder="List of item course includes"
+                                            rows='2'>
+                                        </x-form.ck-editor>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <x-form.ck-editor id="graduates-receives" label="Graduate receives"
+                                            name="graduate_receives" placeholder="List of item of graduate receives"
+                                            rows='2'>
+                                        </x-form.ck-editor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header py-1" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Explore Topic Section</span>
+                                    <span class="mdi mdi-chevron-down"></span>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -129,5 +175,18 @@
     </x-backend.ui.section-card>
 
     @push('customJs')
+        <script>
+            $(document).ready(function() {
+                const headers = $('form .card-header')
+                headers.each((i, header) => {
+                    $(header).click(e => {
+                        let icon = $(header).find('.mdi');
+                        icon.toggleClass('mdi-chevron-down')
+                        icon.toggleClass('mdi-chevron-up')
+                        $(header).next().slideToggle();
+                    })
+                })
+            });
+        </script>
     @endpush
 @endsection
