@@ -78,7 +78,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('about', AboutController::class);
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
-    Route::resource('course', CourseController::class);
+    Route::resource('course', CourseController::class)->names([
+        'index' => 'course.backend.index',
+        'show' => 'course.backend.show',
+    ]);
 
 
     //service related routes

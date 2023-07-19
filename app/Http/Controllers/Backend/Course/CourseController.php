@@ -14,7 +14,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('backend.course.index');
+        $courses = Course::latest()->get(['id','name','price']);
+        return view('backend.course.index', compact('courses'));
     }
 
     /**
@@ -74,7 +75,8 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $course = Course::findOrFail($id);
+        return view('backend.course.show', compact('course'));
     }
 
     /**
