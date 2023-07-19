@@ -42,10 +42,16 @@
                                     <h5 class="text-center">{{ $card->title }}</h5>
                                     <p class="text-justify px-2">{{ $card->description }}</p>
                                     <div class="d-flex justify-content-center text-center">
-                                        <a href="{{ route('mcq.test') }}">
-                                            <x-backend.ui.button class="btn-dark  d-block">Start the assessment
+                                        @if ($key == 0)
+                                            <x-backend.ui.button type="custom" href="#" class="btn-priamary">Enroll
+                                                Now
                                             </x-backend.ui.button>
-                                        </a>
+                                        @else
+                                            <x-backend.ui.button type="custom" href="{{ route('mcq.test') }}"
+                                                class="btn-dark">
+                                                Start The Assesment
+                                            </x-backend.ui.button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
