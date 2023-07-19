@@ -1,15 +1,13 @@
-{{-- <div class="mb-3">
-    <label for="example-textarea" class="form-label">Text area</label>
-    <textarea class="form-control" id="example-textarea" rows="5"></textarea>
-</div> --}}
 @php
     $label = $attributes->get('label');
     $required = $attributes->get('required');
     $name = $attributes->get('name');
     $class = $attributes->get('class');
+    $matches = Illuminate\Support\Str::of($class)->matchAll('/\bh-\d+/')->toArray();
+    $height = implode(' ', $matches);
     // $value = $attributes->has('value') ? $attributes->get('value') : old($name);
 @endphp
-<div class="mb-2">
+<div class="mb-2 {{ $height }}">
     @if ($label)
         <label class="form-label mb-0" style="font-size: 14px;">{{ $label }}
             @if ($required)

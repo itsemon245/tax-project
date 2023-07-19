@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             BookSeeder::class,
             CaseStudyPageSeeder::class,
             ExpertProfileSeeder::class,
+            CourseSeeder::class,
         ]);
     }
 }

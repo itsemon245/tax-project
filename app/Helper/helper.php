@@ -156,7 +156,10 @@ function countRecords($table = 'users', $queries = [])
 
 /**
  * Returns an image url from picsum.photos
- * 
+ * @param ?string $seed
+ * @param ?int $width
+ * @param ?int $height
+ * @return string $picsum
  */
 function picsum(string $seed = null,int $width= 720, int $height = null ) {
     if (!$height) {

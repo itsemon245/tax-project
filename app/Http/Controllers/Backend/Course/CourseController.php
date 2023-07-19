@@ -55,7 +55,6 @@ class CourseController extends Controller
             'preview' => $request->preview,
             'includes' => $request->includes,
             'graduates_receive' => $request->graduates_receive,
-            'graduates_receive' => $request->graduates_receive,
             'page_title' => $request->page_title,
             'page_banner' => saveImage($request->page_banner, 'course/banner'),
             'page_cards' => $page_cards,

@@ -16,8 +16,44 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
+        $page_cards = [
+            [
+                'title' => fake()->realText(),
+                'description' => fake()->realText(200)
+            ],
+            [
+                'title' => fake()->realText(),
+                'description' => fake()->realText(200)
+            ],
+        ];
+        $page_learn_more = [
+            'description' => fake()->realText(200),
+            'images' => [
+                picsum(fake()->word()),
+                picsum(fake()->word()),
+                picsum(fake()->word()),
+            ]
+        ];
+        $page_topics = [
+            'description' => fake()->realText(200),
+            'lists' => [
+                fake()->realText(350),
+                fake()->realText(350),
+                fake()->realText(350),
+            ]
+        ];
         return [
-            //
+            'name' => fake()->realText(15),
+            'price' => fake()->randomFloat(2, 10, 1000),
+            'description' => fake()->realText(300),
+            'preview' => fake()->url(),
+            'includes' => fake()->realText(300),
+            'graduates_receive' => fake()->realText(300),
+            'page_title' => fake()->realText(25),
+            'page_banner' => picsum(fake()->word()),
+            'page_cards' => $page_cards,
+            'page_learn_more' => $page_learn_more,
+            'page_topics' => $page_topics,
         ];
     }
 }

@@ -34,13 +34,14 @@
                                         </x-backend.form.text-input>
                                     </div>
                                     <div class="col-md-6">
-                                        <x-form.ck-editor id="description" label="Course Description" type="text"
-                                            name="description" placeholder="Course Description">
-                                        </x-form.ck-editor>
-
+                                        <x-form.text-area class="h-100" id="description"
+                                            label="Course Description" type="text" name="description"
+                                            placeholder="Course Description">
+                                        </x-form.text-area>
                                     </div>
                                     <div class="col-md-6">
-                                        <x-backend.form.image-input id="page-banner" name="page_banner" style="aspect-ratio:4/1;" label="Page Banner" />
+                                        <x-backend.form.image-input class="h-100" id="page-banner" name="page_banner"
+                                            style="aspect-ratio:3/1.5;" label="Page Banner" />
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +102,8 @@
                                 <div class="row justify-content-center">
                                     @foreach (range(1, 3) as $i)
                                         <div class="col-md-3">
-                                            <x-backend.form.image-input id="learn-more-image-{{$i}}" style="aspect-ratio:2/1.5;" label="Learn More Image"
+                                            <x-backend.form.image-input id="learn-more-image-{{ $i }}"
+                                                style="aspect-ratio:2/1.5;" label="Learn More Image"
                                                 name="learn_more_images[]" />
                                         </div>
                                     @endforeach
@@ -146,7 +148,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <x-form.text-area label="Explore Topic Description" name="explore_topic_description"
+                                        <x-form.text-area label="Explore Topic Description"
+                                            name="explore_topic_description"
                                             placeholder="A brief Description of learn more section" rows='2'>
                                         </x-form.text-area>
                                     </div>
@@ -155,7 +158,8 @@
                                     @foreach (range(1, 3) as $i)
                                         <div class="col-md-4">
                                             <x-form.ck-editor id="explore-topic-{{ $i }}"
-                                                label="Explore Topic List {{ $i }}" name="explore_topic_lists[]"
+                                                label="Explore Topic List {{ $i }}"
+                                                name="explore_topic_lists[]"
                                                 placeholder='A brief description of topics' />
                                         </div>
                                     @endforeach
