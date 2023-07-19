@@ -101,7 +101,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{ route('project-disussion.index') }}">
+                    <a href="{{ route('project-discussion.index') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span>Project Discussion</span>
                     </a>

@@ -92,7 +92,7 @@
                         <h5 class="text-center">Let’s Talk</h5>
                         <h6 class="text-center mb-3">You are quite important to us . We reply as soon as
                             possible</h6>
-                        <form action="{{ route('project-disussion.store') }}" method="post">
+                        <form action="{{ route('project-discussion.store') }}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
