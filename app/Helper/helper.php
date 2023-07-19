@@ -10,11 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
  */
 function useImage($image)
 {
-    if (str($image)->contains('uploads/')) {
-        return asset("storage/$image");
-    } else {
-        return $image;
-    }
+    return str($image)->isUrl() ? $image : asset("storage/$image");
 }
 
 /**
