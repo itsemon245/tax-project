@@ -43,7 +43,7 @@ Route::prefix('product')->name('product.')->controller(ProductPageController::cl
 });
 
 //Project Dicsussion CRUD
-Route::resource('project-disussion', ProjectDiscussionController::class);
+Route::resource('project-discussion', ProjectDiscussionController::class);
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');

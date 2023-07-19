@@ -50,7 +50,8 @@ class ProjectDiscussionController extends Controller
      */
     public function show(ProjectDiscussion $projectDiscussion)
     {
-        //
+
+        return view('backend.projectDiscussion.viewSingle', compact('projectDiscussion'));
     }
 
     /**
@@ -74,6 +75,11 @@ class ProjectDiscussionController extends Controller
      */
     public function destroy(ProjectDiscussion $projectDiscussion)
     {
-        //
+        $projectDiscussion->delete();
+        $notification = [
+            'message' => 'Deleted Successfully',
+            'alert-type' => 'success',
+        ];
+        return redirect()->route('project-discussion.index')->with($notification);
     }
 }

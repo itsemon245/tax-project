@@ -30,10 +30,10 @@
                                         <td>{{ Str::limit($projectDiscussion->location, 10, '...') }}</td>
                                         <td>{{ Str::limit($projectDiscussion->message, 10, '...') }}</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" href="#about" data-bs-toggle="tab" aria-expanded="false" class="nav-link" aria-selected="false" role="tab" tabindex="-1">
+                                            <a class="btn btn-sm btn-info" href="{{ route('project-discussion.show', $projectDiscussion) }}" >
                                                 View
                                             </a>
-                                            <form action="#" method="post"
+                                            <form action="{{ route('project-discussion.destroy', $projectDiscussion) }}" method="post"
                                                 class="d-inline-block py-0">
                                                 @csrf
                                                 @method('DELETE')
