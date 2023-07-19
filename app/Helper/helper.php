@@ -32,7 +32,7 @@ function timestamp()
  */
 function saveImage($image, string $dir, string $prefix = '', string $disk = 'public')
 {
-    if ($prefix === '') {
+    if ($prefix === '' || $prefix === null) {
         $prefix = str($image->getClientOriginalName())->slug();
     }
     $ext = $image->extension();

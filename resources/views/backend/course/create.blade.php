@@ -3,7 +3,7 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Course', 'Create']" />
     <x-backend.ui.section-card name="Create Course">
-        <form action="{{ route('service.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('course.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
 
@@ -40,7 +40,7 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <x-backend.form.image-input style="aspect-ratio:4/1;" label="Page Banner" />
+                                        <x-backend.form.image-input id="page-banner" name="page_banner" style="aspect-ratio:4/1;" label="Page Banner" />
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                                 <div class="row justify-content-center">
                                     @foreach (range(1, 3) as $i)
                                         <div class="col-md-3">
-                                            <x-backend.form.image-input style="aspect-ratio:2/1.5;" label="Learn More Image"
+                                            <x-backend.form.image-input id="learn-more-image-{{$i}}" style="aspect-ratio:2/1.5;" label="Learn More Image"
                                                 name="learn_more_images[]" />
                                         </div>
                                     @endforeach
