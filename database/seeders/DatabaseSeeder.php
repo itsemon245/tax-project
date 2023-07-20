@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             InvoiceItemSeeder::class,
             MapSeeder::class,
             BookSeeder::class,
-            CaseStudyPageSeeder::class,
+            CaseStudyPackageSeeder::class,
             ExpertProfileSeeder::class,
             CourseSeeder::class,
         ]);
