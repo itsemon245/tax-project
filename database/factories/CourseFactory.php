@@ -18,16 +18,16 @@ class CourseFactory extends Factory
     {
         $page_cards = [
             [
-                'title' => fake()->realText(),
+                'title' => fake()->realText(25),
                 'description' => fake()->realText(200)
             ],
             [
-                'title' => fake()->realText(),
+                'title' => fake()->realText(25),
                 'description' => fake()->realText(200)
             ],
         ];
         $page_learn_more = [
-            'description' => fake()->realText(200),
+            'description' => fake()->realText(100),
             'images' => [
                 picsum(fake()->word()),
                 picsum(fake()->word()),
@@ -35,7 +35,7 @@ class CourseFactory extends Factory
             ]
         ];
         $page_topics = [
-            'description' => fake()->realText(200),
+            'description' => fake()->realText(100),
             'lists' => [
                 fake()->realText(350),
                 fake()->realText(350),

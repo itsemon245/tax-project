@@ -19,36 +19,44 @@
                 </thead>
                 <tbody>
                     @forelse ($courses as $key => $course)
-                    <tr>
-                        <td class="fw-bold">{{++$key}}</td>
-                        <td>
-                            <i data-feather="folder" class="icon-dual"></i>
-                            <span class="ms-2 fw-medium"><a href="javascript: void(0);" class="text-reset">{{$course->name}}</a></span>
-                        </td>
-                        <td>{{$course->price}}</td>
-                        <td>
-                            <p class="mb-0">Jan 03, 2020</p>
-                            <span class="font-12">by Andrew</span>
-                        </td>
-                        <td>128 MB</td>
-                        <td>
-                            Danielle Thompson
-                        </td>
-                       
-                        <td>
-                            <div>
-                                <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark " href="{{route('course.backend.show', $course->id)}}">
-                                    Preview
-                                </x-backend.ui.button>
-                                <x-backend.ui.button type="edit" class="btn-sm text-capitalize btn-info mx-1" href="{{route('course.backend.edit', $course->id)}}">
-                                </x-backend.ui.button>
-                                <x-backend.ui.button type="delete" class="btn-sm text-capitalize btn-danger " action="{{route('course.backend.destroy', $course->id)}}">
-                                </x-backend.ui.button>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="fw-bold">{{ ++$key }}</td>
+                            <td>
+                                <i data-feather="folder" class="icon-dual"></i>
+                                <span class="ms-2 fw-medium"><a href="javascript: void(0);"
+                                        class="text-reset">{{ $course->name }}</a></span>
+                            </td>
+                            <td>{{ $course->price }}</td>
+                            <td>
+                                <p class="mb-0">Jan 03, 2020</p>
+                                <span class="font-12">by Andrew</span>
+                            </td>
+                            <td>128 MB</td>
+                            <td>
+                                Danielle Thompson
+                            </td>
+
+                            <td>
+                                <div>
+                                    <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark "
+                                        href="{{ route('course.backend.show', $course->id) }}">
+                                        Preview
+                                    </x-backend.ui.button>
+                                    <x-backend.ui.button type="edit" class="btn-sm text-capitalize btn-info mx-1"
+                                        href="{{ route('course.edit', $course->id) }}">
+                                    </x-backend.ui.button>
+                                    <x-backend.ui.button type="delete" class="btn-sm text-capitalize btn-danger "
+                                        action="{{ route('course.destroy', $course->id) }}">
+                                    </x-backend.ui.button>
+                                </div>
+                            </td>
+                        </tr>
                     @empty
-                        
+                        <tr>
+                            <td colspan="7">
+                                <div class="text-center">No Items Found</div>
+                            </td>
+                        </tr>
                     @endforelse
 
                 </tbody>

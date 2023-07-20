@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Course;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::latest()->get(['id','name','price']);
+        $courses = Course::latest()->get(['id', 'name', 'price']);
         return view('backend.course.index', compact('courses'));
     }
 
@@ -37,8 +38,8 @@ class CourseController extends Controller
             'images' => $this->saveFiles($request->learn_more_images, 'course/learn-more')
         ];
         $page_topics = [
-            'description'=> $request->explore_topic_description,
-            'lists'=> $request->explore_topic_lists
+            'description' => $request->explore_topic_description,
+            'lists' => $request->explore_topic_lists
         ];
         // push page cards
         foreach ($request->page_card_titles as $key => $value) {
@@ -54,8 +55,8 @@ class CourseController extends Controller
             'price' => $request->price,
             'description' => $request->description,
             'preview' => $request->preview,
-            'includes' => $request->includes,
-            'graduates_receive' => $request->graduates_receive,
+            'includes' => $request->course_includes,
+            'graduates_receive' => $request->graduate_receives,
             'page_title' => $request->page_title,
             'page_banner' => saveImage($request->page_banner, 'course/banner'),
             'page_cards' => $page_cards,
@@ -82,28 +83,79 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Course $course)
     {
-        //
+        return view('backend.course.edit', compact('course'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        // dd($request->all());
+        $page_cards = [];
+        $images = [];
+        if ($request->learn_more_images) {
+            foreach ($request->learn_more_images as $key => $image) {
+                $item = updateFile($image, $course->page_learn_more->images[$key], 'course/learn-more');
+                $images[] = $item;
+            }
+        } else {
+            $images = $course->page_learn_more->images;
+        }
+        $page_learn_more = [
+            'description' => $request->learn_more_description,
+            'images' => $images
+        ];
+        $page_topics = [
+            'description' => $request->explore_topic_description,
+            'lists' => $request->explore_topic_lists
+        ];
+        // push page cards
+        foreach ($request->page_card_titles as $key => $value) {
+            $card = [
+                'title' => $request->page_card_titles[$key],
+                'description' => $request->page_card_descriptions[$key],
+            ];
+            $page_cards[] = $card;
+        }
+
+        $course->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'preview' => $request->preview,
+            'includes' => $request->course_includes,
+            'graduates_receive' => $request->graduate_receives,
+            'page_title' => $request->page_title,
+            'page_banner' => updateFile($request->page_banner, $course->page_banner, 'course/banner'),
+            'page_cards' => $page_cards,
+            'page_learn_more' => $page_learn_more,
+            'page_topics' => $page_topics,
+        ]);
+        $alert = [
+            'alert-type' => 'success',
+            'message' => 'Course Updated Successfully'
+        ];
+        return redirect(route('course.backend.index'))->with($alert);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Course $course)
     {
-        //
+        $course->delete();
+
+        return back()->with([
+            'alert-type' => 'success',
+            'message' => 'Course Deleted Successfully'
+        ]);
     }
 
-    function saveFiles(array $files, string $dir, string $prefix = '', string $disk = 'public') {
+    function saveFiles(array $files, string $dir, string $prefix = '', string $disk = 'public')
+    {
         $paths = [];
         foreach ($files as $key => $file) {
             $path = saveImage($file, $dir, $prefix, $disk);
