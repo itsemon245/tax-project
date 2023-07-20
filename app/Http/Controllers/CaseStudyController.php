@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CaseStudyPackage;
 use App\Http\Requests\StoreCaseStudyPageRequest;
 use App\Http\Requests\UpdateCaseStudyPageRequest;
-use App\Models\CaseStudyPage;
 
 class CaseStudyController extends Controller
 {
@@ -40,32 +40,9 @@ class CaseStudyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CaseStudyPage $caseStudyPage)
+    public function show()
     {
         return view('frontend.pages.course.caseStudySingleCategory');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CaseStudyPage $caseStudyPage)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCaseStudyPageRequest $request, CaseStudyPage $caseStudyPage)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(CaseStudyPage $caseStudyPage)
-    {
-        //
-    }
 }

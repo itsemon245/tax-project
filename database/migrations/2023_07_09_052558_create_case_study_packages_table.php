@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('case_study_pages', function (Blueprint $table) {
+        Schema::create('case_study_packages', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
-            $table->longText('hero_title');
-            $table->longText('hero_description');
-            $table->longText('hero_image');
-            $table->longText('description');
+            $table->text('name');
+            $table->decimal('price', 8, 2);
+            $table->integer('limit')->default(0);
+            $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->default('onetime');
+            $table->longText('page_title')->nullable();
+            $table->longText('page_description')->nullable();
+            $table->longText('page_image')->nullable();
             $table->timestamps();
         });
     }
