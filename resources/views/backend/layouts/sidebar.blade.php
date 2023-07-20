@@ -107,6 +107,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('industry.index') }}">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Industries</span>
+                    </a>
+                </li>
+                <li>
                     <a href="#sidebarAboutPage" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> About Page</span>

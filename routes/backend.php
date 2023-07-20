@@ -34,6 +34,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\IndustryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
     Route::resource('course', CourseController::class);
+    Route::resource('industry', IndustryController::class);
 
 
     //service related routes

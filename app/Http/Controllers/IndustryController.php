@@ -12,7 +12,8 @@ class IndustryController extends Controller
      */
     public function index()
     {
-        //
+        $Industries = Industry::get();
+        return view('backend.industry.viewAllIndustry', compact('Industries'));
     }
 
     /**
@@ -20,7 +21,8 @@ class IndustryController extends Controller
      */
     public function create()
     {
-        //
+        $Industries = Industry::get();
+        return view('backend.industry.createIndustry', compact('Industries'));
     }
 
     /**
