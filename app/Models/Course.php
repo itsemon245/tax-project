@@ -15,4 +15,11 @@ class Course extends Model
         'page_learn_more' => Json::class,
         'page_topics' => Json::class,
     ];
+    
+    public function purchased(int $userId = null){
+        if ($userId === null) {
+            $userId = auth()->id();
+        }
+        return $this->morphOne(Purchase::class, 'purchasable')->where('user_id', $userId);
+    }
 }

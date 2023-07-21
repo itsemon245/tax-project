@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
             $table->uuid('txn_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->nullable();
             $table->enum('payment_method', ['cash', 'bkash', 'nagad', 'rocket', 'bank', 'card'])->nullable();
             $table->decimal('payment_amount', 8, 2);
@@ -22,13 +23,14 @@ return new class extends Migration
             $table->dateTime('due_date')->nullable();
             $table->dateTime('payment_date')->nullable();
             $table->dateTime('expire_date')->nullable();
+            $table->morphs('purchasable');
             $table->timestamps();
         });
-        Schema::create('purchasables', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('purchase_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->morphs('purchasable');
-        });
+        // Schema::create('purchasables', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('purchase_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+        //     $table->morphs('purchasable');
+        // });
     }
 
     /**
@@ -37,6 +39,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('purchases');
-        Schema::dropIfExists('purchasables');
+        // Schema::dropIfExists('purchasables');
     }
 };

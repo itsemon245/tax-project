@@ -14,4 +14,11 @@ class Book extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function purchased(int $userId = null){
+        if ($userId === null) {
+            $userId = auth()->id();
+        }
+        return $this->morphOne(Purchase::class, 'purchasable')->where('user_id', $userId);
+    }
 }

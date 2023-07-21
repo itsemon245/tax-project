@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\ProductPageController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\ProjectDiscussionController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\AppointmentController;
@@ -18,8 +21,11 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use App\Http\Controllers\MCQController;
-use App\Http\Controllers\ProjectDiscussionController;
+use App\Models\Book;
+use App\Models\CaseStudy;
+use App\Models\Course;
+use App\Models\Product;
+use App\Models\Purchase;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,6 +127,9 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
+    $books = Product::find(2);
+    $purchased = $books->purchased;
+    dd($purchased);
     return view('test');
 });
 
