@@ -3,7 +3,7 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Industries Section']" />
 
     <x-backend.ui.section-card name="Industries">
-        <div>
+        <div class="mb-2">
             <a href="{{ route('industry.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
         </div>
         <form action="{{ route('info.store') }}" method="post" enctype="multipart/form-data">
@@ -12,8 +12,9 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Image</th>
-                        <th>Title</th>
+                        <th>Logo</th>
+                        <th>Page Content</th>
+                        <th>Description</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -21,10 +22,12 @@
                     @forelse ($Industries as $key=>$industry)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td></td>
-                        <td></td>
+                        <td><img src="{{useImage($industry->logo)}}" alt="" /></td>
+                        <td>{!! Str::limit($industry->page_description, 15, '...') !!}</td>
+                        <td>{!! Str::limit($industry->description, 15, '...') !!}</td>
                         <td>
                             <div class="btn-group">
+                                <a href="" class="btn btn-sm btn-success">View</a>
                                 <x-backend.ui.button type="edit" href="#" class="btn-sm" />
                                 <x-backend.ui.button type="delete" action="#" class="btn-sm" />
                             </div>

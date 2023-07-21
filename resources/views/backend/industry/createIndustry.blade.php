@@ -8,13 +8,15 @@
         </div>
        <form action="{{ route('industry.store') }}" method="post" enctype="multipart/form-data">
         @csrf
-        <div class="row">
+        <div class="row ">
             <div class="col-md-12 mb-2">
-                <x-form.ck-editor id="ck-editor1"   name="description" placeholder="Page Description"
+                <x-form.ck-editor id="ck-editor1"  name="page_description" placeholder="Page Description"
                 label="Page Description">
+                {{-- {!! $findPageDescription !!} --}}
             </x-form.ck-editor>
             </div>
         </div>
+        
         <div class="row">
             <div class="col-md-4">
                 <x-backend.form.image-input name="logo"  />
@@ -26,8 +28,8 @@
                         </x-backend.form.text-input>
                     </div>
                     <div class="col-md-12 mb-2">
-                        <label class="w-100" for="detiles">Description <span class="text-danger">*</span>
-                            <textarea name="detiles" id="detiles" cols="30" rows="4" placeholder="Type Industry Detiles..." class="form-control"></textarea>
+                        <label class="w-100" for="description">Description <span class="text-danger">*</span>
+                            <textarea name="description" id="description" cols="30" rows="4" placeholder="Type Industry Detiles..." class="form-control"></textarea>
                         </label>
                     </div>
                 </div>

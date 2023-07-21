@@ -22,7 +22,7 @@ class IndustryController extends Controller
     public function create()
     {
         $Industries = Industry::get();
-        return view('backend.industry.createIndustry', compact('Industries'));
+        return view('backend.industry.createIndustry', compact( 'Industries'));
     }
 
     /**
@@ -30,7 +30,31 @@ class IndustryController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $industry = new Industry();
+        if($request->page_description == null){
+            $industry->name = $request->name;
+            $industry->logo = saveImage($request->logo, 'industries', 'industry');
+            $industry->description = $request->description;
+            $industry->save();
+            $notification = [
+                'message' => 'Industry Created',
+                'alert-type' => 'success',
+            ];
+            return back()
+                ->with($notification); 
+        }else{
+            $industry->page_description = $request->page_description;
+            $industry->name = $request->name;
+            $industry->logo = saveImage($request->logo, 'industries', 'industry');
+            $industry->description = $request->description;
+            $industry->save();
+            $notification = [
+                'message' => 'Industry Created',
+                'alert-type' => 'success',
+            ];
+            return back()
+                ->with($notification);
+        }
     }
 
     /**
