@@ -127,9 +127,9 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
-    $books = Product::find(2);
-    $purchased = $books->purchased;
-    dd($purchased);
+    $product = Product::find(1);
+    // $products = $product->purchased('product');
+    dd($product->isPurchased);
     return view('test');
 });
 

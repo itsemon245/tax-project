@@ -9,7 +9,10 @@ class CaseStudy extends Model
 {
     use HasFactory;
 
-    public function purchased(int $userId = null){
+    public function purchase(){
+        return $this->morphOne(Purchase::class, 'purchasable');
+    }
+    public function isPurchased(int $userId = null){
         if ($userId === null) {
             $userId = auth()->id();
         }
