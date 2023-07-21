@@ -61,4 +61,15 @@ class Product extends Model
 
         return array_combine(['Silver', 'Gold', 'Platinum', 'Exclusive'], [$silverProducts, $goldProducts, $platinumProducts, $exclusiveProducts]);
     }
+
+
+    public function purchase(){
+        return $this->morphOne(Purchase::class, 'purchasable');
+    }
+    public function isPurchased(int $userId = null){
+        if ($userId === null) {
+            $userId = auth()->id();
+        }
+        return $this->morphOne(Purchase::class, 'purchasable')->where('user_id', $userId);
+    }
 }

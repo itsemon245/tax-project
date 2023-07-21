@@ -425,18 +425,18 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#videoSection" data-bs-toggle="collapse">
+                    <a href="#courseSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Video</span>
+                        <span>Courses</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="videoSection">
+                    <div class="collapse" id="courseSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('video.create') }}">Create</a>
+                                <a href="{{ route('course.create') }}">Create</a>
                             </li>
                             <li>
-                                <a href="{{ route('video.index') }}">View</a>
+                                <a href="{{ route('course.index') }}">View</a>
                             </li>
                         </ul>
                     </div>

@@ -10,11 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
  */
 function useImage($image)
 {
-    if (str($image)->contains('uploads/')) {
-        return asset("storage/$image");
-    } else {
-        return $image;
-    }
+    return str($image)->isUrl() ? $image : asset("storage/$image");
 }
 
 /**
@@ -32,23 +28,32 @@ function timestamp()
  */
 function saveImage($image, string $dir, string $prefix = '', string $disk = 'public')
 {
-    if ($prefix === '') {
-        $prefix = str($image->getClientOriginalName())->slug();
+    if ($image) {
+        if ($prefix === '' || $prefix === null) {
+            $prefix = str($image->getClientOriginalName())->slug();
+        }
+        $ext = $image->extension();
+        $name = $prefix . "-" . timestamp() . '.' . $ext;
+        $path = $image->storeAs("uploads/$dir", $name, $disk);
+        $url = asset('storage/' . $path);
+        return $url;
+    } else {
+        return $image;
     }
-    $ext = $image->extension();
-    $name = $prefix . "-" . timestamp() . '.' . $ext;
-    $path = $image->storeAs("uploads/$dir", $name, $disk);
-    return $path;
 }
 
 /**
  * Updates a file given a new file and old path
  * @return string $new_path
  */
-function updateFile($file, $old_path, $dir,  $prefix = "image")
+function updateFile($file, $old_path, $dir,  $prefix = "", $disk = "public")
 {
     $new_path = $old_path;
-    $path = 'public/' . $old_path;
+    $isFile = str($old_path)->contains('/storage');
+    if ($isFile) {
+        $old_path = explode("storage", $old_path)[1];
+    }
+    $path = $disk . $old_path;
     $fileExists = Storage::exists($path);
     if ($fileExists) {
         if ($file) {
@@ -66,10 +71,15 @@ function updateFile($file, $old_path, $dir,  $prefix = "image")
  * 
  * Deletes only form public disks
  */
-function deleteFile($path)
+function deleteFile($old_path, $disk = 'public')
 {
+    $isFile = str($old_path)->contains('/storage');
+    if ($isFile) {
+        $old_path = explode("storage", $old_path)[1];
+        dd($old_path);
+    }
+    $path = $disk . $old_path;
     $deleted = false;
-    $path = 'public/' . $path;
     if (Storage::exists($path)) {
         $deleted = Storage::delete($path);
     }
@@ -159,15 +169,19 @@ function countRecords($table = 'users', $queries = [])
 
 /**
  * Returns an image url from picsum.photos
- * 
+ * @param ?string $seed
+ * @param ?int $width
+ * @param ?int $height
+ * @return string $picsum
  */
-function picsum(string $seed = null,int $width= 720, int $height = null ) {
+function picsum(string $seed = null, int $width = 720, int $height = null)
+{
     if (!$height) {
         $height = $width;
     }
     if (!$seed) {
         $picsum = "https://picsum.photos/$width/$height";
-    }else{
+    } else {
         $picsum = "https://picsum.photos/seed/$seed/$width/$height";
     }
 
@@ -175,28 +189,28 @@ function picsum(string $seed = null,int $width= 720, int $height = null ) {
 }
 
 
- /**
-     * Returns an array to query for reviews star count
-     */
-    function reviewsAndStarCounts(): array
-    {
-        $array = [
-            'reviews',
-            'reviews as reviews_5star' => function (Builder $query) {
-                $query->where('rating', 5);
-            },
-            'reviews as reviews_4star' => function (Builder $query) {
-                $query->where('rating', 4);
-            },
-            'reviews as reviews_3star' => function (Builder $query) {
-                $query->where('rating', 3);
-            },
-            'reviews as reviews_2star' => function (Builder $query) {
-                $query->where('rating', 2);
-            },
-            'reviews as reviews_1star' => function (Builder $query) {
-                $query->where('rating', 1);
-            },
-        ];
-        return $array;
-    }
+/**
+ * Returns an array to query for reviews star count
+ */
+function reviewsAndStarCounts(): array
+{
+    $array = [
+        'reviews',
+        'reviews as reviews_5star' => function (Builder $query) {
+            $query->where('rating', 5);
+        },
+        'reviews as reviews_4star' => function (Builder $query) {
+            $query->where('rating', 4);
+        },
+        'reviews as reviews_3star' => function (Builder $query) {
+            $query->where('rating', 3);
+        },
+        'reviews as reviews_2star' => function (Builder $query) {
+            $query->where('rating', 2);
+        },
+        'reviews as reviews_1star' => function (Builder $query) {
+            $query->where('rating', 1);
+        },
+    ];
+    return $array;
+}

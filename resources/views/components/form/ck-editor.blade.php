@@ -6,7 +6,7 @@
 @php
     $id = $attributes->get('id');
     $label = $attributes->has('label') ? $attributes->get('label') : $attributes->get('name');
-    $placeholder = $attributes->has('placeholder') ? $attributes->get('placeholder') : $attributes->get('name');
+    $placeholder = $attributes->has('placeholder') ? $attributes->get('placeholder') : str($attributes->get('label'))->title();
     $required = $attributes->get('required');
     $name = $attributes->get('name');
 @endphp
@@ -22,7 +22,7 @@
             <span class="text-danger">*</span>
         @endif
     </label>
-    <textarea {{ $attributes->merge() }}>
+    <textarea {{ $attributes->merge(['value' => $slot]) }}>
     {{ $slot }}
     </textarea>
     @error($name)

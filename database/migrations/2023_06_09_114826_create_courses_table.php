@@ -19,12 +19,11 @@ return new class extends Migration
             $table->longText('page_banner');
             $table->decimal('price', 8, 2);
             $table->longText('preview');
-            $table->json('page_card_1')->comment('{title: title, description:description}');
-            $table->json('page_card_exam')->comment('{title: title, description:description}');
-            $table->json('page_learn_more')->comment('{description:string, images: array[]}');
-            $table->mediumText('includes');
-            $table->mediumText('graduates_receive');
-            $table->json('topics')->comment('{title: string, description:string, lists: array[]}');
+            $table->json('page_cards')->comment('[{title: title, description:description}]');
+            $table->json('page_learn_more')->comment('{description:string, images: array[]}')->nullable();
+            $table->longText('includes')->nullable();
+            $table->longText('graduates_receive')->nullable();
+            $table->json('page_topics')->comment('description:string, lists: array[]}')->nullable();
             $table->timestamps();
         });
     }

@@ -13,9 +13,8 @@
                         <x-backend.table.basic>
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Video</th>
-                                    <th>Title</th>
+                                    <th>No</th>
+                                    <th>Name</th>
                                     <th>Description</th>
                                     <th>Action</th>
                                 </tr>
@@ -26,16 +25,17 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>
-                                            <video width="320" height="240" controls>
-                                                <source src="{{ $video->video }}" type="video/mp4">
-                                            </video>
-                                        </td>
-                                        <td>
-                                            {{ Str::limit($video->title, 20, '...') }}
-                                            <br>
-                                            <span class="text-muted" title="Status">Status: {!! $video->status
-                                                ? "<span class='badge bg-success'>Active</span>"
-                                                : "<span class='badge bg-danger'>Deactive</span>" !!}</span>
+                                            <div class="d-flex align-items-start gap-1">
+                                                <span class="mdi mdi-television-play"></span>
+                                                <div class="p-1">
+                                                    <p class="fw-medium mb-0">
+                                                        {{ str($video->title)->title() }}
+                                                    </p>
+                                                    <span class="text-muted">Section: {{ $video->section }}</span>
+                                                </div>
+                                            </div>
+
+
                                         </td>
                                         <td>{!! Str::limit($video->description, 100, '...') !!}</td>
                                         <td>

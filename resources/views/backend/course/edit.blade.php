@@ -3,8 +3,9 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Course', 'Create']" />
     <x-backend.ui.section-card name="Create Course">
-        <form action="{{ route('course.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
 
 
             {{-- rest of the fields goes down here --}}
@@ -22,26 +23,28 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <x-backend.form.text-input label="Course Name" required type="text"
-                                            name="name">
+                                            name="name" :value="$course->name">
                                         </x-backend.form.text-input>
                                     </div>
                                     <div class="col-md-3">
-                                        <x-backend.form.text-input label="Course Price" type="number" name="price">
+                                        <x-backend.form.text-input label="Course Price" type="number" name="price"
+                                            :value="$course->price">
                                         </x-backend.form.text-input>
                                     </div>
                                     <div class="col-md-5">
-                                        <x-backend.form.text-input label="Page Title" type="text" name="page_title">
+                                        <x-backend.form.text-input label="Page Title" type="text" name="page_title"
+                                            :value="$course->page_title">
                                         </x-backend.form.text-input>
                                     </div>
                                     <div class="col-md-6">
-                                        <x-form.text-area class="h-100" id="description"
-                                            label="Course Description" type="text" name="description"
-                                            placeholder="Course Description">
+                                        <x-form.text-area class="h-100" id="description" label="Course Description"
+                                            type="text" name="description" placeholder="Course Description">
+                                            {!! $course->description !!}
                                         </x-form.text-area>
                                     </div>
                                     <div class="col-md-6">
                                         <x-backend.form.image-input class="h-100" id="page-banner" name="page_banner"
-                                            style="aspect-ratio:3/1.5;" label="Page Banner" />
+                                            style="aspect-ratio:3/1.5;" label="Page Banner" :image="$course->page_banner" />
                                     </div>
                                 </div>
                             </div>
@@ -57,18 +60,19 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    @foreach (range(1, 2) as $key)
+                                    @foreach ($course->page_cards as $key => $card)
                                         <div class="col-md-6">
                                             <div class="card border border-2">
                                                 <div class="card-body p-2">
                                                     <x-backend.form.text-input
-                                                        label="{{ $key === 1 ? 'Card 1 Title' : 'Exam Card Title' }}"
-                                                        type="text" name="page_card_titles[]">
+                                                        label="{{ $key === 0 ? 'Card 1 Title' : 'Exam Card Title' }}"
+                                                        type="text" name="page_card_titles[]" :value="$card->title">
                                                     </x-backend.form.text-input>
                                                     <x-form.text-area id="page-card-description-{{ $key }}"
                                                         name="page_card_descriptions[]"
-                                                        placeholder="{{ $key === 1 ? 'Card 1 Description' : 'Exam Card Description' }}"
-                                                        label="{{ $key === 1 ? 'Card 1 Description' : 'Exam Card Description' }}">
+                                                        placeholder="{{ $key === 0 ? 'Card 1 Description' : 'Exam Card Description' }}"
+                                                        label="{{ $key === 0 ? 'Card 1 Description' : 'Exam Card Description' }}">
+                                                        {{ $card->description }}
                                                     </x-form.text-area>
                                                 </div>
                                             </div>
@@ -91,20 +95,22 @@
                                     <div class="col-md-6">
                                         <x-form.text-area label="Learn More Description" name="learn_more_description"
                                             placeholder="A brief Description of learn more section" rows='2'>
+                                            {!! $course->page_learn_more->description !!}
                                         </x-form.text-area>
                                     </div>
                                     <div class="col-md-6">
                                         <x-form.text-area label="Course Preview" type="url" name="preview"
                                             placeholder="https://www.youtube.com/watch?v=-mUTU9MDOC8" rows='2'>
+                                            {!! $course->preview !!}
                                         </x-form.text-area>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
-                                    @foreach (range(1, 3) as $i)
+                                    @foreach ($course->page_learn_more->images as $key => $image)
                                         <div class="col-md-3">
-                                            <x-backend.form.image-input id="learn-more-image-{{ $i }}"
+                                            <x-backend.form.image-input id="learn-more-image-{{ $key }}"
                                                 style="aspect-ratio:2/1.5;" label="Learn More Image"
-                                                name="learn_more_images[]" />
+                                                name="learn_more_images[]" :image="$image" />
                                         </div>
                                     @endforeach
                                 </div>
@@ -123,14 +129,14 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <x-form.ck-editor id="course-includes" label="Course Includes"
-                                            name="course_includes" placeholder="List of item course includes"
-                                            rows='2'>
+                                            name="course_includes" rows='2'>
+                                            {!! $course->includes !!}
                                         </x-form.ck-editor>
                                     </div>
                                     <div class="col-md-6">
                                         <x-form.ck-editor id="graduates-receives" label="Graduate receives"
-                                            name="graduate_receives" placeholder="List of item of graduate receives"
-                                            rows='2'>
+                                            name="graduate_receives" rows='2'>
+                                            {!! $course->graduates_receive !!}
                                         </x-form.ck-editor>
                                     </div>
                                 </div>
@@ -151,16 +157,18 @@
                                         <x-form.text-area label="Explore Topic Description"
                                             name="explore_topic_description"
                                             placeholder="A brief Description of learn more section" rows='2'>
+                                            {!! $course->page_topics->description !!}
                                         </x-form.text-area>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
-                                    @foreach (range(1, 3) as $i)
+                                    @foreach ($course->page_topics->lists as $key => $list)
                                         <div class="col-md-4">
-                                            <x-form.ck-editor id="explore-topic-{{ $i }}"
-                                                label="Explore Topic List {{ $i }}"
-                                                name="explore_topic_lists[]"
-                                                placeholder='A brief description of topics' />
+                                            <x-form.ck-editor id="explore-topic-{{ $key }}"
+                                                label="Explore Topic List {{ $key }}"
+                                                name="explore_topic_lists[]">
+                                                {!! $list !!}
+                                            </x-form.ck-editor>
                                         </div>
                                     @endforeach
                                 </div>

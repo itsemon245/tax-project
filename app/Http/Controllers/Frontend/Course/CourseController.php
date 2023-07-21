@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Course;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
@@ -12,9 +13,9 @@ class CourseController extends Controller
     {
         return view('frontend.pages.course.viewAll');
     }
-    public function show(int $course)
+    public function show(Course $course)
     {
-        return view('frontend.pages.course.view');
+        return view('frontend.pages.course.view', compact('course'));
     }
 
     public function videos()

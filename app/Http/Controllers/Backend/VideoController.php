@@ -8,12 +8,21 @@ use App\Http\Requests\VideoRequest;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditVideoRequest;
+use App\Models\Course;
 use Illuminate\Support\Facades\Storage;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 
 class VideoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+    public function videosByCourse(Course $course)
+    {
+        $videos = $course->videos()->latest()->get();
+        return view("backend.video.viewVideo", compact('videos'));
+    }
     /**
      * Display a listing of the resource.
      */
@@ -29,6 +38,13 @@ class VideoController extends Controller
     public function create()
     {
         return view('backend.video.createVideo');
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function show()
+    {
+        return back();
     }
 
     /**

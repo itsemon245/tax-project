@@ -5,9 +5,9 @@
     $class = $attributes->get('class');
     $style = $attributes->get('style');
 
-    $note = $attributes->has('note') ? $attributes->get('note') : '<span class="text-danger" style="font-weight: 500;">*</span>Accepted files : <span class="text-success" style="font-weight: 500;">jpg, png, svg, webp up to 5 MB</span> ';
+    $note = $attributes->has('note') ? $attributes->get('note') : 'Accepted files : <span class="text-success" style="font-weight: 500;">jpg, png, svg, webp up to 5 MB</span> ';
 @endphp
-<div class="">
+<div class="mb-2">
     <label for="{{ $id }}">
         @if ($attributes->has('label'))
             <span class="form-label text-capitalize">{{ $attributes->get('label') }}</span>
@@ -16,7 +16,7 @@
         <img class="w-100 border border-2 border-primary {{$class}}" style="{{$style}}" id="live-{{ $id }}"
             src="{{ $image ? useImage($image) : asset('images/Placeholder_view_vector.svg.png') }}">
     </label>
-    <p class="mt-2" id="{{ $name . '_note' }}">
+    <p class="mt-2 mb-0" id="{{ $name . '_note' }}">
         {!! $note !!}
     </p>
     @error($name)
