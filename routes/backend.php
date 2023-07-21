@@ -74,6 +74,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
     Route::resource('video', VideoController::class);
+    Route::get('course/{course}/videos' , [VideoController::class, 'videosByCourse'])->name('video.byCourse');
     Route::resource('partner-section', PartnerSectionController::class);
     Route::resource('about', AboutController::class);
     Route::resource('client-studio', ClientStudioController::class);

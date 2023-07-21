@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('video');
-            $table->string('description')->nullable();
+            $table->foreignId('course_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->text('title');
+            $table->text('video');
+            $table->text('section');
+            $table->longText('description')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

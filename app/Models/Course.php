@@ -16,6 +16,9 @@ class Course extends Model
         'page_topics' => Json::class,
     ];
     
+    function videos() {
+        return $this->hasMany(Video::class);
+    }
     public function purchase(){
         return $this->morphOne(Purchase::class, 'purchasable');
     }

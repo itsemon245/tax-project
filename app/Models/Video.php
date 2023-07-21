@@ -12,10 +12,9 @@ class Video extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [
-        'title',
-        'video',
-        'description',
-        'status'
-    ];
+    protected $guarded = [];
+
+    function course() {
+        return $this->belongsTo(Course::class);
+    }
 }
