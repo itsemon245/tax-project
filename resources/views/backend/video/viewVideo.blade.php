@@ -26,7 +26,8 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>
-                                            <div class="d-flex align-items-start gap-1">
+                                            <a href="{{ route('video.show', $video->id) }}"
+                                                class="d-flex align-items-start gap-1 text-reset">
                                                 <span class="mdi mdi-television-play"></span>
                                                 <div class="p-1">
                                                     <p class="fw-medium mb-0">
@@ -34,7 +35,7 @@
                                                     </p>
                                                     <span class="text-muted">Section: {{ $video->section }}</span>
                                                 </div>
-                                            </div>
+                                            </a>
 
 
                                         </td>
