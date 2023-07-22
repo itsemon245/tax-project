@@ -76,7 +76,6 @@ function deleteFile($old_path, $disk = 'public')
     $isFile = str($old_path)->contains('/storage');
     if ($isFile) {
         $old_path = explode("storage", $old_path)[1];
-        dd($old_path);
     }
     $path = $disk . $old_path;
     $deleted = false;

@@ -2,17 +2,18 @@
 
 
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Video', 'Create']" />
+    <x-backend.ui.breadcrumbs :list="['Course', 'Video', 'Update']" />
 
-    <x-backend.ui.section-card name="Video Section">
+    <x-backend.ui.section-card name="Update Video">
+        <x-backend.ui.button type="custom" class="btn-info btn-sm mb-2" :href="route('video.byCourse', $video->course_id)">Back</x-backend.ui.button>
 
-        <form action="{{ route('video.update') }}" method="post" enctype="multipart/form-data">
+        <form class="py-3" action="{{ route('video.update', $video->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
-            <div class="row">
+            <div class="row my-2">
 
-                <div class="col-md-6 mt-2">
-                    <div class="drop-area h-100">
+                <div class="col-md-6">
+                    <div class="drop-area w-100" style="aspect-ratio:16/9;">
                         <div id="upload-container"
                             class="position-relative h-100 d-flex align-items-center justify-content-center mb-2">
                             <div role="button" id="browseFile"
@@ -44,7 +45,18 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
+                <div class="col-md-6">
+                    <label for="video" class="mb-1 fw-bold">Video Preview</label>
+                    <video src="{{ $video->video }}" class="border rounded rounded-3 shadow shadow-sm"
+                        style="object-fit: contain;aspect-ratio:16/8.2;" width="100%" controls>
+
+                    </video>
+                </div>
+
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-12">
@@ -67,16 +79,17 @@
                         </div>
                         <input type="text" name="video" hidden>
                         <input type="text" name="file_name" hidden>
-                        <div class="col-12">
-                            <x-form.ck-editor id="ck-editor1" name="description" placeholder="Description"
-                                label="Description">
-                            </x-form.ck-editor>
-                        </div>
-                        <div class="col-12">
-                            <x-backend.ui.button type="submit" class="btn-primary rounded-3 w-100">Create
-                            </x-backend.ui.button>
-                        </div>
+
                     </div>
+                </div>
+
+                <div class="col-md-6">
+                    <x-form.ck-editor id="ck-editor1" name="description" placeholder="Description" label="Description">
+                    </x-form.ck-editor>
+                </div>
+                <div class="col-12">
+                    <x-backend.ui.button type="submit" class="btn-primary rounded-3" style="margin-top: -1rem;">Create
+                    </x-backend.ui.button>
                 </div>
             </div>
         </form>
@@ -189,6 +202,7 @@
                 response = JSON.parse(response)
                 $('input[name="video"]').val(response.path);
                 $('input[name="file_name"]').val(response.fileName);
+                $('video').attr('src', response.url);
                 $('#cancelUpload').addClass('d-none')
                 $('#success').removeClass('d-none')
             });

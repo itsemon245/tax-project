@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Video', 'View']" />
+    <x-backend.ui.breadcrumbs :list="['Course', 'Video', 'View']" />
 
     <x-backend.ui.section-card name="Video List">
         <div class="row">
@@ -40,8 +40,9 @@
                                         </td>
                                         <td>{!! Str::limit($video->description, 100, '...') !!}</td>
                                         <td>
-                                            <a href="{{ route('video.edit', $video->id) }}"
-                                                class="btn btn-info btn-sm">Edit</a>
+                                            <x-backend.ui.button type="custom" class="btn-sm btn-dark" :href="route('video.show', $video->id)">
+                                                View</x-backend.ui.button>
+                                            <x-backend.ui.button type="edit" class="btn-sm" :href="route('video.edit', $video->id)" />
                                             <button onclick='deleteVideo("videoDelete-{{ $video->id }}")'
                                                 class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
                                             <form class="d-none" id="videoDelete-{{ $video->id }}"

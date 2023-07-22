@@ -231,12 +231,12 @@
                             </li>
                             <li>
                                 <a href="{{ route('user-appointments.approved') }}">
-                                   Approved
+                                    Approved
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('user-appointments.completed') }}">
-                                   Completed
+                                    Completed
                                 </a>
                             </li>
 
@@ -427,10 +427,16 @@
                     <div class="collapse" id="courseSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('course.create') }}">Create</a>
+                                <a href="{{ route('course.create') }}">Create Course</a>
                             </li>
                             <li>
-                                <a href="{{ route('course.backend.index') }}">View</a>
+                                <a href="{{ route('course.backend.index') }}">View Courses</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('video.create') . '?course_id=1' }}">Create Video</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('video.index') . '?course_id=1' }}">View Videos</a>
                             </li>
                         </ul>
                     </div>

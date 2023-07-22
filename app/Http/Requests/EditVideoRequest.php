@@ -25,7 +25,6 @@ class EditVideoRequest extends FormRequest
             'title'=> 'required|max:255',
             'section'=> 'required|max:255',
             'course_id'=> 'required',
-            'video'=> 'required'
         ];
     }
 }

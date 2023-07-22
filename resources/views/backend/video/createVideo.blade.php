@@ -2,10 +2,10 @@
 
 
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Video', 'Create']" />
+    <x-backend.ui.breadcrumbs :list="['Course', 'Video', 'Create']" />
 
-    <x-backend.ui.section-card name="Video Section">
-
+    <x-backend.ui.section-card name="Create Video">
+        <x-backend.ui.button type="custom" class="btn-info btn-sm mb-2" :href="route('video.byCourse', $courseId)">Back</x-backend.ui.button>
         <form action="{{ route('video.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
@@ -43,6 +43,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="col-md-6">
                     <div class="row">
