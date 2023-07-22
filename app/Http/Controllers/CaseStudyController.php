@@ -26,7 +26,7 @@ class CaseStudyController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.caseStudy.caseStudyIndex');
     }
 
     /**
@@ -34,7 +34,12 @@ class CaseStudyController extends Controller
      */
     public function store(StoreCaseStudyPageRequest $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:50|string',
+            'page_description' => 'required|max:400|string',
+            'image' => 'required|mimes:png,jpg,jpeg|image',
+        ]);
+        dd($request);
     }
 
     /**

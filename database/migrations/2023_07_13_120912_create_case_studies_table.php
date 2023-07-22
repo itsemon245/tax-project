@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('case_studies', function (Blueprint $table) {
             $table->id();
             // $table->foreignId('case_study_category_id');
-            $table->foreignId('case_study_package_id');
+            $table->foreignId('case_study_package_id')->nullable();
             $table->text('name');
             $table->longText('intro');
             $table->longText('description');

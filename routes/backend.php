@@ -34,6 +34,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\IndustryController;
 
 /*
@@ -84,6 +85,15 @@ Route::prefix('admin')->group(function () {
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',
     ]);
+
+    Route::prefix('case-study-backend')
+        ->name('case.study.backend.')
+        ->controller(CaseStudyController::class)
+        ->group(function () {
+            Route::get('', 'create')->name('index');
+            Route::post('/store', 'store')->name('store');
+
+        });
 
     
     Route::resource('industry', IndustryController::class);
