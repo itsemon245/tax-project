@@ -163,4 +163,6 @@ class CourseController extends Controller
         }
         return $paths;
     }
+
+
 }

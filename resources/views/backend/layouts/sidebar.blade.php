@@ -101,9 +101,21 @@
                     </div>
                 </li>
                 <li>
+                    <a href="{{ route('case.study.backend.index') }}">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Case Study</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('project-discussion.index') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span>Project Discussion</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('industry.index') }}">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Industries</span>
                     </a>
                 </li>
                 <li>

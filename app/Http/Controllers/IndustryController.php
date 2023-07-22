@@ -12,7 +12,8 @@ class IndustryController extends Controller
      */
     public function index()
     {
-        //
+        $Industries = Industry::get();
+        return view('backend.industry.viewAllIndustry', compact('Industries'));
     }
 
     /**
@@ -20,7 +21,8 @@ class IndustryController extends Controller
      */
     public function create()
     {
-        //
+        $Industries = Industry::get();
+        return view('backend.industry.createIndustry', compact( 'Industries'));
     }
 
     /**
@@ -28,7 +30,24 @@ class IndustryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'page_description' => 'required|max:500|string',
+            'name' => 'required|max:30|string',
+            'logo' => 'required|image|mimes:jpeg,png,jpg|max:5000',
+            'description' => 'required|max:300|string',
+        ]);
+        $industry = new Industry();
+            $industry->page_description = $request->page_description;
+            $industry->name = $request->name;
+            $industry->logo = saveImage($request->logo, 'industries', 'industry');
+            $industry->description = $request->description;
+            $industry->save();
+            $notification = [
+                'message' => 'Industry Created',
+                'alert-type' => 'success',
+            ];
+            return back()
+                ->with($notification);
     }
 
     /**
@@ -36,7 +55,7 @@ class IndustryController extends Controller
      */
     public function show(Industry $industry)
     {
-        //
+        return view('backend.industry.viewSingle', compact('industry'));
     }
 
     /**
