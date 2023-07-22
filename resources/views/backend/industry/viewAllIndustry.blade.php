@@ -27,9 +27,12 @@
                         <td>{!! Str::limit($industry->description, 15, '...') !!}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="" class="btn btn-sm btn-success">View</a>
-                                <x-backend.ui.button type="edit" href="#" class="btn-sm" />
-                                <x-backend.ui.button type="delete" action="#" class="btn-sm" />
+                                <a href="{{ route('industry.show', $industry) }}" class="btn btn-sm btn-success">View</a>
+                                <form action="{{ route('industry.destroy', $industry) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -47,7 +50,7 @@
     <!-- end row-->
 @endsection
 
-@push('customJs')
+{{-- @push('customJs')
     <script>
         const getSectionTitle = (e) => {
             const section_id = e.value
@@ -75,4 +78,4 @@
             });
         }
     </script>
-@endpush
+@endpush --}}
