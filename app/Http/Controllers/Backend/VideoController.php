@@ -21,7 +21,7 @@ class VideoController extends Controller
     public function videosByCourse(Course $course)
     {
         $videos = $course->videos()->latest()->get();
-        return view("backend.video.viewVideo", compact('videos'));
+        return view("backend.video.viewVideo", compact('videos', 'course'));
     }
     /**
      * Display a listing of the resource.
@@ -35,9 +35,12 @@ class VideoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('backend.video.createVideo');
+        $courseId = (int) $request->course_id;
+        $courses = Course::latest()->get(['id', 'name']);
+        $section = Video::latest()->pluck('section')->first();
+        return view('backend.video.createVideo', compact('courses', 'courseId', 'section'));
     }
     /**
      * Show the form for creating a new resource.
@@ -52,18 +55,22 @@ class VideoController extends Controller
      */
     public function store(VideoRequest $request)
     {
-        $data = $request->validated();
-
+        $course = Course::find($request->course_id);
+        $path = "uploads/course/videos/$course->name/$request->file_name";
+        if (Storage::exists($request->video)) {
+            Storage::move($request->video, 'public/' . $path,);
+        }
         Video::create(
             [
-                "title"       => $data['title'],
-                "video"       => $data['video'],
+                "course_id"       => $course->id,
+                "title"       => str($request->title)->title(),
+                "section"       => str($request->section)->title(),
+                "video"       => $request->video,
                 "description" => $request->description
             ]
         );
 
-        return redirect()
-            ->route("video.index")
+        return back()
             ->with(array(
                 'message'    => "Video Created Successfully",
                 'alert-type' => 'success',
@@ -73,10 +80,11 @@ class VideoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
         $video =  Video::find($id);
-        return view("backend.video.editVideo", compact('video'));
+        $courses = Course::latest()->get(['id', 'name']);
+        return view("backend.video.editVideo", compact('video', 'courses'));
     }
 
     /**
@@ -84,10 +92,11 @@ class VideoController extends Controller
      */
     public function update(EditVideoRequest $request, string $id)
     {
-        $validateData = $request->validated();
         Video::find($id)->update([
-            "title"       => $validateData['title'],
-            "video"       => $validateData['video'],
+            "course_id"   => $request->id,
+            "title"       => str($request->title)->title(),
+            "section"     => str($request->section)->title(),
+            "video"       => $request->video,
             "description" => $request->description
         ]);
 
@@ -122,15 +131,15 @@ class VideoController extends Controller
         if ($fileReceived->isFinished()) { // file uploading is complete / all chunks are uploaded
             $file = $fileReceived->getFile(); // get file
             $extension = $file->getClientOriginalExtension();
-            $fileName = md5(time()) . '.' . $extension; // a unique file name
+            $name = str($file->getClientOriginalName())->replaceLast(".$extension", '-');
+            $fileName =  $name . timestamp() . '.' . $extension; // a unique file name
 
-            $filePath  = public_path() . '/uploads/videos';
-            $file->move($filePath, $fileName);
-            $path = URL::asset("/uploads/videos/{$fileName}");
+
+            $path = $file->storeAs('/videos', $fileName, 'temp');
 
             return [
-                'path' => $path,
-                'filename' => $fileName
+                'path' => "temp/$path",
+                'fileName' => $fileName,
             ];
         }
 

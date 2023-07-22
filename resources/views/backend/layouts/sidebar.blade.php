@@ -430,7 +430,7 @@
                                 <a href="{{ route('course.create') }}">Create</a>
                             </li>
                             <li>
-                                <a href="{{ route('course.index') }}">View</a>
+                                <a href="{{ route('course.backend.index') }}">View</a>
                             </li>
                         </ul>
                     </div>
