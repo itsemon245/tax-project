@@ -152,7 +152,7 @@
                     </li>
                     <li
                         class="nav-item custom-nav-item">
-                        <a class=" nav-link text-light" href="">Case Study Lab</a>
+                        <a class=" nav-link text-light" href="{{route('course.caseStudy.page')}}">Case Study Lab</a>
                     </li>
                    
                     <li class="nav-item custom-nav-item {{ request()->routeIs('books.view') ? 'active-link' : '' }}">

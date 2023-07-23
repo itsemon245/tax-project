@@ -1,5 +1,21 @@
 @extends('backend.layouts.app')
+@php
+    $from = (int) now()
+        ->subYears(20)
+        ->format('Y');
+    $to = (int) now()->format('Y');
+    
+    $months = [];
+    foreach (range(1, 12) as $i) {
+        $dt = now();
+        $dt->month = $i;
+        $months[] = $dt->format('F');
+    }
+@endphp
 
+@push('customCss')
+    <link rel="stylesheet" href="{{ asset('libs/nouislider/dist/nouislider.min.css') }}">
+@endpush
 
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Management', 'Invoice', 'List']" />
@@ -10,12 +26,54 @@
             style="border-radius: 0 25px 25px 0; border: 2px solid var(--ct-gray-500);padding:3.5px 8px;" role="button">
             <span class="mdi mdi-filter-variant fs-5"></span> Advanced Search <span class="mdi mdi-chevron-down fs-5"></span>
         </div>
-        {{-- <div id="advance-search-options" class="card" style="border: 2px solid var(--ct-gray-500);">
-            <div class="card-body">
-                <label for=""></label>
-                <input type="checkbox" name="query" id="">
-            </div>
-        </div> --}}
+        <div id="advance-search-options" class="card" style="border: 2px solid var(--ct-gray-500);">
+            <form id="parsely-form" action="javasript: void(0);">
+                <div class="card-body">
+                    <div class="d-flex gap-3 align-items-center">
+                        <x-backend.form.select-input label="From Year" placeholder="From Year">
+                            @foreach (range($to, $from) as $year)
+                                <option value="{{ $year }}">{{ $year }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                        <x-backend.form.select-input label="To Year" placeholder="To Year">
+                            @foreach (range($to, $from) as $year)
+                                <option value="{{ $year }}">{{ $year }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                    </div>
+                    <div class="d-flex gap-3 align-items-center">
+                        <x-backend.form.select-input label="From Month" placeholder="From Month">
+                            @foreach ($months as $key => $month)
+                                <option value="{{ --$key }}">{{ $month }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                        <x-backend.form.select-input label="To Month" placeholder="To Month">
+                            @foreach ($months as $key => $month)
+                                <option value="{{ --$key }}">{{ $month }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                    </div>
+                    <x-backend.form.select-input label="Payment Stauts" placeholder="Payment Stauts">
+                        @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
+                            <option value="{{ $status }}">{{ str($status)->title() }}</option>
+                        @endforeach
+                    </x-backend.form.select-input>
+                    <div class="row align-items-center">
+                        <div class="col-2">
+                            <x-backend.form.text-input class="p-1 " label="Min" name='min' />
+                        </div>
+
+                        <div class="col-8">
+                            <div id="slider" class="mt-2"></div>
+                        </div>
+                        <div class="col-2">
+                            <x-backend.form.text-input class="p-1 " label="Max" name='max' />
+                        </div>
+                    </div>
+                </div>
+                <button>Submit</button>
+            </form>
+        </div>
         <h5 class="p-3">Recently Updated</h5>
         <div class="d-none d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
             style="height:220px; overflow-x: hidden; overflow-y:hidden;">
@@ -97,6 +155,7 @@
     <!-- end row-->
 
     @push('customJs')
+        <script src="{{ asset('libs/nouislider/dist/nouislider.min.js') }}"></script>
         <script>
             $(document).ready(function() {
                 const filterWrapper = $('#basic-datatable_filter')
@@ -130,6 +189,43 @@
 
                 console.log(searchLabel);
                 filterWrapper.append(advanceSearch.removeClass('d-none'))
+
+                let slider = document.getElementById('slider');
+                let formatForSlider = {
+                    from: function(formattedValue) {
+                        return Number(formattedValue);
+                    },
+                    to: function(numericValue) {
+                        return Math.round(numericValue);
+                    }
+                };
+
+
+                noUiSlider.create(slider, {
+                    start: [100, 10_000],
+                    connect: true,
+                    format: formatForSlider,
+                    tooltips: {
+                        // tooltips are output only, so only a "to" is needed
+                        to: function(numericValue) {
+                            return "&#2547 " + numericValue.toFixed(2);
+                        }
+                    },
+                    step: 50,
+                    range: {
+                        'min': 100,
+                        'max': 10_000
+                    }
+                });
+
+                // console.log(slider.noUiSlider.get(true));
+
+                slider.noUiSlider.on('update', (values) => {
+                    let min = parseInt(values[0])
+                    let max = parseInt(values[1])
+                    $('input[name="min"]').val(min)
+                    $('input[name="max"]').val(max)
+                });
             });
         </script>
     @endpush
