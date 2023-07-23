@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CaseStudy;
 use App\Models\CaseStudyPackage;
+use Symfony\Component\HttpFoundation\Request;
 use App\Http\Requests\StoreCaseStudyPageRequest;
 use App\Http\Requests\UpdateCaseStudyPageRequest;
-use App\Models\CaseStudy;
 
 class CaseStudyController extends Controller
 {
@@ -35,15 +36,6 @@ class CaseStudyController extends Controller
      */
     public function store(StoreCaseStudyPageRequest $request)
     {
-        $request->validate([
-            'title' => 'required|max:50|string',
-            'page_description' => 'required|max:400|string',
-            'image' => 'required|mimes:png,jpg,jpeg|image',
-            'duration' => 'required',
-            'type' => 'required',
-            'orders' => 'required',
-            'rate' => 'required',
-        ]);
         $caseStudy = new CaseStudy();
         $caseStudy->title = $request->title;
         $caseStudy->page_description = $request->page_description;
@@ -68,6 +60,38 @@ class CaseStudyController extends Controller
     public function show()
     {
         return view('frontend.pages.course.caseStudySingleCategory');
+    }
+
+
+        /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $datum = CaseStudy::find($id);
+        return view('backend.caseStudy.editCaseStudy', compact('datum'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateCaseStudyPageRequest $request)
+    {
+        dd($request);
+        $notification = [
+            'message' => 'Client updated',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
+    }
+
+
+    //Custom method for show all data 
+    public function showAll()
+    {
+        $caseStudies = CaseStudy::get();
+        return view('backend.caseStudy.viewCaseStudy', compact('caseStudies'));
     }
 
 }

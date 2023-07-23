@@ -90,21 +90,34 @@
                     <div class="collapse" id="sidebarHeroSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('banner.index') }}">
-                                    View Hero
-                                </a>
                                 <a href="{{ route('banner.create') }}">Create Hero
 
+                                </a>
+                                <a href="{{ route('banner.index') }}">
+                                    View Hero
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
                 <li>
-                    <a href="{{ route('case.study.backend.index') }}">
+                    <a href="#caseStudySection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Case Study</span>
+                        <span> Case Study Section </span>
+                        <span class="menu-arrow"></span>
                     </a>
+                    <div class="collapse" id="caseStudySection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('case.study.backend.index') }}">Create Hero
+
+                                </a>
+                                <a href="{{ route('case.study.backend.show.all') }}">
+                                    View Hero
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li>
                     <a href="{{ route('project-discussion.index') }}">
