@@ -11,7 +11,7 @@ class UpdateCaseStudyPageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user() !== null;
     }
 
     /**
@@ -22,7 +22,14 @@ class UpdateCaseStudyPageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required','max:50','string'],
+            'page_description' => ['required','max:400','string'],
+            'image' => ['required','mimes:png,jpg,jpeg','image'],
+            'duration' => ['required'],
+            'type' => ['required'],
+            'orders' => ['required'],
+            'rate' => ['required'],
+        
         ];
     }
 }

@@ -91,7 +91,11 @@ Route::prefix('admin')->group(function () {
         ->controller(CaseStudyController::class)
         ->group(function () {
             Route::get('', 'create')->name('index');
-            Route::post('/store', 'store')->name('store');
+            Route::post('store', 'store')->name('store');
+            Route::get('show-all', 'showAll')->name('show.all');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::delete('destroy/{id}', 'destroy')->name('delete');
+            Route::PUT('update', 'update')->name('update');
 
         });
 
