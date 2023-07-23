@@ -3,8 +3,9 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Course', 'Case Study']" />
 
     <x-backend.ui.section-card name="Case Study Edit">
-       <form action="#" method="post" enctype="multipart/form-data">
+       <form action="{{ route('case.study.backend.update', $datum) }}" method="post" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="card p-3">
             <div class="row">
                 <div class="col-md-12 mb-2">

@@ -75,14 +75,22 @@ class CaseStudyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCaseStudyPageRequest $request)
+    public function update(UpdateCaseStudyPageRequest $request, CaseStudy $caseStudy)
     {
-        dd($request);
+        $caseStudy->title = $request->title;
+        $caseStudy->page_description = $request->page_description;
+        $caseStudy->duration = $request->duration;
+        $caseStudy->type = $request->type;
+        $caseStudy->orders = $request->orders;
+        $caseStudy->rate = $request->rate;
+        $caseStudy->image = saveImage($request->image, 'page/caseStudy', 'case-study');
+        $caseStudy->save();
         $notification = [
-            'message' => 'Client updated',
+            'message' => 'Record Updated',
             'alert-type' => 'success',
         ];
-        return back()
+        return redirect()
+            ->back()
             ->with($notification);
     }
 
@@ -92,6 +100,19 @@ class CaseStudyController extends Controller
     {
         $caseStudies = CaseStudy::get();
         return view('backend.caseStudy.viewCaseStudy', compact('caseStudies'));
+    }
+
+
+    public function destroy($id)
+    {
+        $datum = CaseStudy::findOrFail($id);
+        $datum->delete();
+        $notification = [
+            'message' => 'Record Deleted',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
     }
 
 }

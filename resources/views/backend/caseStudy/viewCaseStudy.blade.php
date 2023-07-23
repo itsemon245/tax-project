@@ -34,7 +34,7 @@
                                             <a href="{{ route('case.study.backend.edit', $caseStudy) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
 
-                                            <form action="#" method="post"
+                                            <form action="{{ route('case.study.backend.delete', $caseStudy) }}" method="post"
                                                 class="d-inline-block py-0">
                                                 @csrf
                                                 @method('DELETE')
