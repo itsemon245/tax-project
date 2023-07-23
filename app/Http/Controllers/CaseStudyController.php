@@ -11,7 +11,9 @@ use App\Http\Requests\UpdateCaseStudyPageRequest;
 class CaseStudyController extends Controller
 {
     function caseStudy() {
-        return view('frontend.pages.course.caseStudy');
+
+        $caseStudies = CaseStudy::limit(5)->orderBy('id', 'DESC')->get();
+        return view('frontend.pages.course.caseStudy', compact('caseStudies'));
     }
 
     public function index()

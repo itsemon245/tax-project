@@ -7,20 +7,15 @@
                     Tax Preparation Course
                 </p>
                 <h3 class="">
-                    This Should Be A Title Heading
+                    {{ $caseStudies[0]->title }}
                 </h3>
-                <p class="mt-3 mb-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero nulla eaque repellat iusto atque sapiente
-                    ipsum, pariatur voluptatem aliquid ea sunt, vitae ad, assumenda reprehenderit placeat omnis voluptate
-                    rem earum. Voluptatum esse iure dolorum tenetur quam. Dolores perferendis consequuntur quam? Lorem ipsum
-                    dolor sit amet consectetur adipisicing elit. Vitae, fugit dolores harum amet, ipsum incidunt ut labore
-                    mollitia hic fugiat alias beatae aperiam, quam rem. Quidem distinctio vitae fugiat nesciunt porro, unde
-                    cumque obcaecati nemo voluptatibus ipsum quis, eaque magnam?
-                </p>
+                <div class="mt-3 mb-3">
+                    {!! $caseStudies[0]->page_description !!}
+                </div>
             </div>
             <div class="col-md-4 ">
                 <div class=" card overflow-hidden">
-                    <img class="shadow-lg" src="{{ asset('frontend/assets/images/attached-files/img-1.jpg') }}" alt=""
+                    <img class="shadow-lg" src="{{ $caseStudies[0]->image }}" alt=""
                         width="100%" height="300px">
                 </div>
             </div>
@@ -28,7 +23,7 @@
         <div class="">
             <h3 class="text-center mt-5">Case Study Lab</h3>
             <div class="mt-3 d-flex flex-wrap gap-3 justify-content-center">
-                @foreach (range(1, 3) as $key)
+                @foreach ($caseStudies as $caseStudy)
                     <div class="min-w-lg">
                         <div class="px-4 py-4 mb-3 card">
                             <div class="card-body">
