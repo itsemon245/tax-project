@@ -36,11 +36,29 @@
             <form action="javasript: void(0);">
                 <div class="card-body">
                     <div class="row">
-                        <x-backend.form.select-input label="Payment Stauts" placeholder="Payment Stauts">
-                            @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
-                                <option value="{{ $status }}">{{ str($status)->title() }}</option>
-                            @endforeach
-                        </x-backend.form.select-input>
+                        <div class="col-md-4">
+                            <x-form.selectize class="mb-1" id="client" name="client" placeholder="Select Client..."
+                                label="Client" :canCreate="false">
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                @endforeach
+                            </x-form.selectize>
+                        </div>
+                        <div class="col-md-4">
+                            <x-form.selectize class="mb-1" id="reference" name="reference"
+                                placeholder="Select Reference..." label="Reference" :canCreate="false">
+                                @foreach ($references as $reference)
+                                    <option value="{{ $reference }}">{{ $reference }}</option>
+                                @endforeach
+                            </x-form.selectize>
+                        </div>
+                        <div class="col-md-4">
+                            <x-backend.form.select-input label="Payment Stauts" placeholder="Payment Stauts">
+                                @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
+                                    <option value="{{ $status }}">{{ str($status)->title() }}</option>
+                                @endforeach
+                            </x-backend.form.select-input>
+                        </div>
                         <div class="col-lg-4">
                             <x-range-slider id="price" from="100" to="100000" step='50'
                                 icon="mdi mdi-currency-bdt"></x-range-slider>

@@ -22,7 +22,10 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::with('client')->latest()->get();
-        return view('backend.invoice.viewAll', compact('invoices'));
+        $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
+        // dd($references);
+        $clients = Client::get();
+        return view('backend.invoice.viewAll', compact('invoices', 'clients', 'references'));
     }
 
 
@@ -115,15 +118,16 @@ class InvoiceController extends Controller
             'invoiceItems' => $invoiceItems,
         ]);
     }
-    function deleteInvoiceItem(int $id) {
+    function deleteInvoiceItem(int $id)
+    {
         $deleted = InvoiceItem::findOrFail($id)->delete();
         $data = [
-            'success'=> true,
+            'success' => true,
             'message' => 'Item deleted successfully'
         ];
         if (!$deleted) {
             $data = [
-                'success'=> false,
+                'success' => false,
                 'message' => 'Something went wrong'
             ];
         }
@@ -196,7 +200,7 @@ class InvoiceController extends Controller
         // update existing items
         foreach ($invoiceItems as $key => $invoiceItem) {
             $item = array_shift($items);
-            $invoiceItem = InvoiceItem::where('invoice_id' ,$invoice->id)->where('id',$invoiceItem->id)->update($item);
+            $invoiceItem = InvoiceItem::where('invoice_id', $invoice->id)->where('id', $invoiceItem->id)->update($item);
         }
         // create if items left
         if (!empty($items)) {
