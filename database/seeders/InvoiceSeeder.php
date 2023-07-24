@@ -33,6 +33,7 @@ class InvoiceSeeder extends Seeder
                 'sub_total' => $subTotal,
                 'total' => $subTotal - $discount,
             ]);
+            sleep(0.5);
             InvoiceItem::factory(1)->create([
                 'invoice_id' => $key,
                 'rate' => $rate,
