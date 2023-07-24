@@ -8,13 +8,19 @@
             {{ $attributes->merge(['class' => 'btn rounded waves-effect waves-light'])->merge(['style' => $attributes->prepends('font-weight:500;')]) }}>{{ $slot }}</button>
     @break
 
+    @case('button')
+        <button
+            {{ $attributes->merge(['class' => 'btn rounded waves-effect waves-light'])->merge(['style' => $attributes->prepends('font-weight:500;')]) }}>{{ $slot }}</button>
+    @break
+
     @case('edit')
         <a
             {{ $attributes->merge(['class' => 'btn rounded btn-info waves-effect waves-light   '])->merge(['style' => $attributes->prepends('font-weight:500;')]) }}>Edit</a>
     @break
+
     @case('custom')
         <a
-            {{ $attributes->merge(['class' => 'btn rounded waves-effect waves-light'])->merge(['style' => $attributes->prepends('font-weight:500;')]) }}>{{$slot}}</a>
+            {{ $attributes->merge(['class' => 'btn rounded waves-effect waves-light'])->merge(['style' => $attributes->prepends('font-weight:500;')]) }}>{{ $slot }}</a>
     @break
 
     @case('delete')

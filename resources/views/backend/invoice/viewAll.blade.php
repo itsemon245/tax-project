@@ -4,17 +4,22 @@
         ->subYears(20)
         ->format('Y');
     $to = (int) now()->format('Y');
-    
-    $months = [];
-    foreach (range(1, 12) as $i) {
-        $dt = now();
-        $dt->month = $i;
-        $months[] = $dt->format('F');
-    }
 @endphp
 
 @push('customCss')
     <link rel="stylesheet" href="{{ asset('libs/nouislider/dist/nouislider.min.css') }}">
+    <script>
+        function customToolTip(value, name) {
+            let index = parseInt(value.toFixed(0)) - 1
+            let months = [
+                "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+                "November", "December"
+            ]
+            if (name = name) {
+                return months[index];
+            }
+        }
+    </script>
 @endpush
 
 @section('content')
@@ -23,57 +28,49 @@
     <x-backend.ui.section-card name="Invoices">
 
         <div id="advance-search" class="d-inline-block d-none"
-            style="border-radius: 0 25px 25px 0; border: 2px solid var(--ct-gray-500);padding:3.5px 8px;" role="button">
-            <span class="mdi mdi-filter-variant fs-5"></span> Advanced Search <span class="mdi mdi-chevron-down fs-5"></span>
+            style="border-radius:50px; border: 2px solid var(--ct-gray-500);padding:3.5px 8px;" role="button">
+            <span class="mdi mdi-filter-variant fs-5"></span> Advanced Search <span id="chevron-icon"
+                class="mdi mdi-chevron-down fs-5"></span>
         </div>
-        <div id="advance-search-options" class="card" style="border: 2px solid var(--ct-gray-500);">
-            <form id="parsely-form" action="javasript: void(0);">
+        <div id="advance-search-options" class="card rounded-3 d-none mt-2" style="border: 2px solid var(--ct-gray-500);">
+            <form action="javasript: void(0);">
                 <div class="card-body">
-                    <div class="d-flex gap-3 align-items-center">
-                        <x-backend.form.select-input label="From Year" placeholder="From Year">
-                            @foreach (range($to, $from) as $year)
-                                <option value="{{ $year }}">{{ $year }}</option>
+                    <div class="row">
+                        <x-backend.form.select-input label="Payment Stauts" placeholder="Payment Stauts">
+                            @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
+                                <option value="{{ $status }}">{{ str($status)->title() }}</option>
                             @endforeach
                         </x-backend.form.select-input>
-                        <x-backend.form.select-input label="To Year" placeholder="To Year">
-                            @foreach (range($to, $from) as $year)
-                                <option value="{{ $year }}">{{ $year }}</option>
-                            @endforeach
-                        </x-backend.form.select-input>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <x-backend.form.select-input label="From Month" placeholder="From Month">
-                            @foreach ($months as $key => $month)
-                                <option value="{{ --$key }}">{{ $month }}</option>
-                            @endforeach
-                        </x-backend.form.select-input>
-                        <x-backend.form.select-input label="To Month" placeholder="To Month">
-                            @foreach ($months as $key => $month)
-                                <option value="{{ --$key }}">{{ $month }}</option>
-                            @endforeach
-                        </x-backend.form.select-input>
-                    </div>
-                    <x-backend.form.select-input label="Payment Stauts" placeholder="Payment Stauts">
-                        @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
-                            <option value="{{ $status }}">{{ str($status)->title() }}</option>
-                        @endforeach
-                    </x-backend.form.select-input>
-                    <div class="row align-items-center">
-                        <div class="col-2">
-                            <x-backend.form.text-input class="p-1 " label="Min" name='min' />
+                        <div class="col-lg-4">
+                            <x-range-slider id="price" from="100" to="100000" step='50'
+                                icon="mdi mdi-currency-bdt"></x-range-slider>
                         </div>
+                        <div class="col-lg-4">
+                            <x-range-slider id="issue month" :from="1" :to="12" tooltips="custom">
+                            </x-range-slider>
+                        </div>
+                        <div class="col-lg-4">
+                            <x-range-slider id="issue year" :from="$from" :to="$to">
+                            </x-range-slider>
+                        </div>
+                        <div class="col-12">
+                            <div class="float-end">
+                                <x-backend.ui.button type="custom" href="{{ route('invoice.index') }}"
+                                    class="btn-sm btn-outline-danger">Reset
+                                </x-backend.ui.button>
+                                <x-backend.ui.button type="button" id="advance-search-close"
+                                    class="btn-sm btn-outline-dark">
+                                    Close
+                                </x-backend.ui.button>
+                                <x-backend.ui.button type="button" class="btn-sm btn-primary">Apply</x-backend.ui.button>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="col-8">
-                            <div id="slider" class="mt-2"></div>
-                        </div>
-                        <div class="col-2">
-                            <x-backend.form.text-input class="p-1 " label="Max" name='max' />
-                        </div>
-                    </div>
                 </div>
-                <button>Submit</button>
             </form>
         </div>
+
         <h5 class="p-3">Recently Updated</h5>
         <div class="d-none d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
             style="height:220px; overflow-x: hidden; overflow-y:hidden;">
@@ -103,59 +100,55 @@
                 </div>
             @endforeach
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <h5 class="card-header bg-soft-light text-dark">All Invoices</h5>
-                    <div class="card-body">
+        <div class="card">
+            <h5 class="card-header bg-soft-light text-dark">All Invoices</h5>
+            <div class="card-body">
 
-                        <x-backend.table.basic>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Client Info</th>
-                                    <th>Issue Date</th>
-                                    <th>Due Date</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
+                <x-backend.table.basic>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Client Info</th>
+                            <th>Issue Date</th>
+                            <th>Due Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
 
-                            <tbody>
-                                @foreach ($invoices as $key => $invoice)
-                                    <tr>
-                                        <td>{{ ++$key }}</td>
-                                        <td>{{ $invoice->client->name }}</td>
-                                        <td>{{ Carbon\Carbon::parse($invoice->issue_date)->format('d M Y') }}</td>
-                                        <td>{{ Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}</td>
-                                        <td>
-                                            <span class="fw-bold">{{ $invoice->amount_due . ' Tk' }}</span>
-                                        </td>
-                                        <td>{{ $invoice->status }}</td>
-                                        <td>
-                                            <x-backend.ui.button type="custom"
-                                                href="{{ route('invoice.show', $invoice->id) }}" class="btn-sm btn-dark">
-                                                View</x-backend.ui.button>
-                                            <x-backend.ui.button type="delete"
-                                                action="{{ route('invoice.destroy', $invoice->id) }}" class="btn-sm" />
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </x-backend.table.basic>
+                    <tbody>
+                        @foreach ($invoices as $key => $invoice)
+                            <tr>
+                                <td>{{ ++$key }}</td>
+                                <td>{{ $invoice->client->name }}</td>
+                                <td>{{ Carbon\Carbon::parse($invoice->issue_date)->format('d M Y') }}</td>
+                                <td>{{ Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}</td>
+                                <td>
+                                    <span class="fw-bold">{{ $invoice->amount_due . ' Tk' }}</span>
+                                </td>
+                                <td>{{ $invoice->status }}</td>
+                                <td>
+                                    <x-backend.ui.button type="custom" href="{{ route('invoice.show', $invoice->id) }}"
+                                        class="btn-sm btn-dark">
+                                        View</x-backend.ui.button>
+                                    <x-backend.ui.button type="delete"
+                                        action="{{ route('invoice.destroy', $invoice->id) }}" class="btn-sm" />
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </x-backend.table.basic>
 
-                    </div> <!-- end card body-->
-                </div> <!-- end card -->
-            </div><!-- end col-->
-        </div>
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+
 
     </x-backend.ui.section-card>
 
     <!-- end row-->
 
     @push('customJs')
-        <script src="{{ asset('libs/nouislider/dist/nouislider.min.js') }}"></script>
         <script>
             $(document).ready(function() {
                 const filterWrapper = $('#basic-datatable_filter')
@@ -166,6 +159,10 @@
                 const search = $('#basic-datatable_filter input[type="search"]')
                 const searchLabel = search.parent()
                 const advanceSearch = $('#advance-search')
+                const advanceSearchOptions = $('#advance-search-options')
+                advanceSearchOptions.removeClass('d-none')
+                advanceSearchOptions.hide()
+
 
                 search
                     .removeClass('form-control form-control-sm')
@@ -180,7 +177,7 @@
                     .prepend('<span class="fas fa-search"></span>')
                     .css({
                         'border': '2px solid var(--ct-gray-500)',
-                        'border-radius': '50px 0 0 50px',
+                        'border-radius': '50px',
                         'padding': '4px 1rem',
                         'display': 'inline-flex',
                         'align-items': 'baseline',
@@ -189,43 +186,21 @@
 
                 console.log(searchLabel);
                 filterWrapper.append(advanceSearch.removeClass('d-none'))
+                $('#basic-datatable_wrapper').children().first().after(advanceSearchOptions);
+                advanceSearch.click(e => {
+                    e.preventDefault()
+                    advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-down')
+                    advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-up')
+                    $('#advance-search-options').slideToggle()
+                })
+                $('#advance-search-close').click(e => {
+                    e.preventDefault()
+                    advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-down')
+                    advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-up')
+                    $('#advance-search-options').slideToggle()
+                })
 
-                let slider = document.getElementById('slider');
-                let formatForSlider = {
-                    from: function(formattedValue) {
-                        return Number(formattedValue);
-                    },
-                    to: function(numericValue) {
-                        return Math.round(numericValue);
-                    }
-                };
 
-
-                noUiSlider.create(slider, {
-                    start: [100, 10_000],
-                    connect: true,
-                    format: formatForSlider,
-                    tooltips: {
-                        // tooltips are output only, so only a "to" is needed
-                        to: function(numericValue) {
-                            return "&#2547 " + numericValue.toFixed(2);
-                        }
-                    },
-                    step: 50,
-                    range: {
-                        'min': 100,
-                        'max': 10_000
-                    }
-                });
-
-                // console.log(slider.noUiSlider.get(true));
-
-                slider.noUiSlider.on('update', (values) => {
-                    let min = parseInt(values[0])
-                    let max = parseInt(values[1])
-                    $('input[name="min"]').val(min)
-                    $('input[name="max"]').val(max)
-                });
             });
         </script>
     @endpush
