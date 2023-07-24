@@ -39,6 +39,7 @@ class CalendarController extends Controller
         $event->title = $request->event_name;
         $event->client_id = $request->client;
         $event->service = $request->service;
+        $event->service = 'others';
         $event->start = $request->start_date;
         $event->description = $request->event_description;
         $event->save();

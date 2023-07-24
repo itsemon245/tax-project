@@ -16,8 +16,25 @@ class InvoiceItemFactory extends Factory
      */
     public function definition(): array
     {
+        $rate = fake()->numberBetween(10, 1000);
+        $qty = fake()->numberBetween(1, 50);
+        $taxRate = fake()->numberBetween(10, 40);
+        $total = ($rate * $qty);
+        $taxes = [
+            [
+                'name' => fake()->word(),
+                'rate' => $taxRate,
+                'number' => fake()->numberBetween(10, 100),
+            ]
+        ];
         return [
-            //
+            'invoice_id' => 1,
+            'name' => fake()->realText(15),
+            'description' => fake()->realText(),
+            'rate' => $rate,
+            'qty' => $qty,
+            'total' => $total,
+            'taxes' => json_encode($taxes),
         ];
     }
 }
