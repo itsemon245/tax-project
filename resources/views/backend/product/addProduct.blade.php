@@ -33,16 +33,16 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <x-backend.form.text-input label="Title" required type="text"
-                                                name="title">
+                                                name="title" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Sub Title" type="text" name="sub_title">
+                                            <x-backend.form.text-input label="Sub Title" type="text" name="sub_title" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <x-backend.form.select-input id="category" label="Category" name="category"
-                                                placeholder="Choose Category..." onchange="getSubCategories(this)">
+                                                placeholder="Choose Category..." required>
                                                 @forelse ($categories as $category)
                                                     <option value="{{ $category->id }}">
                                                         {{ $category->name }}
@@ -53,8 +53,11 @@
                                             </x-backend.form.select-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.select-input id="sub-category" label="Sub Category"
-                                                name="category" placeholder="Choose Category first..." name="sub_category">
+                                            <x-backend.form.select-input id="type" label="Product Type" placeholder="Choose Type" name="type" required>
+                                                <option value="Silver">Sliver</option>
+                                                <option value="Gold">Silver</option>
+                                                <option value="Platinum">Platinum</option>
+                                                <option value="Exclusive">Exclusive</option>
                                             </x-backend.form.select-input>
                                         </div>
                                         <div class="col-md-6">
@@ -66,30 +69,18 @@
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="mt-1">
                                                 <x-backend.form.select-input id="discount-type" label="Discount Type"
-                                                    required name="discount_type">
+                                                    name="discount_type">
                                                     <option value="0" selected>Percentage</option>
                                                     <option value="1">Fixed</option>
                                                 </x-backend.form.select-input>
-                                            </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Ratting" type="number" name="ratting">
-                                            </x-backend.form.text-input>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <x-backend.form.text-input label="REVIEWS" type="text" name="reviews">
-                                            </x-backend.form.text-input>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mt-1">
-                                                <x-backend.form.select-input id="most-populer" label="Most Popular" required
+                                                <x-backend.form.select-input id="most-populer" label="Most Popular"
                                                     name="most_popular">
                                                     <option value="0" selected>No</option>
                                                     <option value="1">Yes</option>
                                                 </x-backend.form.select-input>
-                                            </div>
                                         </div>
                                         <div class="col-md-12">
                                             {{-- Dynamic Package Feature --}}
@@ -137,10 +128,6 @@
 @endsection
 
 @push('customJs')
-    {{-- quillJs Script  --}}
-    {{-- <script src="{{ asset('backend/assets/libs/quill/quill.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/pages/form-quilljs.init.js') }}"></script> --}}
-    {{-- quillJs Script  --}}
     <script>
         const featureLength = () => {
             $('#packacgeFeaturesInputs').children().length < 2 ?
@@ -157,8 +144,8 @@
                         </x-backend.form.text-input>
                     </div>
                     <div class="col-md-6">
-                        <div class="mt-1">
-                            <label for="color" class="form-label">Color</label>
+                        <div class="mb-2">
+                            <label for="color" class="form-label mb-0">Color</label>
                             <select class="form-select" id="color" name="color[]">
                                 <option value="#282e38" selected>Black</option>
                                 <option value="#1abc9c">Green</option>
@@ -178,31 +165,5 @@
             featureLength()
         }
 
-        const getSubCategories = (e) => {
-            const category_id = e.value
-            let url = "{{ route('getSubcategory', ':categoryId') }}"
-            url = url.replace(':categoryId', category_id)
-
-            $.ajax({
-                type: 'POST',
-                url: url,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(data) {
-                    const subCategories = data.map(subCategory =>
-                        `<option value="${subCategory.id}">${subCategory.name}</option>`).join(
-                        '')
-                    $("#sub-category").html('')
-                    $("#sub-category").html(
-                        `<option selected disabled>Choose Sub Category...</option>` +
-                        subCategories
-                    )
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
-        }
     </script>
 @endpush

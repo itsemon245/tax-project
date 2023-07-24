@@ -72,16 +72,15 @@
                             <li>
                                 <a href="{{ route('product.index') }}">View Products</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="{{ route('product-category.index') }}">Category</a>
                             </li>
                             <li>
                                 <a href="{{ route('product-subcategory.index') }}">Sub-Category</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
-
                 <li>
                     <a href="#sidebarHeroSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
@@ -91,15 +90,46 @@
                     <div class="collapse" id="sidebarHeroSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('banner.index') }}">
-                                    View Hero
-                                </a>
                                 <a href="{{ route('banner.create') }}">Create Hero
 
+                                </a>
+                                <a href="{{ route('banner.index') }}">
+                                    View Hero
                                 </a>
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li>
+                    <a href="#caseStudySection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span> Case Study Section </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="caseStudySection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('case.study.backend.index') }}">Create Hero
+
+                                </a>
+                                <a href="{{ route('case.study.backend.show.all') }}">
+                                    View Hero
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="{{ route('project-discussion.index') }}">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Project Discussion</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('industry.index') }}">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Industries</span>
+                    </a>
                 </li>
                 <li>
                     <a href="#sidebarAboutPage" data-bs-toggle="collapse">
@@ -205,6 +235,33 @@
                             <li>
                                 <a href="{{ route('invoice.index') }}">
                                     View All
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#user-appointmentSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>User Appointments</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="user-appointmentSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('user-appointments.index') }}">
+                                    Pending For Approval
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user-appointments.approved') }}">
+                                    Approved
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user-appointments.completed') }}">
+                                    Completed
                                 </a>
                             </li>
 
@@ -387,18 +444,24 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#videoSection" data-bs-toggle="collapse">
+                    <a href="#courseSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Video</span>
+                        <span>Courses</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="videoSection">
+                    <div class="collapse" id="courseSection">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('video.create') }}">Create</a>
+                                <a href="{{ route('course.create') }}">Create Course</a>
                             </li>
                             <li>
-                                <a href="{{ route('video.index') }}">View</a>
+                                <a href="{{ route('course.backend.index') }}">View Courses</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('video.create') . '?course_id=1' }}">Create Video</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('video.index') . '?course_id=1' }}">View Videos</a>
                             </li>
                         </ul>
                     </div>

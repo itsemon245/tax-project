@@ -106,6 +106,10 @@ For productivity & efficiency this project is included with some components and 
       </x-backend.table.basic>
       
      ```
+     4. Review
+        ```blade
+        <x-review-section :item="$expert" :reviews="$reviews" :slug="'expert_profile'" />
+        ```
      
  - ### Helpers
  1. #### useImage

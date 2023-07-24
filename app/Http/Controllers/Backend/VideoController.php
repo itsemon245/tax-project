@@ -8,6 +8,7 @@ use App\Http\Requests\VideoRequest;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditVideoRequest;
+use App\Models\Course;
 use Illuminate\Support\Facades\Storage;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
@@ -17,18 +18,38 @@ class VideoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function videosByCourse(int $id)
+    {
+        $course = Course::where('id', $id)->first(['id', 'name']);
+        $videos = $course->videos()->latest()->get();
+        return view("backend.video.viewVideo", compact('videos', 'course'));
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
     {
         $videos = Video::latest()->get();
-        return view("backend.video.viewVideo", compact('videos'));
+        $course = Course::where('id', $request->course_id)->first(['id', 'name']);
+        return view("backend.video.viewVideo", compact('videos', 'course'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('backend.video.createVideo');
+        $courseId = (int) $request->course_id;
+        $courses = Course::latest()->get(['id', 'name']);
+        $section = Video::latest()->pluck('section')->first();
+        return view('backend.video.createVideo', compact('courses', 'courseId', 'section'));
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function show(Video $video)
+    {
+        return view('backend.video.showVideo', compact('video'));
     }
 
     /**
@@ -36,18 +57,22 @@ class VideoController extends Controller
      */
     public function store(VideoRequest $request)
     {
-        $data = $request->validated();
-
+        $course = Course::find($request->course_id);
+        $path = "uploads/course/videos/$course->name/$request->file_name";
+        if (Storage::exists($request->video)) {
+            Storage::move($request->video, 'public/' . $path,);
+        }
         Video::create(
             [
-                "title"       => $data['title'],
-                "video"       => $data['video'],
+                "course_id"       => $course->id,
+                "title"       => str($request->title)->title(),
+                "section"       => str($request->section)->title(),
+                "video"       => asset('storage/' . $path),
                 "description" => $request->description
             ]
         );
 
-        return redirect()
-            ->route("video.index")
+        return back()
             ->with(array(
                 'message'    => "Video Created Successfully",
                 'alert-type' => 'success',
@@ -57,26 +82,37 @@ class VideoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
         $video =  Video::find($id);
-        return view("backend.video.editVideo", compact('video'));
+        $courses = Course::latest()->get(['id', 'name']);
+        return view("backend.video.editVideo", compact('video', 'courses'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditVideoRequest $request, string $id)
+    public function update(EditVideoRequest $request, Video $video)
     {
-        $validateData = $request->validated();
-        Video::find($id)->update([
-            "title"       => $validateData['title'],
-            "video"       => $validateData['video'],
+        $course = Course::find($request->course_id);
+        $videoPath = $video->video;
+        if ($request->video) {
+            $path = "uploads/course/videos/$course->name/$request->file_name";
+            if (Storage::exists($request->video)) {
+                $moved  = Storage::move($request->video, 'public/' . $path,);
+                $deleted = $moved ? deleteFile($video->video) : false;
+                $videoPath = $moved & $deleted ? asset('storage/' . $path) : $video->video;
+            }
+        }
+        $video->update([
+            "course_id"   => $course->id,
+            "title"       => str($request->title)->title(),
+            "section"     => str($request->section)->title(),
+            "video"       => $videoPath,
             "description" => $request->description
         ]);
 
-        return redirect()
-            ->route("video.index")
+        return redirect(route('route.index') . "?course_id=1")
             ->with(array(
                 'message' => "Video Updated Successfully",
                 'alert-type' => 'success',
@@ -86,9 +122,10 @@ class VideoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Video $video)
     {
-        Video::find($id)->delete();
+        deleteFile($video->video);
+        $video->delete();
         return back()->with(array(
             'message'    => "Video Deleted Successfully",
             'alert-type' => 'success',
@@ -106,15 +143,16 @@ class VideoController extends Controller
         if ($fileReceived->isFinished()) { // file uploading is complete / all chunks are uploaded
             $file = $fileReceived->getFile(); // get file
             $extension = $file->getClientOriginalExtension();
-            $fileName = md5(time()) . '.' . $extension; // a unique file name
+            $name = str($file->getClientOriginalName())->replaceLast(".$extension", '');
+            $fileName =  str($name)->slug() . '-' . timestamp() . '.' . $extension; // a unique file name
 
-            $filePath  = public_path() . '/uploads/videos';
-            $file->move($filePath, $fileName);
-            $path = URL::asset("/uploads/videos/{$fileName}");
+
+            $path = $file->storeAs('/videos', $fileName, 'temp');
 
             return [
-                'path' => $path,
-                'filename' => $fileName
+                'path' => "temp/$path",
+                'fileName' => $fileName,
+                'url' => asset('storage/temp/' . $path)
             ];
         }
 

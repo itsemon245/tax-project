@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Frontend\Page;
 
+use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
-use App\Http\Controllers\Controller;
-use App\Models\Service;
 use App\Models\ServiceSubCategory;
+use App\Http\Controllers\Controller;
 
 class ServicePageController extends Controller
 {
@@ -18,19 +19,17 @@ class ServicePageController extends Controller
         $testimonials = getRecords('testimonials');
         $banners = getRecords('banners');
         $isTaxServices = str(url()->current())->contains('service/category/1');
-        $productCategory = null;
+        $products = null;
         if ($isTaxServices) {
-            $productCategory = ProductCategory::with('productSubCategories', "productSubCategories.products")->find(2);
+            $products = Product::mappedProducts(['product_category_id' => 2]);
         }
-        // dd($productCategory->productSubCategories);
-        // dd($productCategory->productSubCategories[0]->products);
         $subCategories = ServiceSubCategory::where('service_category_id', $id)->with('serviceCategory')->get();
-        return view('frontend.pages.services.subCategories', compact('productCategory','isTaxServices', 'subCategories', 'appointments', 'testimonials', 'banners', 'infos1', 'infos2'));
+        return view('frontend.pages.services.subCategories', compact('products','isTaxServices', 'subCategories', 'appointments', 'testimonials', 'banners', 'infos1', 'infos2'));
     }
 
     public function servicesUnderSub($id)
     {
-        $services = Service::where('service_sub_category_id', $id)->with('serviceSubCategory')->get();
+        $services = Service::where('service_sub_category_id', $id)->with('serviceSubCategory')->withAvg('reviews', 'rating')->withCount('reviews')->get();
         return view('frontend.pages.services.index', compact('services'));
     }
 

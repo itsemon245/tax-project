@@ -18,61 +18,20 @@
         <div class="row mx-lg-5 mx-2">
             @foreach ($subCategories as $sub)
             <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center">
-                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
-                        src="{{ useImage($sub->image) }}" alt="">
+                <div class="d-flex flex-column align-items-center border rounded shadow-sm p-2 mb-3">
+                    <a href="{{ route('service.sub', $sub->id) }}">
+                        <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
+                            src="{{ useImage($sub->image) }}" alt="">
+                    </a>
                     <a class="text-dark text-capitalize" href="{{route('service.sub', $sub->id)}}"><h6>{{$sub->name}}</h6></a>
-                    <p class="text-center text-muted">{{$sub->description}}</p>
+                    <a href="{{route('service.sub', $sub->id)}}" class="text-center text-muted">{{$sub->description}}</a>
                 </div>
             </div>
             @endforeach
             
         </div>
     </section>
-    <section id="counter-section" class="px-lg-5 px-2 my-5">
-        <div class="row mx-lg-5 mx-2">
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex justify-content-around align-items-center">
-                    <img style="width:120px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <h2 class="counter-up m-0" style="font-size: 46px; color: #1abcfe; font-weight: 700;">100</h2>
-                        <p class="m-0" style="font-size: 16px;"><b>Users</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex justify-content-around align-items-center">
-                    <img style="width:120px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <h2 class="counter-up m-0" style="font-size: 46px; color: #1abcfe; font-weight: 700;">100</h2>
-                        <p class="m-0" style="font-size: 16px;"><b>Users</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex justify-content-around align-items-center">
-                    <img style="width:120px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <h2 class="counter-up m-0" style="font-size: 46px; color: #1abcfe; font-weight: 700;">100</h2>
-                        <p class="m-0" style="font-size: 16px;"><b>Users</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex justify-content-around align-items-center">
-                    <img style="width:120px;aspect-ratio:1/1;" class="rounded rounded-circle"
-                        src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
-                    <div class="d-flex flex-column justify-content-center align-items-center">
-                        <h2 class="counter-up m-0" style="font-size: 46px; color: #1abcfe; font-weight: 700;">100</h2>
-                        <p class="m-0" style="font-size: 16px;"><b>Users</b></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+   
     <x-frontend.appointment-section :sections="$appointments" />
     <x-frontend.info-section :title="$infos1[0]->title" class="text-capitalize">
         @foreach ($infos1 as $info)

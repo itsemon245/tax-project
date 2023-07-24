@@ -11,10 +11,8 @@
         </h2>
         <h5 class="" style="font-weight: 300;">
             <span class="badge bg-danger" style="font-weight: 400;">
-                {{ explode(' ' , $product->sub_title)[0] }}
-            </span> {{
-                join(" ",array_slice(explode(' ' , $product->sub_title), 1))
-            }}
+                {{ explode(' ', $product->sub_title)[0] }}
+            </span> {{ join(' ', array_slice(explode(' ', $product->sub_title), 1)) }}
         </h5>
         <h3 class="product-price mb-0">
             Tk. {{ Str::lower($product->title) !== 'free' ? $product->price : '0.' }}
@@ -27,18 +25,16 @@
 
         <div class="d-flex justify-content-center my-2">
             <div class="cta d-flex flex-column align-items-center">
-                <button class="btn btn-success text-light w-100" style="font-weight: 600">Start
-                    Now</button>
-                <div class="rating">
-                    <p class="text-muted float-start me-1 mb-0">
-                        <span class="mdi mdi-star text-warning"></span>
-                        <span class="mdi mdi-star text-warning"></span>
-                        <span class="mdi mdi-star text-warning"></span>
-                        <span class="mdi mdi-star text-warning"></span>
-                        <span class="mdi mdi-star text-warning"></span>
-                    </p>
+                <a href="{{ route('product.choose', $product->id) }}" class="btn btn-success text-light w-100"
+                    style="font-weight: 600">Start
+                    Now</a>
+                <div class="rating mt-2">
+                    <a href="{{ route('review.item', ['product', $product->id]) }}" class="mb-1">
+                        <x-avg-review-stars :avg="$product->reviews_avg_rating" />
+                    </a>
                     <p class="text-center mb-0">
-                        <a href="" class="text-muted">( 36 Reviews )</a>
+                        <a href="{{ route('review.item', ['product', $product->id]) }}" class="text-muted">(
+                            {{ $product->reviews_count }} Reviews )</a>
                     </p>
                 </div>
             </div>

@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\CaseStudyPage;
+use App\Models\ExpertProfile;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +25,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BannerSeeder::class,
             ProductCategorySeeder::class,
-            ProductSubCategorySeeder::class,
             ProductSeeder::class,
             AppointmentSeeder::class,
             InfoSeeder::class,
@@ -39,6 +41,9 @@ class DatabaseSeeder extends Seeder
             InvoiceItemSeeder::class,
             MapSeeder::class,
             BookSeeder::class,
+            CaseStudyPackageSeeder::class,
+            ExpertProfileSeeder::class,
+            CourseSeeder::class,
         ]);
     }
 }

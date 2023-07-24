@@ -1,21 +1,21 @@
 @extends('backend.layouts.app')
 
-
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Video', 'View']" />
+    <x-backend.ui.breadcrumbs :list="['Course', 'Video', 'View']" />
 
     <x-backend.ui.section-card name="Video List">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <x-backend.ui.button type="custom" :href="route('video.create') . '?course_id=' . $course->id" class="btn-success btn-sm mb-2"><span
+                                class="fw-bold fs-5 me-1">+</span>New Video</x-backend.ui.button>
 
                         <x-backend.table.basic>
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Video</th>
-                                    <th>Title</th>
+                                    <th>No</th>
+                                    <th>Name</th>
                                     <th>Description</th>
                                     <th>Action</th>
                                 </tr>
@@ -26,21 +26,24 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>
-                                            <video width="320" height="240" controls>
-                                                <source src="{{ $video->video }}" type="video/mp4">
-                                            </video>
-                                        </td>
-                                        <td>
-                                            {{ Str::limit($video->title, 20, '...') }}
-                                            <br>
-                                            <span class="text-muted" title="Status">Status: {!! $video->status
-                                                ? "<span class='badge bg-success'>Active</span>"
-                                                : "<span class='badge bg-danger'>Deactive</span>" !!}</span>
+                                            <a href="{{ route('video.show', $video->id) }}"
+                                                class="d-flex align-items-start gap-1 text-reset">
+                                                <span class="mdi mdi-television-play"></span>
+                                                <div class="p-1">
+                                                    <p class="fw-medium mb-0">
+                                                        {{ str($video->title)->title() }}
+                                                    </p>
+                                                    <span class="text-muted">Section: {{ $video->section }}</span>
+                                                </div>
+                                            </a>
+
+
                                         </td>
                                         <td>{!! Str::limit($video->description, 100, '...') !!}</td>
                                         <td>
-                                            <a href="{{ route('video.edit', $video->id) }}"
-                                                class="btn btn-info btn-sm">Edit</a>
+                                            <x-backend.ui.button type="custom" class="btn-sm btn-dark" :href="route('video.show', $video->id)">
+                                                View</x-backend.ui.button>
+                                            <x-backend.ui.button type="edit" class="btn-sm" :href="route('video.edit', $video->id)" />
                                             <button onclick='deleteVideo("videoDelete-{{ $video->id }}")'
                                                 class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
                                             <form class="d-none" id="videoDelete-{{ $video->id }}"

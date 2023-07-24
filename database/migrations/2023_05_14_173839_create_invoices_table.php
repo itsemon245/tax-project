@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamp('payment_date')->nullable();
             $table->timestamp('due_date')->default(now()->addDays(7)->format('Y-m-d'));
             $table->timestamp('issue_date')->default(now()->format('Y-m-d'));
-            $table->enum('status',['overdue', 'outstanding', 'draft', 'partial', 'sent', 'paid'])->default('draft');
+            $table->enum('status',['overdue', 'due', 'draft', 'partial', 'sent', 'paid'])->default('draft');
             $table->timestamps();
         });
     }

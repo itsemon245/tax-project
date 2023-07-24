@@ -1,20 +1,31 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ExpertController;
+use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\ProjectDiscussionController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\AppointmentController;
-use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\Frontend\User\UserDocController;
+use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Models\Book;
+use App\Models\CaseStudy;
+use App\Models\Course;
+use App\Models\Product;
+use App\Models\Purchase;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +45,12 @@ Route::prefix('service')->name('service.')->controller(ServicePageController::cl
     Route::get('sub/{id}', 'servicesUnderSub')->name('sub');
     Route::get('service/{id}', 'service')->name('view');
 });
+Route::prefix('product')->name('product.')->controller(ProductPageController::class)->group(function () {
+    Route::get('{id}/choose', 'choose')->name('choose');
+});
+
+//Project Dicsussion CRUD
+Route::resource('project-discussion', ProjectDiscussionController::class);
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('view');
@@ -47,9 +64,11 @@ Route::resource('user-doc', UserDocController::class);
 //  uncategorized pages
 
 Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
+Route::get('/make-appointment/virtual', [PageController::class, 'appointmentVirtual'])->name('appointment.virtual');
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
+Route::get('/contact', [PageController::class, 'contactPage'])->name('contact');
 Route::get('/office', [PageController::class, 'officePage'])->name('office');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 
@@ -61,9 +80,8 @@ Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'
 
 
 Route::controller(ExpertController::class)->prefix('expert')->name('expert.')->group(function () {
-    Route::get('/categories', 'categories')->name('categories');
     Route::get('/browse', 'browse')->name('browse');
-    Route::get('/profile', 'profile')->name('profile');
+    Route::get('/profile/{id}', 'profile')->name('profile');
 });
 
 // these route will only be visible to 2nd navigation 
@@ -74,34 +92,52 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
 });
-
-// Review Routes
-Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function(){
-    Route::get('/{slug}', 'index')->name('index');
-    Route::get('/{slug}/create', 'create')->name('create');
-    Route::post('/{slug}/store', 'store')->name('store');
-    Route::get('/{slug}/edit', 'edit')->name('edit');
-    Route::get('/{slug}/update', 'update')->name('update');
-    Route::get('/{slug}/destroy', 'destroy')->name('destroy');
+// these route will only be visible to Courses navigation 
+// ! Do not put any new routes in this group
+Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
+    Route::get('index', 'index')->name('index');
+    Route::get('{course}/show', 'show')->name('show');
+    Route::get('videos', 'videos')->name('videos');
+    Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
+        Route::get('/', 'caseStudy')->name('page');
+        Route::get('index/{package_id}', 'index')->name('index');
+        Route::get('show/{case_study_id}', 'show')->name('show');
+    });
 });
 
 
+
+// Review Routes
+Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function () {
+    Route::get('/{slug}/{id}', 'itemReview')->name('item');
+    Route::post('/{slug}/index', 'index')->name('index');
+    Route::post('/{slug}/store', 'store')->name('store');
+});
 // Route for filepond upload
 Route::post('/upload', function (Request $request) {
     $files = $request->fileponds;
     $paths = [];
     foreach ($files as $key => $file) {
-        $paths[] = saveImage($file, "uploads/filepond",'', 'temp');
+        $paths[] = saveImage($file, "uploads/filepond", '', 'temp');
     }
-    $pathString = implode(",",$paths);
+    $pathString = implode(",", $paths);
     return response($pathString, 200, [
         'content_type' => 'text/plain'
     ]);
 });
 
-Route::get('get-mac', function(){
+Route::get('test', function () {
+    $product = Product::find(1);
+    // $products = $product->purchased('product');
+    dd($product->isPurchased);
+    return view('test');
+});
+
+Route::get('get-mac', function () {
     dd(shell_exec('netstat -ie'));
 });
-Route::get('get-ip', function(Request $request){
+Route::get('get-ip', function (Request $request) {
     dd($request->ip());
 });
+
+Route::GET('/test-mcq', [MCQController::class, 'index'])->name('mcq.test');

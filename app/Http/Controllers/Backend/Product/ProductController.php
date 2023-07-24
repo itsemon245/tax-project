@@ -18,8 +18,8 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('productCategory:id,name')
-            ->with('productSubCategory:id,name')
-            ->with('user:id,name')
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
             ->get();
 
         return view('backend.product.viewProducts', compact('products'));
@@ -45,15 +45,13 @@ class ProductController extends Controller
         Product::create(
             [
                 'product_category_id' => $request->category,
-                'product_sub_category_id' => $request->sub_category,
+                'type' => $request->type,
                 'user_id' => Auth::user()->id,
                 'title' => $request->title,
                 'sub_title' => $request->sub_title,
                 'price' => $request->price,
                 'discount' => $request->discount,
                 'package_features' => json_encode($packageFeature),
-                'ratting' => $request->ratting,
-                'reviews' => $request->reviews,
                 'description' => $request->description,
                 'is_discount_fixed' => $request->discount_type,
                 'is_most_popular' => $request->most_popular,
@@ -91,26 +89,22 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $request->validated();
         $packageFeature = $this->createJsonPackage($request->package_feature, $request->color);
 
         Product::find($product->id)
             ->update(
                 [
                     'product_category_id' => $request->category,
-                    'product_sub_category_id' => $request->sub_category,
+                    'type' => $request->type,
                     'user_id' => Auth::user()->id,
                     'title' => $request->title,
                     'sub_title' => $request->sub_title,
                     'price' => $request->price,
                     'discount' => $request->discount,
                     'package_features' => json_encode($packageFeature),
-                    'ratting' => $request->ratting,
-                    'reviews' => $request->reviews,
                     'description' => $request->description,
                     'is_discount_fixed' => $request->discount_type,
                     'is_most_popular' => $request->most_popular,
-                    'status' => $request->status,
                 ]
             );
 
@@ -137,18 +131,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Get Sub Category According Category
-     * 
-     * @param App\Models\ProductCategory\id
-     * @return response\json
-     */
-    public function getSubCategories($categoryId)
-    {
-        $subCategories = ProductSubCategory::where('product_category_id', $categoryId)->get(['id', 'name']);
-        return response()->json($subCategories);
-    }
-
-    /**
      * Get Category
      * 
      * @return response\json 
@@ -161,9 +143,7 @@ class ProductController extends Controller
     /**
      * Create Package Json FIle
      * 
-     * @param $this->store
-     * @param $this->update
-     * @return Array[]
+     * @return array
      */
     public function createJsonPackage($package_features, $colors)
     {
