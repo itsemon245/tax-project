@@ -15,17 +15,25 @@ class Course extends Model
         'page_learn_more' => Json::class,
         'page_topics' => Json::class,
     ];
-    
-    function videos() {
+
+    function videos()
+    {
         return $this->hasMany(Video::class);
     }
-    public function purchase(){
+    public function purchase()
+    {
         return $this->morphOne(Purchase::class, 'purchasable');
     }
-    public function isPurchased(int $userId = null){
+    public function isPurchased(int $userId = null)
+    {
         if ($userId === null) {
             $userId = auth()->id();
         }
         return $this->morphOne(Purchase::class, 'purchasable')->where('user_id', $userId);
+    }
+
+    function exams()
+    {
+        return $this->hasMany(Exam::class);
     }
 }
