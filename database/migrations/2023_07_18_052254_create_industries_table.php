@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('name');
             $table->longText('logo');
             $table->longText('description')->nullable();
-            $table->json('sections')->comment('{title:"title, image: "image", description: "description"}')->nullable();
             $table->timestamps();
         });
     }
