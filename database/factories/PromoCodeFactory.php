@@ -16,8 +16,10 @@ class PromoCodeFactory extends Factory
      */
     public function definition(): array
     {
+        $promoCode = fake()->countryCode();
         return [
-            //
+            'code' => $promoCode,
+
         ];
     }
 }
