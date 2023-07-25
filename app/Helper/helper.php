@@ -181,6 +181,7 @@ function picsum(string $seed = null, int $width = 720, int $height = null)
     if (!$seed) {
         $picsum = "https://picsum.photos/$width/$height";
     } else {
+        $seed = str($seed)->slug();
         $picsum = "https://picsum.photos/seed/$seed/$width/$height";
     }
 

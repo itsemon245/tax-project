@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Calendar;
 use App\Models\CaseStudyPage;
 use App\Models\ExpertProfile;
 use Illuminate\Database\Seeder;
@@ -44,6 +45,7 @@ class DatabaseSeeder extends Seeder
             CaseStudyPackageSeeder::class,
             ExpertProfileSeeder::class,
             CourseSeeder::class,
+            CalendarSeeder::class,
         ]);
     }
 }

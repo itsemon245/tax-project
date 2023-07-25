@@ -21,11 +21,12 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        $recentInvoices = Invoice::with('client')->latest()->limit(5)->get();
         $invoices = Invoice::with('client')->latest()->get();
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
         // dd($references);
         $clients = Client::get();
-        return view('backend.invoice.viewAll', compact('invoices', 'clients', 'references'));
+        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references'));
     }
 
 

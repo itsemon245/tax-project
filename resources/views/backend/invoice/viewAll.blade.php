@@ -90,9 +90,9 @@
         </div>
 
         <h5 class="p-3">Recently Updated</h5>
-        <div class="d-none d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
-            style="height:220px; overflow-x: hidden; overflow-y:hidden;">
-            <a href="{{ route('invoice.create') }}" class="" style="width: clamp(160px, 180px, 200px);">
+        <div id="latest-container" class="d-none d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
+            style="overflow-x: hidden; overflow-y:hidden;">
+            <a href="{{ route('invoice.create') }}" class="mb-2" style="width: clamp(160px, 190px, 220px);">
                 <div class="card h-100 shadow" style="border: medium dashed var(--ct-gray-400);">
                     <div class="card-body h-100">
                         <div class="d-flex flex-column align-items-center justify-content-center h-100">
@@ -102,17 +102,42 @@
                     </div>
                 </div>
             </a>
-            @foreach (range(1, 8) as $item)
-                <div class="" style="width: clamp(160px, 180px, 200px);">
-                    <div class="card h-100 shadow border border-2">
+            @foreach ($recentInvoices as $invoice)
+                @php
+                    $color = 'dark';
+                    switch ($invoice->status) {
+                        case 'sent':
+                            $color = 'success';
+                            break;
+                        case 'paid':
+                            $color = 'success';
+                            break;
+                        case 'due':
+                            $color = 'warning';
+                            break;
+                        case 'overdue':
+                            $color = 'danger';
+                            break;
+                    
+                        default:
+                            # code...
+                            break;
+                    }
+                @endphp
+                <div class="latest-items mb-2" style="width: clamp(160px, 190px, 220px);">
+                    <div class="card h-100 shadow border-top">
                         <div class="card-body">
-                            <p>0001</p>
-                            <h6>Company Name</h6>
-                            <p class='text-muted mb-0'>Issued: 1 Jul, 2023</p>
-                            <p class='text-muted mb-0'>Due: 1 Agust, 2023</p>
+                            <h5>ID:{{ $invoice->id }}</h5>
+                            <h5>{{ str($invoice->client->name)->title() }} <br> <span
+                                    class="text-muted fw-normal fs-6">Company:
+                                    {{ str($invoice->client->company_name)->title() }}</span></h5>
+                            <p class='text-muted mb-0'>Issued:
+                                {{ Carbon\Carbon::parse($invoice->issue_date)->format('d F, Y') }}</p>
+                            <p class='text-muted mb-0'>Due:
+                                {{ Carbon\Carbon::parse($invoice->due_date)->format('d F, Y') }}</p>
                         </div>
-                        <div class="bg-soft-success text-success w-100 p-1 text-center fw-bold" style="overflow:hidden;">
-                            Sent
+                        <div class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
+                            {{ str($invoice->status)->title() }}
                         </div>
                     </div>
                 </div>
@@ -169,6 +194,10 @@
     @push('customJs')
         <script>
             $(document).ready(function() {
+                let containerHeight = parseInt($('.latest-items').css('height').split('px')[0]) +4
+                console.log(containerHeight);
+                $('#latest-container').css('height', containerHeight)
+
                 const filterWrapper = $('#basic-datatable_filter')
                 // removes serach text from label
                 $('#basic-datatable_filter label').contents().filter(function() {

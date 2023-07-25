@@ -202,41 +202,30 @@
                         @foreach ($experts as $expert)
                             <div class="col-md-6">
                                 <div class="browse_content_wrapper">
-                                    <div class="d-flex">
-                                        <div class="col-lg-5">
-                                            <img src="{{ useImage($expert->image) }}" alt=""
-                                                class="browse_thumbail">
-                                            <div class="rating text-center">
-                                                <span class="mdi mdi-star rating"></span>
-                                                <span class="mdi mdi-star rating"></span>
-                                                <span class="mdi mdi-star rating"></span>
-                                                <span class="mdi mdi-star rating"></span>
-                                                <span class="mdi mdi-star rating"></span>
-                                                @isset($expert->reviews_avg_rating)
-                                                    <span class="browse_ratings">
-                                                        {{ $expert->reviews_avg_rating }} ratings
-                                                    </span>
-                                                @else
-                                                    <span class="browse_ratings">
-                                                        No Reviews Yet
-                                                    </span>
-                                                @endisset
+                                    <div class="d-flex gap-3 justify-content-center mb-3">
+                                        <div class="">
+                                            <img src="{{ useImage($expert->image) }}" width="128px" height="128px;"
+                                                alt="" class="rounded rounded-circle mb-2">
+                                            <div class="d-block">
+                                                <x-avg-review-stars :avg="$expert->reviews_avg_rating" />
                                             </div>
+                                            <div class="text-center">{{$expert->reviews_count}} Reviews</div>
                                         </div>
-                                        <div class="col-lg-7">
+                                        <div class="">
                                             <h2 class="browse_card_name">{{ $expert->name }}</h2>
                                             <span class="badge bg-success p-2">{{ $expert->post }}</span>
                                             <h4 class="browse_card_exp">Experience: {{ $expert->experience }} years</h4>
-                                            <h5 class="browse_card_company">Business, Individual,Company</h5>
+                                            <h5 class="text-primary fw-medium">Business, Individual, Company</h5>
                                             <p class="browse_card_price">Fee: 500/-</p>
                                         </div>
                                     </div>
-                                    <div class="profile text-center">
-                                        <button class="browse_card_cons">
-                                            Consultation
-                                        </button>
-                                        <a href="{{ route('expert.profile', $expert->id) }}" class="browse_card_view">View
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <a href="{{ route('expert.profile', $expert->id) }}"
+                                            class="btn btn-outline-primary fw-medium">View
                                             Profile</a>
+                                        <a href="#" class="btn btn-primary fw-medium">
+                                            Consultation
+                                        </a>
                                     </div>
                                 </div>
                             </div>

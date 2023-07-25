@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Testing\Fakes\Fake;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Calendar>
@@ -16,8 +17,19 @@ class CalendarFactory extends Factory
      */
     public function definition(): array
     {
+        $startDates = [now()];
+        foreach (range(1, 7) as $key) {
+
+            $startDates[] = now()->addDays($key);
+        }
         return [
-            //
+            'client_id' => random_int(1, 5),
+            'invoice_id' => random_int(1, 5),
+            'service' => fake()->word(),
+            'type' => fake()->randomElement(['overdue', 'due', 'draft', 'partial', 'sent', 'paid', 'others']),
+            'title' => fake()->words(3, true),
+            'start' => fake()->randomElement($startDates),
+            'description' => fake()->realText(),
         ];
     }
 }
