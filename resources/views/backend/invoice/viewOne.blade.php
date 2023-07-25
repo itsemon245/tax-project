@@ -109,7 +109,7 @@
 
 @section('content')
     <!-- start page title -->
-    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Invoice', 'Create']" />
+    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Invoice', 'View']" />
     <!-- end page title -->
 
     <div id="pdfViewer">
@@ -119,7 +119,7 @@
                 <div>
                     <img src="" alt="">
                     <div class="d-flex border mb-5 justify-content-center">
-                        <x-backend.form.image-input name="header_image" :image="$invoice->header_image"
+                        <x-backend.form.image-input name="header_image" :image="$invoiceImage"
                             class="d-flex justify-content-center" style="aspect-ratio:4/1;object-fit:contain;" />
                     </div>
                     <div class="row">

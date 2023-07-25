@@ -108,8 +108,11 @@ class InvoiceController extends Controller
     {
         $clients = Client::get();
         $invoice=Invoice::with('client','invoiceItems')->find($invoice->id);
-        //dd($invoice);
-        return view('backend.invoice.viewOne', compact('invoice', 'clients'));
+        $invoiceImage = null;
+        if (countRecords('invoices') > 0) {
+            $invoiceImage = Invoice::first()->header_image;
+        }
+        return view('backend.invoice.viewOne', compact('invoice', 'clients','invoiceImage'));
     }
 
     function getInvoiceData($id)
