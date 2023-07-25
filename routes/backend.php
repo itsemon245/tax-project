@@ -73,10 +73,11 @@ Route::prefix('admin')->group(function () {
     Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
     Route::resource('invoice', InvoiceController::class);
+    Route::patch('invoice/{invoice}/markAs/{status}', [InvoiceController::class, 'markAs'])->name('invoice.markAs');
     Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
     Route::resource('video', VideoController::class);
-    Route::get('course/{course}/videos' , [VideoController::class, 'videosByCourse'])->name('video.byCourse');
+    Route::get('course/{course}/videos', [VideoController::class, 'videosByCourse'])->name('video.byCourse');
     Route::resource('partner-section', PartnerSectionController::class);
     Route::resource('about', AboutController::class);
     Route::resource('client-studio', ClientStudioController::class);
@@ -96,10 +97,9 @@ Route::prefix('admin')->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::delete('destroy/{id}', 'destroy')->name('delete');
             Route::PUT('update', 'update')->name('update');
-
         });
 
-    
+
     Route::resource('industry', IndustryController::class);
 
 

@@ -7,12 +7,13 @@ use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\InvoiceResource;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
-use App\Http\Resources\InvoiceItemCollection;
 use App\Http\Resources\InvoiceItemResource;
+use App\Http\Resources\InvoiceItemCollection;
 
 class InvoiceController extends Controller
 {
@@ -230,5 +231,16 @@ class InvoiceController extends Controller
         ];
 
         return back()->with($alert);
+    }
+
+    public function markAs(Request $request, Invoice $invoice, string $status)
+    {
+        $invoice->update([
+            'status'=> $status
+        ]);
+        return back()->with([
+            'alert-type'=>'success',
+            'message' => str("marked as $status")->title()
+        ]);
     }
 }
