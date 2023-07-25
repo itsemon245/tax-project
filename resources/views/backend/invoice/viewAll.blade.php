@@ -163,6 +163,52 @@
 
                     <tbody>
                         @foreach ($invoices as $key => $invoice)
+                            <!-- Center modal content -->
+                            <div class="modal fade" id="send-email-modal-{{ $invoice->id }}" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="">Send Email</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="" method="post">
+                                                @csrf
+                                                <div class="row align-items-center">
+                                                    <div class="col-2">
+                                                        <label for="email-to-{{ $invoice->id }}" class="form-label">To:
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <x-backend.form.text-input id="email-to-{{ $invoice->id }}"
+                                                            placeholder="person@email.com" name="email_to" />
+
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label for="email-subject-{{ $invoice->id }}"
+                                                            class="form-label">Subject: </label>
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <x-backend.form.text-input id="email-subject-{{ $invoice->id }}"
+                                                            placeholder="Subject for email" name="email_subject">
+                                                        </x-backend.form.text-input>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="float-end">
+                                                            <x-backend.ui.button type="button" class="btn-secondary">
+                                                                Close</x-backend.ui.button>
+                                                            <x-backend.ui.button type="submit" class="btn-primary">Send
+                                                            </x-backend.ui.button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $invoice->client->name }}</td>
@@ -191,13 +237,12 @@
                                                     class="mdi mdi-eye text-primary font-20"></span>View</a>
                                             <a class="dropdown-item d-flex align-items-center gap-2" href="#"><span
                                                     class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
-                                            <form action="" method="post">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="dropdown-item d-flex align-items-center gap-2"><span
-                                                        class="mdi mdi-telegram text-warning font-20"></span>Send
-                                                    to...</button>
-                                            </form>
+
+                                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#send-email-modal-{{ $invoice->id }}"><span
+                                                    class="mdi mdi-telegram text-warning font-20"></span>Send
+                                                to...</button>
                                             <form action="{{ route('invoice.markAs', [$invoice->id, 'sent']) }}"
                                                 method="POST">
                                                 @csrf
