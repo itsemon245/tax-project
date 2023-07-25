@@ -107,6 +107,8 @@ class InvoiceController extends Controller
     public function show(Invoice $invoice)
     {
         $clients = Client::get();
+        $invoice=Invoice::with('client','invoiceItems')->find($invoice->id);
+        //dd($invoice);
         return view('backend.invoice.viewOne', compact('invoice', 'clients'));
     }
 
@@ -140,7 +142,9 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        //
+        $clients = Client::get();
+        $invoice=Invoice::with('client','invoiceItems')->find($invoice->id);
+        return view('backend.invoice.edit-invoice', compact('invoice', 'clients'));
     }
 
     /**

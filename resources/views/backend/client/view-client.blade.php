@@ -22,7 +22,7 @@
                 @foreach ($clients as $key => $client)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $client->client_name }}</td>
+                        <td>{{ $client->name }}</td>
                         <td>{{ $client->company_name }}</td>
                         <td>{{ $client->present_address }}</td>
                         <td>{{ $client->parmentat_address }}</td>
