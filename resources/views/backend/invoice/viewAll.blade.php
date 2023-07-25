@@ -32,6 +32,7 @@
             <span class="mdi mdi-filter-variant fs-5"></span> Advanced Search <span id="chevron-icon"
                 class="mdi mdi-chevron-down fs-5"></span>
         </div>
+        {{-- TODO: change advance search options here --}}
         <div id="advance-search-options" class="card rounded-3 d-none mt-2" style="border: 2px solid var(--ct-gray-500);">
             <form action="javasript: void(0);">
                 <div class="card-body">
@@ -151,12 +152,17 @@
                 <x-backend.table.basic>
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Client Info</th>
-                            <th>Issue Date</th>
-                            <th>Due Date</th>
-                            <th>Amount</th>
-                            <th>Status</th>
+                            <th>SL</th>
+                            <th>Date</th>
+                            <th>Client Name</th>
+                            <th>TIN</th>
+                            <th>Reference</th>
+                            <th>Phone</th>
+                            <th>Circle</th>
+                            <th>Zone</th>
+                            <th>Demand</th>
+                            <th>Paid</th>
+                            <th>Arear</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -182,7 +188,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="col-10">
-                                                        <x-backend.form.text-input id="email-to-{{ $invoice->id }}"
+                                                        <input type="text" id="email-to-{{ $invoice->id }}"
                                                             placeholder="person@email.com" name="email_to" />
 
                                                     </div>
@@ -191,16 +197,15 @@
                                                             class="form-label">Subject: </label>
                                                     </div>
                                                     <div class="col-10">
-                                                        <x-backend.form.text-input id="email-subject-{{ $invoice->id }}"
-                                                            placeholder="Subject for email" name="email_subject">
-                                                        </x-backend.form.text-input>
+                                                        <input type="text" id="email-subject-{{ $invoice->id }}"
+                                                            placeholder="Subject for email" name="email_subject"/>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="float-end">
-                                                            <x-backend.ui.button type="button" class="btn-secondary">
-                                                                Close</x-backend.ui.button>
-                                                            <x-backend.ui.button type="submit" class="btn-primary">Send
-                                                            </x-backend.ui.button>
+                                                            <button type="button" class="btn btn-secondary">
+                                                                Close</button>
+                                                            <button type="submit" class="btn btn-primary">Send
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -211,13 +216,22 @@
                             </div><!-- /.modal -->
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $invoice->client->name }}</td>
-                                <td>{{ Carbon\Carbon::parse($invoice->issue_date)->format('d M Y') }}</td>
-                                <td>{{ Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}</td>
+                                <td class="fw-medium">{{ Carbon\Carbon::parse($invoice->issue_date)->format('d M, Y') }}</td>
+                                <td class="fw-medium">{{ $invoice->client->name }}</td>
+                                <td>{{$invoice->client->tin}}</td>
+                                <td>{{$invoice->reference_no}}</td>
+                                <td>{{$invoice->client->phone}}</td>
+                                <td>{{$invoice->client->circle}}</td>
+                                <td>{{$invoice->client->zone}}</td>
                                 <td>
-                                    <span class="fw-bold">{{ $invoice->amount_due . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $invoice->total . ' Tk' }}</span>
                                 </td>
-                                <td>{{ $invoice->status }}</td>
+                                <td>
+                                    <span class="fw-medium">{{ $invoice->amount_paid . ' Tk' }}</span>
+                                </td>
+                                <td>
+                                    <span class="fw-medium">{{ $invoice->amount_due . ' Tk' }}</span>
+                                </td>
                                 {{-- <td>
                                     <x-backend.ui.button type="custom" href="{{ route('invoice.show', $invoice->id) }}"
                                         class="btn-sm btn-dark">

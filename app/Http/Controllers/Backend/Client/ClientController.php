@@ -39,6 +39,7 @@ class ClientController extends Controller
         $client_store->spouse_name= $request->husband_wife_name;
         $client_store->present_address= $request->present_address;
         $client_store->permanent_address= $request->parmentat_address;
+        $client_store->phone= $request->phone;
         $client_store->tin= $request->tin;
         $client_store->circle= $request->circle;
         $client_store->zone= $request->zone;
@@ -81,6 +82,7 @@ class ClientController extends Controller
         $client->spouse_name= $request->husband_wife_name;
         $client->present_address= $request->present_address;
         $client->permanent_address= $request->parmentat_address;
+        $client->phone= $request->phone;
         $client->tin= $request->tin;
         $client->circle= $request->circle;
         $client->zone= $request->zone;
