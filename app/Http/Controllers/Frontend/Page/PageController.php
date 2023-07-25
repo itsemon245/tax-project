@@ -9,7 +9,6 @@ use App\Models\ClientStudio;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
-use App\Models\Industry;
 use App\Models\Map;
 use Illuminate\Support\Facades\Auth;
 
