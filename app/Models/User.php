@@ -60,20 +60,26 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Authentication::class);
     }
-    public function purchases(){
+    public function purchases()
+    {
         return $this->hasMany(Purchase::class);
+    }
+    function exams()
+    {
+        return $this->belongsToMany(Exam::class);
     }
 
     /**
      * Returns items that user has purchased based on the item model
      * @return array
      */
-   public function purchased(string $modelName){
-    $modelName = str($modelName)->singular();
-    $modelName = str($modelName)->studly();
-    $items = $this->purchases()->where('purchasable_type', "App\\Models\\$modelName")->get()->map(function ($purchase){
-        return $purchase->purchasable;
-    });
-    return $items;
-   }
+    public function purchased(string $modelName)
+    {
+        $modelName = str($modelName)->singular();
+        $modelName = str($modelName)->studly();
+        $items = $this->purchases()->where('purchasable_type', "App\\Models\\$modelName")->get()->map(function ($purchase) {
+            return $purchase->purchasable;
+        });
+        return $items;
+    }
 }

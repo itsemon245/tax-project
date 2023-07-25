@@ -18,5 +18,12 @@ class Invoice extends Model
     {
         return $this->belongsTo(Client::class);
     }
-    
+
+
+    protected static function booted(): void
+    {
+        static::updating(function (Invoice $invoice) {
+            $invoice->setUpdatedAt(now());
+        });
+    }
 }

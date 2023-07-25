@@ -136,7 +136,8 @@
                             <p class='text-muted mb-0'>Due:
                                 {{ Carbon\Carbon::parse($invoice->due_date)->format('d F, Y') }}</p>
                         </div>
-                        <div class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
+                        <div
+                            class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
                             {{ str($invoice->status)->title() }}
                         </div>
                     </div>
@@ -162,6 +163,52 @@
 
                     <tbody>
                         @foreach ($invoices as $key => $invoice)
+                            <!-- Center modal content -->
+                            <div class="modal fade" id="send-email-modal-{{ $invoice->id }}" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="">Send Email</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="" method="post">
+                                                @csrf
+                                                <div class="row align-items-center">
+                                                    <div class="col-2">
+                                                        <label for="email-to-{{ $invoice->id }}" class="form-label">To:
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <x-backend.form.text-input id="email-to-{{ $invoice->id }}"
+                                                            placeholder="person@email.com" name="email_to" />
+
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label for="email-subject-{{ $invoice->id }}"
+                                                            class="form-label">Subject: </label>
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <x-backend.form.text-input id="email-subject-{{ $invoice->id }}"
+                                                            placeholder="Subject for email" name="email_subject">
+                                                        </x-backend.form.text-input>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="float-end">
+                                                            <x-backend.ui.button type="button" class="btn-secondary">
+                                                                Close</x-backend.ui.button>
+                                                            <x-backend.ui.button type="submit" class="btn-primary">Send
+                                                            </x-backend.ui.button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $invoice->client->name }}</td>
@@ -171,7 +218,7 @@
                                     <span class="fw-bold">{{ $invoice->amount_due . ' Tk' }}</span>
                                 </td>
                                 <td>{{ $invoice->status }}</td>
-                                <td>
+                                {{-- <td>
                                     <x-backend.ui.button type="custom" href="{{ route('invoice.show', $invoice->id) }}"
                                         class="btn-sm btn-dark">
                                         View</x-backend.ui.button>
@@ -180,14 +227,61 @@
                                         Edit</x-backend.ui.button>
                                     <x-backend.ui.button type="delete"
                                         action="{{ route('invoice.destroy', $invoice->id) }}" class="btn-sm" />
+                                </td> --}}
+                                <td>
+                                    <div class="btn-group dropdown position-relative">
+                                        <a href="javascript: void(0);"
+                                            class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-xs"
+                                            data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                class="mdi mdi-dots-horizontal"></i></a>
+                                        <div class="bg-white py-2 px-3 position-absolute d-none rounded shadow"
+                                            style="inset: 2rem 2rem auto auto!important; z-index:2;">
+                                            <a class="dropdown-item d-flex align-items-center gap-2" href="#"><span
+                                                    class="mdi mdi-eye text-primary font-20"></span>View</a>
+                                            <a class="dropdown-item d-flex align-items-center gap-2" href="#"><span
+                                                    class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
+
+                                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#send-email-modal-{{ $invoice->id }}"><span
+                                                    class="mdi mdi-telegram text-warning font-20"></span>Send
+                                                to...</button>
+                                            <form action="{{ route('invoice.markAs', [$invoice->id, 'sent']) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('patch')
+                                                <button type="submit"
+                                                    class="dropdown-item d-flex align-items-center gap-2"><span
+                                                        class="mdi mdi-check text-success font-20"></span>Mark as
+                                                    Sent</button>
+                                            </form>
+                                            <form action="{{ route('invoice.markAs', [$invoice->id, 'paid']) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('patch')
+                                                <button type="submit"
+                                                    class="dropdown-item d-flex align-items-center gap-2"><span
+                                                        class="mdi mdi-cash-check text-success font-20"></span>Mark as
+                                                    Paid</button>
+                                            </form>
+                                            <form action="" method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="dropdown-item d-flex align-items-center gap-2"><span
+                                                        class="mdi mdi-delete text-danger font-20"></span
+                                                        class="text-danger">Delete</button>
+                                            </form>
+
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </x-backend.table.basic>
 
-            </div> <!-- end card body-->
-        </div> <!-- end card -->
+            </div>
+        </div>
 
 
     </x-backend.ui.section-card>
@@ -197,7 +291,7 @@
     @push('customJs')
         <script>
             $(document).ready(function() {
-                let containerHeight = parseInt($('.latest-items').css('height').split('px')[0]) +4
+                let containerHeight = parseInt($('.latest-items').css('height').split('px')[0]) + 4
                 console.log(containerHeight);
                 $('#latest-container').css('height', containerHeight)
 
@@ -248,6 +342,10 @@
                     advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-down')
                     advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-up')
                     $('#advance-search-options').slideToggle()
+                })
+
+                $('.dropdown-toggle').click(function(e) {
+                    $(e.target).parent().next().toggleClass('d-none')
                 })
 
 
