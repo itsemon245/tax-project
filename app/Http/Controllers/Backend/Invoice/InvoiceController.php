@@ -256,7 +256,6 @@ class InvoiceController extends Controller
     public function sendInvoiceMail(Request $request,$id)
     {
         $invoice=Invoice::with('client','invoiceItems')->find($id);
-        dd($invoice);
         
         Mail::to($request->email_to)->send(new InvoiceMail($invoice));
 

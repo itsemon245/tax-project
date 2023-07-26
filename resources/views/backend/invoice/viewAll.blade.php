@@ -188,7 +188,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="col-10">
-                                                        <input type="text" id="email-to-{{ $invoice->id }}"
+                                                        <input type="text" class="form-control" id="email-to-{{ $invoice->id }}"
                                                             placeholder="person@email.com" name="email_to" />
 
                                                     </div>
@@ -197,10 +197,10 @@
                                                             class="form-label">Subject: </label>
                                                     </div>
                                                     <div class="col-10">
-                                                        <input type="text" id="email-subject-{{ $invoice->id }}"
+                                                        <input type="text" class="form-control mt-2" id="email-subject-{{ $invoice->id }}"
                                                             placeholder="Subject for email" name="email_subject"/>
                                                     </div>
-                                                    <div class="col-12">
+                                                    <div class="col-12 mt-2">
                                                         <div class="float-end">
                                                             <button type="button" class="btn btn-secondary">
                                                                 Close</button>
