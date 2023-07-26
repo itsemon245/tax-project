@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('promo_codes', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->enum('user_type', ['all', 'individual', 'user', 'partner'])->nullable();
             $table->string('code');
             $table->boolean('status')->default(1);
-            $table->integer('limit')->default(1);
+            $table->boolean('is_discount')->default(1);
+            $table->integer('amount')->default(0);
             $table->string('expired_at')->default('112.2232.322');
             $table->timestamps();
         });

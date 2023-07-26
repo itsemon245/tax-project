@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('promo_code_id');
+            $table->integer('limit')->default(1);
             $table->timestamps();
         });
     }
