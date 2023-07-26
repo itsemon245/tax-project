@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Faker\Provider\zh_TW\DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class PromoCodeFactory extends Factory
     {
         $promoCode = fake()->countryCode();
         return [
+            'user_type' => 'individual',
             'code' => $promoCode,
 
         ];
