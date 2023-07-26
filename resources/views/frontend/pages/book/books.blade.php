@@ -4,11 +4,12 @@
     $banners = getRecords('banners');
     // $appointments = getRecords('appointments');
     $testimonials = getRecords('testimonials');
+
 @endphp
 @extends('frontend.layouts.app')
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
-
+{{ dd($users[0]->promo_codes) }}
     <section class="py-12 py-sm-24 py-md-32 my-5">
         <div class="container">
             <div class="mx-auto">
