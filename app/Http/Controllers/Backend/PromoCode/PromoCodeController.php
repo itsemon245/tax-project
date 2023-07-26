@@ -40,12 +40,11 @@ class PromoCodeController extends Controller
     public function store(StorePromoCodeRequest $request)
     {
         // dd($request->all());
-        PromoCode::create(
+        $promoCode = PromoCode::create(
             [
-                'user_type' => $request->user_type,
-                'user_id' => $request->user_id,
                 'code' => $request->code,
-                'limit' => $request->limit,
+                'amount' => $request->amount,
+                'is_discount' => $request->is_discount === "false" ? false : true,
                 'expired_at' => $request->expired_at
             ]
         );
@@ -69,8 +68,9 @@ class PromoCodeController extends Controller
                 break;
         }
         foreach ($users as $user) {
-            Mail::to('mojahid@wisedev.xyz')
-            ->queue(new TestMail());
+            $user->promoCodes()->attach($promoCode->id, ['limit' => $request->limit]);
+            // Mail::to('mojahid@wisedev.xyz')
+            //     ->queue(new TestMail());
         }
 
 
@@ -99,35 +99,57 @@ class PromoCodeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PromoCode $promoCode)
-    {
-        return view('backend.promoCode.editPromoCode', compact('promoCode'));
-    }
+    // public function edit(PromoCode $promoCode)
+    // {
+    //     return view('backend.promoCode.editPromoCode', compact('promoCode'));
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePromoCodeRequest $request, PromoCode $promoCode)
-    {
-        $request->validated();
-        PromoCode::find($promoCode->id)
-            ->update(
-                [
-                    'user_type' => $request->user_type,
-                    'user_id' => $request->user_id,
-                    'code' => $request->code,
-                    'limit' => $request->limit,
-                    'expired_at' => $request->expired_at
-                ]
-            );
+    // public function update(UpdatePromoCodeRequest $request, PromoCode $promoCode)
+    // {
+    //     // dd($request->all());
+    //     $promoCode->update(
+    //         [
+    //             'code' => $request->code,
+    //             'amount' => $request->amount,
+    //             'is_discount' => $request->is_discount === "false" ? false : true,
+    //             'expired_at' => $request->expired_at
+    //         ]
+    //     );
 
-        return redirect()
-            ->route("promo-code.index")
-            ->with(array(
-                'message' => "Promo Code Updated Successfully",
-                'alert-type' => 'success',
-            ));
-    }
+    //     $users = []; // Replace with the user you want to notify
+    //     switch ($request->user_type) {
+    //         case 'all':
+    //             $users = User::get();
+    //             break;
+    //         case 'partner':
+    //             $users = User::role('partner')->get();
+    //             break;
+    //         case 'user':
+    //             $users = User::role('user')->get();
+    //             break;
+    //         case 'individual':
+    //             $users = User::where('id', $request->user_id)->get();
+    //             break;
+
+    //         default:
+    //             break;
+    //     }
+    //     foreach ($users as $user) {
+    //         $user->promoCodes()->detach($promoCode->id);
+    //         // Mail::to('mojahid@wisedev.xyz')
+    //         //     ->queue(new TestMail());
+    //     }
+
+    //     return redirect()
+    //         ->route("promo-code.index")
+    //         ->with(array(
+    //             'message' => "Promo Code Updated Successfully",
+    //             'alert-type' => 'success',
+    //         ));
+    // }
 
     /**
      * Remove the specified resource from storage.

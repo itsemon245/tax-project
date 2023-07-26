@@ -9,9 +9,6 @@
                 <tr>
                     <th>#</th>
                     <th>Promo Code</th>
-                    <th>User Type</th>
-                    <th>Partner/User</th>
-                    <th>Limit</th>
                     <th>Expired</th>
                     <th>Action</th>
                 </tr>
@@ -21,12 +18,8 @@
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>{{ $promo->code }}</td>
-                        <td>{{ strtoupper($promo->user_type) }}</td>
-                        <td>{{ $promo->user ? strtoupper($promo->user->name) : 'ALL' }}</td>
-                        <td>{{ $promo->limit }}</td>
-                        <td>{{ date('d-m-Y', strtotime($promo->expired_at)) }}</td>
+                        <td>{{ date('', strtotime($promo->expired_at)) }}</td>
                         <td>
-                            <a href="{{ route('promo-code.edit', $promo) }}" class="btn btn-info btn-sm">Edit</a>
                             <button onclick='deletePromo("promoDelete-{{ $promo->id }}")'
                                 class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
                             <form action="{{ route('promo-code.destroy', $promo->id) }}" id="promoDelete-{{ $promo->id }}"

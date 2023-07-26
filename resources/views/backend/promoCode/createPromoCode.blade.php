@@ -23,42 +23,71 @@
                 </div>
 
                 <div class="row justify-content-center">
-                    <div class="col-md-4">
-                        <x-backend.form.text-input label="Expired Date" type="date" name="expired_at" :value="Carbon\Carbon::now()->addDays(7)->format('Y-m-d')">
+                    <div class="col-md-3">
+                        <x-backend.form.text-input label="Expired Date" type="date" name="expired_at" :value="Carbon\Carbon::now()
+                            ->addDays(7)
+                            ->format('Y-m-d')">
                         </x-backend.form.text-input>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <x-backend.form.text-input label="Use Limit" type="number" value="1" id="limit"
                             name="limit">
                         </x-backend.form.text-input>
                     </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-3">
-                        <x-backend.form.select-input id="user_type" label="User Type" name="user_type">
-                            <option selected value="all">All</option>
-                            <option value="partner">Partner</option>
-                            <option value="user">User</option>
-                            <option value="individual">Individual</option>
-                        </x-backend.form.select-input>
-                    </div>
-                    <div class="col-md-4">
-                        <div id="user-select-wrapper" class="d-none mb-2">
-                            <label for="user-select" class="form-label mb-0">Select User</label>
-                            <select id="user-select" name="user_id" placeholde="Choose User...">
-                            </select>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row mx-auto">
+                                    <input type="text" name="is_discount" hidden value="false" id="is-discount">
+                                    <label class="form-label mb-0 p-0 col-12">Discount</label>
+                                    <div class="col-5 p-0">
+                                        <input type="text" name="amount"
+                                            class="w-100 border border-light text-center rounded-0 rounded-start h-100 "
+                                            placeholder="0" aria-label="Rate" aria-describedby="tax-addon1">
+                                    </div>
+                                    <div class="col-3 p-0 py-1 ps-1 align-self-center"
+                                        style="background: var(--ct-gray-200);">
+                                        <span id="discount-icon" class="mdi mdi-currency-bdt p-0 text-success"
+                                            style="font-size: 18px;"></span>
+                                    </div>
+                                    <div class="col-4 bg-blue p-0 py-1 ps-2 align-self-center border rounded-end"
+                                        onclick="toggleDiscount()">
+                                        <span class="mdi mdi-swap-horizontal p-0 text-white "
+                                            style="font-size: 18px;cursor: pointer;"></span>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-primary waves-effect waves-light profile-button">
-                            Create
-                        </button>
-                    </div>
-                    <div class="col-md-4"></div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <x-backend.form.select-input id="user_type" label="User Type" name="user_type">
+                        <option selected value="all">All</option>
+                        <option value="partner">Partner</option>
+                        <option value="user">User</option>
+                        <option value="individual">Individual</option>
+                    </x-backend.form.select-input>
                 </div>
+                <div class="col-md-4">
+                    <div id="user-select-wrapper" class="d-none mb-2">
+                        <label for="user-select" class="form-label mb-0">Select User</label>
+                        <select id="user-select" name="user_id" placeholde="Choose User...">
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary waves-effect waves-light profile-button">
+                        Create
+                    </button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
             </div>
         </form>
     </x-backend.ui.section-card>
@@ -88,6 +117,14 @@
                 input.val(userDefienedValue + digits)
             })
 
+            let isDiscount = false;
+            const toggleDiscount = (e) => {
+                isDiscount = !isDiscount
+                $('#is-discount').val(isDiscount)
+                $('#discount-icon').toggleClass('mdi-currency-bdt')
+                $('#discount-icon').toggleClass('mdi-percent-outline')
+
+            }
             let userSelectize = $('#user-select').selectize({
                 maxItems: 1,
                 sortField: 'text',

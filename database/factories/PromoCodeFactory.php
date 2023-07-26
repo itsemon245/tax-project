@@ -19,7 +19,6 @@ class PromoCodeFactory extends Factory
     {
         $promoCode = fake()->countryCode();
         return [
-            'user_type' => 'individual',
             'code' => $promoCode,
 
         ];
