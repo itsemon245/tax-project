@@ -168,7 +168,7 @@
                     <a class="" href="#">Notificaion</a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="" href="#">Promo Code</a>
+                    <a class="" href="{{ route('page.promo.code') }}">Promo Code</a>
 
                 </li>
                 <li class="sidebar-item">

@@ -44,10 +44,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Referee::class);
     }
-    public function promoCodes()
-    {
-        return $this->hasMany(PromoCode::class);
-    }
     public function userDocs()
     {
         return $this->hasMany(UserDoc::class);
@@ -83,8 +79,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $items;
     }
 
-   public function promo_codes()
+   public function promoCodes()
    {
-     return $this->belongsToMany(PromoCode::class);
+     return $this->belongsToMany(PromoCode::class)->withPivot('limit');
    }
 }

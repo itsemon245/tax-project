@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Frontend\Page;
 
+use App\Models\Map;
 use App\Models\Info;
+use App\Models\User;
 use App\Models\About;
 use App\Models\Testimonial;
 use App\Models\ClientStudio;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
-use App\Models\Map;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -72,5 +73,17 @@ class PageController extends Controller
         } else {
             return view('frontend.pages.becomePartner', compact('user'));
         }
+    }
+
+    //promo codes view page
+    public function PromoCodePage()
+    {
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+        if ($user_id == null) {
+            return view('backend.auth.login');
+        } else {
+            return view('frontend.pages.promoCodesPage', compact('user'));
+        }   
     }
 }

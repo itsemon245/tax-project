@@ -17,7 +17,6 @@ class BookController extends Controller
     {
         $user_id = Auth::user()->id;
         $books = Book::withAvg('reviews', 'rating')->withCount('reviews')->get();
-        $users = User::where('id', $user_id)->with('promo_codes')->get();
         return view('frontend.pages.book.books', compact('books', 'users'));
     }
     public function show(int $book)
