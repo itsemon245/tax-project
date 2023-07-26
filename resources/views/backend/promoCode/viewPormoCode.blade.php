@@ -1,15 +1,21 @@
 @extends('backend.layouts.app')
-
+@push('customCss')
+    <link href="{{ asset('backend/assets/libs/mohithg-switchery/switchery.min.css') }}" rel="stylesheet" type="text/css">
+@endpush
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Promo Code', 'View']" />
 
     <x-backend.ui.section-card name="Promo Code List">
+        <x-backend.ui.button type="custom" :href="route('promo-code.create')" class="btn-success rounded-3 btn-sm mb-2">Create New
+        </x-backend.ui.button>
         <x-backend.table.basic>
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Promo Code</th>
+                    <th>Discount</th>
                     <th>Expired</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -18,12 +24,25 @@
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>{{ $promo->code }}</td>
-                        <td>{{ date('', strtotime($promo->expired_at)) }}</td>
+                        <td>{{ $promo->amount }}
+                            @if ($promo->is_discount)
+                                %
+                            @else
+                                <span class="mdi mdi-currency-bdt font-16"></span>
+                            @endif
+                        </td>
+                        <td>{{ Carbon\Carbon::parse($promo->expired_at)->diffForHumans() }}</td>
                         <td>
-                            <button onclick='deletePromo("promoDelete-{{ $promo->id }}")'
-                                class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
-                            <form action="{{ route('promo-code.destroy', $promo->id) }}" id="promoDelete-{{ $promo->id }}"
-                                method="post" class="d-none">
+                            <div class="form-check form-switch ">
+                                <input data-id="{{ $promo->id }}" type="checkbox" class="form-check-input toggle-status"
+                                    id="toggle-status" @checked($promo->status)>
+                            </div>
+                        </td>
+                        <td>
+                            <button id="{{ $promo->id }}"
+                                class="delete-promo btn btn-danger btn-sm waves-effect waves-light">Delete</button>
+                            <form action="{{ route('promo-code.destroy', $promo->id) }}"
+                                id="delete-form-{{ $promo->id }}" method="post" class="d-none">
                                 @csrf
                                 @method('DELETE')
                             </form>
@@ -37,26 +56,60 @@
 
 @push('customJs')
     <script>
-        const deletePromo = id => {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'Deleted',
-                        text: "Your file has been deleted.",
-                        icon: 'success',
-                        showConfirmButton: false
-                    })
-                    $("#" + id).submit()
-                }
+        $(document).ready(function() {
+            $('.toggle-status').each((i, element) => {
+                element.addEventListener('change', e => {
+                    console.log(e.target.dataset);
+                    let id = e.target.dataset.id
+                    let url = "{{ route('ajax.toggle-status', 'PARAM') }}"
+                    url = url.replace('PARAM', id);
+                    console.log(url);
+                    $.ajax({
+                        type: "post",
+                        url: url,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        data: {
+                            table: 'promo_codes'
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            Toast.fire({
+                                title: response.message,
+                                icon: 'success',
+                            })
+                        }
+                    });
+                })
             })
-        }
+
+            $('.delete-promo').each((i, btn) => {
+                btn.addEventListener('click', e => deletePromo(e.target.id))
+            })
+
+            const deletePromo = (id) => {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Swal.fire({
+                        //     title: 'Deleted',
+                        //     text: "Your file has been deleted.",
+                        //     icon: 'success',
+                        //     showConfirmButton: false
+                        // })
+                        $("#delete-form-" + id).submit()
+                    }
+                })
+            }
+
+        });
     </script>
 @endpush

@@ -9,85 +9,80 @@
             @csrf
             <div class="container rounded bg-white py-2">
 
-                <div class="row justify-content-center align-items-center mb-2 mb-md-0">
-                    <div class="col-md-4 col-sm-6">
+                <div class="row justify-content-center">
+                    <div class="col-md-5 col-sm-6">
                         <x-backend.form.text-input label="Promo Code" class="w-100" type="text" id="code"
                             name="code">
                         </x-backend.form.text-input>
                     </div>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-4 col-sm-6">
                         <button type="button" id="code_btn"
-                            class="btn btn-success waves-effect waves-light w-100 mt-sm-2">Generate
+                            class="btn btn-success waves-effect waves-light w-100 mt-sm-3 mb-2">Generate
                             Code</button>
                     </div>
-                </div>
+                    <div class="col-12"></div>
 
-                <div class="row justify-content-center">
                     <div class="col-md-3">
                         <x-backend.form.text-input label="Expired Date" type="date" name="expired_at" :value="Carbon\Carbon::now()
-                            ->addDays(7)
+                            ->addDays(10)
                             ->format('Y-m-d')">
                         </x-backend.form.text-input>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3 col-6">
                         <x-backend.form.text-input label="Use Limit" type="number" value="1" id="limit"
                             name="limit">
                         </x-backend.form.text-input>
                     </div>
-                    <div class="col-md-2">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row mx-auto">
-                                    <input type="text" name="is_discount" hidden value="false" id="is-discount">
-                                    <label class="form-label mb-0 p-0 col-12">Discount</label>
-                                    <div class="col-5 p-0">
-                                        <input type="text" name="amount"
-                                            class="w-100 border border-light text-center rounded-0 rounded-start h-100 "
-                                            placeholder="0" aria-label="Rate" aria-describedby="tax-addon1">
-                                    </div>
-                                    <div class="col-3 p-0 py-1 ps-1 align-self-center"
-                                        style="background: var(--ct-gray-200);">
-                                        <span id="discount-icon" class="mdi mdi-currency-bdt p-0 text-success"
-                                            style="font-size: 18px;"></span>
-                                    </div>
-                                    <div class="col-4 bg-blue p-0 py-1 ps-2 align-self-center border rounded-end"
-                                        onclick="toggleDiscount()">
-                                        <span class="mdi mdi-swap-horizontal p-0 text-white "
-                                            style="font-size: 18px;cursor: pointer;"></span>
-                                    </div>
-                                </div>
+                    <div class="col-md-3 col-6">
+                        <input type="text" name="is_discount" hidden value="false" id="is-discount">
+                        <label class="form-label mb-0 p-0 col-12">Discount</label>
+                        <div class="d-flex align-items-center justify-content-center border shadow-sm rounded" style="overflow: hidden;">
 
-                            </div>
+                            <input type="text" name="amount" class="border-0 rounded-0 w-100 ps-2"
+                                style="outline:transparent;" placeholder="0" aria-label="Discunt">
+
+
+                            <span id="discount-icon"
+                            style="padding-top:.25rem;padding-bottom:0.25rem;"
+                                class="mdi mdi-currency-bdt bg-light px-xxl-3 px-2 text-success font-18"></span>
+
+
+                            <span onclick="toggleDiscount()"
+                            style="padding-top:.25rem;padding-bottom:0.25rem;"
+                                class="mdi mdi-swap-horizontal bg-blue px-xxl-3 px-2  text-white font-18"
+                                style="cursor: pointer;"></span>
+
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-3">
-                    <x-backend.form.select-input id="user_type" label="User Type" name="user_type">
-                        <option selected value="all">All</option>
-                        <option value="partner">Partner</option>
-                        <option value="user">User</option>
-                        <option value="individual">Individual</option>
-                    </x-backend.form.select-input>
-                </div>
-                <div class="col-md-4">
-                    <div id="user-select-wrapper" class="d-none mb-2">
-                        <label for="user-select" class="form-label mb-0">Select User</label>
-                        <select id="user-select" name="user_id" placeholde="Choose User...">
-                        </select>
+                    <div class="col-12"></div>
+
+                    <div class="col-md-4 col-12">
+                        <x-backend.form.select-input id="user_type" label="User Type" name="user_type">
+                            <option selected value="all">All</option>
+                            <option value="partner">Partner</option>
+                            <option value="user">User</option>
+                            <option value="individual">Individual</option>
+                        </x-backend.form.select-input>
+                    </div>
+                    <div class="col-md-5 col-6">
+                        <div id="user-select-wrapper" class="d-none mb-2">
+                            <label for="user-select" class="form-label mb-0">Select User</label>
+                            <select id="user-select" name="user_id" placeholde="Choose User...">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12"></div>
+
+
+
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary rounded-3 waves-effect waves-light profile-button">
+                            Create
+                        </button>
                     </div>
                 </div>
-            </div>
 
-            <div class="row justify-content-center">
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary waves-effect waves-light profile-button">
-                        Create
-                    </button>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
+
             </div>
         </form>
     </x-backend.ui.section-card>
@@ -136,12 +131,10 @@
             });
             $('#user_type').on('change', function getUsers(e) {
                 const userType = e.target.value
-                if (!$('#user-select-wrapper').hasClass('d-none')) {
-                    $('#user-select-wrapper').addClass('d-none');
-                }
-
 
                 if (userType === 'individual') {
+                    $(e.target).parent().parent().toggleClass('col-12')
+                    $(e.target).parent().parent().toggleClass('col-6')
                     $('#user-select-wrapper').removeClass('d-none');
                     let url = "{{ route('getUsers') }}"
                     $.ajax({
@@ -162,6 +155,10 @@
                             console.log(error)
                         }
                     });
+                } else {
+                    $('#user-select-wrapper').addClass('d-none');
+                    $(e.target).parent().parent().addClass('col-12')
+                    $(e.target).parent().parent().removeClass('col-6')
                 }
             })
         </script>
