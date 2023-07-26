@@ -82,4 +82,9 @@ class User extends Authenticatable implements MustVerifyEmail
         });
         return $items;
     }
+
+   public function promo_codes()
+   {
+     return $this->belongsToMany(PromoCode::class);
+   }
 }

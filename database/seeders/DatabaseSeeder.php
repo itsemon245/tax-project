@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
             ExpertProfileSeeder::class,
             CourseSeeder::class,
             CalendarSeeder::class,
+            PromoCodeSeeder::class,
         ]);
     }
 }

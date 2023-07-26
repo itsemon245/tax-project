@@ -28,6 +28,7 @@ class StoreClientRequest extends FormRequest
             'company_name' =>['required'],
             'husband_wife_name' =>['required'],
             'present_address' =>['required'],
+            'phone' =>['required'],
             'tin' =>['required'],
             'circle' =>['required'],
             'parmentat_address' =>['required'],

@@ -24,6 +24,7 @@ class ClientFactory extends Factory
             'company_name' => fake()->word(),
             'present_address' => fake()->address(),
             'permanent_address' => fake()->address(),
+            'phone' => fake()->phoneNumber(),
             'tin' => fake()->numberBetween(1000, 100000),
             'circle' => 'circle',
             'zone' => 'zone',

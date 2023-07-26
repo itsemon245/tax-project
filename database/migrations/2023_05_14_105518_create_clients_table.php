@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('spouse_name');
             $table->longText('present_address');
             $table->longText('permanent_address');
+            $table->text('phone');
             $table->text('tin');
             $table->text('circle');
             $table->text('zone');
