@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Backend\Invoice;
 use Carbon\Carbon;
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Mail\InvoiceMail;
 use App\Models\InvoiceItem;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\InvoiceResource;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
@@ -249,5 +251,20 @@ class InvoiceController extends Controller
             'alert-type'=>'success',
             'message' => str("marked as $status")->title()
         ]);
+    }
+
+    public function sendInvoiceMail(Request $request,$id)
+    {
+        $invoice=Invoice::with('client','invoiceItems')->find($id);
+        dd($invoice);
+        
+        Mail::to($request->email_to)->send(new InvoiceMail($invoice));
+
+        $alert = [
+            'message' => "Invoice Mail Send Successfully",
+            'alert-type' => 'success',
+        ];
+
+        return back()->with($alert);
     }
 }

@@ -162,7 +162,7 @@
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <div class="d-flex justify-content-end ">
-                            <p class="mb-0">Amount Due (USD) </br>
+                            <p class="mb-0">Amount Due (USD) <br>
                                 <span class="fs-1 fw-bold text-black" id="amount-due-vue">0 Tk</span>
                             </p>
                         </div>

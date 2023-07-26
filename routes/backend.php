@@ -86,7 +86,7 @@ Route::prefix('admin')->group(function () {
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',
     ]);
-
+    Route::post('send-invoice-mail/{id}',[InvoiceController::class,'sendInvoiceMail'])->name('send_invoice_mail');
     Route::prefix('case-study-backend')
         ->name('case.study.backend.')
         ->controller(CaseStudyController::class)

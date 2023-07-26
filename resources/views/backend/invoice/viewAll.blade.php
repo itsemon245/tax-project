@@ -174,7 +174,7 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="" method="post">
+                                            <form action="{{route('send_invoice_mail',$invoice->id)}}" method="post">
                                                 @csrf
                                                 <div class="row align-items-center">
                                                     <div class="col-2">
