@@ -506,6 +506,20 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#exams" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Exams</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="exams">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('exams.index') }}">Exams</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
 
             </ul>
