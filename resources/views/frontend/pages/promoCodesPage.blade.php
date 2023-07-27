@@ -4,7 +4,7 @@
         <h2 class="mt-2 mb-2 p-3">All Promo Codes Here: </h2>
         <div class="row mt-3">
             @foreach ($user->promoCodes as $code)
-            <div class="col-md-4 ">
+            <div class="col-md-4 {{ $code->status !== 1 ? 'd-none' : '' }}">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="d-felx">
