@@ -65,12 +65,26 @@
                                 icon="mdi mdi-currency-bdt"></x-range-slider>
                         </div>
                         <div class="col-lg-4">
-                            <x-range-slider id="issue month" :from="1" :to="12" tooltips="custom">
-                            </x-range-slider>
+                            <form action="" method="post">
+                                @csrf
+                                <x-backend.form.text-input name="start_date" label="Start Date" type="date" />
+                                <x-backend.form.text-input name="end_date" label="End Date" type="date" />
+                            </form>
                         </div>
                         <div class="col-lg-4">
-                            <x-range-slider id="issue year" :from="$from" :to="$to">
-                            </x-range-slider>
+                            <form action="" method="post">
+                                @csrf
+                                <x-backend.form.select-input name="circle" label="Circle" placeholder="Select Circle">
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->cricle }}</option>
+                                    @endforeach
+                                </x-backend.form.select-input>
+                                <x-backend.form.select-input name="zone" label="Zone" placeholder="Select Zone">
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->zone }}</option>
+                                    @endforeach
+                                </x-backend.form.select-input>
+                            </form>
                         </div>
                         <div class="col-12">
                             <div class="float-end">
@@ -180,7 +194,7 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{route('send_invoice_mail',$invoice->id)}}" method="post">
+                                            <form action="{{ route('send_invoice_mail', $invoice->id) }}" method="post">
                                                 @csrf
                                                 <div class="row align-items-center">
                                                     <div class="col-2">
@@ -188,7 +202,8 @@
                                                         </label>
                                                     </div>
                                                     <div class="col-10">
-                                                        <input type="text" class="form-control" id="email-to-{{ $invoice->id }}"
+                                                        <input type="text" class="form-control"
+                                                            id="email-to-{{ $invoice->id }}"
                                                             placeholder="person@email.com" name="email_to" />
 
                                                     </div>
@@ -197,8 +212,9 @@
                                                             class="form-label">Subject: </label>
                                                     </div>
                                                     <div class="col-10">
-                                                        <input type="text" class="form-control mt-2" id="email-subject-{{ $invoice->id }}"
-                                                            placeholder="Subject for email" name="email_subject"/>
+                                                        <input type="text" class="form-control mt-2"
+                                                            id="email-subject-{{ $invoice->id }}"
+                                                            placeholder="Subject for email" name="email_subject" />
                                                     </div>
                                                     <div class="col-12 mt-2">
                                                         <div class="float-end">
@@ -216,13 +232,14 @@
                             </div><!-- /.modal -->
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td class="fw-medium">{{ Carbon\Carbon::parse($invoice->issue_date)->format('d M, Y') }}</td>
+                                <td class="fw-medium">{{ Carbon\Carbon::parse($invoice->issue_date)->format('d M, Y') }}
+                                </td>
                                 <td class="fw-medium">{{ $invoice->client->name }}</td>
-                                <td>{{$invoice->client->tin}}</td>
-                                <td>{{$invoice->reference_no}}</td>
-                                <td>{{$invoice->client->phone}}</td>
-                                <td>{{$invoice->client->circle}}</td>
-                                <td>{{$invoice->client->zone}}</td>
+                                <td>{{ $invoice->client->tin }}</td>
+                                <td>{{ $invoice->reference_no }}</td>
+                                <td>{{ $invoice->client->phone }}</td>
+                                <td>{{ $invoice->client->circle }}</td>
+                                <td>{{ $invoice->client->zone }}</td>
                                 <td>
                                     <span class="fw-medium">{{ $invoice->total . ' Tk' }}</span>
                                 </td>
