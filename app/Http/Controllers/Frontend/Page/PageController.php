@@ -79,11 +79,14 @@ class PageController extends Controller
     public function PromoCodePage()
     {
         $user_id = Auth::user()->id;
-        $user = User::find($user_id);
-        if ($user_id == null) {
-            return view('backend.auth.login');
-        } else {
-            return view('frontend.pages.promoCodesPage', compact('user'));
-        }   
+        $promoCodes = User::find($user_id)->promoCodes()->where('status', 1)->get();
+        return view('frontend.pages.promoCodesPage', compact('promoCodes'));
+
+    }
+
+    //notification client side view page
+    public function notificationPage()
+    {
+        return view('frontend.pages.notificationPage');
     }
 }

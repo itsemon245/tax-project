@@ -165,7 +165,7 @@
                     <a class="" href="{{ route('referral.index') }}">Referrals</a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="" href="#">Notificaion</a>
+                    <a class="" href="{{ route('notification') }}">Notificaion</a>
                 </li>
                 <li class="sidebar-item">
                     <a class="" href="{{ route('page.promo.code') }}">Promo Code</a>
