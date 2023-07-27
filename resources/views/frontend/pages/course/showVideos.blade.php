@@ -147,23 +147,39 @@
                         <div class="tab-pane active" id="courseContent" role="tabpanel">
                             <div class="col-md-12">
                                 <div class="p-2 overflow-auto" style="height: 650px;" >
-                                    @foreach (range(1, 8) as $item)
-                                        <div class="mb-3">
-                                            <a href="#">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="p-2">
-                                                            <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" >
-                                                                <label class="form-check-label" for="flexCheckDisabled">
-                                                                  12. | This is more videos
-                                                            </label>
+                                    <div class="accordion" id="accordionExample">
+                                        <div class="accordion-item">
+                                          <h2 class="accordion-header" id="headingThree">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                              Milestone One
+                                            </button>
+                                          </h2>
+                                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                @foreach (range(1, 4) as $item)
+                                                <div class="mb-3">
+                                                    <a href="#">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="p-2">
+                                                                    <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" >
+                                                                        <label class="form-check-label" for="flexCheckDisabled">
+                                                                          {{ $item }}. | This is more videos
+                                                                    </label>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </a>
                                                 </div>
-                                            </a>
+                                            @endforeach
+                                            </div>
+                                          </div>
                                         </div>
-                                    @endforeach
+                                    </div>
+
+                                    
+
                                 </div>
                             </div>
                         </div>

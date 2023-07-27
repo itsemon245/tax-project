@@ -34,15 +34,14 @@
 @push('customJs')
 <script>
     $( ".copyButton" ).each( (i,btn)=> {
-        btn.addEventListener('click', function(e) {
-        var textToCopy = e.target.dataset.code; 
-        navigator.clipboard.writeText(textToCopy);
-        Toast.fire({
-            title: 'Copied', text: 'Copy to Clipboard', icon: 'success'
-        })
+            btn.addEventListener('click', function(e) {
+            var textToCopy = e.target.dataset.code; 
+            navigator.clipboard.writeText(textToCopy);
+            Toast.fire({
+            title: 'Copy to Clipboard', icon: 'success'
+            })
         }); 
-    } )
-    
-    </script>
+    })
+</script>
 @endpush
 

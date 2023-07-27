@@ -80,8 +80,13 @@ class PageController extends Controller
     {
         $user_id = Auth::user()->id;
         $promoCodes = User::find($user_id)->promoCodes()->where('status', 1)->get();
-
         return view('frontend.pages.promoCodesPage', compact('promoCodes'));
 
+    }
+
+    //notification client side view page
+    public function notificationPage()
+    {
+        return view('frontend.pages.notificationPage');
     }
 }
