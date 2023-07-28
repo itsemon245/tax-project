@@ -103,7 +103,7 @@ Route::prefix('admin')->group(function () {
             Route::PUT('update', 'update')->name('update');
         });
 
-
+    Route::get('delete-event/{id}',[CalendarController::class,'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);
 
 

@@ -106,4 +106,13 @@ class CalendarController extends Controller
         ];
         return back()->with($notification);
     }
+
+    public function delete($id){
+        Calendar::find($id)->delete();
+        $notification = [
+            'message' => 'Event Deleted',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
+    }
 }
