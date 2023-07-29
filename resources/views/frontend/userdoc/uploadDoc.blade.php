@@ -8,7 +8,6 @@
                 <h4 class="card-title text-center mb-3">Upload Documents</h4>
                 <div class="row mb-2">
                     <div class="col-8">
-                        @dd($names)
                         <x-form.selectize id="doc-name" label="Document Name" name="name" placeholder="Document Name">
                             @foreach ($names as $name)
                                 <option value="{{ $name }}">{{ $name }}</option>

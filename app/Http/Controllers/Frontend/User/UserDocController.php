@@ -25,7 +25,7 @@ class UserDocController extends Controller
      */
     public function create()
     {
-        $names = UserDoc::distinct()->get('name');
+        $names = UserDoc::distinct()->get()->pluck('name');
         return view('frontend.userdoc.uploadDoc', compact('names'));
     }
 
