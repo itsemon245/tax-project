@@ -70,6 +70,8 @@ Route::post('/user-appointment/store', [UserAppointmentController::class, 'store
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
 Route::get('/contact', [PageController::class, 'contactPage'])->name('contact');
 Route::get('/office', [PageController::class, 'officePage'])->name('office');
+Route::get('/notification', [PageController::class, 'notificationPage'])->name('notification');
+// Route::get('/notification', 'notificationPage')->name('notification');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 Route::get('/promo-codes', [PageController::class, 'PromoCodePage'])->name('page.promo.code');
 
@@ -92,6 +94,7 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/about', 'aboutPage')->name('about');
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
+
 });
 // these route will only be visible to Courses navigation 
 // ! Do not put any new routes in this group
