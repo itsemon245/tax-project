@@ -4,6 +4,7 @@
     <x-backend.ui.breadcrumbs :list="['Backend', 'Calender']" />
     {{-- {{dd($events)}} --}}
     <input type="hidden" id="events" value="{{ $events }}">
+
     <x-backend.ui.section-card name="Calendar">
         {{-- calendar section  --}}
         <div class="row">
@@ -15,7 +16,11 @@
                 <div class="border-start border-top border-2 border-primary h-100 p-2 my-2">
                     <div class="d-flex flex-column gap-1">
                         @forelse ($currentEvents as $event)
-                            <div id="myButton" data-tippy-content="Client: {{ $event->client->name }}"
+                           <div class="d-flex justify-content-between">
+                             <h4 class="enent-type cursor-pointer d-inline-block" data-event-id={{$event->id}}>Created At </h4> <a href="{{route('delete.event', $event->id)}}"> <span class="mdi mdi-check d-inline-block w-25"></span></a>
+                           </div>
+                            
+                            <div id="myButton" class="myButton event-{{$event->id}}" data-tippy-content="Client: {{ $event->client->name }}"
                                 class="w-100 text-light bg-danger rounded" style="padding: 5px;max-width:100%;">
                                 <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
                                     <div>
@@ -23,7 +28,8 @@
                                         <p class='text-light m-0 text-capitalize' style="text-align:left;">
                                             {{ $event->service }}</p>
                                     </div>
-                                    <div class="" style="font-size: 12px;">{{ Carbon\Carbon::parse($event->start)->format('h:m a') }}</div>
+                                    <div class="" style="font-size: 12px;">
+                                        {{ Carbon\Carbon::parse($event->start)->format('h:m a') }}</div>
                                 </div>
                             </div>
                         @empty
@@ -35,7 +41,7 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="servicesData" value="{{$services}}">
+        <input type="hidden" name="servicesData" value="{{ $services }}">
         <!-- Modal for creating event -->
         <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -54,7 +60,7 @@
 
                             <x-form.selectize id="service" name="service" placeholder="Select Service..." label="Service">
                                 @foreach ($services as $item)
-                                <option value="{{$item->service}}">{{$item->service}}</option>
+                                    <option value="{{ $item->service }}">{{ $item->service }}</option>
                                 @endforeach
                             </x-form.selectize>
                             <x-backend.form.select-input id="client" label="Client" name="client"
@@ -105,7 +111,8 @@
             </div>
         </div>
         <!-- Modal for updating event -->
-        <div class="modal fade" id="eventUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="eventUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
@@ -120,14 +127,15 @@
 
                         <div class="modal-body">
                             <x-backend.form.text-input id="eventTitle" name="event_name" label="Event Name" />
-                            
-                            <x-form.selectize id="service" name="service" placeholder="Select Service..." label="Service">
+
+                            <x-form.selectize id="service" name="service" placeholder="Select Service..."
+                                label="Service">
                                 @foreach ($services as $item)
-                                <option value="{{null}}" selected disabled>Select Service</option>
-                                <option value="{{$item->service}}">{{$item->service}}</option>
+                                    <option value="{{ null }}" selected disabled>Select Service</option>
+                                    <option value="{{ $item->service }}">{{ $item->service }}</option>
                                 @endforeach
                             </x-form.selectize>
-                                      
+
                             <x-backend.form.select-input id="client" label="Client" name="client"
                                 placeholder="Select Client">
                                 @foreach ($clients as $client)
@@ -318,5 +326,38 @@
             });
         </script>
 
+        <!-- Add this script below the HTML structure in your Blade view file -->
+        {{-- <script>
+            $(document).ready(function() {
+                // Hide all dropdown contents initially
+                $('#myButton').hide();
+
+                // Handle click event on the title
+                $('.enent-type').click(function() {
+                    // Toggle the visibility of the dropdown content
+                    $(this).siblings('#myButton').slideToggle();
+                });
+            });
+        </script> --}}
+
+        <!-- Add this script below the HTML structure in your Blade view file -->
+        <script>
+            $(document).ready(function() {
+                // Hide all dropdown contents initially
+                $('.myButton').hide();
+
+                // Handle click event on the title
+                $('.enent-type').click(function() {
+                    var eventId = $(this).data('event-id');
+                    var dropdownContent = $('.event-' + eventId);
+
+                    // Hide all other dropdowns
+                    $('.myButton').not(dropdownContent).slideUp();
+
+                    // Toggle the visibility of the selected dropdown content
+                    dropdownContent.slideToggle();
+                });
+            });
+        </script>
     @endpush
 @endsection
