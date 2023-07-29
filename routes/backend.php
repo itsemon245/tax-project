@@ -35,7 +35,9 @@ use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\IndustryController;
+use App\Http\Controllers\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,11 +84,13 @@ Route::prefix('admin')->group(function () {
     Route::resource('about', AboutController::class);
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
+    Route::resource('exams', ExamController::class);
+    Route::resource('questions', QuestionController::class);
     Route::resource('course', CourseController::class)->names([
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',
     ]);
-    Route::post('send-invoice-mail/{id}',[InvoiceController::class,'sendInvoiceMail'])->name('send_invoice_mail');
+    Route::post('send-invoice-mail/{id}', [InvoiceController::class, 'sendInvoiceMail'])->name('send_invoice_mail');
     Route::prefix('case-study-backend')
         ->name('case.study.backend.')
         ->controller(CaseStudyController::class)
@@ -99,7 +103,7 @@ Route::prefix('admin')->group(function () {
             Route::PUT('update', 'update')->name('update');
         });
 
-
+    Route::get('delete-event/{id}',[CalendarController::class,'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);
 
 

@@ -28,7 +28,7 @@ class InvoiceController extends Controller
         $invoices = Invoice::with('client')->latest()->get();
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
         // dd($references);
-        $clients = Client::get();
+        $clients = Client::latest()->get();
         return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references'));
     }
 

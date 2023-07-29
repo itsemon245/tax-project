@@ -11,7 +11,7 @@ class StoreExamRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreExamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name"          => "required",
+            "course"        => "required",
+            "total_marks"   => "required",
+            "passing_marks" => "required",
         ];
     }
 }
