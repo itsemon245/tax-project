@@ -6,15 +6,24 @@
         <div class="container">
             <div class="px-5 my-5">
                 <h4 class="card-title text-center mb-3">Upload Documents</h4>
-                <div class="mb-5">
-                    <x-form.selectize label="Document Name" name="name" placeholder="Document Name">
-                        @foreach ($names as $name)
-                            <option value="{{ $name }}">{{ $name }}</option>
-                        @endforeach
-                    </x-form.selectize>
+                <div class="row mb-2">
+                    <div class="col-8">
+                        <x-form.selectize id="doc-name" label="Document Name" name="name" placeholder="Document Name">
+                            @foreach ($names as $name)
+                                <option value="{{ $name }}">{{ $name }}</option>
+                            @endforeach
+                        </x-form.selectize>
+                    </div>
+                    <div class="col-4">
+                        <x-backend.form.select-input label="Tax Year" placeholder="Select Tax Year..." name="">
+                            @foreach (range(2023, 1980) as $year)
+                                <option value="">{{ $year . '-' . $year - 1 }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                    </div>
                 </div>
                 <label class="mb-2">Select Documents</label>
-                    <x-form.file-pond/>
+                <x-form.file-pond />
                 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
             </div>
         </div>

@@ -19,7 +19,7 @@ class UserDocController extends Controller
         // $upload_documents = UserDoc::with('user')->get();
         return view('frontend.userdoc.userDoc');
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -35,21 +35,30 @@ class UserDocController extends Controller
     public function store(StoreUserDocRequest $request)
     {
 
-        $images = [];
-        $files = $request->fileponds;
-        foreach ($files as $file) {
-            $tempFile = 'temp/'.$file;
-            $mainFile = 'public/'.$file;
+        $files = [];
+        $images = $request->fileponds;
+        // dd($files);
+        foreach ($images as $file) {
+            $fileArr = explode('storage/', $file);
+            $path = explode('storage/', $file)[1];
+            $tempFile = 'temp/' . $path;
+            $mainFile = 'public/' . $path;
+            $arr = explode(".", $path);
+            $ext = array_pop($arr);
             if (Storage::exists($tempFile)) {
                 Storage::move($tempFile, $mainFile);
-                $images[]=$file;
+                $files[] = [
+                    'file' => $fileArr[0] . "storage/" . $path,
+                    'mimeType' => $ext
+                ];
             }
         }
+        // dd($files);
         $user_id = auth()->id();
         $upload_document = new UserDoc();
         $upload_document->user_id = $user_id;
         $upload_document->name = $request->name;
-        $upload_document->images = json_encode($images);
+        $upload_document->files = $files;
         $upload_document->save();
         $notification = array(
             'message' => "Submitted Successfully",

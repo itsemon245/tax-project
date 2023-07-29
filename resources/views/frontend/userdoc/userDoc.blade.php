@@ -80,25 +80,15 @@
                         aut voluptate, id quis
                         iusto facilis pariatur dicta corrupti?</p>
                 </div>
-                <div class="col-lg-8">
-                    <div class="myDocsButton row justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <a href="{{ route('user-doc.create') }}"
-                                        class="myDocsButton btn btn-success waves-effect waves-light pe-3 mb-2">Upload
-                                        Document</a>
-                                </div>
-                                <div class="col-lg-8">
-                                    <select class="form-control" name="">
-                                        <option value="select year" disabled selected>Tax year</option>
-                                        @foreach (range(2023, 1980) as $year)
-                                        <option value="">{{$year}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                <div class="d-flex gap-4 align-items-center">
+                    <a href="{{ route('user-doc.create') }}" class="btn btn-success mt-2">Upload New
+                        Document</a>
+                    <div class="">
+                        <x-backend.form.select-input label="Tax Year" placeholder="Select Tax Year..." name="">
+                            @foreach (range(2023, 1980) as $year)
+                                <option value="">{{ $year . '-' . $year - 1 }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
                     </div>
                 </div>
 
@@ -173,7 +163,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <div class="col-lg-11 col-md-12 col-11 mt-5 position-absolute cardDetails1">
                                 <div class="card text_card pt-3">
                                     <div class="card-body">
@@ -210,7 +200,7 @@
                                 </ul>
                             </div>
                         </div>
-                        
+
                     </div>
 
                 </div>
@@ -224,23 +214,23 @@
     @push('customJs')
         <script>
             var closeTab = $('.close-tab');
-            closeTab.click(function(){
+            closeTab.click(function() {
                 $('.cardDetails').hide();
             })
 
             var closeTab = $('.show-tab');
-            closeTab.click(function(){
+            closeTab.click(function() {
                 $('.cardDetails').show();
             })
         </script>
-         <script>
+        <script>
             var closeTab = $('.close-tab1');
-            closeTab.click(function(){
+            closeTab.click(function() {
                 $('.cardDetails1').hide();
             })
 
             var closeTab = $('.show-tab1');
-            closeTab.click(function(){
+            closeTab.click(function() {
                 $('.cardDetails1').show();
             })
         </script>

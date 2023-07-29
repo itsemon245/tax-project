@@ -26,7 +26,7 @@ function timestamp()
  * @param string $prefix is empty 
  * getClientOriginalName will be used
  */
-function saveImage($image, string $dir, string $prefix = '', string $disk = 'public')
+function saveImage($image, string $dir, ?string $prefix = '', string $disk = 'public')
 {
     if ($image) {
         if ($prefix === '' || $prefix === null) {

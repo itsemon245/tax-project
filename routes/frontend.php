@@ -71,7 +71,7 @@ Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.in
 Route::get('/contact', [PageController::class, 'contactPage'])->name('contact');
 Route::get('/office', [PageController::class, 'officePage'])->name('office');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
-Route::get('/promo-codes',[PageController::class, 'PromoCodePage'])->name('page.promo.code');
+Route::get('/promo-codes', [PageController::class, 'PromoCodePage'])->name('page.promo.code');
 
 // user generated refer link
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
@@ -119,7 +119,7 @@ Route::post('/upload', function (Request $request) {
     $files = $request->fileponds;
     $paths = [];
     foreach ($files as $key => $file) {
-        $paths[] = saveImage($file, "uploads/filepond", '', 'temp');
+        $paths[] = saveImage($file, "filepond", null, 'temp');
     }
     $pathString = implode(",", $paths);
     return response($pathString, 200, [

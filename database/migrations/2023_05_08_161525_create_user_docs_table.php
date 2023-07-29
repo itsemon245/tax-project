@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
-            $table->longText('images')->comment('File can be either image or document');
+            $table->longText('files')->comment('File can be either image or document');
             $table->timestamps();
         });
     }
