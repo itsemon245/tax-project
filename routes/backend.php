@@ -2,7 +2,11 @@
 
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\IndustryController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\VideoController;
@@ -15,6 +19,7 @@ use App\Http\Controllers\Backend\Role\RoleController;
 use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\Pages\AboutController;
 use App\Http\Controllers\Backend\UserProfileController;
+use App\Http\Controllers\Backend\Chalan\ChalanController;
 use App\Http\Controllers\Backend\Client\ClientController;
 use App\Http\Controllers\Backend\Course\CourseController;
 use App\Http\Controllers\Frontend\User\UserDocController;
@@ -34,10 +39,6 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
-use App\Http\Controllers\CaseStudyController;
-use App\Http\Controllers\ExamController;
-use App\Http\Controllers\IndustryController;
-use App\Http\Controllers\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +106,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('delete-event/{id}',[CalendarController::class,'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);
+
+    Route::resource('chalan', ChalanController::class);
 
 
     //service related routes

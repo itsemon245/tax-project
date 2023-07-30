@@ -425,6 +425,23 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#chalanSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Chalan</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="chalanSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('chalan.create') }}">Create</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('chalan.index') }}">View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#bookSection" data-bs-toggle="collapse">
