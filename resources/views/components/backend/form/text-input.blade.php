@@ -3,6 +3,7 @@
     $required = $attributes->get('required');
     $name = $attributes->get('name');
     $class = $attributes->get('class');
+    $class = str($class)->contains('dotted-border') ? $class : 'form-control ' . $class;
     // $value = $attributes->has('value') ? $attributes->get('value') : old($name);
 @endphp
 <div class="mb-2 w-100">
@@ -13,7 +14,7 @@
             @endif
         </label>
     @endif
-    <input class="{{ 'form-control ' . $class }} @error($name)
+    <input class="{{ $class }} @error($name)
         is-invalid
     @enderror"
         {{ $attributes->merge(['placeholder' => $label])->merge(['value' => old($name)]) }}>

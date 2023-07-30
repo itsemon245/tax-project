@@ -19,11 +19,18 @@
     <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     @vite(['resources/js/app.js'])
 
-    
+
     {{-- Plugins link  --}}
     <style>
-        .mdi{
+        .mdi {
             font-size: 24px;
+        }
+
+        .dotted-border {
+            border: 3px dotted var(--ct-gray-400);
+            border-top: 0;
+            border-right: 0;
+            border-left: 0;
         }
     </style>
     @stack('customCss')

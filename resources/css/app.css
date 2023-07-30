@@ -740,6 +740,7 @@ footer .social-handles {
     background-color: var(--bs-gray-100);
     border-bottom: 2px solid var(--primary);
 }
+
 @media (max-width: 426.99px) {
     .tabs {
         margin: 2% 0;
