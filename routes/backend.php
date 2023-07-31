@@ -104,10 +104,11 @@ Route::prefix('admin')->group(function () {
             Route::PUT('update', 'update')->name('update');
         });
 
-    Route::get('delete-event/{id}',[CalendarController::class,'delete'])->name('delete.event');
+    Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);
 
     Route::resource('chalan', ChalanController::class);
+    Route::resource('return-form', ReturnFormController::class);
 
 
     //service related routes

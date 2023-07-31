@@ -442,6 +442,23 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#return-formSection" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Return</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="return-formSection">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('return-form.create') }}">Create</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('return-form.index') }}">View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li>
                     <a href="#bookSection" data-bs-toggle="collapse">
