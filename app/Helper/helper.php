@@ -18,7 +18,7 @@ function useImage($image)
  */
 function timestamp()
 {
-    return Carbon::now()->format('Y-m-d-H-m:s:u');
+    return Carbon::now()->format('Y-m-d-H-m-s-u');
 }
 /**
  * Stores an image given an image request and a directory
@@ -28,6 +28,7 @@ function timestamp()
  */
 function saveImage($image, string $dir, ?string $prefix = '', string $disk = 'public')
 {
+    // dd($image);
     if ($image) {
         if ($prefix === '' || $prefix === null) {
             $prefix = str($image->getClientOriginalName())->slug();
