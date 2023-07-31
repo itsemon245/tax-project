@@ -13,7 +13,7 @@ class ReturnFormController extends Controller
      */
     public function index()
     {
-        return view('backend.chalan.index');
+        return view('backend.return.index');
     }
 
     /**
@@ -21,7 +21,7 @@ class ReturnFormController extends Controller
      */
     public function create()
     {
-        return view('backend.chalan.create');
+        return view('backend.return.create');
         //
     }
 
@@ -38,7 +38,7 @@ class ReturnFormController extends Controller
      */
     public function show(ReturnForm $returnForm)
     {
-        return view('backend.chalan.show');
+        return view('backend.return.show');
         //
     }
 
@@ -47,7 +47,7 @@ class ReturnFormController extends Controller
      */
     public function edit(ReturnForm $returnForm)
     {
-        return view('backend.chalan.clone');
+        return view('backend.return.clone');
         //
     }
 

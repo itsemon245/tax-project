@@ -32,6 +32,12 @@
             border-right: 0;
             border-left: 0;
         }
+
+        @page {
+            size: 21cm 29.7cm;
+            margin: 2.5cm;
+            /* change the margins as you want them to be. */
+        }
     </style>
     @stack('customCss')
     <!-- Head js -->

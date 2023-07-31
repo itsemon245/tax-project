@@ -28,6 +28,7 @@ use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\UserAppointmentController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\CkEditor\CkEditorController;
+use App\Http\Controllers\Backend\Return\ReturnFormController;
 use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
