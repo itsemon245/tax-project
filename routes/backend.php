@@ -18,6 +18,7 @@ use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Role\RoleController;
 use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\Pages\AboutController;
+use App\Http\Controllers\Backend\Role\MemberController;
 use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Chalan\ChalanController;
 use App\Http\Controllers\Backend\Client\ClientController;
@@ -110,6 +111,7 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('chalan', ChalanController::class);
     Route::resource('return-form', ReturnFormController::class);
+    Route::resource('member', MemberController::class);
 
 
     //service related routes
