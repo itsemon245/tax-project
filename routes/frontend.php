@@ -1,7 +1,13 @@
 <?php
 
+use App\Models\Book;
 use App\Models\User;
+use App\Models\Course;
+use App\Models\Product;
+use App\Models\Purchase;
+use App\Models\CaseStudy;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ExpertController;
@@ -21,11 +27,6 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use App\Models\Book;
-use App\Models\CaseStudy;
-use App\Models\Course;
-use App\Models\Product;
-use App\Models\Purchase;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,7 +95,6 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/about', 'aboutPage')->name('about');
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
-
 });
 // these route will only be visible to Courses navigation 
 // ! Do not put any new routes in this group
@@ -131,9 +131,10 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
-    $product = Product::find(1);
+    $roles = Role::where('name', 'not like', 'user')->get();
     // $products = $product->purchased('product');
-    dd($product->isPurchased);
+    // $user = User::get();
+    dd($roles);
     return view('test');
 });
 
