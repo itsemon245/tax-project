@@ -124,9 +124,19 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
-                            <div class="pe-5">
-                                <x-backend.form.text-input value="{{ $invoice->client->name }}" label="Client Name"
-                                    name="name" disabled />
+                            <div class="pe-2 mb-2">
+                                <div class="fw-bold">
+                                    {{ $invoice->client->name }}
+                                </div>
+                                <div class="fw-bold">
+                                    {{ str($invoice->client->company_name)->title() }}
+                                </div>
+                                <div class="">
+                                    {{ $invoice->client->present_address }}
+                                </div>
+                                <div class="">
+                                    {{ $invoice->client->phone }}
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-4 col-md-3">
@@ -134,14 +144,14 @@
                                 <label for="issue-date" class="mb-0 d-block">Date of Issue</label>
                                 <div class="d-flex align-items-center">
                                     <input type="date" name="issue_date" id="issue-date"
-                                        value="{{ Carbon\Carbon::parse($invoice->issue_date)->format('Y-m-d') }}">
+                                        value="{{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $year)->first()->pivot->issue_date)->format('Y-m-d') }}">
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="issue-date" class="mb-0 d-block">Due Date</label>
                                 <div class="d-flex align-items-center">
                                     <input type="date" name="due_date" id="due-date"
-                                        value="{{ Carbon\Carbon::parse($invoice->due_date)->format('Y-m-d') }}">
+                                        value="{{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $year)->first()->pivot->due_date)->format('Y-m-d') }}">
                                 </div>
                             </div>
                         </div>
@@ -158,11 +168,14 @@
 
                         </div>
                         <div class="col-sm-12 col-md-3">
-                            <div class="d-flex justify-content-end ">
+                            <div class="d-flex justify-content-end mb-2">
                                 <p class="mb-0">Amount Due (USD) <br>
                                     <span class="fs-1 fw-bold text-black"
-                                        id="amount-due-vue">{{ $invoice->amount_due ?? '' }}Tk</span>
+                                        id="amount-due-vue">{{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->due ?? '' }}Tk</span>
                                 </p>
+                            </div>
+                            <div class="fw-bold d-flex justify-content-end">
+                                <h4> Year: {{ $year }}</h4>
                             </div>
                         </div>
                     </div>
@@ -218,12 +231,14 @@
                                     <label class="col-4 form-label mb-0">Sub Total:</label>
                                     <div class="col-5 p-0"><input type="text" class="text-end p-1 d-inline-block fw-bold"
                                             name="sub_total" placeholder="00.00" style="width: calc(100% - 1rem);"
-                                            value={{ $invoice->sub_total ?? '' }}><span class="">Tk</span></div>
+                                            value={{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->sub_total ?? '' }}><span
+                                            class="">Tk</span></div>
 
                                     <label class="col-4 form-label mb-0">Discount</label>
                                     <div class="col-5 p-0"><input type="text" class="text-end p-1 d-inline-block fw-bold"
                                             name="sub_total" placeholder="00.00" style="width: calc(100% - 1rem);"
-                                            value={{ $invoice->discount ?? '' }}><span class="">Tk</span></div>
+                                            value={{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->discount ?? '' }}><span
+                                            class="">Tk</span></div>
                                 </div>
 
                                 <div class="mb-2">
@@ -244,7 +259,8 @@
                                 <div class="row mb-2 align-items-center justify-content-between border-top border-2"><label
                                         class="col-4 form-label mb-0">Total</label><input type="text"
                                         class="col-6 text-end p-1" name="total" placeholder="00.00"
-                                        value={{ $invoice->total }}></div>
+                                        value={{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->demand }}>
+                                </div>
 
                             </div>
                             <div class="col-md-5">
@@ -267,13 +283,16 @@
                                 <div class="row mb-2 align-items-center"><label
                                         class="col-4 form-label mb-0">Total</label><input type="text"
                                         class="col-6 p-1" name="total" placeholder="00.00"
-                                        value="{{ $invoice->total }}"></div>
+                                        value="{{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->demand }}">
+                                </div>
                                 <div class="row mb-2 align-items-center"><label class="col-4 form-label mb-0">Amount
                                         Paid</label><input type="text" class="col-6 p-1" name="paid"
-                                        placeholder="00.00" value="{{ $invoice->amount_paid }}"></div>
+                                        placeholder="00.00"
+                                        value="{{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->paid }}">
+                                </div>
                                 <div class="row mb-2 align-items-center"><label class="col-4 form-label mb-0">Amount Due
                                     </label><input type="text" class="col-6 p-1" name="due" placeholder="00.00"
-                                        value="{{ $invoice->amount_due }}">
+                                        value="{{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->due }}">
                                 </div>
                             </div>
                         </div>
@@ -287,12 +306,11 @@
     <button class="btn btn-primary waves-effect waves-light mt-2" id="cmd">Print</button>
 
     @push('customJs')
-    <script src="{{asset('backend/assets/js/printThis.js')}}"></script>
-    <script>
-
-            $('#cmd').on('click',function(){
+        <script src="{{ asset('backend/assets/js/printThis.js') }}"></script>
+        <script>
+            $('#cmd').on('click', function() {
                 $('#pdfViewer').printThis()
             })
-    </script>
+        </script>
     @endpush
 @endsection

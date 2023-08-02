@@ -18,17 +18,9 @@ return new class extends Migration
             $table->text('header_image')->nullable();
             $table->string('reference_no')->nullable();
             $table->longText('note')->nullable();
-            $table->integer('discount')->nullable();
-            $table->integer('sub_total')->default(0);
-            $table->integer('total')->default(0);
-            $table->integer('amount_paid')->default(0);
-            $table->integer('amount_due')->default(0);
             $table->text('payment_note')->nullable();
             $table->enum('payment_method',['cash', 'bkash', 'nagad', 'rocket', 'bank', 'card'])->nullable();
-            $table->timestamp('payment_date')->nullable();
-            $table->timestamp('due_date')->default(now()->addDays(7)->format('Y-m-d'));
-            $table->timestamp('issue_date')->default(now()->format('Y-m-d'));
-            $table->enum('status',['overdue', 'due', 'draft', 'partial', 'sent', 'paid'])->default('draft');
+            
             $table->timestamps();
         });
     }

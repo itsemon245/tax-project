@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\FiscalYear;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,9 @@ class InvoiceSeeder extends Seeder
         $total = ($rate * $qty);
         $discount = fake()->numberBetween(10, 100);
         $subTotal = $total + $total * ($taxRate / 100);
+        $total = $subTotal - $discount;
+        $paid = fake()->numberBetween(0, $total);
+        $due = $total - $paid;
         $taxes = [
             [
                 'name' => fake()->word(),
@@ -27,13 +31,22 @@ class InvoiceSeeder extends Seeder
                 'number' => fake()->numberBetween(10, 100),
             ]
         ];
+        $fiscalYear = FiscalYear::create(['year' => currentFiscalYear()]);
         foreach (range(1, 10) as $key) {
-            Invoice::factory(1)->create([
+            $invoice = Invoice::factory(1)->create();
+
+            $invoice[0]->fiscalYears()->attach($fiscalYear->id, [
                 'discount' => $discount,
                 'sub_total' => $subTotal,
-                'total' => $subTotal - $discount,
+                'demand' => $total,
+                'paid' => $paid,
+                'due' => $due,
+                'status' => $due == 0 ? 'paid' : fake()->randomElement(['overdue', 'due', 'draft', 'partial', 'sent']),
+                'payment_date' => $due == 0 ? now() : null,
+                'due_date' => now()->addDays(7)->format('Y-m-d'),
+                'issue_date' => now()->format('Y-m-d'),
             ]);
-            sleep(0.5);
+
             InvoiceItem::factory(1)->create([
                 'invoice_id' => $key,
                 'rate' => $rate,

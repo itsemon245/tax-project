@@ -10,6 +10,7 @@ class Invoice extends Model
     use HasFactory;
     protected $guarded = [];
 
+
     public function invoiceItems()
     {
         return $this->hasMany(InvoiceItem::class);
@@ -18,7 +19,37 @@ class Invoice extends Model
     {
         return $this->belongsTo(Client::class);
     }
-
+    function fiscalYears()
+    {
+        return $this->belongsToMany(FiscalYear::class)
+            ->withPivot([
+                'discount',
+                'sub_total',
+                'demand',
+                'paid',
+                'due',
+                'payment_date',
+                'issue_date',
+                'due_date',
+                'status'
+            ]);
+    }
+    function currentFiscal()
+    {
+        return $this->belongsToMany(FiscalYear::class)
+            ->where('year', currentFiscalYear())
+            ->withPivot([
+                'discount',
+                'sub_total',
+                'demand',
+                'paid',
+                'due',
+                'payment_date',
+                'issue_date',
+                'due_date',
+                'status'
+            ]);
+    }
 
     protected static function booted(): void
     {

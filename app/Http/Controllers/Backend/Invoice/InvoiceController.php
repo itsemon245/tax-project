@@ -16,6 +16,7 @@ use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceItemResource;
 use App\Http\Resources\InvoiceItemCollection;
+use App\Models\FiscalYear;
 
 class InvoiceController extends Controller
 {
@@ -24,12 +25,13 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $recentInvoices = Invoice::with('client')->latest()->limit(5)->get();
-        $invoices = Invoice::with('client')->latest()->get();
+        $recentInvoices = Invoice::with('client', 'currentFiscal')->latest()->limit(5)->get();
+        $year = currentFiscalYear();
+        // dd($recentInvoices[0]->currentFiscal[0]->pivot->status);
+        $invoices = Invoice::with('client', 'currentFiscal')->latest()->get();
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
-        // dd($references);
         $clients = Client::latest()->get();
-        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references'));
+        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'year'));
     }
 
 
@@ -51,6 +53,9 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
+        $fiscalYear = FiscalYear::where('year', $request->year)->first();
+        $fiscalYear = $fiscalYear === null ? FiscalYear::create(['year' => $request->year]) : $fiscalYear;
+        // dd($fiscalYear);
         if ($request->hasFile('header_image')) {
             $header_image = saveImage($request->image, 'invoices', 'invoice');
         } else {
@@ -61,13 +66,25 @@ class InvoiceController extends Controller
             'header_image' => $header_image,
             'reference_no' => $request->reference,
             'note' => $request->note,
-            'discount' => $request->discount,
-            'sub_total' => $request->sub_total,
-            'total' => $request->total,
-            'amount_paid' => $request->paid,
-            'amount_due' => $request->due,
             'payment_note' => $request->payment_note,
             'payment_method' => $request->payment_method,
+        ]);
+        $demand = (int) $request->total;
+        $paid = (int) $request->paid;
+        $due = (int) $request->due;
+        $status = $due === 0 ? 'due' : '';
+        $status = $paid > 0 && $paid === $demand ? 'paid' : 'partial';
+
+
+
+        $invoice->fiscalYears()->attach($fiscalYear->id, [
+            'discount' => $request->discount,
+            'sub_total' => $request->sub_total,
+            'demand' => $demand,
+            'paid' => $paid,
+            'due' => $due,
+            'status' => $status,
+            'payment_date' => $due == 0 ? now() : null,
             'due_date' => $request->due_date,
             'issue_date' => $request->issue_date,
         ]);
@@ -107,15 +124,17 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Invoice $invoice)
+    public function show(Request $request, Invoice $invoice)
     {
+        $year = $request->year ? $request->year : currentFiscalYear();
         $clients = Client::get();
-        $invoice=Invoice::with('client','invoiceItems')->find($invoice->id);
+        $fiscalYear = FiscalYear::where('year', $year)->first();
+        $invoice = $fiscalYear->invoices()->find($invoice->id);
         $invoiceImage = null;
         if (countRecords('invoices') > 0) {
             $invoiceImage = Invoice::first()->header_image;
         }
-        return view('backend.invoice.viewOne', compact('invoice', 'clients','invoiceImage'));
+        return view('backend.invoice.viewOne', compact('invoice', 'clients', 'invoiceImage', 'year'));
     }
 
     function getInvoiceData($id)
@@ -149,7 +168,7 @@ class InvoiceController extends Controller
     public function edit(Invoice $invoice)
     {
         $clients = Client::get();
-        $invoice=Invoice::with('client','invoiceItems')->find($invoice->id);
+        $invoice = Invoice::with('client', 'invoiceItems')->find($invoice->id);
         return view('backend.invoice.edit-invoice', compact('invoice', 'clients'));
     }
 
@@ -244,19 +263,20 @@ class InvoiceController extends Controller
 
     public function markAs(Request $request, Invoice $invoice, string $status)
     {
-        $invoice->update([
-            'status'=> $status
+        $fiscalYear = FiscalYear::where('year', $request->year)->first();
+        $invoice->fiscalYears()->updateExistingPivot($fiscalYear->id, [
+            'status' => $status
         ]);
         return back()->with([
-            'alert-type'=>'success',
+            'alert-type' => 'success',
             'message' => str("marked as $status")->title()
         ]);
     }
 
-    public function sendInvoiceMail(Request $request,$id)
+    public function sendInvoiceMail(Request $request, $id)
     {
-        $invoice=Invoice::with('client','invoiceItems')->find($id);
-        
+        $invoice = Invoice::with('client', 'invoiceItems')->find($id);
+
         Mail::to($request->email_to)->send(new InvoiceMail($invoice));
 
         $alert = [
