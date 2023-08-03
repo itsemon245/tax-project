@@ -137,9 +137,13 @@ class InvoiceController extends Controller
         return view('backend.invoice.viewOne', compact('invoice', 'clients', 'invoiceImage', 'year'));
     }
 
-    function getInvoiceData($id)
+    function getInvoiceData(Request $request, $id)
     {
-        $invoice = new InvoiceResource(Invoice::find($id));
+        $year = $request->year ? $request->year : currentFiscalYear();
+        $clients = Client::get();
+        $fiscalYear = FiscalYear::where('year', $year)->first();
+        $invoice = $fiscalYear->invoices()->find($id);
+        $invoice = new InvoiceResource($invoice);
         $invoiceItems = new InvoiceItemCollection(InvoiceItem::where('invoice_id', $id)->get());
         return response()->json([
             'invoice' => $invoice,

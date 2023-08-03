@@ -26,7 +26,7 @@ export const item: InvoiceItem = {
     taxes: [
         {
             id: 0,
-            rate: undefined,
+            rate: 0,
             name: undefined,
             number: undefined,
         },

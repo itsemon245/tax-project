@@ -1,8 +1,4 @@
 <template>
-  <div class="d-flex justify-content-end">
-    <button type="button" class="btn btn-success waves-effect waves-light rounded-3 shadow mb-2"
-      @click="toggleEditMode">{{ editBtn }}</button>
-  </div>
   <div class="border-top border-4">
     <div class="table-responsive mb-3">
       <table class="table table-striped">
@@ -16,12 +12,12 @@
           </tr>
         </thead>
         <tbody id="table-body">
-          <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item" :is-edit-mode="isEditMode">
+          <InvoiceItem v-for="item in invoiceItems" :key="item.id" :item="item">
           </InvoiceItem>
         </tbody>
       </table>
-      <button v-show="isEditMode" @click="addNewItem" id="item-add-btn" type="button"
-        class="w-100 p-1 fw-bold rounded rounded-3" style="background: none; border: 2px solid rgb(172, 170, 170);">Add
+      <button @click="addNewItem" id="item-add-btn" type="button" class="w-100 p-1 fw-bold rounded rounded-3"
+        style="background: none; border: 2px solid rgb(172, 170, 170);">Add
         New Item</button>
     </div>
   </div><!-- end table-responsive-->
@@ -58,7 +54,7 @@
                 <div class="col-5 p-0">
                   <input type="text" name="discount"
                     class="w-100 border-top border-bottom border-start border-1 text-center rounded-0 rounded-start h-100 "
-                    placeholder="0" v-model="discount.amount" aria-label="Rate" aria-describedby="tax-addon1">
+                    placeholder="0" v-model="discount.percentage" aria-label="Rate" aria-describedby="tax-addon1">
                 </div>
                 <div class="col-3 p-0 py-1 ps-1 align-self-center border-end border-top border-bottom "
                   style="background: var(--ct-gray-200);">
@@ -150,11 +146,7 @@ import { useInvoice } from './composables/useInvoice';
 import { useAccounts } from './composables/useAccounts';
 import axios from 'axios'
 
-const isEditMode = ref(false);
 
-const editBtn = computed(() => {
-  return isEditMode.value ? 'Cancel' : 'Edit'
-})
 const { invoiceItems, addNewItem, calcTaxes } = useInvoice()
 const { subTotal, total, discount, paid, due, notes } = useAccounts()
 const totalTax = ref(0)
@@ -171,27 +163,11 @@ const toggleDiscountType = () => {
   discount.value.isFixed = !discount.value.isFixed
 }
 const calcDiscount = () => {
-  discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount / 100;
-  toggleDiscount()
+  discount.value.amount = discount.value.isFixed ? discount.value.percentage : subTotal.value * discount.value.percentage / 100;
+  discount.value.isActive = false
 }
-const toggleEditMode = () => {
-  isEditMode.value = !isEditMode.value
-  $('#submit-btn').toggleClass('d-none')
-}
-const toggleInputs = (isEditMode) => {
-  let mode = !isEditMode
-  console.log(mode);
-  $('#submit-form').prop('disabled', mode)
-  $('input').prop('disabled', mode)
-  $('select').prop('disabled', mode)
-  $('.selectize').prop('disabled', mode)
-  $('textarea').prop('disabled', mode)
-}
+
 onMounted(() => {
- 
-  watch(isEditMode, (newVal) => {
-    toggleInputs(newVal)
-  })
 
 
   const id = document.querySelector('#invoice-id')?.innerHTML
@@ -208,9 +184,11 @@ onMounted(() => {
       })
 
       const invoice = response.data.invoice
+      console.log(invoice);
+
 
       invoiceItems.value = items
-      
+
 
       subTotal.value = invoice.subTotal
       discount.value = {
@@ -228,11 +206,9 @@ onMounted(() => {
     })
     .catch(error => {
       console.log(error);
-    }).finally(()=>{
-      toggleInputs(!isEditMode)
     })
 
-    
+
 
   watch(invoiceItems, (newItems) => {
     let sum = 0;
@@ -257,7 +233,7 @@ onMounted(() => {
 
   watch([subTotal], () => {
     if (subTotal.value !== 0) {
-      discount.value.amount = discount.value.isFixed ? discount.value.amount : subTotal.value * discount.value.amount / 100;
+      calcDiscount()
     }
   }, { deep: true })
 

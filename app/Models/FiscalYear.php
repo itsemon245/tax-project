@@ -12,6 +12,17 @@ class FiscalYear extends Model
 
     function invoices()
     {
-        return $this->belongsToMany(Invoice::class);
+        return $this->belongsToMany(Invoice::class)
+            ->withPivot([
+                'discount',
+                'sub_total',
+                'demand',
+                'paid',
+                'due',
+                'payment_date',
+                'issue_date',
+                'due_date',
+                'status'
+            ]);
     }
 }

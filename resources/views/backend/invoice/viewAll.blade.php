@@ -1,25 +1,8 @@
 @extends('backend.layouts.app')
-@php
-    $from = (int) now()
-        ->subYears(20)
-        ->format('Y');
-    $to = (int) now()->format('Y');
-@endphp
+
 
 @push('customCss')
     <link rel="stylesheet" href="{{ asset('libs/nouislider/dist/nouislider.min.css') }}">
-    <script>
-        function customToolTip(value, name) {
-            let index = parseInt(value.toFixed(0)) - 1
-            let months = [
-                "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-                "November", "December"
-            ]
-            if (name = name) {
-                return months[index];
-            }
-        }
-    </script>
 @endpush
 
 @section('content')
@@ -37,7 +20,7 @@
             <form action="javasript: void(0);">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3 col-sm-6">
                             <x-form.selectize class="mb-1" id="client" name="client" placeholder="Select Client..."
                                 label="Client" :canCreate="false">
                                 @foreach ($clients as $client)
@@ -45,7 +28,7 @@
                                 @endforeach
                             </x-form.selectize>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3 col-sm-6">
                             <x-form.selectize class="mb-1" id="reference" name="reference"
                                 placeholder="Select Reference..." label="Reference" :canCreate="false">
                                 @foreach ($references as $reference)
@@ -53,40 +36,53 @@
                                 @endforeach
                             </x-form.selectize>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3 col-sm-6">
                             <x-backend.form.select-input label="Payment Stauts" placeholder="Payment Stauts">
                                 @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
                                     <option value="{{ $status }}">{{ str($status)->title() }}</option>
                                 @endforeach
                             </x-backend.form.select-input>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-md-3 col-sm-6">
+                            <x-backend.form.select-input name="year" label="Year" placeholder="Year">
+                                @foreach (range(currentYear(), 2020) as $year)
+                                    <option value="{{ $year - 1 . '-' . $year }}" @selected($year === currentYear())>
+                                        {{ str($year - 1 . '-' . $year)->title() }}</option>
+                                @endforeach
+                            </x-backend.form.select-input>
+                        </div>
+                        <div class="col-lg-6">
                             <x-range-slider id="price" from="100" to="100000" step='50'
                                 icon="mdi mdi-currency-bdt"></x-range-slider>
                         </div>
-                        <div class="col-lg-4">
-                            <form action="" method="post">
-                                @csrf
-                                <x-backend.form.text-input name="start_date" label="Start Date" type="date" />
-                                <x-backend.form.text-input name="end_date" label="End Date" type="date" />
-                            </form>
+
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <x-backend.form.text-input name="start_date" label="Start Date" type="date" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <x-backend.form.text-input name="end_date" label="End Date" type="date" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <x-form.selectize class="mb-2" id="circle" name="circle" label="Circle"
+                                        placeholder="Select Circle" :canCreate="false">
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->cricle }}</option>
+                                        @endforeach
+                                    </x-form.selectize>
+                                </div>
+                                <div class="col-sm-6">
+                                    <x-form.selectize class="mb-2" id="zone" name="zone" label="Zone"
+                                        placeholder="Select Zone" :canCreate="false">
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client->zone }}">{{ $client->zone }}</option>
+                                        @endforeach
+                                    </x-form.selectize>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            <form action="" method="post">
-                                @csrf
-                                <x-backend.form.select-input name="circle" label="Circle" placeholder="Select Circle">
-                                    @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}">{{ $client->cricle }}</option>
-                                    @endforeach
-                                </x-backend.form.select-input>
-                                <x-backend.form.select-input name="zone" label="Zone" placeholder="Select Zone">
-                                    @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}">{{ $client->zone }}</option>
-                                    @endforeach
-                                </x-backend.form.select-input>
-                            </form>
-                        </div>
-                        <div class="col-12">
+                        <div class="col-12 mt-2">
                             <div class="float-end">
                                 <x-backend.ui.button type="custom" href="{{ route('invoice.index') }}"
                                     class="btn-sm btn-outline-danger">Reset
@@ -186,8 +182,8 @@
                     <tbody>
                         @foreach ($invoices as $key => $invoice)
                             <!-- Center modal content -->
-                            <div class="modal fade" id="send-email-modal-{{ $invoice->id }}" tabindex="-1" role="dialog"
-                                aria-hidden="true">
+                            <div class="modal fade" id="send-email-modal-{{ $invoice->id }}" tabindex="-1"
+                                role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -252,16 +248,6 @@
                                 <td>
                                     <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->due . ' Tk' }}</span>
                                 </td>
-                                {{-- <td>
-                                    <x-backend.ui.button type="custom" href="{{ route('invoice.show', $invoice->id) }}"
-                                        class="btn-sm btn-dark">
-                                        View</x-backend.ui.button>
-                                        <x-backend.ui.button type="custom" href="{{ route('invoice.edit', $invoice->id) }}"
-                                            class="btn-sm btn-dark">
-                                        Edit</x-backend.ui.button>
-                                    <x-backend.ui.button type="delete"
-                                        action="{{ route('invoice.destroy', $invoice->id) }}" class="btn-sm" />
-                                </td> --}}
                                 <td>
                                     <div class="btn-group dropdown position-relative">
                                         <a href="javascript: void(0);"
@@ -273,7 +259,8 @@
                                             <a class="dropdown-item d-flex align-items-center gap-2"
                                                 href="{{ route('invoice.show', $invoice->id) . '?year=' . $year }}"><span
                                                     class="mdi mdi-eye text-primary font-20"></span>View</a>
-                                            <a class="dropdown-item d-flex align-items-center gap-2" href="#"><span
+                                            <a class="dropdown-item d-flex align-items-center gap-2"
+                                                href="{{ route('invoice.edit', $invoice->id) }}"><span
                                                     class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
 
                                             <button type="submit" class="dropdown-item d-flex align-items-center gap-2"
