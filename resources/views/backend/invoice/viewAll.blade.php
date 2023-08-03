@@ -257,10 +257,10 @@
                                         <div class="bg-white py-2 px-3 position-absolute d-none rounded shadow"
                                             style="inset: 2rem 2rem auto auto!important; z-index:2;">
                                             <a class="dropdown-item d-flex align-items-center gap-2"
-                                                href="{{ route('invoice.show', $invoice->id) . '?year=' . $year }}"><span
+                                                href="{{ route('invoice.show', $invoice->id) . '?year=' . $fiscalYear }}"><span
                                                     class="mdi mdi-eye text-primary font-20"></span>View</a>
                                             <a class="dropdown-item d-flex align-items-center gap-2"
-                                                href="{{ route('invoice.edit', $invoice->id) }}"><span
+                                                href="{{ route('invoice.edit', $invoice->id) . '?year=' . $fiscalYear }}"><span
                                                     class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
 
                                             <button type="submit" class="dropdown-item d-flex align-items-center gap-2"

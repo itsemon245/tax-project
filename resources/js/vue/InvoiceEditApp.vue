@@ -171,7 +171,8 @@ onMounted(() => {
 
 
   const id = document.querySelector('#invoice-id')?.innerHTML
-  const url = 'http://localhost:8000/admin/get-invoice-data/' + id
+  const fiscalYear = document.querySelector('#fiscal-year')?.innerHTML
+  const url = 'http://localhost:8000/admin/get-invoice-data/' + id + '?year=' + fiscalYear
 
   axios.get(url)
     .then(response => {

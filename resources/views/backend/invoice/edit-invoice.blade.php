@@ -112,8 +112,10 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card>
+        <input type="hidden" name="" id="fiscal-year">
         <section class="p-lg-3">
-            <form id="submit-form" action="{{ route('invoice.update', $invoice->id) }}" method="post" enctype="multipart/form-data">
+            <form id="submit-form" action="{{ route('invoice.update', $invoice->id) }}" method="post"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <div>
@@ -124,7 +126,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
-                            <div class="pe-5">
+                            <div class="pe-2 mb-2">
                                 <x-form.selectize class="mb-1" id="client" name="client"
                                     placeholder="Select Client..." label="Bill To" :canCreate="false">
                                     @foreach ($clients as $client)
@@ -134,6 +136,15 @@
                                 </x-form.selectize>
                                 <a href="{{ route('client.create') }}" class="text-blue" style="font-weight: 500;">Create
                                     New Client</a>
+                            </div>
+                            <div class="pe-2">
+                                <x-backend.form.select-input name="year" placeholder="Select Year" label="Year">
+                                    @foreach (range(currentYear(), 2020) as $year)
+                                        <option value="{{ $year - 1 . '-' . $year }}" @selected($year - 1 . '-' . $year == $activeYear)>
+                                            {{ $year - 1 . '-' . $year }}
+                                        </option>
+                                    @endforeach
+                                </x-backend.form.select-input>
                             </div>
                         </div>
                         <div class="col-sm-4 col-md-3">
@@ -147,7 +158,8 @@
                             <div class="mb-3">
                                 <label for="issue-date" class="mb-0 d-block">Due Date</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="date" name="due_date" id="due-date" value="{{ Carbon\Carbon::parse($invoice->due_date)->format('Y-m-d') }}">
+                                    <input type="date" name="due_date" id="due-date"
+                                        value="{{ Carbon\Carbon::parse($invoice->due_date)->format('Y-m-d') }}">
                                 </div>
                             </div>
                         </div>
@@ -176,7 +188,8 @@
 
                 </div>
 
-                <button id="submit-btn" type="submit" class="btn btn-primary waves-effect waves-light mt-2 rounded-3 shadow d-none">Update</button>
+                <button id="submit-btn" type="submit"
+                    class="btn btn-primary waves-effect waves-light mt-2 rounded-3 shadow">Update</button>
 
             </form>
 

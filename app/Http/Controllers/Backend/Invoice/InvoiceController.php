@@ -26,12 +26,12 @@ class InvoiceController extends Controller
     public function index()
     {
         $recentInvoices = Invoice::with('client', 'currentFiscal')->latest()->limit(5)->get();
-        $year = currentFiscalYear();
+        $fiscalYear = currentFiscalYear();
         // dd($recentInvoices[0]->currentFiscal[0]->pivot->status);
         $invoices = Invoice::with('client', 'currentFiscal')->latest()->get();
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
         $clients = Client::latest()->get();
-        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'year'));
+        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'fiscalYear'));
     }
 
 
@@ -140,7 +140,6 @@ class InvoiceController extends Controller
     function getInvoiceData(Request $request, $id)
     {
         $year = $request->year ? $request->year : currentFiscalYear();
-        $clients = Client::get();
         $fiscalYear = FiscalYear::where('year', $year)->first();
         $invoice = $fiscalYear->invoices()->find($id);
         $invoice = new InvoiceResource($invoice);
@@ -169,11 +168,14 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Invoice $invoice)
+    public function edit(Request $request, Invoice $invoice)
     {
         $clients = Client::get();
-        $invoice = Invoice::with('client', 'invoiceItems')->find($invoice->id);
-        return view('backend.invoice.edit-invoice', compact('invoice', 'clients'));
+        $activeYear = $request->year ? $request->year : currentFiscalYear();
+        $clients = Client::get();
+        $fiscalYear = FiscalYear::where('year', $activeYear)->first();
+        $invoice = $fiscalYear->invoices()->find($invoice->id);
+        return view('backend.invoice.edit-invoice', compact('invoice', 'clients', 'activeYear'));
     }
 
     /**
@@ -181,28 +183,60 @@ class InvoiceController extends Controller
      */
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
-        $header_image = null;
-        // dd($request->all());
+        $fiscalYear = FiscalYear::where('year', $request->year)->first();
+        $fiscalYear = $fiscalYear === null ? FiscalYear::create(['year' => $request->year]) : $fiscalYear;
+
+        // dd($fiscalYear);
         if ($request->hasFile('header_image')) {
             $header_image = saveImage($request->image, 'invoices', 'invoice');
         } else {
             $header_image = Invoice::first()->header_image;
         }
-        $updated = Invoice::where('id', $invoice->id)->update([
+        $invoice->update([
             'client_id' => $request->client,
             'header_image' => $header_image,
             'reference_no' => $request->reference,
             'note' => $request->note,
-            'discount' => $request->discount,
-            'sub_total' => $request->sub_total,
-            'total' => $request->total,
-            'amount_paid' => $request->paid,
-            'amount_due' => $request->due,
             'payment_note' => $request->payment_note,
             'payment_method' => $request->payment_method,
-            'due_date' => $request->due_date,
-            'issue_date' => $request->issue_date,
         ]);
+        $demand = (int) $request->total;
+        $paid = (int) $request->paid;
+        $due = (int) $request->due;
+        $status = $due === 0 ? 'due' : '';
+        $status = $paid > 0 && $paid === $demand ? 'paid' : 'partial';
+
+
+
+        if ($fiscalYear->wasRecentlyCreated) {
+            $invoice->fiscalYears()->attach($fiscalYear->id, [
+                'discount' => $request->discount,
+                'sub_total' => $request->sub_total,
+                'demand' => $demand,
+                'paid' => $paid,
+                'due' => $due,
+                'status' => $status,
+                'payment_date' => $due == 0 ? now() : null,
+                'due_date' => $request->due_date,
+                'issue_date' => $request->issue_date,
+            ]);
+        } else {
+            $invoice->fiscalYears()
+                ->wherePivot('invoice_id', $invoice->id)
+                ->wherePivot('fiscal_year_id', $fiscalYear->id)
+                ->update([
+                    'discount' => $request->discount,
+                    'sub_total' => $request->sub_total,
+                    'demand' => $demand,
+                    'paid' => $paid,
+                    'due' => $due,
+                    'status' => $status,
+                    'payment_date' => $due == 0 ? now() : null,
+                    'due_date' => $request->due_date,
+                    'issue_date' => $request->issue_date,
+                ]);
+        }
+
         //invoice Items
         $items = [];
         foreach ($request->item_names as $key => $name) {
