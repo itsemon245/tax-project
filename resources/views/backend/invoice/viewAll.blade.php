@@ -120,7 +120,7 @@
             @foreach ($recentInvoices as $invoice)
                 @php
                     $color = 'dark';
-                    switch ($invoice->status) {
+                    switch ($invoice->currentFiscal[0]->pivot->status) {
                         case 'sent':
                             $color = 'success';
                             break;
@@ -147,13 +147,15 @@
                                     class="text-muted fw-normal fs-6">Company:
                                     {{ str($invoice->client->company_name)->title() }}</span></h5>
                             <p class='text-muted mb-0'>Issued:
-                                {{ Carbon\Carbon::parse($invoice->issue_date)->format('d F, Y') }}</p>
+                                {{ Carbon\Carbon::parse($invoice->currentFiscal()->first()->pivot->issue_date)->format('d F, Y') }}
+                            </p>
                             <p class='text-muted mb-0'>Due:
-                                {{ Carbon\Carbon::parse($invoice->due_date)->format('d F, Y') }}</p>
+                                {{ Carbon\Carbon::parse($invoice->currentFiscal()->first()->pivot->due_date)->format('d F, Y') }}
+                            </p>
                         </div>
                         <div
                             class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
-                            {{ str($invoice->status)->title() }}
+                            {{ str($invoice->currentFiscal()->first()->pivot->status)->title() }}
                         </div>
                     </div>
                 </div>
@@ -232,7 +234,8 @@
                             </div><!-- /.modal -->
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td class="fw-medium">{{ Carbon\Carbon::parse($invoice->issue_date)->format('d M, Y') }}
+                                <td class="fw-medium">
+                                    {{ Carbon\Carbon::parse($invoice->fiscalYears[0]->pivot->issue_date)->format('d M, Y') }}
                                 </td>
                                 <td class="fw-medium">{{ $invoice->client->name }}</td>
                                 <td>{{ $invoice->client->tin }}</td>
@@ -241,13 +244,13 @@
                                 <td>{{ $invoice->client->circle }}</td>
                                 <td>{{ $invoice->client->zone }}</td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->total . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->demand . ' Tk' }}</span>
                                 </td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->amount_paid . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->paid . ' Tk' }}</span>
                                 </td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->amount_due . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->due . ' Tk' }}</span>
                                 </td>
                                 {{-- <td>
                                     <x-backend.ui.button type="custom" href="{{ route('invoice.show', $invoice->id) }}"
@@ -267,7 +270,8 @@
                                                 class="mdi mdi-dots-horizontal"></i></a>
                                         <div class="bg-white py-2 px-3 position-absolute d-none rounded shadow"
                                             style="inset: 2rem 2rem auto auto!important; z-index:2;">
-                                            <a class="dropdown-item d-flex align-items-center gap-2" href="#"><span
+                                            <a class="dropdown-item d-flex align-items-center gap-2"
+                                                href="{{ route('invoice.show', $invoice->id) . '?year=' . $year }}"><span
                                                     class="mdi mdi-eye text-primary font-20"></span>View</a>
                                             <a class="dropdown-item d-flex align-items-center gap-2" href="#"><span
                                                     class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
@@ -281,6 +285,8 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('patch')
+                                                <input type="text" name="year" value="{{ currentFiscalYear() }}"
+                                                    hidden>
                                                 <button type="submit"
                                                     class="dropdown-item d-flex align-items-center gap-2"><span
                                                         class="mdi mdi-check text-success font-20"></span>Mark as
@@ -290,6 +296,8 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('patch')
+                                                <input type="text" name="year" value="{{ currentFiscalYear() }}"
+                                                    hidden>
                                                 <button type="submit"
                                                     class="dropdown-item d-flex align-items-center gap-2"><span
                                                         class="mdi mdi-cash-check text-success font-20"></span>Mark as

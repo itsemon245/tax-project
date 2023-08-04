@@ -27,17 +27,8 @@ class InvoiceFactory extends Factory
             'header_image' => $header_image,
             'reference_no' => fake()->randomNumber(4),
             'note' => fake()->realText(),
-            'discount' => $discount,
-            'sub_total' => $subTotal,
-            'total' => $total,
-            'amount_paid' => $paid,
-            'amount_due' => $due,
             'payment_note' => fake()->realText(),
             'payment_method' => fake()->randomElement(['cash', 'bkash', 'nagad', 'rocket', 'bank', 'card']),
-            'status' => $due == 0 ? 'paid' : fake()->randomElement(['overdue', 'due', 'draft', 'partial', 'sent']),
-            'payment_date' => $due == 0 ? now() : null,
-            'due_date' => now()->addDays(7)->format('Y-m-d'),
-            'issue_date' => now()->format('Y-m-d'),
         ];
     }
 }

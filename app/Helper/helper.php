@@ -215,3 +215,22 @@ function reviewsAndStarCounts(): array
     ];
     return $array;
 }
+
+
+function currentFiscalYear(): string
+{
+    $from = currentYear() - 1;
+    $to = currentYear();
+    $currentYear = $from . "-" . $to;
+    return $currentYear;
+}
+function currentYear(): int
+{
+    $date = now();
+    $year = (int) now()->year;
+    $month = (int) $date->month;
+    if ($month >= 6) {
+        $year = (int) now()->year + 1;
+    }
+    return $year;
+}
