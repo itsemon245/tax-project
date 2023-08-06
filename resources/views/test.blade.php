@@ -1,13 +1,22 @@
 @extends('frontend.layouts.app')
 
 @section('main')
-    <style>
-        .mask1 {
-            -webkit-mask-image: linear-gradient(to right, black 50% , transparent 50%);
-            mask-image: linear-gradient(to right, black 50%, transparent 50%);
-        }
-    </style>
-    <section class="my-5 container">
-        <span class="fas fa-star text-warning fs-3 mask1"></span>
-    </section>
+    <ul>
+
+        @foreach ($clients as $client)
+            @foreach ($client->projects as $project)
+                <li>
+                    Project: {{ $project->name }}
+                    <span class="mx-3"></span>
+                    Client: {{ $client->name }}
+                    <span class="ms-3">Tasks:</span>
+                    <ul class="d-inline-flex gap-2 list-unstyled">
+                        @foreach ($client->tasks($project->id)->get() as $task)
+                            <li>{{ $task->name }}</li>
+                        @endforeach
+                    </ul>
+                </li>
+            @endforeach
+        @endforeach
+    </ul>
 @endsection

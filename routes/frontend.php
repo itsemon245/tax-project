@@ -131,11 +131,10 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
-    $roles = Role::where('name', 'not like', 'user')->get();
-    // $products = $product->purchased('product');
-    // $user = User::get();
-    dd($roles);
-    return view('test');
+    $user = User::find(1);
+    $clients = $user->clients;
+    // dd($clients);
+    return view('test', compact('clients',));
 });
 
 Route::get('get-mac', function () {

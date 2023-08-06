@@ -11,31 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->text('father_name');
-            $table->text('mother_name');
-            $table->text('company_name');
-            $table->text('spouse_name');
-            $table->longText('present_address');
-            $table->longText('permanent_address');
-            $table->text('phone');
-            $table->text('tin');
-            $table->text('circle');
-            $table->text('zone');
+            $table->foreignId('project_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->string('name');
             $table->timestamps();
         });
-        Schema::create('client_user', function (Blueprint $table) {
+        Schema::create('client_task', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('user_id')
+            $table->foreignId('task_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
@@ -45,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('tasks');
     }
 };
