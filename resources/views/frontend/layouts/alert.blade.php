@@ -18,7 +18,8 @@
     if ("{{ Session::has('message') }}") {
         Toast.fire({
             icon: "{{ Session::get('alert-type') }}",
-            title: "{{ Session::get('message') }}"
+            title: "{{ str(Session::get('alert-type'))->title() }}",
+            text: "{{ Session::get('message') }}"
         })
     }
 </script>
