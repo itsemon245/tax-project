@@ -36,8 +36,8 @@ function saveImage($image, string $dir, ?string $prefix = '', string $disk = 'pu
         $ext = $image->extension();
         $name = $prefix . "-" . timestamp() . '.' . $ext;
         $path = $image->storeAs("uploads/$dir", $name, $disk);
-        $url = asset('storage/' . $path);
-        return $url;
+        // $url = asset('storage/' . $path);
+        return $path;
     } else {
         return $image;
     }
