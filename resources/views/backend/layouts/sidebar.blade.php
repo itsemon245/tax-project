@@ -397,6 +397,12 @@
                     <div class="collapse" id="roleSection">
                         <ul class="nav-second-level">
                             <li>
+                                <a href="{{ route('users.create') }}">Create User</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('users.index') }}">View User</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('role.create') }}">Create Role</a>
                             </li>
                             <li>

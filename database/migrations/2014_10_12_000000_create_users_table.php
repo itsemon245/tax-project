@@ -25,7 +25,7 @@ return new class extends Migration
             $table->longText('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->longText('image_url')->nullable();
-            $table->longText('refer_link');
+            $table->longText('refer_link')->nullable();
             $table->integer('refer_discount_rate')->nullable();
             $table->string('password');
             $table->rememberToken();
