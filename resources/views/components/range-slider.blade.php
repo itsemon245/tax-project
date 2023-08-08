@@ -86,11 +86,12 @@
                 },
             });
 
-            slider.noUiSlider.on('slide', (values) => {
+            slider.noUiSlider.on('slide', (values, handle) => {
                 let from = parseInt(values[0])
                 let to = parseInt(values[1])
-                $('input[name="{{ $name }}_from"]').val(from)
-                $('input[name="{{ $name }}_to"]').val(to)
+                handle === 0 ?
+                    $('input[name="{{ $name }}_from"]').val(from).trigger('change') :
+                    $('input[name="{{ $name }}_to"]').val(to).trigger('change')
             });
             $('input[name="{{ $name }}_from"]').on('input', e => {
                 let value = parseInt(e.target.value)

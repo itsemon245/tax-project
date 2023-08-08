@@ -17,7 +17,7 @@
         </div>
         {{-- TODO: change advance search options here --}}
         <div id="advance-search-options" class="card rounded-3 d-none mt-2" style="border: 2px solid var(--ct-gray-500);">
-            <form action="javasript: void(0);">
+            <form action="#">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3 col-sm-6">
@@ -37,14 +37,15 @@
                             </x-form.selectize>
                         </div>
                         <div class="col-md-3 col-sm-6">
-                            <x-backend.form.select-input label="Payment Stauts" placeholder="Payment Stauts">
+                            <x-backend.form.select-input label="Payment Stauts" name="payment_status"
+                                placeholder="Payment Stauts">
                                 @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
                                     <option value="{{ $status }}">{{ str($status)->title() }}</option>
                                 @endforeach
                             </x-backend.form.select-input>
                         </div>
                         <div class="col-md-3 col-sm-6">
-                            <x-backend.form.select-input name="year" label="Year" placeholder="Year">
+                            <x-backend.form.select-input name="fiscal_year" label="Year" placeholder="Year">
                                 @foreach (range(currentYear(), 2020) as $year)
                                     <option value="{{ $year - 1 . '-' . $year }}" @selected($year === currentYear())>
                                         {{ str($year - 1 . '-' . $year)->title() }}</option>
@@ -52,31 +53,31 @@
                             </x-backend.form.select-input>
                         </div>
                         <div class="col-lg-6">
-                            <x-range-slider id="price" from="100" to="100000" step='50'
+                            <x-range-slider name="price" id="price" from="100" to="100000" step='50'
                                 icon="mdi mdi-currency-bdt"></x-range-slider>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <x-backend.form.text-input name="start_date" label="Start Date" type="date" />
+                                    <x-backend.form.text-input name="date_from" label="Start Date" type="date" />
                                 </div>
                                 <div class="col-sm-6">
-                                    <x-backend.form.text-input name="end_date" label="End Date" type="date" />
+                                    <x-backend.form.text-input name="date_to" label="End Date" type="date" />
                                 </div>
                                 <div class="col-sm-6">
                                     <x-form.selectize class="mb-2" id="circle" name="circle" label="Circle"
                                         placeholder="Select Circle" :canCreate="false">
-                                        @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->cricle }}</option>
+                                        @foreach ($circles as $circle)
+                                            <option value="{{ $circle }}">{{ str($circle)->title() }}</option>
                                         @endforeach
                                     </x-form.selectize>
                                 </div>
                                 <div class="col-sm-6">
                                     <x-form.selectize class="mb-2" id="zone" name="zone" label="Zone"
                                         placeholder="Select Zone" :canCreate="false">
-                                        @foreach ($clients as $client)
-                                            <option value="{{ $client->zone }}">{{ $client->zone }}</option>
+                                        @foreach ($zones as $zone)
+                                            <option value="{{ $zone }}">{{ str($zone)->title() }}</option>
                                         @endforeach
                                     </x-form.selectize>
                                 </div>
@@ -91,7 +92,8 @@
                                     class="btn-sm btn-outline-dark">
                                     Close
                                 </x-backend.ui.button>
-                                <x-backend.ui.button type="button" class="btn-sm btn-primary">Apply</x-backend.ui.button>
+                                <x-backend.ui.button id="apply-btn" type="button"
+                                    class="btn-sm btn-primary">Apply</x-backend.ui.button>
                             </div>
                         </div>
                     </div>
@@ -372,6 +374,124 @@
 
                 $('.dropdown-toggle').click(function(e) {
                     $(e.target).parent().next().toggleClass('d-none')
+                })
+
+                let clientEl = $('[name="client"]')
+                let referenceEl = $('[name="reference"]')
+                let statusEl = $('[name="payment_status"]')
+                let yearEl = $('[name="fiscal_year"]')
+                let priceFromEl = $('[name="price_from"]')
+                let priceToEl = $('[name="price_to"]')
+                let dateFromEl = $('[name="date_from"]')
+                let dateToEL = $('[name="date_to"]')
+                let circleEl = $('[name="circle"]')
+                let zoneEl = $('[name="zone"]')
+
+                let elements = [
+                    clientEl,
+                    referenceEl,
+                    statusEl,
+                    yearEl,
+                    priceFromEl,
+                    priceToEl,
+                    dateFromEl,
+                    dateToEL,
+                    circleEl,
+                    zoneEl,
+                ];
+                let applyBtn = $('#apply-btn')
+                let url = "{{ route('invoice.filter') }}" + '?'
+                // filter options
+                const filter = {
+                    queries: {
+                        client: '',
+                        reference: '',
+                        status: '',
+                        year: "year=" + '{{ currentFiscalYear() }}',
+                        priceFrom: '',
+                        priceTo: '',
+                        dateFrom: '',
+                        dateTo: '',
+                        circle: '',
+                        zone: '',
+                    },
+                    url: '',
+
+                    updateUrl(jqElement) {
+                        // console.log(jqElement);
+                        jqElement.on('change', (e) => {
+
+                            switch (e.target.name) {
+                                case 'fiscal_year':
+                                    this.queries.year = `fiscal_year=` + e.target.value
+                                    break;
+                                case 'client':
+                                    this.queries.client = `&client=` + e.target.value
+                                    break;
+                                case 'reference':
+                                    this.queries.reference = `&reference=` + e.target.value
+                                    break
+                                case 'payment_status':
+                                    this.queries.status = `&status=` + e.target.value
+                                    break;
+                                case 'price_from':
+                                    this.queries.priceFrom = `&price_from=` + e.target.value
+                                    break;
+                                case 'price_to':
+                                    this.queries.priceTo = `&price_to=` + e.target.value
+                                    break;
+                                case 'date_from':
+                                    this.queries.dateFrom = `&date_from=` + e.target.value
+                                    break;
+                                case 'date_to':
+                                    this.queries.dateTo = `&date_to=` + e.target.value
+                                    break;
+                                case 'zone':
+                                    this.queries.zone = `&zone=` + e.target.value
+                                    break;
+                                case 'circle':
+                                    this.queries.circle = `&circle=` + e.target.value
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            this.url = url +
+                                this.queries.year +
+                                this.queries.client +
+                                this.queries.reference +
+                                this.queries.status +
+                                this.queries.priceFrom +
+                                this.queries.priceTo +
+                                this.queries.dateFrom +
+                                this.queries.dateTo +
+                                this.queries.circle +
+                                this.queries.zone
+                        })
+                    },
+                    fetchData(url) {
+                        $.ajax({
+                            type: "get",
+                            url: url,
+                            dataType: "json",
+                            success: function(response) {
+                                console.log(response);
+                            }
+                        });
+                    },
+                    updateDom(data) {
+
+                    },
+
+                }
+
+                elements.forEach(element => {
+                    filter.updateUrl(element)
+                });
+
+                applyBtn.click(function(e) {
+                    e.preventDefault()
+                    filter.fetchData(filter.url)
                 })
 
 

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\InvoiceResource;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Resources\InvoiceCollection;
 use App\Http\Resources\InvoiceItemResource;
 use App\Http\Resources\InvoiceItemCollection;
 use App\Models\FiscalYear;
@@ -30,8 +31,10 @@ class InvoiceController extends Controller
         // dd($recentInvoices[0]->currentFiscal[0]->pivot->status);
         $invoices = Invoice::with('client', 'currentFiscal')->latest()->get();
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
+        $zones = Client::select('zone')->distinct()->get()->pluck('zone');
+        $circles = Client::select('circle')->distinct()->get()->pluck('circle');
         $clients = Client::latest()->get();
-        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'fiscalYear'));
+        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
     }
 
 
@@ -323,5 +326,17 @@ class InvoiceController extends Controller
         ];
 
         return back()->with($alert);
+    }
+
+    function filter(Request $request)
+    {
+        dd('hello');
+        $invoices = null;
+        if ($request->client) {
+            $invoices = Client::find($request->client)->invoices;
+        }
+
+        $content = new InvoiceCollection($invoices);
+        return response($content);
     }
 }
