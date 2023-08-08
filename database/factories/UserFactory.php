@@ -19,10 +19,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $userName= fake()->userName();
+        $seed = str($userName)->slug();
         return [
             'name' => fake()->name(),
             'user_name' => $userName,
-            'image_url' => "https://api.dicebear.com/6.x/initials/svg?seed=$userName",
+            'image_url' => "https://api.dicebear.com/6.x/initials/svg?seed=$seed",
             'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
