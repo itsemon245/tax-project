@@ -38,7 +38,7 @@ class ServiceSubCategorySeeder extends Seeder
                     'service_category_id' => $key,
                     'name'=> $name,
                     'description'=> fake()->realText(),
-                    'image'=> "https://picsum.photos/seed/$name/200"
+                    'image'=> picsum($name)
                 ]);
             }
         }
