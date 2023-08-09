@@ -11,6 +11,7 @@ class CourseController extends Controller
 {
     public function index()
     {
+        
         return view('frontend.pages.course.viewAll');
     }
     public function show(Course $course)
