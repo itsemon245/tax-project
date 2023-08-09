@@ -12,8 +12,8 @@ class CaseStudyController extends Controller
 {
     function caseStudy() {
 
-        $caseStudies = CaseStudy::limit(5)->orderBy('id', 'DESC')->get();
-        return view('frontend.pages.course.caseStudy', compact('caseStudies'));
+        $packages = CaseStudyPackage::get();
+        return view('frontend.pages.course.caseStudy', compact('packages'));
     }
 
     public function index()
