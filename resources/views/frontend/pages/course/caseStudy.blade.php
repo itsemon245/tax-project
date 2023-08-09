@@ -29,7 +29,8 @@
                                     Orders
                                     Upload</small>
                                 <div class="d-flex justify-content-center mt-3">
-                                    <p class="bg-primary text-black p-2 text-center">Choose</p>
+                                    <a class="bg-primary text-black p-2 text-center"
+                                        href="{{ route('course.caseStudy.index', $package->id) }}">Choose</a>
                                 </div>
                                 <p class="mt-3 fw-bold">What your will get: <small
                                         class="bg-primary text-white p-1 rounded">Monthly {{ $package->limit }} Orders
