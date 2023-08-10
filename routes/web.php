@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('ajax')->name('ajax.')->controller(AjaxController::class)->group(function () {
     Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');
+    Route::post('mark-notifications', 'markNotificationsAsRead')->name('notifications.read');
 });
 
 

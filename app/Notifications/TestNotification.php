@@ -2,25 +2,21 @@
 
 namespace App\Notifications;
 
-use App\Models\PromoCode;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PromoCodeNotification extends Notification
+class TestNotification extends Notification
 {
     use Queueable;
-    public string $url;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct(public PromoCode $promoCode, ?string $url = null)
+    public function __construct()
     {
-        if ($url===null) {
-            $url = route('page.promo.code');
-        }
-        $this->url = $url;
+        //
     }
 
     /**
@@ -30,7 +26,7 @@ class PromoCodeNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return $notifiable->prefers_sms ? ['vonage'] : ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -38,12 +34,10 @@ class PromoCodeNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-
         return (new MailMessage)
-            ->greeting('Hurray!')
-            ->line('You got a new Promo Code')
-            ->action('View Promo Codes', $this->url)
-            ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -54,10 +48,7 @@ class PromoCodeNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'promo_code_id' => $this->promoCode->id,
-            'title' => 'New Promo Code',
-            'body' => 'You have received a new promo code',
-            'url' => $this->url
+            //
         ];
     }
 }

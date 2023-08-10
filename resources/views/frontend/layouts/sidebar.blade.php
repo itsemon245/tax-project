@@ -1,6 +1,11 @@
 @php
     $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
     $isPageV2 = str(url()->current())->contains('page');
+    
+    $user_id = auth()->id();
+    $user = App\Models\User::find($user_id);
+    // dd($notifications);
+    $isRead = count($user->unreadNotifications) === 0;
 @endphp
 <nav class="relative">
     {{-- Sidebar 1-> page navigation --}}
@@ -94,7 +99,8 @@
                             @foreach ($category->serviceSubCategories as $sub)
                                 <li
                                     class="sidebar-item ps-3 dropdown-item {{ request()->routeIs('service.sub', $sub->id) ? 'active' : '' }}">
-                                    <a href="">{{ $sub->name }}</a></li>
+                                    <a href="">{{ $sub->name }}</a>
+                                </li>
                             @endforeach
                         </ul>
                     </li>
@@ -165,7 +171,12 @@
                     <a class="" href="{{ route('referral.index') }}">Referrals</a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="" href="{{ route('notification') }}">Notificaion</a>
+                    <a class="" href="{{ route('notification') }}">Notificaion
+                        @if (!$isRead)
+                            <span
+                                class="badge bg-danger px2 py-1 rounded-circle">{{ count($user->unreadNotifications) }}</span>
+                        @endif
+                    </a>
                 </li>
                 <li class="sidebar-item">
                     <a class="" href="{{ route('page.promo.code') }}">Promo Code</a>

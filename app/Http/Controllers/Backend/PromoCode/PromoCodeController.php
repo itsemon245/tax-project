@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Backend\PromoCode;
 
 use App\Models\User;
+use App\Mail\TestMail;
 use App\Models\PromoCode;
+use App\Mail\PromoCodeCreated;
+use App\Models\UserNotification;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StorePromoCodeRequest;
-use App\Http\Requests\UpdatePromoCodeRequest;
-use App\Mail\PromoCodeCreated;
-use App\Mail\TestMail;
-use App\Models\UserNotification;
-use App\Notifications\PromoCodeNotification;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\StorePromoCodeRequest;
+use App\Notifications\PromoCodeNotification;
+use Illuminate\Support\Facades\Notification;
+use App\Http\Requests\UpdatePromoCodeRequest;
 
 class PromoCodeController extends Controller
 {
@@ -69,17 +69,8 @@ class PromoCodeController extends Controller
         }
         foreach ($users as $user) {
             $user->promoCodes()->attach($promoCode->id, ['limit' => $request->limit]);
-            // Mail::to('mojahid@wisedev.xyz')
-            //     ->queue(new TestMail());
+            $user->notify(new PromoCodeNotification($promoCode));
         }
-
-
-        // $store_notification = new UserNotification();
-        // $store_notification->user_id = $request->user_id;
-        // $store_notification->title = 'New PromoCode Create by ' . Auth::user()->name;
-        // $store_notification->message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit mauris ut tristique laoreet. Sed eu hendrerit dolor';
-        // $store_notification->image = Auth::user()->image_url;
-        // $store_notification->save();
         return redirect()
             ->route("promo-code.index")
             ->with(array(
