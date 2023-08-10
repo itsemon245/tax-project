@@ -5,25 +5,6 @@
     $class = $attributes->has('class') ? $attributes->get('class') : '';
     
 @endphp
-@pushOnce('customCss')
-    @php
-        function style($rating, $avg)
-        {
-            $gt = $rating <= $avg;
-            $lt = $avg <= $rating + 1;
-            if ($gt & $lt) {
-                $percnetage = (round($avg, 1) - $rating) * 100;
-                $black = "black $percnetage%";
-                $transparent = 'transparent ' . (100 - $percnetage) . '%';
-                $mask = "
-    -webkit-mask-image: linear-gradient(to right, $black , $transparent);
-    mask-image: linear-gradient(to right, $black, $transparent);
-    ";
-                return $mask;
-            }
-        }
-    @endphp
-@endPushOnce
 <div>
     <span class="text-dark {{ $class }}">{{ round($avg, 1) }}</span>
     @php
@@ -38,7 +19,7 @@
     @endforeach
     <div class="d-inline-flex justify-content-center align-items-center position-relative ">
         <span class="fas fa-star" style="color: var(--bs-gray-400);position:absolute; top:0;left:0;"></span>
-        <span class="fas fa-star" style="z-index:2;color: {{ $color }};{{ style($rating, $avg) }}"></span>
+        <span class="fas fa-star" style="z-index:2;color: {{ $color }};{{ starStyle($rating, $avg) }}"></span>
     </div>
 
 </div>
