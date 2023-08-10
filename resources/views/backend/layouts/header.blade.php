@@ -23,8 +23,7 @@
 
 
             <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#"
-                    role="button" aria-haspopup="false" aria-expanded="false">
+                <a class="nav-link dropdown-toggle waves-effect waves-light">
                     <i class="fe-bell noti-icon"></i>
                     <span class="badge bg-danger rounded-circle noti-icon-badge">{{ $countNoti }}</span>
                 </a>
@@ -124,9 +123,8 @@
             </li>
 
             <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
-                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ useImage($user->image_url) ? useImage($user->image_url) : 'https://api.dicebear.com/6.x/initials/svg?seed=' . auth()->user()->name }}"
+                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light">
+                    <img src="{{ useImage($user->image_url) }}"
                         alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ms-1">
                         {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
