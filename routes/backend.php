@@ -16,10 +16,12 @@ use App\Http\Controllers\Backend\Book\BookController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Role\RoleController;
+use App\Http\Controllers\Backend\User\UserController;
 use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\Pages\AboutController;
 use App\Http\Controllers\Backend\Role\MemberController;
 use App\Http\Controllers\Backend\UserProfileController;
+use App\Http\Controllers\Backend\Book\BookCategoryController;
 use App\Http\Controllers\Backend\Chalan\ChalanController;
 use App\Http\Controllers\Backend\Client\ClientController;
 use App\Http\Controllers\Backend\Course\CourseController;
@@ -34,14 +36,13 @@ use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
-use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
+use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
-use App\Http\Controllers\Backend\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('user-profile', UserProfileController::class);
     Route::resource('users', UserController::class);
     Route::resource('product', ProductController::class);
+    Route::resource('book-category', BookCategoryController::class);
     Route::resource('product-category', ProductCategoryController::class);
     Route::resource('product-subcategory', ProductSubCategoryController::class);
     Route::resource('banner', BannerController::class);
