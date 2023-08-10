@@ -234,3 +234,19 @@ function currentYear(): int
     }
     return $year;
 }
+
+function starStyle($rating, $avg)
+        {
+            $gt = $rating <= $avg;
+            $lt = $avg <= $rating + 1;
+            if ($gt & $lt) {
+                $percnetage = (round($avg, 1) - $rating) * 100;
+                $black = "black $percnetage%";
+                $transparent = 'transparent ' . (100 - $percnetage) . '%';
+                $mask = "
+    -webkit-mask-image: linear-gradient(to right, $black , $transparent);
+    mask-image: linear-gradient(to right, $black, $transparent);
+    ";
+                return $mask;
+            }
+        }
