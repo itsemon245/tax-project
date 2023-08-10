@@ -25,29 +25,29 @@ class ReviewController extends Controller
         return view('backend.review.index', compact('slug'));
     }
 
-    function itemReview(string $slug, int $id)
-    {
-        $column = Str::snake($slug . '_id');
-        $reviews = Review::where($column, $id)->latest()->get();
-        switch ($column) {
-            case 'product_id':
-                $item = Product::withAvg('reviews', 'rating')
-                    ->withCount(reviewsAndStarCounts())
-                    ->find($id);
-                break;
-            case 'service_id':
-                $item = Service::withAvg('reviews', 'rating')
-                    ->withCount(reviewsAndStarCounts())
-                    ->find($id);
-                break;
+    // function itemReview(string $slug, int $id)
+    // {
+    //     $type = Str::studly($slug);
+    //     $reviews = Review::where($type, $id)->latest()->get();
+    //     switch ($type) {
+    //         case 'product_id':
+    //             $item = Product::withAvg('reviews', 'rating')
+    //                 ->withCount(reviewsAndStarCounts())
+    //                 ->find($id);
+    //             break;
+    //         case 'service_id':
+    //             $item = Service::withAvg('reviews', 'rating')
+    //                 ->withCount(reviewsAndStarCounts())
+    //                 ->find($id);
+    //             break;
 
-            default:
-                # code...
-                break;
-        }
+    //         default:
+    //             # code...
+    //             break;
+    //     }
 
-        return view('frontend.pages.itemReview', compact('reviews', 'item', 'slug'));
-    }
+    //     return view('frontend.pages.itemReview', compact('reviews', 'item', 'slug'));
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -82,12 +82,13 @@ class ReviewController extends Controller
             $name = $request->name ? $request->name : auth()->user()->name;
             $comment = $request->comment;
             $rating = $request->rating;
-            $column = Str::snake($slug . '_id');
+            $type = Str::studly($slug);
             $review = Review::create([
                 'user_id' => $user_id,
                 'name' => $name,
                 'avatar' => $avatar,
-                $column => $request->item_id,
+                'reviewable_type' => $type,
+                'reviewable_id' => $$request->item_id,
                 'comment' => $comment,
                 'rating' => $rating,
             ]);

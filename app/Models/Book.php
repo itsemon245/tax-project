@@ -4,21 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Book extends Model
 {
     use HasFactory;
-
-    function reviews()
+    /**
+     * Get all of the book's reviews.
+     */
+    function reviews(): MorphMany
     {
-        return $this->hasMany(Review::class);
+        return $this->morphMany(Review::class, 'reviewable');
     }
 
-    public function purchase(){
+
+    public function purchase()
+    {
         return $this->morphOne(Purchase::class, 'purchasable');
     }
-    public function isPurchased(int $userId = null){
+    public function isPurchased(int $userId = null)
+    {
         if ($userId === null) {
             $userId = auth()->id();
         }

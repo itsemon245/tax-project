@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->morphs('reviewable');
             $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('product_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('service_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('book_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('expert_profile_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            // $table->foreignId('product_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            // $table->foreignId('service_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            // $table->foreignId('book_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            // $table->foreignId('expert_profile_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->text('avatar')->nullable();
             $table->text('name')->nullable();
             $table->longText('comment');
-            $table->enum('rating', [1,2,3,4,5]);
+            $table->enum('rating', [1, 2, 3, 4, 5]);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
