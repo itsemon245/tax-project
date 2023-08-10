@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
             'ExpertProfile' => 'App\Models\ExpertProfile',
             'Book' => 'App\Models\Book',
             'Course' => 'App\Models\Course',
+            'User' => 'App\Models\User',
         ]);
     }
 }
