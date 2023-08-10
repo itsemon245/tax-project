@@ -1,49 +1,16 @@
+<style>
+    .nav-second-level .mdi {
+        font-size: 18px;
+    }
+
+    #side-menu>li>a .mdi {
+        font-size: 22px !important;
+    }
+</style>
 <div class="left-side-menu">
 
     <div class="h-100" data-simplebar>
 
-        <!-- User box -->
-        {{-- <div class="user-box text-center">
-            <img src="{{ asset('backend/assets/images/users/user-1.jpg') }}" alt="user-img" title="Mat Helme"
-                class="rounded-circle avatar-md">
-            <div class="dropdown">
-                <a href="javascript: void(0);" class="text-dark dropdown-toggle h5 mt-2 mb-1 d-block"
-                    data-bs-toggle="dropdown">Geneva Kennedy</a>
-                <div class="dropdown-menu user-pro-dropdown">
-
-                    <!-- Update Profile -->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-user me-1"></i>
-                        <span>My Account</span>
-                    </a>
-                    <!-- Change password-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-password me-1"></i>
-                        <span>Change Password</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-settings me-1"></i>
-                        <span>Settings</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-lock me-1"></i>
-                        <span>Lock Screen</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-log-out me-1"></i>
-                        <span>Logout</span>
-                    </a>
-
-                </div>
-            </div>
-            <p class="text-muted">Admin Head</p>
-        </div> --}}
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
@@ -59,66 +26,235 @@
                 </li>
                 <li class="menu-title mt-2">Frontend Manage</li>
                 <li>
-                    <a href="#productSection" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Products </span>
+                    <a href="#homepage" data-bs-toggle="collapse">
+                        <i class="mdi mdi-home-outline"></i>
+                        <span>Homepage</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="productSection">
+                    <div class="collapse" id="homepage">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('product.create') }}">Create Product</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('product.index') }}">View Products</a>
-                            </li>
-                            {{-- <li>
-                                <a href="{{ route('product-category.index') }}">Category</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('product-subcategory.index') }}">Sub-Category</a>
-                            </li> --}}
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#sidebarHeroSection" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Hero Section </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarHeroSection">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('banner.create') }}">Create Hero
+                                <a href="#sidebarHeroSection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-image-frame"></i>
+                                    <span> Hero Section </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarHeroSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('banner.create') }}">Create Hero
 
-                                </a>
-                                <a href="{{ route('banner.index') }}">
-                                    View Hero
-                                </a>
+                                            </a>
+                                            <a href="{{ route('banner.index') }}">
+                                                View Hero
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
+
+                            <li>
+                                <a href="#productSection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-gift-outline"></i>
+                                    <span> Products </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="productSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('product.create') }}">Create Product</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('product.index') }}">View Products</a>
+                                        </li>
+                                        {{-- <li>
+                                            <a href="{{ route('product-category.index') }}">Category</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('product-subcategory.index') }}">Sub-Category</a>
+                                        </li> --}}
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li>
+                                <a href="#appointmentSection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-comment-edit-outline"></i>
+                                    <span> Appointment Section </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="appointmentSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('appointment.index') }}">
+                                                View All
+                                            </a>
+                                            <a href="{{ route('appointment.create') }}">Create
+
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#stats" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-chart-box-outline"></i>
+                                    <span> Stats </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="stats">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="#">
+                                                <span>View</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span>Create</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li>
+                                <a href="#sidebarInfoSection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-information-outline"></i>
+                                    <span> Info Section </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarInfoSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('info.index') }}">
+                                                View Info
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('info.create') }}">Create Info
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
                         </ul>
                     </div>
                 </li>
+
                 <li>
-                    <a href="#caseStudySection" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Case Study Section </span>
+                    <a href="#services" data-bs-toggle="collapse">
+                        <i class="mdi mdi-badge-account-horizontal-outline"></i>
+                        <span>Service Page</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="caseStudySection">
+                    <div class="collapse" id="services">
                         <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('case.study.backend.index') }}">Create Hero
 
+                            <li>
+                                <a href="#sidebarSerivces" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-badge-account-horizontal-outline"></i>
+                                    <span>Services </span>
+                                    <span class="menu-arrow"></span>
                                 </a>
-                                <a href="{{ route('case.study.backend.show.all') }}">
-                                    View Hero
+                                <div class="collapse" id="sidebarSerivces">
+                                    <ul class="nav-second-level">
+                                        @php
+                                            $categories = getRecords('service_categories');
+                                        @endphp
+                                        @foreach ($categories as $category)
+                                            <li>
+                                                <a href="{{ route('service.subs.view', $category->id) }}">
+                                                    <span>{{ $category->name }}</span>
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#sidebarInfoSection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-information-outline"></i>
+                                    <span> Info Section </span>
+                                    <span class="menu-arrow"></span>
                                 </a>
+                                <div class="collapse" id="sidebarInfoSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('info.index')."?page_type=service" }}">
+                                                View Info
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('info.create')."?page_type=service" }}">Create Info
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </li>
+
+                <li>
+                    <a href="#training" data-bs-toggle="collapse">
+                        <i class="mdi mdi-book-education-outline"></i>
+                        <span>Training</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="training">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="#courseSection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-certificate-outline"></i>
+                                    <span>Courses</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="courseSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('course.create') }}">Create Course</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('course.backend.index') }}">View Courses</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('video.create') . '?course_id=1' }}">Create Video</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('video.index') . '?course_id=1' }}">View Videos</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li>
+                                <a href="#caseStudySection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-file-chart-outline"></i>
+                                    <span> Case Studies </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="caseStudySection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('case.study.backend.index') }}">Create Hero
+
+                                            </a>
+                                            <a href="{{ route('case.study.backend.show.all') }}">
+                                                View Hero
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
+
+
                 <li>
                     <a href="{{ route('project-discussion.index') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
@@ -147,27 +283,7 @@
                         </ul>
                     </div>
                 </li>
-                <li>
-                    <a href="#sidebarSerivces" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Services </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarSerivces">
-                        <ul class="nav-second-level">
-                            @php
-                                $categories = getRecords('service_categories');
-                            @endphp
-                            @foreach ($categories as $category)
-                                <li>
-                                    <a href="{{ route('service.subs.view', $category->id) }}">
-                                        <span>{{ $category->name }}</span>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </li>
+
                 <li>
                     <a href="#user-doc" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
@@ -198,26 +314,7 @@
                         </ul>
                     </div>
                 </li>
-                <li>
-                    <a href="#sidebarInfoSection" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Info Section </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarInfoSection">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('info.index') }}">
-                                    View Info
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('info.create') }}">Create Info
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+
                 <li>
                     <a href="#invoiceSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
@@ -290,25 +387,7 @@
                     </div>
                 </li>
 
-                <li>
-                    <a href="#appointmentSection" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Appointment Section </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="appointmentSection">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('appointment.index') }}">
-                                    View All
-                                </a>
-                                <a href="{{ route('appointment.create') }}">Create
 
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
                 <li>
                     <a href="{{ route('social-handle.index') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
@@ -483,29 +562,7 @@
                         </ul>
                     </div>
                 </li>
-                <li>
-                    <a href="#courseSection" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Courses</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="courseSection">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('course.create') }}">Create Course</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('course.backend.index') }}">View Courses</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('video.create') . '?course_id=1' }}">Create Video</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('video.index') . '?course_id=1' }}">View Videos</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+
                 <li>
                     <a href="#expertProfile" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
