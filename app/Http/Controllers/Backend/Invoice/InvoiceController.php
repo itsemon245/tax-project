@@ -130,14 +130,9 @@ class InvoiceController extends Controller
     public function show(Request $request, Invoice $invoice)
     {
         $year = $request->year ? $request->year : currentFiscalYear();
-        $clients = Client::get();
         $fiscalYear = FiscalYear::where('year', $year)->first();
         $invoice = $fiscalYear->invoices()->find($invoice->id);
-        $invoiceImage = null;
-        if (countRecords('invoices') > 0) {
-            $invoiceImage = Invoice::first()->header_image;
-        }
-        return view('backend.invoice.viewOne', compact('invoice', 'clients', 'invoiceImage', 'year'));
+        return view('backend.invoice.viewOne', compact('invoice', 'year'));
     }
 
     function getInvoiceData(Request $request, $id)
@@ -316,10 +311,16 @@ class InvoiceController extends Controller
 
     public function sendInvoiceMail(Request $request, $id)
     {
-        $invoice = Invoice::with('client', 'invoiceItems')->find($id);
+        $invoice = Invoice::find($id);
+        $year = $request->year ? $request->year : currentFiscalYear();
+        // dd($year);
 
-        Mail::to($request->email_to)->send(new InvoiceMail($invoice));
+        Mail::to($request->email_to)->queue(new InvoiceMail($invoice, $year));
 
+        $fiscalYear = FiscalYear::where('year', $request->year)->first();
+        $invoice->fiscalYears()->updateExistingPivot($fiscalYear->id, [
+            'status' => 'sent'
+        ]);
         $alert = [
             'message' => "Invoice Mail Send Successfully",
             'alert-type' => 'success',

@@ -2,23 +2,27 @@
 
 namespace App\Mail;
 
+use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class InvoiceMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $invoice;
+    public $year;
     /**
      * Create a new message instance.
      */
-    public function __construct($invoice)
+    public function __construct(public Invoice $invoice, $year = null)
     {
-        $this->invoice = $invoice;
+        if ($year === null) {
+            $year = currentFiscalYear();
+        }
+        $this->year = $year;
     }
 
     /**

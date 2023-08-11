@@ -196,6 +196,7 @@
                                         <div class="modal-body">
                                             <form action="{{ route('send_invoice_mail', $invoice->id) }}" method="post">
                                                 @csrf
+                                                <input type="text" name='year' value="{{ $fiscalYear }}" hidden>
                                                 <div class="row align-items-center">
                                                     <div class="col-2">
                                                         <label for="email-to-{{ $invoice->id }}" class="form-label">To:
