@@ -21,7 +21,6 @@ use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\Pages\AboutController;
 use App\Http\Controllers\Backend\Role\MemberController;
 use App\Http\Controllers\Backend\UserProfileController;
-use App\Http\Controllers\Backend\Book\BookCategoryController;
 use App\Http\Controllers\Backend\Chalan\ChalanController;
 use App\Http\Controllers\Backend\Client\ClientController;
 use App\Http\Controllers\Backend\Course\CourseController;
@@ -29,6 +28,7 @@ use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\UserAppointmentController;
+use App\Http\Controllers\Backend\Book\BookCategoryController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\CkEditor\CkEditorController;
 use App\Http\Controllers\Backend\Return\ReturnFormController;
@@ -36,12 +36,13 @@ use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
+use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
-use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
+use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 
 /*
@@ -67,6 +68,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('product', ProductController::class);
     Route::resource('book-category', BookCategoryController::class);
+    Route::resource('case-study-category', CaseStudyCategoryController::class);
     Route::resource('product-category', ProductCategoryController::class);
     Route::resource('product-subcategory', ProductSubCategoryController::class);
     Route::resource('banner', BannerController::class);
