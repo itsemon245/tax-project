@@ -1,75 +1,33 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" />
 
-    <title>{{ config('app.name', 'E-Tax') }}</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    {{-- App Css  --}}
-    <link href="{{ asset('frontend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
-    {{-- bootstrap Css  --}}
-    <link href="{{ asset('frontend/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
-    <link href="/node_modules/bootstrap/dist/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style">
-    {{-- icons css  --}}
-    <link href="{{ asset('frontend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
-    {{-- Head JS  --}}
-    <script src="{{ asset('frontend/assets/js/head.js') }}"></script>
-    <script src="{{ asset('frontend/extractColor.js') }}"></script>
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
-</head>
-
-<body class="">
+<body class="w-100">
     <!-- Page Heading -->
-    <header class="row align-items-center">
-        <div class="col-lg-2">
-            Logo Here
+    @include('frontend.layouts.header')
+    @include('frontend.layouts.sidebar')
+
+
+    {{-- Chat bot --}}
+    <aside style="z-index: 50; top:50%; right:0;transform: translateY(-50%);border-radius: 0.5rem 0 0 0.5rem;max-width:max-content;" class="w-100 d-flex flex-column shadow bg-light border border-primary position-fixed">
+        <a href="mailto:someone@example.com" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+            <span class="mdi mdi-email"></span>
+        </a>
+        <a href="tel:555-555-5555" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+            <span class="mdi mdi-phone"></span>
+        </a>
+        <a href="https://wa.me/+8801885518864/?text=Hi Sam, Whatsup" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+            <span class="mdi mdi-whatsapp"></span>
+        </a>
+    </aside>
+
+
+    <aside style="z-index: 50; top:calc(100dvh - 13%); right:5%;transform: translateY(-50%);max-width:max-content;cursor: pointer;" class=" px-3 py-2 rounded-circle shadow bg-primary border border-primary position-fixed">
+        <div class="" style="transform:rotateY(180deg)">
+            <span style="" class="mdi mdi-chat text-white fs-4"></span>
         </div>
-        <nav class="col-lg-7">
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="">Navlink</a>
-                </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
-                </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
-                </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
-                </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
-                </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
-                </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
-                </li>
-                <li class="nav-item">
-                    <a class=" nav-link text-light" href="#">Navlink</a>
-                </li>
-            </ul>
-        </nav>
-        <div class="col-lg-3">
-            <div class="d-flex align-items-center gap-2 justify-content-end">
-                <a class="btn btn-secondary" href="">Become a partner</a>
-                @if (Route::has('login'))
-                    <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
-                @endif
-            </div>
-        </div>
-    </header>
+    </aside>
 
     <!-- Page Content -->
     <main class="">
@@ -77,12 +35,8 @@
     </main>
 
 
-    <footer></footer>
-    @stack('customJs')
-    {{-- vendor JS  --}}
-    <script src="{{ asset('frontend/assets/js/vendor.min.js') }}"></script>
-    {{-- app JS  --}}
-    <script src="{{ asset('frontend/assets/js/app.min.js') }}"></script>
+    @include('frontend.layouts.footer')
+    @include('frontend.layouts.scripts')
 
 </body>
 

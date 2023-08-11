@@ -1,7 +1,12 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
+//for vue components
+import { createApp } from 'vue';
+import InvoiceCreateApp from './vue/InvoiceCreateApp.vue'
+import InvoiceEditApp from './vue/InvoiceEditApp.vue'
 
-window.Alpine = Alpine;
+const invoiceCreateApp = createApp(InvoiceCreateApp);
+const invoiceEditApp = createApp(InvoiceEditApp);
 
-Alpine.start();
+invoiceCreateApp.mount('#invoice-create-app');
+invoiceEditApp.mount('#invoice-edit-app');

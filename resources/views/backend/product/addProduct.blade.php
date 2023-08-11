@@ -1,4 +1,169 @@
 @extends('backend.layouts.app')
+@pushOnce('customCss')
+    {{-- quillJs editor css  --}}
+    <link href="{{ asset('backend/assets/libs/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
+    {{-- quillJs editor css  --}}
+@endpushOnce
 @section('content')
-{{-- add product page markup --}}
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Products', 'View Products', 'Add Product']" />
+                </div>
+                <h4 class="page-title">Add Product</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <!-- Add product Form -->
+                    <form action="{{ route('product.store') }}" method="POST">
+                        @csrf
+                        <div class="container rounded bg-white py-3 px-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <x-backend.form.text-input label="Title" required type="text"
+                                                name="title" required>
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <x-backend.form.text-input label="Sub Title" type="text" name="sub_title" required>
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <x-backend.form.select-input id="category" label="Category" name="category"
+                                                placeholder="Choose Category..." required>
+                                                @forelse ($categories as $category)
+                                                    <option value="{{ $category->id }}">
+                                                        {{ $category->name }}
+                                                    </option>
+                                                @empty
+                                                    <option disabled>No Records Found!</option>
+                                                @endforelse
+                                            </x-backend.form.select-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <x-backend.form.select-input id="type" label="Product Type" placeholder="Choose Type" name="type" required>
+                                                <option value="Silver">Sliver</option>
+                                                <option value="Gold">Silver</option>
+                                                <option value="Platinum">Platinum</option>
+                                                <option value="Exclusive">Exclusive</option>
+                                            </x-backend.form.select-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <x-backend.form.text-input label="Price" type="number" name="price">
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <x-backend.form.text-input label="Discount" type="number" name="discount">
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <x-backend.form.select-input id="discount-type" label="Discount Type"
+                                                    name="discount_type">
+                                                    <option value="0" selected>Percentage</option>
+                                                    <option value="1">Fixed</option>
+                                                </x-backend.form.select-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <x-backend.form.select-input id="most-populer" label="Most Popular"
+                                                    name="most_popular">
+                                                    <option value="0" selected>No</option>
+                                                    <option value="1">Yes</option>
+                                                </x-backend.form.select-input>
+                                        </div>
+                                        <div class="col-md-12">
+                                            {{-- Dynamic Package Feature --}}
+                                            <div id="packacgeFeaturesInputs"></div>
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="icon-item mx-1 mt-3" style="cursor: pointer"
+                                                    onclick="addPackageFeature()" title="Add Package Feature">
+                                                    <i data-feather="plus-square" class="icon-dual"></i>
+                                                </div>
+                                                <div id="removePackageFeatureBtn" class="icon-item mx-1 mt-3"
+                                                    style="cursor: pointer" onclick="removePackageFeature()"
+                                                    title="Add Package Feature">
+                                                    <i data-feather="minus-square" class="icon-dual"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            
+                                            <x-form.ck-editor id="ck-editor" name="description"></x-form.ck-editor>
+                                           
+                                        </div><!-- end col -->
+
+
+
+                                        <div class="mt-3">
+                                            <button type="submit"
+                                                class="btn btn-primary waves-effect waves-light profile-button">Create
+                                                Product</button>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div><!-- end col-->
+    </div>
+    <!-- end row-->
 @endsection
+
+@push('customJs')
+    <script>
+        const featureLength = () => {
+            $('#packacgeFeaturesInputs').children().length < 2 ?
+                $("#removePackageFeatureBtn").addClass('d-none') :
+                $("#removePackageFeatureBtn").removeClass('d-none')
+        }
+
+        const addPackageFeature = () => {
+            const inputs = `
+               <div class="row">
+                    <div class="col-md-6">
+                        <x-backend.form.text-input label="Package Feature" type="test"
+                            name="package_feature[]">
+                        </x-backend.form.text-input>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label for="color" class="form-label mb-0">Color</label>
+                            <select class="form-select" id="color" name="color[]">
+                                <option value="#282e38" selected>Black</option>
+                                <option value="#1abc9c">Green</option>
+                                <option value="#f1556c">Red</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            `
+            $('#packacgeFeaturesInputs').append(inputs)
+            featureLength()
+        }
+        addPackageFeature()
+
+        const removePackageFeature = () => {
+            $("#packacgeFeaturesInputs").find(".row:last").remove()
+            featureLength()
+        }
+
+    </script>
+@endpush

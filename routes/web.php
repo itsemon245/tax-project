@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\UserProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\Hero\BannerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +16,6 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.pages.welcome');
-});
 
 // Route::get('/dashboard', function () {
 //     return view('backend.dashboard.dashboard');
@@ -30,19 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-/*
-* dashboard controller start
-*/
-
-Route::controller(DashboardController::class)->group(function(){
-    Route::get('/dashboard','create')->name('dashboard');
+Route::prefix('ajax')->name('ajax.')->controller(AjaxController::class)->group(function () {
+    Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');
 });
-Route::resource('user-profile', UserProfileController::class);
 
 
-
-
-/*
-* dashboard controller end
-*/
 require __DIR__ . '/auth.php';
+require __DIR__ . '/frontend.php';
+require __DIR__ . '/backend.php';

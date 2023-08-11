@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class HeroSection extends Component
 {
+    public $banners;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($banners)
     {
-        //
+        $this->banners = $banners;
     }
 
     /**
@@ -21,6 +22,8 @@ class HeroSection extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.frontend.hero-section');
+        return view('components.frontend.hero-section', [
+            'banners' => $this->banners
+        ]);
     }
 }

@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Models\Authentication;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -23,26 +26,57 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        $userExists = User::with('authentications')->where('email', $request->email)->first();
+        $loginCount = null;
 
-        $request->session()->regenerate();
+        // if user doesn't exists
+        if (!$userExists) {
+            $alert = array(
+                'message' => "User doesn't exists",
+                'alert-type' => 'error',
+            );
+            return back()->with($alert);
+        } else {
+            $loginCount = $userExists->authentications()->count();
+            // if user is logged in more than 3 devices
+            if ($loginCount < 3) {
+                
+                $request->authenticate();
+                $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+                $store = new Authentication();
+                $store->user_id = auth()->id();
+                $store->login_status = 1;
+                $store->login_time = Carbon::now();
+                $store->save();
+
+                return redirect()->intended(RouteServiceProvider::HOME);
+            } else {
+                $alert = array(
+                    'message' => "Can't log in into more then 3 devices at once",
+                    'alert-type' => 'error',
+                );
+                return back()->with($alert);
+            }
+        }
     }
+
+
 
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
-
+        $data = Authentication::where('user_id', $request->auth_id)->first();
+        if ($data != null) {
+            $data->delete();
+        }
+        Auth::logout();
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('/');
     }
 }

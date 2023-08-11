@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -17,14 +18,17 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $userName= fake()->userName();
         return [
             'name' => fake()->name(),
-            'user_name' => fake()->name(),
-            'phone' => fake()->name(),
+            'user_name' => $userName,
+            'image_url' => "https://api.dicebear.com/6.x/initials/svg?seed=$userName",
+            'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => Hash::make('12345678'), // password
             'remember_token' => Str::random(10),
+            'refer_link' => route('refer.link', $userName),
         ];
     }
 

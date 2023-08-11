@@ -1,4 +1,247 @@
 @extends('backend.layouts.app')
+@push('customCss')
+    {{-- quillJs editor css  --}}
+    <link href="{{ asset('backend/assets/libs/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
+    {{-- quillJs editor css  --}}
+@endpush
 @section('content')
-{{-- edit product page markup --}}
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Products', 'View Products', 'Edit Product']" />
+                </div>
+                <h4 class="page-title">Edit Product</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <!-- Add product Form -->
+                    <form action="{{ route('product.update', $product) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="container rounded bg-white py-3 px-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <x-backend.form.text-input label="Title" required type="text" name="title"
+                                                value="{{ $product->title }}" required>
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <x-backend.form.text-input label="Sub Title" type="text" name="sub_title"
+                                                value="{{ $product->sub_title }}" required>
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mt-1">
+                                                <x-backend.form.select-input id="category" label="Category" name="category"
+                                                    placeholder="Choose Category..." required>
+                                                    @forelse ($categories as $category)
+                                                        <option value="{{ $category->id }}"
+                                                            {{ $category->id === $product->product_category_id ? 'selected' : '' }}>
+                                                            {{ $category->name }}
+                                                        </option>
+                                                    @empty
+                                                        <option disabled>No Records Found!</option>
+                                                    @endforelse
+                                                </x-backend.form.select-input>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mt-1">
+                                                <x-backend.form.select-input id="type" label="Product Type" placeholder="Choose Type" name="type" required>
+                                                    <option value="Silver" @if ($product->type === 'Silver')
+                                                        selected
+                                                    @endif>Sliver</option>
+                                                    <option value="Gold" @if ($product->type === 'Gold')
+                                                        selected
+                                                    @endif>Gold</option>
+                                                    <option value="Platinum" @if ($product->type === 'Platinum')
+                                                        selected
+                                                    @endif>Platinum</option>
+                                                    <option value="Exclusive" @if ($product->type === 'Exclusive')
+                                                        selected
+                                                    @endif>Exclusive</option>
+                                                </x-backend.form.select-input>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <x-backend.form.text-input label="Price" type="number" name="price"
+                                                value="{{ $product->price }}">
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <x-backend.form.text-input label="Discount" type="number" name="discount"
+                                                value="{{ $product->discount }}">
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mt-1">
+                                                <x-backend.form.select-input id="discount-type" label="Discount Type"
+                                                     name="discount_type">
+                                                    <option value="0"
+                                                        {{ !$product->is_discount_fixed ? 'selected' : '' }}>Percentage
+                                                    </option>
+                                                    <option value="1"
+                                                        {{ $product->is_discount_fixed ? 'selected' : '' }}>Fixed</option>
+                                                </x-backend.form.select-input>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mt-1">
+                                                <x-backend.form.select-input id="most-populer" label="Most Popular"
+                                                    name="most_popular">
+                                                    <option value="0"
+                                                        {{ !$product->is_most_popular ? 'selected' : '' }}>No</option>
+                                                    <option value="1"
+                                                        {{ $product->is_most_popular ? 'selected' : '' }}>Yes</option>
+                                                </x-backend.form.select-input>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            {{-- Dynamic Package Feature --}}
+                                            <div id="packacgeFeaturesInputs"></div>
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="icon-item mx-1 mt-3" style="cursor: pointer"
+                                                    onclick="addPackageFeature()" title="Add Package Feature">
+                                                    <i data-feather="plus-square" class="icon-dual"></i>
+                                                </div>
+                                                <div id="removePackageFeatureBtn" class="icon-item mx-1 mt-3"
+                                                    style="cursor: pointer" onclick="removePackageFeature()"
+                                                    title="Add Package Feature">
+                                                    <i data-feather="minus-square" class="icon-dual"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <x-form.ck-editor id="ck-editor" name="description">
+                                            {!!$product->description!!}</x-form.ck-editor>
+                                            <!-- end Snow-editor-->
+                                        </div><!-- end col -->
+
+
+
+                                        <div class="mt-3">
+                                            <button type="submit"
+                                                class="btn btn-primary waves-effect waves-light profile-button">Update
+                                                Product</button>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div><!-- end col-->
+    </div>
+
+
+    <!-- end row-->
 @endsection
+
+@pushOnce('customJs')
+    
+    <script>
+       
+        const featureLength = () => {
+            $('#packacgeFeaturesInputs').children().length < 2 ?
+                $("#removePackageFeatureBtn").addClass('d-none') :
+                $("#removePackageFeatureBtn").removeClass('d-none')
+        }
+
+        const addPackageFeature = () => {
+            const inputs = `
+               <div class="row">
+                    <div class="col-md-6">
+                        <x-backend.form.text-input label="Package Feature" type="test"
+                            name="package_feature[]">
+                        </x-backend.form.text-input>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mt-1">
+                            <label for="color" class="form-label">Color</label>
+                            <select class="form-select" id="color" name="color[]">
+                                <option value="#282e38" selected>Black</option>
+                                <option value="#1abc9c">Green</option>
+                                <option value="#f1556c">Red</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            `
+            $('#packacgeFeaturesInputs').append(inputs)
+            featureLength()
+        }
+
+        const printPackageFeature = () => {
+            const inputs = [];
+            @forelse (json_decode($product->package_features) as $feature)
+                inputs.push(`
+               <div class="row">
+                    <div class="col-md-6">
+                        <x-backend.form.text-input label="Package Feature" type="test"
+                            name="package_feature[]" value="{{ $feature->package_feature }}">
+                        </x-backend.form.text-input>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label for="color" class="form-label mb-0">Color</label>
+                            <select class="form-select" id="color" name="color[]">
+                                <option value="#282e38" {{ $feature->color === '#282e38' ? 'selected' : '' }}>Black</option>
+                                <option value="#1abc9c" {{ $feature->color === '#1abc9c' ? 'selected' : '' }}>Green</option>
+                                <option value="#f1556c" {{ $feature->color === '#f1556c' ? 'selected' : '' }}>Red</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            `)
+            @empty
+                inputs.push(`
+               <div class="row">
+                    <div class="col-md-6">
+                        <x-backend.form.text-input label="Package Feature" type="test"
+                            name="package_feature[]">
+                        </x-backend.form.text-input>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label for="color" class="form-label mb-0">Color</label>
+                            <select class="form-select" id="color" name="color[]">
+                                <option value="#282e38" selected>Black</option>
+                                <option value="#1abc9c">Green</option>
+                                <option value="#f1556c">Red</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            `)
+            @endforelse
+
+            $('#packacgeFeaturesInputs').append(inputs)
+            featureLength()
+        }
+        printPackageFeature()
+
+        const removePackageFeature = () => {
+            $("#packacgeFeaturesInputs").find(".row:last").remove()
+            featureLength()
+        }
+
+    </script>
+@endPushOnce

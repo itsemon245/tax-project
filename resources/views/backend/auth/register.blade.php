@@ -110,6 +110,9 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                @isset($user_name)
+                                    <x-backend.form.text-input name="refer_code" label="Refer Code" :value="$user_name" />
+                                @endisset
                                 <div class="mb-3">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="checkbox-signup" required>
@@ -118,6 +121,7 @@
                                                 Conditions</a></label>
                                     </div>
                                 </div>
+                                
                                 <div class="text-center d-grid">
                                     <button class="btn btn-success"> Sign Up </button>
                                 </div>

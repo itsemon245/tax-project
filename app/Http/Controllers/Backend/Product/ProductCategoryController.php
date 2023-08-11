@@ -14,7 +14,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = ProductCategory::with('productSubCategories')->get();
+        return view('backend.product.category', compact('categories'));
     }
 
     /**
@@ -30,7 +31,10 @@ class ProductCategoryController extends Controller
      */
     public function store(StoreProductCategoryRequest $request)
     {
-        //
+        $category = new ProductCategory();
+        $category->name = $request->category;
+        $category->save();
+        return back()->with('success', 'Added Successfully');
     }
 
     /**
@@ -46,7 +50,8 @@ class ProductCategoryController extends Controller
      */
     public function edit(ProductCategory $productCategory)
     {
-        //
+        
+        return view('backend.product.editCategory', compact('productCategory'));
     }
 
     /**
@@ -54,7 +59,9 @@ class ProductCategoryController extends Controller
      */
     public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
-        //
+        $productCategory->name = $request->category;
+        $productCategory->save();
+        return back()->with('success','Category Edit Successfully');
     }
 
     /**
@@ -62,6 +69,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
-        //
+        $productCategory->delete();
+        return back()->with('danger','Deleted Successfully');
     }
 }

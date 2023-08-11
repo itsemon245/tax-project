@@ -1,0 +1,44 @@
+export interface InvoiceItem {
+    id: number;
+    baseId?: number;
+    name: string | undefined | null;
+    description: undefined | null | string;
+    rate: number;
+    qty: number;
+    total: number;
+    taxes: Array<{
+        id: number | undefined | null;
+        rate: number | undefined | null;
+        name: string | undefined | null;
+        number: number | undefined | null;
+    }>;
+    isTaxActive: boolean;
+    tax: number
+}
+
+export const item: InvoiceItem = {
+    id: 0,
+    name: "Item Name",
+    description: undefined,
+    rate: 0,
+    qty: 1,
+    total: 0,
+    taxes: [
+        {
+            id: 0,
+            rate: 0,
+            name: undefined,
+            number: undefined,
+        },
+    ],
+    isTaxActive: false,
+    tax: 0
+}
+const InvoiceItems : Array<InvoiceItem>  = [
+    {
+        ...item
+    }
+];
+
+
+export default InvoiceItems
