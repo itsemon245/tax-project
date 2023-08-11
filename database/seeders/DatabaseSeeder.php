@@ -4,9 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Calendar;
-use App\Models\CaseStudyPage;
-use App\Models\ExpertProfile;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -48,6 +45,7 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             CalendarSeeder::class,
             PromoCodeSeeder::class,
+            BookCategorySeeder::class,
         ]);
     }
 }

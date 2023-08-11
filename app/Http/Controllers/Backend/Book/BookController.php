@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateBookRequest;
+use App\Models\BookCategory;
 
 class BookController extends Controller
 {
@@ -15,7 +16,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::latest()->get();
+        $books = Book::with('bookCategory')->latest()->get();
         return view('backend.book.view-book', compact('books'));
     }
 
@@ -24,7 +25,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('backend.book.create-book');
+        $bookCategories = BookCategory::all();
+        return view('backend.book.create-book', compact('bookCategories'));
     }
 
     /**
@@ -33,16 +35,17 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)
     {
         $book_store = new Book();
+        $book_store->book_category_id = $request->book_category_id;
         $book_store->title = $request->book_title;
         $book_store->author = $request->author;
         $book_store->description = $request->book_desc;
         $book_store->price = $request->price;
-        $book_store->thumbail = saveImage($request->book_image, 'book-thumbail', 'book');
+        $book_store->thumbnail = saveImage($request->book_image, 'book-thumbail', 'book');
         $book_store->sample_pdf = saveImage($request->sample_pdf, 'book-pdf-sample', 'book');
         $book_store->pdf = saveImage($request->pdf, 'book-pdf', 'book');
         $book_store->save();
         $notification = [
-            'message' => 'Book Updated',
+            'message' => 'Book Created',
             'alert-type' => 'success',
         ];
         return back()->with($notification);
@@ -61,7 +64,11 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        return view('backend.book.edit-book', compact('book'));
+        $book = Book::with('bookCategory')
+            ->find($book->id)
+            ->first();
+        $bookCategories = BookCategory::all();
+        return view('backend.book.edit-book', compact('book', 'bookCategories'));
     }
 
     /**
@@ -70,10 +77,13 @@ class BookController extends Controller
     public function update(UpdateBookRequest $request, Book $book)
     {
         $book->title = $request->book_title;
+        $book->book_category_id = $request->book_category_id;
         $book->author = $request->author;
         $book->description = $request->book_desc;
         $book->price = $request->price;
-        $book->thumbail = updateFile($request->book_image, $book->thumbail, 'book-thumbail', 'book');
+        if ($request->hasFile('book_image')) {
+            $book->thumbnail = updateFile($request->book_image, $book->thumbnail, 'book-thumbnail', 'book');
+        }
         $book->sample_pdf = updateFile($request->sample_pdf, $book->sample_pdf, 'book-pdf-sample', 'book');
         $book->pdf = updateFile($request->pdf, $book->pdf, 'book-pdf', 'book');
         $book->price = $request->price;
@@ -90,9 +100,9 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        $thumbail = 'public/' . $book->thumbail;
-        if (Storage::exists($thumbail)) {
-            Storage::delete($thumbail);
+        $thumbnail = 'public/' . $book->thumbnail;
+        if (Storage::exists($thumbnail)) {
+            Storage::delete($thumbnail);
         }
         $sample_pdf = 'public/' . $book->sample_pdf;
         if (Storage::exists($sample_pdf)) {
@@ -107,7 +117,6 @@ class BookController extends Controller
             'message' => 'Book Deleted',
             'alert-type' => 'success',
         ];
-        return back()
-            ->with($notification);
+        return back()->with($notification);
     }
 }

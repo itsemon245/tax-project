@@ -17,7 +17,7 @@ class BookCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'book_category' => fake()->words(8,true),
         ];
     }
 }

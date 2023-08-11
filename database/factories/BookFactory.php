@@ -20,6 +20,7 @@ class BookFactory extends Factory
         $description = fake()->realText(300);
         $seed = str($text)->slug();
         return [
+            'book_category_id' => fake()->numberBetween(1,10),
             'title' => $text,
             'author' => fake()->name(),
             'description' => $description,

@@ -15,6 +15,11 @@ class Book extends Model
         return $this->hasMany(Review::class);
     }
 
+    function bookCategory()
+    {
+        return $this->belongsTo(BookCategory::class,'book_category_id');
+    }
+
     public function purchase(){
         return $this->morphOne(Purchase::class, 'purchasable');
     }
