@@ -7,12 +7,13 @@ use App\Models\CaseStudyPackage;
 use Symfony\Component\HttpFoundation\Request;
 use App\Http\Requests\StoreCaseStudyPageRequest;
 use App\Http\Requests\UpdateCaseStudyPageRequest;
+use Database\Seeders\CaseStudySeeder;
+use Ramsey\Uuid\Type\Integer;
 
 class CaseStudyController extends Controller
 {
     function caseStudy()
     {
-
         $packages = CaseStudyPackage::get();
         return view('frontend.pages.course.caseStudy', compact('packages'));
     }
@@ -20,7 +21,7 @@ class CaseStudyController extends Controller
     public function index(int $caseStudyPackage)
     {
         $caseStudies = CaseStudyPackage::find($caseStudyPackage)->caseStudies;
-        // dd($caseStudies);    
+        // dd($caseStudies);
         return view('frontend.pages.course.caseStudyIndex', compact('caseStudies'));
     }
 
@@ -33,7 +34,8 @@ class CaseStudyController extends Controller
      */
     public function create()
     {
-        return view('backend.caseStudy.caseStudyIndex');
+        $caseStudyData = CaseStudyPackage::first();
+        return view('backend.caseStudy.caseStudyIndex', compact('caseStudyData'));
     }
 
     /**
@@ -41,19 +43,32 @@ class CaseStudyController extends Controller
      */
     public function store(StoreCaseStudyPageRequest $request)
     {
-        $caseStudy = new CaseStudy();
-        $caseStudy->title = $request->title;
-        $caseStudy->page_description = $request->page_description;
-        $caseStudy->duration = $request->duration;
-        $caseStudy->type = $request->type;
-        $caseStudy->orders = $request->orders;
-        $caseStudy->rate = $request->rate;
-        $caseStudy->image = saveImage($request->image, 'page/caseStudy', 'case-study');
-        $caseStudy->save();
+        $caseStudyData = CaseStudyPackage::first();
+
+        if ($caseStudyData === null) {
+            $caseStudy = new CaseStudyPackage();
+            $caseStudy->page_title = $request->title;
+            $caseStudy->page_description = $request->page_description;
+            $caseStudy->billing_type = $request->billing_type;
+            $caseStudy->name = $request->name;
+            $caseStudy->limit = $request->limit;
+            $caseStudy->price = $request->price;
+            $caseStudy->page_image = saveImage($request->image, 'page/caseStudy', 'case-study');
+            $caseStudy->save();
+        } else {
+            $caseStudy = new CaseStudyPackage();
+            $caseStudy->billing_type = $request->billing_type;
+            $caseStudy->name = $request->name;
+            $caseStudy->limit = $request->limit;
+            $caseStudy->price = $request->price;
+            $caseStudy->save();
+        }
+
         $notification = [
             'message' => 'Case Study Created',
             'alert-type' => 'success',
         ];
+
         return redirect()
             ->back()
             ->with($notification);
@@ -67,29 +82,41 @@ class CaseStudyController extends Controller
         return view('frontend.pages.course.caseStudySingleCategory');
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $datum = CaseStudy::find($id);
-        return view('backend.caseStudy.editCaseStudy', compact('datum'));
+        $datum = CaseStudyPackage::find($id);
+        $caseStudyData = CaseStudyPackage::first();
+        return view('backend.caseStudy.editCaseStudy', compact('datum', 'caseStudyData'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCaseStudyPageRequest $request, CaseStudy $caseStudy)
+    public function update(UpdateCaseStudyPageRequest $request, $id)
     {
-        $caseStudy->title = $request->title;
-        $caseStudy->page_description = $request->page_description;
-        $caseStudy->duration = $request->duration;
-        $caseStudy->type = $request->type;
-        $caseStudy->orders = $request->orders;
-        $caseStudy->rate = $request->rate;
-        $caseStudy->image = saveImage($request->image, 'page/caseStudy', 'case-study');
-        $caseStudy->save();
+        $caseStudyData = CaseStudyPackage::skip(0)->value('id');
+        if ($caseStudyData == $id) {
+            $caseStudy = CaseStudyPackage::find($id);
+            $caseStudy->page_title = $request->title;
+            $caseStudy->page_description = $request->page_description;
+            $caseStudy->billing_type = $request->billing_type;
+            $caseStudy->name = $request->name;
+            $caseStudy->limit = $request->limit;
+            $caseStudy->price = $request->price;
+            $caseStudy->page_image = saveImage($request->image, 'page/caseStudy', 'case-study');
+            $caseStudy->save();
+        } else {
+            $caseStudy = CaseStudyPackage::find($id);
+            $caseStudy->billing_type = $request->billing_type;
+            $caseStudy->name = $request->name;
+            $caseStudy->limit = $request->limit;
+            $caseStudy->price = $request->price;
+            $caseStudy->save();
+        }
+
         $notification = [
             'message' => 'Record Updated',
             'alert-type' => 'success',
@@ -99,24 +126,30 @@ class CaseStudyController extends Controller
             ->with($notification);
     }
 
-
-    //Custom method for show all data 
+    //Custom method for show all data
     public function showAll()
     {
-        $caseStudies = CaseStudy::get();
-        return view('backend.caseStudy.viewCaseStudy', compact('caseStudies'));
+        $CaseStudyPackages = CaseStudyPackage::all();
+        return view('backend.caseStudy.viewCaseStudy', compact('CaseStudyPackages'));
     }
-
 
     public function destroy($id)
     {
-        $datum = CaseStudy::findOrFail($id);
+        $datum = CaseStudyPackage::findOrFail($id);
+        $caseStudyData = (string) CaseStudyPackage::skip(0)->value('id');
+        if($datum->id == $caseStudyData){
+            $caseStudy= CaseStudyPackage::skip(1)->first();
+            $caseStudy->page_title = $datum->page_title;
+            $caseStudy->page_description = $datum->page_description;
+            $caseStudy->page_image = $datum->page_image;
+            $caseStudy->save();
+        }
+
         $datum->delete();
         $notification = [
             'message' => 'Record Deleted',
             'alert-type' => 'success',
         ];
-        return back()
-            ->with($notification);
+        return back()->with($notification);
     }
 }

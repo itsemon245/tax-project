@@ -109,7 +109,7 @@ Route::prefix('admin')->group(function () {
             Route::get('show-all', 'showAll')->name('show.all');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::delete('destroy/{id}', 'destroy')->name('delete');
-            Route::PUT('update', 'update')->name('update');
+            Route::PUT('update/{id}', 'update')->name('update');
         });
 
     Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');

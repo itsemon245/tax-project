@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('case_study_packages', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->decimal('price', 8, 2);
-            $table->integer('limit')->default(0);
-            $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->default('onetime');
+            $table->text('name')->nullable();
+            $table->decimal('price', 8, 2)->nullable();
+            $table->integer('limit')->default(0)->nullable();
+            $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->default('onetime')->nullable();
             $table->longText('page_title')->nullable();
             $table->longText('page_description')->nullable();
             $table->longText('page_image')->nullable();

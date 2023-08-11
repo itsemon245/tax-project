@@ -11,7 +11,6 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Image</th>
                                     <th>Package</th>
                                     <th>Title</th>
                                     <th>Duration</th>
@@ -21,20 +20,18 @@
                             </thead>
 
                             <tbody>
-                                @foreach ($caseStudies as $key => $caseStudy)
+                                @foreach ($CaseStudyPackages as $key => $CaseStudyPackage)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td><img src="{{ $caseStudy->image }}"
-                                                width="80px" loading="lazy"></td>
-                                        <td>{{ $caseStudy->case_study_package_id }}</td>
-                                        <td>{{ Str::limit($caseStudy->title, 15, '...') }}</td>
-                                        <td>{{ $caseStudy->duration }}</td>
-                                        <td>{{ $caseStudy->type }}</td>
+                                        <td>{{ $CaseStudyPackage->name }}</td>
+                                        <td>{{ $CaseStudyPackage->limit }}</td>
+                                        <td>{{ $CaseStudyPackage->price }}</td>
+                                        <td>{{ $CaseStudyPackage->billing_type }}</td>
                                         <td>
-                                            <a href="{{ route('case.study.backend.edit', $caseStudy) }}"
+                                            <a href="{{ route('case.study.backend.edit', $CaseStudyPackage->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
 
-                                            <form action="{{ route('case.study.backend.delete', $caseStudy) }}" method="post"
+                                            <form action="{{ route('case.study.backend.delete', $CaseStudyPackage->id) }}" method="post"
                                                 class="d-inline-block py-0">
                                                 @csrf
                                                 @method('DELETE')
