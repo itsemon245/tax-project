@@ -329,7 +329,7 @@ class InvoiceController extends Controller
         return back()->with($alert);
     }
 
-    function filter(Request $request)
+    public function filterInvoices(Request $request)
     {
         dd('hello');
         $invoices = null;
