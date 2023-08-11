@@ -69,7 +69,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        $data = Authentication::where('user_id', $request->auth_id)->first();
+        $data = Authentication::where('user_id', $request->user()->id)->first();
         if ($data != null) {
             $data->delete();
         }

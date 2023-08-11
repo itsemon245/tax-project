@@ -1,60 +1,82 @@
+@php
+    $categories = App\Models\ServiceCategory::get();
+@endphp
 <footer class="top-footer bg-dark">
-    <div class="container">
-        <div class="d-flex p-4 flex-wrap justify-content-center gap-3">
-            <div class="mt-3 mx-auto">
-                <div class="d-flex flex-column align-items-center text-light">
-                    <p style="font-weight: 500;font-size:18px;">Our Services</p>
-                    <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
+    <div class="px-5 mx-3 text-white py-3">
+        <div class="row justify-content-center">
+            <div class="col-12 mb-3">
+                <div class="row justify-content-center">
+                    <h6 class="text-center font-20">Our Services</h6>
+                    @foreach ($categories as $category)
+                        <div
+                            class=" {{ count($category->serviceSubCategories) < 2 ? 'col-xl-2 col-md-4' : 'col-xl-4 col-md-6' }}">
+                            <a class="fw-medium font-18 d-flex justify-content-md-center mb-2"
+                                href="{{ route('service.category', $category->id) }}" target="_blank"
+                                rel="noopener noreferrer">{{ $category->name }}</a>
+                            <ul class="row mx-0  list-unstyled mb-2">
+                                @foreach ($category->serviceSubCategories as $sub)
+                                    <li
+                                        class="{{ count($category->serviceSubCategories) < 2 ? 'col-md-12' : 'col-sm-6' }} mb-2">
+                                        <a class="fw-medium mb-2"
+                                            href="{{ route('service.sub', $sub->id) }}">{{ $sub->name }}</a>
+                                        <ul class="" style="list-style: disc; mx-0">
+                                            @foreach ($sub->services as $service)
+                                                <li class="">
+                                                    <a
+                                                        href="{{ route('service.view', $service->id) }}">{{ $service->title }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="col-xxl-4 col-md-6">
+                <div class="row mb-2">
+                    <p class="mb-1 text-center" style="font-weight: 500;font-size:18px;">
+                        <a href="{{ route('page.about') }}">About Us</a>
+                    </p>
+                    <div>
+                        <div class="d-flex justify-content-center gap-5" style="font-weight: 500; font-size: 16px;">
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="">Terms &
+                                Codition</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="">Help &
+                                Support</a>
+                        </div>
+                        <div class="d-flex justify-content-center gap-5" style="font-weight: 500; font-size: 16px;">
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="">Terms &
+                                Codition</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="">Help &
+                                Support</a>
+                        </div>
                     </div>
-                    <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
-                    </div>
-                    <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
+                    <div class="d-flex justify-content-center gap-5" style="font-weight: 500; font-size: 16px;">
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="">Terms & Codition</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="">Help & Support</a>
                     </div>
                 </div>
             </div>
-            <div class="divider-vr"></div>
-            <div class="mt-3 mx-auto">
-                <div class="d-flex flex-column align-items-center text-light">
-                    <p style="font-weight: 500;font-size:18px;">About Us</p>
-                    <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
-                    </div>
-                    <div class="d-flex gap-3 align-items-cetner">
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Lorem, ipsum.</a>
-                    </div>
-                </div>
-            </div>
-            <div class="divider-vr"></div>
-            <div class="mt-3 mx-auto">
-                <div class="d-flex flex-column align-items-center text-light">
-                    <p class="mb-1" style="font-weight: 500;font-size:18px;">Stay Connected</p>
-                    <div class="social-handles">
-                        @foreach (getRecords('social_handles') as $social)
-                            <div class="d-flex gap-2 align-items-center">
-                                <span class="{{ $social->icon }}"></span>
-                                <a class="text-capitalize" href="{{ $social->link }}" target="_blank" rel="noopener noreferrer">{{ $social->name }}</a>
-                            </div>
-                        @endforeach
-                    </div>
+            <div class="col-xxl-4 col-md-6">
+                <div class="row text-light">
+                    <p class="mb-1 text-center" style="font-weight: 500;font-size:18px;">Stay Connected</p>
+                    @foreach (getRecords('social_handles') as $social)
+                        <div class="col-lg-4 col-6">
+                            <span class="{{ $social->icon }}"></span>
+                            <a class="text-capitalize" href="{{ $social->link }}" target="_blank"
+                                rel="noopener noreferrer">{{ $social->name }}</a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center gap-5" style="font-weight: 500; font-size: 16px;">
-            <a href="#" target="_blank" rel="noopener noreferrer" class="">Terms & Codition</a>
-            <a href="#" target="_blank" rel="noopener noreferrer" class="">Help & Support</a>
-        </div>
+
     </div>
     <div class="bottom-footer bg-primary text-light mt-3">
         <p class="d-flex align-items-center justify-content-center mb-0">Copyright <span
                 class="mdi mdi-copyright mx-2"></span>
-            {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by company name</p>
+            {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by {{ env('APP_NAME') }}</p>
     </div>
 </footer>

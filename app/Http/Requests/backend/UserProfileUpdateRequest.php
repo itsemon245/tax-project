@@ -23,11 +23,11 @@ class UserProfileUpdateRequest extends FormRequest
     {
         $id = auth()->id();
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'user_name' => ['required', 'string', 'max:255', "unique:users,user_name,$id"],
-            'phone' => ['required', 'max:20', 'min:11'],
-            'profile_img' => ['image', 'max:2048'],
-            'email' => ['required', 'email', 'max:255', "unique:users,email,$id"],
+            'name' => ['string', 'max:255'],
+            'user_name' => ['string', 'max:255', "unique:users,user_name,$id"],
+            'phone' => ['max:20', 'min:11'],
+            'avatar' => ['image', 'max:5120'],
+            'email' => ['email', 'max:255', "unique:users,email,$id"],
 
         ];
     }

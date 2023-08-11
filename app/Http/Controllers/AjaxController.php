@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\DB;
 
 class AjaxController extends Controller
 {
@@ -22,6 +23,20 @@ class AjaxController extends Controller
                 'success' => true,
                 'message' => $title . " status has been updated!",
                 'record' => $record
+            ];
+        } catch (Exception $e) {
+            $response = $e;
+        }
+        return response($response);
+    }
+    function markNotificationsAsRead(Request $request): Response
+    {
+        try {
+            $user = User::find(auth()->id());
+            $user->unreadNotifications->markAsRead();
+            $response = [
+                'success' => true,
+                'message' => "Marked as read",
             ];
         } catch (Exception $e) {
             $response = $e;

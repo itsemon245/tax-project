@@ -61,20 +61,15 @@ class UserProfileController extends Controller
      */
     public function update(UserProfileUpdateRequest $request, $id)
     {
-            $userData = User::findOrFail($id);
-                $userData->name = $request->name;
-                $userData->email = $request->email;
-                $userData->user_name = $request->user_name;
-                $userData->phone = $request->phone;
-                $old_path = $userData->image_url;
-                $userData->image_url = updateFile($request->profile_img, $old_path,'profile','user-image');
-                $userData->save();
-        
-                $notification = array(
-                    'message' => "Profile Updated",
-                    'alert-type' => 'success',
-                );
-                return back()->with($notification);
+        $request->user()->fill($request->except('avatar'));
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+        if ($request->hasFile('avatar')) {
+            $request->user()->image_url = updateFile($request->avatar, $request->user()->image_url, 'profile', $request->user_name);
+        }
+        $request->user()->save();
 
         $notification = array(
             'message' => "Profile Updated",
@@ -96,13 +91,13 @@ class UserProfileController extends Controller
      */
     public function changePassword(Request $request)
     {
-            $request->validate([
+        $request->validate([
             'old_password' => 'required|string',
             'new_password' => 'required|string',
             'confirm_new_password' => 'required|string|same:new_password',
 
-            ]);
-        
+        ]);
+
         $user = User::findOrFail(auth()->id());
         $isValid = Hash::check($request->old_password, $user->password);
         $notification = array(

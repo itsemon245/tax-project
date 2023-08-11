@@ -54,15 +54,15 @@ function updateFile($file, $old_path, $dir,  $prefix = "", $disk = "public")
     if ($isFile) {
         $old_path = explode("storage", $old_path)[1];
     }
-    $path = $disk . $old_path;
+    $path = $old_path ? $disk . $old_path : 'no file exists';
     $fileExists = Storage::exists($path);
     if ($fileExists) {
         if ($file) {
-            $new_path = saveImage($file, $dir, $prefix);
+            $new_path = saveImage($file, $dir, $prefix, $disk);
             Storage::delete($path);
         }
     } else {
-        $new_path = saveImage($file, $dir, $prefix);
+        $new_path = saveImage($file, $dir, $prefix, $disk);
     }
     return $new_path;
 }
@@ -234,3 +234,19 @@ function currentYear(): int
     }
     return $year;
 }
+
+function starStyle($rating, $avg)
+        {
+            $gt = $rating <= $avg;
+            $lt = $avg <= $rating + 1;
+            if ($gt & $lt) {
+                $percnetage = (round($avg, 1) - $rating) * 100;
+                $black = "black $percnetage%";
+                $transparent = 'transparent ' . (100 - $percnetage) . '%';
+                $mask = "
+    -webkit-mask-image: linear-gradient(to right, $black , $transparent);
+    mask-image: linear-gradient(to right, $black, $transparent);
+    ";
+                return $mask;
+            }
+        }

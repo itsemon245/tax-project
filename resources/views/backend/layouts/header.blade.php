@@ -1,117 +1,70 @@
 @php
-    $user_id = auth()->user();
-    $user = App\Models\User::find($user_id->id);
-    
-    $notifications = App\Models\UserNotification::where('user_id', Auth::user()->id)->get();
-    $countNoti = App\Models\UserNotification::where('user_id', Auth::user()->id)->count();
-    
+    $user_id = auth()->id();
+    $user = App\Models\User::find($user_id);
+    $notifications = $user
+        ->notifications()
+        ->latest()
+        ->get(['id', 'data', 'type', 'read_at']);
+    // dd($notifications);
+    $isRead = count($user->unreadNotifications) === 0;
 @endphp
+<style>
+    .read>* {
+        color: var(--ct-gray-800) !important;
+        opacity: 0.6 !important;
+    }
+</style>
 
 <div class="navbar-custom">
     <div class="container-fluid">
         <ul class="list-unstyled topnav-menu float-end mb-0">
 
 
-
-            <li class="dropdown d-none d-lg-inline-block">
-                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen"
-                    href="#">
-                    <i class="fe-maximize noti-icon"></i>
-                </a>
-            </li>
-
-
-
             <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#"
-                    role="button" aria-haspopup="false" aria-expanded="false">
+                <a class="nav-link dropdown-toggle waves-effect waves-light">
                     <i class="fe-bell noti-icon"></i>
-                    <span class="badge bg-danger rounded-circle noti-icon-badge">{{ $countNoti }}</span>
+                    @if (!$isRead)
+                        <span
+                            class="badge bg-danger rounded-circle noti-icon-badge">{{ count($user->unreadNotifications) }}</span>
+                    @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-lg">
 
                     <!-- item-->
                     <div class="dropdown-item noti-title">
-                        <h5 class="m-0">
-                            <span class="float-end">
-                                <a href="" class="text-dark">
-                                    <small>Clear All</small>
-                                </a>
-                            </span>Notification
-                        </h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="my-0">
+                                Notifications
+                            </h5>
+                            <div data-is-marked="{{ $isRead ? 'true' : 'false' }}" id="mark-notification-btn"
+                                role="button"
+                                class="d-inline-flex gap-2 align-items-center {{ $isRead ? 'read' : 'text-dark' }}">
+                                <span class="mdi mdi-check-all font-16"></span>
+                                <span class="font-14">Mark all as read</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="noti-scroll" data-simplebar>
 
 
-                        @forelse ($notifications as $notify)
+                        @forelse ($notifications as $key => $notification)
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                            <a href="{{ $notification->data['url'] }}"
+                                class="dropdown-item notify-item {{ $notification->read_at ? 'read' : 'unread' }}">
                                 <div class="notify-icon">
-                                    {{-- <img src="{{ useImage($notify->image_url) ?? '' }}" class="img-fluid rounded-circle"
-                                        alt="" /> --}}
+                                    <img src="{{ useImage($user->image_url) }}" class="img-fluid rounded-circle"
+                                        alt="" />
                                 </div>
-                                <p class="notify-details">{{ $notify->title }}</p>
-                                <p class="text-muted mb-0 user-msg">
-                                    <small>{{ $notify->message }}</small>
+                                <p class="notify-details">{{ $notification->data['title'] }}</p>
+                                <p class="mb-0 user-msg">
+                                    <small>{{ $notification->data['body'] }}</small>
                                 </p>
                             </a>
-
                         @empty
+                            <div class="text-muted text-center">No notifications to show</div>
                         @endforelse
 
-                        {{-- <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-primary">
-                                <i class="mdi mdi-comment-account-outline"></i>
-                            </div>
-                            <p class="notify-details">Caleb Flakelar commented on Admin
-                                <small class="text-muted">1 min ago</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon">
-                                <img src="{{ asset('backend/assets/images/users/user-4.jpg') }}"
-                                    class="img-fluid rounded-circle" alt="" />
-                            </div>
-                            <p class="notify-details">Karen Robinson</p>
-                            <p class="text-muted mb-0 user-msg">
-                                <small>Wow ! this admin looks good and awesome design</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-warning">
-                                <i class="mdi mdi-account-plus"></i>
-                            </div>
-                            <p class="notify-details">New user registered.
-                                <small class="text-muted">5 hours ago</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-info">
-                                <i class="mdi mdi-comment-account-outline"></i>
-                            </div>
-                            <p class="notify-details">Caleb Flakelar commented on Admin
-                                <small class="text-muted">4 days ago</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-secondary">
-                                <i class="mdi mdi-heart"></i>
-                            </div>
-                            <p class="notify-details">Carlos Crouch liked
-                                <b>Admin</b>
-                                <small class="text-muted">13 days ago</small>
-                            </p>
-                        </a> --}}
                     </div>
 
                     <!-- All-->
@@ -124,10 +77,8 @@
             </li>
 
             <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
-                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ useImage($user->image_url) ? useImage($user->image_url) : 'https://api.dicebear.com/6.x/initials/svg?seed=' . auth()->user()->name }}"
-                        alt="user-image" class="rounded-circle">
+                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light">
+                    <img src="{{ useImage($user->image_url) }}" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ms-1">
                         {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
                     </span>
@@ -145,25 +96,22 @@
                         <span>Change Password</span>
                     </a>
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                         <i class="fe-settings"></i>
                         <span>Settings</span>
-                    </a>
+                    </a> --}}
 
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-lock"></i>
-                        <span>Lock Screen</span>
-                    </a>
 
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <form action="{{ route('logout') }}" method="get">
+                    <form class="text-danger dropdown-item notify-item d-flex gap-2 align-items-center"
+                        action="{{ route('logout') }}" method="post">
                         @csrf
-                        <input type="hidden"  name="auth_id" class="d-none" value="{{ auth()->id() }}" >
-                        <x-backend.ui.button class="text-danger">Log out</x-backend.ui.button>
-                        </form>
+                        <span class="fe-log-out"></span>
+                        <x-backend.ui.button class="border-0 p-0 flex-grow-1 text-start">
+                            Log out</x-backend.ui.button>
+                    </form>
 
                 </div>
             </li>
@@ -218,3 +166,40 @@
         <div class="clearfix"></div>
     </div>
 </div>
+
+@push('customJs')
+    <script>
+        $(document).ready(function() {
+            let unRead = $('.unread')
+            $('#mark-notification-btn').click(function() {
+                let isMarked = this.dataset.isMarked === 'true'
+                if (!isMarked) {
+                    $.ajax({
+                        type: "post",
+                        url: "{{ route('ajax.notifications.read') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: (response) => {
+                            $(this)
+                                .toggleClass('read')
+                            unRead
+                                .toggleClass('read')
+                                .toggleClass('unread')
+
+                            // Toast.fire({
+                            //     'title': 'Success',
+                            //     'icon': 'success',
+                            //     'text': response.message
+                            // })
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+@endpush

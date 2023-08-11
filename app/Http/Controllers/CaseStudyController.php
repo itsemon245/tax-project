@@ -10,15 +10,18 @@ use App\Http\Requests\UpdateCaseStudyPageRequest;
 
 class CaseStudyController extends Controller
 {
-    function caseStudy() {
+    function caseStudy()
+    {
 
-        $caseStudies = CaseStudy::limit(5)->orderBy('id', 'DESC')->get();
-        return view('frontend.pages.course.caseStudy', compact('caseStudies'));
+        $packages = CaseStudyPackage::get();
+        return view('frontend.pages.course.caseStudy', compact('packages'));
     }
 
-    public function index()
+    public function index(int $caseStudyPackage)
     {
-        return view('frontend.pages.course.caseStudyPackegeCategories');
+        $caseStudies = CaseStudyPackage::find($caseStudyPackage)->caseStudies;
+        // dd($caseStudies);    
+        return view('frontend.pages.course.caseStudyIndex', compact('caseStudies'));
     }
 
     /**
@@ -65,7 +68,7 @@ class CaseStudyController extends Controller
     }
 
 
-        /**
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
@@ -116,5 +119,4 @@ class CaseStudyController extends Controller
         return back()
             ->with($notification);
     }
-
 }

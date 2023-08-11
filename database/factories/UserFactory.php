@@ -18,11 +18,18 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $userName= fake()->userName();
+        $userName = fake()->userName();
+        $name = fake()->name();
+        $arr = explode(' ', $name);
+        if (count($arr) > 1) {
+            $seed = $arr[0][0] . $arr[1][0];
+        } else {
+            $seed = $name;
+        }
         return [
-            'name' => fake()->name(),
+            'name' => $name,
             'user_name' => $userName,
-            'image_url' => "https://api.dicebear.com/6.x/initials/svg?seed=$userName",
+            'image_url' => "https://api.dicebear.com/6.x/initials/svg?seed=$seed&backgroundType=gradientLinear&backgroundRotation=0,360",
             'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),

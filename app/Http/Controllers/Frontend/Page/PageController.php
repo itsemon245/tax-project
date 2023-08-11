@@ -49,30 +49,28 @@ class PageController extends Controller
     public function aboutPage()
     {
         $about_data = About::skip(0)->first();
-        if($about_data > 0){
+        if ($about_data > 0) {
             $about_sections = json_decode($about_data->sections, true);
             return view('frontend.pages.about', compact('about_data', 'about_sections'));
-        }else{
-            $about_sections=null;
+        } else {
+            $about_sections = null;
             return view('frontend.pages.about', compact('about_data', 'about_sections'));
         }
     }
-    function officePage() {
+    function officePage()
+    {
         $maps = Map::get();
         return view('frontend.pages.office', compact('maps'));
     }
-    function contactPage() {
+    function contactPage()
+    {
         $maps = Map::get();
         return view('frontend.pages.contact', compact('maps'));
     }
     public function becomePartnerPage()
     {
-        $user = Auth::user();
-        if ($user == null) {
-            return view('backend.auth.login');
-        } else {
-            return view('frontend.pages.becomePartner', compact('user'));
-        }
+        $user = auth()->user();
+        return view('frontend.pages.becomePartner', compact('user'));
     }
 
     //promo codes view page
@@ -81,7 +79,6 @@ class PageController extends Controller
         $user_id = Auth::user()->id;
         $promoCodes = User::find($user_id)->promoCodes()->where('status', 1)->get();
         return view('frontend.pages.promoCodesPage', compact('promoCodes'));
-
     }
 
     //notification client side view page
