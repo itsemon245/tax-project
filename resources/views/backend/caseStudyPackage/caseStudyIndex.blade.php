@@ -3,7 +3,7 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Course', 'Case Study Package']" />
 
     <x-backend.ui.section-card name="Case Study Package Create">
-        <form action="{{ route('case.study.backend.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('case.study.package.backend.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="card p-3">
                 <div class="row">

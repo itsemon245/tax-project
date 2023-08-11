@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\CaseStudyCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,6 +16,12 @@ class CaseStudy extends Model
     {
         return $this->belongsTo(CaseStudyPackage::class);
     }
+
+    function caseStudyCategory(): BelongsTo
+    {
+        return $this->belongsTo(CaseStudyCategory::class);
+    }
+
     public function purchase()
     {
         return $this->morphOne(Purchase::class, 'purchasable');

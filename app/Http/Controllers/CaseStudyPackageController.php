@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateCaseStudyPageRequest;
 use Database\Seeders\CaseStudySeeder;
 use Ramsey\Uuid\Type\Integer;
 
-class CaseStudyController extends Controller
+class CaseStudyPackageController extends Controller
 {
     function caseStudy()
     {
@@ -35,7 +35,7 @@ class CaseStudyController extends Controller
     public function create()
     {
         $caseStudyData = CaseStudyPackage::first();
-        return view('backend.caseStudy.caseStudyIndex', compact('caseStudyData'));
+        return view('backend.caseStudyPackage.caseStudyIndex', compact('caseStudyData'));
     }
 
     /**
@@ -89,7 +89,7 @@ class CaseStudyController extends Controller
     {
         $datum = CaseStudyPackage::find($id);
         $caseStudyData = CaseStudyPackage::first();
-        return view('backend.caseStudy.editCaseStudy', compact('datum', 'caseStudyData'));
+        return view('backend.caseStudyPackage.editCaseStudy', compact('datum', 'caseStudyData'));
     }
 
     /**
@@ -106,7 +106,9 @@ class CaseStudyController extends Controller
             $caseStudy->name = $request->name;
             $caseStudy->limit = $request->limit;
             $caseStudy->price = $request->price;
-            $caseStudy->page_image = saveImage($request->image, 'page/caseStudy', 'case-study');
+            if ($request->hasFile('image')) {
+            $caseStudy->page_image = updateFile($request->image, $caseStudy->page_image,'page/caseStudy', 'case-study');
+            }
             $caseStudy->save();
         } else {
             $caseStudy = CaseStudyPackage::find($id);
@@ -130,7 +132,7 @@ class CaseStudyController extends Controller
     public function showAll()
     {
         $CaseStudyPackages = CaseStudyPackage::all();
-        return view('backend.caseStudy.viewCaseStudy', compact('CaseStudyPackages'));
+        return view('backend.caseStudyPackage.viewCaseStudy', compact('CaseStudyPackages'));
     }
 
     public function destroy($id)

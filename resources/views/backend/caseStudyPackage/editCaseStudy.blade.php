@@ -2,7 +2,7 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Course', 'Case Study Package']" />
     <x-backend.ui.section-card name="Case Study Edit">
-       <form action="{{ route('case.study.backend.update', $datum->id) }}" method="post" enctype="multipart/form-data">
+       <form action="{{ route('case.study.package.backend.update', $datum->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="card p-3">

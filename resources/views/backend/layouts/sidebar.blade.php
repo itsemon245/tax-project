@@ -238,10 +238,10 @@
                                 <div class="collapse" id="caseStudySection">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="{{ route('case.study.backend.index') }}">Create Hero
+                                            <a href="{{ route('case.study.package.backend.index') }}">Create Hero
 
                                             </a>
-                                            <a href="{{ route('case.study.backend.show.all') }}">
+                                            <a href="{{ route('case.study.package.backend.show.all') }}">
                                                 View Hero
                                             </a>
                                         </li>

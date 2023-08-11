@@ -6,7 +6,7 @@ use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\VideoController;
@@ -43,6 +43,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
+use App\Http\Controllers\Backend\CaseStudyController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 
 /*
@@ -100,9 +101,9 @@ Route::prefix('admin')->group(function () {
         'show' => 'course.backend.show',
     ]);
     Route::post('send-invoice-mail/{id}', [InvoiceController::class, 'sendInvoiceMail'])->name('send_invoice_mail');
-    Route::prefix('case-study-backend')
-        ->name('case.study.backend.')
-        ->controller(CaseStudyController::class)
+    Route::prefix('case-study-package-backend')
+        ->name('case.study.package.backend.')
+        ->controller(CaseStudyPackageController::class)
         ->group(function () {
             Route::get('', 'create')->name('index');
             Route::post('store', 'store')->name('store');
@@ -111,6 +112,8 @@ Route::prefix('admin')->group(function () {
             Route::delete('destroy/{id}', 'destroy')->name('delete');
             Route::PUT('update/{id}', 'update')->name('update');
         });
+
+    Route::resource('case-study',CaseStudyController::class);
 
     Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);
