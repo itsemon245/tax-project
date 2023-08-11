@@ -78,7 +78,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
     Route::resource('invoice', InvoiceController::class);
-    Route::get('invoice/filtered', [InvoiceController::class, 'filterInvoices'])->name('invoice.filter');
+    Route::post('filtered-invoices', [InvoiceController::class, 'filterInvoices'])->name('invoice.filter');
     Route::patch('invoice/{invoice}/markAs/{status}', [InvoiceController::class, 'markAs'])->name('invoice.markAs');
     Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);

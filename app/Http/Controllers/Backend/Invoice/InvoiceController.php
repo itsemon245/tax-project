@@ -331,13 +331,12 @@ class InvoiceController extends Controller
 
     public function filterInvoices(Request $request)
     {
-        dd('hello');
-        $invoices = null;
-        if ($request->client) {
-            $invoices = Client::find($request->client)->invoices;
-        }
-
-        $content = new InvoiceCollection($invoices);
+        // $invoices = null;
+        // if ($request->client) {
+        //     $invoices = Client::find($request->client)->invoices;
+        // }
+        // $content = new InvoiceCollection($invoices);
+        $content = $request;
         return response($content);
     }
 }
