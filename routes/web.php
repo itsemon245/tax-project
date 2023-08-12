@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\Hero\BannerController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,16 @@ Route::prefix('ajax')->name('ajax.')->controller(AjaxController::class)->group(f
     Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');
     Route::post('mark-notifications', 'markNotificationsAsRead')->name('notifications.read');
 });
-
+Route::get('call-artisan', function () {
+    $exitCode = Artisan::call('migrate:fresh');
+    echo 'Database migrated: ' . $exitCode . "<br>";
+    $exitCode = Artisan::call('db:seed');
+    echo 'Database seeded: ' . $exitCode . "<br>";
+    $exitCode = Artisan::call('optimize');
+    echo 'Optimized: ' . $exitCode . "<br>";
+    $exitCode = Artisan::call('optimize:clear');
+    echo 'Optimize cleared: ' . $exitCode . "<br>";
+});
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/frontend.php';
