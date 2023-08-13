@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build && sass ./resources/scss/theme/compile_colors.scss:./resources/css/colors.css",
         "build-force": "node --max-old-space-size=2048 $(which npm) run build"
     },
     "devDependencies": {
