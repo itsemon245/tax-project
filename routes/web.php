@@ -41,6 +41,8 @@ Route::get('call-artisan', function () {
     echo 'Optimized: ' . $exitCode . "<br>";
     $exitCode = Artisan::call('optimize:clear');
     echo 'Optimize cleared: ' . $exitCode . "<br>";
+    $exitCode = Artisan::call('storage:link');
+    echo 'Storage Linked: ' . $exitCode . "<br>";
 });
 
 require __DIR__ . '/auth.php';
