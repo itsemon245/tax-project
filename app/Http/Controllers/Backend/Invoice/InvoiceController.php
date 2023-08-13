@@ -18,6 +18,7 @@ use App\Http\Resources\InvoiceCollection;
 use App\Http\Resources\InvoiceItemResource;
 use App\Http\Resources\InvoiceItemCollection;
 use App\Models\FiscalYear;
+use Exception;
 
 class InvoiceController extends Controller
 {
@@ -331,12 +332,17 @@ class InvoiceController extends Controller
 
     public function filterInvoices(Request $request)
     {
-        // $invoices = null;
-        // if ($request->client) {
-        //     $invoices = Client::find($request->client)->invoices;
-        // }
-        // $content = new InvoiceCollection($invoices);
-        $content = $request;
+        $content = null;
+        $invoices = null;
+        try {
+            if ($request->client) {
+                $invoices = Client::find($request->client)->invoices;
+            }
+            $content = new InvoiceCollection($invoices);
+        } catch (Exception $e) {
+            $content = $e;
+        }
+        // $content = $request;
         return response($content);
     }
 }

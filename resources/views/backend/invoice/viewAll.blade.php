@@ -21,15 +21,15 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3 col-sm-6">
-                            <x-form.selectize class="mb-1" id="client" name="client" placeholder="Select Client..."
-                                label="Client" :canCreate="false">
+                            <x-form.selectize class="mb-1 advance-filter-options" id="client" name="client"
+                                placeholder="Select Client..." label="Client" :canCreate="false">
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->id }}">{{ $client->name }}</option>
                                 @endforeach
                             </x-form.selectize>
                         </div>
                         <div class="col-md-3 col-sm-6">
-                            <x-form.selectize class="mb-1" id="reference" name="reference"
+                            <x-form.selectize class="mb-1 advance-filter-options" id="reference" name="reference"
                                 placeholder="Select Reference..." label="Reference" :canCreate="false">
                                 @foreach ($references as $reference)
                                     <option value="{{ $reference }}">{{ $reference }}</option>
@@ -37,15 +37,16 @@
                             </x-form.selectize>
                         </div>
                         <div class="col-md-3 col-sm-6">
-                            <x-backend.form.select-input label="Payment Stauts" name="payment_status"
-                                placeholder="Payment Stauts">
+                            <x-backend.form.select-input class="advance-filter-options mb-2" label="Payment Stauts"
+                                name="payment_status" placeholder="Payment Stauts">
                                 @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
                                     <option value="{{ $status }}">{{ str($status)->title() }}</option>
                                 @endforeach
                             </x-backend.form.select-input>
                         </div>
                         <div class="col-md-3 col-sm-6">
-                            <x-backend.form.select-input name="fiscal_year" label="Year" placeholder="Year">
+                            <x-backend.form.select-input class="advance-filter-options mb-2" name="fiscal_year"
+                                label="Year" placeholder="Year">
                                 @foreach (range(currentYear(), 2020) as $year)
                                     <option value="{{ $year - 1 . '-' . $year }}" @selected($year === currentYear())>
                                         {{ str($year - 1 . '-' . $year)->title() }}</option>
@@ -53,29 +54,31 @@
                             </x-backend.form.select-input>
                         </div>
                         <div class="col-lg-6">
-                            <x-range-slider name="price" id="price" from="100" to="100000" step='50'
-                                icon="mdi mdi-currency-bdt"></x-range-slider>
+                            <x-range-slider class="advance-filter-options" name="price" id="price" from="100"
+                                to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <x-backend.form.text-input name="date_from" label="Start Date" type="date" />
+                                    <x-backend.form.text-input class="advance-filter-options mb-2" name="date_from"
+                                        label="Start Date" type="date" />
                                 </div>
                                 <div class="col-sm-6">
-                                    <x-backend.form.text-input name="date_to" label="End Date" type="date" />
+                                    <x-backend.form.text-input class="advance-filter-options mb-2" name="date_to"
+                                        label="End Date" type="date" />
                                 </div>
                                 <div class="col-sm-6">
-                                    <x-form.selectize class="mb-2" id="circle" name="circle" label="Circle"
-                                        placeholder="Select Circle" :canCreate="false">
+                                    <x-form.selectize class="advance-filter-options mb-2" id="circle" name="circle"
+                                        label="Circle" placeholder="Select Circle" :canCreate="false">
                                         @foreach ($circles as $circle)
                                             <option value="{{ $circle }}">{{ str($circle)->title() }}</option>
                                         @endforeach
                                     </x-form.selectize>
                                 </div>
                                 <div class="col-sm-6">
-                                    <x-form.selectize class="mb-2" id="zone" name="zone" label="Zone"
-                                        placeholder="Select Zone" :canCreate="false">
+                                    <x-form.selectize class="advance-filter-options mb-2" id="zone" name="zone"
+                                        label="Zone" placeholder="Select Zone" :canCreate="false">
                                         @foreach ($zones as $zone)
                                             <option value="{{ $zone }}">{{ str($zone)->title() }}</option>
                                         @endforeach
@@ -321,7 +324,7 @@
         <script>
             $(document).ready(function() {
                 let containerHeight = parseInt($('.latest-items').css('height').split('px')[0]) + 4
-                console.log(containerHeight);
+                // console.log(containerHeight);
                 $('#latest-container').css('height', containerHeight)
 
                 const filterWrapper = $('#basic-datatable_filter')
@@ -357,7 +360,7 @@
                     })
 
 
-                console.log(searchLabel);
+                // console.log(searchLabel);
                 filterWrapper.append(advanceSearch.removeClass('d-none'))
                 $('#basic-datatable_wrapper').children().first().after(advanceSearchOptions);
                 advanceSearch.click(e => {
@@ -377,30 +380,9 @@
                     $(e.target).parent().next().toggleClass('d-none')
                 })
 
-                let clientEl = $('[name="client"]')
-                let referenceEl = $('[name="reference"]')
-                let statusEl = $('[name="payment_status"]')
-                let yearEl = $('[name="fiscal_year"]')
-                let priceFromEl = $('[name="price_from"]')
-                let priceToEl = $('[name="price_to"]')
-                let dateFromEl = $('[name="date_from"]')
-                let dateToEL = $('[name="date_to"]')
-                let circleEl = $('[name="circle"]')
-                let zoneEl = $('[name="zone"]')
 
-                let elements = [
-                    clientEl,
-                    referenceEl,
-                    statusEl,
-                    yearEl,
-                    priceFromEl,
-                    priceToEl,
-                    dateFromEl,
-                    dateToEL,
-                    circleEl,
-                    zoneEl,
-                ];
-                let applyBtn = $('#apply-btn')
+                const elements = $('.advance-filter-options')
+                const applyBtn = $('#apply-btn')
                 let url = "{{ route('invoice.filter') }}" + '?'
                 // filter options
                 const filter = {
@@ -421,7 +403,6 @@
                     updateUrl(jqElement) {
                         // console.log(jqElement);
                         jqElement.on('change', (e) => {
-
                             switch (e.target.name) {
                                 case 'fiscal_year':
                                     this.queries.year = `fiscal_year=` + e.target.value
@@ -474,7 +455,6 @@
                         $.ajax({
                             type: "get",
                             url: url,
-                            dataType: "json",
                             success: function(response) {
                                 console.log(response);
                             }
@@ -485,9 +465,10 @@
                     },
 
                 }
-
-                elements.forEach(element => {
-                    filter.updateUrl(element)
+                // add eventlisteners to every filter input element
+                elements.each((i, element) => {
+                    let jqEl = $(element)
+                    filter.updateUrl(jqEl)
                 });
 
                 applyBtn.click(function(e) {
