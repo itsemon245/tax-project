@@ -40,6 +40,7 @@ class RegisteredUserController extends Controller
         ]);
         $user = User::create($data);
         $user->refer_link = route('refer.link', $request->user_name);
+        $user->password = Hash::make($data['password']);
         $arr = explode(' ', $request->name);
         if (count($arr) > 1) {
             $seed = $arr[0][0] . $arr[1][0];
@@ -47,6 +48,7 @@ class RegisteredUserController extends Controller
             $seed = $request->name;
         }
         $user->image_url = "https://api.dicebear.com/6.x/initials/svg?seed=$seed&backgroundType=gradientLinear&backgroundRotation=0,360";
+        $user->save();
 
         if ($request->has('refer_code')) {
             $parent = User::where('user_name', $request->refer_code)->first();
