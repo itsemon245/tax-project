@@ -316,7 +316,7 @@ class InvoiceController extends Controller
         $year = $request->year ? $request->year : currentFiscalYear();
         // dd($year);
 
-        Mail::to($request->email_to)->queue(new InvoiceMail($invoice, $year));
+        Mail::to($request->email_to)->queue(new InvoiceMail($invoice, $year, $request->subject));
 
         $fiscalYear = FiscalYear::where('year', $request->year)->first();
         $invoice->fiscalYears()->updateExistingPivot($fiscalYear->id, [

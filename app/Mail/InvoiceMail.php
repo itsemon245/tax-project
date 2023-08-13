@@ -17,12 +17,13 @@ class InvoiceMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public Invoice $invoice, $year = null)
+    public function __construct(public Invoice $invoice, $year = null, ?string $subject='Invoice Mail')
     {
         if ($year === null) {
             $year = currentFiscalYear();
         }
         $this->year = $year;
+        $this->subject = $subject;
     }
 
     /**
@@ -31,7 +32,7 @@ class InvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Invoice Mail',
+            subject: $this->subject,
         );
     }
 

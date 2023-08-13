@@ -218,7 +218,7 @@
                                                     <div class="col-10">
                                                         <input type="text" class="form-control mt-2"
                                                             id="email-subject-{{ $invoice->id }}"
-                                                            placeholder="Subject for email" name="email_subject" />
+                                                            placeholder="Subject for email" name="subject" />
                                                     </div>
                                                     <div class="col-12 mt-2">
                                                         <div class="float-end">
