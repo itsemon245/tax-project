@@ -23,6 +23,7 @@ use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Models\Invoice;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,10 +128,9 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
-    $user = User::find(1);
-    $clients = $user->clients;
-    // dd($clients);
-    return view('test', compact('clients',));
+    $invoice = Invoice::first();
+    $year = currentFiscalYear();
+    return view('mail.invoiceMail', compact('invoice', 'year'));
 });
 
 Route::get('get-mac', function () {
