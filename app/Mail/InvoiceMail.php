@@ -2,23 +2,26 @@
 
 namespace App\Mail;
 
+use Carbon\Carbon;
+use App\Models\Invoice;
+use Illuminate\Support\Arr;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use MailerSend\Helpers\Builder\Variable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use MailerSend\LaravelDriver\MailerSendTrait;
 
 class InvoiceMail extends Mailable
 {
-    use Queueable, SerializesModels;
-    public $invoice;
+    use Queueable, SerializesModels, MailerSendTrait;
     /**
      * Create a new message instance.
      */
-    public function __construct($invoice)
+    public function __construct(public Invoice $invoice)
     {
-        $this->invoice = $invoice;
     }
 
     /**
