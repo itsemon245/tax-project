@@ -119,8 +119,8 @@
                 <div>
                     <img src="" alt="">
                     <div class="d-flex border mb-5 justify-content-center">
-                        <x-backend.form.image-input name="header_image" :image="$invoiceImage"
-                            class="d-flex justify-content-center" style="aspect-ratio:4/1;object-fit:contain;" />
+                        <img class="w-100"
+                            src="{{useImage($invoice->header_image)}}" style="aspect-ratio:4/1;object-fit:cover;" >
                     </div>
                     <div class="row">
                         <div class="col-sm-4 col-md-3">

@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\InvoiceResource;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Resources\InvoiceCollection;
 use App\Http\Resources\InvoiceItemResource;
 use App\Http\Resources\InvoiceItemCollection;
 use App\Models\FiscalYear;
+use Exception;
 
 class InvoiceController extends Controller
 {
@@ -30,8 +32,10 @@ class InvoiceController extends Controller
         // dd($recentInvoices[0]->currentFiscal[0]->pivot->status);
         $invoices = Invoice::with('client', 'currentFiscal')->latest()->get();
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
+        $zones = Client::select('zone')->distinct()->get()->pluck('zone');
+        $circles = Client::select('circle')->distinct()->get()->pluck('circle');
         $clients = Client::latest()->get();
-        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'fiscalYear'));
+        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
     }
 
 
@@ -127,14 +131,9 @@ class InvoiceController extends Controller
     public function show(Request $request, Invoice $invoice)
     {
         $year = $request->year ? $request->year : currentFiscalYear();
-        $clients = Client::get();
         $fiscalYear = FiscalYear::where('year', $year)->first();
         $invoice = $fiscalYear->invoices()->find($invoice->id);
-        $invoiceImage = null;
-        if (countRecords('invoices') > 0) {
-            $invoiceImage = Invoice::first()->header_image;
-        }
-        return view('backend.invoice.viewOne', compact('invoice', 'clients', 'invoiceImage', 'year'));
+        return view('backend.invoice.viewOne', compact('invoice', 'year'));
     }
 
     function getInvoiceData(Request $request, $id)
@@ -313,15 +312,37 @@ class InvoiceController extends Controller
 
     public function sendInvoiceMail(Request $request, $id)
     {
-        $invoice = Invoice::with('client', 'invoiceItems')->find($id);
+        $invoice = Invoice::find($id);
+        $year = $request->year ? $request->year : currentFiscalYear();
+        // dd($year);
 
-        Mail::to($request->email_to)->send(new InvoiceMail($invoice));
+        Mail::to($request->email_to)->queue(new InvoiceMail($invoice, $year));
 
+        $fiscalYear = FiscalYear::where('year', $request->year)->first();
+        $invoice->fiscalYears()->updateExistingPivot($fiscalYear->id, [
+            'status' => 'sent'
+        ]);
         $alert = [
             'message' => "Invoice Mail Send Successfully",
             'alert-type' => 'success',
         ];
 
         return back()->with($alert);
+    }
+
+    public function filterInvoices(Request $request)
+    {
+        $content = null;
+        $invoices = null;
+        try {
+            if ($request->client) {
+                $invoices = Client::find($request->client)->invoices;
+            }
+            $content = new InvoiceCollection($invoices);
+        } catch (Exception $e) {
+            $content = $e;
+        }
+        // $content = $request;
+        return response($content);
     }
 }
