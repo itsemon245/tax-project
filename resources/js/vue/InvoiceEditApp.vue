@@ -55,6 +55,7 @@
                   <input type="text" name="discount"
                     class="w-100 border-top border-bottom border-start border-1 text-center rounded-0 rounded-start h-100 "
                     placeholder="0" v-model="discount.percentage" aria-label="Rate" aria-describedby="tax-addon1">
+                    <input type="text" hidden name="discount" :value="discount.amount">
                 </div>
                 <div class="col-3 p-0 py-1 ps-1 align-self-center border-end border-top border-bottom "
                   style="background: var(--ct-gray-200);">

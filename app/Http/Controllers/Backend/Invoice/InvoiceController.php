@@ -98,14 +98,17 @@ class InvoiceController extends Controller
         foreach ($request->item_names as $key => $name) {
             // taxes
             $taxes = [];
-            foreach ($request["tax-$key-names"] as $id => $name) {
-                $array = [
-                    'name' => $request["tax-$key-names"][$id],
-                    'rate' => $request["tax-$key-rates"][$id],
-                    'number' => $request["tax-$key-numbers"][$id],
-                ];
-                array_push($taxes, $array);
+            if ($request["tax-$key-rates"] !== null) {
+                foreach ($request["tax-$key-rates"] as $id => $name) {
+                    $array = [
+                        'name' => $request["tax-$key-names"][$id],
+                        'rate' => $request["tax-$key-rates"][$id],
+                        'number' => $request["tax-$key-numbers"][$id],
+                    ];
+                    array_push($taxes, $array);
+                }
             }
+
             $item = [
                 'invoice_id' => $invoice->id,
                 'name' => $request['item_names'][$key],
