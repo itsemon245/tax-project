@@ -187,6 +187,38 @@
                     <div class="fw-bold d-flex justify-content-end">
                         <h4> Year: {{ $year }}</h4>
                     </div>
+                    @php
+                        $color = 'dark';
+                        switch (
+                            $invoice
+                                ->fiscalYears()
+                                ->where('year', $year)
+                                ->first()->pivot->status
+                        ) {
+                            case 'sent':
+                                $color = '#1abc9c';
+                                break;
+                            case 'paid':
+                                $color = '#1abc9c';
+                                break;
+                            case 'due':
+                                $color = '#f7b84b';
+                                break;
+                            case 'overdue':
+                                $color = '#f1556c';
+                                break;
+                        
+                            default:
+                                # code...
+                                break;
+                        }
+                    @endphp
+                    <div style="font-weight: 600;margin-bottom:.5rem; text-align:end;">
+                        <span style="margin-right:1rem; ">Status:</span>
+                        <span
+                            style="background: {{ $color }};padding:0.3rem 0.6rem; border-radius:0.3rem;color:white;">{{ str($invoice->fiscalYears()->where('year', $year)->first()->pivot->status)->title() }}</span>
+                        </d>
+                    </div>
                 </div>
             </div>
         </div>
@@ -202,22 +234,28 @@
             </thead>
             <div id="table-body">
                 @forelse ($invoice->invoiceItems as $key=>$invoiceItems)
-                    <tr scope="row">
-                        <td class="p-1">
+                    <tr scope="row" @if ($key % 2 !== 0) style="background: #eceff1;" @endif>
+                        <td style=" padding:0.2rem 0.5rem;align-text:center;">
                             {{ ++$key }}
                         </td>
-                        <td class="p-1">
-                            <input value="{{ $invoiceItems->name ?? 'No Name' }}" disabled />
-                            <input value="{{ $invoiceItems->description ?? 'No Description' }}" disabled />
+                        <td style=" padding:0.2rem 0.5rem;align-text:center;">
+                            <div style="text-align: start;">
+                                <div style="max-widht:50ch;margin-right:auto;">
+                                    <strong>{{ $invoiceItems->name }}</strong>
+                                </div>
+                                <div style="max-width: 30ch;color: rgb(138, 137, 137);">
+                                    <small>{{ $invoiceItems->description }}</small>
+                                </div>
+                            </div>
                         </td>
-                        <td class="p-1">
-                            <input value="{{ $invoiceItems->rate ?? 'No Rate' }}" disabled />
+                        <td style=" padding:0.2rem 0.5rem;align-text:center;">
+                            <div style="align-text:center;">{{ $invoiceItems->rate }}</div>
                         </td>
-                        <td class="p-1">
-                            <input value="{{ $invoiceItems->qty ?? 'No Qty' }}" disabled />
+                        <td style=" padding:0.2rem 0.5rem;align-text:center;">
+                            <div style="align-text:center;">{{ $invoiceItems->qty }}</div>
                         </td>
-                        <td class="p-1">
-                            <input value="{{ $invoiceItems->total ?? 'No Total' }}" disabled />
+                        <td style=" padding:0.2rem 0.5rem;align-text:center;">
+                            <div style="align-text:center;">{{ $invoiceItems->total }}</div>
                         </td>
                     </tr>
                 @empty
@@ -234,8 +272,7 @@
                         <div class="">
                             <div style="display: table;width:100%">
                                 <div style="font-weight: 600;display:table-row">
-                                    <div style="margin-right: 1rem;display:table-cell">Sub Total:
-                                    </div>
+                                    <div style="margin-right: 1rem;display:table-cell">Sub Total:</div>
                                     <div style="display:table-cell;text-align:end;">
                                         {{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->sub_total }}
                                         Tk</div>
@@ -245,9 +282,9 @@
 
                             <div style="display: table;width:100%">
                                 <div style="font-weight: 600;display:table-row">
-                                    <div style="margin-right: 1rem;display:table-cell">Discount:
-                                    </div>
+                                    <div style="margin-right: 1rem;display:table-cell">Discount:</div>
                                     <div style="display:table-cell;text-align:end;color:#1abc9c;">
+                                        -
                                         {{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->discount }}
                                         Tk</div>
                                     </h3>
@@ -259,6 +296,10 @@
                                 <div style="border-bottom: 2px solid gray;padding-bottom:1rem;">
                                     @forelse ($invoice->invoiceItems as $item)
                                         @foreach (json_decode($item->taxes) as $tax)
+                                            <div style="">
+
+
+                                            </div>
                                             <div style="display: table;width:100%">
                                                 <div style="font-weight: 600;display:table-row">
                                                     <div style="margin-right: 1rem;display:table-cell">
@@ -298,8 +339,8 @@
                             <div style="font-weight: 500;margin-top:1rem;">
                                 Note:
                             </div>
-                            <div style="margin-right:0;border:1px solid gray; border-radius:10px; margin-bottom:1rem;">
-                                <p style="max-width: 50ch; padding:1rem;">
+                            <div style="border:1px solid #c2c2c2; border-radius:5px;margin:.3rem 0 0.5rem;">
+                                <p style="max-width: 50ch; padding:0.4rem;margin:0;">
                                     {{ $invoice->note }}
                                 </p>
                             </div>
@@ -318,19 +359,10 @@
                                 <span>{{ str($invoice->payment_method)->title() }}</span>
                                 </h3>
                             </div>
-                            @if ($invoice->payment_note)
-                                <div style="font-weight: 500;">
-                                    Payment Note:
-                                </div>
-                                <div style="margin-right:0;border:1px solid gray; border-radius:10px; margin-bottom:1rem;">
-                                    <p style="max-width: 50ch; padding:1rem;">
-                                        {{ $invoice->payment_note }}
-                                    </p>
-                                </div>
-                            @endif
 
-                            <div class="">
-                                <div style="display: table;width:50%">
+
+                            <div class="" style="margin-bottom: 1rem;">
+                                <div style="display: table;width:50%;margin-bottom:0.4rem;">
                                     <div style="font-weight: 600;display:table-row">
                                         <div style="display:table-cell;width:50%;">Demand</div>
                                         <div style="display:table-cell;text-align:end;">:</div>
@@ -340,17 +372,17 @@
                                         </h3>
                                     </div>
                                 </div>
-                                <div style="display: table;width:50%">
+                                <div style="display: table;width:50%;margin-bottom:0.4rem;">
                                     <div style="font-weight: 600;display:table-row">
                                         <div style="display:table-cell;width:50%;">Paid</div>
                                         <div style="display:table-cell;text-align:end;">:</div>
                                         <div style="display:table-cell;text-align:end;color:#1abc9c;">
-                                            -{{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->paid }}
+                                            - {{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->paid }}
                                             Tk</div>
                                         </h3>
                                     </div>
                                 </div>
-                                <div style="display: table;width:50%">
+                                <div style="display: table;width:50%;margin-bottom:0.4rem;">
                                     <div style="font-weight: 600;display:table-row">
                                         <div style="display:table-cell;width:50%;">Due</div>
                                         <div style="display:table-cell;text-align:end;">:</div>
@@ -362,6 +394,16 @@
                                 </div>
 
                             </div>
+                            @if ($invoice->payment_note)
+                                <div style="font-weight: 500;">
+                                    Payment Note:
+                                </div>
+                                <div
+                                    style="max-width: 50ch; padding:0.4rem;margin:0; border:1px solid #c2c2c2; border-radius:5px;">
+
+                                    {{ $invoice->payment_note }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
