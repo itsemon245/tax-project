@@ -111,6 +111,7 @@ Route::prefix('admin')->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::delete('destroy/{id}', 'destroy')->name('delete');
             Route::PUT('update/{id}', 'update')->name('update');
+            Route::get('user/{id}', 'user')->name('user');
         });
 
     Route::resource('case-study',CaseStudyController::class);

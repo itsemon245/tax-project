@@ -79,12 +79,12 @@
                             <div class="col-lg-6">
                                 <x-backend.form.text-input type="text" name="chalan_no"
                                     class="chalan_title_input  dotted-border" required label="চালান নং"
-                                    style="font-size: 10px;" />
+                                    style="font-size: 10px;" required/>
                             </div>
                             <div class="col-lg-6">
                                 <x-backend.form.text-input type="date" name="date"
                                     class="chalan_title_input dotted-border" required label="তারিখ"
-                                    style="font-size: 10px;" />
+                                    style="font-size: 10px;" required/>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                             <p class="w-100" style="font-size: 10px;">বাংলাদেশ ব্যাংক/ <b> সোনালী ব্যাংকের </b> চট্টগ্রাম
                                 জেলার </p>
                             <x-backend.form.text-input type="text" name="chalan_title"
-                                class="chalan_title_input dotted-border" required style="font-size: 10px;" />
+                                class="chalan_title_input dotted-border" required style="font-size: 10px;" required/>
                             <p class="w-100" style="font-size: 10px;"> টাকা জমা দেওয়ার চালান </p>
                         </div>
                     </div>
@@ -101,25 +101,25 @@
                         <p class="me-2" style="font-size: 10px;"> কোড নংঃ </p>
                         <div class="code d-flex mx-auto">
                             <div class="d-inline-block me-3 d-flex">
-                                <input type="number" class="" style="font-size: 10px;" name="code1">
+                                <input type="number" class="" style="font-size: 10px;" name="code1" required>
                             </div>
                             <div class="d-inline-block me-3 d-flex">
-                                <input type="number" class="g-0" style="font-size: 10px;" name="code2">
-                                <input type="number" class="g-0" style="font-size: 10px;" name="code3">
-                                <input type="number" class="g-0" style="font-size: 10px;" name="code4">
-                                <input type="number" class="g-0" style="font-size: 10px;" name="code5">
+                                <input type="number" class="g-0" style="font-size: 10px;" name="code2" required> 
+                                <input type="number" class="g-0" style="font-size: 10px;" name="code3" required>
+                                <input type="number" class="g-0" style="font-size: 10px;" name="code4" required>
+                                <input type="number" class="g-0" style="font-size: 10px;" name="code5" required>
                             </div>
                             <div class="code_no d-inline-block me-3 d-flex">
-                                <input type="number" class="" style="font-size: 10px;" name="code6">
-                                <input type="number" class="" style="font-size: 10px;" name="code7">
-                                <input type="number" class="" style="font-size: 10px;" name="code8">
-                                <input type="number" class="" style="font-size: 10px;" name="code9">
+                                <input type="number" class="" style="font-size: 10px;" name="code6" required>
+                                <input type="number" class="" style="font-size: 10px;" name="code7" required>
+                                <input type="number" class="" style="font-size: 10px;" name="code8" required>
+                                <input type="number" class="" style="font-size: 10px;" name="code9" required>
                             </div>
                             <div class="code_no d-inline-block d-flex">
-                                <input type="number" class="" style="font-size: 10px;" name="code10">
-                                <input type="number" class="" style="font-size: 10px;" name="code11">
-                                <input type="number" class="" style="font-size: 10px;" name="code12">
-                                <input type="number" class="" style="font-size: 10px;" name="code13">
+                                <input type="number" class="" style="font-size: 10px;" name="code10" required>
+                                <input type="number" class="" style="font-size: 10px;" name="code11" required>
+                                <input type="number" class="" style="font-size: 10px;" name="code12" required>
+                                <input type="number" class="" style="font-size: 10px;" name="code13" required>
                             </div>
                         </div>
 
@@ -150,135 +150,204 @@
                                     <td style="width:80px">
                                         <div class="d-flex">
                                             <div style="width:80px">
-                                                <input type="text" placeholder="Name" class="w-100 dotted-border"
-                                                    style="font-size:10px" name="name">
+                                                <input type="text" placeholder="Name" class="w-100 dotted-border @error('name') is-invalid @enderror"
+                                                    style="font-size:10px" name="name" >
+                                                    @error('name')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="d-flex">
                                             <div style="width:80px">
-                                                <input type="text" placeholder="Location" class="w-100 dotted-border"
+                                                <input type="text" placeholder="Location" class="w-100 dotted-border @error('location') is-invalid @enderror"
                                                     style="font-size:10px" name="location">
+                                                    @error('location')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="d-flex">
                                             <div style="width:80px">
                                                 <input type="text" placeholder="Phone Number"
-                                                    class="w-100 dotted-border" style="font-size:10px"
+                                                    class="w-100 dotted-border @error('phone_number') is-invalid @enderror" style="font-size:10px"
                                                     name="phone_number">
+                                                    @error('phone_number')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </td>
                                     <td style="width:80px; border-left:1px solid #333;">
                                         <div>
                                             <div style="width:80px">
-                                                <input type="text" class="w-100 dotted-border"
+                                                <input type="text"
+                                                    class="w-100 dotted-border @error('client_name') is-invalid @enderror"
                                                     placeholder="Client Name" style="font-size:10px" name="client_name">
+                                                @error('client_name')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div>
                                             <div style="width:80px">
-                                                <input type="text" class="w-100 dotted-border"
+                                                <input type="text"
+                                                    class="w-100 dotted-border @error('company_name') is-invalid @enderror"
                                                     placeholder="Company Name" style="font-size:10px"
                                                     name="company_name">
+                                                @error('company_name')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div>
                                             <div style="width:80px">
-                                                <input type="text" class="w-100 dotted-border" placeholder="Location"
-                                                    style="font-size:10px" name="location">
+                                                <input type="text"
+                                                    class="w-100 dotted-border @error('location') is-invalid @enderror"
+                                                    placeholder="Location" style="font-size:10px" name="location">
+                                                @error('location')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div style="width:80px">
-                                            <input type="text" class="w-100 dotted-border" placeholder="Tin:/Circle"
-                                                style="font-size:10px" name="tin:/circle">
+                                            <input type="text"
+                                                class="w-100 dotted-border @error('tin_circle') is-invalid @enderror"
+                                                placeholder="Tin:/Circle" style="font-size:10px" name="tin_circle">
+                                            @error('tin_circle')
+                                                <span class="text-bold text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </td>
                                     <td style="width:80px; border-left:1px solid #333;">
                                         <div>
                                             <div style="width:80px">
-                                                <input type="text" class="w-100 dotted-border" placeholder="Purpose:"
-                                                    style="font-size:10px" name="purpose">
+                                                <input type="text"
+                                                    class="w-100 dotted-border @error('purpose') is-invalid @enderror"
+                                                    placeholder="Purpose:" style="font-size:10px" name="purpose">
+                                                @error('purpose')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div>
                                             <div style="width:80px">
-                                                <input type="date" class="w-100 dotted-border" placeholder="Year:"
-                                                    style="font-size:10px" name="year">
+                                                <input type="date"
+                                                    class="w-100 dotted-border @error('year') is-invalid @enderror"
+                                                    placeholder="Year:" style="font-size:10px" name="year">
+                                                @error('year')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div>
                                             <div style="width:80px">
-                                                <input type="text" class="w-100 dotted-border"
+                                                <input type="text"
+                                                    class="w-100 dotted-border @error('distription') is-invalid @enderror"
                                                     placeholder="Distription:" style="font-size:10px" name="distription">
+                                                @error('distription')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </td>
                                     <td style="width:80px; border-left:1px solid #333;">
                                         <select style="width:80px; " id="payment" onchange="toggleInputFields()"
-                                            class="w-100 dotted-border" style="font-size:10px" name="payment_method">
+                                            class="w-100 dotted-border @error('payment_method') is-invalid @enderror"
+                                            style="font-size:10px" name="payment_method">
                                             <option disabled selected style="font-size:10px!important">Select Payment
                                                 Method:</option>
                                             <option value="cash">Cash</option>
                                             <option value="bank">Bank</option>
                                         </select>
+                                        @error('payment_method')
+                                            <span class="text-bold text-danger">{{ $message }}</span>
+                                        @enderror
 
                                         <div id="bankInputs" style="display: none; width:80px;">
                                             <input type="text" id="bankName" class="w-100 dotted-border"
                                                 placeholder="Bank Name:" style="font-size: 10px" name="bank_name">
 
-                                            <input type="text" id="accountNumber" class="w-100 dotted-border"
+                                            <input type="text" id="accountNumber"
+                                                class="w-100 dotted-border @error('account_number') is-invalid @enderror"
                                                 placeholder="Account Number:" style="font-size: 10px"
                                                 name="account_number">
+                                            @error('account_number')
+                                                <span class="text-bold text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
 
                                         <div id="bankInput" style="display: none; width:80px;">
-                                            <input type="text" id="cash" class="w-100 dotted-border"
+                                            <input type="number" id="cash" class="w-100 dotted-border"
                                                 placeholder="Cash:" style="font-size: 10px" name="cash">
+
 
                                         </div>
                                     </td>
                                     <td style="width:80px; border-left:1px solid #333;">
-                                        <input type="text" class="w-100 dotted-border" placeholder="Ammount"
-                                            style="font-size: 10px; width:80px">
+                                        <input type="number"
+                                            class="w-100 dotted-border @error('taka_kothay') is-invalid @enderror"
+                                            placeholder="Ammount" style="font-size: 10px; width:80px" name="taka_kothay">
+                                        @error('taka_kothay')
+                                            <span class="text-bold text-danger">{{ $message }}</span>
+                                        @enderror
                                     </td>
                                     <td style="width:40px; border-left:1px solid #333;">
                                         .00
                                     </td>
                                     <td style="width:80px; border-left:1px solid #333;">
-                                        <input type="text" class="w-100 dotted-border" placeholder="Org Name Text"
-                                            style="font-size: 10px; width:80px" name="org_name_text">
+                                        <input type="text"
+                                            class="w-100 dotted-border @error('org_name_text') is-invalid @enderror"
+                                            placeholder="Org Name Text" style="font-size: 10px; width:80px"
+                                            name="org_name_text">
+                                        @error('org_name_text')
+                                            <span class="text-bold text-danger">{{ $message }}</span>
+                                        @enderror
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" class="col-lg-4 chalan_table_row text-start"> <span
                                             class="d-inline-block" style="font-size: 10px;"> টাকা কথায়</span> <input
-                                            type="text" class="d-inline-block w-50 dotted-border" name="taka_kothay">
-                                        <span class="text-end ms-5 w-25" style="font-size: 10px;"> মোট
-                                            টাকা </span> </td>
-                                    <td colspan="1" class="col-lg-1 chalan_table_row">
-                                        <input type="text" class="form-control" placeholder="Total Ammount"
-                                            style="font-size: 10px;" name="total_ammount">
+                                            type="text"
+                                            class="d-inline-block w-50 dotted-border @error('taka_kothay') is-invalid @enderror"
+                                            name="taka_kothay">
+                                        @error('taka_kothay')
+                                            <span class="text-bold text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <span class="text-end ms-5 w-25" style="font-size: 10px;"> মোট টাকা </span>
                                     </td>
                                     <td colspan="1" class="col-lg-1 chalan_table_row">
-                                        <input type="text" class="form-control" placeholder="Total Ammount"
+                                        <input type="number"
+                                            class="form-control @error('total_ammount') is-invalid @enderror"
+                                            placeholder="Total Ammount" style="font-size: 10px;" name="total_ammount">
+                                        @error('total_ammount')
+                                            <span class="text-bold text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </td>
+                                    <td colspan="1" class="col-lg-1 chalan_table_row">
+                                        <input type="number" class="form-control" placeholder="Total Ammount"
                                             style="font-size: 10px;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="6" class="col-lg-6 chalan_table_row text-start"> <span
                                             class="d-inline-block" style="font-size: 10px;"> টাকা পাওয়া গেল </span> <input
-                                            type="text" class="d-inline-block w-75 dotted-border"
+                                            type="text"
+                                            class="d-inline-block w-75 dotted-border @error('take_poua_gelo') is-invalid @enderror"
                                             style="font-size: 10px;" name="take_poua_gelo"> </td>
+                                    @error('take_poua_gelo')
+                                        <span class="text-bold text-danger">{{ $message }}</span>
+                                    @enderror
                                 </tr>
                                 <tr>
                                     <td colspan="6" class="col-lg-6 chalan_table_row1 text-start"
                                         style="font-size: 10px;"> <span class="d-inline-block"
                                             style="font-size: 10px;">তারিখ</span> <input type="date"
-                                            class="d-inline-block w-25 form-control  @error('date') is-invalid @enderror" name="date"> 
-                                            @error('data')
-                                                <span class="text-bold">{{$message}}</span>
-                                            @enderror
-                                        </td>
+                                            class="d-inline-block w-25 @error('date') is-invalid @enderror"
+                                            name="date" style="padding:2px;">
+                                        @error('data')
+                                            <span class="text-bold text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </td>
                                     <td colspan="4" rowspan="4" class="text-center" style="font-size: 10px;">
                                         <span class="d-block">ম্যানেজার </span>
                                         <span class="">বাংলাদেশ ব্যাংক/সোনালী ব্যাংক </span>
@@ -305,7 +374,7 @@
 
             </form>
 
-           
+
 
         </div>
     </x-backend.ui.section-card>
