@@ -31,21 +31,24 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'user_name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-        $user = User::create([
-            'name' => $request->name,
-            'user_name' => $request->user_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-            'refer_link' => route('refer.link', $request->user_name),
-        ]);
+        $user = User::create($data);
+        $user->refer_link = route('refer.link', $request->user_name);
+        $user->password = Hash::make($data['password']);
+        $arr = explode(' ', $request->name);
+        if (count($arr) > 1) {
+            $seed = $arr[0][0] . $arr[1][0];
+        } else {
+            $seed = $request->name;
+        }
+        $user->image_url = "https://api.dicebear.com/6.x/initials/svg?seed=$seed&backgroundType=gradientLinear&backgroundRotation=0,360";
+        $user->save();
 
         if ($request->has('refer_code')) {
             $parent = User::where('user_name', $request->refer_code)->first();
@@ -59,8 +62,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // return redirect(RouteServiceProvider::HOME);
-
-        return redirect('/');
+        return redirect(RouteServiceProvider::HOME);
     }
 }

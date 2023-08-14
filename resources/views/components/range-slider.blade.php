@@ -11,6 +11,7 @@
     $label = str($id)->title();
     $name = str($id)->snake();
     $id = str($id)->slug();
+    $class = $attributes->has('class') ? $attributes->get('class') : '';
 @endphp
 
 <div class="card">
@@ -25,10 +26,10 @@
                 </div>
             </div>
             <div class="col-6">
-                <input type="text" placeholder="From" class="form-control w-100 p-1" name='{{ $name . '_from' }}' />
+                <input type="text" placeholder="From" class="form-control w-100 p-1 {{$class}}" name='{{ $name . '_from' }}' />
             </div>
             <div class="col-6">
-                <input type="text" placeholder="To" class="form-control w-100 p-1" name='{{ $name . '_to' }}' />
+                <input type="text" placeholder="To" class="form-control w-100 p-1 {{$class}}" name='{{ $name . '_to' }}' />
             </div>
         </div>
     </div>
@@ -86,11 +87,12 @@
                 },
             });
 
-            slider.noUiSlider.on('slide', (values) => {
+            slider.noUiSlider.on('slide', (values, handle) => {
                 let from = parseInt(values[0])
                 let to = parseInt(values[1])
-                $('input[name="{{ $name }}_from"]').val(from)
-                $('input[name="{{ $name }}_to"]').val(to)
+                handle === 0 ?
+                    $('input[name="{{ $name }}_from"]').val(from).trigger('change') :
+                    $('input[name="{{ $name }}_to"]').val(to).trigger('change')
             });
             $('input[name="{{ $name }}_from"]').on('input', e => {
                 let value = parseInt(e.target.value)

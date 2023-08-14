@@ -13,12 +13,23 @@
 
 
                 <div class="col-md-6 mt-3">
-                    <x-backend.form.image-input name="book_image" :image="$book->thumbail" />
+                    <x-backend.form.image-input name="book_image" :image="$book->thumbnail" />
                 </div>
+
 
                 <div class="col-md-6">
 
                     <div class="row">
+
+                        <div class="col-md-6">
+                            <x-backend.form.select-input id="section" label="Book Category Name" name="book_category_id"
+                                placeholder="Choose Book Category...">
+                                @forelse ($bookCategories as $bookCategory)
+                                    <option value="{{ $bookCategory->id }}" {{$bookCategory->id == $book->book_category_id ? 'selected' : ''}}>{{ $bookCategory->book_category }}</option>
+                                @empty
+                                @endforelse
+                            </x-backend.form.select-input>
+                        </div>
 
                         <div class="col-md-6">
                             <x-backend.form.text-input label="Book Title" required type="text" name="book_title"

@@ -11,30 +11,29 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Image</th>
+                                    <th>Category</th>
                                     <th>Package</th>
-                                    <th>Title</th>
-                                    <th>Duration</th>
-                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Image</th>
+                                    <th>description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach ($caseStudies as $key => $caseStudy)
+                                @foreach ($data as $key => $CaseStudy)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td><img src="{{ $caseStudy->image }}"
-                                                width="80px" loading="lazy"></td>
-                                        <td>{{ $caseStudy->case_study_package_id }}</td>
-                                        <td>{{ Str::limit($caseStudy->title, 15, '...') }}</td>
-                                        <td>{{ $caseStudy->duration }}</td>
-                                        <td>{{ $caseStudy->type }}</td>
+                                        <td>{{ $CaseStudy->caseStudyCategory->case_study_category ?? '' }}</td>
+                                        <td>{{ $CaseStudy->caseStudyPackage->name }}</td>
+                                        <td>{{ $CaseStudy->name }}</td>
+                                        <td><img src="{{ useImage($CaseStudy->image) }}" alt="" width="80px"/></td>
+                                        <td>{!! Str::limit($CaseStudy->description,10,'...') !!}</td>
                                         <td>
-                                            <a href="{{ route('case.study.backend.edit', $caseStudy) }}"
+                                            <a href="{{ route('case-study.edit', $CaseStudy->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
 
-                                            <form action="{{ route('case.study.backend.delete', $caseStudy) }}" method="post"
+                                            <form action="{{ route('case-study.destroy', $CaseStudy->id) }}" method="post"
                                                 class="d-inline-block py-0">
                                                 @csrf
                                                 @method('DELETE')

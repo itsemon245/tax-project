@@ -5,11 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserNotification extends Model
+class BookCategory extends Model
 {
     use HasFactory;
-    public function user()
+
+    protected $guarded=[];
+
+    function book()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Book::class,'book_category_id');
     }
+
 }

@@ -40,9 +40,8 @@ class AuthenticatedSessionController extends Controller
             return back()->with($alert);
         } else {
             $loginCount = $userExists->authentications()->count();
-            // if user is logged in more than 3 devices
             if ($loginCount < 3) {
-                
+
                 $request->authenticate();
                 $request->session()->regenerate();
 
@@ -52,7 +51,7 @@ class AuthenticatedSessionController extends Controller
                 $store->login_time = Carbon::now();
                 $store->save();
 
-                return redirect()->intended(RouteServiceProvider::HOME);
+                return redirect()->intended(RouteServiceProvider::ADMIN);
             } else {
                 $alert = array(
                     'message' => "Can't log in into more then 3 devices at once",
@@ -70,7 +69,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        $data = Authentication::where('user_id', $request->auth_id)->first();
+        $data = Authentication::where('user_id', $request->user()->id)->first();
         if ($data != null) {
             $data->delete();
         }

@@ -27,15 +27,14 @@ class ReviewController extends Controller
 
     function itemReview(string $slug, int $id)
     {
-        $column = Str::snake($slug . '_id');
-        $reviews = Review::where($column, $id)->latest()->get();
-        switch ($column) {
-            case 'product_id':
+        $type = Str::lower($slug);
+        switch ($type) {
+            case 'product':
                 $item = Product::withAvg('reviews', 'rating')
                     ->withCount(reviewsAndStarCounts())
                     ->find($id);
                 break;
-            case 'service_id':
+            case 'service':
                 $item = Service::withAvg('reviews', 'rating')
                     ->withCount(reviewsAndStarCounts())
                     ->find($id);
@@ -45,6 +44,7 @@ class ReviewController extends Controller
                 # code...
                 break;
         }
+        $reviews = $item->reviews()->latest()->get();
 
         return view('frontend.pages.itemReview', compact('reviews', 'item', 'slug'));
     }
@@ -82,12 +82,13 @@ class ReviewController extends Controller
             $name = $request->name ? $request->name : auth()->user()->name;
             $comment = $request->comment;
             $rating = $request->rating;
-            $column = Str::snake($slug . '_id');
+            $type = Str::studly($slug);
             $review = Review::create([
                 'user_id' => $user_id,
                 'name' => $name,
                 'avatar' => $avatar,
-                $column => $request->item_id,
+                'reviewable_type' => $type,
+                'reviewable_id' => $request->item_id,
                 'comment' => $comment,
                 'rating' => $rating,
             ]);

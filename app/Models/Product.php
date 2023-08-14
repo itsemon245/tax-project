@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
@@ -26,9 +27,9 @@ class Product extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function reviews()
+    function reviews(): MorphMany
     {
-        return $this->hasMany(Review::class);
+        return $this->morphMany(Review::class, 'reviewable');
     }
 
 

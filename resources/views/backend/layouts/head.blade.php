@@ -35,7 +35,7 @@
 
         @page {
             size: 21cm 29.7cm;
-            margin: 2.5cm;
+            margin: 1.5cm;
             /* change the margins as you want them to be. */
         }
     </style>

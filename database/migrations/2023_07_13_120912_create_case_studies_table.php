@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('case_studies', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('case_study_category_id');
-            $table->foreignId('case_study_package_id')->nullable();
-            $table->text('title');
-            $table->longText('page_description');
-            $table->text('duration');
-            $table->text('type');
-            $table->integer('orders');
-            $table->integer('rate');
+            $table->unsignedBigInteger('case_study_category_id')->nullable();
+            $table->foreignId('case_study_package_id')->constrained()->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->text('name');
+            $table->longText('intro');
             $table->longText('image');
+            $table->longText('description');
+            $table->unsignedBigInteger('likes');
+            $table->unsignedBigInteger('downloads')->nullable();
+            $table->decimal('price', 8, 2)->default(0);
+            $table->longText('download_link');
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@ use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\VideoController;
@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\Book\BookController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Role\RoleController;
+use App\Http\Controllers\Backend\User\UserController;
 use App\Http\Controllers\Backend\Hero\BannerController;
 use App\Http\Controllers\Backend\Pages\AboutController;
 use App\Http\Controllers\Backend\Role\MemberController;
@@ -27,19 +28,21 @@ use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\UserAppointmentController;
+use App\Http\Controllers\Backend\Book\BookCategoryController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\CkEditor\CkEditorController;
 use App\Http\Controllers\Backend\Return\ReturnFormController;
 use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
-use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
+use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
+use App\Http\Controllers\Backend\CaseStudyController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 use App\Http\Controllers\TaxCalculatorController;
 use App\Models\TaxCalculator;
@@ -64,7 +67,10 @@ Route::prefix('admin')->group(function () {
 
     //Routes for backend CRUD operation
     Route::resource('user-profile', UserProfileController::class);
+    Route::resource('users', UserController::class);
     Route::resource('product', ProductController::class);
+    Route::resource('book-category', BookCategoryController::class);
+    Route::resource('case-study-category', CaseStudyCategoryController::class);
     Route::resource('product-category', ProductCategoryController::class);
     Route::resource('product-subcategory', ProductSubCategoryController::class);
     Route::resource('banner', BannerController::class);
@@ -76,10 +82,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('promo-code', PromoCodeController::class);
     Route::resource('user-docs', UserDocController::class);
     Route::resource('map', MapController::class);
-    Route::resource('document-type', DocumentTypeController::class);
     Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
     Route::resource('invoice', InvoiceController::class);
+    Route::get('filtered-invoices', [InvoiceController::class, 'filterInvoices'])->name('invoice.filter');
     Route::patch('invoice/{invoice}/markAs/{status}', [InvoiceController::class, 'markAs'])->name('invoice.markAs');
     Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
@@ -97,17 +103,19 @@ Route::prefix('admin')->group(function () {
         'show' => 'course.backend.show',
     ]);
     Route::post('send-invoice-mail/{id}', [InvoiceController::class, 'sendInvoiceMail'])->name('send_invoice_mail');
-    Route::prefix('case-study-backend')
-        ->name('case.study.backend.')
-        ->controller(CaseStudyController::class)
+    Route::prefix('case-study-package-backend')
+        ->name('case.study.package.backend.')
+        ->controller(CaseStudyPackageController::class)
         ->group(function () {
             Route::get('', 'create')->name('index');
             Route::post('store', 'store')->name('store');
             Route::get('show-all', 'showAll')->name('show.all');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::delete('destroy/{id}', 'destroy')->name('delete');
-            Route::PUT('update', 'update')->name('update');
+            Route::PUT('update/{id}', 'update')->name('update');
         });
+
+    Route::resource('case-study',CaseStudyController::class);
 
     Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);

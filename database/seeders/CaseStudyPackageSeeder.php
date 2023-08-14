@@ -13,13 +13,9 @@ class CaseStudyPackageSeeder extends Seeder
      */
     public function run(): void
     {
-        // $page = [
-        //     'name' => 'Case Study Lab',
-        //     'hero_title' => fake()->realText(30),
-        //     'hero_description' => fake()->realText(300),
-        //     'hero_image' => picsum('case-study'),
-        // ];
-
-        // CaseStudyPackage::create($page);
+        $desc = fake()->realText();
+        CaseStudyPackage::factory(3)->create([
+            'page_description' => $desc
+        ]);
     }
 }

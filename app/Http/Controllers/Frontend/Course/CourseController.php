@@ -11,7 +11,8 @@ class CourseController extends Controller
 {
     public function index()
     {
-        return view('frontend.pages.course.viewAll');
+        $courses = Course::get();
+        return view('frontend.pages.course.viewAll', compact('courses'));
     }
     public function show(Course $course)
     {
@@ -22,6 +23,4 @@ class CourseController extends Controller
     {
         return view('frontend.pages.course.showVideos');
     }
-
-   
 }

@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\CaseStudy;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ExpertController;
@@ -17,16 +16,14 @@ use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\UserAppointmentController;
-use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\ProjectDiscussionController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Frontend\AppointmentController;
 use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Frontend\Course\CourseController;
-use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Models\Invoice;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,10 +128,9 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
-    $user = User::find(1);
-    $clients = $user->clients;
-    // dd($clients);
-    return view('test', compact('clients',));
+    $invoice = Invoice::first();
+    $year = currentFiscalYear();
+    return view('mail.invoiceMail', compact('invoice', 'year'));
 });
 
 Route::get('get-mac', function () {

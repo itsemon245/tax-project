@@ -8,18 +8,8 @@
                         <div class="col-md-6">
                             <div class="h-100">
                                 <p class="fw-bold text-success">{{ $course->name }}</p>
-                                <h4 class="">A meaningful carrer starts here.</h4>
-                                <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam in
-                                    maiores
-                                    quidem
-                                    iste
-                                    animi natus earum magni. Autem, veritatis perspiciatis. Earum nobis provident
-                                    quisquam
-                                    nulla
-                                    assumenda quam fugiat, voluptatem numquam eligendi, neque tenetur corrupti sed?
-                                    Recusandae
-                                    suscipit
-                                    ullam libero</p>
+                                <h4 class="">{{ $course->page_title }}</h4>
+                                <p class="">{!! $course->description !!}</p>
                                 <x-backend.ui.button class="btn-success text-capitalize">Enroll Now
                                 </x-backend.ui.button>
                             </div>
@@ -43,7 +33,7 @@
                                     <p class="text-justify px-2">{{ $card->description }}</p>
                                     <div class="d-flex justify-content-center text-center">
                                         @if ($key == 0)
-                                            <x-backend.ui.button type="custom" href="#" class="btn-priamary">Enroll
+                                            <x-backend.ui.button type="custom" href="#" class="btn-primary">Enroll
                                                 Now
                                             </x-backend.ui.button>
                                         @else

@@ -15,16 +15,15 @@ class BookController extends Controller
 {
     public function index()
     {
-        $user_id = Auth::user()->id;
         $books = Book::withAvg('reviews', 'rating')->withCount('reviews')->get();
         return view('frontend.pages.book.books', compact('books'));
     }
     public function show(int $book)
     {
         $book = Book::withAvg('reviews', 'rating')
-        ->withCount(reviewsAndStarCounts())
-        ->find($book);
-        $reviews = Review::where('book_id', $book->id)->latest()->get();
-        return view('frontend.pages.book.viewBook',compact('book', 'reviews'));
+            ->withCount(reviewsAndStarCounts())
+            ->find($book);
+        $reviews = $book->reviews;
+        return view('frontend.pages.book.viewBook', compact('book', 'reviews'));
     }
 }
