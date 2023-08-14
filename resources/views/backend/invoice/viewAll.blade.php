@@ -390,49 +390,77 @@
                         client: '',
                         reference: '',
                         status: '',
-                        year: "year=" + '{{ currentFiscalYear() }}',
-                        priceFrom: '',
-                        priceTo: '',
-                        dateFrom: '',
-                        dateTo: '',
+                        year: "fiscal_year=[eq]" + '{{ currentFiscalYear() }}',
+                        demandPriceFrom: '',
+                        paidPriceFrom: '',
+                        duePriceFrom: '',
+                        demandPriceTo: '',
+                        paidPriceTo: '',
+                        duePriceTo: '',
+                        issueDateFrom: '',
+                        dueDateFrom: '',
+                        issueDateTo: '',
+                        dueDateTo: '',
                         circle: '',
                         zone: '',
                     },
                     url: '',
 
                     updateUrl(jqElement) {
-                        // console.log(jqElement);
                         jqElement.on('change', (e) => {
                             switch (e.target.name) {
                                 case 'fiscal_year':
-                                    this.queries.year = `fiscal_year=` + e.target.value
+                                    this.queries.year = e.target.value !== '' ?
+                                        `fiscal_year=[eq]` + e.target.value : ''
                                     break;
                                 case 'client':
-                                    this.queries.client = `&client=` + e.target.value
+                                    this.queries.client = e.target.value !== '' ?
+                                        `&client=[eq]` + e.target.value : ''
                                     break;
                                 case 'reference':
-                                    this.queries.reference = `&reference=` + e.target.value
+                                    this.queries.reference = e.target.value !== '' ?
+                                        `&reference=[eq]` + e.target.value : ''
                                     break
                                 case 'payment_status':
-                                    this.queries.status = `&status=` + e.target.value
+                                    this.queries.status = e.target.value !== '' ?
+                                        `&status=[eq]` + e.target.value : ''
                                     break;
                                 case 'price_from':
-                                    this.queries.priceFrom = `&price_from=` + e.target.value
+                                    this.queries.demandPriceFrom = e.target.value !== '' ?
+                                        `&demand_price_from=[gte]` + e.target : ''
+                                        .value
+                                    // this.queries.paidPriceFrom = e.target.value !== '' ?
+                                    //     `&paid_price_from=[gte]` + e.target.value : ''
+                                    // this.queries.duePriceFrom = e.target.value !== '' ?
+                                    //     `&due_price_from=[gte]` + e.target.value : ''
                                     break;
                                 case 'price_to':
-                                    this.queries.priceTo = `&price_to=` + e.target.value
+                                    this.queries.demandPriceTo = e.target.value !== '' ?
+                                        `&demand_price_to=[lte]` + e.target.value : ''
+                                    // this.queries.paidPriceTo = e.target.value !== '' ?
+                                    //     `&paid_price_to=[lte]` + e.target.value : ''
+                                    // this.queries.duePriceTo = e.target.value !== '' ?
+                                    //     `&due_price_to=[lte]` + e.target.value : ''
                                     break;
                                 case 'date_from':
-                                    this.queries.dateFrom = `&date_from=` + e.target.value
+                                    this.queries.issueDateFrom = e.target.value !== '' ?
+                                        `&issue_date_from=[gte]` + e.target.value : ''
+                                    // this.queries.dueDateFrom = e.target.value !== '' ?
+                                    //     `&due_date_from=[gte]` + e.target.value : ''
                                     break;
                                 case 'date_to':
-                                    this.queries.dateTo = `&date_to=` + e.target.value
+                                    this.queries.issueDateTo = e.target.value !== '' ?
+                                        `&issue_date_to=[lte]` + e.target.value : ''
+                                    // this.queries.dueDateTo = e.target.value !== '' ?
+                                    //     `&due_date_to=[lte]` + e.target.value : ''
                                     break;
                                 case 'zone':
-                                    this.queries.zone = `&zone=` + e.target.value
+                                    this.queries.zone = e.target.value !== '' ?
+                                        `&zone=[eq]` + e.target.value : ''
                                     break;
                                 case 'circle':
-                                    this.queries.circle = `&circle=` + e.target.value
+                                    this.queries.circle = e.target.value !== '' ?
+                                        `&circle=[eq]` + e.target.value : ''
                                     break;
 
                                 default:
@@ -443,10 +471,16 @@
                                 this.queries.client +
                                 this.queries.reference +
                                 this.queries.status +
-                                this.queries.priceFrom +
-                                this.queries.priceTo +
-                                this.queries.dateFrom +
-                                this.queries.dateTo +
+                                this.queries.demandPriceFrom +
+                                this.queries.paidPriceFrom +
+                                this.queries.duePriceFrom +
+                                this.queries.demandPriceTo +
+                                this.queries.paidPriceTo +
+                                this.queries.duePriceTo +
+                                this.queries.issueDateFrom +
+                                this.queries.issueDateTo +
+                                this.queries.dueDateFrom +
+                                this.queries.dueDateTo +
                                 this.queries.circle +
                                 this.queries.zone
                         })
@@ -455,8 +489,16 @@
                         $.ajax({
                             type: "get",
                             url: url,
+                            contentType: 'application/json',
+                            dataType: 'application/json',
+                            beforeSend: function(data){
+                                console.log(data);
+                            }
                             success: function(response) {
-                                console.log(response);
+                                console.log(response)
+                            },
+                            error: function(error) {
+                                console.log(error);
                             }
                         });
                     },
