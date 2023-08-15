@@ -394,7 +394,15 @@
                 </div>
             </div>
         </div>
+
+        
+        <div class="col-md-4 mt-3">
+            <x-backend.ui.button class="btn-primary btn btn-sm" id="cmd">View</x-backend.ui.button>
+        </div>
+
+
     </x-backend.ui.section-card>
+
     <!-- end row-->
 
     @push('customJs')
@@ -418,6 +426,13 @@
 
 
             }
+        </script>
+
+        <script src="{{ asset('backend/assets/js/printThis.js') }}"></script>
+        <script>
+            $('#cmd').on('click', function() {
+                $('#pdfViewer').printThis()
+            })
         </script>
     @endpush
 @endsection

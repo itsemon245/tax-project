@@ -447,5 +447,7 @@
                 });
             });
         </script>
+
+       
     @endpush
 @endsection
