@@ -32,16 +32,16 @@ class QueryFilter
             if (!isset($query)) {
                 continue;
             }
-
-            $column = $this->columnMap[$param] ?? $param;
+            $column = $this->columnMap[$param];
 
             foreach ($operators as  $operator) {
-                $index = strpos($query, ']') + 1;
-                $query = substr($query, $index);
-                if (isset($query)) {
+
+                if (str_contains($query, $operator)) {
+                    $index = strpos($query, ']') + 1;
+                    $value = substr($query, $index);
                     $eloQuery[] = ($operator === 'like' || $operator === 'nl') ?
-                        [$column, $this->operatorMap[$operator], "%" . $query . "%"]
-                        : [$column, $this->operatorMap[$operator], $query];
+                        [$column, $this->operatorMap[$operator], "%" . $value . "%"]
+                        : [$column, $this->operatorMap[$operator], $value];
                 }
             }
         }

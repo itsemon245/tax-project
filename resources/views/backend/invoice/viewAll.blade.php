@@ -54,7 +54,15 @@
                             </x-backend.form.select-input>
                         </div>
                         <div class="col-lg-6">
-                            <x-range-slider class="advance-filter-options" name="price" id="price" from="100"
+                            <x-range-slider class="advance-filter-options" name="demand" id="demand" from="100"
+                                to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
+                        </div>
+                        <div class="col-lg-6">
+                            <x-range-slider class="advance-filter-options" name="paid" id="paid" from="100"
+                                to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
+                        </div>
+                        <div class="col-lg-6">
+                            <x-range-slider class="advance-filter-options" name="arear" id="arear" from="100"
                                 to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
                         </div>
 
@@ -420,27 +428,34 @@
                                 case 'reference':
                                     this.queries.reference = e.target.value !== '' ?
                                         `&reference=[eq]` + e.target.value : ''
-                                    break
+                                    break;
                                 case 'payment_status':
                                     this.queries.status = e.target.value !== '' ?
                                         `&status=[eq]` + e.target.value : ''
                                     break;
-                                case 'price_from':
+                                case 'demand_from':
                                     this.queries.demandPriceFrom = e.target.value !== '' ?
-                                        `&demand_price_from=[gte]` + e.target : ''
-                                        .value
-                                    // this.queries.paidPriceFrom = e.target.value !== '' ?
-                                    //     `&paid_price_from=[gte]` + e.target.value : ''
-                                    // this.queries.duePriceFrom = e.target.value !== '' ?
-                                    //     `&due_price_from=[gte]` + e.target.value : ''
+                                        `&demand=[gte]` + e.target.value : ''
                                     break;
-                                case 'price_to':
+                                case 'paid_from':
+                                    this.queries.paidPriceFrom = e.target.value !== '' ?
+                                        `&paid=[gte]` + e.target.value : ''
+                                    break;
+                                case 'arear_from':
+                                    this.queries.duePriceFrom = e.target.value !== '' ?
+                                        `&arear=[gte]` + e.target.value : ''
+                                    break;
+                                case 'demand_to':
                                     this.queries.demandPriceTo = e.target.value !== '' ?
-                                        `&demand_price_to=[lte]` + e.target.value : ''
-                                    // this.queries.paidPriceTo = e.target.value !== '' ?
-                                    //     `&paid_price_to=[lte]` + e.target.value : ''
-                                    // this.queries.duePriceTo = e.target.value !== '' ?
-                                    //     `&due_price_to=[lte]` + e.target.value : ''
+                                        `&demand=[lte]` + e.target.value : ''
+                                    break;
+                                case 'paid_to':
+                                    this.queries.paidPriceTo = e.target.value !== '' ?
+                                        `&paid=[lte]` + e.target.value : ''
+                                    break;
+                                case 'arear_to':
+                                    this.queries.duePriceTo = e.target.value !== '' ?
+                                        `&arear=[lte]` + e.target.value : ''
                                     break;
                                 case 'date_from':
                                     this.queries.issueDateFrom = e.target.value !== '' ?
@@ -483,6 +498,8 @@
                                 this.queries.dueDateTo +
                                 this.queries.circle +
                                 this.queries.zone
+
+                            console.log(this.url);
                         })
                     },
                     fetchData(url) {
@@ -491,15 +508,9 @@
                             url: url,
                             contentType: 'application/json',
                             dataType: 'application/json',
-                            beforeSend: function(data){
-                                console.log(data);
-                            }
                             success: function(response) {
                                 console.log(response)
                             },
-                            error: function(error) {
-                                console.log(error);
-                            }
                         });
                     },
                     updateDom(data) {
@@ -517,7 +528,6 @@
                     e.preventDefault()
                     filter.fetchData(filter.url)
                 })
-
 
             });
         </script>

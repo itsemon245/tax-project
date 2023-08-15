@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Backend\Invoice;
 
+use Error;
 use Exception;
+use Throwable;
 use Carbon\Carbon;
+use ErrorException;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Mail\InvoiceMail;
@@ -12,19 +15,17 @@ use App\Models\InvoiceItem;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Filter\InvoiceFilter;
+use Psy\Exception\ThrowUpException;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\InvoiceResource;
 use App\Http\Resources\InvoiceCollection;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\JoinClause;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceItemResource;
 use App\Http\Resources\InvoiceItemCollection;
-use Error;
-use ErrorException;
-use Psy\Exception\ThrowUpException;
-use Throwable;
 
 class InvoiceController extends Controller
 {
@@ -349,30 +350,29 @@ class InvoiceController extends Controller
         $invoices = null;
         $filter = new InvoiceFilter();
         $queries = $filter->transform($request);
+        // dd($queries);
         $invoiceQueries = array_filter($queries, fn ($query) => $query[0] === 'client_id' || $query[0] === 'reference_no');
         $clientQueries = array_filter($queries, fn ($query) => $query[0] === 'zone' || $query[0] === 'circle');
         $fiscalQueries = array_filter($queries, fn ($query) => $query[0] === 'year');
         $pivotQueries = array_filter($queries, function ($query) {
-            return  $query[0] === 'paid' ||
-                $query[0] === 'due' ||
-                $query[0] === 'demand' ||
-                $query[0] === 'issue_date' ||
-                $query[0] === 'status' ||
-                $query[0] === 'due_date';
+            return  $query[0] === 'fiscal_year_invoice.paid' ||
+                $query[0] === 'fiscal_year_invoice.due' ||
+                $query[0] === 'fiscal_year_invoice.demand' ||
+                $query[0] === 'fiscal_year_invoice.issue_date' ||
+                $query[0] === 'fiscal_year_invoice.status' ||
+                $query[0] === 'fiscal_year_invoice.due_date';
         });
         if (Arr::isAssoc($pivotQueries)) {
             $pivotQueries =  array_values($pivotQueries);
         };
 
         try {
-            $invoices = FiscalYear::where($fiscalQueries)->firstOrFail()->invoices()
-                ->where($invoiceQueries)
+            $invoices = Invoice::where($invoiceQueries)
                 ->whereHas('client', function (Builder $query) use ($clientQueries) {
                     $query->where($clientQueries);
                 })
                 ->whereHas('fiscalYears', function ($query) use ($fiscalQueries, $pivotQueries) {
-                    $query
-                        ->where($fiscalQueries)
+                    $query->where($fiscalQueries)
                         ->where($pivotQueries);
                 })
                 ->get();
