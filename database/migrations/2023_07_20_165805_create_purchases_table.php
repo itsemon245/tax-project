@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('payment_method', ['bkash', 'nagad', 'rocket'])->nullable();
             $table->string('payment_number');
             $table->string('contact_number')->nullable();
-            $table->json('metadata');
+            $table->json('metadata')->nullable();
             $table->decimal('payable_amount', 8, 2);
             $table->decimal('paid', 8, 2);
             $table->decimal('due', 8, 2);
@@ -36,8 +36,7 @@ return new class extends Migration
         });
         // Schema::create('purchasables', function (Blueprint $table) {
         //     $table->id();
-        //     $table->foreignId('purchase_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-        //     $table->morphs('purchasable');
+            
         // });
     }
 

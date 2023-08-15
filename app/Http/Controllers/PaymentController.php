@@ -11,15 +11,14 @@ class PaymentController extends Controller
     {
         return view('frontend.payment.index');
     }
-    public function create(int $id): View
+    public function create(int $id, string $slug): View
     {
         return view('frontend.payment.create');
     }
-    public function store(int $id)
+    public function store(int $id, string $slug)
     {
-        
     }
-    public function success(int $id): View
+    public function success(int $id, string $slug): View
     {
         return view('frontend.payment.success');
     }
