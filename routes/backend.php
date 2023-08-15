@@ -44,6 +44,8 @@ use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
 use App\Http\Controllers\Backend\CaseStudyController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\TaxCalculatorController;
+use App\Models\TaxCalculator;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +97,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('expert-profile', ExpertProfileController::class);
     Route::resource('exams', ExamController::class);
     Route::resource('questions', QuestionController::class);
+    Route::resource('taxCalculator', TaxCalculatorController::class);
     Route::resource('course', CourseController::class)->names([
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',
