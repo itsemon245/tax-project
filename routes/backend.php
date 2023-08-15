@@ -123,7 +123,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('return-form', ReturnFormController::class);
     Route::resource('member', MemberController::class);
 
-
+    Route::get('chalan/clintes/{id}',[ChalanController::class,'user'])->name('admin.chalan.client');
     //service related routes
     Route::resource('service-subcategory', ServiceSubCategoryController::class);
     // custom routes for service only for spacial purpose

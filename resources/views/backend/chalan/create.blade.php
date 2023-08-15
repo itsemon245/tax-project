@@ -79,12 +79,12 @@
                             <div class="col-lg-6">
                                 <x-backend.form.text-input type="text" name="chalan_no"
                                     class="chalan_title_input  dotted-border" required label="চালান নং"
-                                    style="font-size: 10px;" required/>
+                                    style="font-size: 10px;" required />
                             </div>
                             <div class="col-lg-6">
                                 <x-backend.form.text-input type="date" name="date"
                                     class="chalan_title_input dotted-border" required label="তারিখ"
-                                    style="font-size: 10px;" required/>
+                                    style="font-size: 10px;" required />
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                             <p class="w-100" style="font-size: 10px;">বাংলাদেশ ব্যাংক/ <b> সোনালী ব্যাংকের </b> চট্টগ্রাম
                                 জেলার </p>
                             <x-backend.form.text-input type="text" name="chalan_title"
-                                class="chalan_title_input dotted-border" required style="font-size: 10px;" required/>
+                                class="chalan_title_input dotted-border" required style="font-size: 10px;" required />
                             <p class="w-100" style="font-size: 10px;"> টাকা জমা দেওয়ার চালান </p>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                                 <input type="number" class="" style="font-size: 10px;" name="code1" required>
                             </div>
                             <div class="d-inline-block me-3 d-flex">
-                                <input type="number" class="g-0" style="font-size: 10px;" name="code2" required> 
+                                <input type="number" class="g-0" style="font-size: 10px;" name="code2" required>
                                 <input type="number" class="g-0" style="font-size: 10px;" name="code3" required>
                                 <input type="number" class="g-0" style="font-size: 10px;" name="code4" required>
                                 <input type="number" class="g-0" style="font-size: 10px;" name="code5" required>
@@ -150,18 +150,20 @@
                                     <td style="width:80px">
                                         <div class="d-flex">
                                             <div style="width:80px">
-                                                <input type="text" placeholder="Name" class="w-100 dotted-border @error('name') is-invalid @enderror"
-                                                    style="font-size:10px" name="name" >
-                                                    @error('name')
+                                                <input type="text" placeholder="Name"
+                                                    class="w-100 dotted-border @error('name') is-invalid @enderror"
+                                                    style="font-size:10px" name="name">
+                                                @error('name')
                                                     <span class="text-bold text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
                                         <div class="d-flex">
                                             <div style="width:80px">
-                                                <input type="text" placeholder="Location" class="w-100 dotted-border @error('location') is-invalid @enderror"
+                                                <input type="text" placeholder="Location"
+                                                    class="w-100 dotted-border @error('location') is-invalid @enderror"
                                                     style="font-size:10px" name="location">
-                                                    @error('location')
+                                                @error('location')
                                                     <span class="text-bold text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -169,9 +171,9 @@
                                         <div class="d-flex">
                                             <div style="width:80px">
                                                 <input type="text" placeholder="Phone Number"
-                                                    class="w-100 dotted-border @error('phone_number') is-invalid @enderror" style="font-size:10px"
-                                                    name="phone_number">
-                                                    @error('phone_number')
+                                                    class="w-100 dotted-border @error('phone_number') is-invalid @enderror"
+                                                    style="font-size:10px" name="phone_number">
+                                                @error('phone_number')
                                                     <span class="text-bold text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -180,30 +182,47 @@
                                     <td style="width:80px; border-left:1px solid #333;">
                                         <div>
                                             <div style="width:80px">
-                                                <input type="text"
+                                                {{-- <input type="text"
                                                     class="w-100 dotted-border @error('client_name') is-invalid @enderror"
                                                     placeholder="Client Name" style="font-size:10px" name="client_name">
                                                 @error('client_name')
                                                     <span class="text-bold text-danger">{{ $message }}</span>
+                                                @enderror --}}
+
+                                                <select style="width:80px;" id="userSelect"
+                                                    class="w-100 dotted-border @error('client_name') is-invalid @enderror"
+                                                    style="font-size:10px" name="client_name">
+                                                    <option disabled selected style="font-size:10px!important">Select
+                                                        Client</option>
+                                                    @foreach ($clients as $client)
+                                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                                    @endforeach
+
+                                                </select>
+                                                @error('client_name')
+                                                    <span class="text-bold text-danger">{{ $message }}</span>
                                                 @enderror
+
                                             </div>
                                         </div>
                                         <div>
                                             <div style="width:80px">
                                                 <input type="text"
                                                     class="w-100 dotted-border @error('company_name') is-invalid @enderror"
-                                                    placeholder="Company Name" style="font-size:10px"
+                                                    placeholder="Company Name" id="company" style="font-size:10px"
                                                     name="company_name">
                                                 @error('company_name')
                                                     <span class="text-bold text-danger">{{ $message }}</span>
                                                 @enderror
+
                                             </div>
                                         </div>
                                         <div>
                                             <div style="width:80px">
                                                 <input type="text"
                                                     class="w-100 dotted-border @error('location') is-invalid @enderror"
-                                                    placeholder="Location" style="font-size:10px" name="location">
+                                                    placeholder="Location" id="adress" style="font-size:10px"
+                                                    name="location">
                                                 @error('location')
                                                     <span class="text-bold text-danger">{{ $message }}</span>
                                                 @enderror
@@ -212,7 +231,8 @@
                                         <div style="width:80px">
                                             <input type="text"
                                                 class="w-100 dotted-border @error('tin_circle') is-invalid @enderror"
-                                                placeholder="Tin:/Circle" style="font-size:10px" name="tin_circle">
+                                                placeholder="Tin:/Circle" id="circle" style="font-size:10px"
+                                                name="tin_circle">
                                             @error('tin_circle')
                                                 <span class="text-bold text-danger">{{ $message }}</span>
                                             @enderror
@@ -373,9 +393,6 @@
                 </div>
 
             </form>
-
-
-
         </div>
     </x-backend.ui.section-card>
     <!-- end row-->
@@ -398,9 +415,37 @@
                 } else {
                     bankInputs.style.display = 'none';
                 }
-
-
             }
+        </script>
+
+
+        <script>
+            $(document).ready(function() {
+                $('#userSelect').on('change', function() {
+                    var userId = $(this).val();
+                    //alert(userId)
+                    var url = "{{ route('admin.chalan.client', ':userID') }}";
+                    url = url.replace(':userID', userId);
+                    if (userId) {
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            success: function(data) {
+
+                                console.log(data)
+
+                                $('#adress').val(data.location);
+                                $('#company').val(data.company);
+                                $('#circle').val(data.circle);
+                            }
+                        });
+                    } else {
+                        $('#location').val('');
+                        $('#company').val('');
+                        $('#circle').val('');
+                    }
+                });
+            });
         </script>
     @endpush
 @endsection
