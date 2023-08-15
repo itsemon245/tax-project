@@ -417,7 +417,6 @@
                             type: "get",
                             url: url,
                             success: function(response) {
-                                console.log(response)
                                 this.data = response.data
                                 callback(this.data)
                             },
@@ -513,7 +512,143 @@
                         })
                     },
                     updateDom(data) {
-                        console.log(data);
+                        const html = (invoice, i) => {
+                            let sendInvoiceUrl = "{{ route('send_invoice_mail', 'ID') }}"
+                            sendInvoiceUrl = sendInvoiceUrl.replace('ID', invoice.id)
+                            console.log(sendInvoiceUrl);
+                            // let sendInvoiceUrl = "{{ route('send_invoice_mail', 'ID') }}"
+                            // sendInvoiceUrl = sendInvoiceUrl.replace('ID', invoice.id)
+                            // console.log(sendInvoiceUrl);
+                            return `
+                            <div class="modal fade" id="send-email-modal-${invoice.id}" tabindex="-1"
+                                    role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="">Send Email</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="${sendInvoiceUrl}" method="post">
+                                                    @csrf
+                                                    <input type="text" name='year' value="{{ $fiscalYear }}" hidden>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-2">
+                                                            <label for="email-to-${invoice.id}" class="form-label">To:
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <input type="text" class="form-control"
+                                                                id="email-to-${invoice.id}"
+                                                                placeholder="person@email.com" name="email_to" />
+
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <label for="email-subject-${invoice.id}"
+                                                                class="form-label">Subject: </label>
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <input type="text" class="form-control mt-2"
+                                                                id="email-subject-${invoice.id}"
+                                                                placeholder="Subject for email" name="subject" />
+                                                        </div>
+                                                        <div class="col-12 mt-2">
+                                                            <div class="float-end">
+                                                                <button type="button" class="btn btn-secondary">
+                                                                    Close</button>
+                                                                <button type="submit" class="btn btn-primary">Send
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                            </div
+                            <tr>
+                                <td>${++i}</td>
+                                <td class="fw-medium">
+                                   ${invoice.issueDateFormatted}
+                                </td>
+                                <td class="fw-medium">{{ $invoice->client->name }}</td>
+                                <td>{{ $invoice->client->tin }}</td>
+                                <td>{{ $invoice->reference_no }}</td>
+                                <td>{{ $invoice->client->phone }}</td>
+                                <td>{{ $invoice->client->circle }}</td>
+                                <td>{{ $invoice->client->zone }}</td>
+                                <td>
+                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->demand . ' Tk' }}</span>
+                                </td>
+                                <td>
+                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->paid . ' Tk' }}</span>
+                                </td>
+                                <td>
+                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->due . ' Tk' }}</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group dropdown position-relative">
+                                        <a href="javascript: void(0);"
+                                            class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-xs"
+                                            data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                class="mdi mdi-dots-horizontal"></i></a>
+                                        <div class="bg-white py-2 px-3 position-absolute d-none rounded shadow"
+                                            style="inset: 2rem 2rem auto auto!important; z-index:2;">
+                                            <a class="dropdown-item d-flex align-items-center gap-2"
+                                                href="{{ route('invoice.show', $invoice->id) . '?year=' . $fiscalYear }}"><span
+                                                    class="mdi mdi-eye text-primary font-20"></span>View</a>
+                                            <a class="dropdown-item d-flex align-items-center gap-2"
+                                                href="{{ route('invoice.edit', $invoice->id) . '?year=' . $fiscalYear }}"><span
+                                                    class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
+
+                                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#send-email-modal-{{ $invoice->id }}"><span
+                                                    class="mdi mdi-telegram text-warning font-20"></span>Send
+                                                to...</button>
+                                            <form action="{{ route('invoice.markAs', [$invoice->id, 'sent']) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('patch')
+                                                <input type="text" name="year" value="{{ currentFiscalYear() }}"
+                                                    hidden>
+                                                <button type="submit"
+                                                    class="dropdown-item d-flex align-items-center gap-2"><span
+                                                        class="mdi mdi-check text-success font-20"></span>Mark as
+                                                    Sent</button>
+                                            </form>
+                                            <form action="{{ route('invoice.markAs', [$invoice->id, 'paid']) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('patch')
+                                                <input type="text" name="year" value="{{ currentFiscalYear() }}"
+                                                    hidden>
+                                                <button type="submit"
+                                                    class="dropdown-item d-flex align-items-center gap-2"><span
+                                                        class="mdi mdi-cash-check text-success font-20"></span>Mark as
+                                                    Paid</button>
+                                            </form>
+                                            <form action="" method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="dropdown-item d-flex align-items-center gap-2"><span
+                                                        class="mdi mdi-delete text-danger font-20"></span
+                                                        class="text-danger">Delete</button>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        `
+                        }
+
+                        data.forEach((invoice, i) => {
+                            console.log(invoice);
+                            // html(invoice, i)
+                        });
+
                     }
 
                 }

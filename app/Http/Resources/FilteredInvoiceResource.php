@@ -6,8 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class InvoiceResource extends JsonResource
+class FilteredInvoiceResource extends JsonResource
 {
+
     /**
      * Transform the resource into an array.
      *
@@ -15,11 +16,6 @@ class InvoiceResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // $items = array_map(function ($item) {
-        //     return [
-        //         'id'=> $item->id -1,
-        //     ];
-        // }, $this->invoiceItems);
         return [
             "id" => $this->id,
             "userId" => $this->user_id,

@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Invoice;
 
-use Error;
-use Exception;
 use Throwable;
-use Carbon\Carbon;
-use ErrorException;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Mail\InvoiceMail;
@@ -15,16 +11,15 @@ use App\Models\InvoiceItem;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Filter\InvoiceFilter;
-use Psy\Exception\ThrowUpException;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\InvoiceResource;
 use App\Http\Resources\InvoiceCollection;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\JoinClause;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
-use App\Http\Resources\InvoiceItemResource;
+use App\Http\Resources\FilteredInvoiceCollection;
+use App\Http\Resources\FilteredInvoiceResource;
 use App\Http\Resources\InvoiceItemCollection;
 
 class InvoiceController extends Controller
@@ -354,14 +349,8 @@ class InvoiceController extends Controller
         $invoiceQueries = array_filter($queries, fn ($query) => $query[0] === 'client_id' || $query[0] === 'reference_no');
         $clientQueries = array_filter($queries, fn ($query) => $query[0] === 'zone' || $query[0] === 'circle');
         $fiscalQueries = array_filter($queries, fn ($query) => $query[0] === 'year');
-        $pivotQueries = array_filter($queries, function ($query) {
-            return  $query[0] === 'fiscal_year_invoice.paid' ||
-                $query[0] === 'fiscal_year_invoice.due' ||
-                $query[0] === 'fiscal_year_invoice.demand' ||
-                $query[0] === 'fiscal_year_invoice.issue_date' ||
-                $query[0] === 'fiscal_year_invoice.status' ||
-                $query[0] === 'fiscal_year_invoice.due_date';
-        });
+        $pivotQueries = array_filter($queries, fn ($query) => str_contains($query[0], 'fiscal_year_invoice'));
+
         if (Arr::isAssoc($pivotQueries)) {
             $pivotQueries =  array_values($pivotQueries);
         };
@@ -376,7 +365,7 @@ class InvoiceController extends Controller
                         ->where($pivotQueries);
                 })
                 ->get();
-            $content['data'] = new InvoiceCollection($invoices);
+            $content['data'] = new FilteredInvoiceCollection($invoices);
         } catch (Throwable $e) {
             $content['success'] = false;
             $content['message'] = $e->getMessage();
