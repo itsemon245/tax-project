@@ -17,100 +17,97 @@
         </div>
         {{-- TODO: change advance search options here --}}
         <div id="advance-search-options" class="card rounded-3 d-none mt-2" style="border: 2px solid var(--ct-gray-500);">
-            <form action="#">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-6">
-                            <x-form.selectize class="mb-1 advance-filter-options" id="client" name="client"
-                                placeholder="Select Client..." label="Client" :canCreate="false">
-                                @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                @endforeach
-                            </x-form.selectize>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <x-form.selectize class="mb-1 advance-filter-options" id="reference" name="reference"
-                                placeholder="Select Reference..." label="Reference" :canCreate="false">
-                                @foreach ($references as $reference)
-                                    <option value="{{ $reference }}">{{ $reference }}</option>
-                                @endforeach
-                            </x-form.selectize>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <x-backend.form.select-input class="advance-filter-options mb-2" label="Payment Stauts"
-                                name="payment_status" placeholder="Payment Stauts">
-                                @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
-                                    <option value="{{ $status }}">{{ str($status)->title() }}</option>
-                                @endforeach
-                            </x-backend.form.select-input>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <x-backend.form.select-input class="advance-filter-options mb-2" name="fiscal_year"
-                                label="Year" placeholder="Year">
-                                @foreach (range(currentYear(), 2020) as $year)
-                                    <option value="{{ $year - 1 . '-' . $year }}" @selected($year === currentYear())>
-                                        {{ str($year - 1 . '-' . $year)->title() }}</option>
-                                @endforeach
-                            </x-backend.form.select-input>
-                        </div>
-                        <div class="col-lg-6">
-                            <x-range-slider class="advance-filter-options" name="demand" id="demand" from="100"
-                                to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
-                        </div>
-                        <div class="col-lg-6">
-                            <x-range-slider class="advance-filter-options" name="paid" id="paid" from="100"
-                                to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
-                        </div>
-                        <div class="col-lg-6">
-                            <x-range-slider class="advance-filter-options" name="arear" id="arear" from="100"
-                                to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
-                        </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <x-form.selectize class="mb-1 advance-filter-options" id="client" name="client"
+                            placeholder="Select Client..." label="Client" :canCreate="false">
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                            @endforeach
+                        </x-form.selectize>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <x-form.selectize class="mb-1 advance-filter-options" id="reference" name="reference"
+                            placeholder="Select Reference..." label="Reference" :canCreate="false">
+                            @foreach ($references as $reference)
+                                <option value="{{ $reference }}">{{ $reference }}</option>
+                            @endforeach
+                        </x-form.selectize>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <x-backend.form.select-input class="advance-filter-options mb-2" label="Payment Stauts"
+                            name="payment_status" placeholder="Payment Stauts">
+                            @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
+                                <option value="{{ $status }}">{{ str($status)->title() }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <x-backend.form.select-input class="advance-filter-options mb-2" name="fiscal_year" label="Year"
+                            placeholder="Year">
+                            @foreach (range(currentYear(), 2020) as $year)
+                                <option value="{{ $year - 1 . '-' . $year }}" @selected($year === currentYear())>
+                                    {{ str($year - 1 . '-' . $year)->title() }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                    </div>
+                    <div class="col-lg-6">
+                        <x-range-slider class="advance-filter-options" name="demand" id="demand" from="100"
+                            to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
+                    </div>
+                    <div class="col-lg-6">
+                        <x-range-slider class="advance-filter-options" name="paid" id="paid" from="100"
+                            to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
+                    </div>
+                    <div class="col-lg-6">
+                        <x-range-slider class="advance-filter-options" name="arear" id="arear" from="100"
+                            to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
+                    </div>
 
-                        <div class="col-lg-6">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <x-backend.form.text-input class="advance-filter-options mb-2" name="date_from"
-                                        label="Start Date" type="date" />
-                                </div>
-                                <div class="col-sm-6">
-                                    <x-backend.form.text-input class="advance-filter-options mb-2" name="date_to"
-                                        label="End Date" type="date" />
-                                </div>
-                                <div class="col-sm-6">
-                                    <x-form.selectize class="advance-filter-options mb-2" id="circle" name="circle"
-                                        label="Circle" placeholder="Select Circle" :canCreate="false">
-                                        @foreach ($circles as $circle)
-                                            <option value="{{ $circle }}">{{ str($circle)->title() }}</option>
-                                        @endforeach
-                                    </x-form.selectize>
-                                </div>
-                                <div class="col-sm-6">
-                                    <x-form.selectize class="advance-filter-options mb-2" id="zone" name="zone"
-                                        label="Zone" placeholder="Select Zone" :canCreate="false">
-                                        @foreach ($zones as $zone)
-                                            <option value="{{ $zone }}">{{ str($zone)->title() }}</option>
-                                        @endforeach
-                                    </x-form.selectize>
-                                </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <x-backend.form.text-input class="advance-filter-options mb-2" name="date_from"
+                                    label="Start Date" type="date" />
                             </div>
-                        </div>
-                        <div class="col-12 mt-2">
-                            <div class="float-end">
-                                <x-backend.ui.button type="custom" href="{{ route('invoice.index') }}"
-                                    class="btn-sm btn-outline-danger">Reset
-                                </x-backend.ui.button>
-                                <x-backend.ui.button type="button" id="advance-search-close"
-                                    class="btn-sm btn-outline-dark">
-                                    Close
-                                </x-backend.ui.button>
-                                <x-backend.ui.button id="apply-btn" type="button"
-                                    class="btn-sm btn-primary">Apply</x-backend.ui.button>
+                            <div class="col-sm-6">
+                                <x-backend.form.text-input class="advance-filter-options mb-2" name="date_to"
+                                    label="End Date" type="date" />
+                            </div>
+                            <div class="col-sm-6">
+                                <x-form.selectize class="advance-filter-options mb-2" id="circle" name="circle"
+                                    label="Circle" placeholder="Select Circle" :canCreate="false">
+                                    @foreach ($circles as $circle)
+                                        <option value="{{ $circle }}">{{ str($circle)->title() }}</option>
+                                    @endforeach
+                                </x-form.selectize>
+                            </div>
+                            <div class="col-sm-6">
+                                <x-form.selectize class="advance-filter-options mb-2" id="zone" name="zone"
+                                    label="Zone" placeholder="Select Zone" :canCreate="false">
+                                    @foreach ($zones as $zone)
+                                        <option value="{{ $zone }}">{{ str($zone)->title() }}</option>
+                                    @endforeach
+                                </x-form.selectize>
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-12 mt-2">
+                        <div class="float-end">
+                            <x-backend.ui.button type="custom" href="{{ route('invoice.index') }}"
+                                class="btn-sm btn-outline-danger">Reset
+                            </x-backend.ui.button>
+                            <x-backend.ui.button type="button" id="advance-search-close" class="btn-sm btn-outline-dark">
+                                Close
+                            </x-backend.ui.button>
+                            <x-backend.ui.button id="apply-btn" type="button"
+                                class="btn-sm btn-primary">Apply</x-backend.ui.button>
+                        </div>
+                    </div>
                 </div>
-            </form>
+
+            </div>
         </div>
 
         <h5 class="p-3">Recently Updated</h5>
@@ -394,6 +391,8 @@
                 let url = "{{ route('invoice.filter') }}" + '?'
                 // filter options
                 const filter = {
+                    url: url + "fiscal_year=[eq]" + '{{ currentFiscalYear() }}',
+                    data: null,
                     queries: {
                         client: '',
                         reference: '',
@@ -412,7 +411,19 @@
                         circle: '',
                         zone: '',
                     },
-                    url: '',
+
+                    fetchData(url, callback) {
+                        $.ajax({
+                            type: "get",
+                            url: url,
+                            success: function(response) {
+                                console.log(response)
+                                this.data = response.data
+                                callback(this.data)
+                            },
+                        });
+                        return this
+                    },
 
                     updateUrl(jqElement) {
                         jqElement.on('change', (e) => {
@@ -499,23 +510,11 @@
                                 this.queries.circle +
                                 this.queries.zone
 
-                            console.log(this.url);
                         })
                     },
-                    fetchData(url) {
-                        $.ajax({
-                            type: "get",
-                            url: url,
-                            contentType: 'application/json',
-                            dataType: 'application/json',
-                            success: function(response) {
-                                console.log(response)
-                            },
-                        });
-                    },
                     updateDom(data) {
-
-                    },
+                        console.log(data);
+                    }
 
                 }
                 // add eventlisteners to every filter input element
@@ -525,8 +524,8 @@
                 });
 
                 applyBtn.click(function(e) {
-                    e.preventDefault()
-                    filter.fetchData(filter.url)
+                    // e.preventDefault()
+                    filter.fetchData(filter.url, filter.updateDom)
                 })
 
             });
