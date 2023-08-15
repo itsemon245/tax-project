@@ -1,18 +1,22 @@
 <?php
 
 use App\Models\Course;
+use App\Models\TaxCalculator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\VideoController;
 use App\Http\Controllers\ExpertProfileController;
+use App\Http\Controllers\Review\ReviewController;
+use App\Http\Controllers\TaxCalculatorController;
 use App\Http\Controllers\Backend\Map\MapController;
+use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\Backend\Book\BookController;
+use App\Http\Controllers\Backend\CaseStudyController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Role\RoleController;
@@ -42,10 +46,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
-use App\Http\Controllers\Backend\CaseStudyController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
-use App\Http\Controllers\TaxCalculatorController;
-use App\Models\TaxCalculator;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,6 +125,12 @@ Route::prefix('admin')->group(function () {
     Route::resource('return-form', ReturnFormController::class);
     Route::resource('member', MemberController::class);
 
+    //Review backend 
+    Route::prefix('/review')->name('backend.review.')->controller(ReviewController::class)->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::delete('{id}/destroy', 'destroy')->name('destroy');
+    });
 
     //service related routes
     Route::resource('service-subcategory', ServiceSubCategoryController::class);

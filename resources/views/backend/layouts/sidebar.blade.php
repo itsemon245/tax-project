@@ -589,9 +589,9 @@
                     <div class="collapse" id="reviews">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('review.index', 'package') }}">Package Reviews</a>
+                                <a href="{{ route('backend.review.index') }}">Package Reviews</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="{{ route('review.index', 'service') }}">Service Reviews</a>
                             </li>
                             <li>
@@ -599,7 +599,7 @@
                             </li>
                             <li>
                                 <a href="{{ route('review.index', 'expert-profile') }}">Expert Reviews</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>

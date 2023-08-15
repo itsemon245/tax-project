@@ -19,10 +19,10 @@ class ReviewController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $slug)
+    public function index()
     {
-        // dd($slug);
-        return view('backend.review.index', compact('slug'));
+        $reviews = Review::get();
+        return view('backend.review.viewAll', compact('reviews'));
     }
 
     function itemReview(string $slug, int $id)
