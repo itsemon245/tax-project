@@ -23,7 +23,10 @@ use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\PaymentController;
 use App\Models\Invoice;
+
+use function Clue\StreamFilter\fun;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,11 +136,17 @@ Route::get('test', function () {
     return view('mail.invoiceMail', compact('invoice', 'year'));
 });
 
-Route::get('get-mac', function () {
-    dd(shell_exec('netstat -ie'));
-});
-Route::get('get-ip', function (Request $request) {
-    dd($request->ip());
-});
 
 Route::GET('/test-mcq', [MCQController::class, 'index'])->name('mcq.test');
+
+
+// Route for payment
+Route::prefix('payment')
+    ->name('payment.')
+    ->controller(PaymentController::class)
+    ->group(function () {
+        Route::get('create/{id}', 'create')->name('create');
+        Route::get('store/{id}', 'store')->name('store');
+        Route::get('success/{id}', 'success')->name('success');
+        Route::get('cancel', 'cancel')->name('cancel');
+    });
