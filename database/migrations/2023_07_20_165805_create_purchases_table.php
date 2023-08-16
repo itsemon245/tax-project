@@ -24,6 +24,7 @@ return new class extends Migration
             $table->dateTime('payment_date')->nullable();
             $table->dateTime('expire_date')->nullable();
             $table->morphs('purchasable');
+            $table->integer('apporved')->default(0);
             $table->timestamps();
         });
         // Schema::create('purchasables', function (Blueprint $table) {

@@ -145,3 +145,4 @@ Route::get('get-ip', function (Request $request) {
 });
 
 Route::GET('/test-mcq', [MCQController::class, 'index'])->name('mcq.test');
+
