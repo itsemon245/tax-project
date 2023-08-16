@@ -1,10 +1,10 @@
 @extends('backend.layouts.app')
 
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Course', 'Index']" />
-    <x-backend.ui.section-card name="All Courses">
-        <x-backend.ui.button type="custom" :href="route('course.create')" class="btn-success btn-sm mb-2"><span
-                class="fw-bold fs-5 me-1">+</span>New Course</x-backend.ui.button>
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Review']" />
+    <x-backend.ui.section-card name="All Review">
+        <x-backend.ui.button type="custom" :href="route('backend.review.create')" class="btn-success btn-sm mb-2"><span
+                class="fw-bold fs-5 me-1">+</span>Create Review</x-backend.ui.button>
         <div class="table-responsive">
             <x-backend.table.basic>
                 <thead>
@@ -17,19 +17,18 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    {{ dd($reviews) }}
+                    {{-- {{ dd($reviews) }} --}}
                     @forelse ($reviews as $key=>$review)
                     <tr>
                         {{-- {{ dd($review) }} --}}
                         <td>{{ ++$key }}</td>
-                        <td></td>
-                        <td>{!! Str::limit($industry->page_description, 15, '...') !!}</td>
-                        <td>{!! Str::limit($industry->description, 15, '...') !!}</td>
+                        <td>{!! Str::limit($review->user_id, 15, '...') !!}</td>
+                        <td>{!! Str::limit($review->reviewable_type, 15, '...') !!}</td>
+                        <td>{!! Str::limit($review->comment, 15, '...') !!}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('industry.show', $industry) }}" class="btn btn-sm btn-success">View</a>
-                                <form action="{{ route('industry.destroy', $industry) }}" method="post">
+                                <a href="#" class="btn btn-sm btn-success">View</a>
+                                <form action="{{ route('backend.review.destroy', $review) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>

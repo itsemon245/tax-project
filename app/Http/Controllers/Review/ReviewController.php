@@ -21,7 +21,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::get();
+        $reviews = Review::orderBy('id', 'DESC')->get();
         return view('backend.review.viewAll', compact('reviews'));
     }
 
@@ -54,7 +54,8 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        $reviews = Review::orderBy('id', 'DESC')->get();
+        return view('backend.review.create', compact('reviews'));
     }
 
     /**
@@ -136,8 +137,10 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy($id)
     {
-        //
+        $review = Review::find($id);
+        $review->delete();
+        return back();
     }
 }
