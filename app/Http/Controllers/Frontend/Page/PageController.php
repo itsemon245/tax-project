@@ -6,6 +6,7 @@ use App\Models\Map;
 use App\Models\Info;
 use App\Models\User;
 use App\Models\About;
+use App\Models\Industry;
 use App\Models\Testimonial;
 use App\Models\ClientStudio;
 use Illuminate\Http\Request;
@@ -85,5 +86,12 @@ class PageController extends Controller
     public function notificationPage()
     {
         return view('frontend.pages.notificationPage');
+    }
+
+    //show all industry page 
+    public function showAllIndusryPage()
+    {
+        $industries = Industry::get();
+        return view('frontend.pages.industries.showAllIndustry', compact('industries'));
     }
 }
