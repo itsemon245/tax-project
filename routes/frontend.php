@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ExpertController;
-use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -102,11 +101,11 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
     Route::get('index', 'index')->name('index');
     Route::get('{course}/show', 'show')->name('show');
     Route::get('videos', 'videos')->name('videos');
-    Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
-        Route::get('/', 'caseStudy')->name('page');
-        Route::get('index/{package_id}', 'index')->name('index');
-        Route::get('show/{case_study_id}', 'show')->name('show');
-    });
+    // Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
+    //     Route::get('/', 'caseStudy')->name('page');
+    //     Route::get('index/{package_id}', 'index')->name('index');
+    //     Route::get('show/{case_study_id}', 'show')->name('show');
+    // });
 });
 
 

@@ -619,27 +619,32 @@
                 </li>
 
 
+
+                <li>
+                    <a href="#taxCalculator" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Tax Calculator</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="taxCalculator">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('tax-setting.create') }}">New Tax Setting</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="collapse" id="taxCalculator">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('tax-setting.index') }}">View Tax Settings</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
             </ul>
         </div>
-        </li>
-     
-        <li>
-            <a href="#taxCalculator" data-bs-toggle="collapse">
-                <i class="mdi mdi-view-dashboard-outline"></i>
-                <span>Tax Calculator</span>
-                <span class="menu-arrow"></span>
-            </a>
-            <div class="collapse" id="taxCalculator">
-                <ul class="nav-second-level">
-                    <li>
-                        <a href="{{ route('taxCalculator.create') }}">Create TaxCalculator</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
-
-        </ul>
 
     </div>
     <!-- End Sidebar -->

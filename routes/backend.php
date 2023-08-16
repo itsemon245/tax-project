@@ -1,18 +1,21 @@
 <?php
 
 use App\Models\Course;
+use App\Models\TaxSetting;
+use App\Models\TaxCalculator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\VideoController;
 use App\Http\Controllers\ExpertProfileController;
 use App\Http\Controllers\Backend\Map\MapController;
+use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\Backend\Book\BookController;
+use App\Http\Controllers\Backend\CaseStudyController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Info\InfoController;
 use App\Http\Controllers\Backend\Role\RoleController;
@@ -38,14 +41,12 @@ use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
+use App\Http\Controllers\Backend\TaxCalculator\TaxSettingController;
 use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
-use App\Http\Controllers\Backend\CaseStudyController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
-use App\Http\Controllers\TaxCalculatorController;
-use App\Models\TaxCalculator;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,13 +116,14 @@ Route::prefix('admin')->group(function () {
             Route::PUT('update/{id}', 'update')->name('update');
         });
 
-    Route::resource('case-study',CaseStudyController::class);
+    Route::resource('case-study', CaseStudyController::class);
 
     Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);
 
     Route::resource('chalan', ChalanController::class);
     Route::resource('return-form', ReturnFormController::class);
+    Route::resource('tax-setting', TaxSettingController::class);
     Route::resource('member', MemberController::class);
 
 
