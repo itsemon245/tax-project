@@ -49,6 +49,7 @@ use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\Backend\Progress\ProgressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,6 +118,19 @@ Route::prefix('admin')->group(function () {
             Route::delete('destroy/{id}', 'destroy')->name('delete');
             Route::PUT('update/{id}', 'update')->name('update');
             Route::get('user/{id}', 'user')->name('user');
+        });
+        Route::prefix('progress')
+        ->name('progress.')
+        ->controller(ProgressController::class)
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            // Route::post('store', 'store')->name('store');
+            // Route::get('show-all', 'showAll')->name('show.all');
+            // Route::get('edit/{id}', 'edit')->name('edit');
+            // Route::delete('destroy/{id}', 'destroy')->name('delete');
+            // Route::PUT('update/{id}', 'update')->name('update');
+            // Route::get('user/{id}', 'user')->name('user');
         });
 
     Route::resource('case-study', CaseStudyController::class);
