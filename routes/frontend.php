@@ -145,8 +145,8 @@ Route::prefix('payment')
     ->name('payment.')
     ->controller(PaymentController::class)
     ->group(function () {
-        Route::get('create/{model}/{slug}/{id}', 'create')->name('create');
-        Route::post('store/{model}/', 'store')->name('store');
-        Route::get('success/{slug}/{id}', 'success')->name('success');
+        Route::get('create/{model}/{id}', 'create')->name('create');
+        Route::post('store/', 'store')->name('store');
+        Route::get('success/{model}/{id}', 'success')->name('success');
         Route::get('cancel', 'cancel')->name('cancel');
     });

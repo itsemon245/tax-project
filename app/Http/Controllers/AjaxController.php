@@ -43,4 +43,15 @@ class AjaxController extends Controller
         }
         return response($response);
     }
+
+    function applyPromoCode(Request $request): Response
+    {
+        $content = [
+            'data' => null,
+            'success' => true,
+            'message' => 'Promo code applied!'
+        ];
+        $content['data'] = $request->all();
+        return response($content);
+    }
 }

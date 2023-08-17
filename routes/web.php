@@ -28,10 +28,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('ajax')->name('ajax.')->controller(AjaxController::class)->group(function () {
-    Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');
-    Route::post('mark-notifications', 'markNotificationsAsRead')->name('notifications.read');
-});
+Route::prefix('ajax')
+    ->middleware(['auth'])
+    ->name('ajax.')
+    ->controller(AjaxController::class)->group(function () {
+        Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');
+        Route::post('mark-notifications', 'markNotificationsAsRead')->name('notifications.read');
+        Route::post('promo-code/apply', 'applyPromoCode')->name('promo.apply');
+    });
 Route::get('call-artisan', function () {
     $exitCode = Artisan::call('migrate:fresh');
     echo 'Database migrated: ' . $exitCode . "<br>";

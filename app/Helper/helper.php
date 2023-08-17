@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * Set Image given a img from database
@@ -236,17 +237,17 @@ function currentYear(): int
 }
 
 function starStyle($rating, $avg)
-        {
-            $gt = $rating <= $avg;
-            $lt = $avg <= $rating + 1;
-            if ($gt & $lt) {
-                $percnetage = (round($avg, 1) - $rating) * 100;
-                $black = "black $percnetage%";
-                $transparent = 'transparent ' . (100 - $percnetage) . '%';
-                $mask = "
+{
+    $gt = $rating <= $avg;
+    $lt = $avg <= $rating + 1;
+    if ($gt & $lt) {
+        $percnetage = (round($avg, 1) - $rating) * 100;
+        $black = "black $percnetage%";
+        $transparent = 'transparent ' . (100 - $percnetage) . '%';
+        $mask = "
     -webkit-mask-image: linear-gradient(to right, $black , $transparent);
     mask-image: linear-gradient(to right, $black, $transparent);
     ";
-                return $mask;
-            }
-        }
+        return $mask;
+    }
+}

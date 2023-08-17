@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\PromoCode;
+use App\Models\User;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use App\Notifications\PromoCodeNotification;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider

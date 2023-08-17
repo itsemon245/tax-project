@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->uuid('txn_id');
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignId('promo_code_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->string('name')->nullable();
+            $table->string('contact_number')->nullable();
             $table->decimal('discount', 8, 2);
-            $table->boolean('is_promo_code_applied')->default(false);
+            $table->boolean('has_promo_code_applied')->default(false);
             $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->nullable();
             $table->enum('payment_method', ['bkash', 'nagad', 'rocket'])->nullable();
             $table->string('payment_number');
-            $table->string('contact_number')->nullable();
+            $table->string('trx_id')->nullable();
             $table->json('metadata')->nullable();
             $table->decimal('payable_amount', 8, 2);
             $table->decimal('paid', 8, 2);
@@ -37,7 +38,7 @@ return new class extends Migration
         });
         // Schema::create('purchasables', function (Blueprint $table) {
         //     $table->id();
-            
+
         // });
     }
 

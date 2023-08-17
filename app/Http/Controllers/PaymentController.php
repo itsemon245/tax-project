@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ItemResource;
 use App\Models\Purchase;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -13,26 +15,28 @@ class PaymentController extends Controller
     {
         return view('frontend.payment.index');
     }
-    public function create(string $model, string $slug, string $id): View
+    public function create(string $model, string $id): View
     {
-        return view('frontend.pages.payment.create');
+        $table = str(str($model)->snake())->plural();
+        $record = DB::table($table)->find($id);
+        return view('frontend.pages.payment.create', compact('model', 'id', 'record'));
     }
-    public function store( string $model, Request $request)
+    public function store(Request $request)
     {
         Purchase::create([
-            'user_id'=> Auth::user()->id,
-            'user_id'=> Auth::user()->id,
-            'user_id'=> Auth::user()->id,
-            'user_id'=> Auth::user()->id,
-            'user_id'=> Auth::user()->id,
-            'user_id'=> Auth::user()->id,
-            'user_id'=> Auth::user()->id,
-            'user_id'=> Auth::user()->id,
-            'user_id'=> Auth::user()->id,
-            'user_id'=> Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id,
         ]);
     }
-    public function success(int $id, string $slug): View
+    public function success(string $model, int $id): View
     {
         return view('frontend.payment.success');
     }
