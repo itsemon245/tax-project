@@ -19,10 +19,10 @@ class ReviewController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $slug)
+    public function index()
     {
-        // dd($slug);
-        return view('backend.review.index', compact('slug'));
+        $reviews = Review::orderBy('id', 'DESC')->get();
+        return view('backend.review.viewAll', compact('reviews'));
     }
 
     function itemReview(string $slug, int $id)
@@ -54,7 +54,8 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        $reviews = Review::orderBy('id', 'DESC')->get();
+        return view('backend.review.create', compact('reviews'));
     }
 
     /**
@@ -136,8 +137,10 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy($id)
     {
-        //
+        $review = Review::find($id);
+        $review->delete();
+        return back();
     }
 }
