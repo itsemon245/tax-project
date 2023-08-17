@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\CaseStudy;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ExpertController;
@@ -17,16 +16,17 @@ use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\UserAppointmentController;
-use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\ProjectDiscussionController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Frontend\AppointmentController;
 use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Frontend\Course\CourseController;
-use App\Http\Controllers\Frontend\BrowseTaxExpertController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\PaymentController;
+use App\Models\Invoice;
+
+use function Clue\StreamFilter\fun;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,18 +131,22 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
-    $user = User::find(1);
-    $clients = $user->clients;
-    // dd($clients);
-    return view('test', compact('clients',));
+    $invoice = Invoice::first();
+    $year = currentFiscalYear();
+    return view('mail.invoiceMail', compact('invoice', 'year'));
 });
 
-Route::get('get-mac', function () {
-    dd(shell_exec('netstat -ie'));
-});
-Route::get('get-ip', function (Request $request) {
-    dd($request->ip());
-});
 
 Route::GET('/test-mcq', [MCQController::class, 'index'])->name('mcq.test');
 
+
+// Route for payment
+Route::prefix('payment')
+    ->name('payment.')
+    ->controller(PaymentController::class)
+    ->group(function () {
+        Route::get('create/{model}/{slug}/{id}', 'create')->name('create');
+        Route::post('store/{model}/', 'store')->name('store');
+        Route::get('success/{slug}/{id}', 'success')->name('success');
+        Route::get('cancel', 'cancel')->name('cancel');
+    });

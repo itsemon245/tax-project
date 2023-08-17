@@ -30,7 +30,7 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->boolean('status')->default(false);
+            $table->boolean('is_completed')->default(false);
             $table->timestamps();
         });
     }

@@ -35,7 +35,6 @@ use App\Http\Controllers\Backend\Return\ReturnFormController;
 use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
-use App\Http\Controllers\Backend\UserDoc\DocumentTypeController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
@@ -45,6 +44,8 @@ use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
 use App\Http\Controllers\Backend\CaseStudyController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\TaxCalculatorController;
+use App\Models\TaxCalculator;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,10 +82,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('promo-code', PromoCodeController::class);
     Route::resource('user-docs', UserDocController::class);
     Route::resource('map', MapController::class);
-    Route::resource('document-type', DocumentTypeController::class);
     Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
     Route::resource('invoice', InvoiceController::class);
+    Route::get('filtered-invoices', [InvoiceController::class, 'filterInvoices'])->name('invoice.filter');
     Route::patch('invoice/{invoice}/markAs/{status}', [InvoiceController::class, 'markAs'])->name('invoice.markAs');
     Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
@@ -96,6 +97,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('expert-profile', ExpertProfileController::class);
     Route::resource('exams', ExamController::class);
     Route::resource('questions', QuestionController::class);
+    Route::resource('taxCalculator', TaxCalculatorController::class);
     Route::resource('course', CourseController::class)->names([
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',

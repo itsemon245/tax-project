@@ -2,21 +2,30 @@
 
 namespace App\Http\Controllers\Backend\Invoice;
 
+use Error;
+use Exception;
+use Throwable;
 use Carbon\Carbon;
+use ErrorException;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Mail\InvoiceMail;
+use App\Models\FiscalYear;
 use App\Models\InvoiceItem;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Filter\InvoiceFilter;
+use Psy\Exception\ThrowUpException;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\InvoiceResource;
+use App\Http\Resources\InvoiceCollection;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\JoinClause;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceItemResource;
 use App\Http\Resources\InvoiceItemCollection;
-use App\Models\FiscalYear;
 
 class InvoiceController extends Controller
 {
@@ -30,8 +39,10 @@ class InvoiceController extends Controller
         // dd($recentInvoices[0]->currentFiscal[0]->pivot->status);
         $invoices = Invoice::with('client', 'currentFiscal')->latest()->get();
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
+        $zones = Client::select('zone')->distinct()->get()->pluck('zone');
+        $circles = Client::select('circle')->distinct()->get()->pluck('circle');
         $clients = Client::latest()->get();
-        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'fiscalYear'));
+        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
     }
 
 
@@ -94,14 +105,17 @@ class InvoiceController extends Controller
         foreach ($request->item_names as $key => $name) {
             // taxes
             $taxes = [];
-            foreach ($request["tax-$key-names"] as $id => $name) {
-                $array = [
-                    'name' => $request["tax-$key-names"][$id],
-                    'rate' => $request["tax-$key-rates"][$id],
-                    'number' => $request["tax-$key-numbers"][$id],
-                ];
-                array_push($taxes, $array);
+            if ($request["tax-$key-rates"] !== null) {
+                foreach ($request["tax-$key-rates"] as $id => $name) {
+                    $array = [
+                        'name' => $request["tax-$key-names"][$id],
+                        'rate' => $request["tax-$key-rates"][$id],
+                        'number' => $request["tax-$key-numbers"][$id],
+                    ];
+                    array_push($taxes, $array);
+                }
             }
+
             $item = [
                 'invoice_id' => $invoice->id,
                 'name' => $request['item_names'][$key],
@@ -127,14 +141,9 @@ class InvoiceController extends Controller
     public function show(Request $request, Invoice $invoice)
     {
         $year = $request->year ? $request->year : currentFiscalYear();
-        $clients = Client::get();
         $fiscalYear = FiscalYear::where('year', $year)->first();
         $invoice = $fiscalYear->invoices()->find($invoice->id);
-        $invoiceImage = null;
-        if (countRecords('invoices') > 0) {
-            $invoiceImage = Invoice::first()->header_image;
-        }
-        return view('backend.invoice.viewOne', compact('invoice', 'clients', 'invoiceImage', 'year'));
+        return view('backend.invoice.viewOne', compact('invoice', 'year'));
     }
 
     function getInvoiceData(Request $request, $id)
@@ -313,15 +322,66 @@ class InvoiceController extends Controller
 
     public function sendInvoiceMail(Request $request, $id)
     {
-        $invoice = Invoice::with('client', 'invoiceItems')->find($id);
+        $invoice = Invoice::find($id);
+        $year = $request->year ? $request->year : currentFiscalYear();
+        // dd($year);
 
-        Mail::to($request->email_to)->send(new InvoiceMail($invoice));
+        Mail::to($request->email_to)->queue(new InvoiceMail($invoice, $year, $request->subject));
 
+        $fiscalYear = FiscalYear::where('year', $request->year)->first();
+        $invoice->fiscalYears()->updateExistingPivot($fiscalYear->id, [
+            'status' => 'sent'
+        ]);
         $alert = [
             'message' => "Invoice Mail Send Successfully",
             'alert-type' => 'success',
         ];
 
         return back()->with($alert);
+    }
+
+    public function filterInvoices(Request $request)
+    {
+        $content = [
+            'data' => null,
+            'success' => true,
+            'message' => 'Request Successful'
+        ];
+        $invoices = null;
+        $filter = new InvoiceFilter();
+        $queries = $filter->transform($request);
+        // dd($queries);
+        $invoiceQueries = array_filter($queries, fn ($query) => $query[0] === 'client_id' || $query[0] === 'reference_no');
+        $clientQueries = array_filter($queries, fn ($query) => $query[0] === 'zone' || $query[0] === 'circle');
+        $fiscalQueries = array_filter($queries, fn ($query) => $query[0] === 'year');
+        $pivotQueries = array_filter($queries, function ($query) {
+            return  $query[0] === 'fiscal_year_invoice.paid' ||
+                $query[0] === 'fiscal_year_invoice.due' ||
+                $query[0] === 'fiscal_year_invoice.demand' ||
+                $query[0] === 'fiscal_year_invoice.issue_date' ||
+                $query[0] === 'fiscal_year_invoice.status' ||
+                $query[0] === 'fiscal_year_invoice.due_date';
+        });
+        if (Arr::isAssoc($pivotQueries)) {
+            $pivotQueries =  array_values($pivotQueries);
+        };
+
+        try {
+            $invoices = Invoice::where($invoiceQueries)
+                ->whereHas('client', function (Builder $query) use ($clientQueries) {
+                    $query->where($clientQueries);
+                })
+                ->whereHas('fiscalYears', function ($query) use ($fiscalQueries, $pivotQueries) {
+                    $query->where($fiscalQueries)
+                        ->where($pivotQueries);
+                })
+                ->get();
+            $content['data'] = new InvoiceCollection($invoices);
+        } catch (Throwable $e) {
+            $content['success'] = false;
+            $content['message'] = $e->getMessage();
+            return response($content, 404);
+        }
+        return response($content);
     }
 }

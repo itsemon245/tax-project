@@ -26,6 +26,8 @@ class Book extends Model
     public function purchase(){
         return $this->morphOne(Purchase::class, 'purchasable');
     }
+
+    
     public function isPurchased(int $userId = null)
     {
         if ($userId === null) {

@@ -25,7 +25,7 @@
 
         <div class="d-flex justify-content-center my-2">
             <div class="cta d-flex flex-column align-items-center">
-                <a href="{{ route('product.choose', $product->id) }}" class="btn btn-success text-light w-100"
+                <a href="{{ route('payment.create',['model'=>'Product','slug' => $product->title, 'id' => $product->id]) }}" class="btn btn-success text-light w-100"
                     style="font-weight: 600">Start
                     Now</a>
                 <div class="rating mt-2">

@@ -182,12 +182,12 @@
                                 <div class="collapse" id="sidebarInfoSection">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="{{ route('info.index')."?page_type=service" }}">
+                                            <a href="{{ route('info.index') . '?page_type=service' }}">
                                                 View Info
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('info.create')."?page_type=service" }}">Create Info
+                                            <a href="{{ route('info.create') . '?page_type=service' }}">Create Info
                                             </a>
                                         </li>
                                     </ul>
@@ -238,11 +238,11 @@
                                 <div class="collapse" id="caseStudySection">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="{{ route('case.study.package.backend.index') }}">Create Hero
+                                            <a href="{{ route('case.study.package.backend.index') }}">Create Package
 
                                             </a>
                                             <a href="{{ route('case.study.package.backend.show.all') }}">
-                                                View Hero
+                                                View Package
                                             </a>
                                         </li>
                                     </ul>
@@ -620,13 +620,33 @@
 
 
             </ul>
-
         </div>
-        <!-- End Sidebar -->
+        </li>
+     
+        <li>
+            <a href="#taxCalculator" data-bs-toggle="collapse">
+                <i class="mdi mdi-view-dashboard-outline"></i>
+                <span>Tax Calculator</span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="taxCalculator">
+                <ul class="nav-second-level">
+                    <li>
+                        <a href="{{ route('taxCalculator.create') }}">Create TaxCalculator</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
 
-        <div class="clearfix"></div>
+
+        </ul>
 
     </div>
-    <!-- Sidebar -left -->
+    <!-- End Sidebar -->
+
+    <div class="clearfix"></div>
+
+</div>
+<!-- Sidebar -left -->
 
 </div>

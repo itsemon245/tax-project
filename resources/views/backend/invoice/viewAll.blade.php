@@ -17,87 +17,97 @@
         </div>
         {{-- TODO: change advance search options here --}}
         <div id="advance-search-options" class="card rounded-3 d-none mt-2" style="border: 2px solid var(--ct-gray-500);">
-            <form action="javasript: void(0);">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-6">
-                            <x-form.selectize class="mb-1" id="client" name="client" placeholder="Select Client..."
-                                label="Client" :canCreate="false">
-                                @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                @endforeach
-                            </x-form.selectize>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <x-form.selectize class="mb-1" id="reference" name="reference"
-                                placeholder="Select Reference..." label="Reference" :canCreate="false">
-                                @foreach ($references as $reference)
-                                    <option value="{{ $reference }}">{{ $reference }}</option>
-                                @endforeach
-                            </x-form.selectize>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <x-backend.form.select-input label="Payment Stauts" placeholder="Payment Stauts">
-                                @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
-                                    <option value="{{ $status }}">{{ str($status)->title() }}</option>
-                                @endforeach
-                            </x-backend.form.select-input>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <x-backend.form.select-input name="year" label="Year" placeholder="Year">
-                                @foreach (range(currentYear(), 2020) as $year)
-                                    <option value="{{ $year - 1 . '-' . $year }}" @selected($year === currentYear())>
-                                        {{ str($year - 1 . '-' . $year)->title() }}</option>
-                                @endforeach
-                            </x-backend.form.select-input>
-                        </div>
-                        <div class="col-lg-6">
-                            <x-range-slider id="price" from="100" to="100000" step='50'
-                                icon="mdi mdi-currency-bdt"></x-range-slider>
-                        </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <x-form.selectize class="mb-1 advance-filter-options" id="client" name="client"
+                            placeholder="Select Client..." label="Client" :canCreate="false">
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                            @endforeach
+                        </x-form.selectize>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <x-form.selectize class="mb-1 advance-filter-options" id="reference" name="reference"
+                            placeholder="Select Reference..." label="Reference" :canCreate="false">
+                            @foreach ($references as $reference)
+                                <option value="{{ $reference }}">{{ $reference }}</option>
+                            @endforeach
+                        </x-form.selectize>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <x-backend.form.select-input class="advance-filter-options mb-2" label="Payment Stauts"
+                            name="payment_status" placeholder="Payment Stauts">
+                            @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
+                                <option value="{{ $status }}">{{ str($status)->title() }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <x-backend.form.select-input class="advance-filter-options mb-2" name="fiscal_year" label="Year"
+                            placeholder="Year">
+                            @foreach (range(currentYear(), 2020) as $year)
+                                <option value="{{ $year - 1 . '-' . $year }}" @selected($year === currentYear())>
+                                    {{ str($year - 1 . '-' . $year)->title() }}</option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                    </div>
+                    <div class="col-lg-6">
+                        <x-range-slider class="advance-filter-options" name="demand" id="demand" from="100"
+                            to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
+                    </div>
+                    <div class="col-lg-6">
+                        <x-range-slider class="advance-filter-options" name="paid" id="paid" from="100"
+                            to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
+                    </div>
+                    <div class="col-lg-6">
+                        <x-range-slider class="advance-filter-options" name="arear" id="arear" from="100"
+                            to="100000" step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
+                    </div>
 
-                        <div class="col-lg-6">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <x-backend.form.text-input name="start_date" label="Start Date" type="date" />
-                                </div>
-                                <div class="col-sm-6">
-                                    <x-backend.form.text-input name="end_date" label="End Date" type="date" />
-                                </div>
-                                <div class="col-sm-6">
-                                    <x-form.selectize class="mb-2" id="circle" name="circle" label="Circle"
-                                        placeholder="Select Circle" :canCreate="false">
-                                        @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->cricle }}</option>
-                                        @endforeach
-                                    </x-form.selectize>
-                                </div>
-                                <div class="col-sm-6">
-                                    <x-form.selectize class="mb-2" id="zone" name="zone" label="Zone"
-                                        placeholder="Select Zone" :canCreate="false">
-                                        @foreach ($clients as $client)
-                                            <option value="{{ $client->zone }}">{{ $client->zone }}</option>
-                                        @endforeach
-                                    </x-form.selectize>
-                                </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <x-backend.form.text-input class="advance-filter-options mb-2" name="date_from"
+                                    label="Start Date" type="date" />
                             </div>
-                        </div>
-                        <div class="col-12 mt-2">
-                            <div class="float-end">
-                                <x-backend.ui.button type="custom" href="{{ route('invoice.index') }}"
-                                    class="btn-sm btn-outline-danger">Reset
-                                </x-backend.ui.button>
-                                <x-backend.ui.button type="button" id="advance-search-close"
-                                    class="btn-sm btn-outline-dark">
-                                    Close
-                                </x-backend.ui.button>
-                                <x-backend.ui.button type="button" class="btn-sm btn-primary">Apply</x-backend.ui.button>
+                            <div class="col-sm-6">
+                                <x-backend.form.text-input class="advance-filter-options mb-2" name="date_to"
+                                    label="End Date" type="date" />
+                            </div>
+                            <div class="col-sm-6">
+                                <x-form.selectize class="advance-filter-options mb-2" id="circle" name="circle"
+                                    label="Circle" placeholder="Select Circle" :canCreate="false">
+                                    @foreach ($circles as $circle)
+                                        <option value="{{ $circle }}">{{ str($circle)->title() }}</option>
+                                    @endforeach
+                                </x-form.selectize>
+                            </div>
+                            <div class="col-sm-6">
+                                <x-form.selectize class="advance-filter-options mb-2" id="zone" name="zone"
+                                    label="Zone" placeholder="Select Zone" :canCreate="false">
+                                    @foreach ($zones as $zone)
+                                        <option value="{{ $zone }}">{{ str($zone)->title() }}</option>
+                                    @endforeach
+                                </x-form.selectize>
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-12 mt-2">
+                        <div class="float-end">
+                            <x-backend.ui.button type="custom" href="{{ route('invoice.index') }}"
+                                class="btn-sm btn-outline-danger">Reset
+                            </x-backend.ui.button>
+                            <x-backend.ui.button type="button" id="advance-search-close" class="btn-sm btn-outline-dark">
+                                Close
+                            </x-backend.ui.button>
+                            <x-backend.ui.button id="apply-btn" type="button"
+                                class="btn-sm btn-primary">Apply</x-backend.ui.button>
+                        </div>
+                    </div>
                 </div>
-            </form>
+
+            </div>
         </div>
 
         <h5 class="p-3">Recently Updated</h5>
@@ -194,6 +204,7 @@
                                         <div class="modal-body">
                                             <form action="{{ route('send_invoice_mail', $invoice->id) }}" method="post">
                                                 @csrf
+                                                <input type="text" name='year' value="{{ $fiscalYear }}" hidden>
                                                 <div class="row align-items-center">
                                                     <div class="col-2">
                                                         <label for="email-to-{{ $invoice->id }}" class="form-label">To:
@@ -212,7 +223,7 @@
                                                     <div class="col-10">
                                                         <input type="text" class="form-control mt-2"
                                                             id="email-subject-{{ $invoice->id }}"
-                                                            placeholder="Subject for email" name="email_subject" />
+                                                            placeholder="Subject for email" name="subject" />
                                                     </div>
                                                     <div class="col-12 mt-2">
                                                         <div class="float-end">
@@ -318,7 +329,7 @@
         <script>
             $(document).ready(function() {
                 let containerHeight = parseInt($('.latest-items').css('height').split('px')[0]) + 4
-                console.log(containerHeight);
+                // console.log(containerHeight);
                 $('#latest-container').css('height', containerHeight)
 
                 const filterWrapper = $('#basic-datatable_filter')
@@ -354,7 +365,7 @@
                     })
 
 
-                console.log(searchLabel);
+                // console.log(searchLabel);
                 filterWrapper.append(advanceSearch.removeClass('d-none'))
                 $('#basic-datatable_wrapper').children().first().after(advanceSearchOptions);
                 advanceSearch.click(e => {
@@ -374,6 +385,148 @@
                     $(e.target).parent().next().toggleClass('d-none')
                 })
 
+
+                const elements = $('.advance-filter-options')
+                const applyBtn = $('#apply-btn')
+                let url = "{{ route('invoice.filter') }}" + '?'
+                // filter options
+                const filter = {
+                    url: url + "fiscal_year=[eq]" + '{{ currentFiscalYear() }}',
+                    data: null,
+                    queries: {
+                        client: '',
+                        reference: '',
+                        status: '',
+                        year: "fiscal_year=[eq]" + '{{ currentFiscalYear() }}',
+                        demandPriceFrom: '',
+                        paidPriceFrom: '',
+                        duePriceFrom: '',
+                        demandPriceTo: '',
+                        paidPriceTo: '',
+                        duePriceTo: '',
+                        issueDateFrom: '',
+                        dueDateFrom: '',
+                        issueDateTo: '',
+                        dueDateTo: '',
+                        circle: '',
+                        zone: '',
+                    },
+
+                    fetchData(url, callback) {
+                        $.ajax({
+                            type: "get",
+                            url: url,
+                            success: function(response) {
+                                console.log(response)
+                                this.data = response.data
+                                callback(this.data)
+                            },
+                        });
+                        return this
+                    },
+
+                    updateUrl(jqElement) {
+                        jqElement.on('change', (e) => {
+                            switch (e.target.name) {
+                                case 'fiscal_year':
+                                    this.queries.year = e.target.value !== '' ?
+                                        `fiscal_year=[eq]` + e.target.value : ''
+                                    break;
+                                case 'client':
+                                    this.queries.client = e.target.value !== '' ?
+                                        `&client=[eq]` + e.target.value : ''
+                                    break;
+                                case 'reference':
+                                    this.queries.reference = e.target.value !== '' ?
+                                        `&reference=[eq]` + e.target.value : ''
+                                    break;
+                                case 'payment_status':
+                                    this.queries.status = e.target.value !== '' ?
+                                        `&status=[eq]` + e.target.value : ''
+                                    break;
+                                case 'demand_from':
+                                    this.queries.demandPriceFrom = e.target.value !== '' ?
+                                        `&demand=[gte]` + e.target.value : ''
+                                    break;
+                                case 'paid_from':
+                                    this.queries.paidPriceFrom = e.target.value !== '' ?
+                                        `&paid=[gte]` + e.target.value : ''
+                                    break;
+                                case 'arear_from':
+                                    this.queries.duePriceFrom = e.target.value !== '' ?
+                                        `&arear=[gte]` + e.target.value : ''
+                                    break;
+                                case 'demand_to':
+                                    this.queries.demandPriceTo = e.target.value !== '' ?
+                                        `&demand=[lte]` + e.target.value : ''
+                                    break;
+                                case 'paid_to':
+                                    this.queries.paidPriceTo = e.target.value !== '' ?
+                                        `&paid=[lte]` + e.target.value : ''
+                                    break;
+                                case 'arear_to':
+                                    this.queries.duePriceTo = e.target.value !== '' ?
+                                        `&arear=[lte]` + e.target.value : ''
+                                    break;
+                                case 'date_from':
+                                    this.queries.issueDateFrom = e.target.value !== '' ?
+                                        `&issue_date_from=[gte]` + e.target.value : ''
+                                    // this.queries.dueDateFrom = e.target.value !== '' ?
+                                    //     `&due_date_from=[gte]` + e.target.value : ''
+                                    break;
+                                case 'date_to':
+                                    this.queries.issueDateTo = e.target.value !== '' ?
+                                        `&issue_date_to=[lte]` + e.target.value : ''
+                                    // this.queries.dueDateTo = e.target.value !== '' ?
+                                    //     `&due_date_to=[lte]` + e.target.value : ''
+                                    break;
+                                case 'zone':
+                                    this.queries.zone = e.target.value !== '' ?
+                                        `&zone=[eq]` + e.target.value : ''
+                                    break;
+                                case 'circle':
+                                    this.queries.circle = e.target.value !== '' ?
+                                        `&circle=[eq]` + e.target.value : ''
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            this.url = url +
+                                this.queries.year +
+                                this.queries.client +
+                                this.queries.reference +
+                                this.queries.status +
+                                this.queries.demandPriceFrom +
+                                this.queries.paidPriceFrom +
+                                this.queries.duePriceFrom +
+                                this.queries.demandPriceTo +
+                                this.queries.paidPriceTo +
+                                this.queries.duePriceTo +
+                                this.queries.issueDateFrom +
+                                this.queries.issueDateTo +
+                                this.queries.dueDateFrom +
+                                this.queries.dueDateTo +
+                                this.queries.circle +
+                                this.queries.zone
+
+                        })
+                    },
+                    updateDom(data) {
+                        console.log(data);
+                    }
+
+                }
+                // add eventlisteners to every filter input element
+                elements.each((i, element) => {
+                    let jqEl = $(element)
+                    filter.updateUrl(jqEl)
+                });
+
+                applyBtn.click(function(e) {
+                    // e.preventDefault()
+                    filter.fetchData(filter.url, filter.updateDom)
+                })
 
             });
         </script>
