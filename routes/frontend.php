@@ -65,6 +65,7 @@ Route::resource('user-doc', UserDocController::class);
 
 Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
 Route::get('/make-appointment/virtual', [PageController::class, 'appointmentVirtual'])->name('appointment.virtual');
+Route::get('show-all/industries', [PageController::class, 'showAllIndusryPage'])->name('show.all.industries');
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
@@ -144,8 +145,8 @@ Route::prefix('payment')
     ->name('payment.')
     ->controller(PaymentController::class)
     ->group(function () {
-        Route::get('create/{slug}/{id}', 'create')->name('create');
-        Route::get('store/{slug}/{id}', 'store')->name('store');
+        Route::get('create/{model}/{slug}/{id}', 'create')->name('create');
+        Route::post('store/{model}/', 'store')->name('store');
         Route::get('success/{slug}/{id}', 'success')->name('success');
         Route::get('cancel', 'cancel')->name('cancel');
     });

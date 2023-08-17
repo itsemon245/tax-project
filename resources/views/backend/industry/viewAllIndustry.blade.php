@@ -22,7 +22,7 @@
                     @forelse ($Industries as $key=>$industry)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td><img src="{{useImage($industry->logo)}}" alt="" /></td>
+                        <td><img src="{{useImage($industry->logo)}}" width="60px" loading="lazy" alt="" /></td>
                         <td>{!! Str::limit($industry->page_description, 15, '...') !!}</td>
                         <td>{!! Str::limit($industry->description, 15, '...') !!}</td>
                         <td>

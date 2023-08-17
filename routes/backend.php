@@ -12,6 +12,8 @@ use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\VideoController;
 use App\Http\Controllers\ExpertProfileController;
+use App\Http\Controllers\Review\ReviewController;
+use App\Http\Controllers\TaxCalculatorController;
 use App\Http\Controllers\Backend\Map\MapController;
 use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\Backend\Book\BookController;
@@ -114,6 +116,7 @@ Route::prefix('admin')->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::delete('destroy/{id}', 'destroy')->name('delete');
             Route::PUT('update/{id}', 'update')->name('update');
+            Route::get('user/{id}', 'user')->name('user');
         });
 
     Route::resource('case-study', CaseStudyController::class);
@@ -126,6 +129,13 @@ Route::prefix('admin')->group(function () {
     Route::resource('tax-setting', TaxSettingController::class);
     Route::resource('member', MemberController::class);
 
+    Route::get('chalan/clintes/{id}',[ChalanController::class,'user'])->name('admin.chalan.client');
+    //Review backend 
+    Route::prefix('/review')->name('backend.review.')->controller(ReviewController::class)->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::delete('{id}/destroy', 'destroy')->name('destroy');
+    });
 
     //service related routes
     Route::resource('service-subcategory', ServiceSubCategoryController::class);

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Purchase;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -11,12 +13,24 @@ class PaymentController extends Controller
     {
         return view('frontend.payment.index');
     }
-    public function create(int $id, string $slug): View
+    public function create(string $model, string $slug, string $id): View
     {
-        return view('frontend.payment.create');
+        return view('frontend.pages.payment.create');
     }
-    public function store(int $id, string $slug)
+    public function store( string $model, Request $request)
     {
+        Purchase::create([
+            'user_id'=> Auth::user()->id,
+            'user_id'=> Auth::user()->id,
+            'user_id'=> Auth::user()->id,
+            'user_id'=> Auth::user()->id,
+            'user_id'=> Auth::user()->id,
+            'user_id'=> Auth::user()->id,
+            'user_id'=> Auth::user()->id,
+            'user_id'=> Auth::user()->id,
+            'user_id'=> Auth::user()->id,
+            'user_id'=> Auth::user()->id,
+        ]);
     }
     public function success(int $id, string $slug): View
     {

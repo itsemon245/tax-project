@@ -32,6 +32,7 @@ return new class extends Migration
             $table->dateTime('expire_date')->nullable();
             $table->boolean('is_expired')->default(false);
             $table->morphs('purchasable');
+            $table->integer('approved')->default(0);
             $table->timestamps();
         });
         // Schema::create('purchasables', function (Blueprint $table) {
