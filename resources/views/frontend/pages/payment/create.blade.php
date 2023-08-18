@@ -117,7 +117,8 @@
                                         <div class="col-md-6">
                                             <x-backend.form.text-input name="name" label="Full Name"
                                                 placeholder="Full Name"
-                                                value="{{ auth()->user() ? auth()->user()->name : '' }}" />
+                                                value="{{ auth()->user() ? auth()->user()->name : '' }}" required />
+                                              
                                             <div class="row align-items-center">
                                                 <div class="col-4">
                                                     <label class="form-label d-block mb-0" for="pay-later-switch">Pay
@@ -130,7 +131,7 @@
                                                 </div>
                                                 <div class="col-8">
                                                     <x-backend.form.text-input  type="number" name="paid_amount"
-                                                        label="Amount To Pay(৳)" placeholder="0.00 ৳" />
+                                                        label="Amount To Pay(৳)" placeholder="0.00 ৳" required/>
                                                 </div>
 
                                             </div>

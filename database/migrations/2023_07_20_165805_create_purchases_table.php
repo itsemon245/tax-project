@@ -21,7 +21,7 @@ return new class extends Migration
             $table->boolean('has_promo_code_applied')->default(false);
             $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->nullable();
             $table->enum('payment_method', ['bkash', 'nagad', 'rocket'])->nullable();
-            $table->string('payment_number');
+            $table->string('payment_number')->nullable();
             $table->string('trx_id')->nullable();
             $table->json('metadata')->nullable();
             $table->decimal('payable_amount', 8, 2);
