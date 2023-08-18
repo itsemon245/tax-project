@@ -1,12 +1,15 @@
+
+@php
+    use Illuminate\Support\Str;
+@endphp
 @extends('backend.layouts.app')
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Project', 'Create']" />
 
     <x-backend.ui.section-card name="Project Create">
         <div class="container my-3">  
-            <form method="POST" action="#" >
+            <form method="POST" action="{{ route('project.store') }}" >
                 @csrf
-                @method("PUT")
                 <div class="row">
                     {{-- {{ dd($clients) }} --}}
                     <div class="col-md-12">
@@ -42,7 +45,7 @@
                                                 <x-backend.form.text-input label="Project Name" name='name'  required />
                                             </div>
                                             <div class="col-md-6 mb-2">
-                                                <x-backend.form.text-input label="Weekdays" name='weekdays' disabled />
+                                                <x-backend.form.text-input label="Weekdays" type="number" name='weekdays' required />
                                             </div>
                                                 <div class="col-md-6 mb-2">
                                                     <x-backend.form.text-input label="Start Date" type="date" required name='start_date'   />
@@ -51,11 +54,11 @@
                                                 <x-backend.form.text-input label="End Date" type="date" required name='end_date'   />
                                             </div>
                                             <div class="col-md-6 mb-2">
-                                                <x-backend.form.text-input label="Daily Target" required name="daily_target"   />
+                                                <x-backend.form.text-input label="Daily Target" type="number" required name="daily_target"   />
                                             </div>
                                             <div class="col-md-6 mb-2">
-                                                <x-backend.form.text-input label="Total Target" value="{{ count($clients) }}" name="" disabled />
-                                                <input type="text" hidden value="{{ $clients }}" name="total_target"> 
+                                                <x-backend.form.text-input label="Total Clients" name="" placeholder="{{ count($clients) }}" disabled />
+                                                <input type="text" hidden value="{{ count($clients) }}" name="total_clients"> 
                                             </div>
                                             {{-- {{ dd($users[0]) }} --}}
                                         </div> <!-- end row -->
@@ -71,26 +74,31 @@
                                                             <th>Phone</th>
                                                             <th>Circle</th>
                                                             <th>Zone</th>
-                                                            <th>Action</th>
+                                                            <th>Assign</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @forelse ($users as $key=>$user)
+                                                        @forelse ($clients as $key=>$client)
                                                         <tr>
+                                                            <input type="hidden" value="{{ $client->id }}" name="clients[]">
                                                             {{-- {{ dd($user) }} --}}
                                                             <td>{{ ++$key }}</td>
-                                                            <td>{{ $user->name }}</td>
-                                                            <td>{{ $user->phone }}</td>
-                                                            <td>{{ $user->thana }}</td>
-                                                            <td>{{ $user->district }}</td>
+                                                            <td>{{ $client->name }}</td>
+                                                            <td>{{ $client->phone }}</td>
+                                                            <td>{{ $client->circle }}</td>
+                                                            <td>{{ $client->zone }}</td>
                                                             <td>
-                                                                <div class="btn-group">
-                                                                    <a href="#" class="btn btn-sm btn-success">View</a>
-                                                                    <form action="#" method="post">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
-                                                                    </form>
+                                                                <div class="d-flex flex-wrap gap-1">
+                                                                    @foreach ($users as $conut => $user)
+                                                                    <div style="max-width: 400px;">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" value="{{ $user->id }}" name="client_{{ $client->id }}_users[]" type="checkbox" id="{{ Str::slug($user->user_name) }}">
+                                                                            <label class="form-check-label text-primary" for="{{ Str::slug($user->user_name) }}">
+                                                                                {{ $user->name }}
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    @endforeach
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -160,7 +168,7 @@
                 valueField: 'district',
                 searchField: 'district',
             });
-            let thanaSelect = $('#thana').selectize({
+            let circleSelect = $('#thana').selectize({
                 maxItems:1,
                 sortField:'text',
                 create:true,

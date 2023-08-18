@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('start_date')->default(now());
             $table->date('end_date')->default(now()->addDays(10));
             $table->integer('weekdays')->default(5);
-            $table->integer('total_target');
+            $table->integer('total_clients');
             $table->integer('daily_target');
             $table->integer('weekly_target');
             $table->integer('monthly_target');
