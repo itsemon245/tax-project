@@ -338,6 +338,13 @@
                         </ul>
                     </div>
                 </li>
+
+                <li>
+                    <a href="{{ route('progress.index') }}">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Projects Progress</span>
+                    </a>
+                </li>
                 <li>
                     <a href="#user-appointmentSection" data-bs-toggle="collapse">
                         <i class="mdi mdi-view-dashboard-outline"></i>
