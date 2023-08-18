@@ -76,12 +76,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $items;
     }
 
-   public function promoCodes()
-   {
-     return $this->belongsToMany(PromoCode::class)->withPivot('limit');
-   }
+    public function promoCodes()
+    {
+        return $this->belongsToMany(PromoCode::class)
+            ->withPivot('limit');
+    }
 
-   function clients(): BelongsToMany
+    function clients(): BelongsToMany
     {
         return $this->belongsToMany(Client::class);
     }

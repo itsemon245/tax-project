@@ -216,13 +216,11 @@
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             },
-                            data: {
-                                hello: 'world'
-                            },
-                            dataType: "json",
-                            contentType: "json",
+                            data: code.data(),
+                            // dataType: "json",
+                            // contentType: "json",
                             success: function(response) {
-                                console.table(response);
+                                console.log(response);
                                 if (response.success) {
                                     let message = response.message
                                     code.message
@@ -233,10 +231,13 @@
                                 }
                             },
                             error: function(error) {
-                                // console.table(error);
+                                console.log(error);
                                 if (error.status === 401 || error.statusText === 'Unauthorized') {
                                     let message = 'Please login to apply promo code !'
                                     code.message.text(message)
+                                }
+                                if (error.status === 404) {
+                                    code.message.text(error.responseJSON.message).addClass('text-danger')
                                 }
                             }
                         });
