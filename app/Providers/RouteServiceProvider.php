@@ -33,13 +33,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureRateLimiting();
-
-        parent::boot();
-        Route::bind('model', function ($value) {
-            // decrypt the namespace before using it
-            return decrypt($value);
-        });
-
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')

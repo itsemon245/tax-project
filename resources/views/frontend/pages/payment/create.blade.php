@@ -217,13 +217,13 @@
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             },
                             data: {
-                                'code': code.data().code,
-                                'price': code.data().price,
+                                hello: 'world'
                             },
                             dataType: "json",
                             contentType: "json",
                             success: function(response) {
                                 console.table(response);
+                                debugger
                                 if (response.success) {
                                     let message = response.message
                                     code.message
