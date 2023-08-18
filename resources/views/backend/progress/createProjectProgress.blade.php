@@ -16,14 +16,14 @@
                                     <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <a href="#project-info" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 active" aria-selected="true" role="tab" tabindex="-1">
-                                                <i class="mdi mdi-information-variant-circle-outline"></i>
+                                                <i class="mdi mdi-information-outline"></i>
                                                 <span class="d-none d-sm-inline">Project Info</span>
                                             </a>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 " aria-selected="false" role="tab">
-                                                <i class="mdi mdi-office-building-marker"></i>
-                                                <span class="d-none d-sm-inline">Address</span>
+                                                <i class="mdi mdi-progress-clock"></i>
+                                                <span class="d-none d-sm-inline">Target</span>
                                             </a>
                                         </li>
                                         <li class="nav-item" role="presentation">
@@ -45,51 +45,26 @@
                                     <div class="tab-pane my-3 active" id="project-info" role="tabpanel">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <x-backend.form.text-input label="Full Name" name='name'  required placeholder="John Doe"  />
+                                                <x-backend.form.text-input label="Project Name" name='name'  required />
                                             </div>
                                             <div class="col-md-6">
-                                                <x-backend.form.text-input label="Username" name='username' disabled "  />
+                                                <x-backend.form.text-input label="Weekdays" name='weekdays' disabled />
                                             </div>
                                                 <div class="col-md-6">
-                                                    <x-backend.form.text-input label="Phone No." required name='phone'   />
+                                                    <x-backend.form.text-input label="Start Date" type="date" required name='start_date'   />
                                                 </div>
                                             <div class="col-md-6">
-                                                <x-backend.form.text-input label="Email" name='email' disabled   />
+                                                <x-backend.form.text-input label="End Date" type="date" required name='end_date'   />
                                             </div>
                                             
                                         </div> <!-- end row -->
                                     </div>
-                                    <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel"> 
-            
+                                    <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
                                         <div class="row">
                                             <div class="col-md-6 col-lg-4">
-                                                <label for="division">Division <span class="text-danger">*</span></label>
-                                                <select class="selectize" id="division" name="division" required placeholder="Select Division..." >
-                                                    <option disabled selected>Select Division</option>
-                                                    {{-- @foreach ($data as $item)
-                                                    <option class="divisions" value="{{$item['division']}}">{{$item['division']}}</option>
-                                                    @endforeach --}}
-                                                </select>
+                                                <x-backend.form.text-input label="Total Target" name='total_target'  required />                                            
                                             </div>
-                                            <div class="col-md-6 col-lg-4">
-                                                <label for="district">District <span class="text-danger">*</span></label>
-                                                <select id="district" name="district" required placeholder="Select District..." >
-                                                    <option disabled selected>Select Division First</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 col-lg-4">
-                                                <label for="thana">Thana <span class="text-danger">*</span></label>
-                                                <select id="thana" name="thana" required placeholder="Select Thana..." >
-                                                    <option disabled selected>Select District First</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="form-label" for="address">Address</label>
-                                                <div class="">
-                                                    <textarea name="address" id="address" class="form-control" required placeholder="{{"House No:,\nStreet No:,\nPost Office:"}}" cols="30" ="" rows="4"></textarea>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row -->
+                                        </div>
                                     </div>
                                     <div class="tab-pane my-3" id="finish" role="tabpanel">
                                         <div class="row">

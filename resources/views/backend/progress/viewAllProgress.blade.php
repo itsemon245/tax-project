@@ -12,9 +12,9 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Logo</th>
-                        <th>Page Content</th>
-                        <th>Description</th>
+                        <th>Name</th>
+                        <th>Start</th>
+                        <th>End</th>
                         <th>Action</th>
                     </tr>
                 </thead>
