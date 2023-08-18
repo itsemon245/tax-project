@@ -7,11 +7,10 @@
             <form method="POST" action="{{ route('project.store') }}">
                 @csrf
                 <div class="row">
-                    {{-- {{ dd($clients) }} --}}
                     <div class="col-md-12">
                         <div class="px-md-0 px-2">
+                            <a href="{{ route('project.index') }}" class="btn btn-info btn-sm mb-2">Back</a>
                             <div id="progressbarwizard">
-
                                 <div class="d-flex justify-content-center">
                                     <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
                                         <li class="nav-item" role="presentation">
