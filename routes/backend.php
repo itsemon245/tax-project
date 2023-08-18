@@ -119,12 +119,13 @@ Route::prefix('admin')->group(function () {
             Route::PUT('update/{id}', 'update')->name('update');
             Route::get('user/{id}', 'user')->name('user');
         });
-        Route::prefix('progress')
-        ->name('progress.')
+        Route::prefix('project')
+        ->name('project.')
         ->controller(ProgressController::class)
         ->group(function () {
             Route::get('', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
             // Route::post('store', 'store')->name('store');
             // Route::get('show-all', 'showAll')->name('show.all');
             // Route::get('edit/{id}', 'edit')->name('edit');

@@ -340,7 +340,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('progress.index') }}">
+                    <a href="{{ route('project.index') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span>Projects Progress</span>
                     </a>
