@@ -2,25 +2,8 @@
 
 @pushOnce('customCss')
     <style>
-        .custom-grid {
-            display: grid;
-            grid-template-columns: 220px 220px;
-            justify-content: center;
-            margin-bottom: 1rem;
-            gap: 1rem;
-        }
-
-        @media (min-width:550px) {
-            .custom-grid {
-                grid-template-columns: 170px 170px 170px;
-            }
-        }
-
-        @media (min-width:850px) {
-            .custom-grid {
-                grid-template-columns: 250px 250px 250px;
-                margin-bottom: 2rem;
-            }
+        .line-through {
+            text-decoration: var(--bs-danger) solid line-through 2px;
         }
     </style>
 @endPushOnce
@@ -100,8 +83,8 @@
                                     <div class="d-flex gap-1 align-items-center">
                                         <span class="fw-medium">Item Price:</span>
                                         <div>
-                                            <span class="font-24" id="record-price"> {{ $record->price }}</span>
-                                            <span class="mdi mdi-currency-bdt font-24 fw-bold p-0"></span>
+                                            <span class="font-24 prev-price" id="record-price"> {{ $record->price }}</span>
+                                            <span class="mdi mdi-currency-bdt font-24 fw-bold p-0 prev-price"></span>
                                         </div>
                                         @if ($record->discount > 0)
                                             @php
@@ -113,6 +96,10 @@
                                                 <span class="mdi mdi-currency-bdt font-16 p-0"></span>
                                             </div>
                                         @endif
+                                        <div id="payable-wrapper" class="text-success fw-bold d-none">
+                                            <span class="font-24" id="price"></span>
+                                            <span class="mdi mdi-currency-bdt font-24 fw-bold p-0"></span>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -122,6 +109,9 @@
                                     @csrf
                                     <input type="text" name="purchasable_type" value="{{ $model }}" hidden>
                                     <input type="text" name="purchasable_id" value="{{ $id }}" hidden>
+                                    <input type="text" name="payable" value="{{ $record->price }}" hidden>
+                                    <input type="text" name="discount" value="0" hidden>
+                                    <input type="text" name="is_promo_code_applied" value="false" hidden>
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -129,10 +119,6 @@
                                                 placeholder="Full Name"
                                                 value="{{ auth()->user() ? auth()->user()->name : '' }}" />
                                             <div class="row align-items-center">
-                                                <div class="col-8">
-                                                    <x-backend.form.text-input type="number" name="paid_amount"
-                                                        label="Amount To Pay(৳)" placeholder="0.00 ৳" />
-                                                </div>
                                                 <div class="col-4">
                                                     <label class="form-label d-block mb-0" for="pay-later-switch">Pay
                                                         Later</label>
@@ -142,6 +128,11 @@
 
                                                     </div>
                                                 </div>
+                                                <div class="col-8">
+                                                    <x-backend.form.text-input  type="number" name="paid_amount"
+                                                        label="Amount To Pay(৳)" placeholder="0.00 ৳" />
+                                                </div>
+
                                             </div>
                                             <x-backend.form.text-input name="trx_id" label="Trx ID" placeholder="Trx ID" />
                                         </div>
@@ -177,6 +168,7 @@
                                         </div>
 
                                     </div>
+                                    <button class="btn btn-primary rounded rounded-3">Submit Payment</button>
 
                                 </form>
                             </div>
@@ -220,13 +212,20 @@
                             // dataType: "json",
                             // contentType: "json",
                             success: function(response) {
-                                console.log(response);
                                 if (response.success) {
                                     let message = response.message
                                     code.message
                                         .text(message)
                                         .toggleClass('text-danger')
                                         .toggleClass('text-success')
+                                    $('#payable-wrapper')
+                                        .removeClass('d-none')
+                                        .find('#price')
+                                        .text(response.data.payable)
+                                    $('.prev-price').addClass('line-through')
+                                    $('input[name="discount"]').val(response.data.discount)
+                                    $('input[name="payable"]').val(response.data.payable)
+                                    $('input[name="is_promo_code_applied"]').val(true)
                                     code.hasApplied = true
                                 }
                             },
@@ -237,12 +236,16 @@
                                     code.message.text(message)
                                 }
                                 if (error.status === 404) {
-                                    code.message.text(error.responseJSON.message).addClass('text-danger')
+                                    code.message.text(error.responseJSON.message).addClass(
+                                        'text-danger')
                                 }
                             }
                         });
                     }
                 }
+
+                // TODO: Hide some feilds upon paylater enabled
+
             });
         </script>
     @endpush

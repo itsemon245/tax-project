@@ -6,6 +6,7 @@ use App\Models\PromoCode;
 use Exception;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use PhpParser\Node\Stmt\TryCatch;
@@ -50,7 +51,7 @@ class AjaxController extends Controller
         return response($response);
     }
 
-    public function applyPromoCode(Request $request): Response
+    public function applyPromoCode(Request $request): JsonResponse
     {
         $content = [
             'data' => null,
@@ -62,23 +63,31 @@ class AjaxController extends Controller
         $promoCode = null;
         try {
             $user = User::find(auth()->id());
-            $promoCode = $user->promoCodes()->where('code', $code)->firstOrFail();
+            $promoCode = $user->promoCodes()->where('code', $code)->first();
+            if ($promoCode === null) {
+                throw new Exception('Invalid promo code!');
+            }
             $expire = Carbon::parse($promoCode->expired_at);
             $isExpired = today()->gt($expire);
             if ($isExpired) {
-                throw new Exception('Promo code expired at ' . $expire->format('d F, Y'));
+                throw new Exception('Promo code expired at ' . $expire->format('d F, Y') . "!");
             }
             if ($promoCode->pivot->limit < 1) {
-                throw new Exception('Limit Exceeded');
+                throw new Exception('Limit Exceeded!');
             }
-            // TODO: Calculate promo code discount
-            $content['data'] = $promoCode->pivot->limit;
+            $discount = $promoCode->is_discount ? $request->price * ($promoCode->amount / 100) : $promoCode->amount;
+            $discount = round($discount, 2);
+            $payable = $request->price - $discount;
+            $content['data'] = [
+                'discount' => $discount,
+                'payable' => $payable
+            ];
         } catch (Exception $e) {
             $content['data'] = $e;
             $content['success'] = false;
             $content['message'] = $e->getMessage();
-            return response($content, 404);
+            return response()->json($content, 404);
         }
-        return response($content);
+        return response()->json($content);
     }
 }

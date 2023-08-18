@@ -23,18 +23,19 @@ class PaymentController extends Controller
     }
     public function store(Request $request)
     {
-        Purchase::create([
-            'user_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id,
-        ]);
+        dd($request->all());
+        // Purchase::create([
+        //     'user_id' => Auth::user()->id,
+        //     'user_id' => Auth::user()->id,
+        //     'user_id' => Auth::user()->id,
+        //     'user_id' => Auth::user()->id,
+        //     'user_id' => Auth::user()->id,
+        //     'user_id' => Auth::user()->id,
+        //     'user_id' => Auth::user()->id,
+        //     'user_id' => Auth::user()->id,
+        //     'user_id' => Auth::user()->id,
+        //     'user_id' => Auth::user()->id,
+        // ]);
     }
     public function success(string $model, int $id): View
     {

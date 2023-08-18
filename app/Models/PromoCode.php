@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class PromoCode extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_type', 'user_id', 'code', 'limit', 'expired_at'];
+    protected $guarded = [];
 
     public function user()
     {

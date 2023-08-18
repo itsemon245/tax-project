@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->boolean('status')->default(1);
-            $table->boolean('is_discount')->default(1);
+            $table->boolean('is_discount')->default(false);
             $table->integer('amount')->default(0);
             $table->date('expired_at')->default(now()->addDays(10));
             $table->timestamps();
