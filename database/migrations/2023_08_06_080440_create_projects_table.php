@@ -19,12 +19,12 @@ return new class extends Migration
             $table->integer('weekdays')->default(5);
             $table->integer('total_clients');
             $table->integer('daily_target');
-            $table->integer('weekly_target');
-            $table->integer('monthly_target');
-            // $table->integer('total_progress')->default(0);
-            // $table->integer('daily_progress')->nullable();
-            // $table->integer('weekly_progress')->nullable();
-            // $table->integer('monthly_progress')->nullable();
+            $table->integer('weekly_target')->nullable();
+            $table->integer('monthly_target')->nullable();
+            $table->integer('total_progress')->default(0);
+            $table->integer('daily_progress')->nullable();
+            $table->integer('weekly_progress')->nullable();
+            $table->integer('monthly_progress')->nullable();
             $table->timestamps();
         });
         Schema::create('client_project', function (Blueprint $table) {
@@ -38,10 +38,10 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->boolean('is_completed')->default(false);
-            $table->integer('total_progress')->default(0);
-            $table->integer('daily_progress')->nullable();
-            $table->integer('weekly_progress')->nullable();
-            $table->integer('monthly_progress')->nullable();
+            // $table->integer('total_progress')->default(0);
+            // $table->integer('daily_progress')->nullable();
+            // $table->integer('weekly_progress')->nullable();
+            // $table->integer('monthly_progress')->nullable();
             $table->timestamps();
         });
     }
