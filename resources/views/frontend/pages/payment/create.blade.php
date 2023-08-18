@@ -223,7 +223,6 @@
                             contentType: "json",
                             success: function(response) {
                                 console.table(response);
-                                debugger
                                 if (response.success) {
                                     let message = response.message
                                     code.message
