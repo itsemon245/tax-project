@@ -6,6 +6,8 @@ use App\Models\Progress;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProgressRequest;
 use App\Http\Requests\UpdateProgressRequest;
+use App\Models\Client;
+use App\Models\User;
 
 class ProgressController extends Controller
 {
@@ -16,13 +18,15 @@ class ProgressController extends Controller
     {
         return view('backend.progress.viewAllProgress');
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('backend.progress.createProjectProgress');
+        $clients = Client::with('users')->get();
+        $users = User::limit(5)->get();
+        return view('backend.progress.createProjectProgress', compact('clients', 'users'));
     }
 
     // /**

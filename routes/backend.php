@@ -119,8 +119,8 @@ Route::prefix('admin')->group(function () {
             Route::PUT('update/{id}', 'update')->name('update');
             Route::get('user/{id}', 'user')->name('user');
         });
-        Route::prefix('progress')
-        ->name('progress.')
+        Route::prefix('project')
+        ->name('project.')
         ->controller(ProgressController::class)
         ->group(function () {
             Route::get('', 'index')->name('index');

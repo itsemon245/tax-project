@@ -1,10 +1,10 @@
 @extends('backend.layouts.app')
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Progress', 'Project Progress']" />
+    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Show All', 'Project']" />
 
-    <x-backend.ui.section-card name="Progress">
+    <x-backend.ui.section-card name="Projects">
         <div class="mb-2">
-            <a href="{{ route('progress.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
+            <a href="{{ route('project.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
         </div>
         <form action="{{ route('info.store') }}" method="post" enctype="multipart/form-data">
             @csrf

@@ -1,13 +1,14 @@
 @extends('backend.layouts.app')
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Progress', 'Project Progress', 'Create']" />
+    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Project', 'Create']" />
 
-    <x-backend.ui.section-card name="Progress Create">
+    <x-backend.ui.section-card name="Project Create">
         <div class="container my-3">  
             <form method="POST" action="#" >
                 @csrf
                 @method("PUT")
                 <div class="row">
+                    {{-- {{ dd($clients) }} --}}
                     <div class="col-md-12">
                         <div class="px-md-0 px-2">
                             <div id="progressbarwizard">
@@ -21,15 +22,9 @@
                                             </a>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 " aria-selected="false" role="tab">
-                                                <i class="mdi mdi-progress-clock"></i>
-                                                <span class="d-none d-sm-inline">Target</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
                                             <a href="#finish" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2" aria-selected="false" role="tab" tabindex="-1">
-                                                <i class="mdi mdi-checkbox-marked-circle-outline "></i>
-                                                <span class="d-none d-sm-inline">Finish</span>
+                                                <i class="mdi mdi-book-plus-multiple"></i>
+                                                <span class="d-none d-sm-inline">Assign</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -37,52 +32,77 @@
                         
                             
                                 <div class="tab-content ">
-                        
-                                    <div id="bar" class="progress my-3" style="height: 7px;">
+                                    {{-- <div id="bar" class="progress my-3" style="height: 7px;">
                                         <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
-                                    </div>
+                                    </div> --}}
                             
                                     <div class="tab-pane my-3 active" id="project-info" role="tabpanel">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <x-backend.form.text-input label="Project Name" name='name'  required />
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <x-backend.form.text-input label="Weekdays" name='weekdays' disabled />
                                             </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 mb-2">
                                                     <x-backend.form.text-input label="Start Date" type="date" required name='start_date'   />
                                                 </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-2">
                                                 <x-backend.form.text-input label="End Date" type="date" required name='end_date'   />
                                             </div>
-                                            
-                                        </div> <!-- end row -->
-                                    </div>
-                                    <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-6 col-lg-4">
-                                                <x-backend.form.text-input label="Total Target" name='total_target'  required />                                            
+                                            <div class="col-md-6 mb-2">
+                                                <x-backend.form.text-input label="Daily Target" required name="daily_target"   />
                                             </div>
-                                        </div>
+                                            <div class="col-md-6 mb-2">
+                                                <x-backend.form.text-input label="Total Target" value="{{ count($clients) }}" name="" disabled />
+                                                <input type="text" hidden value="{{ $clients }}" name="total_target"> 
+                                            </div>
+                                            {{-- {{ dd($users[0]) }} --}}
+                                        </div> <!-- end row -->
                                     </div>
                                     <div class="tab-pane my-3" id="finish" role="tabpanel">
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="text-center">
-                                                    <h2 class="mt-0"><i class="mdi mdi-check-all"></i></h2>
-                                                    <h3 class="mt-0">Thank you !</h3>
-                    
-                                                    <p class="w-75 mb-2 mx-auto">Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas mattis dui. Aliquam
-                                                        mattis dictum aliquet.</p>
-                    
-                                                    <div class="mb-3">
-                                                        <div class="form-check d-inline-block">
-                                                            <input type="checkbox" class="form-check-input" id="customCheck3">
-                                                            <label class="form-check-label" for="customCheck3">I agree with the Terms and Conditions</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <x-backend.table.basic>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Name</th>
+                                                            <th>Phone</th>
+                                                            <th>Circle</th>
+                                                            <th>Zone</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @forelse ($users as $key=>$user)
+                                                        <tr>
+                                                            {{-- {{ dd($user) }} --}}
+                                                            <td>{{ ++$key }}</td>
+                                                            <td>{{ $user->name }}</td>
+                                                            <td>{{ $user->phone }}</td>
+                                                            <td>{{ $user->thana }}</td>
+                                                            <td>{{ $user->district }}</td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a href="#" class="btn btn-sm btn-success">View</a>
+                                                                    <form action="#" method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                                                    </form>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="4">
+                                                                    <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                                                                </td>
+                                                            </tr>
+                                                        @endforelse
+                                                    </tbody>
+                                                </x-backend.table.basic>
                                             </div> <!-- end col -->
                                         </div> <!-- end row -->
                                     </div>
