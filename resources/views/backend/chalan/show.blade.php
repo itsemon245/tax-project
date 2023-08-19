@@ -278,39 +278,40 @@
                                         style="font-size:10px" name="payment_method">
                                         <option disabled selected style="font-size:10px!important">Select Payment
                                             Method:</option>
-                                        <option value="cash">Cash</option>
-                                        <option value="bank">Bank</option>
+                                        <option value="cash" {{$chalan->payment_method === 'cash' ? 'selected' : ''}}>Cash</option>
+                                        <option value="bank" {{$chalan->payment_method === 'bank' ? 'selected' : ''}}>Bank</option>
                                     </select>
                                     @error('payment_method')
                                         <span class="text-bold text-danger">{{ $message }}</span>
                                     @enderror
 
-                                    <div id="bankInputs" style="display: none; width:80px;">
-                                        <input type="text" id="bankName" class="w-100 dotted-border"
-                                            placeholder="Bank Name:" style="font-size: 10px" name="bank_name"
-                                            value="{{ $chalan->bank_name }}">
+                                    @if ($chalan->payment_method === 'bank')
+                                        <div id="bankInputs" style="display: none; width:80px;">
+                                            <input type="text" id="bankName" class="w-100 dotted-border"
+                                                placeholder="Bank Name:" style="font-size: 10px" name="bank_name"
+                                                value="{{ $chalan->bank_name }}">
 
-                                        <input type="text" id="accountNumber"
-                                            class="w-100 dotted-border @error('account_number') is-invalid @enderror"
-                                            placeholder="Account Number:" style="font-size: 10px" name="account_number"
-                                            value="{{ $chalan->account_number }}">
-                                        @error('account_number')
-                                            <span class="text-bold text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-                                    <div id="bankInput" style="display: none; width:80px;">
-                                        <input type="number" id="cash" class="w-100 dotted-border"
-                                            placeholder="Cash:" style="font-size: 10px" name="cash">
-
-
-                                    </div>
+                                            <input type="text" id="accountNumber"
+                                                class="w-100 dotted-border @error('account_number') is-invalid @enderror"
+                                                placeholder="Account Number:" style="font-size: 10px"
+                                                name="account_number" value="{{ $chalan->account_number }}">
+                                            @error('account_number')
+                                                <span class="text-bold text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    @elseif ($chalan->payment_method === 'cash')
+                                        <div id="bankInput" style="display: none; width:80px;">
+                                            <input type="number" id="cash" class="w-100 dotted-border"
+                                                placeholder="Cash:" style="font-size: 10px" name="cash"
+                                                value="{{ $chalan->cash }}">
+                                        </div>
+                                    @endif
                                 </td>
                                 <td style="width:80px; border-left:1px solid #333;">
                                     <input type="number"
                                         class="w-100 dotted-border @error('taka_kothay') is-invalid @enderror"
                                         placeholder="Ammount" style="font-size: 10px; width:80px" name="taka_kothay"
-                                        value="{{ $chalan->taka_kothay }}">
+                                        value="{{ $chalan->total_ammount }}">
                                     @error('taka_kothay')
                                         <span class="text-bold text-danger">{{ $message }}</span>
                                     @enderror
@@ -395,7 +396,7 @@
             </div>
         </div>
 
-        
+
         <div class="col-md-4 mt-3">
             <x-backend.ui.button class="btn-primary btn btn-sm" id="cmd">View</x-backend.ui.button>
         </div>
@@ -406,7 +407,7 @@
     <!-- end row-->
 
     @push('customJs')
-        <script>
+        {{-- <script>
             function toggleInputFields() {
                 const paymentMethod = document.getElementById('payment').value;
                 const bankInputsDiv = document.getElementById('bankInputs');
@@ -426,7 +427,7 @@
 
 
             }
-        </script>
+        </script> --}}
 
         <script src="{{ asset('backend/assets/js/printThis.js') }}"></script>
         <script>
