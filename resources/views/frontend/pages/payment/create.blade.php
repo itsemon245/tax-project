@@ -109,7 +109,7 @@
                                     @csrf
                                     <input type="text" name="purchasable_type" value="{{ $model }}" hidden>
                                     <input type="text" name="purchasable_id" value="{{ $id }}" hidden>
-                                    <input type="text" name="payable" value="{{ $record->price }}" hidden>
+                                    <input type="number" name="payable" value="{{ $record->price }}" hidden>
                                     <input type="text" name="discount" value="0" hidden>
                                     <input type="text" name="is_promo_code_applied" value="false" hidden>
 
@@ -124,7 +124,7 @@
                                                     <label class="form-label d-block mb-0" for="pay-later-switch">Pay
                                                         Later</label>
                                                     <div class="form-check form-switch">
-                                                        <input type="checkbox" class="form-check-input"
+                                                        <input type="checkbox" name="pay_later" class="form-check-input"
                                                             id="pay-later-switch">
 
                                                     </div>
@@ -144,7 +144,7 @@
 
                                             <div class="row align-items-center">
                                                 <div class="col-sm-8">
-                                                    <x-backend.form.text-input type="text" name="payent_number"
+                                                    <x-backend.form.text-input type="text" name="payment_number"
                                                         label="Payment Number" placeholder="Number You Have Paid From" />
                                                 </div>
                                                 <div class="col-sm-4">

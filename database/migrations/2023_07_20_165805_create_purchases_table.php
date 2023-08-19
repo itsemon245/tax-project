@@ -13,25 +13,25 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
-            $table->foreignId('promo_code_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('promo_code_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name')->nullable();
             $table->string('contact_number')->nullable();
-            $table->decimal('discount', 8, 2);
+            $table->decimal('discount', 8, 2)->nullable();
             $table->boolean('has_promo_code_applied')->default(false);
             $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->nullable();
             $table->enum('payment_method', ['bkash', 'nagad', 'rocket'])->nullable();
             $table->string('payment_number')->nullable();
             $table->string('trx_id')->nullable();
             $table->json('metadata')->nullable();
-            $table->decimal('payable_amount', 8, 2);
-            $table->decimal('paid', 8, 2);
-            $table->decimal('due', 8, 2);
-            $table->enum('status', ['paid', 'partial', 'due']);
-            $table->dateTime('due_date')->nullable();
+            $table->decimal('payable_amount', 8, 2)->nullable();
+            $table->decimal('paid', 8, 2)->nullable();
+            $table->decimal('due', 8, 2)->nullable();
+            $table->enum('status', ['paid', 'partial', 'due', 'rejected', 'expired']);
+            $table->dateTime('due_date')->default(today()->addDays(7));
             $table->dateTime('payment_date')->nullable();
             $table->dateTime('expire_date')->nullable();
-            $table->boolean('is_expired')->default(false);
+            $table->boolean('is_expired')->default(true)->nullable();
             $table->morphs('purchasable');
             $table->integer('approved')->default(0);
             $table->timestamps();
