@@ -115,6 +115,7 @@ class PaymentController extends Controller
 
         Purchase::create([
             'user_id' => Auth::user()->id,
+            'name' => $request->name,
             'promo_code_id' => $promoCode->id ?? null,
             'payable_amount' => $request->payable ?? null,
             'discount' => $request->discount,

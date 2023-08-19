@@ -48,6 +48,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 use App\Http\Controllers\Backend\Progress\ProgressController;
 
@@ -135,6 +136,10 @@ Route::prefix('admin')->group(function () {
         });
 
     Route::resource('case-study', CaseStudyController::class);
+
+    Route::get('order', [OrderController::class, 'index'])->name('order.index');
+    Route::get('order/status/{id}', [OrderController::class, 'status'])->name('order.status');
+    Route::delete('order/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
 
     Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);
