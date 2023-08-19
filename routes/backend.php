@@ -36,10 +36,12 @@ use App\Http\Controllers\Backend\UserAppointmentController;
 use App\Http\Controllers\Backend\Book\BookCategoryController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\CkEditor\CkEditorController;
+use App\Http\Controllers\Backend\Progress\ProgressController;
 use App\Http\Controllers\Backend\Return\ReturnFormController;
 use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
+use App\Http\Controllers\Backend\Project\ProjectController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
@@ -50,7 +52,6 @@ use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
-use App\Http\Controllers\Backend\Progress\ProgressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,16 +123,16 @@ Route::prefix('admin')->group(function () {
         });
         Route::prefix('project')
         ->name('project.')
-        ->controller(ProgressController::class)
+        ->controller(ProjectController::class)
         ->group(function () {
             Route::get('', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/store', 'store')->name('store');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::PUT('update/{id}', 'update')->name('update');
+            Route::delete('destroy/{id}', 'destroy')->name('destroy');
             // Route::post('store', 'store')->name('store');
             // Route::get('show-all', 'showAll')->name('show.all');
-            // Route::get('edit/{id}', 'edit')->name('edit');
-            // Route::delete('destroy/{id}', 'destroy')->name('delete');
-            // Route::PUT('update/{id}', 'update')->name('update');
             // Route::get('user/{id}', 'user')->name('user');
         });
 
