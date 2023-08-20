@@ -97,20 +97,20 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="#stats" data-bs-toggle="collapse">
+                                <a href="#achievements" data-bs-toggle="collapse">
                                     <i class="mdi mdi-chart-box-outline"></i>
-                                    <span> Stats </span>
+                                    <span>Achievements</span>
                                     <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="stats">
+                                <div class="collapse" id="achievements">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="#">
+                                            <a href="{{ route('achievements.index') }}">
                                                 <span>View</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="{{ route('achievements.create') }}">
                                                 <span>Create</span>
                                             </a>
                                         </li>
@@ -483,16 +483,18 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="#Section-manager" data-bs-toggle="collapse">
+                                <a href="#our-partners" data-bs-toggle="collapse">
                                     <i class="mdi mdi-vector-intersection"></i>
-                                    <span>Section Manager</span>
+                                    <span>Our Partners</span>
                                     <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="Section-manager">
+                                <div class="collapse" id="our-partners">
                                     <ul class="nav-second-level">
                                         <li>
-            
-                                            <a href="{{ route('partner-section.index') }}">About Us Partner Section</a>
+                                            <a href="{{ route('partner-section.index') }}">View</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('partner-section.create') }}">Create</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -531,25 +533,6 @@
                                         </li>
                                         <li>
                                             <a href="{{ route('expert-profile.index') }}">View</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="#testimonialSection" data-bs-toggle="collapse">
-                                    <i class="mdi mdi-account-tie-voice-outline"></i>
-                                    <span> Testimonial Section </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="testimonialSection">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="{{ route('testimonial.index') }}">
-                                                View All
-                                            </a>
-                                            <a href="{{ route('testimonial.create') }}">Create
-            
-                                            </a>
                                         </li>
                                     </ul>
                                 </div>
