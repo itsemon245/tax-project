@@ -245,6 +245,22 @@
                                                 View Package
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="{{ route('case-study-category.index') }}">All Case Study Category
+
+                                            </a>
+                                            <a href="{{ route('case-study-category.create') }}">
+                                                Create Study Category
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('case-study.index') }}">All Case Study 
+
+                                            </a>
+                                            <a href="{{ route('case-study.create') }}">
+                                                Create Case Study 
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -636,6 +652,22 @@
                         <ul class="nav-second-level">
                             <li>
                                 <a href="{{ route('order.index') }}">Order</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                
+                <li>
+                    <a href="#payments" data-bs-toggle="collapse">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span>Achievements</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="payments">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('achievements.index') }}">Order</a>
                             </li>
                         </ul>
                     </div>

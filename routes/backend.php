@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AchievementController;
 use App\Models\Course;
 use App\Models\TaxSetting;
 use App\Models\TaxCalculator;
@@ -146,6 +147,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('industry', IndustryController::class);
 
     Route::resource('chalan', ChalanController::class);
+    Route::resource('achievements', AchievementController::class);
     Route::resource('return-form', ReturnFormController::class);
     Route::resource('tax-setting', TaxSettingController::class);
     Route::resource('member', MemberController::class);
