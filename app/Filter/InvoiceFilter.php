@@ -27,10 +27,10 @@ class InvoiceFilter extends QueryFilter
     protected $columnMap = [
         'client' => 'client_id',
         'reference' => 'reference_no',
-        'status' => 'status',
         'fiscal_year' => 'year',
         'zone' => 'zone',
         'circle' => 'circle',
+        'status' => 'fiscal_year_invoice.status',
         'demand' => 'fiscal_year_invoice.demand',
         'paid' => 'fiscal_year_invoice.paid',
         'arear' => 'fiscal_year_invoice.due',

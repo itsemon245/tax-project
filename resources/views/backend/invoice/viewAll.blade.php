@@ -413,15 +413,16 @@
                     },
 
                     fetchData(url, callback) {
-                        $.ajax({
-                            type: "get",
-                            url: url,
-                            success: function(response) {
-                                this.data = response.data
-                                callback(this.data)
-                            },
-                        });
-                        return this
+                        location.assign(url)
+                        // $.ajax({
+                        //     type: "get",
+                        //     url: url,
+                        //     success: function(response) {
+                        //         this.data = response.data
+                        //         callback(this.data)
+                        //     },
+                        // });
+                        // return this
                     },
 
                     updateUrl(jqElement) {
