@@ -576,6 +576,14 @@
                     </a>
                     <div class="collapse" id="bookSection">
                         <ul class="nav-second-level">
+
+                            <li>
+                                <a href="{{ route('book-category.create') }}">Book Category Create</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('book-category.index') }}">Book Category View</a>
+                            </li>
+
                             <li>
                                 <a href="{{ route('book.create') }}">Create</a>
                             </li>
