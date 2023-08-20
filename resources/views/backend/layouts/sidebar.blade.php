@@ -17,14 +17,14 @@
 
             <ul id="side-menu">
 
-                <li>
+                <li class=" border-dark border-bottom border-3" >
                     <a href="{{ route('dashboard') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> Dashboard </span>
                     </a>
 
                 </li>
-                <li class="menu-title mt-2">Frontend Manage</li>
+                {{-- <li class="menu-title mt-2">Frontend Manage</li> --}}
                 <li>
                     <a href="#homepage" data-bs-toggle="collapse">
                         <i class="mdi mdi-home-outline"></i>
@@ -482,221 +482,232 @@
                                     </ul>
                                 </div>
                             </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="#Section-manager" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Section Manager</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="Section-manager">
-                        <ul class="nav-second-level">
                             <li>
-
-                                <a href="{{ route('partner-section.index') }}">About Us Partner Section</a>
+                                <a href="#Section-manager" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-vector-intersection"></i>
+                                    <span>Section Manager</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="Section-manager">
+                                    <ul class="nav-second-level">
+                                        <li>
+            
+                                            <a href="{{ route('partner-section.index') }}">About Us Partner Section</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#clientStudio" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-electron-framework"></i>
+                                    <span>Client Studio</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="clientStudio">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('client-studio.index') }}">
+                                                Create
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('client-studio.create') }}">
+                                                View
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#expertProfile" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-account-tie"></i>
+                                    <span>Expert Profile</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="expertProfile">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('expert-profile.create') }}">Create</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('expert-profile.index') }}">View</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#testimonialSection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-account-tie-voice-outline"></i>
+                                    <span> Testimonial Section </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="testimonialSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('testimonial.index') }}">
+                                                View All
+                                            </a>
+                                            <a href="{{ route('testimonial.create') }}">Create
+            
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </li>
                 <li>
-                    <a href="#clientStudio" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Client Studio</span>
+                    <a href="#managment" data-bs-toggle="collapse">
+                        <i class="mdi mdi-manjaro"></i>
+                        <span>Managment</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="clientStudio">
+                    <div class="collapse" id="managment">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('client-studio.index') }}">
-                                    Create
+                                <a href="#promoCodeSection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-passport-biometric"></i>
+                                    <span> Promo Code </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="promoCodeSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('promo-code.create') }}">Create</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('promo-code.index') }}">View Promo</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#reviews" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-comment-quote-outline"></i>
+                                    <span>Reviews</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="reviews">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('backend.review.index') }}">All Reviews</a>
+                                        </li>
+                                        {{-- <li>
+                                            <a href="{{ route('review.index', 'service') }}">Service Reviews</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('review.index', 'book') }}">Book Reviews</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('review.index', 'expert-profile') }}">Expert Reviews</a>
+                                        </li> --}}
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#timeTracking" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-timeline-clock-outline"></i>
+                                    <span>Time Tracking</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="timeTracking">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('calendar.create') }}">Calendar</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('calendar.index') }}">View Events</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#exams" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-human-capacity-increase"></i>
+                                    <span>Exam's</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="exams">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('exams.index') }}">Exams</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#taxCalculator" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-calculator-variant-outline"></i>
+                                    <span>Tax Calculator</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="taxCalculator">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('tax-setting.create') }}">New Tax Setting</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="collapse" id="taxCalculator">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('tax-setting.index') }}">View Tax Settings</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="{{ route('social-handle.index') }}">
+                                    <i class="mdi mdi-microsoft-edge-legacy"></i>
+                                    <span>Social Media</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('client-studio.create') }}">
-                                    View
+                                <a href="#payments" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-order-bool-descending-variant"></i>
+                                    <span>Order</span>
+                                    <span class="menu-arrow"></span>
                                 </a>
+                                <div class="collapse" id="payments">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('order.index') }}">Order</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </li>
-
-
                 <li>
-                    <a href="{{ route('social-handle.index') }}">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Social Media</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#map-section" data-bs-toggle="collapse">
-                        <i class="fe-map-pin"></i>
-                        <span>Maps</span>
+                    <a href="#others" data-bs-toggle="collapse">
+                        <i class="mdi mdi-checkbox-multiple-blank-circle-outline"></i>
+                        <span>Others</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="map-section">
+                    <div class="collapse" id="others">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('map.create') }}">Create</a>
-                                <a href="{{ route('map.index') }}">
-                                    View All
+                                <a href="#map-section" data-bs-toggle="collapse">
+                                    <i class="fe-map-pin"></i>
+                                    <span>Maps</span>
+                                    <span class="menu-arrow"></span>
                                 </a>
+                                <div class="collapse" id="map-section">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('map.create') }}">Create</a>
+                                            <a href="{{ route('map.index') }}">
+                                                View All
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </li>
-
-                <li>
-                    <a href="#testimonialSection" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Testimonial Section </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="testimonialSection">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('testimonial.index') }}">
-                                    View All
-                                </a>
-                                <a href="{{ route('testimonial.create') }}">Create
-
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#promoCodeSection" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Promo Code </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="promoCodeSection">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('promo-code.create') }}">Create Promo Code</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('promo-code.index') }}">View Promo Code</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#timeTracking" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Time Tracking</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="timeTracking">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('calendar.create') }}">Calendar</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('calendar.index') }}">View Events</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#expertProfile" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Expert Profile</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="expertProfile">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('expert-profile.create') }}">Create</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('expert-profile.index') }}">View</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#reviews" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Reviews</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="reviews">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('backend.review.index') }}">All Reviews</a>
-                            </li>
-                            {{-- <li>
-                                <a href="{{ route('review.index', 'service') }}">Service Reviews</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('review.index', 'book') }}">Book Reviews</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('review.index', 'expert-profile') }}">Expert Reviews</a>
-                            </li> --}}
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#exams" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Exams</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="exams">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('exams.index') }}">Exams</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-
-                <li>
-                    <a href="#payments" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Order</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="payments">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('order.index') }}">Order</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-
-
-                <li>
-                    <a href="#taxCalculator" data-bs-toggle="collapse">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span>Tax Calculator</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="taxCalculator">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('tax-setting.create') }}">New Tax Setting</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="collapse" id="taxCalculator">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('tax-setting.index') }}">View Tax Settings</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-
             </ul>
         </div>
 
