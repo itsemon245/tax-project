@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CaseStudyPackage;
 use App\Models\PromoCode;
 use Exception;
 use App\Models\User;
@@ -89,5 +90,14 @@ class AjaxController extends Controller
             return response()->json($content, 404);
         }
         return response()->json($content);
+    }
+
+    function caseStudyCategories($id) : Response {
+        $package = CaseStudyPackage::find($id);
+        $content = [
+            'success'=> true,
+            'data'=> $package->caseStudyCategories
+        ];
+        return response($content);
     }
 }

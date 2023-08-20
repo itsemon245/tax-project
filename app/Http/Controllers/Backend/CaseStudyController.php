@@ -16,8 +16,8 @@ class CaseStudyController extends Controller
      */
     public function index()
     {
-        $data= CaseStudy::with('caseStudyCategory','caseStudyPackage')->latest()->get();
-        return view('backend.case-study.index',compact('data'));
+        $data = CaseStudy::with('caseStudyCategory', 'caseStudyPackage')->latest()->get();
+        return view('backend.case-study.index', compact('data'));
     }
 
     /**
@@ -25,9 +25,8 @@ class CaseStudyController extends Controller
      */
     public function create()
     {
-        $caseStudyPackage= CaseStudyPackage::latest()->get();
-        $caseStudyCategory= CaseStudyCategory::latest()->get();
-        return view('backend.case-study.create',compact('caseStudyCategory','caseStudyPackage'));
+        $caseStudyPackage = CaseStudyPackage::latest()->get();
+        return view('backend.case-study.create', compact('caseStudyPackage'));
     }
 
     /**
@@ -37,15 +36,14 @@ class CaseStudyController extends Controller
     {
 
         $request->validate([
-            'case_study_category_id'=>'required',
-            'case_study_package_id'=>'required',
-            'name'=>'required',
-            'intro'=>'required',
-            'image'=>'required',
-            'description'=>'required',
-            'likes'=>'required',
-            'price'=>'required',
-            'download_link'=>'required',
+            'case_study_category_id' => 'required',
+            'case_study_package_id' => 'required',
+            'name' => 'required',
+            'intro' => 'required',
+            'image' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'download_link' => 'required',
         ]);
 
         $caseStudy = new CaseStudy();
@@ -53,11 +51,10 @@ class CaseStudyController extends Controller
         $caseStudy->case_study_package_id = $request->case_study_package_id;
         $caseStudy->name = $request->name;
         $caseStudy->intro = $request->intro;
-        $caseStudy->image = saveImage($request->image, 'page/caseStudy', 'case-study');
+        $caseStudy->image = saveImage($request->image, 'case-study/banners');
         $caseStudy->description = $request->description;
-        $caseStudy->likes = $request->likes;
         $caseStudy->price = $request->price;
-        $caseStudy->download_link =  saveImage($request->download_link, 'page/caseStudy', 'case-study');
+        $caseStudy->download_link =  saveImage($request->download_link, 'case-study/files');
         $caseStudy->save();
 
         $notification = [
@@ -84,9 +81,9 @@ class CaseStudyController extends Controller
     public function edit(string $id)
     {
         $caseStudy = CaseStudy::find($id);
-        $caseStudyPackage= CaseStudyPackage::latest()->get();
-        $caseStudyCategory= CaseStudyCategory::latest()->get();
-        return view('backend.case-study.edit',compact('caseStudyCategory','caseStudyPackage','caseStudy'));
+        $caseStudyPackage = CaseStudyPackage::latest()->get();
+        $caseStudyCategory = CaseStudyPackage::find($caseStudy->case_study_package_id)->caseStudyCategories;
+        return view('backend.case-study.edit', compact('caseStudyCategory', 'caseStudyPackage', 'caseStudy'));
     }
 
     /**
@@ -95,13 +92,12 @@ class CaseStudyController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'case_study_category_id'=>'required',
-            'case_study_package_id'=>'required',
-            'name'=>'required',
-            'intro'=>'required',
-            'description'=>'required',
-            'likes'=>'required',
-            'price'=>'required',
+            'case_study_category_id' => 'required',
+            'case_study_package_id' => 'required',
+            'name' => 'required',
+            'intro' => 'required',
+            'description' => 'required',
+            'price' => 'required',
         ]);
 
         $caseStudy = CaseStudy::find($id);
@@ -109,14 +105,12 @@ class CaseStudyController extends Controller
         $caseStudy->case_study_package_id = $request->case_study_package_id;
         $caseStudy->name = $request->name;
         $caseStudy->intro = $request->intro;
-        if($request->hasFile('image'))
-            $caseStudy->image = saveImage($request->image, 'page/caseStudy', 'case-study');
+        if ($request->hasFile('image'))
+            $caseStudy->image = updateFile($request->image,$caseStudy->image, 'case-study/banners');
         $caseStudy->description = $request->description;
-        $caseStudy->likes = $request->likes;
         $caseStudy->price = $request->price;
-        $caseStudy->downloads = $request->downloads;
-        if($request->hasFile('download_link'))
-            $caseStudy->download_link =  saveImage($request->download_link, 'page/caseStudy', 'case-study');
+        if ($request->hasFile('download_link'))
+            $caseStudy->download_link =  updateFile($request->download_link, $caseStudy->download_link, 'case-study/files');
         $caseStudy->save();
 
         $notification = [
@@ -134,7 +128,7 @@ class CaseStudyController extends Controller
      */
     public function destroy(string $id)
     {
-        $delete= CaseStudy::find($id);
+        $delete = CaseStudy::find($id);
         deleteFile($delete->image);
         deleteFile($delete->download_link);
         $delete->delete();

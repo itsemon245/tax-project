@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             MapSeeder::class,
             BookSeeder::class,
             CaseStudyPackageSeeder::class,
+            CaseStudyCategorySeeder::class,
             CaseStudySeeder::class,
             ExpertProfileSeeder::class,
             CourseSeeder::class,

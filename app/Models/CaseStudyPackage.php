@@ -15,6 +15,9 @@ class CaseStudyPackage extends Model
     {
         return $this->hasMany(CaseStudy::class);
     }
+    function caseStudyCategories() : HasMany {
+        return $this->hasMany(CaseStudyCategory::class);
+    }
 
     /**
      * Interact with the models billing_type
