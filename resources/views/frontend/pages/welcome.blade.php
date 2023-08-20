@@ -31,14 +31,14 @@
     <section id="counter-section" class="px-lg-5 px-2 my-5">
         <h4 class="text-center mb-5 fs-3">Our Achievments</h4>
         <div class="d-flex flex-wrap gap-5 justify-content-center mx-lg-5 mx-2 mb-2">
-            @foreach (range(1, 4) as $item)
+            @foreach ($achievements as $item)
                 <div class="min-w-md mx-3">
                     <div class="d-flex gap-5 align-items-center">
                         <img style="width:100px;aspect-ratio:1/1;"
-                            src="{{ asset('frontend/assets/images/attached-files/img-2.jpg') }}" alt="">
+                            src="{{ useImage($item->image) }}" alt="">
                         <div class="d-flex flex-column justify-content-center align-items-center">
-                            <h2 class="counter-up m-0" style="font-size: 46px; color: #1abcfe; font-weight: 700;">100</h2>
-                            <p class="m-0" style="font-size: 16px;"><b>Users</b></p>
+                            <h2 class="counter-up m-0" style="font-size: 46px; color: #1abcfe; font-weight: 700;">{{$item->total_user}}</h2>
+                            <p class="m-0" style="font-size: 16px;"><b>{{$item->user}}</b></p>
                         </div>
                     </div>
                 </div>
