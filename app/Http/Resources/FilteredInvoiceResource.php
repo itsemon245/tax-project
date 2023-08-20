@@ -8,6 +8,25 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class FilteredInvoiceResource extends JsonResource
 {
+    /**
+     * @var
+     */
+    private $year;
+
+    /**
+     * Create a new resource instance.
+     *
+     * @param  mixed  $resource
+     * @return void
+     */
+    public function __construct($resource, $year)
+    {
+        // Ensure you call the parent constructor
+        parent::__construct($resource);
+        $this->resource = $resource;
+
+        $this->year = $year;
+    }
 
     /**
      * Transform the resource into an array.
@@ -41,7 +60,8 @@ class FilteredInvoiceResource extends JsonResource
             "items" => $this->invoiceItems,
             "user" => $this->user,
             "client" => $this->client,
-            "pivot" => $this->pivot ? $this->pivot : null
+            "pivot" => $this->pivot ? $this->pivot : null,
+            "year" => $this->year,
         ];
     }
 }

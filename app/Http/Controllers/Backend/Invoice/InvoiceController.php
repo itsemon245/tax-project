@@ -356,7 +356,7 @@ class InvoiceController extends Controller
         };
 
         try {
-            $invoices = Invoice::where($invoiceQueries)
+            $invoices = Invoice::with('fiscalYears')->where($invoiceQueries)
                 ->whereHas('client', function (Builder $query) use ($clientQueries) {
                     $query->where($clientQueries);
                 })
@@ -365,7 +365,7 @@ class InvoiceController extends Controller
                         ->where($pivotQueries);
                 })
                 ->get();
-            $content['data'] = new FilteredInvoiceCollection($invoices);
+            $content['data'] = new InvoiceCollection($invoices, $fiscalQueries[0][2]);
         } catch (Throwable $e) {
             $content['success'] = false;
             $content['message'] = $e->getMessage();

@@ -579,13 +579,13 @@
                                 <td>{{ $invoice->client->circle }}</td>
                                 <td>{{ $invoice->client->zone }}</td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->demand . ' Tk' }}</span>
+                                    <span class="fw-medium">${invoice.demand} Tk</span>
                                 </td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->paid . ' Tk' }}</span>
+                                    <span class="fw-medium">${invoice.amountPaid} Tk</span>
                                 </td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->due . ' Tk' }}</span>
+                                    <span class="fw-medium">${invoice.amountDue} Tk</span>
                                 </td>
                                 <td>
                                     <div class="btn-group dropdown position-relative">
@@ -645,8 +645,11 @@
                         }
 
                         data.forEach((invoice, i) => {
+                            $('tbody').children().remove()
+                            // $('tbody').append(html(invoice, i))
+                            //TODO update dom 
                             console.log(invoice);
-                            // html(invoice, i)
+
                         });
 
                     }
