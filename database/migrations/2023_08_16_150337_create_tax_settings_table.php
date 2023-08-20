@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('turnover_percentage')->nullable()->comment('for Turnover');
             $table->json('tax_free')->nullable()->comment('male:amount,female:amount');
             $table->enum('type', ['tax', 'others']);
-            $table->enum('tax_for', ['firm', 'individual', 'company']);
+            $table->enum('for', ['firm', 'individual', 'company']);
             $table->timestamps();
         });
     }

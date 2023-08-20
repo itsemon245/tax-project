@@ -27,7 +27,7 @@ class InvoiceResource extends JsonResource
             "headerImage" => $this->header_image,
             "referenceNo" => $this->reference_no,
             "note" => $this->note,
-            "discount" => $this->pivot ? $this->pivot->discount : null,
+            "discount" => $this->fiscalYears,
             "subTotal" => $this->pivot ? $this->pivot->sub_total : null,
             "total" => $this->pivot ? $this->pivot->demand : null,
             "amountPaid" => $this->pivot ? $this->pivot->paid : null,

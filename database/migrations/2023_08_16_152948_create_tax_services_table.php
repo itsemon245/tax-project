@@ -17,9 +17,13 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->foreignId('tax_setting_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('name');
             $table->bigInteger('amount')->default(0);
-            $table->boolean('is_fixed')->default(false);
+            $table->boolean('is_discount')->default(true);
             $table->timestamps();
         });
     }
