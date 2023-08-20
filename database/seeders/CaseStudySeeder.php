@@ -3,9 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\CaseStudy;
-use App\Models\CaseStudyPackage;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\CaseStudyPackage;
+use App\Models\CaseStudyCategory;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CaseStudySeeder extends Seeder
 {
@@ -15,11 +16,15 @@ class CaseStudySeeder extends Seeder
     public function run(): void
     {
         $packages = CaseStudyPackage::get('id');
+        $categories = CaseStudyCategory::get('id');
 
         foreach ($packages as $package) {
-            CaseStudy::factory(10)->create([
-                'case_study_package_id' => $package->id
-            ]);
+            foreach ($categories as $key => $category) {
+                CaseStudy::factory(8)->create([
+                    'case_study_package_id' => $package->id,
+                    'case_study_category_id' => $category->id,
+                ]);
+            }
         }
     }
 }

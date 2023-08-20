@@ -19,8 +19,8 @@ return new class extends Migration
             $table->longText('intro');
             $table->longText('image');
             $table->longText('description');
-            $table->unsignedBigInteger('likes');
-            $table->unsignedBigInteger('downloads')->nullable();
+            $table->unsignedBigInteger('likes')->default(0);
+            $table->unsignedBigInteger('downloads')->default(0);
             $table->decimal('price', 8, 2)->default(0);
             $table->longText('download_link');
             $table->timestamps();

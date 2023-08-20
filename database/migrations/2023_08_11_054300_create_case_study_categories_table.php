@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('case_study_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('case_study_category')->nullable();
+            $table->foreignId('case_study_package_id')->constrained()->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }

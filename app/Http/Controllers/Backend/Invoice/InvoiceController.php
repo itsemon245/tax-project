@@ -342,7 +342,13 @@ class InvoiceController extends Controller
             'success' => true,
             'message' => 'Request Successful'
         ];
+
+        $recentInvoices = Invoice::with('client', 'currentFiscal')->latest()->limit(5)->get();
         $invoices = null;
+        $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
+        $zones = Client::select('zone')->distinct()->get()->pluck('zone');
+        $circles = Client::select('circle')->distinct()->get()->pluck('circle');
+        $clients = Client::latest()->get();
         $filter = new InvoiceFilter();
         $queries = $filter->transform($request);
         // dd($queries);
@@ -350,27 +356,22 @@ class InvoiceController extends Controller
         $clientQueries = array_filter($queries, fn ($query) => $query[0] === 'zone' || $query[0] === 'circle');
         $fiscalQueries = array_filter($queries, fn ($query) => $query[0] === 'year');
         $pivotQueries = array_filter($queries, fn ($query) => str_contains($query[0], 'fiscal_year_invoice'));
+        // dd($fiscalYear);
+        $invoiceQueries =  array_values($invoiceQueries);
+        $clientQueries =  array_values($clientQueries);
+        $fiscalQueries =  array_values($fiscalQueries);
+        $pivotQueries =  array_values($pivotQueries);
+        $fiscalYear = $fiscalQueries[0][2];
 
-        if (Arr::isAssoc($pivotQueries)) {
-            $pivotQueries =  array_values($pivotQueries);
-        };
-
-        try {
-            $invoices = Invoice::with('fiscalYears')->where($invoiceQueries)
-                ->whereHas('client', function (Builder $query) use ($clientQueries) {
-                    $query->where($clientQueries);
-                })
-                ->whereHas('fiscalYears', function ($query) use ($fiscalQueries, $pivotQueries) {
-                    $query->where($fiscalQueries)
-                        ->where($pivotQueries);
-                })
-                ->get();
-            $content['data'] = new InvoiceCollection($invoices, $fiscalQueries[0][2]);
-        } catch (Throwable $e) {
-            $content['success'] = false;
-            $content['message'] = $e->getMessage();
-            return response($content, 404);
-        }
-        return response($content);
+        $invoices = Invoice::with('fiscalYears')->where($invoiceQueries)
+            ->whereHas('client', function (Builder $query) use ($clientQueries) {
+                $query->where($clientQueries);
+            })
+            ->whereHas('fiscalYears', function ($query) use ($fiscalQueries, $pivotQueries) {
+                $query->where($fiscalQueries)
+                    ->where($pivotQueries);
+            })
+            ->get();
+        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
     }
 }

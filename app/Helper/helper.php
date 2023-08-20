@@ -55,7 +55,7 @@ function updateFile($file, $old_path, $dir,  $prefix = "", $disk = "public")
     if ($isFile) {
         $old_path = explode("storage", $old_path)[1];
     }
-    $path = $old_path ? $disk . $old_path : 'no file exists';
+    $path = $old_path ? $disk ."/". $old_path : 'no file exists';
     $fileExists = Storage::exists($path);
     if ($fileExists) {
         if ($file) {

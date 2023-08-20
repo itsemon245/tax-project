@@ -37,12 +37,12 @@
                                         Upload</small></p>
                                 <div>
                                     <ul class="px-3" style="list-style: decimal;">
-                                        @foreach (range(1, 5) as $item)
+                                        @foreach ($package->caseStudyCategories as $category)
                                             <li class="row justify-content-between mb-1">
-                                                <span class="col-10">list item {{ $item }}</span>
+                                                <span class="col-10">{{ $category->name }}</span>
                                                 <div class="col-2">
                                                     <span class="badge bg-light p-2 text-dark w-100"
-                                                        style="font-weight: 500;">{{ $item * random_int(1, 10) }}</span>
+                                                        style="font-weight: 500;">{{ $category->caseStudies()->count() }}</span>
                                                 </div>
                                             </li>
                                         @endforeach

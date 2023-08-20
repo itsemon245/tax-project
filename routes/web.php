@@ -33,6 +33,7 @@ Route::prefix('ajax')
     ->middleware(['auth'])
     ->name('ajax.')
     ->controller(AjaxController::class)->group(function () {
+        Route::get('case-study/package/{id}/categories', 'caseStudyCategories')->name('caseStudyCategories');
         Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');
         Route::post('mark-notifications', 'markNotificationsAsRead')->name('notifications.read');
         Route::post('promo-code/apply', 'applyPromoCode')->name('promo.apply');

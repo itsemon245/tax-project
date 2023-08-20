@@ -3,29 +3,30 @@
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Invoice;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\CaseStudy;
 use Illuminate\Http\Request;
+use function Clue\StreamFilter\fun;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ExpertController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\UserAppointmentController;
+use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\ProjectDiscussionController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\User\UserDocController;
+
 use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use App\Http\Controllers\PaymentController;
-use App\Models\Invoice;
-
-use function Clue\StreamFilter\fun;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,11 +103,11 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
     Route::get('index', 'index')->name('index');
     Route::get('{course}/show', 'show')->name('show');
     Route::get('videos', 'videos')->name('videos');
-    // Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
-    //     Route::get('/', 'caseStudy')->name('page');
-    //     Route::get('index/{package_id}', 'index')->name('index');
-    //     Route::get('show/{case_study_id}', 'show')->name('show');
-    // });
+    Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyPackageController::class)->group(function () {
+        Route::get('/', 'caseStudy')->name('page');
+        Route::get('index/{package_id}', 'index')->name('index');
+        Route::get('show/{case_study_id}', 'show')->name('show');
+    });
 });
 
 
