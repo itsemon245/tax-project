@@ -10,7 +10,6 @@
     }
 </style>
 @section('main')
-    {{-- {{ dd($data->toArray()) }} --}}
     <form action="{{ route('mcq.submit', $exam->id) }}" method="post">
         @csrf
         <div class="container my-5">

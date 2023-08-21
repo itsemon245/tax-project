@@ -15,7 +15,9 @@ class ResultController extends Controller
      */
     public function index()
     {
-        //
+        $result= Result::with('exam','user')->where('user_id',Auth::user()->id)->latest()->get();
+        //dd($result);
+        return view('backend.result.index',compact('result'));
     }
 
     /**

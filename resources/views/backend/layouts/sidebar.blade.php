@@ -616,6 +616,9 @@
                                         <li>
                                             <a href="{{ route('exams.index') }}">Exams</a>
                                         </li>
+                                        <li>
+                                            <a href="{{ route('result.index') }}">Result</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
