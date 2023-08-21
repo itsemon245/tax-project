@@ -30,17 +30,22 @@ class IndustryController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'page_description' => 'required|max:500|string',
-            'name' => 'required|max:30|string',
-            'logo' => 'required|image|mimes:jpeg,png,jpg|max:5000',
-            'description' => 'required|max:300|string',
+            'titles' => 'required|max:30|string',
+            'images' => 'required|image|mimes:jpeg,png,jpg|max:5000',
+            'descriptions' => 'required|max:300|string',
         ]);
+        
+        $images = $request->file('images');
+        $jsonSection = $this->createJsonFile($request->titles, $request->descriptions, $request->images);
         $industry = new Industry();
             $industry->page_description = $request->page_description;
-            $industry->name = $request->name;
-            $industry->logo = saveImage($request->logo, 'industries', 'industry');
-            $industry->description = $request->description;
+            $industry->title = $request->titles;
+            $industry->image = saveImage($images, 'industries', 'industry');
+            $industry->description = $request->descriptions;
+            $industry->sections = json_encode($jsonSection);
             $industry->save();
             $notification = [
                 'message' => 'Industry Created',
@@ -80,5 +85,23 @@ class IndustryController extends Controller
     public function destroy(Industry $industry)
     {
         //
+    }
+
+    public function createJsonFile($titles, $descriptions, $images)
+    {
+        $sections = [];
+        foreach ($titles as $index => $title) {
+            array_push(
+                $sections,
+                (object)
+                [
+                    'title'         => $title,
+                    'description'   => $descriptions[$index],
+                    'image'         => isset($images[$index]) ? saveImage($images[$index], 'industries', 'industry') : ''
+                ]
+            );
+        }
+
+        return $sections;
     }
 }

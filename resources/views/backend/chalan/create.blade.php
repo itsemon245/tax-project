@@ -74,17 +74,29 @@
                 <div class="text-center chalan">
                     <p class="chalan_title" style="font-size: 10px;">চালান ফরম</p>
                     <h5>টি, আর ফরম নং ৬ (এস, আর ৩৭ দ্রষ্টব্য)</h5>
-                    <div class="col-lg-6 mx-auto">
-                        <div class="chalan-no d-flex justify-content-center">
-                            <div class="col-lg-6">
-                                <x-backend.form.text-input type="text" name="chalan_no"
-                                    class="chalan_title_input  dotted-border" required label="চালান নং"
-                                    style="font-size: 10px;" required />
-                            </div>
-                            <div class="col-lg-6">
-                                <x-backend.form.text-input type="date" name="date"
-                                    class="chalan_title_input dotted-border" required label="তারিখ"
-                                    style="font-size: 10px;" required />
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <small>চালান নং</small>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="dotted-border" required name="chalan_no">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <small>তারিখ</small>
+                                        </div>
+                                        <div class="col-md-10 d-flex">
+                                            <input class="dotted-border" required type="date" name="date">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

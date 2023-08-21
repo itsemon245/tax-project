@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('industries', function (Blueprint $table) {
             $table->id();
             $table->longText('page_description')->nullable();
-            $table->text('name');
-            $table->longText('logo');
+            $table->text('title');
+            $table->longText('image');
             $table->longText('description')->nullable();
+            $table->json('sections')->nullable()->comment('{title:"title", image: "image", description: "description"}');
             $table->timestamps();
         });
     }
