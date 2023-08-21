@@ -21,8 +21,8 @@ class IndustryFactory extends Factory
         $description = fake()->realText(300);
         return [
             'page_description' => $description,
-            'name' => $text,
-            'logo' => picsum($seed),
+            'title' => $text,
+            'image' => picsum($seed),
             'description' => $description,
         ];
     }

@@ -28,8 +28,14 @@
                 </div>
             </div>
             @empty
-            <div class="row mt-3">
-                <h3 class="p-4 text-center text-muted" >No Promo Code Here....</h3>
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-8">
+                        <img src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100vh;" class="img-fluid p-5" alt="Responsive image">
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
             </div>
             @endforelse   
         </div>
