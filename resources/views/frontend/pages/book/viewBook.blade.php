@@ -29,7 +29,7 @@
                             </p>
                         </div>
                         <div class="d-flex gap-3">
-                            <x-backend.ui.button type="custom" href=""
+                            <x-backend.ui.button type="custom" href="{{ route('payment.create', ['model' => Book::class, 'id' => $book->id]) }}"
                                 class="btn-success text-light px-3 py-2 d-inline-flex align-items-center justify-content-center gap-2">
                                 <span class="mdi mdi-cart-outline"></span>
                                 <span style="font-weight: 500;">Buy Now</span>

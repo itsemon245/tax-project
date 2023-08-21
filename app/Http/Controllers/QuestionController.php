@@ -31,10 +31,10 @@ class QuestionController extends Controller
      */
     public function store(StoreQuestionRequest $request)
     {
-        $data = (object) $request->validated();
-        $choices = (object) [
+        $data =  $request->validated();
+        $choices = [
+            'correct' => $data->currect_ans,
             'options' => [$data->option1, $data->option2, $data->option3, $data->option4],
-            'correct' => $data->currect_ans
         ];
 
         Question::create(
@@ -42,7 +42,7 @@ class QuestionController extends Controller
                 'exam_id'   => $request->exam_id,
                 'name'      => $data->question,
                 'mark'      => $data->mark,
-                'choices'   => json_encode($choices),
+                'choices'   => $choices,
             ]
         );
 

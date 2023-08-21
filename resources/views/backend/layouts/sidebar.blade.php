@@ -650,6 +650,29 @@
                                 </div>
                             </li>
                             <li>
+                                <a href="#exams" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-human-capacity-increase"></i>
+                                    <span>Exam's</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="exams">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('exams.index') }}">Exams</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('result.index') }}">Result</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="{{ route('social-handle.index') }}">
+                                    <i class="mdi mdi-microsoft-edge-legacy"></i>
+                                    <span>Social Media</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="#payments" data-bs-toggle="collapse">
                                     <i class="mdi mdi-order-bool-descending-variant"></i>
                                     <span>Order</span>

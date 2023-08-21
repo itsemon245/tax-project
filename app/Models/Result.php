@@ -2,23 +2,18 @@
 
 namespace App\Models;
 
-use App\Casts\Json;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class Result extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
-    protected $fillable = [
-        'exam_id',
-        'name',
-        'mark',
-        'choices'
-    ];
-    protected $casts = [
-        'choices' => Json::class,
-    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     function exam()
     {

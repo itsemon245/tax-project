@@ -10,8 +10,9 @@
                                 <p class="fw-bold text-success">{{ $course->name }}</p>
                                 <h4 class="">{{ $course->page_title }}</h4>
                                 <p class="">{!! $course->description !!}</p>
-                                <x-backend.ui.button class="btn-success text-capitalize">Enroll Now
-                                </x-backend.ui.button>
+                                {{-- <x-backend.ui.button href="{{ route('payment.create', ['model' => Course::class, 'id' => $course->id]) }}" class="btn-success text-capitalize">Enroll Now
+                                </x-backend.ui.button> --}}
+                                <a href="{{ route('payment.create', ['model' => Course::class, 'id' => $course->id]) }}" class="btn-success btn  text-capitalize">Enroll Now</a>
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -33,12 +34,13 @@
                                     <p class="text-justify px-2">{{ $card->description }}</p>
                                     <div class="d-flex justify-content-center text-center">
                                         @if ($key == 0)
-                                            <x-backend.ui.button type="custom" href="#" class="btn-primary">Enroll
+                                            {{-- <x-backend.ui.button type="custom" href="#" class="btn-primary">Enroll
                                                 Now
-                                            </x-backend.ui.button>
+                                            </x-backend.ui.button> --}}
+                                            <a href="{{ route('payment.create', ['model' => Course::class, 'id' => $course->id]) }}" class="btn-primary btn  text-capitalize">Enroll Now</a>
                                         @else
-                                            <x-backend.ui.button type="custom" href="{{ route('mcq.test') }}"
-                                                class="btn-dark">
+                                            <x-backend.ui.button type="custom"
+                                                href="{{ route('mcq.index') . '?course_id=' . $course->id }}" class="btn-dark">
                                                 Start The Assesment
                                             </x-backend.ui.button>
                                         @endif
@@ -63,7 +65,8 @@
                             @endforeach
                         </div>
                         <div class="d-flex justify-content-center my-3">
-                            <x-backend.ui.button class="btn-info d-block">Enroll now</x-backend.ui.button>
+                            <a href="{{ route('payment.create', ['model' => Course::class, 'id' => $course->id]) }}" class="btn-info d-block btn  text-capitalize">Enroll Now</a>
+                            {{-- <x-backend.ui.button class="btn-info d-block">Enroll now</x-backend.ui.button> --}}
                         </div>
                     </div>
                 </div>

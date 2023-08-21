@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Exam>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Result>
  */
-class ExamFactory extends Factory
+class ResultFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,10 +17,7 @@ class ExamFactory extends Factory
     public function definition(): array
     {
         return [
-            'course_id' => 1,
-            'name'=> fake()->realText(20),
-            'total_marks'=> 100,
-            'passing_marks'=> 33,
+            //
         ];
     }
 }

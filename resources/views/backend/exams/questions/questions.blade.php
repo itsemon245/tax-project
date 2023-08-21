@@ -77,9 +77,9 @@
                                 <td>
                                     <b>{{ $question->name }}</b><br>
                                     <small class="text-muted">mark: {{ $question->mark }}</small><br>
-                                    @foreach (json_decode($question->choices)->options as $key => $option)
+                                    @foreach ($question->choices->options as $key => $option)
                                         <small
-                                            class="{{ json_decode($question->choices)->correct == $key ? 'text-primary' : 'text-muted' }}">Option#{{ ++$key }}:
+                                            class="{{ $question->choices->correct == $key ? 'text-primary' : 'text-muted' }}">Option#{{ ++$key }}:
                                             {{ $option }}</small><br>
                                     @endforeach
                                 </td>

@@ -68,7 +68,7 @@
                                     <p class="me-3 d-flex align-items-center gap-2"><span class="mdi mdi-clock-time-three-outline"></span>Delivery in {{Carbon\Carbon::parse($service->delivery_date)->addDays(1)->diffInDays()}} Days</p>
                                 </div>
                                 <div class="px-4">  
-                                    <a href="#"  class="w-100 d-flex justify-content-center mt-4 align-items-center btn btn-dark btn-sm">Continue<i class="mx-2 mdi mdi-arrow-collapse-right "></i></a>
+                                    <a href="{{ route('payment.create', ['model' => Service::class, 'id' => $service->id]) }}"  class="w-100 d-flex justify-content-center mt-4 align-items-center btn btn-dark btn-sm">Continue<i class="mx-2 mdi mdi-arrow-collapse-right "></i></a>
                                 </div>
                         </div>
                     </div>

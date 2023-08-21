@@ -138,7 +138,8 @@ Route::get('test', function () {
 });
 
 
-Route::GET('/test-mcq', [MCQController::class, 'index'])->name('mcq.test');
+Route::get('/test-mcq', [MCQController::class, 'index'])->name('mcq.index');
+Route::post('/test-submit/{exam}', [MCQController::class, 'store'])->name('mcq.submit');
 
 
 // Route for payment

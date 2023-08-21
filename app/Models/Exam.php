@@ -25,8 +25,8 @@ class Exam extends Model
         return $this->hasMany(Question::class);
     }
 
-    function users()
+    function results()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(Result::class);
     }
 }
