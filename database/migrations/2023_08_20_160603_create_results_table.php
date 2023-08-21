@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('exam_id')->nullable();
-            $table->string('question_name')->nullable();
-            $table->string('answer')->nullable();
-            $table->string('total_marks')->nullable();
+            $table->integer('right')->default(0);
+            $table->integer('wrong')->default(0);
+            $table->integer('obtained_marks')->default(0);
+            $table->boolean('has_passed')->default(0);
+            $table->decimal('score')->nullable();
+            $table->string('grade')->nullable();
             $table->timestamps();
         });
     }

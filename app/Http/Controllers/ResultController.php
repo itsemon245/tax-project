@@ -31,28 +31,7 @@ class ResultController extends Controller
      */
     public function store(StoreResultRequest $request)
     {
-    dd($request->all());
-
-        $id= Question::where('id',$request->question)->first();
-
-
-        $result= new Result();
-        $result->user_id = Auth::user()->id;
-        $result->exam_id = $id->exam_id;
-        foreach($request->answer as $answer){
-            $Question= Question::where('name',$request->questionName)->first();
-            $options = json_decode($Question->choices, true);
-            dd($options);
-            if($options['correct'] === $answer);
-
-        }
-        dd(1);
-        Result::create([
-            'user_id'=> Auth::user()->id,
-            'exam_id'=> $id->exam_id,
-            'user_id'=> $request->question,
-            'user_id'=> Auth::user()->id,
-        ]);
+    
     }
 
     /**

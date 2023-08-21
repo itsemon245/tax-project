@@ -37,8 +37,8 @@ class Course extends Model
         return $this->morphOne(Purchase::class, 'purchasable')->where('user_id', $userId);
     }
 
-    function exams()
+    function exam()
     {
-        return $this->hasMany(Exam::class);
+        return $this->hasOne(Exam::class);
     }
 }

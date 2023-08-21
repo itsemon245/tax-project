@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Json;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,9 @@ class Question extends Model
         'name',
         'mark',
         'choices'
+    ];
+    protected $casts = [
+        'choices' => Json::class,
     ];
 
     function exam()

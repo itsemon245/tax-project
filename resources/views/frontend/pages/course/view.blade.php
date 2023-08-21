@@ -37,8 +37,8 @@
                                                 Now
                                             </x-backend.ui.button>
                                         @else
-                                            <x-backend.ui.button type="custom" href="{{ route('mcq.test') }}"
-                                                class="btn-dark">
+                                            <x-backend.ui.button type="custom"
+                                                href="{{ route('mcq.index') . '?course_id=' . $course->id }}" class="btn-dark">
                                                 Start The Assesment
                                             </x-backend.ui.button>
                                         @endif

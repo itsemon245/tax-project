@@ -17,7 +17,10 @@ class ExamFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'course_id' => 1,
+            'name'=> fake()->realText(20),
+            'total_marks'=> 100,
+            'passing_marks'=> 33,
         ];
     }
 }

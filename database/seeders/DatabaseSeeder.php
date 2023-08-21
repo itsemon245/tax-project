@@ -44,6 +44,7 @@ class DatabaseSeeder extends Seeder
             CaseStudySeeder::class,
             ExpertProfileSeeder::class,
             CourseSeeder::class,
+            ExamSeeder::class,
             CalendarSeeder::class,
             PromoCodeSeeder::class,
             BookCategorySeeder::class,

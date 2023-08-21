@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('exam_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
-            $table->decimal('mark');
+            $table->integer('mark');
             $table->json('choices');
             $table->timestamps();
         });
