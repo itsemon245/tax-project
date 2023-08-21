@@ -501,8 +501,10 @@
                                 <div class="collapse" id="users">
                                     <ul class="nav-second-level">
                                         <li>
-            
-                                            <a href="{{ route('user-doc.index') }}">Show</a>
+                                            <a href="{{ route('users.create') }}">Create</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('users.index') }}">Show</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -594,12 +596,6 @@
                                 </a>
                                 <div class="collapse" id="roleSection">
                                     <ul class="nav-second-level">
-                                        <li>
-                                            <a href="{{ route('users.create') }}">Create Employee</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('users.index') }}">View Employee</a>
-                                        </li>
                                         <li>
                                             <a href="{{ route('role.create') }}">Create Role</a>
                                         </li>

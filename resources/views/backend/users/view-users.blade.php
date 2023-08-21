@@ -2,9 +2,9 @@
 
 
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', 'List']" />
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Users', 'List']" />
 
-<x-backend.ui.section-card name="Hero List">
+<x-backend.ui.section-card name="Users List">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -30,11 +30,11 @@
                                         <td>{{ ++$key }}</td>
                                         <td><img src="{{ useImage($user->image_url) }}" alt="{{ $user->user_name }}"
                                                 width="80px" loading="lazy"></td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->getRoleNames() != null ? $user->getRoleNames(): ''}}</td>
+                                        <td>{!! Str::limit($user->name, 10, '...') !!}</td>
+                                        <td>{!! Str::limit($user->email, 10, '...') !!}</td>
+                                        <td>{!! $user->getRoleNames() != null ? $user->getRoleNames(): ''!!}</td>
                                         <td>{{ $user->phone }}</td>
-                                        <td>{{ $user->admin_ref }}</td>
+                                        <td>{!! Str::limit($user->admin_ref, 15, '...') !!}</td>
                                         <td>
                                             <a href="{{ route('users.edit', $user->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
