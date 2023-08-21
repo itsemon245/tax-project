@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FiscalYear extends Model
 {
@@ -24,5 +25,10 @@ class FiscalYear extends Model
                 'due_date',
                 'status'
             ]);
+    }
+
+    function userDocs(): HasMany
+    {
+        return $this->hasMany(UserDoc::class);
     }
 }
