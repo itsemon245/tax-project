@@ -29,4 +29,9 @@ class Exam extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    function result()
+    {
+        return $this->hasMany(Result::class);
+    }
 }
