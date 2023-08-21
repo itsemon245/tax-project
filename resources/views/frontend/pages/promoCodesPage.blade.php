@@ -1,9 +1,9 @@
 @extends('frontend.layouts.app')
 @section('main')
     <div class="container">
-        <h2 class="mt-2 mb-2 p-3">All Promo Codes Here: </h2>
         <div class="row mt-3">
-            @foreach ($promoCodes as $code)
+            @forelse ($promoCodes as $code)
+            <h3 class="p-4 text-center text-muted" >Promo Code Here....</h3>
             <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -27,7 +27,11 @@
                     </span>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="row mt-3">
+                <h3 class="p-4 text-center text-muted" >No Promo Code Here....</h3>
+            </div>
+            @endforelse   
         </div>
     </div>
 @endsection
