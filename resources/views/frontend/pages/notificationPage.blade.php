@@ -18,36 +18,46 @@
 @section('main')
     <div class="container">
         <div class="row">
-            <div class="d-flex justify-content-between align-items-center p-3">
-                <h3 class="">Notifications</h3>
-                <div data-is-marked="{{ $isRead ? 'true' : 'false' }}" id="mark-notification-btn" role="button"
-                    class="d-inline-flex gap-2 align-items-center {{ $isRead ? 'read' : 'text-dark' }}">
-                    <span class="mdi mdi-check-all font-16"></span>
-                    <span class="font-14">Mark all as read</span>
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <h3 class="">Notifications</h3>
+                    <div data-is-marked="{{ $isRead ? 'true' : 'false' }}" id="mark-notification-btn" role="button"
+                        class="d-inline-flex gap-2 align-items-center {{ $isRead ? 'read' : 'text-dark' }}">
+                        <span class="mdi mdi-check-all font-16"></span>
+                        <span class="font-14">Mark all as read</span>
+                    </div>
                 </div>
-            </div>
-            <div class=" overflow-scroll" style=" height:400px;">
-                @forelse (request()->user()->notifications as $notification)
-                    <div class="card show w-100 mb-3 {{ $isRead ? 'read' : 'unread' }}" role="alert" aria-live="assertive"
-                        aria-atomic="true">
-                        <div class="card-header bg-primary text-white">
-                            <img src="{{ asset('backend/assets/images/users/user-6.jpg') }}" alt="" height="30"
-                                class="me-1 rounded-circle shadow">
-                            <strong class="me-auto">{{ $notification->data['title'] }}</span></strong>
-                            <small>{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</small>
-                            <button type="button" class="float-end btn-close ms-2" data-bs-dismiss="toast"
-                                aria-label="Close"></button>
+                <div class="overflow-scroll" style=" height:400px;">
+                    @forelse (request()->user()->notifications as $notification)
+                        <div class="card show w-100 mb-3 {{ $isRead ? 'read' : 'unread' }}" role="alert" aria-live="assertive"
+                            aria-atomic="true">
+                            <div class="card-header bg-primary text-white">
+                                <img src="{{ asset('backend/assets/images/users/user-6.jpg') }}" alt="" height="30"
+                                    class="me-1 rounded-circle shadow">
+                                <strong class="me-auto">{{ $notification->data['title'] }}</span></strong>
+                                <small>{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</small>
+                                <button type="button" class="float-end btn-close ms-2" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="card-body">
+                                {{ $notification->data['body'] }}
+                                <a href="{{ $notification->data['url'] }}">Explore more</a>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            {{ $notification->data['body'] }}
-                            <a href="{{ $notification->data['url'] }}">Explore more</a>
+                    @empty
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <img src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100vh;" class="img-fluid p-5" alt="Responsive image">
+                            </div>
+                            <div class="col-md-2"></div>
                         </div>
                     </div>
-                @empty
-                    <h4 class="text-cetner bg-light">No Notification here....</h4>
-                @endforelse
+                    @endforelse
+                </div>
             </div>
-            <div class="col-md-2"></div>
         </div>
     </div>
 @endsection
