@@ -58,6 +58,11 @@
                         <div class="col-sm-6 col-lg-4">
                             <div class="card h-100  position-relative">
                                 <div class="card-body h-100  py-3">
+                                    <div class="d-flex flex-row-reverse">
+                                        <div class="icon">
+                                            <span><i class="mdi mdi-view-list show-menu"></i></span>
+                                        </div>
+                                    </div>
                                     <div class="">
                                         @foreach ($doc->files as $key => $file)
                                             <span
@@ -70,9 +75,6 @@
                                             <p>Submitted on: {{ $doc->created_at->format('d M, Y') }}</p>
                                             <span class="mdi mdi-file-outline font-16"></span><span>{{ count($doc->files) }}
                                                 Files</span>
-                                        </div>
-                                        <div class="icon">
-                                            <span><i class="fas fa-ellipsis-h show-menu"></i></span>
                                         </div>
                                     </div>
                                 </div>

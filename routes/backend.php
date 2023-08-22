@@ -53,6 +53,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
+use App\Http\Controllers\Backend\Maintenance\MaintenanceController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 
 /*
@@ -106,6 +107,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('questions', QuestionController::class);
     Route::resource('result', ResultController::class);
     Route::resource('taxCalculator', TaxCalculatorController::class);
+    Route::resource('maintenance', MaintenanceController::class);
     Route::resource('course', CourseController::class)->names([
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',

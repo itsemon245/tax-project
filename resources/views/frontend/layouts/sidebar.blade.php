@@ -148,7 +148,7 @@
                             style="background: none;">
                             <span class="mdi mdi-close"></span>
                         </button>
-                        <a href="/">
+                        <a href="{{ route('home') }}">
                             <img style="max-width:120px;" src="{{ asset('frontend/assets/images/logo/app.png') }}"
                                 alt="Text Act Logo">
                         </a>
@@ -158,13 +158,10 @@
                     <a href="{{ route('user-profile.create') }}" class="">Profile</a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="" href="">My Product</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="#">My Taxes</a>
-                </li>
-                <li class="sidebar-item">
                     <a class="" href="{{ route('user-doc.index') }}">My Documents</a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="" href="{{ route('page.my.courses') }}">My Courses</a>
                 </li>
                 <li class="sidebar-item">
                     <a class="" href="{{ route('referral.index') }}">Referrals</a>
@@ -185,10 +182,7 @@
                     <a class="" href="{{ route('tax.calculator') }}">Tax Calculator</a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="" href="#">Upgrade Product</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="#">Payment History</a>
+                    <a class="" href="{{ route('page.my.payments') }}">Payment History</a>
                 </li>
                 <li class="sidebar-item">
                     <a class="btn btn-success waves-effect waves-light" href="{{ route('user-doc.create') }}">Upload
@@ -202,7 +196,7 @@
                             <input type="hidden" name="auth_id" class="d-none" value="{{ auth()->id() }}">
                             <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
                         </form>
-                        <a class="btn btn-secondary" href="">Become a partner</a>
+                        <a class="btn btn-secondary" href="{{ route('page.become.partner') }}">Become a partner</a>
                     </div>
                 </li>
             </ul>
