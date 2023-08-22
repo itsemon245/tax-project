@@ -1,21 +1,19 @@
-@extends('backend.layouts.app')
-@section('content')
-    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Backend', 'Tax Calculator']" />
+@extends('frontend.layouts.app')
+@section('main')
+    <style>
+        .check-active {
+            background: var(--bs-primary);
+            color: var(--dark);
+        }
 
-    <x-backend.ui.section-card name="Tax Calculator">
+        .form-check-label {
+            transition: all 150ms ease-in-out;
+        }
+    </style>
+    <section class="my-5">
         <div class="container d-flex justify-content-center">
-            <ul class="nav nav-pills navtab-bg" role="tablist"
-                style="width: 100%;display: flex;justify-content: space-evenly;">
-                {{-- @foreach ($products as $type => $items)
-                    <li class="nav-item" role="presentation">
-                        <a href="#{{ $type }}" data-bs-toggle="tab"
-                            aria-expanded="{{ $type === 'Silver' ? 'true' : 'false' }}"
-                            aria-selected="{{ $type === 'Silver' ? 'true' : 'false' }}" role="tab"
-                            class="text-capitalize nav-link {{ $type === 'Silver' ? 'active' : '' }}" tabindex="-1">
-                            {{ $type }}
-                        </a>
-                    </li>
-                @endforeach --}}
+            <ul class="nav nav-pills navtab-bg nav-justif" role="tablist"
+                style="width: 100%;display: flex;justify-content: center; gap:1rem;">
                 <li>
                     <a href="#" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" aria-controls="company"
                         aria-expanded="true" aria-selected="true" role="tab"
@@ -41,99 +39,75 @@
         </div>
         <div class="container-fluid">
             <div class="tab-content">
-                {{-- @foreach ($products as $type => $items)
-                    <div class="tab-pane {{ $type === 'Silver' ? 'active' : '' }}" id="{{ $type }}" role="tabpanel">
-                        <div class="product-wrapper">
-                            @foreach ($items as $product)
-                                <x-frontend.product-card :$product />
-                            @endforeach
-                        </div>
-                    </div>
-                @endforeach --}}
                 <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="company-tab">
-                    <form action="" method="POST">
+                    <form action="{{ route('tax.calculate') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="tax_for" value="company">
                         <div class="container rounded bg-white py-3 px-4">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Name" required type="text" name="name"
-                                                required>
+                                            <x-backend.form.text-input label="Name" :value="auth()->user() ? auth()->user()->name : ''" required
+                                                type="text" name="name" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Email Address" type="email" name="email"
-                                                required>
+                                            <x-backend.form.text-input label="Email Address" :value="auth()->user() ? auth()->user()->email : ''"
+                                                type="email" name="email" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Phone Number" type="number" name="phone"
-                                                required>
+                                            <x-backend.form.text-input label="Phone Number" :value="auth()->user() ? auth()->user()->phone : ''" type="string"
+                                                name="phone" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <x-backend.form.text-input label="Source of Income" type="text"
-                                                name="incomeSource">
+                                                name="income_source">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <x-backend.form.text-input label="Yearly Turnover" type="number"
-                                                name="yearlyTurnover">
+                                                name="yearly_turnover">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Total Assets" type="text"
-                                                name="totalAssets">
+                                            <x-backend.form.text-input label="Total Assets" type="number"
+                                                name="total_asset">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <x-backend.form.text-input label="Yearly Income" type="number"
-                                                name="yearlyIncome">
+                                                name="yearly_income">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-12 my-4">
                                             <h4 class="mb-2">Tax Services</h4>
-                                            <div class="clearfix">
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="Registration"
-                                                        value="Registration" class="d-none">
-                                                    <label for="Registration"
-                                                        class="border rounded p-1">Registration</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="AccountWithAuditReport"
-                                                        value="Account With Audit Report" class="d-none">
-                                                    <label for="AccountWithAuditReport" class="border rounded p-1">Account
-                                                        With Audit Report</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices"
-                                                        id="accountAuditReport&TaxAdvisory"
-                                                        value="Account Audit Report & Tax Advisory" class="d-none">
-                                                    <label for="accountAuditReport&TaxAdvisory"
-                                                        class="border rounded p-1">Account Audit
-                                                        Report & Tax Advisory</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="Others"
-                                                        class="d-none">
-                                                    <label for="Others" class="border rounded p-1 mb-1">Others</label>
-                                                    <x-backend.form.text-input label="Details" type="text"
-                                                        name="texServices">
-                                                    </x-backend.form.text-input>
-                                                </div>
+                                            <div class="clearfix d-flex flex-wrap gap-3 align-items-center">
+                                                @isset($settings['company'])
+                                                    @foreach ($settings['company'] as $setting)
+                                                        @foreach ($setting->slots as $key => $slot)
+                                                            @foreach ($slot->taxServices as $i => $service)
+                                                                <label
+                                                                    class="form-check-label d-flex gap-2 py-2 px-3 bg-light bg-gradient rounded-3"
+                                                                    for="{{ $service->name . '-' . $service->id }}">
+                                                                    <input class="form-check-input" type="checkbox" hidden
+                                                                        id="{{ $service->name . '-' . $service->id }}"
+                                                                        name="services[]" value="{{ $service->name }}">
+                                                                    {{ $service->name }}
+                                                                </label>
+                                                            @endforeach
+                                                        @endforeach
+                                                    @endforeach
+                                                @endisset
+
                                             </div>
                                         </div><!-- end col -->
                                         <div class="col-12">
-
                                             <x-form.ck-editor id="ck-editor" name="Massage"></x-form.ck-editor>
-
                                         </div><!-- end col -->
-
-
-
-                                        <div class="mt-3">
+                                        <div class="">
                                             <button type="submit"
                                                 class="btn btn-primary waves-effect waves-light profile-button">Submit</button>
                                         </div>
@@ -150,6 +124,8 @@
                 <div class="tab-pane" id="firm" role="tabpanel" aria-labelledby="firm-tab">
                     <form action="" method="POST">
                         @csrf
+                        <input type="hidden" name="tax_for" value="firm">
+
                         <div class="container rounded bg-white py-3 px-4">
                             <div class="row">
                                 <div class="col-md-12">
@@ -191,40 +167,9 @@
                                         </div>
                                         <div class="col-12 my-4">
                                             <h4 class="mb-2">Tax Services</h4>
-                                            <div class="clearfix">
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="Registration"
-                                                        value="Registration" class="d-none">
-                                                    <label for="Registration"
-                                                        class="border rounded p-1">Registration</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="AccountWithAuditReport"
-                                                        value="Account With Audit Report" class="d-none">
-                                                    <label for="AccountWithAuditReport" class="border rounded p-1">Account
-                                                        With Audit Report</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices"
-                                                        id="accountAuditReport&TaxAdvisory"
-                                                        value="Account Audit Report & Tax Advisory" class="d-none">
-                                                    <label for="accountAuditReport&TaxAdvisory"
-                                                        class="border rounded p-1">Account Audit
-                                                        Report & Tax Advisory</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="vat"
-                                                        value="Vat" class="d-none">
-                                                    <label for="vat" class="border rounded p-1">Vat</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="Others"
-                                                        class="d-none">
-                                                    <label for="Others" class="border rounded p-1 mb-1">Others</label>
-                                                    <x-backend.form.text-input label="Details" type="text"
-                                                        name="texServices">
-                                                    </x-backend.form.text-input>
-                                                </div>
+                                            <div class="clearfix d-flex flex-wrap gap-3 align-items-center">
+
+
                                             </div>
                                         </div><!-- end col -->
                                         <div class="col-12">
@@ -252,6 +197,7 @@
                 <div class="tab-pane" id="indivudual" role="tabpanel" aria-labelledby="indivudual-tab">
                     <form action="" method="POST">
                         @csrf
+                        <input type="hidden" name="tax_for" value="individual">
                         <div class="container rounded bg-white py-3 px-4">
                             <div class="row">
                                 <div class="col-md-12">
@@ -298,37 +244,9 @@
                                         </div>
                                         <div class="col-12 my-4">
                                             <h4 class="mb-2">Tax Services</h4>
-                                            <div class="clearfix">
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="Registration"
-                                                        value="Registration" class="d-none">
-                                                    <label for="Registration"
-                                                        class="border rounded p-1">Registration</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="Account"
-                                                        value="Account" class="d-none">
-                                                    <label for="Account" class="border rounded p-1">Account</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="account&TaxAdvisory"
-                                                        value="Account & Tax Advisory" class="d-none">
-                                                    <label for="account&TaxAdvisory" class="border rounded p-1">Account &
-                                                        Tax Advisory</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="vat"
-                                                        value="Vat" class="d-none">
-                                                    <label for="vat" class="border rounded p-1">Vat</label>
-                                                </div>
-                                                <div class="float-start m-1">
-                                                    <input type="radio" name="texServices" id="Others"
-                                                        class="d-none">
-                                                    <label for="Others" class="border rounded p-1 mb-1">Others</label>
-                                                    <x-backend.form.text-input label="Details" type="text"
-                                                        name="texServices">
-                                                    </x-backend.form.text-input>
-                                                </div>
+                                            <div class="clearfix d-flex flex-wrap gap-3 align-items-center">
+
+
                                             </div>
                                         </div><!-- end col -->
                                         <div class="col-12">
@@ -355,36 +273,19 @@
                 </div>
             </div>
         </div>
-    </x-backend.ui.section-card>
+    </section>
     <!-- end row-->
 @endsection
 
 @push('customJs')
     <script>
-        const getSectionTitle = (e) => {
-            const section_id = e.value
-            let url = "{{ route('getInfoSectionTitle', ':sectionId') }}"
-            url = url.replace(':sectionId', section_id)
-
-            $.ajax({
-                type: 'POST',
-                url: url,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(title) {
-                    $('input[name="title"]').val('')
-                    $('input[name="old_title"]').val('')
-
-                    $('input[name="title"]').val(title)
-                    $('input[name="old_title"]').val(title)
-                },
-                error: function(error) {
-                    $('input[name="title"]').val('')
-                    $('input[name="old_title"]').val('')
-                    console.log(error)
-                }
-            });
-        }
+        $(document).ready(function() {
+            $('.form-check-input').on('change', e => {
+                $(e.target)
+                    .parent()
+                    .toggleClass('check-active')
+                    .toggleClass('bg-light');
+            })
+        });
     </script>
 @endpush

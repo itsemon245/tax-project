@@ -1,6 +1,6 @@
 @php
     $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
-    $isPageV2 = str(url()->current())->contains('page'); 
+    $isPageV2 = str(url()->current())->contains('page');
 @endphp
 <nav class="relative">
     {{-- Sidebar 1-> page navigation --}}
@@ -136,10 +136,10 @@
 
     {{-- Sidebar 2 -> user dashboard navigation --}}
     @auth
-    @php
-         $user = App\Models\User::find(auth()->id());
-        $isRead = count($user->unreadNotifications) === 0;
-    @endphp
+        @php
+            $user = App\Models\User::find(auth()->id());
+            $isRead = count($user->unreadNotifications) === 0;
+        @endphp
         <div class="sidebar sidebar-2">
             <ul class="list-unstyled">
                 <li class="p-1">
@@ -182,7 +182,7 @@
 
                 </li>
                 <li class="sidebar-item">
-                    <a class="" href="#">Live Chat</a>
+                    <a class="" href="{{ route('tax.calculator') }}">Tax Calculator</a>
                 </li>
                 <li class="sidebar-item">
                     <a class="" href="#">Upgrade Product</a>

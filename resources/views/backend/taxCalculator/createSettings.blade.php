@@ -32,7 +32,7 @@
                             <input type="hidden" value="1" id="last-service-count">
                             <div class="col-6 p-1">
                                 <x-backend.form.text-input id="service-name" name="slot_1_services[]"
-                                    placeholder="Service Name" label="Service Name 1" />
+                                    placeholder="Service Name" label="Service Name 1" disabled />
                             </div>
                             <div class="col-6 p-1">
                                 <div class="mb-2">
@@ -40,10 +40,11 @@
                                             class="service-count">1</span></label>
                                     <div class="d-flex align-items-center justify-content-center border shadow-sm rounded"
                                         style="overflow: hidden;">
-                                        <input type="checkbox" checked id="is-discount" name="slot_1_is_discounts[]" hidden>
+                                        <input type="checkbox" checked id="is-discount" name="slot_1_is_discounts[]" hidden
+                                            disabled>
                                         <input type="number" id="discount-amount" name="slot_1_discount_amounts[]"
                                             class="amount border-0 rounded-0 w-100 ps-2" style="outline:transparent;"
-                                            placeholder="0" aria-label="Discunt">
+                                            placeholder="0" aria-label="Discunt" disabled>
 
 
                                         <span id="slot-1-service-discount-icon-1"
@@ -160,8 +161,8 @@
                                                     <input type="number" id="discount-amount"
                                                         name="slot_1_discount_amounts[]"
                                                         class="amount border-0 rounded-0 w-100 ps-2"
-                                                        style="outline:transparent;" placeholder="0"
-                                                        aria-label="Discunt" disabled>
+                                                        style="outline:transparent;" placeholder="0" aria-label="Discunt"
+                                                        disabled>
 
 
                                                     <span id="slot-1-service-discount-icon-1"
@@ -230,6 +231,11 @@
                     let count = ++this.count;
                     let html = $('#slot').clone()
                     let serviceCount = html.find('#service-count').val(count)
+                    let taxType = $('select[name="type"]')
+                    if (taxType.val() === 'others') {
+                        html.find('.service-wrapper').find('input').attr('disabled', false)
+                        console.log(html.find('.service-wrapper').find('input'));
+                    }
                     html.find('.slot-count').text(count)
                     html.find('#service-name').attr('name', `slot_${count}_services[]`)
                     html.find('#is-discount').attr('name', `slot_${count}_is_discounts[]`)
