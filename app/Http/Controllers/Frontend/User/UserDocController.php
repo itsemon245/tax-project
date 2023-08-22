@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreUserDocRequest;
 use App\Http\Requests\UpdateUserDocRequest;
 use App\Models\FiscalYear;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
+use Spatie\FlareClient\Http\Exceptions\NotFound;
 
 class UserDocController extends Controller
 {
@@ -20,7 +22,7 @@ class UserDocController extends Controller
     {
         $reqYear = $request->year ? $request->year : currentFiscalYear();
         $fiscalYear = FiscalYear::where('year', $reqYear)->first();
-        $userDocs = $fiscalYear ? $fiscalYear->userDocs : [];
+        $userDocs = $fiscalYear ? $fiscalYear->userDocs()->where('user_id', auth()->id())->get() : [];
         // $upload_documents = UserDoc::with('user')->get();
         return view('frontend.userdoc.userDoc', compact('userDocs', 'reqYear'));
     }
@@ -33,6 +35,34 @@ class UserDocController extends Controller
         $reqYear = $request->year ? $request->year : currentFiscalYear();
         $names = UserDoc::distinct()->get()->pluck('name');
         return view('frontend.userdoc.uploadDoc', compact('names', 'reqYear'));
+    }
+
+    public function download(UserDoc $userDoc, $fileIndex)
+    {
+        if ($userDoc->user_id !== auth()->id()) {
+            abort(404, 'File not found');
+        }
+        $path = 'public/' . $userDoc->files[$fileIndex]->file;
+        if (Storage::exists($path)) {
+            return Storage::download($path);
+        }
+    }
+    public function moveTo(Request $request, UserDoc $userDoc)
+    {
+        $fiscalYear = FiscalYear::firstOrCreate([
+            'year' => $request->year
+        ]);
+        if ($userDoc->user_id !== auth()->id()) {
+            abort(404, 'File not found');
+        } else {
+            $userDoc->fiscal_year_id = $fiscalYear->id;
+            $userDoc->update();
+            $alert = [
+                'alert-type' => 'success',
+                'message' => 'Document moved to year ' . $request->year
+            ];
+            return back()->with($alert);
+        }
     }
 
     /**
@@ -77,26 +107,7 @@ class UserDocController extends Controller
      */
     public function show(UserDoc $userDoc)
     {
-        $document_id = $userDoc->id;
-        $upload_documents = UserDoc::with('user')->with('documentType')->where('id', $document_id)->get();
-        $select_docs = $upload_documents[0];
-        return view('backend.userdoc.viewSingleDoc', compact('select_docs'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(UserDoc $userDoc)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUserDocRequest $request, UserDoc $userDoc)
-    {
-        //
+        return view('frontend.userdoc.show', compact('userDoc'));
     }
 
     /**
@@ -104,6 +115,11 @@ class UserDocController extends Controller
      */
     public function destroy(UserDoc $userDoc)
     {
-        //
+        $userDoc->delete();
+        $alert = [
+            'alert-type' => 'success',
+            'message' => 'Document Deleted'
+        ];
+        return back()->with($alert);
     }
 }
