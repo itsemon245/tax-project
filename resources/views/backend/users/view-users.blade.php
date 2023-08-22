@@ -4,7 +4,7 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Users', 'List']" />
 
-<x-backend.ui.section-card name="Users List">
+    <x-backend.ui.section-card name="Users List">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -30,9 +30,12 @@
                                         <td>{{ ++$key }}</td>
                                         <td><img src="{{ useImage($user->image_url) }}" alt="{{ $user->user_name }}"
                                                 width="80px" loading="lazy"></td>
-                                        <td>{!! Str::limit($user->name, 10, '...') !!}</td>
-                                        <td>{!! Str::limit($user->email, 10, '...') !!}</td>
-                                        <td>{!! $user->getRoleNames() != null ? $user->getRoleNames(): ''!!}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td class="text-capitalize">
+                                            <span
+                                                class="px-2 py-1 bg-soft-success text-success rounded rounded-3 fw-medium">{{ $user->getRoleNames()->first() }}</span>
+                                        </td>
                                         <td>{{ $user->phone }}</td>
                                         <td>{!! Str::limit($user->admin_ref, 15, '...') !!}</td>
                                         <td>
@@ -43,7 +46,8 @@
                                                 class="d-inline-block py-0">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                                <x-backend.ui.button
+                                                    class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                                             </form>
                                         </td>
                                     </tr>
@@ -55,7 +59,7 @@
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
-    </x-backend.ui.section-card>    
+    </x-backend.ui.section-card>
 
     <!-- end row-->
 

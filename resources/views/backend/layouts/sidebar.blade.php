@@ -17,7 +17,7 @@
 
             <ul id="side-menu">
 
-                <li class=" border-dark border-bottom" >
+                <li class=" border-dark border-bottom">
                     <a href="{{ route('dashboard') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span> Dashboard </span>
@@ -236,7 +236,7 @@
                                     <ul class="nav-second-level">
                                         <li>
                                             <a href="{{ route('about.create') }}">Create
-            
+
                                             </a>
                                         </li>
                                     </ul>
@@ -473,7 +473,7 @@
                                                 Completed
                                             </a>
                                         </li>
-            
+
                                     </ul>
                                 </div>
                             </li>
@@ -486,8 +486,8 @@
                                 <div class="collapse" id="user-doc">
                                     <ul class="nav-second-level">
                                         <li>
-            
-                                            <a href="{{ route('user-doc.index') }}">Show</a>
+
+                                            <a href="{{ route('userDoc.backend.index') }}">View All</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -533,13 +533,13 @@
                                                 Create
                                             </a>
                                         </li>
-            
+
                                         <li>
                                             <a href="{{ route('invoice.index') }}">
                                                 View All
                                             </a>
                                         </li>
-            
+
                                     </ul>
                                 </div>
                             </li>

@@ -22,7 +22,10 @@ class UserDocController extends Controller
     {
         $reqYear = $request->year ? $request->year : currentFiscalYear();
         $fiscalYear = FiscalYear::where('year', $reqYear)->first();
-        $userDocs = $fiscalYear ? $fiscalYear->userDocs()->where('user_id', auth()->id())->get() : [];
+        $userDocs = [];
+        if ($fiscalYear) {
+            $userDocs = $fiscalYear->userDocs()->where('user_id', auth()->id())->get();
+        }
         // $upload_documents = UserDoc::with('user')->get();
         return view('frontend.userdoc.userDoc', compact('userDocs', 'reqYear'));
     }
@@ -42,9 +45,10 @@ class UserDocController extends Controller
         if ($userDoc->user_id !== auth()->id()) {
             abort(404, 'File not found');
         }
+        $name = str($userDoc->name)->slug() . '-' . $userDoc->user->user_name . '.' . $userDoc->files[$fileIndex]->mimeType;
         $path = 'public/' . $userDoc->files[$fileIndex]->file;
         if (Storage::exists($path)) {
-            return Storage::download($path);
+            return Storage::download($path, $name);
         }
     }
     public function moveTo(Request $request, UserDoc $userDoc)

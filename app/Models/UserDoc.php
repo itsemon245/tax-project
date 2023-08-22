@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class UserDoc extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     protected $casts = [
         'files' => Json::class
     ];

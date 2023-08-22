@@ -2,12 +2,13 @@
 
 @section('content')
     <!-- start page title -->
-    <x-backend.ui.breadcrumbs :list="['Dashboard', 'User Documents', 'Show']" />
+    <x-backend.ui.breadcrumbs :list="['User Data', 'Documents', 'View']" />
     <!-- end page title -->
 
     <x-backend.ui.section-card name="Users Documents">
-        <x-backend.ui.button type="custom" href="{{ route('document-type.index') }}" class="mb-3 btn-sm btn-success">New
-            Type +</x-backend.ui.button>
+        <x-btn-back class="me-2 mb-3"></x-btn-back>
+        <x-backend.ui.button type="custom" href="{{ route('userDoc.backend.create') }}" class="mb-3 btn-sm btn-success">New
+            Name</x-backend.ui.button>
         <x-backend.table.basic>
             <thead>
                 <tr>
@@ -20,34 +21,31 @@
             </thead>
 
             <tbody>
-                @forelse ($upload_documents as $key => $document)
+                @forelse ($userDocs as $key => $doc)
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>
-                            <p class="mb-0">Name: {{ $document->user->name }}</p>
-                            <p class="mb-0 text-muted">Username: {{ $document->user->user_name }}</p>
-                            <p class="mb-0 text-muted">Phone: {{ $document->user->phone }}</p>
-                            <a href="mailto:{{ $document->user->email }}">
-                                <p class="mb-0 text-muted">Email: {{ $document->user->email }}</p>
+                            <p class="mb-0">Name: {{ $doc->user->name }}</p>
+                            <p class="mb-0 text-muted">Username: {{ $doc->user->user_name }}</p>
+                            <p class="mb-0 text-muted">Phone: {{ $doc->user->phone }}</p>
+                            <a href="mailto:{{ $doc->user->email }}">
+                                <p class="mb-0 text-muted">Email: {{ $doc->user->email }}</p>
                             </a>
                         </td>
                         <td>
                             <div>
                                 <p class="mb-0">
-                                    Title: {{ $document->title }}
-                                </p>
-                                <p class="mb-0">
-                                    Type: {{ $document->documentType->name }}
+                                    Title: {{ $doc->name }}
                                 </p>
                             </div>
                         </td>
                         <td id="tooltip-container">
                             <div class="avatar-group">
-                                @foreach (json_decode($document->images) as $image)
-                                    <a href="javascript: void(0);" class="avatar-group-item"
+                                @foreach ($doc->files as $file)
+                                    <a href="{{ useImage($file->file) }}" class="avatar-group-item"
                                         data-bs-container="#tooltip-container" data-bs-toggle="tooltip"
                                         data-bs-placement="top">
-                                        <img src="{{ useImage($image) }}"
+                                        <img src="{{ useImage($file->file) }}"
                                             class="rounded-circle border border-light border-3 avatar-md" alt="friend">
                                     </a>
                                 @endforeach
@@ -55,15 +53,18 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <x-backend.ui.button type="custom" href="{{ route('user-doc.show', $document) }}"
-                                    class="btn-sm btn-info">View</x-backend.ui.button>
-                                <x-backend.ui.button type="delete" action="#" class="btn-sm" />
+                                <x-backend.ui.button type="custom" href="{{ route('userDoc.backend.show', $doc->id) }}"
+                                    class="btn-sm btn-info me-1">View</x-backend.ui.button>
+                                @if (!$doc->user->hasRole('user') && !$doc->user->hasRole('partner'))
+                                    <x-backend.ui.button type="delete"
+                                        action="{{ route('userDoc.backend.destroy', $doc->id) }}" class="btn-sm" />
+                                @endif
                             </div>
                         </td>
                     </tr>
                 @empty
                 @endforelse
-                {{-- {{ dd(json_decode($upload_documents[0]->images)) }} --}}
+                {{-- {{ dd(json_decode($upload_documents[0]->files)) }} --}}
             </tbody>
         </x-backend.table.basic>
     </x-backend.ui.section-card>

@@ -1,16 +1,18 @@
 <?php
 
-use App\Http\Controllers\AchievementController;
 use App\Models\Course;
 use App\Models\TaxSetting;
 use App\Models\TaxCalculator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UiElementController;
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\SocialHandleController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\VideoController;
 use App\Http\Controllers\ExpertProfileController;
 use App\Http\Controllers\Review\ReviewController;
@@ -30,10 +32,11 @@ use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Chalan\ChalanController;
 use App\Http\Controllers\Backend\Client\ClientController;
 use App\Http\Controllers\Backend\Course\CourseController;
-use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Product\ProductController;
+use App\Http\Controllers\Backend\Project\ProjectController;
 use App\Http\Controllers\Backend\UserAppointmentController;
+use App\Http\Controllers\Backend\UserDoc\UserDocController;
 use App\Http\Controllers\Backend\Book\BookCategoryController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\CkEditor\CkEditorController;
@@ -42,7 +45,6 @@ use App\Http\Controllers\Backend\Return\ReturnFormController;
 use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
-use App\Http\Controllers\Backend\Project\ProjectController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
@@ -51,9 +53,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
-use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
-use App\Http\Controllers\ResultController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,7 +88,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('social-handle', SocialHandleController::class);
     Route::resource('ui-element', UiElementController::class);
     Route::resource('promo-code', PromoCodeController::class);
-    Route::resource('user-docs', UserDocController::class);
     Route::resource('map', MapController::class);
     Route::resource('map', MapController::class);
     Route::resource('role', RoleController::class);
@@ -111,6 +110,15 @@ Route::prefix('admin')->group(function () {
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',
     ]);
+    Route::resource('userDoc', UserDocController::class)->names([
+        'index' => 'userDoc.backend.index',
+        'create' => 'userDoc.backend.create',
+        'store' => 'userDoc.backend.store',
+        'show' => 'userDoc.backend.show',
+        'destroy' => 'userDoc.backend.destroy',
+    ]);
+    Route::get('userDoc/{userDoc}/download/{fileIndex}', [UserDocController::class, 'download'])->name('userDoc.backend.download');
+
     Route::post('send-invoice-mail/{id}', [InvoiceController::class, 'sendInvoiceMail'])->name('send_invoice_mail');
     Route::prefix('case-study-package-backend')
         ->name('case.study.package.backend.')
@@ -124,7 +132,7 @@ Route::prefix('admin')->group(function () {
             Route::PUT('update/{id}', 'update')->name('update');
             Route::get('user/{id}', 'user')->name('user');
         });
-        Route::prefix('project')
+    Route::prefix('project')
         ->name('project.')
         ->controller(ProjectController::class)
         ->group(function () {
@@ -154,7 +162,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('tax-setting', TaxSettingController::class);
     Route::resource('member', MemberController::class);
 
-    Route::get('chalan/clintes/{id}',[ChalanController::class,'user'])->name('admin.chalan.client');
+    Route::get('chalan/clintes/{id}', [ChalanController::class, 'user'])->name('admin.chalan.client');
     //Review backend 
     Route::prefix('/review')->name('backend.review.')->controller(ReviewController::class)->group(function () {
         Route::get('/index', 'index')->name('index');
