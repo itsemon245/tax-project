@@ -182,10 +182,7 @@
 
                 </li>
                 <li class="sidebar-item">
-                    <a class="" href="#">Live Chat</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="#">Upgrade Product</a>
+                    <a class="" href="{{ route('page.my.courses') }}">My Courses</a>
                 </li>
                 <li class="sidebar-item">
                     <a class="" href="#">Payment History</a>

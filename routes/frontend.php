@@ -75,10 +75,9 @@ Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.in
 Route::get('/contact', [PageController::class, 'contactPage'])->name('contact');
 Route::get('/office', [PageController::class, 'officePage'])->name('office');
 Route::get('/notification', [PageController::class, 'notificationPage'])->name('notification');
-// Route::get('/notification', 'notificationPage')->name('notification');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 Route::get('/promo-codes', [PageController::class, 'PromoCodePage'])->name('page.promo.code');
-
+Route::get('/my-courses', [PageController::class, 'myCourses'])->name('page.my.courses');
 // user generated refer link
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
 
