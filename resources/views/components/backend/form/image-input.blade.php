@@ -10,7 +10,7 @@
 <div class="mb-2">
     <label for="{{ $id }}">
         @if ($attributes->has('label'))
-            <span class="form-label text-capitalize">{{ $attributes->get('label') }}</span>
+            <span class="form-label text-capitalize">{{ $attributes->get('label') }}<span class="text-danger"> *</span></span>
         @endif
         <input id="{{ $id }}" name="{{ $name }}" type="file" hidden>
         <img class="w-100 border border-2 border-primary {{$class}}" style="{{$style}}" id="live-{{ $id }}"

@@ -89,18 +89,16 @@
                         <i class="fe-user"></i>
                         <span>Profile</span>
                     </a>
-
+                    
                     <!-- item-->
                     <a href="{{ route('user-profile.edit', auth()->id()) }}" class="dropdown-item notify-item">
                         <i class="fe-lock"></i>
                         <span>Change Password</span>
                     </a>
-                    <!-- item-->
-                    {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-settings"></i>
-                        <span>Settings</span>
-                    </a> --}}
-
+                    <a href="{{ route('maintenance.index') }}" class="dropdown-item notify-item">
+                        <i class="fa fa-cog"></i>
+                        <span>Maintenance</span>
+                    </a>
 
                     <div class="dropdown-divider"></div>
 
