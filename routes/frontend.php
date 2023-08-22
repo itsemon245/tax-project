@@ -78,6 +78,7 @@ Route::get('/notification', [PageController::class, 'notificationPage'])->name('
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 Route::get('/promo-codes', [PageController::class, 'PromoCodePage'])->name('page.promo.code');
 Route::get('/my-courses', [PageController::class, 'myCourses'])->name('page.my.courses');
+Route::get('/my-payments', [PageController::class, 'myPayments'])->name('page.my.payments');
 // user generated refer link
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
 

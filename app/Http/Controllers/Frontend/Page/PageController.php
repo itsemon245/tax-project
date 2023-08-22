@@ -102,4 +102,9 @@ class PageController extends Controller
         $courses = Course::get();
         return view('frontend.pages.myCourses', compact('courses'));
     }
+    //show all my payments/payment history in frontend
+    public function myPayments()
+    {
+        return view('frontend.pages.myPayments');
+    }
 }
