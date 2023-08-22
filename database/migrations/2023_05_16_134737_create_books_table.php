@@ -21,6 +21,8 @@ return new class extends Migration
             $table->longText('pdf')->nullable();
             $table->string('thumbnail')->nullable();
             $table->decimal('price', 8, 2)->nullable();
+            $table->boolean('is_discount_fixed')->default(false)->comment('true = Discount is fixed, false = Discount is percentage');
+            $table->integer('discount')->nullable();
             $table->timestamps();
         });
     }
