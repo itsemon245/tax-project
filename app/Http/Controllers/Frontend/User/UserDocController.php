@@ -8,25 +8,31 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreUserDocRequest;
 use App\Http\Requests\UpdateUserDocRequest;
+use App\Models\FiscalYear;
+use Illuminate\Http\Request;
 
 class UserDocController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $reqYear = $request->year ? $request->year : currentFiscalYear();
+        $fiscalYear = FiscalYear::where('year', $reqYear)->first();
+        $userDocs = $fiscalYear ? $fiscalYear->userDocs : [];
         // $upload_documents = UserDoc::with('user')->get();
-        return view('frontend.userdoc.userDoc');
+        return view('frontend.userdoc.userDoc', compact('userDocs', 'reqYear'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        $reqYear = $request->year ? $request->year : currentFiscalYear();
         $names = UserDoc::distinct()->get()->pluck('name');
-        return view('frontend.userdoc.uploadDoc', compact('names'));
+        return view('frontend.userdoc.uploadDoc', compact('names', 'reqYear'));
     }
 
     /**
@@ -37,26 +43,26 @@ class UserDocController extends Controller
 
         $files = [];
         $images = $request->fileponds;
-        // dd($files);
+        // dd($request->fiscal_year);   
         foreach ($images as $file) {
-            $fileArr = explode('storage/', $file);
-            $path = explode('storage/', $file)[1];
-            $tempFile = 'temp/' . $path;
-            $mainFile = 'public/' . $path;
-            $arr = explode(".", $path);
+            $tempFile = 'temp/' . $file;
+            $mainFile = 'public/' . $file;
+            $arr = explode(".", $file);
             $ext = array_pop($arr);
             if (Storage::exists($tempFile)) {
                 Storage::move($tempFile, $mainFile);
                 $files[] = [
-                    'file' => $fileArr[0] . "storage/" . $path,
+                    'file' => $file,
                     'mimeType' => $ext
                 ];
             }
         }
-        // dd($files);
-        $user_id = auth()->id();
+        $year = FiscalYear::firstOrCreate([
+            'year' => $request->fiscal_year
+        ]);
         $upload_document = new UserDoc();
-        $upload_document->user_id = $user_id;
+        $upload_document->user_id = auth()->id();
+        $upload_document->fiscal_year_id = $year->id;
         $upload_document->name = $request->name;
         $upload_document->files = $files;
         $upload_document->save();

@@ -15,9 +15,10 @@
                         </x-form.selectize>
                     </div>
                     <div class="col-4">
-                        <x-backend.form.select-input label="Tax Year" placeholder="Select Tax Year..." name="">
-                            @foreach (range(2023, 1980) as $year)
-                                <option value="">{{ $year . '-' . $year - 1 }}</option>
+                        <x-backend.form.select-input label="Tax Year" placeholder="Select Tax Year..." name="fiscal_year">
+                            @foreach (range(currentYear(), 2020) as $year)
+                                <option value="{{ $year - 1 . '-' . $year }}" @selected($year - 1 . '-' . $year === $reqYear)>
+                                    {{ $year - 1 . '-' . $year }}</option>
                             @endforeach
                         </x-backend.form.select-input>
                     </div>
