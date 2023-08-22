@@ -24,6 +24,8 @@ return new class extends Migration
             $table->longText('includes')->nullable();
             $table->longText('graduates_receive')->nullable();
             $table->json('page_topics')->comment('description:string, lists: array[]}')->nullable();
+            $table->boolean('is_discount_fixed')->default(false)->comment('true = Discount is fixed, false = Discount is percentage');
+            $table->integer('discount')->nullable();
             $table->timestamps();
         });
     }
