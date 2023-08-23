@@ -53,6 +53,7 @@ use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\IncomeSourceController;
 use App\Http\Controllers\ResultController;
 
 /*
@@ -111,6 +112,7 @@ Route::prefix('admin')->group(function () {
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',
     ]);
+    Route::resource('income-source',IncomeSourceController::class);
     Route::post('send-invoice-mail/{id}', [InvoiceController::class, 'sendInvoiceMail'])->name('send_invoice_mail');
     Route::prefix('case-study-package-backend')
         ->name('case.study.package.backend.')
