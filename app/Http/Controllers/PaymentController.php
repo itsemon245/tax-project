@@ -35,10 +35,10 @@ class PaymentController extends Controller
             'payable' => 'required|numeric',
             'name' => 'required',
             'phone' => 'required',
-            'paid_amount' => 'required_with:pay_later',
-            'trx_id' => 'required_with:pay_later',
-            'payment_number' => 'required_with:pay_later',
-            'promo_code' => 'required_with:pay_later',
+            'paid_amount' => 'required_without:pay_later',
+            'payment_method' => 'required_without:pay_later',
+            'trx_id' => 'required_without:pay_later',
+            'payment_number' => 'required_without:pay_later',
         ]);
 
         try {
