@@ -23,6 +23,7 @@ class TaxCalculatorController extends Controller
             "yearly_turnover" => "required|numeric",
             "total_asset" => "required|numeric",
             "yearly_income" => "required|numeric",
+            "gender" => "required|string",
             "services" => 'array|nullable',
             "message" => "string|nullable",
         ]);
@@ -56,15 +57,15 @@ class TaxCalculatorController extends Controller
 
         // dd($request);
         foreach ($valueSlots as $slot) {
-            $tax = 0;
+            $tax = (float) 0;
             if ($slot->difference < $value) {
-                $tax = $slot->difference * $slot->percentage / 100;
+                $tax =  $slot->difference * $slot->tax_percentage / 100;
                 $tax = $tax > $slot->min_tax ? $tax : $slot->min_tax;
+                $value -= $slot->difference;
             } else {
-                $tax = $value * $slot->percentage / 100;
+                $tax =  $value * $slot->tax_percentage / 100;
                 $tax = $tax > $slot->min_tax ? $tax : $slot->min_tax;
             }
-            $value -= $slot->difference;
             $totalTax += $tax;
 
             if ($slot->id === $lastValueSlot->id) {

@@ -99,12 +99,13 @@ class PageController extends Controller
     //show all my courses in frontend
     public function myCourses()
     {
-        $courses = Course::get();
+        $courses = User::find(auth()->id())->purchased('course');
         return view('frontend.pages.myCourses', compact('courses'));
     }
     //show all my payments/payment history in frontend
     public function myPayments()
     {
-        return view('frontend.pages.myPayments');
+        $payments = User::find(auth()->id())->purchases;
+        return view('frontend.pages.myPayments', compact('payments'));
     }
 }

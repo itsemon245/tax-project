@@ -82,6 +82,17 @@
                                                 name="yearly_income">
                                             </x-backend.form.text-input>
                                         </div>
+                                        <div class="col-md-6">
+                                            <label for="gender" class="d-block form-label">Gender</label>
+                                            <label for="male" class=" mx-2">
+                                                <input id="male" type="radio" name="gender" value="male">
+                                                Male
+                                            </label>
+                                            <label for="female" class=" mx-2">
+                                                <input id="female" type="radio" name="gender" value="female">
+                                                Female
+                                            </label>
+                                        </div>
                                         <div class="col-12 my-4">
                                             <h4 class="mb-2">Tax Services</h4>
                                             <div class="clearfix d-flex flex-wrap gap-3 align-items-center">
