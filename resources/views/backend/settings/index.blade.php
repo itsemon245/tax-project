@@ -8,19 +8,20 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                        <h4 class="p-2">Basic Setting</h4>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-1">
-                                                <x-backend.form.image-input id="logo"  style="aspect-ratio:1.8/.7;" label="Company logo" name="logo"/>                                 
+                                                <x-backend.form.image-input id="logo" required style="aspect-ratio:1.8/.7;" label="Company logo" name="logo"/>                                 
                                             </div>
                                         </div>
                                         <div class="col-md-6 mt-1">
-                                            <x-backend.form.text-input type="email" class="mb-2"  name="email" label="Company E-mail" />
-                                            <x-backend.form.text-input type="phone" class="mb-2"  name="phone" label="Company Phone" />
-                                            <x-backend.form.text-input type="phone" class="mb-2"  name="whatsapp" label="Company What's App" />
+                                            <x-backend.form.text-input type="email" class="mb-2" required name="email" label="Company E-mail" />
+                                            <x-backend.form.text-input type="phone" class="mb-2" required name="phone" label="Company Phone" />
+                                            <x-backend.form.text-input type="phone" class="mb-2" required name="whatsapp" label="Company What's App" />
                                         </div>
                                     </div>
                                     <div class="mb-1 row">
@@ -53,12 +54,49 @@
             </div>
         </form>
 
-        <form action="{{ route('setting.store') }}" method="post">
-            @csrf
-            <input type="text" name="sky">
-            <div class="mt-2"><button class="btn btn-primary w-100 btn-sm profile-button"
-                type="submit">Save Change</button>
-        </div>
+        {{-- Referance  --}}
+        <form action="#" method="post">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <h4 class="p-2">Referance Setting</h4>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <x-backend.form.text-input type="number" class="mb-2" required name="commision" label="Refer Commision" />
+                                </div>
+                                <div class="col-md-6">
+                                    <x-backend.form.text-input type="number" class="mb-2" required name="withdrawal" label="Withdrawal Limit" />
+                                </div>
+                                <div class="mt-2"><button class="btn btn-primary w-100 btn-sm profile-button"
+                                type="submit">Save Change</button>
+                                </div>
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div>
+            </div>
+        </form>
+        {{-- Payment  --}}
+        <form action="#" method="post">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <h4 class="p-2">Payment Setting</h4>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <x-backend.form.text-input type="number" class="mb-2" required name="commision" label="Refer Commision" />
+                                </div>
+                                <div class="col-md-6">
+                                    <x-backend.form.text-input type="number" class="mb-2" required name="withdrawal" label="Withdrawal Limit" />
+                                </div>
+                                <div class="mt-2"><button class="btn btn-primary w-100 btn-sm profile-button"
+                                type="submit">Save Change</button>
+                                </div>
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div>
+            </div>
         </form>
     </x-backend.ui.section-card>
     @push('customJs')
