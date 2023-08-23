@@ -1,25 +1,30 @@
 @extends('backend.layouts.app')
-
-
 @section('content')
-    <x-backend.ui.breadcrumbs :list="['Web Site', 'Maintenance']" />
-
-    <x-backend.ui.section-card name="Web Site Maintenance">
-
+    <x-backend.ui.breadcrumbs :list="['Web Site', 'Settings']" />
+    <x-backend.ui.section-card name="Web Site Settings">
         {{-- Select category option --}}
-        <form action="{{ route('maintenance.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('setting.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-1">
-                                        <x-backend.form.image-input id="logo" required style="aspect-ratio:1.8/.7;" label="Web Site logo" name="logo"/>                                 
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-1">
+                                                <x-backend.form.image-input id="logo"  style="aspect-ratio:1.8/.7;" label="Company logo" name="logo"/>                                 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mt-1">
+                                            <x-backend.form.text-input type="email" class="mb-2"  name="email" label="Company E-mail" />
+                                            <x-backend.form.text-input type="phone" class="mb-2"  name="phone" label="Company Phone" />
+                                            <x-backend.form.text-input type="phone" class="mb-2"  name="whatsapp" label="Company What's App" />
+                                        </div>
                                     </div>
                                     <div class="mb-1 row">
-                                        <div class="col-md-3" style="max-width: 100%;">
+                                        <div class="col-md-2" style="max-width: 50%;">
                                             <label for="favicon">
                                                     <span class="form-label text-capitalize">Favicon<span class="text-danger"> *</span></span>
                                                 <input id="favicon" name="favicon" type="file" hidden>
@@ -30,23 +35,14 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-9 mt-3">
-                                            <x-backend.form.text-input type="text" required name="title" label="Web Title" />
+                                        <div class="col-md-10">
+                                            <label for="address" class="w-100">Address<span class="text-danger"> *</span>
+                                                <textarea name="address" class="form-control" cols="30" placeholder="Type your company address..." rows="6"></textarea>
+                                            </label>
                                         </div>
                                     </div>
                                 </div> <!-- end col -->
                                 {{-- Add sub-category --}}
-                                <div class="col-md-6">
-                                    <div class="mb-1">
-                                        <x-backend.form.text-input type="email" class="mb-3" required name="email" label="Web E-mail" />
-                                        <x-backend.form.text-input type="phone" class="mb-3" required name="phone" label="Web Phone" />
-                                        <x-backend.form.text-input type="phone" class="mb-3" required name="whatsapp" label="Web What's App" />
-                                        <div class="mt-4">
-                                            <label for="exampleColorInput" class="form-label">Button Color<span class="text-danger"> *</span></label>
-                                            <input type="color" class="form-control pb-2" name="btn_color" id="exampleColorInput" value="#38BDF8"/>
-                                        </div>
-                                    </div>
-                                </div> <!-- end col -->
                                 <div class="mt-2"><button class="btn btn-primary w-100 btn-sm profile-button"
                                         type="submit">Save Change</button>
                                 </div>
@@ -57,9 +53,14 @@
             </div>
         </form>
 
+        <form action="{{ route('setting.store') }}" method="post">
+            @csrf
+            <input type="text" name="sky">
+            <div class="mt-2"><button class="btn btn-primary w-100 btn-sm profile-button"
+                type="submit">Save Change</button>
+        </div>
+        </form>
     </x-backend.ui.section-card>
-
-
     @push('customJs')
         <script>
                 $(document).ready(function() {  

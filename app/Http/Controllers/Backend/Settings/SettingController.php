@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Maintenance;
+namespace App\Http\Controllers\Backend\Settings;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Maintenance;
 
-class MaintenanceController extends Controller
+class SettingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('backend.maintenance.index');
+        return view('backend.settings.index');
     }
 
     /**
@@ -29,17 +28,7 @@ class MaintenanceController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'logo' => 'required|image|mimes:jpeg,png,jpg|max:5000',
-            'favicon' => 'required|image|mimes:jpeg,png,jpg|max:1000',
-            'title' => 'required|max:500',
-            'email' => 'required|email',
-            'phone' => 'required|numeric|digits:11',
-            'whatsapp' => 'required|numeric|digits:11',
-            'btn_color' => 'required|max:300|string',
-        ]);
-        // $data = new Maintenance();
-        // $data->logo
+        
     }
 
     /**
