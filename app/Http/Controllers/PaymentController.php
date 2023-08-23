@@ -35,10 +35,10 @@ class PaymentController extends Controller
             'payable' => 'required|numeric',
             'name' => 'required',
             'phone' => 'required',
-            'paid_amount' => 'required_with:pay_later',
-            'trx_id' => 'required_with:pay_later',
-            'payment_number' => 'required_with:pay_later',
-            'promo_code' => 'required_with:pay_later',
+            'paid_amount' => 'required_without:pay_later',
+            'payment_method' => 'required_without:pay_later',
+            'trx_id' => 'required_without:pay_later',
+            'payment_number' => 'required_without:pay_later',
         ]);
 
         try {
@@ -46,12 +46,12 @@ class PaymentController extends Controller
             $expireDate = null;
             $status = 'due';
             $due = null;
-            if ($request->pay_later !== null) {
+            if ($request->pay_later === null) {
                 $paid_amount = (int)$request->paid_amount;
                 $payable = (int)$request->payable;
                 $due = $payable - $paid_amount;
                 if ($due < 0) {
-                    throw new Exception("You can't pay more than payable amount");
+                    throw new Exception("You can not pay more than $payable ৳");
                 } elseif ($due === 0) {
                     $status = 'paid';
                 } elseif ($due > 0 && $due < $payable) {

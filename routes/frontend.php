@@ -25,6 +25,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\User\UserDocController;
 
 use App\Http\Controllers\Frontend\Course\CourseController;
+use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
 
@@ -59,6 +60,8 @@ Route::prefix('/books')->name('books.')->group(function () {
 });
 // routes for user docs
 Route::resource('user-doc', UserDocController::class);
+Route::get('user-doc/{userDoc}/download/{fileIndex}', [UserDocController::class, 'download'])->name('user-doc.download');
+Route::get('user-doc/{userDoc}/move-to', [UserDocController::class, 'moveTo'])->name('user-doc.move-to');
 
 
 
@@ -73,10 +76,10 @@ Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.in
 Route::get('/contact', [PageController::class, 'contactPage'])->name('contact');
 Route::get('/office', [PageController::class, 'officePage'])->name('office');
 Route::get('/notification', [PageController::class, 'notificationPage'])->name('notification');
-// Route::get('/notification', 'notificationPage')->name('notification');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 Route::get('/promo-codes', [PageController::class, 'PromoCodePage'])->name('page.promo.code');
-
+Route::get('/my-courses', [PageController::class, 'myCourses'])->name('page.my.courses');
+Route::get('/my-payments', [PageController::class, 'myPayments'])->name('page.my.payments');
 // user generated refer link
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
 
@@ -152,3 +155,8 @@ Route::prefix('payment')
         Route::get('success/{model}/{id}', 'success')->name('success');
         Route::get('cancel', 'cancel')->name('cancel');
     });
+
+
+Route::get('tax/calculator', [TaxCalculatorController::class, 'calculator'])->name('tax.calculator');
+Route::post('tax/calculate', [TaxCalculatorController::class, 'calculate'])->name('tax.calculate');
+Route::get('tax/calculator/result', [TaxCalculatorController::class, 'result'])->name('tax.calculation.result');

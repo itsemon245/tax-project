@@ -46,7 +46,7 @@ class AboutController extends Controller
             ];
              array_push($sections,  $array);
         }
-        $store_about->sections= json_encode($sections);
+        $store_about->sections = json_encode($sections);
         $store_about->save();
         $notification = [
             'message' => 'About us Created',

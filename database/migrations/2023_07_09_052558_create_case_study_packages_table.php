@@ -20,6 +20,8 @@ return new class extends Migration
             $table->longText('page_title')->nullable();
             $table->longText('page_description')->nullable();
             $table->longText('page_image')->nullable();
+            $table->boolean('is_discount_fixed')->default(false)->comment('true = Discount is fixed, false = Discount is percentage');
+            $table->integer('discount')->nullable();
             $table->timestamps();
         });
     }

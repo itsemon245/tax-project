@@ -16,8 +16,9 @@ return new class extends Migration
             $table->longText('page_description')->nullable();
             $table->text('title');
             $table->longText('image');
+            $table->longText('intro')->nullable();
             $table->longText('description')->nullable();
-            $table->json('sections')->nullable()->comment('{title:"title", image: "image", description: "description"}');
+            $table->json('sections')->nullable()->comment('[{title:"title", image: "image", description: "description"}]');
             $table->timestamps();
         });
     }

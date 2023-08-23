@@ -32,14 +32,14 @@ class IndustryController extends Controller
     {
         // dd($request);
         $request->validate([
-            'page_description' => 'required|max:500|string',
+            'page_description' => 'required|max:500',
             'titles' => 'required|max:30|string',
             'images' => 'required|image|mimes:jpeg,png,jpg|max:5000',
             'descriptions' => 'required|max:300|string',
         ]);
         
         $images = $request->file('images');
-        $jsonSection = $this->createJsonFile($request->titles, $request->descriptions, $request->images);
+        $jsonSection = $this->createJsonFile($request->titles, $request->descriptions, $images);
         $industry = new Industry();
             $industry->page_description = $request->page_description;
             $industry->title = $request->titles;

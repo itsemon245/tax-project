@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_docs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('fiscal_year_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('fiscal_year_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->json('files')->comment('[["file"=> filepath, "mime_type"=> mime_type]]')->nullable();
             $table->timestamps();

@@ -30,7 +30,7 @@
                                 </a>
                             </div>
                             <div class="d-flex gap-3">
-                                <a href="#" class="btn btn-primary" style="font-weight: 500;">Enroll Now</a>
+                                <a href="{{ route('payment.create', ['model' => Course::class, 'id' => $course->id]) }}" class="btn btn-primary" style="font-weight: 500;">Enroll Now</a>
                                 <a href="{{ route('course.show', $course->id) }}" class="btn btn-secondary"
                                     style="font-weight: 500;">Course Details</a>
                             </div>

@@ -12,6 +12,7 @@ use App\Models\ClientStudio;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -93,5 +94,18 @@ class PageController extends Controller
     {
         $industries = Industry::get();
         return view('frontend.pages.industries.showAllIndustry', compact('industries'));
+    }
+
+    //show all my courses in frontend
+    public function myCourses()
+    {
+        $courses = User::find(auth()->id())->purchased('course');
+        return view('frontend.pages.myCourses', compact('courses'));
+    }
+    //show all my payments/payment history in frontend
+    public function myPayments()
+    {
+        $payments = User::find(auth()->id())->purchases;
+        return view('frontend.pages.myPayments', compact('payments'));
     }
 }

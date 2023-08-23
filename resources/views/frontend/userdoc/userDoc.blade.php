@@ -17,28 +17,6 @@
                 padding: 10 0;
             }
 
-
-            .preview_details {
-                list-style: none;
-                color: white;
-            }
-
-            .preview_details a {
-                color: white;
-                display: block;
-                padding: 13px 0;
-            }
-
-            .myDocs_alert {
-                background: #ECEFF1;
-            }
-
-            .tips_details {
-                list-style: none;
-                color: #000;
-                padding: 20px 0 !important;
-            }
-
             .cross-icon {
                 position: absolute;
                 right: 20px;
@@ -77,9 +55,14 @@
 
                 <div class="row mt-3">
                     @forelse ($userDocs as $i => $doc)
-                        <div class="col-sm-6 col-lg-4 mb-3">
-                            <div class="card h-100 position-relative">
-                                <div class="card-body py-3">
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="card h-100  position-relative">
+                                <div class="card-body h-100  py-3">
+                                    <div class="d-flex flex-row-reverse">
+                                        <div class="icon">
+                                            <span><i class="mdi mdi-view-list show-menu"></i></span>
+                                        </div>
+                                    </div>
                                     <div class="">
                                         @foreach ($doc->files as $key => $file)
                                             <span
@@ -93,9 +76,6 @@
                                             <span class="mdi mdi-file-outline font-16"></span><span>{{ count($doc->files) }}
                                                 Files</span>
                                         </div>
-                                        <div class="icon">
-                                            <span><i class="fas fa-ellipsis-h show-menu"></i></span>
-                                        </div>
                                     </div>
                                 </div>
                                 <div id="doc-menu-{{ $i }}"
@@ -104,14 +84,40 @@
                                         <div class="cross-icon">
                                             <span class="mdi mdi-close close-menu"></span>
                                         </div>
-                                        <div class="col-lg-12">
-                                            <ul class="preview_details mb-0">
-                                                <li><a href="">Preview document </a></li>
-                                                <li><a href="">View details</a></li>
-                                                <li><a href="">Move to another year</a></li>
-                                                <li class="hello"><a href="">Delete document</a></li>
-                                            </ul>
-                                        </div>
+                                        <ul class="list-unstyled fw-medium mb-0">
+                                            <li class="my-3"><a class="text-white p-3 "
+                                                    href="{{ route('user-doc.show', $doc->id) }}">Preview document
+                                                </a></li>
+                                            <li class="my-3"><a class="text-white p-3 "
+                                                    href="{{ route('user-doc.show', $doc->id) }}">View details</a>
+                                            </li>
+                                            <li class="my-3">
+                                                <button data-url='{{ route('user-doc.move-to', $doc->id) }}'
+                                                    class="move-to-year text-white px-3 bg-transparent border-0">
+                                                    Move to another year</button>
+                                                <div class="d-inline-block d-none">
+                                                    <div class="d-flex">
+                                                        <x-backend.form.select-input placeholder="Select Tax Year..."
+                                                            name="move-year">
+                                                            @foreach (range(currentYear(), 2020) as $year)
+                                                                <option value="{{ $year - 1 . '-' . $year }}"
+                                                                    @selected($year - 1 . '-' . $year === $reqYear)>
+                                                                    {{ $year - 1 . '-' . $year }}</option>
+                                                            @endforeach
+                                                        </x-backend.form.select-input>
+                                                    </div>
+                                                </div>
+
+                                            <li class="">
+                                                <form action="{{ route('user-doc.destroy', $doc->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button
+                                                        class="delete-doc text-danger d-block px-3 bg-transparent border-0">
+                                                        Delete document</button>
+                                                </form>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -146,6 +152,15 @@
     @push('customJs')
         <script>
             $(document).ready(function() {
+                $('.move-to-year').click(function(e) {
+                    let btn = $(this)
+                    btn.next().toggleClass('d-none')
+                    btn.next().find('select').on('change', function(e) {
+                        let url = btn.attr('data-url') + "?year=" + e.target.value
+                        location.assign(url)
+                    })
+                })
+
                 $('.show-menu').each(function(i, element) {
                     $(element).click(function() {
                         let menu = $(this).parents().find('#doc-menu-' + i)
@@ -168,6 +183,30 @@
                     let upUrl = upload.attr('href') + "?year=" + e.target.value
                     btn.attr('href', url)
                     upload.attr('href', upUrl)
+                })
+
+                var deleteBtn = $('.delete-doc');
+                deleteBtn.on('click', function(e) {
+                    e.preventDefault()
+                    var form = $(this).parent()
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            form.submit()
+                        }
+                    })
                 })
             });
         </script>

@@ -63,7 +63,7 @@ class IncomeSourceController extends Controller
      */
     public function update(UpdateIncomeSourceRequest $request, IncomeSource $incomeSource)
     {
-        $updateData = new IncomeSource();
+        $updateData = IncomeSource::find($incomeSource->id);
         $updateData->title = $request->title;
         $updateData->image = updateFile($request->image, $incomeSource->image ,'Income-Source', 'income-source');
         $updateData->save();
