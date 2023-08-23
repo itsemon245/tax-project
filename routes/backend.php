@@ -53,6 +53,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
+use App\Http\Controllers\Backend\Invoice\ReportController;
 use App\Http\Controllers\Backend\Maintenance\MaintenanceController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
 
@@ -95,6 +96,12 @@ Route::prefix('admin')->group(function () {
     Route::resource('invoice', InvoiceController::class);
     Route::get('filtered-invoices', [InvoiceController::class, 'filterInvoices'])->name('invoice.filter');
     Route::patch('invoice/{invoice}/markAs/{status}', [InvoiceController::class, 'markAs'])->name('invoice.markAs');
+    Route::prefix('report')
+        ->controller(ReportController::class)
+        ->name('report.')
+        ->group(function () {
+            Route::get('/{type}/index', 'index')->name('index');
+        });
     Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
     Route::resource('video', VideoController::class);

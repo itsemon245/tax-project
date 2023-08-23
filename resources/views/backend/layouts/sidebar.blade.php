@@ -544,6 +544,33 @@
                                 </div>
                             </li>
                             <li>
+                                <a href="#reportSection" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-printer-settings"></i>
+                                    <span>Report</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="reportSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('report.index', ['type'=> 'demand']) }}">
+                                                Demand
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('invoice.index', ['type'=> 'due'])}}">
+                                                Arear
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('invoice.index', ['type'=> 'paid']) }}">
+                                                Paid
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
                                 <a href="#chalanSection" data-bs-toggle="collapse">
                                     <i class="mdi mdi-bank-check"></i>
                                     <span>Chalan</span>

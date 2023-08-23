@@ -11,7 +11,7 @@
                             <th class="">Name</th>
                             <th class="">Price</th>
                             <th class="">Trainer</th>
-                            <th class="" style="width: 80px;">Action</th>
+                            <th class="">Action</th>
                         </tr>
                     </thead>
                     <tbody>

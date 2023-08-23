@@ -206,7 +206,7 @@
                     </form>
                 </div>
                 <div class="tab-pane" id="indivudual" role="tabpanel" aria-labelledby="indivudual-tab">
-                    <form action="" method="POST">
+                    <form action="{{ route('tax.calculate') }}" method="POST">
                         @csrf
                         <input type="hidden" name="tax_for" value="individual">
                         <div class="container rounded bg-white py-3 px-4">
@@ -214,61 +214,87 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Name" required type="text"
-                                                name="name" required>
+                                            <x-backend.form.text-input label="Name" :value="auth()->user() ? auth()->user()->name : ''" required
+                                                type="text" name="name" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Email Address" type="email"
-                                                name="email" required>
+                                            <x-backend.form.text-input label="Email Address" :value="auth()->user() ? auth()->user()->email : ''"
+                                                type="email" name="email" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Phone Number" type="number" name="phone"
-                                                required>
+                                            <x-backend.form.text-input label="Phone Number" :value="auth()->user() ? auth()->user()->phone : ''"
+                                                type="string" name="phone" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <x-backend.form.text-input label="Source of Income" type="text"
-                                                name="incomeSource">
+                                                name="income_source">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Yearly Turnover (If Any)" type="number"
-                                                name="yearlyTurnover">
+                                            <x-backend.form.text-input label="Yearly Turnover" type="number"
+                                                name="yearly_turnover">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Total Assets (Eastimited)" type="text"
-                                                name="totalAssets">
+                                            <x-backend.form.text-input label="Total Assets" type="number"
+                                                name="total_asset">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Yearly Income (Eastimited)" type="number"
-                                                name="yearlyIncome">
+                                            <x-backend.form.text-input label="Yearly Income" type="number"
+                                                name="yearly_income">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Investment of Rebate" type="text"
-                                                name="investmentofRebate">
+                                            <x-backend.form.text-input label="Investment of Rebate" type="number"
+                                                name="rebate">
                                             </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <x-backend.form.text-input label="Tax Deduction" type="number"
+                                                name="tax_deduction">
+                                            </x-backend.form.text-input>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="gender" class="d-block form-label">Gender</label>
+                                            <label for="male" class=" mx-2">
+                                                <input id="male" type="radio" name="gender" value="male">
+                                                Male
+                                            </label>
+                                            <label for="female" class=" mx-2">
+                                                <input id="female" type="radio" name="gender" value="female">
+                                                Female
+                                            </label>
                                         </div>
                                         <div class="col-12 my-4">
                                             <h4 class="mb-2">Tax Services</h4>
                                             <div class="clearfix d-flex flex-wrap gap-3 align-items-center">
-
+                                                @isset($settings['company'])
+                                                    @foreach ($settings['company'] as $setting)
+                                                        @foreach ($setting->slots as $key => $slot)
+                                                            @foreach ($slot->taxServices as $i => $service)
+                                                                <label
+                                                                    class="form-check-label d-flex gap-2 py-2 px-3 bg-light bg-gradient rounded-3"
+                                                                    for="{{ $service->name . '-' . $service->id }}">
+                                                                    <input class="form-check-input" type="checkbox" hidden
+                                                                        id="{{ $service->name . '-' . $service->id }}"
+                                                                        name="services[]" value="{{ $service->name }}">
+                                                                    {{ $service->name }}
+                                                                </label>
+                                                            @endforeach
+                                                        @endforeach
+                                                    @endforeach
+                                                @endisset
 
                                             </div>
                                         </div><!-- end col -->
                                         <div class="col-12">
-
-                                            <x-form.ck-editor id="ck-editor-induvudual" name="Massage"></x-form.ck-editor>
-
+                                            <x-form.ck-editor id="ck-editor-individual" name="Massage"></x-form.ck-editor>
                                         </div><!-- end col -->
-
-
-
-                                        <div class="mt-3">
+                                        <div class="">
                                             <button type="submit"
                                                 class="btn btn-primary waves-effect waves-light profile-button">Submit</button>
                                         </div>

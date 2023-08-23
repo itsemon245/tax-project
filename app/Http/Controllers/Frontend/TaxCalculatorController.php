@@ -31,13 +31,13 @@ class TaxCalculatorController extends Controller
         $turnover = (int) $request->yearly_turnover;
         $asset = (int) $request->total_asset;
         $incomeTax = $this->getTax($income, $request->tax_for, 'income');
-        $turnoverTax = $this->getTax($turnover, $request->tax_for, 'turnover');
-        $assetTax = $this->getTax($asset, $request->tax_for, 'asset');
+        // $turnoverTax = $this->getTax($turnover, $request->tax_for, 'turnover');
+        // $assetTax = $this->getTax($asset, $request->tax_for, 'asset');
         dd([
             'taxes' => [
                 'income' => $incomeTax,
-                'asset' => $assetTax,
-                'turnover' => $turnoverTax,
+                // 'asset' => $assetTax,
+                // 'turnover' => $turnoverTax,
             ]
         ]);
         return view('frontend.pages.taxCalculator');
@@ -51,11 +51,10 @@ class TaxCalculatorController extends Controller
     function getTax(int $value, string $for, string $type): int
     {
         $totalTax = 0;
-        $taxSetting = TaxSetting::where(['for' => $for, 'type' => 'tax'])->first();
+        $taxSetting = TaxSetting::where(['for' => 'individual', 'type' => 'tax'])->first();
         $valueSlots = $taxSetting->slots()->where('type', $type)->get();
         $lastValueSlot = $valueSlots->where('to', '>=', $value)->first();
 
-        // dd($request);
         foreach ($valueSlots as $slot) {
             $tax = (float) 0;
             if ($slot->difference < $value) {
