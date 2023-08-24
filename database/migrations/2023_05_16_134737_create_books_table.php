@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2)->nullable();
             $table->boolean('is_discount_fixed')->default(false)->comment('true = Discount is fixed, false = Discount is percentage');
             $table->integer('discount')->nullable();
+            $table->enum('billing_type', ['onetime'])->default('onetime');
             $table->timestamps();
         });
     }

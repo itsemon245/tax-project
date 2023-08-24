@@ -26,6 +26,7 @@ return new class extends Migration
             $table->json('page_topics')->comment('description:string, lists: array[]}')->nullable();
             $table->boolean('is_discount_fixed')->default(false)->comment('true = Discount is fixed, false = Discount is percentage');
             $table->integer('discount')->nullable();
+            $table->enum('billing_type', ['onetime'])->default('onetime');
             $table->timestamps();
         });
     }

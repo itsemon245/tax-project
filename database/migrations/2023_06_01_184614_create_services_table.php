@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('price_description')->nullable();
             $table->integer('discount')->default(0);
             $table->boolean('is_discount_fixed')->default(false);
+            $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->default('onetime');
             $table->timestamp('delivery_date')->default(now()->addDays(3)->format("Y-m-d"));
             $table->decimal('rating');
             $table->text('reviews');

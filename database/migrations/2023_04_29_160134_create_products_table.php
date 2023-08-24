@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('type', ['Silver', 'Gold', 'Platinum', 'Exclusive']);
             $table->longText('description')->nullable();
             $table->boolean('is_discount_fixed')->default(false)->comment('true = Discount is fixed, false = Discount is percentage');
+            $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->default('onetime');
             $table->boolean('is_most_popular')->default(false)->comment('true = This Product is most popular, false = This Product is not most popular');
             $table->boolean('status')->default(true);
             $table->timestamps();

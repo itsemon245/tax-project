@@ -43,12 +43,42 @@ class PaymentController extends Controller
 
         try {
             $isExpired = null;
+            $data = null;
             $expireDate = null;
-            $status = 'due';
             $due = null;
-            if ($request->pay_later === null) {
+            $promoCode = null;
+            $status = 'due';
+            $table = str($request->purchasable_type)->snake();
+            $user = User::find(auth()->id());
+            $record = DB::table($table)->find($request->purchasable_id);
+            $billingType = $record->billing_type;
+            if (!$request->has('pay_later')) {
+                switch ($billingType) {
+                    case 'monthly':
+                        $expireDate = today()->addMonth();
+                        break;
+                    case 'yearly':
+                        $expireDate = today()->addYear();
+                        break;
+                    case 'onetime':
+                        $expireDate = null;
+                        break;
+
+                    default:
+                        break;
+                }
+                if ($request->has('promo_code')) {
+                    $promoCode = $user->promoCodes()->where('code', $request->promo_code)->first();
+                    $data = $this->applyPromoCode($promoCode, $record->price);
+                    //decrement the promo code limit if all checks passes
+                    if ($data['discount'] > 0) {
+                        $user->promoCodes()->updateExistingPivot($promoCode->id, [
+                            'limit' => $promoCode->limit - 1,
+                        ]);
+                    }
+                }
                 $paid_amount = (int)$request->paid_amount;
-                $payable = (int)$request->payable;
+                $payable = $data['payable'];
                 $due = $payable - $paid_amount;
                 if ($due < 0) {
                     throw new Exception("You can not pay more than $payable ৳");
@@ -57,58 +87,19 @@ class PaymentController extends Controller
                 } elseif ($due > 0 && $due < $payable) {
                     $status = 'partial';
                 }
-
-                $billingType = $request->input('billing_type') ?? null;
-                $expireDate = null;
-                switch ($billingType) {
-                    case 'monthly':
-                        $expire = today()->addMonth();
-                        break;
-                    case 'yearly':
-                        $expire = today()->addYear();
-                        break;
-                    case 'onetime':
-                        $expire = null;
-                        break;
-
-                    default:
-                        $expire = null; //TODO: remove these code when billingType is added
-                        break;
-                }
-                // find to fetch promo code
-                $user = User::find(auth()->id());
-                $promoCode = $user->promoCodes()->where('code', $request->promo_code)->first();
-
-                // check for possible conditions
-                if ($promoCode === null) {
-                    throw new Exception('Invalid promo code!');
-                }
-                $expire = Carbon::parse($promoCode->expired_at);
-                $hasExpired = today()->gt($expire);
-                if ($hasExpired) {
-                    throw new Exception('Promo code expired at ' . $expire->format('d F, Y') . "!");
-                }
-                if ($promoCode->pivot->limit < 1) {
-                    throw new Exception('Limit Exceeded!');
-                }
-
-                //decrement the promo code limit if all checks passes
-                $user->promoCodes()->updateExistingPivot($promoCode->id, [
-                    'limit' => $promoCode->limit - 1,
-                ]);
             }
             Purchase::create([
                 'user_id' => auth()->id(),
                 'name' => $request->name,
                 'promo_code_id' => $promoCode->id ?? null,
-                'payable_amount' => $request->payable ?? null,
-                'discount' => $request->discount,
-                'has_promo_code_applied' => $request->is_promo_code_applied == "true" ? true : false,
+                'payable_amount' => $data['payable'],
+                'discount' => $data['discount'],
+                'has_promo_code_applied' => $promoCode !== null ? true : false,
                 'paid' => $request->paid_amount,
                 'trx_id' => $request->trx_id,
                 'contact_number' => $request->phone,
                 'payment_number' => $request->payment_number,
-                'billing_type' => $request->billing_type,
+                'billing_type' => $billingType,
                 'due' => $due,
                 'status' => $status,
                 'is_expired' => $isExpired,
@@ -138,5 +129,28 @@ class PaymentController extends Controller
     public function cancel(): View
     {
         return view('frontend.payment.cancel');
+    }
+
+    function applyPromoCode($promoCode, $price)
+    {
+        $discount = null;
+        $payable = null;
+        $expire = Carbon::parse($promoCode->expired_at);
+        $isExpired = today()->gt($expire);
+        if ($promoCode === null) {
+            throw new Exception('Invalid promo code!');
+        } elseif ($isExpired) {
+            throw new Exception('Promo code expired at ' . $expire->format('d F, Y') . "!");
+        } elseif ($promoCode->pivot->limit < 1) {
+            throw new Exception('Limit Exceeded!');
+        } else {
+            $discount = $promoCode->is_discount ? $price * ($promoCode->amount / 100) : $promoCode->amount;
+            $discount = round($discount, 2);
+            $payable = $price - $discount;
+        }
+        return [
+            'payable' => $payable,
+            'discount' => $discount,
+        ];
     }
 }

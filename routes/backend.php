@@ -101,6 +101,7 @@ Route::prefix('admin')->group(function () {
         ->name('report.')
         ->group(function () {
             Route::get('/{type}/index', 'index')->name('index');
+            Route::get('/ledger', 'ledger')->name('ledger');
         });
     Route::resource('invoice-item', InvoiceItemController::class);
     Route::resource('training', TrainingController::class);
