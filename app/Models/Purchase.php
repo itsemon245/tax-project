@@ -10,11 +10,14 @@ class Purchase extends Model
 {
     use HasFactory;
     protected $guarded= [];
-
     public function purchasable(): MorphTo
     {
         return $this->morphTo();
         
+    }
+    public function incomeSource()
+    {
+        return $this->belongsTo(IncomeSource::class);
     }
     
 }

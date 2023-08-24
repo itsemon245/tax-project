@@ -62,6 +62,9 @@
                                 <div class="collapse" id="productSection">
                                     <ul class="nav-second-level">
                                         <li>
+                                            <a href="{{ route('income-source.index') }}">Create Income Source</a>
+                                        </li>
+                                        <li>
                                             <a href="{{ route('product.create') }}">Create Product</a>
                                         </li>
                                         <li>

@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('maintenances', function (Blueprint $table) {
+        Schema::create('income_sources', function (Blueprint $table) {
             $table->id();
-            $table->string('logo');
-            $table->string('favicon');
-            $table->string('title');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('whatsapp');
-            $table->string('btn_color');
+            $table->string('title')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('maintenances');
+        Schema::dropIfExists('income_sources');
     }
 };

@@ -95,9 +95,9 @@
                         <i class="fe-lock"></i>
                         <span>Change Password</span>
                     </a>
-                    <a href="{{ route('maintenance.index') }}" class="dropdown-item notify-item">
+                    <a href="{{ route('setting.index') }}" class="dropdown-item notify-item">
                         <i class="fa fa-cog"></i>
-                        <span>Maintenance</span>
+                        <span>Settings</span>
                     </a>
 
                     <div class="dropdown-divider"></div>

@@ -56,6 +56,8 @@ use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
 use App\Http\Controllers\Backend\Invoice\ReportController;
 use App\Http\Controllers\Backend\Maintenance\MaintenanceController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\IncomeSourceController;
+use App\Http\Controllers\Backend\Settings\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,11 +117,19 @@ Route::prefix('admin')->group(function () {
     Route::resource('questions', QuestionController::class);
     Route::resource('result', ResultController::class);
     Route::resource('taxCalculator', TaxCalculatorController::class);
-    Route::resource('maintenance', MaintenanceController::class);
+    Route::resource('setting', SettingController::class);
+    Route::prefix('setting')
+    ->controller(SettingController::class)
+    ->name('setting.')
+    ->group(function () {
+        Route::post('/reference', 'reference')->name('reference');
+        Route::post('/payment', 'payment')->name('payment');
+    });
     Route::resource('course', CourseController::class)->names([
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',
     ]);
+    Route::resource('income-source',IncomeSourceController::class);
     Route::resource('userDoc', UserDocController::class)->names([
         'index' => 'userDoc.backend.index',
         'create' => 'userDoc.backend.create',
