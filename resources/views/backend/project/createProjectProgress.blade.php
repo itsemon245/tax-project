@@ -1,7 +1,6 @@
 @extends('backend.layouts.app')
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Project', 'Create']" />
-
     <x-backend.ui.section-card name="Project Create">
         <div class="container my-3">
             <form method="POST" action="{{ route('project.store') }}">
@@ -31,13 +30,10 @@
                                         </li>
                                     </ul>
                                 </div>
-
-
                                 <div class="tab-content ">
-                                    {{-- <div id="bar" class="progress my-3" style="height: 7px;">
+                                    <div id="bar" class="progress my-3" style="height: 7px;">
                                         <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
-                                    </div> --}}
-
+                                    </div>
                                     <div class="tab-pane my-3 active" id="project-info" role="tabpanel">
                                         <div class="row">
                                             <div class="col-md-6 mb-2">
@@ -87,7 +83,6 @@
                                                             <tr>
                                                                 <input type="hidden" value="{{ $client->id }}"
                                                                     name="clients[]">
-                                                                {{-- {{ dd($user) }} --}}
                                                                 <td>{{ ++$key }}</td>
                                                                 <td>{{ $client->name }}</td>
                                                                 <td>{{ $client->phone }}</td>
@@ -98,13 +93,16 @@
                                                                         @foreach ($users as $conut => $user)
                                                                             <div>
                                                                                 <div class="form-check p-0">
-                                                                                    <input class="form-check-input" hidden
+                                                                                    @php
+                                                                                        $isAttached = $user->clients()->find($client->id);
+                                                                                    @endphp
+                                                                                    <input @checked($isAttached) class="form-check-input" hidden
                                                                                         value="{{ $user->id }}"
                                                                                         name="client_{{ $client->id }}_users[]"
                                                                                         type="checkbox"
                                                                                         id="client-{{ $client->id }}-users-{{ $user->id }}">
                                                                                     <label style="max-width: 200px;"
-                                                                                        class="custom-check-label form-check-label text-dark bg-light text-secondary border rounded rounded-2 p-1"
+                                                                                        class="custom-check-label form-check-label text-dark {{ $isAttached ? 'bg-soft-success' : 'bg-light' }} text-secondary border rounded rounded-2 p-1"
                                                                                         for="client-{{ $client->id }}-users-{{ $user->id }}">
                                                                                         {{ $user->name }}
                                                                                     </label>

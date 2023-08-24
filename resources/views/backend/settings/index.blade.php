@@ -16,7 +16,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-1">
-                                                <x-backend.form.image-input id="logo" required style="aspect-ratio:1.8/.7;" label="Company logo" name="logo"/>                                 
+                                                <x-backend.form.image-input id="logo" :image="$data->basic->logo" required style="aspect-ratio:1.8/.7;" label="Company logo" name="logo"/>                                 
                                             </div>
                                         </div>
                                         <div class="col-md-6 mt-1">
@@ -134,12 +134,12 @@
                             <div class="row">
                             <div class="col-md-6">
                                 <div class="mt-1">
-                                    <x-backend.form.text-input type="text" name="payment[]" label="Pay Method" required />
+                                    <x-backend.form.text-input type="text" name="payment_methods[]" label="Pay Method" required />
                                 </div>
                             </div>
                             <div class="col-md-6">  
                                 <div class="mt-1">
-                                    <x-backend.form.text-input type="text" name="account[]" label="Account No."  required />
+                                    <x-backend.form.text-input type="text" name="accounts[]" label="Account No."  required />
                                 </div>
                             </div>
                         </div>

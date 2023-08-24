@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Backend\Project;
 
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Project;
 use App\Models\Progress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProgressRequest;
 use App\Http\Requests\UpdateProgressRequest;
-use App\Models\Project;
-use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -54,13 +55,23 @@ class ProjectController extends Controller
         foreach ($request->clients as $clientId) {
             $project->clients()->attach($clientId);
             $users = $request["client_" . $clientId . "_users"];
-            // dd($users);
+            $admins = Role::where('name','admin')->first()->users;
+            if($admins){
+                foreach($admins as $admin){
+                    if($admin->clients()->find($clientId) == null){
+                        $admin->clients()->attach($clientId);
+                    }
+                }
+            }
             if($users){
                 foreach ($users as $userId) {
-                    DB::table('client_user')->insert([
-                        'client_id' => $clientId,
-                        'user_id' => $userId
-                    ]);
+                    $isAttached = DB::table('client_user')->where(['client_id' => $clientId,'user_id' => $userId,])->first();
+                    if(!$isAttached){
+                        DB::table('client_user')->insert([
+                            'client_id' => $clientId,
+                            'user_id' => $userId
+                        ]);
+                    }
                 };
             };
         };

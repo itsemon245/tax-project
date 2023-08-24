@@ -8,12 +8,17 @@ use App\Models\Setting;
 
 class SettingController extends Controller
 {
+    public $setting;
+    public function __construct()
+    {
+       $this->setting = Setting::first();
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Setting::get();
+        $data = $this->setting;
         return view('backend.settings.index', compact('data'));
     }
 
@@ -46,9 +51,14 @@ class SettingController extends Controller
             'phone' => $request->phone,
             'whatsapp' => $request->whatsapp,
         ];
-        $dataBase = new Setting();
-        $dataBase->basic = json_encode($array);
-        $dataBase->save(); 
+        if($this->setting){
+            $this->setting->basic = $array;
+            $this->setting->update(); 
+        }else{
+            Setting::create([
+                'basic' => $array,
+            ]);
+        }
         $notification = [
             'message' => 'Save Changed',
             'alert-type' => 'success',
@@ -73,17 +83,19 @@ class SettingController extends Controller
             'commission' => $request->commission,
             'withdrawal' => $request->withdrawal,
         ];
-        $latest = Setting::latest('created_at')->first()->id;
-        $condition = ['id' => $latest];
-        $save = Setting::where($condition)->update(['reference' => $array]);
-        if($save){
-            $notification = [
-                'message' => 'Save Changed',
-                'alert-type' => 'success',
-            ];
-            return back()
-                ->with($notification);
+        if($this->setting){
+            $this->setting->reference = $array;
+        }else{
+            Setting::create([
+                'reference' => $array,
+            ]);
         }
+        $notification = [
+            'message' => 'Save Changed',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
     }
         /**
      * Store a newly created resource in reference.
@@ -93,35 +105,31 @@ class SettingController extends Controller
 
         // dd($request);
         $request->validate([
-            'payment' => 'required|string',
-            'account' => 'required|numeric',
+            'payment_methods' => 'required|array',
+            'accounts' => 'required|array',
         ]);
 
 
         $payments = [];
-        foreach($request->payment as $key => $item){
+        foreach($request->payment_methods as $key => $method){
             $array = [
-                'payment' => $request->payment[$key],
-                'account' => $request->account[$key],
+                $method => $request->accounts[$key],
             ];
             array_push($payments, $array);
         }
-
-        // $array = [
-        //     'payment' => $request->payment,
-        //     'account' => $request->account,
-        // ];
-        $latest = Setting::latest('created_at')->first()->id;
-        $condition = ['id' => $latest];
-        $save = Setting::where($condition)->update(['payment' => $payments]);
-        if($save){
-            $notification = [
-                'message' => 'Save Changed',
-                'alert-type' => 'success',
-            ];
-            return back()
-                ->with($notification);
+        if($this->setting){
+            $this->setting->update(['payment' => $payments]);
+        }else{
+            Setting::create([
+                'payment' => $payments,
+            ]);
         }
+        $notification = [
+            'message' => 'Save Changed',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
     }
 
 
