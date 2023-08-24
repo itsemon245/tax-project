@@ -117,6 +117,13 @@ Route::prefix('admin')->group(function () {
     Route::resource('result', ResultController::class);
     Route::resource('taxCalculator', TaxCalculatorController::class);
     Route::resource('setting', SettingController::class);
+    Route::prefix('setting')
+    ->controller(SettingController::class)
+    ->name('setting.')
+    ->group(function () {
+        Route::post('/reference', 'reference')->name('reference');
+        Route::post('/payment', 'payment')->name('payment');
+    });
     Route::resource('course', CourseController::class)->names([
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',

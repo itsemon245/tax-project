@@ -3,6 +3,7 @@
     <x-backend.ui.breadcrumbs :list="['Web Site', 'Settings']" />
     <x-backend.ui.section-card name="Web Site Settings">
         {{-- Select category option --}}
+        {{-- {{ dd(json_decode($data[0]->reference)) }} --}}
         <form action="{{ route('setting.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
@@ -55,7 +56,8 @@
         </form>
 
         {{-- Referance  --}}
-        <form action="#" method="post">
+        <form action="{{ route('setting.reference') }}" method="post">
+            @csrf
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -63,7 +65,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <x-backend.form.text-input type="number" class="mb-2" required name="commision" label="Refer Commision" />
+                                    <x-backend.form.text-input type="number" class="mb-2" required name="commission" label="Refer Commission" />
                                 </div>
                                 <div class="col-md-6">
                                     <x-backend.form.text-input type="number" class="mb-2" required name="withdrawal" label="Withdrawal Limit" />
@@ -77,23 +79,29 @@
             </div>
         </form>
         {{-- Payment  --}}
-        <form action="#" method="post">
+        <form action="{{ route('setting.payment') }}" method="post">
+            @csrf
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <h4 class="p-2">Payment Setting</h4>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <x-backend.form.text-input type="number" class="mb-2" required name="commision" label="Refer Commision" />
-                                </div>
-                                <div class="col-md-6">
-                                    <x-backend.form.text-input type="number" class="mb-2" required name="withdrawal" label="Withdrawal Limit" />
+                            <div class="col-md-12">
+                                <div id="packacgeFeaturesInputs"></div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="icon-item mx-1 mt-3" style="cursor: pointer" onclick="addPackageFeature()"
+                                        title="Add Package Feature">
+                                        <i data-feather="plus-square" class="icon-dual"></i>
+                                    </div>
+                                    <div id="removePackageFeatureBtn" class="icon-item mx-1 mt-3" style="cursor: pointer"
+                                        onclick="removePackageFeature()" title="Add Package Feature">
+                                        <i data-feather="minus-square" class="icon-dual"></i>
+                                    </div>
                                 </div>
                                 <div class="mt-2"><button class="btn btn-primary w-100 btn-sm profile-button"
-                                type="submit">Save Change</button>
+                                    type="submit">Save Change</button>
                                 </div>
-                        </div> <!-- end card-body -->
+                            </div>
                     </div> <!-- end card -->
                 </div>
             </div>
@@ -110,5 +118,54 @@
                 })
                 });
         </script>
+                <script>
+                    let itemCount = 0;
+                    const featureLength = () => {
+                        $('#packacgeFeaturesInputs').children().length < 2 ?
+                            $("#removePackageFeatureBtn").addClass('d-none') :
+                            $("#removePackageFeatureBtn").removeClass('d-none')
+                    }
+        
+                    const addPackageFeature = () => {
+                        itemCount++
+                        const inputs = `
+                        <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mt-1">
+                                    <x-backend.form.text-input type="text" name="payment[]" label="Pay Method" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">  
+                                <div class="mt-1">
+                                    <x-backend.form.text-input type="text" name="account[]" label="Account No."  required />
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    `
+                        $('#packacgeFeaturesInputs').append(inputs)
+                        const imageInputs = $('.custom-input')
+                        imageInputs.each((i, input) => {
+                            input.addEventListener('change', e => {
+                                const image = document.querySelector('#live-'+e.target.dataset.index)
+                                const url = URL.createObjectURL(e.target.files[0])
+                                image.src = url
+                            })
+                        })
+        
+        
+                        featureLength()
+                    }
+                    addPackageFeature()
+        
+                    const removePackageFeature = () => {
+                        itemCount--
+                        $("#packacgeFeaturesInputs").find(".row:last").remove()
+                        featureLength()
+                    }
+                </script>
     @endpush
 @endsection

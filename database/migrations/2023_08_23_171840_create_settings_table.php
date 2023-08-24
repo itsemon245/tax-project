@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->json('basic')->nullable();
+            $table->json('reference')->nullable();
+            $table->json('payment')->nullable();
+            $table->json('invoice')->nullable();
             $table->timestamps();
         });
     }
