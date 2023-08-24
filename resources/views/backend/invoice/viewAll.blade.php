@@ -6,6 +6,10 @@
 @endpush
 
 @section('content')
+    @php
+        $pattern = '/\[.*\]/';
+        // dd(preg_replace($pattern, '', request()->query('reference')));
+    @endphp
     <x-backend.ui.breadcrumbs :list="['Management', 'Invoice', 'List']" />
 
     <x-backend.ui.section-card name="Invoices">
@@ -23,7 +27,8 @@
                         <x-form.selectize class="mb-1 advance-filter-options" id="client" name="client"
                             placeholder="Select Client..." label="Client" :canCreate="false">
                             @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                <option value="{{ $client->id }}" @selected(preg_replace($pattern, '', request()->query('client')) == $client->id)>{{ $client->name }}
+                                </option>
                             @endforeach
                         </x-form.selectize>
                     </div>
@@ -31,7 +36,8 @@
                         <x-form.selectize class="mb-1 advance-filter-options" id="reference" name="reference"
                             placeholder="Select Reference..." label="Reference" :canCreate="false">
                             @foreach ($references as $reference)
-                                <option value="{{ $reference }}">{{ $reference }}</option>
+                                <option value="{{ $reference }}" @selected(preg_replace($pattern, '', request()->query('reference')) == $reference)>{{ $reference }}
+                                </option>
                             @endforeach
                         </x-form.selectize>
                     </div>
@@ -39,7 +45,8 @@
                         <x-backend.form.select-input class="advance-filter-options mb-2" label="Payment Stauts"
                             name="payment_status" placeholder="Payment Stauts">
                             @foreach (['draft', 'sent', 'partial', 'paid', 'due', 'overdue'] as $status)
-                                <option value="{{ $status }}">{{ str($status)->title() }}</option>
+                                <option value="{{ $status }}" @selected(preg_replace($pattern, '', request()->query('status')) == $status)>{{ str($status)->title() }}
+                                </option>
                             @endforeach
                         </x-backend.form.select-input>
                     </div>
@@ -47,7 +54,7 @@
                         <x-backend.form.select-input class="advance-filter-options mb-2" name="fiscal_year" label="Year"
                             placeholder="Year">
                             @foreach (range(currentYear(), 2020) as $year)
-                                <option value="{{ $year - 1 . '-' . $year }}" @selected($year === currentYear())>
+                                <option value="{{ $year - 1 . '-' . $year }}" @selected($year === currentYear() || preg_replace($pattern, '', request()->query('fiscal_year')) == $year - 1 . '-' . $year)>
                                     {{ str($year - 1 . '-' . $year)->title() }}</option>
                             @endforeach
                         </x-backend.form.select-input>
@@ -69,17 +76,18 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <x-backend.form.text-input class="advance-filter-options mb-2" name="date_from"
-                                    label="Start Date" type="date" />
+                                    label="Start Date" type="date" :value="preg_replace($pattern, '', request()->query('issue_date_from'))" />
                             </div>
                             <div class="col-sm-6">
                                 <x-backend.form.text-input class="advance-filter-options mb-2" name="date_to"
-                                    label="End Date" type="date" />
+                                    label="End Date" type="date" :value="preg_replace($pattern, '', request()->query('issue_date_to'))" />
                             </div>
                             <div class="col-sm-6">
                                 <x-form.selectize class="advance-filter-options mb-2" id="circle" name="circle"
                                     label="Circle" placeholder="Select Circle" :canCreate="false">
                                     @foreach ($circles as $circle)
-                                        <option value="{{ $circle }}">{{ str($circle)->title() }}</option>
+                                        <option value="{{ $circle }}" @selected(preg_replace($pattern, '', request()->query('circle')) == $circle)>
+                                            {{ str($circle)->title() }}</option>
                                     @endforeach
                                 </x-form.selectize>
                             </div>
@@ -87,7 +95,8 @@
                                 <x-form.selectize class="advance-filter-options mb-2" id="zone" name="zone"
                                     label="Zone" placeholder="Select Zone" :canCreate="false">
                                     @foreach ($zones as $zone)
-                                        <option value="{{ $zone }}">{{ str($zone)->title() }}</option>
+                                        <option value="{{ $zone }}" @selected(preg_replace($pattern, '', request()->query('zone')) == $zone)>
+                                            {{ str($zone)->title() }}</option>
                                     @endforeach
                                 </x-form.selectize>
                             </div>
@@ -242,7 +251,7 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td class="fw-medium">
-                                    {{ Carbon\Carbon::parse($invoice->fiscalYears[0]->pivot->issue_date)->format('d M, Y') }}
+                                    {{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->issue_date)->format('d M, Y') }}
                                 </td>
                                 <td class="fw-medium">{{ $invoice->client->name }}</td>
                                 <td>{{ $invoice->client->tin }}</td>
@@ -251,13 +260,13 @@
                                 <td>{{ $invoice->client->circle }}</td>
                                 <td>{{ $invoice->client->zone }}</td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->demand . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->demand . ' Tk' }}</span>
                                 </td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->paid . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->paid . ' Tk' }}</span>
                                 </td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->fiscalYears[0]->pivot->due . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->due . ' Tk' }}</span>
                                 </td>
                                 <td>
                                     <div class="btn-group dropdown position-relative">
@@ -391,38 +400,35 @@
                 let url = "{{ route('invoice.filter') }}" + '?'
                 // filter options
                 const filter = {
-                    url: url + "fiscal_year=[eq]" + '{{ currentFiscalYear() }}',
+                    url: url + "{{ request()->query('fiscal_year') }}" ?
+                        "fiscal_year={{ request()->query('fiscal_year') }}" :
+                        'fiscal_year=[eq]{{ currentFiscalYear() }}',
                     data: null,
                     queries: {
-                        client: '',
-                        reference: '',
-                        status: '',
-                        year: "fiscal_year=[eq]" + '{{ currentFiscalYear() }}',
+                        year: "{{ request()->query('fiscal_year') }}" ?
+                            "fiscal_year={{ request()->query('fiscal_year') }}" :
+                            'fiscal_year=[eq]{{ currentFiscalYear() }}',
+                        client: "{{ request()->query('client') }}" ? "&client={{ request()->query('client') }}" :
+                            '',
+                        reference: "{{ request()->query('reference') }}" ?
+                            "&reference={{ request()->query('reference') }}" : '',
+                        status: "{{ request()->query('status') }}" ? "&status={{ request()->query('status') }}" :
+                            '',
                         demandPriceFrom: '',
                         paidPriceFrom: '',
                         duePriceFrom: '',
                         demandPriceTo: '',
                         paidPriceTo: '',
                         duePriceTo: '',
-                        issueDateFrom: '',
+                        issueDateFrom: "{{ request()->query('issue_date_from') }}" ?
+                            "&issue_date_from={{ request()->query('issue_date_from') }}" : '',
                         dueDateFrom: '',
-                        issueDateTo: '',
+                        issueDateTo: "{{ request()->query('issue_date_to') }}" ?
+                            "&issue_date_to={{ request()->query('issue_date_to') }}" : '',
                         dueDateTo: '',
-                        circle: '',
-                        zone: '',
-                    },
-
-                    fetchData(url, callback) {
-                        location.assign(url)
-                        // $.ajax({
-                        //     type: "get",
-                        //     url: url,
-                        //     success: function(response) {
-                        //         this.data = response.data
-                        //         callback(this.data)
-                        //     },
-                        // });
-                        // return this
+                        circle: "{{ request()->query('circle') }}" ? "&circle={{ request()->query('circle') }}" :
+                            '',
+                        zone: "{{ request()->query('zone') }}" ? "&zone={{ request()->query('zone') }}" : '',
                     },
 
                     updateUrl(jqElement) {
@@ -471,14 +477,10 @@
                                 case 'date_from':
                                     this.queries.issueDateFrom = e.target.value !== '' ?
                                         `&issue_date_from=[gte]` + e.target.value : ''
-                                    // this.queries.dueDateFrom = e.target.value !== '' ?
-                                    //     `&due_date_from=[gte]` + e.target.value : ''
                                     break;
                                 case 'date_to':
                                     this.queries.issueDateTo = e.target.value !== '' ?
                                         `&issue_date_to=[lte]` + e.target.value : ''
-                                    // this.queries.dueDateTo = e.target.value !== '' ?
-                                    //     `&due_date_to=[lte]` + e.target.value : ''
                                     break;
                                 case 'zone':
                                     this.queries.zone = e.target.value !== '' ?
@@ -509,152 +511,8 @@
                                 this.queries.dueDateTo +
                                 this.queries.circle +
                                 this.queries.zone
-
                         })
                     },
-                    updateDom(data) {
-                        const html = (invoice, i) => {
-                            let sendInvoiceUrl = "{{ route('send_invoice_mail', 'ID') }}"
-                            sendInvoiceUrl = sendInvoiceUrl.replace('ID', invoice.id)
-                            console.log(sendInvoiceUrl);
-                            // let sendInvoiceUrl = "{{ route('send_invoice_mail', 'ID') }}"
-                            // sendInvoiceUrl = sendInvoiceUrl.replace('ID', invoice.id)
-                            // console.log(sendInvoiceUrl);
-                            return `
-                            <div class="modal fade" id="send-email-modal-${invoice.id}" tabindex="-1"
-                                    role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="">Send Email</h4>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="${sendInvoiceUrl}" method="post">
-                                                    @csrf
-                                                    <input type="text" name='year' value="{{ $fiscalYear }}" hidden>
-                                                    <div class="row align-items-center">
-                                                        <div class="col-2">
-                                                            <label for="email-to-${invoice.id}" class="form-label">To:
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-10">
-                                                            <input type="text" class="form-control"
-                                                                id="email-to-${invoice.id}"
-                                                                placeholder="person@email.com" name="email_to" />
-
-                                                        </div>
-                                                        <div class="col-2">
-                                                            <label for="email-subject-${invoice.id}"
-                                                                class="form-label">Subject: </label>
-                                                        </div>
-                                                        <div class="col-10">
-                                                            <input type="text" class="form-control mt-2"
-                                                                id="email-subject-${invoice.id}"
-                                                                placeholder="Subject for email" name="subject" />
-                                                        </div>
-                                                        <div class="col-12 mt-2">
-                                                            <div class="float-end">
-                                                                <button type="button" class="btn btn-secondary">
-                                                                    Close</button>
-                                                                <button type="submit" class="btn btn-primary">Send
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                            </div
-                            <tr>
-                                <td>${++i}</td>
-                                <td class="fw-medium">
-                                   ${invoice.issueDateFormatted}
-                                </td>
-                                <td class="fw-medium">{{ $invoice->client->name }}</td>
-                                <td>{{ $invoice->client->tin }}</td>
-                                <td>{{ $invoice->reference_no }}</td>
-                                <td>{{ $invoice->client->phone }}</td>
-                                <td>{{ $invoice->client->circle }}</td>
-                                <td>{{ $invoice->client->zone }}</td>
-                                <td>
-                                    <span class="fw-medium">${invoice.demand} Tk</span>
-                                </td>
-                                <td>
-                                    <span class="fw-medium">${invoice.amountPaid} Tk</span>
-                                </td>
-                                <td>
-                                    <span class="fw-medium">${invoice.amountDue} Tk</span>
-                                </td>
-                                <td>
-                                    <div class="btn-group dropdown position-relative">
-                                        <a href="javascript: void(0);"
-                                            class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-xs"
-                                            data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                class="mdi mdi-dots-horizontal"></i></a>
-                                        <div class="bg-white py-2 px-3 position-absolute d-none rounded shadow"
-                                            style="inset: 2rem 2rem auto auto!important; z-index:2;">
-                                            <a class="dropdown-item d-flex align-items-center gap-2"
-                                                href="{{ route('invoice.show', $invoice->id) . '?year=' . $fiscalYear }}"><span
-                                                    class="mdi mdi-eye text-primary font-20"></span>View</a>
-                                            <a class="dropdown-item d-flex align-items-center gap-2"
-                                                href="{{ route('invoice.edit', $invoice->id) . '?year=' . $fiscalYear }}"><span
-                                                    class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
-
-                                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#send-email-modal-{{ $invoice->id }}"><span
-                                                    class="mdi mdi-telegram text-warning font-20"></span>Send
-                                                to...</button>
-                                            <form action="{{ route('invoice.markAs', [$invoice->id, 'sent']) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('patch')
-                                                <input type="text" name="year" value="{{ currentFiscalYear() }}"
-                                                    hidden>
-                                                <button type="submit"
-                                                    class="dropdown-item d-flex align-items-center gap-2"><span
-                                                        class="mdi mdi-check text-success font-20"></span>Mark as
-                                                    Sent</button>
-                                            </form>
-                                            <form action="{{ route('invoice.markAs', [$invoice->id, 'paid']) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('patch')
-                                                <input type="text" name="year" value="{{ currentFiscalYear() }}"
-                                                    hidden>
-                                                <button type="submit"
-                                                    class="dropdown-item d-flex align-items-center gap-2"><span
-                                                        class="mdi mdi-cash-check text-success font-20"></span>Mark as
-                                                    Paid</button>
-                                            </form>
-                                            <form action="" method="POST">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="dropdown-item d-flex align-items-center gap-2"><span
-                                                        class="mdi mdi-delete text-danger font-20"></span
-                                                        class="text-danger">Delete</button>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        `
-                        }
-
-                        data.forEach((invoice, i) => {
-                            $('tbody').children().remove()
-                            // $('tbody').append(html(invoice, i))
-                            //TODO update dom 
-                            console.log(invoice);
-
-                        });
-
-                    }
-
                 }
                 // add eventlisteners to every filter input element
                 elements.each((i, element) => {
@@ -662,11 +520,28 @@
                     filter.updateUrl(jqEl)
                 });
 
-                applyBtn.click(function(e) {
-                    // e.preventDefault()
-                    filter.fetchData(filter.url, filter.updateDom)
+                applyBtn.click(e => {
+                    location.assign(filter.url)
                 })
 
+                // add any existing queries to the default url
+                filter.url = url +
+                    filter.queries.year +
+                    filter.queries.client +
+                    filter.queries.reference +
+                    filter.queries.status +
+                    filter.queries.demandPriceFrom +
+                    filter.queries.paidPriceFrom +
+                    filter.queries.duePriceFrom +
+                    filter.queries.demandPriceTo +
+                    filter.queries.paidPriceTo +
+                    filter.queries.duePriceTo +
+                    filter.queries.issueDateFrom +
+                    filter.queries.issueDateTo +
+                    filter.queries.dueDateFrom +
+                    filter.queries.dueDateTo +
+                    filter.queries.circle +
+                    filter.queries.zone
             });
         </script>
     @endpush

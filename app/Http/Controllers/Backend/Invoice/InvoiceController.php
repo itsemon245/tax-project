@@ -8,18 +8,14 @@ use App\Models\Invoice;
 use App\Mail\InvoiceMail;
 use App\Models\FiscalYear;
 use App\Models\InvoiceItem;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Filter\InvoiceFilter;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\InvoiceResource;
-use App\Http\Resources\InvoiceCollection;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
-use App\Http\Resources\FilteredInvoiceCollection;
-use App\Http\Resources\FilteredInvoiceResource;
 use App\Http\Resources\InvoiceItemCollection;
 
 class InvoiceController extends Controller
@@ -337,14 +333,7 @@ class InvoiceController extends Controller
 
     public function filterInvoices(Request $request)
     {
-        $content = [
-            'data' => null,
-            'success' => true,
-            'message' => 'Request Successful'
-        ];
-
         $recentInvoices = Invoice::with('client', 'currentFiscal')->latest()->limit(5)->get();
-        $invoices = null;
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
         $zones = Client::select('zone')->distinct()->get()->pluck('zone');
         $circles = Client::select('circle')->distinct()->get()->pluck('circle');
