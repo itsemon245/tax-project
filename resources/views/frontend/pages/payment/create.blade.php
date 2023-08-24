@@ -133,9 +133,6 @@
 
                                     <input type="text" name="purchasable_type" value="{{ $model }}" hidden>
                                     <input type="text" name="purchasable_id" value="{{ $id }}" hidden>
-                                    <input type="number" name="payable" value="{{ $record->price }}" hidden>
-                                    <input type="text" name="discount" value="0" hidden>
-                                    <input type="text" name="is_promo_code_applied" value="false" hidden>
 
                                     <div class="row">
                                         <div class="col-md-6">

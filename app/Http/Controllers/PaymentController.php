@@ -29,10 +29,10 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request->all());
         $request->validate([
             'purchasable_type' => 'required',
             'purchasable_id' => 'required',
-            'payable' => 'required|numeric',
             'name' => 'required',
             'phone' => 'required',
             'paid_amount' => 'required_without:pay_later',
@@ -45,12 +45,15 @@ class PaymentController extends Controller
             $isExpired = null;
             $data = null;
             $expireDate = null;
+            $dueDate = today()->addDays(10);
             $due = null;
             $promoCode = null;
             $status = 'due';
             $table = str($request->purchasable_type)->snake();
-            $user = User::find(auth()->id());
+            $table = str($table)->plural();
+            $user = User::findOrFail(auth()->id());
             $record = DB::table($table)->find($request->purchasable_id);
+            // dd($record);
             $billingType = $record->billing_type;
             if (!$request->has('pay_later')) {
                 switch ($billingType) {
@@ -67,7 +70,7 @@ class PaymentController extends Controller
                     default:
                         break;
                 }
-                if ($request->has('promo_code')) {
+                if ($request->input('promo_code') !== null) {
                     $promoCode = $user->promoCodes()->where('code', $request->promo_code)->first();
                     $data = $this->applyPromoCode($promoCode, $record->price);
                     //decrement the promo code limit if all checks passes
@@ -76,6 +79,11 @@ class PaymentController extends Controller
                             'limit' => $promoCode->limit - 1,
                         ]);
                     }
+                } else {
+                    $data = [
+                        'payable' => $record->price,
+                        'discount' => 0
+                    ];
                 }
                 $paid_amount = (int)$request->paid_amount;
                 $payable = $data['payable'];
@@ -84,6 +92,8 @@ class PaymentController extends Controller
                     throw new Exception("You can not pay more than $payable ৳");
                 } elseif ($due === 0) {
                     $status = 'paid';
+                    $isExpired = false;
+                    $dueDate = null;
                 } elseif ($due > 0 && $due < $payable) {
                     $status = 'partial';
                 }
@@ -99,11 +109,13 @@ class PaymentController extends Controller
                 'trx_id' => $request->trx_id,
                 'contact_number' => $request->phone,
                 'payment_number' => $request->payment_number,
+                'payment_method' => $request->payment_method,
                 'billing_type' => $billingType,
                 'due' => $due,
                 'status' => $status,
                 'is_expired' => $isExpired,
                 'payment_date' => today(),
+                'due_date' => $dueDate,
                 'expire_date' => $expireDate,
                 'purchasable_id' => $request->purchasable_id,
                 'purchasable_type' => $request->purchasable_type,

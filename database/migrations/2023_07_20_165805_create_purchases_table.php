@@ -28,7 +28,7 @@ return new class extends Migration
             $table->decimal('paid', 8, 2)->nullable();
             $table->decimal('due', 8, 2)->nullable();
             $table->enum('status', ['paid', 'partial', 'due', 'rejected', 'expired']);
-            $table->dateTime('due_date')->default(today()->addDays(7));
+            $table->dateTime('due_date')->default(today()->addDays(10));
             $table->dateTime('payment_date')->nullable();
             $table->dateTime('expire_date')->nullable();
             $table->boolean('is_expired')->default(true)->nullable();
@@ -36,10 +36,6 @@ return new class extends Migration
             $table->integer('approved')->default(0);
             $table->timestamps();
         });
-        // Schema::create('purchasables', function (Blueprint $table) {
-        //     $table->id();
-
-        // });
     }
 
     /**
