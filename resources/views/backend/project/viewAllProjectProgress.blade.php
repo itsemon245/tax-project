@@ -1,42 +1,73 @@
 @extends('backend.layouts.app')
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Show All', 'Project']" />
-
+    {{-- {{ dd($clients[0]->projects[0]->pivot->client_id) }} --}}
     <x-backend.ui.section-card name="Projects">
         <div class="mb-2">
             <a href="{{ route('project.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
+        </div>
+        <div id="bar" class="progress my-3" style="height: 15px;">
+            <span class="text-dark">Tax Project:</span>
+            <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
+        </div>
+        <div id="bar" class="progress my-3" style="height: 15px;">
+            <span class="text-dark">Tax Project:</span>
+            <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
+        </div>
+        <div id="bar" class="progress my-3" style="height: 15px;">
+            <span class="text-dark">Tax Project:</span>
+            <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
         </div>
         <x-backend.table.basic>
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Project Name</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
+                    <th>Client Name</th>
+                    <th>Client Phone</th>
+                    <th>User</th>
+                    <th>Task List</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($projects as $key=>$project)
-                <tr>
-                    <td>{{ ++$key }}</td>
-                    <td>{!! Str::limit($project->name, 15, '...') !!}</td>
-                    <td>{{ \Carbon\Carbon::parse($project->start_date)->format('d-M-Y') }}</td>
-                    <td>{{ \Carbon\Carbon::parse($project->end_date)->format('d-M-Y') }}</td>
-                    <td>
-                        <div class="btn-group">
-                            <a href="{{ route('project.edit', $project) }}" class="btn btn-sm btn-success">Edit</a>
-                            <form action="{{ route('project.destroy', $project->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+                @forelse ($clients as $key=>$client)
+                    @foreach ($client->projects as $project)
+                    <tr>
+                        <td>{{ ++$key }}</td>
+                        {{ dd($project) }}
+                        <td>{!! $project->name !!}</td>
+                        <td>{!! $client->name !!}</td>
+                        <td>{!! $client->phone !!}</td>
+                        <td>
+                            <div class="d-flex flex-wrap gap-2">
+                                @foreach ($client->users as $user)
+                                    <span class="bg-soft-success text-dark">{{ $user->name }}</span>
+                                @endforeach
+                            </div>
+                        </td>
+                        <td> 
+                            <div class="d-flex flex-wrap gap-2">
+                                @foreach ($project->tasks as $task)
+                                    <span class=" bg-soft-success text-dark rounded-3">{{ $task->name }}</span>
+                                @endforeach
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{{ route('project.edit', $project) }}" class="btn btn-sm btn-success">Edit</a>
+                                <form action="{{ route('project.destroy', $project->id) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>   
+                    @endforeach
                 @empty
                     <tr>
-                        <td colspan="4">
+                        <td colspan="6">
                             <h5 class="d-flex justify-content-center text-muted">No record found</h5>
                         </td>
                     </tr>
@@ -46,33 +77,3 @@
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection
-
-{{-- @push('customJs')
-    <script>
-        const getSectionTitle = (e) => {
-            const section_id = e.value
-            let url = "{{ route('getInfoSectionTitle', ':sectionId') }}"
-            url = url.replace(':sectionId', section_id)
-
-            $.ajax({
-                type: 'POST',
-                url: url,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(title) {
-                    $('input[name="title"]').val('')
-                    $('input[name="old_title"]').val('')
-
-                    $('input[name="title"]').val(title)
-                    $('input[name="old_title"]').val(title)
-                },
-                error: function(error) {
-                    $('input[name="title"]').val('')
-                    $('input[name="old_title"]').val('')
-                    console.log(error)
-                }
-            });
-        }
-    </script>
-@endpush --}}

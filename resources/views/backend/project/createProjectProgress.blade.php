@@ -63,6 +63,19 @@
                                             </div>
                                             {{-- {{ dd($users[0]) }} --}}
                                         </div> <!-- end row -->
+                                        <div class="row">
+                                            <div id="packacgeFeaturesInputs"></div>
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="icon-item mx-1 mt-3" style="cursor: pointer" onclick="addPackageFeature()"
+                                                    title="Add Package Feature">
+                                                    <i data-feather="plus-square" class="icon-dual"></i>
+                                                </div>
+                                                <div id="removePackageFeatureBtn" class="icon-item mx-1 mt-3" style="cursor: pointer"
+                                                    onclick="removePackageFeature()" title="Add Package Feature">
+                                                    <i data-feather="minus-square" class="icon-dual"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="tab-pane my-3" id="finish" role="tabpanel">
                                         <div class="row">
@@ -155,7 +168,6 @@
 
             $('.custom-check-label').each((i, label) => {
                 $(label).click(e => {
-                    console.log('hello world');
                     $(label).toggleClass('bg-soft-success');
                 })
             })
@@ -183,4 +195,44 @@
 
         });
     </script>
+                    <script>
+                        let itemCount = 0;
+                        const featureLength = () => {
+                            $('#packacgeFeaturesInputs').children().length < 2 ?
+                                $("#removePackageFeatureBtn").addClass('d-none') :
+                                $("#removePackageFeatureBtn").removeClass('d-none')
+                        }
+            
+                        const addPackageFeature = () => {
+                            itemCount++
+                            const inputs = `
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mt-1">
+                                        <x-backend.form.text-input type="text" name="tasks[]" label="Task"  />
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                            $('#packacgeFeaturesInputs').append(inputs)
+                            const imageInputs = $('.custom-input')
+                            imageInputs.each((i, input) => {
+                                input.addEventListener('change', e => {
+                                    const image = document.querySelector('#live-'+e.target.dataset.index)
+                                    const url = URL.createObjectURL(e.target.files[0])
+                                    image.src = url
+                                })
+                            })
+            
+            
+                            featureLength()
+                        }
+                        addPackageFeature()
+            
+                        const removePackageFeature = () => {
+                            itemCount--
+                            $("#packacgeFeaturesInputs").find(".row:last").remove()
+                            featureLength()
+                        }
+                    </script>
 @endpush
