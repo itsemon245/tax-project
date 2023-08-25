@@ -44,7 +44,7 @@
                         @foreach ($incomeSources as $item)
                             <label
                                 class="bg-light d-flex justify-content-center align-items-center border rounded position-relative">
-                                <input type="checkbox" name="income_source" class="position-absolute top-0 end-0" value="{{$item->title}}">
+                                <input type="checkbox" name="income_source[]" class="position-absolute top-0 end-0" value="{{$item->title}}">
                                 <div class="text-dark d-flex flex-column align-items-center">
                                     <img src="{{ useImage($item->image)}}" width="80" height="60"
                                         alt="">

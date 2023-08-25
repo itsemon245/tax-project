@@ -100,6 +100,8 @@ class PaymentController extends Controller
                     $status = 'partial';
                 }
             }
+            $incomeSources= json_encode($request->income_source);
+
             Purchase::create([
                 'user_id' => auth()->id(),
                 'name' => $request->name,
@@ -115,7 +117,7 @@ class PaymentController extends Controller
                 'billing_type' => $billingType,
                 'due' => $due,
                 'status' => $status,
-                'metadata'=> $request->income_source,
+                'metadata'=> $incomeSources,
                 'is_expired' => $isExpired,
                 'payment_date' => today(),
                 'due_date' => $dueDate,
