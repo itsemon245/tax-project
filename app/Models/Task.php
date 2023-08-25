@@ -12,9 +12,6 @@ class Task extends Model
 {
     use HasFactory;
     protected $guarded = []; 
-    protected $casts = [
-        'name' => Json::class,
-    ]; 
 
     function project(): BelongsTo
     {

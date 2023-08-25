@@ -18,7 +18,7 @@ return new class extends Migration
                 ->nullable()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->json('name');
+            $table->string('name');
             $table->timestamps();
         });
         Schema::create('client_task', function (Blueprint $table) {

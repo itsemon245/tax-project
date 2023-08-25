@@ -31,9 +31,9 @@
                                     </ul>
                                 </div>
                                 <div class="tab-content ">
-                                    <div id="bar" class="progress my-3" style="height: 7px;">
+                                    {{-- <div id="bar" class="progress my-3" style="height: 7px;">
                                         <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
-                                    </div>
+                                    </div> --}}
                                     <div class="tab-pane my-3 active" id="project-info" role="tabpanel">
                                         <div class="row">
                                             <div class="col-md-6 mb-2">

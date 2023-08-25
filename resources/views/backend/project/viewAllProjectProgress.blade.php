@@ -6,17 +6,105 @@
         <div class="mb-2">
             <a href="{{ route('project.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
         </div>
-        <div id="bar" class="progress my-3" style="height: 15px;">
-            <span class="text-dark">Tax Project:</span>
-            <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
-        </div>
-        <div id="bar" class="progress my-3" style="height: 15px;">
-            <span class="text-dark">Tax Project:</span>
-            <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
-        </div>
-        <div id="bar" class="progress my-3" style="height: 15px;">
-            <span class="text-dark">Tax Project:</span>
-            <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
+        <div class="row border-bottom mb-1">
+            <div class="col-md-12">
+                <div id="progressbarwizard">
+                    <div class="d-flex justify-content-center">
+                        <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a href="#daily" data-bs-toggle="tab" data-toggle="tab"
+                                    class="nav-link rounded-0 active" aria-selected="true"
+                                    role="tab" tabindex="-1">
+                                    <i class="mdi mdi-clock-time-two-outline"></i>
+                                    <span class="d-none d-sm-inline">Daily</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a href="#weekly" data-bs-toggle="tab" data-toggle="tab"
+                                    class="nav-link rounded-0" aria-selected="false" role="tab"
+                                    tabindex="-1">
+                                    <i class="mdi mdi-table-clock"></i>
+                                    <span class="d-none d-sm-inline">Weekly</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a href="#monthly" data-bs-toggle="tab" data-toggle="tab"
+                                    class="nav-link rounded-0" aria-selected="false" role="tab"
+                                    tabindex="-1">
+                                    <i class="mdi mdi-table-clock"></i>
+                                    <span class="d-none d-sm-inline">Monthly</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a href="#yearly" data-bs-toggle="tab" data-toggle="tab"
+                                    class="nav-link rounded-0" aria-selected="false" role="tab"
+                                    tabindex="-1">
+                                    <i class="mdi mdi-table-clock"></i>
+                                    <span class="d-none d-sm-inline">Yearly</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content ">
+                        <div class="tab-pane my-3 active" id="daily" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @forelse ($clients[0]->projects as $project)
+                                    <span class="text-dark">{{ $project->name }}:</span>
+                                    <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
+                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $project->daily_progress <= 30 ? 'bg-danger' : ($project->daily_progress <= 60 ? 'bg-warning' : 'bg-success') }}" style="width: 90%;"><span class="text-light">90%</span></div>
+                                    </div>
+                                    @empty
+                                    <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                                    @endforelse
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+                        <div class="tab-pane my-3" id="weekly" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @forelse ($clients[0]->projects as $project)
+                                    <span class="text-dark">{{ $project->name }}:</span>
+                                    <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
+                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $project->daily_progress <= 30 ? 'bg-danger' : ($project->daily_progress <= 60 ? 'bg-warning' : 'bg-success') }}" style="width: 60%;"><span class="text-light">60%</span></div>
+                                    </div>
+                                    @empty
+                                    <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                                    @endforelse
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+                        <div class="tab-pane my-3" id="monthly" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @forelse ($clients[0]->projects as $project)
+                                    <span class="text-dark">{{ $project->name }}:</span>
+                                    <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
+                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $project->daily_progress <= 30 ? 'bg-danger' : ($project->daily_progress <= 60 ? 'bg-warning' : 'bg-success') }}" style="width: 250%;"><span class="text-light">25%</span></div>
+                                    </div>
+                                    @empty
+                                    <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                                    @endforelse
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+                        <div class="tab-pane my-3" id="yearly" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @forelse ($clients[0]->projects as $project)
+                                    <span class="text-dark">{{ $project->name }}:</span>
+                                    <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
+                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $project->daily_progress <= 30 ? 'bg-danger' : ($project->daily_progress <= 60 ? 'bg-warning' : 'bg-success') }}" style="width: 30%;"><span class="text-light">80%</span></div>
+                                    </div>
+                                    @empty
+                                    <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                                    @endforelse
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+                    </div> <!-- tab-content -->
+                </div>
+            </div>
         </div>
         <x-backend.table.basic>
             <thead>
@@ -35,7 +123,6 @@
                     @foreach ($client->projects as $project)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        {{ dd($project) }}
                         <td>{!! $project->name !!}</td>
                         <td>{!! $client->name !!}</td>
                         <td>{!! $client->phone !!}</td>

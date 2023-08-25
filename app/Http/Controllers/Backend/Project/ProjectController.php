@@ -21,9 +21,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('tasks')->get();
-        $clients = Client::with('projects')->get();
-        return view('backend.project.viewAllProjectProgress', compact('projects','clients'));
+
+        $clients = Client::get();
+        $projects = Project::get();
+        return view('backend.project.viewAllProjectProgress', compact('clients'));
     }
 
     /**
@@ -76,18 +77,13 @@ class ProjectController extends Controller
                 };
             };
         };
-        $tasks = [];
         foreach($request->tasks as $task){
-            $array = [
-                'task' => $task,
-            ];
-            array_push($tasks, $array);
+            Task::create([
+                'name' => $task,
+                'project_id' => $project->id,
+            ]);
         }
-        $project = Project::orderBy('id', 'desc')->first();
-        Task::create([
-            'name' => $tasks,
-            'project_id' => $project->id,
-        ]);
+
         $notification = [
             'message' => 'Project Created With Assigned',
             'alert-type' => 'success',
