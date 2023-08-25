@@ -28,6 +28,7 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -151,6 +152,18 @@ Route::prefix('payment')
     ->controller(PaymentController::class)
     ->group(function () {
         Route::get('create/{model}/{id}', 'create')->name('create');
+        Route::post('store/', 'store')->name('store');
+        Route::get('success/{model}/{id}', 'success')->name('success');
+        Route::get('cancel', 'cancel')->name('cancel');
+    });
+
+
+// Route for payment
+Route::prefix('purchase')
+    ->name('purchase.')
+    ->controller(PurchaseController::class)
+    ->group(function () {
+        Route::get('', 'index')->name('index');
         Route::post('store/', 'store')->name('store');
         Route::get('success/{model}/{id}', 'success')->name('success');
         Route::get('cancel', 'cancel')->name('cancel');

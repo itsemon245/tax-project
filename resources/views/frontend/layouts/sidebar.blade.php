@@ -161,6 +161,9 @@
                     <a class="" href="{{ route('user-doc.index') }}">My Documents</a>
                 </li>
                 <li class="sidebar-item">
+                    <a class="" href="{{ route('purchase.index') }}">My Purcahses</a>
+                </li>
+                <li class="sidebar-item">
                     <a class="" href="{{ route('page.my.courses') }}">My Courses</a>
                 </li>
                 <li class="sidebar-item">

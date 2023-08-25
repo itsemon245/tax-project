@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        //
+        $banners= Banner::latest()->get();
+        $purchaseItem= Purchase::where('approved',1)->latest()->get();
+        return view('frontend.pages.purchasesItems.purchases',compact('purchaseItem','banners'));
     }
 
     /**

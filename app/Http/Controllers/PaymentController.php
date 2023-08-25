@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ItemResource;
+use App\Models\IncomeSource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Exists;
 
@@ -24,12 +25,13 @@ class PaymentController extends Controller
     {
         $table = str(str($model)->snake())->plural();
         $record = DB::table($table)->find($id);
-        return view('frontend.pages.payment.create', compact('model', 'id', 'record'));
+        $incomeSources= IncomeSource::latest()->get();
+        return view('frontend.pages.payment.create', compact('model', 'id', 'record','incomeSources'));
     }
     public function store(Request $request)
     {
 
-        // dd($request->all());
+        //dd($request->all());
         $request->validate([
             'purchasable_type' => 'required',
             'purchasable_id' => 'required',
@@ -53,7 +55,7 @@ class PaymentController extends Controller
             $table = str($table)->plural();
             $user = User::findOrFail(auth()->id());
             $record = DB::table($table)->find($request->purchasable_id);
-            // dd($record);
+            //dd($record);
             $billingType = $record->billing_type;
             if (!$request->has('pay_later')) {
                 switch ($billingType) {
@@ -113,6 +115,7 @@ class PaymentController extends Controller
                 'billing_type' => $billingType,
                 'due' => $due,
                 'status' => $status,
+                'metadata'=> $request->income_source,
                 'is_expired' => $isExpired,
                 'payment_date' => today(),
                 'due_date' => $dueDate,
