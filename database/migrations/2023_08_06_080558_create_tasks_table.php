@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')
                 ->constrained()
+                ->nullable()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('name');
+            $table->json('name');
             $table->timestamps();
         });
         Schema::create('client_task', function (Blueprint $table) {
