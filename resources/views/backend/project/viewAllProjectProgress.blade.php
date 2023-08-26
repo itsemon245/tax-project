@@ -1,3 +1,4 @@
+
 @extends('backend.layouts.app')
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Show All', 'Project']" />
@@ -36,11 +37,11 @@
                                 </a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a href="#yearly" data-bs-toggle="tab" data-toggle="tab"
+                                <a href="#total" data-bs-toggle="tab" data-toggle="tab"
                                     class="nav-link rounded-0" aria-selected="false" role="tab"
                                     tabindex="-1">
                                     <i class="mdi mdi-table-clock"></i>
-                                    <span class="d-none d-sm-inline">Yearly</span>
+                                    <span class="d-none d-sm-inline">Total</span>
                                 </a>
                             </li>
                         </ul>
@@ -50,9 +51,18 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     @forelse ($clients[0]->projects as $project)
+                                    @php
+                                        $progress = $project->daily_target === 0 ? 100 : ($project->daily_progress * 100) / $project->daily_target; 
+                                        $progress = round($progress);
+                                        $color = match( true) {
+                                        $progress <= 30 => 'bg-danger',
+                                        $progress <= 60 => 'bg-warning',
+                                        default => 'bg-success',
+                                    };
+                                    @endphp
                                     <span class="text-dark">{{ $project->name }}:</span>
                                     <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
-                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $project->daily_progress <= 30 ? 'bg-danger' : ($project->daily_progress <= 60 ? 'bg-warning' : 'bg-success') }}" style="width: 90%;"><span class="text-light">90%</span></div>
+                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}%;"><span class="text-light">{{ $progress }}%</span></div>
                                     </div>
                                     @empty
                                     <h5 class="d-flex justify-content-center text-muted">No record found</h5>
@@ -64,9 +74,18 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     @forelse ($clients[0]->projects as $project)
+                                    @php
+                                     $progress = $project->weekly_target === 0 ? 100 : ($project->weekly_progress * 100) / $project->weekly_target; 
+                                    $progress = round($progress);
+                                    $color = match( true) {
+                                        $progress <= 30 => 'bg-danger',
+                                        $progress <= 60 => 'bg-warning',
+                                        default => 'bg-success',
+                                    };
+                                    @endphp
                                     <span class="text-dark">{{ $project->name }}:</span>
                                     <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
-                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $project->daily_progress <= 30 ? 'bg-danger' : ($project->daily_progress <= 60 ? 'bg-warning' : 'bg-success') }}" style="width: 60%;"><span class="text-light">60%</span></div>
+                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}" style="width: {{ $progress }}%;"><span class="text-light">{{ $progress }}%</span></div>
                                     </div>
                                     @empty
                                     <h5 class="d-flex justify-content-center text-muted">No record found</h5>
@@ -78,9 +97,18 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     @forelse ($clients[0]->projects as $project)
+                                    @php
+                                    $progress = $project->monthly_target === 0 ? 100 : ($project->monthly_progress * 100) / $project->monthly_target; 
+                                    $progress = round($progress);
+                                    $color = match( true) {
+                                    $progress <= 30 => 'bg-danger',
+                                    $progress <= 60 => 'bg-warning',
+                                    default => 'bg-success',
+                                    };
+                                    @endphp
                                     <span class="text-dark">{{ $project->name }}:</span>
                                     <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
-                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $project->daily_progress <= 30 ? 'bg-danger' : ($project->daily_progress <= 60 ? 'bg-warning' : 'bg-success') }}" style="width: 250%;"><span class="text-light">25%</span></div>
+                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}" style="width: {{ $progress }}%;"><span class="text-light">{{ $progress }}%</span></div>
                                     </div>
                                     @empty
                                     <h5 class="d-flex justify-content-center text-muted">No record found</h5>
@@ -88,13 +116,22 @@
                                 </div>
                             </div> <!-- end row -->
                         </div>
-                        <div class="tab-pane my-3" id="yearly" role="tabpanel">
+                        <div class="tab-pane my-3" id="total" role="tabpanel">
                             <div class="row">
                                 <div class="col-md-12">
                                     @forelse ($clients[0]->projects as $project)
+                                    @php
+                                    $progress = $project->total_clients === 0 ? 100 : ($project->total_progress * 100) / $project->total_clients; 
+                                    $progress = round($progress);
+                                    $color = match( true) {
+                                    $progress <= 30 => 'bg-danger',
+                                    $progress <= 60 => 'bg-warning',
+                                    default => 'bg-success',
+                                    };
+                                    @endphp
                                     <span class="text-dark">{{ $project->name }}:</span>
                                     <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
-                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $project->daily_progress <= 30 ? 'bg-danger' : ($project->daily_progress <= 60 ? 'bg-warning' : 'bg-success') }}" style="width: 30%;"><span class="text-light">80%</span></div>
+                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}" style="width:{{ $progress }}%;"><span class="text-light">{{ $progress }}%</span></div>
                                     </div>
                                     @empty
                                     <h5 class="d-flex justify-content-center text-muted">No record found</h5>
