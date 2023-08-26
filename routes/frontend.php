@@ -106,8 +106,7 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
 Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
     Route::get('index', 'index')->name('index');
     Route::get('{course}/show', 'show')->name('show');
-    Route::get('videos/{id}/{course}', 'videos')->name('videos');
-    Route::get('video/{id}/{course}', 'video')->name('video');
+    Route::get('course/{course}/videos/', 'videos')->name('videos');
     Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyPackageController::class)->group(function () {
         Route::get('/', 'caseStudy')->name('page');
         Route::get('index/{package_id}', 'index')->name('index');

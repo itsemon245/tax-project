@@ -9,7 +9,6 @@
                         <tr>
                             <th class="">No</th>
                             <th class="">Name</th>
-                            <th class="">Price</th>
                             <th class="">Trainer</th>
                             <th class="" style="width: 80px;">Action</th>
                         </tr>
@@ -32,9 +31,6 @@
                                     </a>
                                 </td>
                                 <td>
-                                    {{ $course->payable_amount }}
-                                </td>
-                                <td>
                                     <div class="d-flex align-items-start gap-2">
                                         <div>
                                             <img src="{{ asset('backend/assets/images/users/user-1.jpg') }}"
@@ -49,15 +45,20 @@
                                         </div>
                                     </div>
                                 </td>
-
-
+                                @php
+                                    $video= $course->videos->first();
+                                @endphp
                                 <td>
+                                    @if ($video)
                                     <div>
                                         <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark"
-                                            href="{{route('course.videos',['id'=>$course->purchasable_id,'courseID'=>1])}}">
-                                            Lessons
+                                            href="{{route('course.videos',$course->id).'?videos_id='.$video->id}}">
+                                         Lessons
                                         </x-backend.ui.button>
                                     </div>
+                                    @else
+                                        No Video's Found
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

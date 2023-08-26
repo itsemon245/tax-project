@@ -6,12 +6,18 @@
             <h3 class="py-2 px-2">Welcome to Our Video course</h3>
         </div>
 
+
         <div class="col-md-12">
             <div class="p-2 ratio ratio-16x9">
                     {{-- <iframe width="400" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
 
+                    @php
+                        $currentVideo= $videos->where('id',request()->query('videos_id'))->first();
+                        //dd($currentVideo)
+                    @endphp
+
                     <video width="400" controls>
-                        <source src="{{ useImage($courseVideos->video) }}" type="video/mp4">
+                        <source src="{{ $currentVideo->video }}" type="video/mp4">
                     </video>
             </div>
             <div class="row p-3">
@@ -180,7 +186,7 @@
                                                     <div class="accordion-body">
                                                         @foreach ($videos as $item)
                                                             <div class="mb-3">
-                                                                <a href="{{route('course.video',["id"=>$item->id,"course"=>$item->course_id] )}}">
+                                                                <a href="{{route('course.videos',$item->course_id)."?videos_id=".$item->id}}">
                                                                     <div class="card">
                                                                         <div class="card-body">
                                                                             <div class="p-2">
