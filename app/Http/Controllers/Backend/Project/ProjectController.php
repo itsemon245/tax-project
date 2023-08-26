@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProgressRequest;
 use App\Http\Requests\UpdateProgressRequest;
+use App\Models\Task;
 
 class ProjectController extends Controller
 {
@@ -20,8 +21,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
+
+        $clients = Client::get();
         $projects = Project::get();
-        return view('backend.project.viewAllProjectProgress', compact('projects'));
+        return view('backend.project.viewAllProjectProgress', compact('clients'));
     }
 
     /**
@@ -47,7 +50,6 @@ class ProjectController extends Controller
             'daily_target' => 'numeric|required',
             'total_clients' => 'required|numeric',
         ]);
-
         $project = Project::create($data);
         $project->weekly_target = $request->daily_target * $data['weekdays'];
         $project->monthly_target = $request->daily_target * $data['weekdays'] * 4;
@@ -75,6 +77,13 @@ class ProjectController extends Controller
                 };
             };
         };
+        foreach($request->tasks as $task){
+            Task::create([
+                'name' => $task,
+                'project_id' => $project->id,
+            ]);
+        }
+
         $notification = [
             'message' => 'Project Created With Assigned',
             'alert-type' => 'success',
