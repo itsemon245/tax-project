@@ -27,12 +27,12 @@
                                         </div>
                                         <div>
                                             <div class="fw-medium">{{ $course->name }}</div>
-                                            <div>{{ $course->videos()->count() }} Videos</div>
+                                            {{-- <div>{{ $course->videos()->count() }} Videos</div> --}}
                                         </div>
                                     </a>
                                 </td>
                                 <td>
-                                    {{ $course->price }}
+                                    {{ $course->payable_amount }}
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-start gap-2">
@@ -53,9 +53,9 @@
 
                                 <td>
                                     <div>
-                                        <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark "
-                                            href="#">
-                                            Preview
+                                        <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark"
+                                            href="{{route('course.videos',['id'=>$course->purchasable_id,'courseID'=>1])}}">
+                                            Lessons
                                         </x-backend.ui.button>
                                     </div>
                                 </td>

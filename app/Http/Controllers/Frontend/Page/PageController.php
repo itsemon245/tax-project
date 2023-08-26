@@ -99,7 +99,9 @@ class PageController extends Controller
     //show all my courses in frontend
     public function myCourses()
     {
-        $courses = User::find(auth()->id())->purchased('course');
+        $courses = User::with('purchases')->where('id',auth()->id())->get();
+        $courses= $courses[0]->purchases[0]->where('purchasable_type',"Course")->get();
+        //dd($courses);
         return view('frontend.pages.myCourses', compact('courses'));
     }
     //show all my payments/payment history in frontend

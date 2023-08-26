@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Course;
 
+use App\Models\Video;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
@@ -19,8 +20,19 @@ class CourseController extends Controller
         return view('frontend.pages.course.view', compact('course'));
     }
 
-    public function videos()
+    public function videos($id,$courseID)
     {
-        return view('frontend.pages.course.showVideos');
+        $courseVideos= Video::where('course_id',$id)->first();
+        $videos= Video::where('course_id',$id)->get();
+        //dd($videos);
+        return view('frontend.pages.course.showVideos',compact('courseVideos','videos'));
+    }
+
+    public function video($id,$course)
+    {
+        $courseVideos= Video::where('id',$id)->first();
+        $videos= Video::where('course_id',$course)->get();
+        //dd($videos);
+        return view('frontend.pages.course.showVideos',compact('courseVideos','videos'));
     }
 }
