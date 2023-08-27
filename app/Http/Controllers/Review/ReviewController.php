@@ -54,8 +54,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        $reviews = Review::orderBy('id', 'DESC')->get();
-        return view('backend.review.create', compact('reviews'));
+        return view('backend.review.create');
     }
 
     /**
