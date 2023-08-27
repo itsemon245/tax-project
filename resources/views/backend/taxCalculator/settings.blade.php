@@ -47,26 +47,48 @@
                                         <span class="fw-bold text-capitalize text-warning">{{ $tax->for }}</span>
                                     </div>
                                 </div>
-                                <div class="p-1 bg-soft-primary d-inline rounded rounded-3 text-primary">
-                                    <span class="">Turnover Percentage: </span>
-                                    <span>{{ $tax->turnover_percentage }} %</span>
-                                </div>
+                                @if ($tax->for === 'company' && $tax->type === 'tax')
+                                    <div>
+                                        Percentage:
+                                        <div class="p-1 bg-soft-primary d-inline rounded rounded-3 text-primary">
+                                            <span class="">Turnover: </span>
+                                            <span>{{ $tax->turnover_percentage }} %</span>
+                                        </div>
+                                        <div class="p-1 bg-soft-primary d-inline rounded rounded-3 text-primary">
+                                            <span class="">Income: </span>
+                                            <span>{{ $tax->income_percentage }} %</span>
+                                        </div>
+                                        <div class="p-1 bg-soft-primary d-inline rounded rounded-3 text-primary">
+                                            <span class="">Asset: </span>
+                                            <span>{{ $tax->asset_percentage }} %</span>
+                                        </div>
+                                    </div>
+                                @endif
                             </td>
                             <td class="fw-bold">
-                                <div class="mb-1">
-                                    <div class="p-1 bg-soft-blue text-blue d-inline rounded rounded-3">
-                                        <span class="">Male: </span>
-                                        <span>{{ $tax->tax_free->male }}</span> <span
-                                            class="mdi mdi-currency-bdt font-16"></span>
+                                @if ($tax->for === 'individual')
+                                    <div class="mb-1">
+                                        <div class="p-1 bg-soft-blue text-blue d-inline rounded rounded-3">
+                                            <span class="">Male: </span>
+                                            <span>{{ $tax->tax_free->male }}</span> <span
+                                                class="mdi mdi-currency-bdt font-16"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="p-1 bg-soft-pink text-pink d-inline rounded rounded-3">
-                                        <span class="">Female: </span>
-                                        <span>{{ $tax->tax_free->female }}</span> <span
-                                            class="mdi mdi-currency-bdt font-16"></span>
+                                    <div>
+                                        <div class="p-1 bg-soft-pink text-pink d-inline rounded rounded-3">
+                                            <span class="">Female: </span>
+                                            <span>{{ $tax->tax_free->female }}</span> <span
+                                                class="mdi mdi-currency-bdt font-16"></span>
+                                        </div>
                                     </div>
-                                </div>
+                                @else
+                                    <div>
+                                        <div class="p-1 bg-soft-success text-success d-inline rounded rounded-3">
+                                            <span>{{ $tax->tax_free }}</span> <span
+                                                class="mdi mdi-currency-bdt font-16"></span>
+                                        </div>
+                                    </div>
+                                @endif
                             </td>
                             <td>
                                 <table class="table table-borderless mb-0">
@@ -76,7 +98,6 @@
                                             <th class="p-1">To</th>
                                             <th class="p-1">Difference</th>
                                             <th class="p-1">Tax(%)</th>
-                                            <th class="p-1">Minium(৳)</th>
                                             <th class="p-1">Type</th>
 
                                         </tr>
@@ -95,9 +116,6 @@
                                                         class="mdi mdi-currency-bdt font-16"></span> </td>
                                                 <td class="p-1">{{ $slot->tax_percentage }} <span
                                                         class="mdi mdi-percent-outline font-16"></span> </td>
-                                                <td class="p-1">{{ $slot->min_tax }} <span
-                                                        class="mdi mdi-currency-bdt font-16"></span>
-                                                </td>
                                                 <td class="p-1 text-success text-capitalize">{{ $slot->type }}</span>
                                                 </td>
                                             </tr>

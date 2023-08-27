@@ -21,7 +21,6 @@ return new class extends Migration
             $table->unsignedBigInteger('to')->default(0);
             $table->bigInteger('difference')->default(0);
             $table->integer('tax_percentage')->default(0);
-            $table->bigInteger('min_tax')->default(0);
             $table->enum('type', ['income', 'turnover', 'asset'])->default('income');
             $table->timestamps();
         });
