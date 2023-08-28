@@ -4,6 +4,39 @@
 <x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" />
 
 <body class="w-100">
+    <!-- Messenger Chat plugin Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Chat plugin code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "105558834321190");
+      chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v17.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <!-- Messenger Chat plugin Code End-->
+
+
     <!-- Page Heading -->
     @include('frontend.layouts.header')
     @auth
@@ -48,14 +81,7 @@
     </aside>
 
 
-    <aside
-        style="z-index: 50; top:calc(100dvh - 13%); right:5%;transform: translateY(-50%);max-width:max-content;cursor: pointer;"
-        class=" px-3 py-2 rounded-circle shadow bg-primary border border-primary position-fixed">
-        <div class="" style="transform:rotateY(180deg)">
-            <span style="" class="mdi mdi-chat text-white fs-4"></span>
-        </div>
-    </aside>
-
+    
     <!-- Page Content -->
     <main class="">
         @yield('main')
