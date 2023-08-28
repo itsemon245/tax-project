@@ -1,9 +1,0 @@
-@use './colors';
-@use 'sass:meta';
-
-:root {
-  @each $name, $value in meta.module-variables("colors") {
-    --#{$name}: #{$value};
-  }
-  font-size: 15px;
-}
