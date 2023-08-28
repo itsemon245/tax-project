@@ -5,7 +5,7 @@
 
 <body class="w-100">
     {{-- Messenger --}}
-    @include('frontennd.layouts.chat-plugin')
+    @include('frontend.layouts.chat-plugin')
     {{-- End Messenger --}}
 
 
