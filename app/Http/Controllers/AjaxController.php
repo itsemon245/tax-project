@@ -100,4 +100,13 @@ class AjaxController extends Controller
         ];
         return response($content);
     }
+
+    public function getItems($slug) : Response {
+        $table = str($slug)->snake();
+        $table = str($table)->plural();
+        $items = DB::table($table)->get();
+
+        return response($items);
+    }
+
 }

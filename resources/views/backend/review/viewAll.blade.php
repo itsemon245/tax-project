@@ -3,7 +3,7 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Review']" />
     <x-backend.ui.section-card name="All Review">
-        <x-backend.ui.button type="custom" :href="route('backend.review.create')" class="btn-success btn-sm mb-2"><span
+        <x-backend.ui.button type="custom" href="{{ route('backend.review.create') }}" class="btn-success btn-sm mb-2"><span
                 class="fw-bold fs-5 me-1">+</span>Create Review</x-backend.ui.button>
         <div class="table-responsive">
             <x-backend.table.basic>
@@ -46,6 +46,5 @@
                 </tbody>
             </x-backend.table.basic>
         </div>
-
     </x-backend.ui.section-card>
 @endsection
