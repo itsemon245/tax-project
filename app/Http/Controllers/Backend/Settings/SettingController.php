@@ -41,6 +41,7 @@ class SettingController extends Controller
             'phone' => 'required|numeric',
             'whatsapp' =>'required|numeric',
             'favicon' => 'required|image|mimes:jpeg,png,jpg|max:1024',
+            'address' => 'required|string',
         ]);
         $logo = saveImage($request->logo, 'settings', 'logo');
         $favicon = saveImage($request->favicon, 'settings', 'favicon');
@@ -50,6 +51,7 @@ class SettingController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'whatsapp' => $request->whatsapp,
+            'address' =>$request->address,
         ];
         if($this->setting){
             $this->setting->basic = $array;
@@ -84,7 +86,7 @@ class SettingController extends Controller
             'withdrawal' => $request->withdrawal,
         ];
         if($this->setting){
-            $this->setting->reference = $array;
+            $this->setting->update(['reference' => $array]);
         }else{
             Setting::create([
                 'reference' => $array,

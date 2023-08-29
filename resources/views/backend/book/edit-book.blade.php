@@ -11,7 +11,7 @@
             @method('PUT')
             <div class="row">
 
-
+                {{-- {{ dd($book->thumbnail) }} --}}
                 <div class="col-md-6 mt-3">
                     <x-backend.form.image-input name="book_image" :image="$book->thumbnail" />
                 </div>
