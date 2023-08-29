@@ -44,11 +44,11 @@
                         @foreach ($incomeSources as $item)
                             <label
                                 class="bg-light d-flex justify-content-center align-items-center border rounded position-relative">
-                                <input type="checkbox" name="income_source[]" class="position-absolute top-0 end-0" value="{{$item->title}}">
+                                <input type="checkbox" name="income_source[]" class="position-absolute top-0 end-0"
+                                    value="{{ $item->title }}">
                                 <div class="text-dark d-flex flex-column align-items-center">
-                                    <img src="{{ useImage($item->image)}}" width="80" height="60"
-                                        alt="">
-                                    <h6 class="text-center">{{$item->title}}</h6>
+                                    <img src="{{ useImage($item->image) }}" width="80" height="60" alt="">
+                                    <h6 class="text-center">{{ $item->title }}</h6>
                                 </div>
                             </label>
                         @endforeach
@@ -60,6 +60,49 @@
 
 
         <div class="my-3">
+
+
+            @if ($model === ExpertProfile::class)
+                <h4 class="text-center">
+                    Write Your Message
+                </h4>
+                <div class="container-lg">
+                    <div class="bg-light">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="text-center">Message</h5>
+                            </div>
+                            <div class="card-body px-lg-5">
+                                <div class="row justify-content-between">
+
+                                    <div class="col-md-12 mb-2">
+                                        <div class="fw-medium text-start">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="">Subject</label>
+                                                    <input type="text" class="form-control mb-3" name="metaData[]"
+                                                        placeholder="Subject">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="">Message</label>
+                                                    <textarea name="metaData[]" id="" cols="30" rows="10" class="form-control" placeholder="Message"></textarea>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            @endif
+
+
+
+
             <h4 class="text-center">
                 Complete Your Transaction Safely
             </h4>
@@ -102,7 +145,7 @@
                                         </div>
                                         <div>
                                             <span class="fw-medium">Item Type:</span> <span
-                                                class="badge bg-soft-success text-success mb-0">{{ $model }}</span>
+                                                class="badge bg-soft-success text-success mb-0">c</span>
                                         </div>
                                         <div class="d-flex gap-1 align-items-center">
                                             <span class="fw-medium">Item Price:</span>
@@ -152,7 +195,8 @@
                                         <div class="col-md-6">
                                             <div class="row">
                                                 <div class="col-lg-3 col-4 mb-2">
-                                                    <label class="form-label mb-0" for="pay-later-switch">Pay Later</label>
+                                                    <label class="form-label mb-0" for="pay-later-switch">Pay
+                                                        Later</label>
                                                     <div class="form-check form-switch">
                                                         <input type="checkbox" name="pay_later" class="form-check-input"
                                                             id="pay-later-switch">
@@ -161,7 +205,8 @@
                                                 </div>
                                                 <div class="col-lg-9 col-8 payment_field">
                                                     <x-backend.form.text-input class="" type="number"
-                                                        name="paid_amount" label="Amount To Pay(৳)" placeholder="0.00 ৳" />
+                                                        name="paid_amount" label="Amount To Pay(৳)"
+                                                        placeholder="0.00 ৳" />
                                                 </div>
                                             </div>
                                         </div>

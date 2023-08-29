@@ -27,6 +27,7 @@ class ExpertProfileFactory extends Factory
             'availability'=> "09:00 am to 05:00pm (Monday to Thursday)",
             'at_a_glance'=> fake()->realText(100),
             'description'=> fake()->realText(300),
+            'price'=> fake()->numberBetween(100,1000),
         ];
     }
 }
