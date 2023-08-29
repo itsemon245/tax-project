@@ -63,10 +63,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <x-backend.form.text-input type="number" class="mb-2" required name="commission" label="Refer Commission" />
+                                    <x-backend.form.text-input type="number" class="mb-2" :value="$data->reference->commission" required name="commission" label="Refer Commission" />
                                 </div>
                                 <div class="col-md-6">
-                                    <x-backend.form.text-input type="number" class="mb-2" required name="withdrawal" label="Withdrawal Limit" />
+                                    <x-backend.form.text-input type="number" class="mb-2" :value="$data->reference->withdrawal" required name="withdrawal" label="Withdrawal Limit" />
                                 </div>
                                 <div class="mt-2"><button class="btn btn-primary w-100 btn-sm profile-button"
                                 type="submit">Save Change</button>
@@ -129,7 +129,6 @@
                         const inputs = `
                         <div class="card">
                         <div class="card-body">
-                            <div class="row">
                             <div class="col-md-6">
                                 <div class="mt-1">
                                     <x-backend.form.text-input type="text" name="payment_methods[]" label="Pay Method" required />
