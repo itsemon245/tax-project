@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\Project;
+use App\Models\Calendar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -18,6 +22,12 @@ class DashboardController extends Controller
     */
     public function index()
     {
-        return view('backend.dashboard.dashboard');
+        $clients = Client::get();
+        $projects = Project::get();
+        $events = Calendar::with('client')->latest()->get();
+        $today = Carbon::now()->format('Y-m-d');
+        $services = Calendar::get()->unique();
+        $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();
+        return view('backend.dashboard.dashboard', compact('clients','projects'));
     }
 }
