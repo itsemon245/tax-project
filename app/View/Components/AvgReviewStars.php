@@ -8,13 +8,11 @@ use Illuminate\View\Component;
 
 class AvgReviewStars extends Component
 {
-    public $avg;
     /**
      * Create a new component instance.
      */
-    public function __construct($avg = 0)
+    public function __construct(public $avg = 0, public $iconFont = '')
     {
-        $this->avg = $avg;
     }
 
     /**

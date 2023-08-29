@@ -63,12 +63,12 @@
         }
 
         @media (max-width: 992px) {
-            .expert-filter {
-                display: none;
-            }
-
-            .filter-btn-box {
-                display: inline-block
+            .filter-menu {
+                width: 50%;
+                position: absolute;
+                transform: translateX(-1000px);
+                z-index: 5;
+                transition: all 250ms ease-in-out;
             }
         }
     </style>
@@ -80,7 +80,7 @@
     <x-frontend.hero-section :banners="$banners" />
 
     <div id="browse_section">
-        <div class="container">
+        <div class="px-lg-5 px-2">
             <div class="d-flex center_sm">
                 <h2 class="browse_header">Browse Experts</h2>
                 <div class="line">
@@ -90,15 +90,14 @@
 
             </div>
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="filter-btn-box shadow mb-3">
-                        <button class="browse_card_cons" style="background: none;margin: 0; padding: 0;"
-                            onclick="setFilterVissible()">
-                            <span><i class="fa-solid fa-bars-filter"></i></span>
-                            <h4 class="browse_header" style="margin: 0; padding: 0;">Filter</h4>
-                        </button>
-                    </div>
-                    <div class="expert-filter p-3" style="background: #F1EBEB; border-radius: 10px">
+                <div class="col-12">
+                    <button id="filter-menu-btn" data-target="closed" class="btn btn-secondary rounded-1 d-lg-none my-3">
+                        <span class="mdi mdi-filter font-14"></span>
+                        Filter
+                    </button>
+                </div>
+                <div class="col-lg-3 ">
+                    <div class="filter-menu p-3 shadow bg-light rounded-2 ">
                         <div class="filters">
                             <div class="price-filter my-2">
                                 <div class="label mb-2">
@@ -200,16 +199,17 @@
                 <div class="col-lg-9">
                     <div class="row mt-0">
                         @foreach ($experts as $expert)
-                            <div class="col-md-6">
-                                <div class="browse_content_wrapper">
+                            <div class="col-12 col-sm-6 col-xxl-4 mb-3">
+                                <div class="browse_content_wrapper h-100">
                                     <div class="d-flex gap-3 justify-content-center mb-3">
-                                        <div class="">
-                                            <img src="{{ useImage($expert->image) }}" width="128px" height="128px;"
+                                        <div class="d-flex flex-column align-items-center">
+                                            <img src="{{ useImage($expert->image) }}" width="64px" height="64px;"
                                                 alt="" class="rounded rounded-circle mb-2">
                                             <div class="d-block">
-                                                <x-avg-review-stars :avg="$expert->reviews_avg_rating" />
+                                                <x-avg-review-stars icon-font="font-14" :avg="$expert->reviews_avg_rating" />
                                             </div>
-                                            <div class="text-center">{{$expert->reviews_count}} Reviews</div>
+                                            <div class="text-center">{{ $expert->reviews_avg_rating ?? 0 }} Ratings</div>
+                                            <div class="text-center">{{ $expert->reviews_count }} Reviews</div>
                                         </div>
                                         <div class="">
                                             <h2 class="browse_card_name">{{ $expert->name }}</h2>
@@ -242,15 +242,15 @@
 
 @push('customJs')
     <script>
-        const setFilterVissible = () => {
-            const filter = document.querySelector(".expert-filter")
-
-            if (filter.style.display === "none") {
-                filter.style.display = "block";
+        $('#filter-menu-btn').click(e => {
+            if (e.target.dataset.target === 'closed') {
+                e.target.dataset.target = 'opened'
+                $('.filter-menu').css('transform', 'translateX(0)');
             } else {
-                filter.style.display = "none";
+                e.target.dataset.target = 'closed'
+                $('.filter-menu').css('transform', 'translateX(-1000px)');
             }
-        }
+        })
 
         const rangeSlider = (rangeSliderInputs, rangeInputs, progress, priceGap) => {
             rangeInputs.forEach(input => {
