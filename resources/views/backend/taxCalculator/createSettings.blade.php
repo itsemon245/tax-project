@@ -10,11 +10,11 @@
                 <h5 class="fw-medium mb-1">Slot <span class="slot-count"></span></h5>
                 <div class="row only-tax">
                     <div class="col-md-3">
-                        <x-backend.form.text-input type="number" name="slot_from[]" placeholder="Range From"
+                        <x-backend.form.text-input type="number" name="tax_slot_from[]" placeholder="Range From"
                             label="Range From" />
                     </div>
                     <div class="col-md-3">
-                        <x-backend.form.text-input type="number" name="slot_to[]" placeholder="Range To"
+                        <x-backend.form.text-input type="number" name="tax_slot_to[]" placeholder="Range To"
                             label="Range To" />
                     </div>
                     <div class="col-md-2">
@@ -34,11 +34,11 @@
                     <div class="service-wrapper">
                         <div class="row" id="service">
                             <div class="col-md-3">
-                                <x-backend.form.text-input type="number" name="slot_from[]" placeholder="Range From"
+                                <x-backend.form.text-input type="number" name="others_slot_from[]" placeholder="Range From"
                                     label="Range From" disabled />
                             </div>
                             <div class="col-md-3">
-                                <x-backend.form.text-input type="number" name="slot_to[]" placeholder="Range To"
+                                <x-backend.form.text-input type="number" name="others_slot_to[]" placeholder="Range To"
                                     label="Range To" disabled />
                             </div>
                             <div class="col-md-3">
@@ -143,11 +143,11 @@
                             <h5 class="fw-medium mb-1">Slot 1</h5>
                             <div class="row only-tax">
                                 <div class="col-md-3">
-                                    <x-backend.form.text-input type="number" name="slot_from[]" placeholder="Range From"
-                                        label="Range From" />
+                                    <x-backend.form.text-input type="number" name="tax_slot_from[]"
+                                        placeholder="Range From" label="Range From" />
                                 </div>
                                 <div class="col-md-3">
-                                    <x-backend.form.text-input type="number" name="slot_to[]" placeholder="Range To"
+                                    <x-backend.form.text-input type="number" name="tax_slot_to[]" placeholder="Range To"
                                         label="Range To" />
                                 </div>
                                 <div class="col-md-2">
@@ -167,11 +167,11 @@
                                 <div class="service-wrapper">
                                     <div class="row" id="service">
                                         <div class="col-md-3">
-                                            <x-backend.form.text-input type="number" name="slot_from[]"
+                                            <x-backend.form.text-input type="number" name="others_slot_from[]"
                                                 placeholder="Range From" label="Range From" disabled />
                                         </div>
                                         <div class="col-md-3">
-                                            <x-backend.form.text-input type="number" name="slot_to[]"
+                                            <x-backend.form.text-input type="number" name="others_slot_to[]"
                                                 placeholder="Range To" label="Range To" disabled />
                                         </div>
                                         <div class="col-md-3">

@@ -44,7 +44,7 @@ class IndustryController extends Controller
             ...$validated,
             'image' => saveImage($request->image, 'industries'),
         ]);
-        $this->setSections($request, $industry);
+        $this->setSections($request, $industry, 'Industry');
 
 
         $notification = [
@@ -89,7 +89,7 @@ class IndustryController extends Controller
             ...$validated,
             'image' => updateFile($request->image, $industry->image, 'industries'),
         ]);
-        $this->setSections($request, $industry);
+        $this->setSections($request, $industry, 'Industry');
         $notification = [
             'message' => 'Industry Updated',
             'alert-type' => 'success',
@@ -105,13 +105,13 @@ class IndustryController extends Controller
     {
         //
     }
-    public function setSections($request, $industry)
+    public function setSections($request, $model, string $modelName)
     {
         foreach ($request->section_titles as $key => $title) {
             $image = null;
             $description = $request->section_descriptions[$key];
             $sectionId = $request->section_ids[$key] ?? null;
-            $oldSection = $industry->sections->find($sectionId);
+            $oldSection = $model->sections->find($sectionId);
             $img = $request->section_images[$key] ?? null;
             if ($img !== null && $oldSection !== null) {
                 $image = updateFile($img, $oldSection->image, 'industries');
@@ -122,10 +122,9 @@ class IndustryController extends Controller
             if ($img !== null && $oldSection === null) {
                 $image = saveImage($img, 'industries');
             }
-            // dd($image);
             $section = Section::updateOrCreate(['id' => $sectionId], [
-                'sectionable_type' => 'Industry',
-                'sectionable_id' => $industry->id,
+                'sectionable_type' => $modelName,
+                'sectionable_id' => $model->id,
                 'title'         => $title,
                 'description'   => $description,
                 'image'         => $image
