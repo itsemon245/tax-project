@@ -6,8 +6,9 @@
 
     <x-backend.ui.section-card name="Edit Service">
 
-        <form action="{{ route('service.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('service.update', $service) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <input type="text" name="service_category_id" value="{{ $service->service_category_id }}" hidden />
             <input type="text" name="service_sub_category_id" value="{{ $service->service_sub_category_id }}" hidden />
 
@@ -73,43 +74,7 @@
                                 </x-form.ck-editor>
                             </div>
                             <div class="col-md-12">
-                                <label for="color" class="form-label my-3"><b>SECTIONS</b></label>
-
-                                
-                                <div id="packacgeFeaturesInputs">
-                                    @foreach (json_decode($service->sections) as $key=> $section)
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mt-1">
-                                            <x-backend.form.text-input label="Section Title {{$key+1}}" type="text" name="sections_titles[]"
-                                                value="{{ $section->title }}">
-                                            </x-backend.form.text-input>
-                                        </div>
-                                        <div class="mt-1">
-                                            <x-form.ck-editor id="section-editor-{{$key+1}}" name="sections_descriptions[]" placeholder="Price Description"
-                                                label="Section Description {{$key+1}}" label="Section Image {{$key+1}}">
-                                                {!! $section->description !!}
-                                            </x-form.ck-editor>
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6"> 
-                                        <x-backend.form.image-input label="Section Image {{$key+1}}" name="sections_images[]" id="section-image-{{$key+1}}" :image="$section->image" />
-                                        
-                                    </div>
-                                </div>
-                                @endforeach
-                                </div>
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <div class="icon-item mx-1 mt-3" style="cursor: pointer" onclick="addPackageFeature()"
-                                        title="Add Package Feature">
-                                        <i data-feather="plus-square" class="icon-dual"></i>
-                                    </div>
-                                    <div id="removePackageFeatureBtn" class="icon-item mx-1 mt-3" style="cursor: pointer"
-                                        onclick="removePackageFeature()" title="Add Package Feature">
-                                        <i data-feather="minus-square" class="icon-dual"></i>
-                                    </div>
-                                </div>
+                                <x-form.sections :sections="$service->sections"/>
                             </div>
                             <div class="mt-3">
                                 <button type="submit"

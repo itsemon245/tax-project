@@ -95,13 +95,13 @@ class AboutController extends Controller
             $oldSection = $model->sections->find($sectionId);
             $img = $request->section_images[$key] ?? null;
             if ($img !== null && $oldSection !== null) {
-                $image = updateFile($img, $oldSection->image, 'industries');
+                $image = updateFile($img, $oldSection->image, 'sections/about');
             }
             if ($img === null && $oldSection !== null) {
                 $image = $oldSection->image;
             }
             if ($img !== null && $oldSection === null) {
-                $image = saveImage($img, 'industries');
+                $image = saveImage($img, 'sections/about');
             }
             $section = Section::updateOrCreate(['id' => $sectionId], [
                 'sectionable_type' => $modelName,

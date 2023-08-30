@@ -6,8 +6,6 @@
         <div class="mb-2">
             <a href="{{ route('industry.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
         </div>
-        <form action="{{ route('info.store') }}" method="post" enctype="multipart/form-data">
-            @csrf
             <x-backend.table.basic>
                 <thead>
                     <tr>
@@ -23,7 +21,7 @@
                             <td>{{ ++$key }}</td>
                             <td>
                                 <div class="d-flex mb-2">
-                                    <img style="width:48px;" src="{{ $industry->image }}" class="rounded" alt="" />
+                                    <img style="width:48px;" src="{{ useImage($industry->image) }}" class="rounded" alt="" />
                                     <h6 class="px-3">{{ $industry->title }}</h6>
                                 </div>
                                 <p class="tex-justify text-muted text-wrap" style="max-width: 30ch;">{!! Str::limit($industry->intro, 80, '...') !!}
@@ -52,7 +50,6 @@
                     @endforelse
                 </tbody>
             </x-backend.table.basic>
-        </form>
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection

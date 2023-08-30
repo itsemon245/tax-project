@@ -25,7 +25,8 @@ class ServiceController extends Controller
     public function create($subCategoryId)
     {
         $subCategory = ServiceSubCategory::find($subCategoryId);
-        return view('backend.service.createService', compact('subCategory'));
+        $service = Service::first();
+        return view('backend.service.createService', compact('subCategory', 'service'));
     }
 
     /**
@@ -79,7 +80,16 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        //
+        $service->update([
+            'image' => updateFile($request->image, $service->image, 'sections/service'),
+        ]);
+        $this->setSections($request, $service, 'Service');
+        $notification = [
+            'message' => 'Service Updated',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
     }
 
     /**
@@ -99,20 +109,20 @@ class ServiceController extends Controller
 
     public function setSections($request, $model, string $modelName)
     {
-        foreach ($request->sections_titles as $key => $title) {
+        foreach ($request->section_titles as $key => $title) {
             $image = null;
-            $description = $request->sections_descriptions[$key];
+            $description = $request->section_descriptions[$key];
             $sectionId = $request->section_ids[$key] ?? null;
             $oldSection = $model->sections->find($sectionId);
             $img = $request->section_images[$key] ?? null;
             if ($img !== null && $oldSection !== null) {
-                $image = updateFile($img, $oldSection->image, 'industries');
+                $image = updateFile($img, $oldSection->image, 'sections/service');
             }
             if ($img === null && $oldSection !== null) {
                 $image = $oldSection->image;
             }
             if ($img !== null && $oldSection === null) {
-                $image = saveImage($img, 'industries');
+                $image = saveImage($img, 'sections/service');
             }
             $section = Section::updateOrCreate(['id' => $sectionId], [
                 'sectionable_type' => $modelName,

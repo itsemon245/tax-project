@@ -42,7 +42,7 @@ class IndustryController extends Controller
         // Set sections in an array
         $industry = Industry::create([
             ...$validated,
-            'image' => saveImage($request->image, 'industries'),
+            'image' => saveImage($request->image, 'sections/industries'),
         ]);
         $this->setSections($request, $industry, 'Industry');
 
@@ -87,7 +87,7 @@ class IndustryController extends Controller
 
         $industry->update([
             ...$validated,
-            'image' => updateFile($request->image, $industry->image, 'industries'),
+            'image' => updateFile($request->image, $industry->image, 'sections/industries'),
         ]);
         $this->setSections($request, $industry, 'Industry');
         $notification = [
@@ -103,7 +103,13 @@ class IndustryController extends Controller
      */
     public function destroy(Industry $industry)
     {
-        //
+        $industry->delete();
+        $notification = [
+            'message' => 'Industry Deleted',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
     }
     public function setSections($request, $model, string $modelName)
     {
@@ -114,13 +120,13 @@ class IndustryController extends Controller
             $oldSection = $model->sections->find($sectionId);
             $img = $request->section_images[$key] ?? null;
             if ($img !== null && $oldSection !== null) {
-                $image = updateFile($img, $oldSection->image, 'industries');
+                $image = updateFile($img, $oldSection->image, 'sections/industries');
             }
             if ($img === null && $oldSection !== null) {
                 $image = $oldSection->image;
             }
             if ($img !== null && $oldSection === null) {
-                $image = saveImage($img, 'industries');
+                $image = saveImage($img, 'sections/industries');
             }
             $section = Section::updateOrCreate(['id' => $sectionId], [
                 'sectionable_type' => $modelName,
