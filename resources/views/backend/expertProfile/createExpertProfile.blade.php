@@ -33,6 +33,7 @@
                     <x-backend.form.text-input label="Join Date" required type="text" name="join_date">
                     </x-backend.form.text-input>
                 </div>
+
                 <div class="col-md-6">
                     <x-backend.form.text-input label="Availability Date" required type="text" name="availability"
                         placeholder="Sat-Fri(08:00AM-11:55PM)">
@@ -41,11 +42,15 @@
                     <x-form.ck-editor id="ck-editor3" name="at_a_glance" placeholder="Sat-Fri(08:00AM-11:55PM)"
                         label="At a Glance">
                     </x-form.ck-editor>
+                    <x-backend.form.text-input label="Price" required type="number" name="price">
+                    </x-backend.form.text-input>
                 </div>
+
                 <div class="col-md-6 mt-3">
                     <x-backend.form.image-input name="image" />
                 </div>
-                <div class="col-md-612">
+
+                <div class="col-md-12">
                     <x-backend.ui.button type="submit" class="btn-primary mt-2">Create</x-backend.ui.button>
                 </div>
             </div>
