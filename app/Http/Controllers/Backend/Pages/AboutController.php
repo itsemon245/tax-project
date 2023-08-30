@@ -88,28 +88,32 @@ class AboutController extends Controller
     }
     public function setSections($request, $model, string $modelName)
     {
-        foreach ($request->section_titles as $key => $title) {
-            $image = null;
-            $description = $request->section_descriptions[$key];
-            $sectionId = $request->section_ids[$key] ?? null;
-            $oldSection = $model->sections->find($sectionId);
-            $img = $request->section_images[$key] ?? null;
-            if ($img !== null && $oldSection !== null) {
-                $image = updateFile($img, $oldSection->image, 'sections/about');
+        if ($request->section_titles) {
+            $dir = str($modelName)->slug();
+            $dir = str($dir)->plural();
+            foreach ($request->section_titles as $key => $title) {
+                $image = null;
+                $description = $request->section_descriptions[$key];
+                $sectionId = $request->section_ids[$key] ?? null;
+                $oldSection = $model->sections->find($sectionId);
+                $img = $request->section_images[$key] ?? null;
+                if ($img !== null && $oldSection !== null) {
+                    $image = updateFile($img, $oldSection->image, $dir);
+                }
+                if ($img === null && $oldSection !== null) {
+                    $image = $oldSection->image;
+                }
+                if ($img !== null && $oldSection === null) {
+                    $image = saveImage($img, $dir);
+                }
+                $section = Section::updateOrCreate(['id' => $sectionId], [
+                    'sectionable_type' => $modelName,
+                    'sectionable_id' => $model->id,
+                    'title'         => $title,
+                    'description'   => $description,
+                    'image'         => $image
+                ]);
             }
-            if ($img === null && $oldSection !== null) {
-                $image = $oldSection->image;
-            }
-            if ($img !== null && $oldSection === null) {
-                $image = saveImage($img, 'sections/about');
-            }
-            $section = Section::updateOrCreate(['id' => $sectionId], [
-                'sectionable_type' => $modelName,
-                'sectionable_id' => $model->id,
-                'title'         => $title,
-                'description'   => $description,
-                'image'         => $image
-            ]);
         }
     }
 }
