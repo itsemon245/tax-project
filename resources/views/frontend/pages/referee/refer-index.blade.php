@@ -16,7 +16,8 @@
                             <p>Total Amount Withdrawn</p>
                             <p>443 TK</p>
                         </div>
-                        <a class="btn rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-light bg-gradient text-success" style="font-weight: 500;">
+                        <a class="btn rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-light bg-gradient text-success"
+                            style="font-weight: 500;">
                             <span class="mdi mdi-cash p-0 m-0"></span> Request Withdrawl
                         </a>
                     </div>
@@ -30,7 +31,8 @@
                                 <h1 class="text-success mt-4 d-flex justify-content-center">0</h1>
                                 <p class="d-flex justify-content-center mt-0">Singups</p>
                             </div>
-                            <span class="mdi mdi-graph-outline p-0 m-0" style="color: var(--bs-gray-500);position: absolute;top:0;right:4px;"></span>
+                            <span class="mdi mdi-graph-outline p-0 m-0"
+                                style="color: var(--bs-gray-500);position: absolute;top:0;right:4px;"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -39,7 +41,8 @@
                                 <h1 class="text-success mt-4 d-flex justify-content-center">0</h1>
                                 <p class="d-flex justify-content-center mt-0">Conversation</p>
                             </div>
-                            <span class="mdi mdi-account-cash p-0 m-0" style="color: var(--bs-gray-500);position: absolute;top:0;right:4px;"></span>
+                            <span class="mdi mdi-account-cash p-0 m-0"
+                                style="color: var(--bs-gray-500);position: absolute;top:0;right:4px;"></span>
                         </div>
                     </div>
                 </div>
@@ -51,14 +54,14 @@
                             </p>
                             <div class="d-flex gap-2">
                                 <div class="bg-light bg-gradient p-3 rounded shadow-sm">
-                                    {{auth()->user()->refer_link}}
+                                    {{ auth()->user()->refer_link }}
                                 </div>
                                 <div class="copy-btn bg-light text-center py-2 px-3 rounded shoadow-sm">
                                     <span class="mdi mdi-content-copy">
 
                                     </span>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -68,18 +71,16 @@
             <div class="card p-2">
                 <table class="table mt-3 text-dark">
                     <tbody>
-                        <tr>
-                            <td>Lorem ipsum dolor sit.</td>
-                            <td>43</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum dolor sit.</td>
-                            <td>43</td>
-                        </tr>
-                        <tr>
-                            <td>Lorem ipsum dolor sit.</td>
-                            <td>43</td>
-                        </tr>
+                        @forelse ($referees as $referee)
+                            <tr>
+                                <td>{{ $referee->user->name }}</td>
+                                <td>43</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="2" class="text-muted text-center">No refereals yet</td>
+                                </td>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -88,15 +89,15 @@
 @endsection
 @push('customCss')
     <style>
-        .copy-btn{
+        .copy-btn {
             cursor: pointer;
             transition: all 150ms ease-in;
         }
+
         .copy-btn:hover {
             /* color: var(--bs-success); */
             scale: 1.05;
-            background: var(--bs-gray-300)!important;
+            background: var(--bs-gray-300) !important;
         }
     </style>
 @endpush
-

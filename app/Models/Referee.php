@@ -14,4 +14,8 @@ class Referee extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function parent()
+    {
+        return $this->hasOne(User::class, 'id', 'parent_id');
+    }
 }

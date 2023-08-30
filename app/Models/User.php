@@ -43,7 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function referees()
     {
-        return $this->hasMany(Referee::class);
+        return $this->hasMany(Referee::class, 'parent_id', 'id');
     }
     public function userDocs()
     {

@@ -31,6 +31,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // dd($request->refer_code);
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'user_name' => ['required', 'string', 'max:255'],
@@ -39,7 +40,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
         $user = User::create($data);
-        $user->refer_link = route('refer.link', $request->user_name);
+        $user->refer_link = url("/register/r/" . $request->user_name);
         $user->password = Hash::make($data['password']);
         $arr = explode(' ', $request->name);
         if (count($arr) > 1) {
@@ -49,6 +50,7 @@ class RegisteredUserController extends Controller
         }
         $user->image_url = "https://api.dicebear.com/6.x/initials/svg?seed=$seed&backgroundType=gradientLinear&backgroundRotation=0,360";
         $user->save();
+
 
         if ($request->has('refer_code')) {
             $parent = User::where('user_name', $request->refer_code)->first();

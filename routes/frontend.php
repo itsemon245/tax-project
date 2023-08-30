@@ -29,6 +29,7 @@ use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
 use App\Http\Controllers\PurchaseController;
+use App\Models\Referee;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,9 +137,8 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
-    $invoice = Invoice::first();
-    $year = currentFiscalYear();
-    return view('mail.invoiceMail', compact('invoice', 'year'));
+    $user = User::find(1);
+    dd($user->referees);
 });
 
 
