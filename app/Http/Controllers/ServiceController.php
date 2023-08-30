@@ -16,7 +16,6 @@ class ServiceController extends Controller
     public function index($subCategoryId)
     {
         $services = Service::with(['serviceSubCategory', 'serviceCategory'])->where('service_sub_category_id', $subCategoryId)->get();
-        // dd($services);
         return view('backend.service.viewServices', compact("services"));
     }
 
@@ -34,25 +33,7 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        // $service = Service::create(
-        //     [
-        //         "service_category_id" => $request->service_category_id,
-        //         "service_sub_category_id" => $request->service_sub_category_id,
-        //         "title" => $request->title,
-        //         "intro" => $request->intro,
-        //         "description" => $request->description,
-        //         "price" => $request->price,
-        //         "price_description" => $request->price_description,
-        //         "discount" => $request->discount,
-        //         "is_discount_fixed" => $request->discount_type,
-        //         "delivery_date" => $request->delivery_date,
-        //         "rating" => $request->ratting,
-        //         "reviews" => $request->reviews,
-        //         "sections" => $this->setSections($request, $service, 'Service'),
-        //     ]
-        // );
         $service = new Service();
-        // dd($request);
         $service->service_category_id = $request->service_category_id;
         $service->service_sub_category_id = $request->service_sub_category_id;
         $service->title = $request->title;
@@ -106,13 +87,14 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        Service::find($service->id)->delete();
-        return redirect()
-            ->back()
-            ->with(array(
-                'message' => "Service Deleted Successfully",
-                'alert-type' => 'success',
-            ));
+       $service->delete();
+       $notification = [
+        'message' => 'Service Deleted',
+        'alert-type' => 'success',
+    ];
+    return redirect()
+        ->back()
+        ->with($notification);
     }
 
     public function setSections($request, $model, string $modelName)
