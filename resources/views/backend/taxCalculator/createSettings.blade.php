@@ -106,16 +106,16 @@
                     <div class="row only-company only-tax d-none">
                         <div class="col-md-4">
                             <x-backend.form.text-input type='number' name="turnover_percentage"
-                                placeholder="Percentage For Turnover" label="Percentage For Turnover(%)" required
+                                placeholder="Percentage For Turnover" label="Percentage For Turnover(%)"
                                 disabled />
                         </div>
                         <div class="col-md-4">
                             <x-backend.form.text-input type='number' name="income_percentage"
-                                placeholder="Percentage For Income" label="Percentage For Income(%)" required disabled />
+                                placeholder="Percentage For Income" label="Percentage For Income(%)" disabled />
                         </div>
                         <div class="col-md-4">
                             <x-backend.form.text-input type='number' name="asset_percentage"
-                                placeholder="Percentage For Asset" label="Percentage For Asset(%)" required disabled />
+                                placeholder="Percentage For Asset" label="Percentage For Asset(%)" disabled />
                         </div>
                     </div>
 
@@ -123,16 +123,16 @@
                     <div class="row only-individual">
                         <div class="col-md-6">
                             <x-backend.form.text-input type="number" name="tax_free_male" placeholder="Tax Free Male"
-                                label="Tax Free Male(৳)" required />
+                                label="Tax Free Male(৳)" />
                         </div>
                         <div class="col-md-6">
                             <x-backend.form.text-input type="number" name="tax_free_female"
-                                placeholder="Tax Free Female" label="Tax Free Female(৳)" required />
+                                placeholder="Tax Free Female" label="Tax Free Female(৳)" />
                         </div>
                     </div>
                     <div class="row not-individual d-none">
                         <x-backend.form.text-input type="number" name="tax_free" placeholder="Tax Free"
-                            label="Tax Free(৳)" required />
+                            label="Tax Free(৳)" />
                     </div>
 
                 </div>
