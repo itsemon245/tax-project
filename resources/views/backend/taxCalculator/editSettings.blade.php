@@ -107,18 +107,18 @@
                     <div
                         class="row only-company only-tax {{ $taxSetting->for !== 'company' && $taxSetting->type === 'others' ? 'd-none' : '' }}">
                         <div class="col-md-4">
-                            <x-backend.form.text-input required type='number' name="turnover_percentage"
+                            <x-backend.form.text-input type='number' name="turnover_percentage"
                                 placeholder="Percentage For Turnover" label="Percentage For Turnover(%)"
                                 @if ($taxSetting->for === 'company' && $taxSetting->type === 'tax') :value="$taxSetting->turnover_percentage" @endif
                                 disabled />
                         </div>
                         <div class="col-md-4">
-                            <x-backend.form.text-input required type='number' name="income_percentage"
+                            <x-backend.form.text-input type='number' name="income_percentage"
                                 placeholder="Percentage For Income" label="Percentage For Income(%)"
                                 @if ($taxSetting->for === 'company' && $taxSetting->type === 'tax') :value="$taxSetting->income_percentage" @endif disabled />
                         </div>
                         <div class="col-md-4">
-                            <x-backend.form.text-input required type='number' name="asset_percentage"
+                            <x-backend.form.text-input type='number' name="asset_percentage"
                                 placeholder="Percentage For Asset" label="Percentage For Asset(%)"
                                 @if ($taxSetting->for === 'company' && $taxSetting->type === 'tax') :value="$taxSetting->asset_percentage" @endif disabled />
                         </div>
@@ -127,16 +127,16 @@
 
                     <div class="row only-individual {{ $taxSetting->for !== 'individual' ? 'd-none' : '' }}">
                         <div class="col-md-6">
-                            <x-backend.form.text-input required type="number" name="tax_free_male"
+                            <x-backend.form.text-input type="number" name="tax_free_male"
                                 placeholder="Tax Free Male" label="Tax Free Male(৳)" :value="$taxSetting->tax_free->male ?? null" />
                         </div>
                         <div class="col-md-6">
-                            <x-backend.form.text-input required type="number" name="tax_free_female"
+                            <x-backend.form.text-input type="number" name="tax_free_female"
                                 placeholder="Tax Free Female" label="Tax Free Female(৳)" :value="$taxSetting->tax_free->female ?? null" />
                         </div>
                     </div>
                     <div class="row not-individual {{ $taxSetting->for === 'individual' ? 'd-none' : '' }}">
-                        <x-backend.form.text-input required type="number" name="tax_free" placeholder="Tax Free"
+                        <x-backend.form.text-input type="number" name="tax_free" placeholder="Tax Free"
                             label="Tax Free(৳)" :value="$taxSetting->tax_free->amount ?? null" />
                     </div>
 
