@@ -16,6 +16,7 @@ use PhpParser\Node\Stmt\TryCatch;
 
 use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\error;
+use Illuminate\Support\Facades\Storage;
 use function PHPUnit\Framework\throwException;
 
 class AjaxController extends Controller
@@ -114,6 +115,7 @@ class AjaxController extends Controller
 
     public function deleteSection(Section $section)
     {
+        deleteFile($section->image);
         $section->delete();
         return response()->json([
             'success' => true,

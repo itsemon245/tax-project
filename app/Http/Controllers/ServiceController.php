@@ -99,28 +99,30 @@ class ServiceController extends Controller
 
     public function setSections($request, $model, string $modelName)
     {
-        foreach ($request->sections_titles as $key => $title) {
-            $image = null;
-            $description = $request->sections_descriptions[$key];
-            $sectionId = $request->section_ids[$key] ?? null;
-            $oldSection = $model->sections->find($sectionId);
-            $img = $request->section_images[$key] ?? null;
-            if ($img !== null && $oldSection !== null) {
-                $image = updateFile($img, $oldSection->image, 'industries');
+        if ($request->section_titles) {
+            foreach ($request->section_titles as $key => $title) {
+                $image = null;
+                $description = $request->section_descriptions[$key];
+                $sectionId = $request->section_ids[$key] ?? null;
+                $oldSection = $model->sections->find($sectionId);
+                $img = $request->section_images[$key] ?? null;
+                if ($img !== null && $oldSection !== null) {
+                    $image = updateFile($img, $oldSection->image, 'industries');
+                }
+                if ($img === null && $oldSection !== null) {
+                    $image = $oldSection->image;
+                }
+                if ($img !== null && $oldSection === null) {
+                    $image = saveImage($img, 'industries');
+                }
+                $section = Section::updateOrCreate(['id' => $sectionId], [
+                    'sectionable_type' => $modelName,
+                    'sectionable_id' => $model->id,
+                    'title'         => $title,
+                    'description'   => $description,
+                    'image'         => $image
+                ]);
             }
-            if ($img === null && $oldSection !== null) {
-                $image = $oldSection->image;
-            }
-            if ($img !== null && $oldSection === null) {
-                $image = saveImage($img, 'industries');
-            }
-            $section = Section::updateOrCreate(['id' => $sectionId], [
-                'sectionable_type' => $modelName,
-                'sectionable_id' => $model->id,
-                'title'         => $title,
-                'description'   => $description,
-                'image'         => $image
-            ]);
         }
     }
 }

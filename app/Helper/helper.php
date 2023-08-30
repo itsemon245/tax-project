@@ -82,7 +82,7 @@ function deleteFile($old_path, $disk = 'public')
     if ($isFile) {
         $old_path = explode("storage", $old_path)[1];
     }
-    $path = $disk . $old_path;
+    $path = $disk. '/' . $old_path;
     $deleted = false;
     if (Storage::exists($path)) {
         $deleted = Storage::delete($path);
