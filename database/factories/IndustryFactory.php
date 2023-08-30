@@ -18,11 +18,13 @@ class IndustryFactory extends Factory
     {
         $text = fake()->realText(15);
         $seed = str($text)->slug();
+        $intro = fake()->realText(200);
         $description = fake()->realText(300);
         return [
             'page_description' => $description,
             'title' => $text,
             'image' => picsum($seed),
+            'intro' => $intro,
             'description' => $description,
         ];
     }

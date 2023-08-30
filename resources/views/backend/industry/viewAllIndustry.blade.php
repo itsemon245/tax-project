@@ -6,36 +6,41 @@
         <div class="mb-2">
             <a href="{{ route('industry.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
         </div>
-        <form action="{{ route('info.store') }}" method="post" enctype="multipart/form-data">
-            @csrf
             <x-backend.table.basic>
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Logo</th>
-                        <th>Page Content</th>
+                        <th>Details</th>
                         <th>Description</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($Industries as $key=>$industry)
-                    <tr>
-                        <td>{{ ++$key }}</td>
-                        <td><img src="{{useImage($industry->logo)}}" width="60px" loading="lazy" alt="" /></td>
-                        <td>{!! Str::limit($industry->page_description, 15, '...') !!}</td>
-                        <td>{!! Str::limit($industry->description, 15, '...') !!}</td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="{{ route('industry.show', $industry) }}" class="btn btn-sm btn-success">View</a>
-                                <form action="{{ route('industry.destroy', $industry) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
+                    @forelse ($industries as $key=>$industry)
+                        <tr>
+                            <td>{{ ++$key }}</td>
+                            <td>
+                                <div class="d-flex mb-2">
+                                    <img style="width:48px;" src="{{ useImage($industry->image) }}" class="rounded" alt="" />
+                                    <h6 class="px-3">{{ $industry->title }}</h6>
+                                </div>
+                                <p class="tex-justify text-muted text-wrap" style="max-width: 30ch;">{!! Str::limit($industry->intro, 80, '...') !!}
+                                </p>
+
+                            </td>
+                            <td>
+                                <div class="text-wrap" style="max-width: 40ch;">
+                                    {!! str($industry->description)->limit(200, '<span class="text-danger fw-bold font-20">...</span>') !!}
+                                </div>
+                            </td>
+                            <td>
+                                <x-backend.ui.button type="custom" class="btn-sm btn-dark"
+                                    :href="route('industry.show', $industry->id)">View</x-backend.ui.button>
+                                <x-backend.ui.button type="edit" class="btn-sm" :href="route('industry.edit', $industry->id)" />
+                                <x-backend.ui.button type="delete" class="btn-sm" :action="route('industry.destroy', $industry->id)" />
+
+                            </td>
+                        </tr>
                     @empty
                         <tr>
                             <td colspan="4">
@@ -45,7 +50,6 @@
                     @endforelse
                 </tbody>
             </x-backend.table.basic>
-        </form>
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection

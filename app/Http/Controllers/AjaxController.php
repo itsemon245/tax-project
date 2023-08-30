@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CaseStudyPackage;
-use App\Models\PromoCode;
 use Exception;
-use App\Models\User;
+use Throwable;
 use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
+use App\Models\User;
+use App\Models\Section;
+use App\Models\PromoCode;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\CaseStudyPackage;
+use Illuminate\Http\JsonResponse;
 use PhpParser\Node\Stmt\TryCatch;
-use Illuminate\Support\Facades\DB;
-use Throwable;
 
+use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\error;
+use Illuminate\Support\Facades\Storage;
 use function PHPUnit\Framework\throwException;
 
 class AjaxController extends Controller
@@ -92,16 +94,18 @@ class AjaxController extends Controller
         return response()->json($content);
     }
 
-    function caseStudyCategories($id) : Response {
+    function caseStudyCategories($id): Response
+    {
         $package = CaseStudyPackage::find($id);
         $content = [
-            'success'=> true,
-            'data'=> $package->caseStudyCategories
+            'success' => true,
+            'data' => $package->caseStudyCategories
         ];
         return response($content);
     }
 
-    public function getItems($slug) : Response {
+    public function getItems($slug): Response
+    {
         $table = str($slug)->snake();
         $table = str($table)->plural();
         $items = DB::table($table)->get();
@@ -109,4 +113,13 @@ class AjaxController extends Controller
         return response($items);
     }
 
+    public function deleteSection(Section $section)
+    {
+        deleteFile($section->image);
+        $section->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Section Deleted!'
+        ]);
+    }
 }

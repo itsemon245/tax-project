@@ -21,7 +21,10 @@ return new class extends Migration
             $table->unsignedBigInteger('to')->default(0);
             $table->bigInteger('difference')->default(0);
             $table->integer('tax_percentage')->default(0);
-            $table->enum('type', ['income', 'turnover', 'asset'])->default('income');
+            $table->string('service')->nullable();
+            $table->bigInteger('amount')->nullable();
+            $table->boolean('is_discount_fixed')->nullable();
+            $table->enum('type', ['income', 'turnover', 'asset'])->nullable();
             $table->timestamps();
         });
     }

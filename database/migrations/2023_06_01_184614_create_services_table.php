@@ -26,7 +26,6 @@ return new class extends Migration
             $table->timestamp('delivery_date')->default(now()->addDays(3)->format("Y-m-d"));
             $table->decimal('rating');
             $table->text('reviews');
-            $table->json('sections')->comment('{title:"title, image: "image", description: "description"}');
             $table->timestamps();
         });
     }

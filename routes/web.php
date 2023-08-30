@@ -37,7 +37,8 @@ Route::prefix('ajax')
         Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');
         Route::post('mark-notifications', 'markNotificationsAsRead')->name('notifications.read');
         Route::post('promo-code/apply', 'applyPromoCode')->name('promo.apply');
-        Route::get('get-items/{slug}','getItems')->name('get.items');
+        Route::get('get-items/{slug}', 'getItems')->name('get.items');
+        Route::delete('delete/{section}/section', 'deleteSection')->name('section.destroy');
     });
 Route::get('call-artisan', function () {
     $exitCode = Artisan::call('migrate:fresh');

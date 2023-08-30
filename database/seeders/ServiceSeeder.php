@@ -91,18 +91,7 @@ class ServiceSeeder extends Seeder
             $cat_id++;
             foreach ($subs as $sub_id => $services) {
                 foreach ($services as $service) {
-                    $sections = json_encode([
-                        [
-                            'title' => fake()->realText(10),
-                            'description' => fake()->realText(500),
-                            'image' => picsum($service)
-                        ],
-                        [
-                            'title' => fake()->realText(10),
-                            'description' => fake()->realText(500),
-                            'image' => picsum($service)
-                        ],
-                    ]);
+
                     Service::create([
                         'title' => $service,
                         'service_category_id' => $cat_id,
@@ -114,7 +103,6 @@ class ServiceSeeder extends Seeder
                         'rating' => 5,
                         'discount' => fake()->randomNumber(2),
                         'reviews' => fake()->numberBetween(100, 1000) . " Reviews",
-                        'sections' => $sections
                     ]);
                 }
             }

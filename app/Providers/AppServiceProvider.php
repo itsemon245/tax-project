@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
+
         // dd($cookie);
 
         Relation::enforceMorphMap([
@@ -39,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
             'Book' => 'App\Models\Book',
             'Course' => 'App\Models\Course',
             'User' => 'App\Models\User',
+            'Industry' => 'App\Models\Industry',
+            'About' => 'App\Models\About',
         ]);
     }
 }

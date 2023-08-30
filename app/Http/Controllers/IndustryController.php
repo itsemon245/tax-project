@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Industry;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class IndustryController extends Controller
@@ -12,8 +13,8 @@ class IndustryController extends Controller
      */
     public function index()
     {
-        $Industries = Industry::get();
-        return view('backend.industry.viewAllIndustry', compact('Industries'));
+        $industries = Industry::latest()->get(['id', 'title', 'image', 'intro', 'description']);
+        return view('backend.industry.viewAllIndustry', compact('industries'));
     }
 
     /**
@@ -21,8 +22,8 @@ class IndustryController extends Controller
      */
     public function create()
     {
-        $Industries = Industry::get();
-        return view('backend.industry.createIndustry', compact( 'Industries'));
+        $industries = Industry::get();
+        return view('backend.industry.createIndustry', compact('industries'));
     }
 
     /**
@@ -30,29 +31,28 @@ class IndustryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        $request->validate([
-            'page_description' => 'required|max:500',
-            'titles' => 'required|max:30|string',
-            'images' => 'required|image|mimes:jpeg,png,jpg|max:5000',
-            'descriptions' => 'required|max:300|string',
+        $validated = $request->validate([
+            'page_description' => 'required',
+            'title' => 'required|max:255',
+            'intro' => 'required',
+            'image' => 'required|image',
+            'description' => 'required',
         ]);
-        
-        $images = $request->file('images');
-        $jsonSection = $this->createJsonFile($request->titles, $request->descriptions, $images);
-        $industry = new Industry();
-            $industry->page_description = $request->page_description;
-            $industry->title = $request->titles;
-            $industry->image = saveImage($images, 'industries', 'industry');
-            $industry->description = $request->descriptions;
-            $industry->sections = json_encode($jsonSection);
-            $industry->save();
-            $notification = [
-                'message' => 'Industry Created',
-                'alert-type' => 'success',
-            ];
-            return back()
-                ->with($notification);
+
+        // Set sections in an array
+        $industry = Industry::create([
+            ...$validated,
+            'image' => saveImage($request->image, 'sections/industries'),
+        ]);
+        $this->setSections($request, $industry, 'Industry');
+
+
+        $notification = [
+            'message' => 'Industry Created',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
     }
 
     /**
@@ -69,6 +69,7 @@ class IndustryController extends Controller
     public function edit(Industry $industry)
     {
         //
+        return view('backend.industry.edit', compact('industry'));
     }
 
     /**
@@ -76,7 +77,25 @@ class IndustryController extends Controller
      */
     public function update(Request $request, Industry $industry)
     {
-        //
+        // dd($request->all());
+        $validated = $request->validate([
+            'page_description' => 'required',
+            'title' => 'required|max:255',
+            'intro' => 'required',
+            'description' => 'required',
+        ]);
+
+        $industry->update([
+            ...$validated,
+            'image' => updateFile($request->image, $industry->image, 'sections/industries'),
+        ]);
+        $this->setSections($request, $industry, 'Industry');
+        $notification = [
+            'message' => 'Industry Updated',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
     }
 
     /**
@@ -84,24 +103,42 @@ class IndustryController extends Controller
      */
     public function destroy(Industry $industry)
     {
-        //
+        $industry->delete();
+        $notification = [
+            'message' => 'Industry Deleted',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
     }
-
-    public function createJsonFile($titles, $descriptions, $images)
+    public function setSections($request, $model, string $modelName)
     {
-        $sections = [];
-        foreach ($titles as $index => $title) {
-            array_push(
-                $sections,
-                (object)
-                [
+        if ($request->section_titles) {
+            $dir = str($modelName)->slug();
+            $dir = str($dir)->plural();
+            foreach ($request->section_titles as $key => $title) {
+                $image = null;
+                $description = $request->section_descriptions[$key];
+                $sectionId = $request->section_ids[$key] ?? null;
+                $oldSection = $model->sections->find($sectionId);
+                $img = $request->section_images[$key] ?? null;
+                if ($img !== null && $oldSection !== null) {
+                    $image = updateFile($img, $oldSection->image, $dir);
+                }
+                if ($img === null && $oldSection !== null) {
+                    $image = $oldSection->image;
+                }
+                if ($img !== null && $oldSection === null) {
+                    $image = saveImage($img, $dir);
+                }
+                $section = Section::updateOrCreate(['id' => $sectionId], [
+                    'sectionable_type' => $modelName,
+                    'sectionable_id' => $model->id,
                     'title'         => $title,
-                    'description'   => $descriptions[$index],
-                    'image'         => isset($images[$index]) ? saveImage($images[$index], 'industries', 'industry') : ''
-                ]
-            );
+                    'description'   => $description,
+                    'image'         => $image
+                ]);
+            }
         }
-
-        return $sections;
     }
 }

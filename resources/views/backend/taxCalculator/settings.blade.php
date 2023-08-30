@@ -84,44 +84,87 @@
                                 @else
                                     <div>
                                         <div class="p-1 bg-soft-success text-success d-inline rounded rounded-3">
-                                            <span>{{ $tax->tax_free }}</span> <span
+                                            <span>{{ $tax->tax_free->amount }}</span> <span
                                                 class="mdi mdi-currency-bdt font-16"></span>
                                         </div>
                                     </div>
                                 @endif
                             </td>
                             <td>
-                                <table class="table table-borderless mb-0">
-                                    <thead class="bg-soft-dark text-dark">
-                                        <tr>
-                                            <th class="p-1">From</th>
-                                            <th class="p-1">To</th>
-                                            <th class="p-1">Difference</th>
-                                            <th class="p-1">Tax(%)</th>
-                                            <th class="p-1">Type</th>
+                                @if ($tax->slots->count() > 0)
+                                    <table class="table table-borderless mb-0">
+                                        <thead class="bg-soft-dark text-dark">
+                                            @if ($tax->type === 'tax')
+                                                <tr>
+                                                    <th class="p-1">From</th>
+                                                    <th class="p-1">To</th>
+                                                    <th class="p-1">Difference</th>
+                                                    <th class="p-1">Tax(%)</th>
+                                                    <th class="p-1">Type</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($tax->slots as $slot)
-                                            <tr class="fw-medium mb-0">
+                                                </tr>
+                                            @else
+                                                <tr>
+                                                    <th class="p-1">From</th>
+                                                    <th class="p-1">To</th>
+                                                    <th class="p-1">Difference</th>
+                                                    <th class="p-1">Amount</th>
+                                                    <th class="p-1">Service</th>
 
-                                                <td class="p-1">{{ $slot->from }} <span
-                                                        class="mdi mdi-currency-bdt font-16"></span>
-                                                </td>
-                                                <td class="p-1">{{ $slot->to }} <span
-                                                        class="mdi mdi-currency-bdt font-16"></span>
-                                                </td>
-                                                <td class="p-1">{{ $slot->difference }} <span
-                                                        class="mdi mdi-currency-bdt font-16"></span> </td>
-                                                <td class="p-1">{{ $slot->tax_percentage }} <span
-                                                        class="mdi mdi-percent-outline font-16"></span> </td>
-                                                <td class="p-1 text-success text-capitalize">{{ $slot->type }}</span>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                                </tr>
+                                            @endif
+
+                                        </thead>
+                                        <tbody>
+                                            @if ($tax->type === 'tax')
+                                                @foreach ($tax->slots as $slot)
+                                                    <tr class="fw-medium mb-0">
+
+                                                        <td class="p-1">{{ $slot->from }} <span
+                                                                class="mdi mdi-currency-bdt font-16"></span>
+                                                        </td>
+                                                        <td class="p-1">{{ $slot->to }} <span
+                                                                class="mdi mdi-currency-bdt font-16"></span>
+                                                        </td>
+                                                        <td class="p-1">{{ $slot->difference }} <span
+                                                                class="mdi mdi-currency-bdt font-16"></span> </td>
+                                                        <td class="p-1">{{ $slot->tax_percentage }} <span
+                                                                class="mdi mdi-percent-outline font-16"></span> </td>
+                                                        <td class="p-1 text-success text-capitalize">
+                                                            {{ $slot->type }}</span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                @foreach ($tax->slots as $slot)
+                                                    <tr class="fw-medium mb-0">
+
+                                                        <td class="p-1">{{ $slot->from }} <span
+                                                                class="mdi mdi-currency-bdt font-16"></span>
+                                                        </td>
+                                                        <td class="p-1">{{ $slot->to }} <span
+                                                                class="mdi mdi-currency-bdt font-16"></span>
+                                                        </td>
+                                                        <td class="p-1">{{ $slot->difference }} <span
+                                                                class="mdi mdi-currency-bdt font-16"></span> </td>
+                                                        <td class="p-1">{{ $slot->amount }}
+                                                            @if ($slot->is_discount_fixed)
+                                                                <span class="mdi mdi-currency-bdt font-16"></span>
+                                                            @else
+                                                                <span class="mdi mdi-percent-outline font-16"></span>
+                                                            @endif
+                                                        </td>
+                                                        <td class="p-1 text-success text-capitalize">
+                                                            {{ $slot->service }}</span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <div class="text-center text-muted">No slots available</div>
+                                @endif
                             </td>
                             <td>
                                 <x-backend.ui.button type="edit" :href="route('tax-setting.edit', $tax->id)" class="btn-sm"></x-backend.ui.button>

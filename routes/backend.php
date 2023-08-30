@@ -119,17 +119,17 @@ Route::prefix('admin')->group(function () {
     Route::resource('taxCalculator', TaxCalculatorController::class);
     Route::resource('setting', SettingController::class);
     Route::prefix('setting')
-    ->controller(SettingController::class)
-    ->name('setting.')
-    ->group(function () {
-        Route::post('/reference', 'reference')->name('reference');
-        Route::post('/payment', 'payment')->name('payment');
-    });
+        ->controller(SettingController::class)
+        ->name('setting.')
+        ->group(function () {
+            Route::post('/reference', 'reference')->name('reference');
+            Route::post('/payment', 'payment')->name('payment');
+        });
     Route::resource('course', CourseController::class)->names([
         'index' => 'course.backend.index',
         'show' => 'course.backend.show',
     ]);
-    Route::resource('income-source',IncomeSourceController::class);
+    Route::resource('income-source', IncomeSourceController::class);
     Route::resource('userDoc', UserDocController::class)->names([
         'index' => 'userDoc.backend.index',
         'create' => 'userDoc.backend.create',
@@ -175,7 +175,6 @@ Route::prefix('admin')->group(function () {
 
     Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);
-
     Route::resource('chalan', ChalanController::class);
     Route::resource('achievements', AchievementController::class);
     Route::resource('return-form', ReturnFormController::class);

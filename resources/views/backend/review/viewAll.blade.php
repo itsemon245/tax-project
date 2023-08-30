@@ -11,20 +11,18 @@
                     <tr>
                         <th>#</th>
                         <th>Author</th>
-                        <th>Date</th>
+                        <th>Type</th>
                         <th>Review</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- {{ dd($reviews) }} --}}
                     @forelse ($reviews as $key=>$review)
                     <tr>
-                        {{-- {{ dd($review) }} --}}
                         <td>{{ ++$key }}</td>
-                        <td>{!! Str::limit($review->user_id, 15, '...') !!}</td>
-                        <td>{!! Str::limit($review->reviewable_type, 15, '...') !!}</td>
-                        <td>{!! Str::limit($review->comment, 15, '...') !!}</td>
+                        <td>{{ $review->name }}</td>
+                        <td>{{ $review->reviewable_type }}</td>
+                        <td>{!! Str::limit($review->comment, 20, '...') !!}</td>
                         <td>
                             <div class="btn-group">
                                 <a href="#" class="btn btn-sm btn-success">View</a>
