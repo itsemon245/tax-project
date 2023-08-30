@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreServiceRequest;
-use App\Http\Requests\UpdateServiceRequest;
+use App\Models\Section;
 use App\Models\Service;
 use App\Models\ServiceSubCategory;
+use App\Http\Requests\StoreServiceRequest;
+use App\Http\Requests\UpdateServiceRequest;
 
 class ServiceController extends Controller
 {
@@ -33,25 +34,38 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        $jsonSection = $this->createJsonFile($request->sections_titles, $request->sections_descriptions, $request->sections_images);
-        Service::create(
-            [
-                "service_category_id" => $request->service_category_id,
-                "service_sub_category_id" => $request->service_sub_category_id,
-                "title" => $request->title,
-                "intro" => $request->intro,
-                "description" => $request->description,
-                "price" => $request->price,
-                "price_description" => $request->price_description,
-                "discount" => $request->discount,
-                "is_discount_fixed" => $request->discount_type,
-                "delivery_date" => $request->delivery_date,
-                "rating" => $request->ratting,
-                "reviews" => $request->reviews,
-                "sections" => json_encode($jsonSection),
-            ]
-        );
-
+        // $service = Service::create(
+        //     [
+        //         "service_category_id" => $request->service_category_id,
+        //         "service_sub_category_id" => $request->service_sub_category_id,
+        //         "title" => $request->title,
+        //         "intro" => $request->intro,
+        //         "description" => $request->description,
+        //         "price" => $request->price,
+        //         "price_description" => $request->price_description,
+        //         "discount" => $request->discount,
+        //         "is_discount_fixed" => $request->discount_type,
+        //         "delivery_date" => $request->delivery_date,
+        //         "rating" => $request->ratting,
+        //         "reviews" => $request->reviews,
+        //         "sections" => $this->setSections($request, $service, 'Service'),
+        //     ]
+        // );
+        $service = new Service();
+        $service->service_category_id = $request->service_category_id;
+        $service->service_sub_category_id = $request->service_sub_category_id;
+        $service->title = $request->title;
+        $service->intro = $request->intro;
+        $service->description = $request->description;
+        $service->price = $request->price;
+        $service->price_description = $request->price_description;
+        $service->discount = $request->discount;
+        $service->is_discount_fixed = $request->discount_type;
+        $service->delivery_date = $request->delivery_date;
+        $service->rating = $request->ratting;
+        $service->reviews = $request->reviews;
+        $service->save();
+        $this->setSections($request, $service, 'Service');
         return redirect()
             ->route("service.index", $request->service_sub_category_id)
             ->with(array(
@@ -99,21 +113,30 @@ class ServiceController extends Controller
             ));
     }
 
-    public function createJsonFile($titles, $descriptions, $images)
+    public function setSections($request, $model, string $modelName)
     {
-        $sections = [];
-        foreach ($titles as $index => $title) {
-            array_push(
-                $sections,
-                (object)
-                [
-                    'title'         => $title,
-                    'description'   => $descriptions[$index],
-                    'image'         => isset($images[$index]) ? saveImage($images[$index], 'service', 'service') : ''
-                ]
-            );
+        foreach ($request->section_titles as $key => $title) {
+            $image = null;
+            $description = $request->section_descriptions[$key];
+            $sectionId = $request->section_ids[$key] ?? null;
+            $oldSection = $model->sections->find($sectionId);
+            $img = $request->section_images[$key] ?? null;
+            if ($img !== null && $oldSection !== null) {
+                $image = updateFile($img, $oldSection->image, 'industries');
+            }
+            if ($img === null && $oldSection !== null) {
+                $image = $oldSection->image;
+            }
+            if ($img !== null && $oldSection === null) {
+                $image = saveImage($img, 'industries');
+            }
+            $section = Section::updateOrCreate(['id' => $sectionId], [
+                'sectionable_type' => $modelName,
+                'sectionable_id' => $model->id,
+                'title'         => $title,
+                'description'   => $description,
+                'image'         => $image
+            ]);
         }
-
-        return $sections;
     }
 }

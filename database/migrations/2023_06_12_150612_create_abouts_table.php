@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
             $table->text('description')->nullable();
-            $table->json('sections')->nullable()->comment('titles','descriptin','images');
             $table->timestamps();
         });
     }
