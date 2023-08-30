@@ -2,8 +2,6 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Web Site', 'Settings']" />
     <x-backend.ui.section-card name="Web Site Settings">
-        {{-- Select category option --}}
-        {{-- {{ dd(json_decode($data[0]->reference)) }} --}}
         <form action="{{ route('setting.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
@@ -12,6 +10,7 @@
                         <h4 class="p-2">Basic Setting</h4>
                         <div class="card-body">
                             <div class="row">
+                                {{-- {{ dd($data->basic->logo) }} --}}
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -20,9 +19,9 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 mt-1">
-                                            <x-backend.form.text-input type="email" class="mb-2" required name="email" label="Company E-mail" />
-                                            <x-backend.form.text-input type="phone" class="mb-2" required name="phone" label="Company Phone" />
-                                            <x-backend.form.text-input type="phone" class="mb-2" required name="whatsapp" label="Company What's App" />
+                                            <x-backend.form.text-input type="email" :value="$data->basic->email" class="mb-2" required name="email" label="Company E-mail" />
+                                            <x-backend.form.text-input type="phone" :value="$data->basic->phone" class="mb-2" required name="phone" label="Company Phone" />
+                                            <x-backend.form.text-input type="phone" :value="$data->basic->whatsapp" class="mb-2" required name="whatsapp" label="Company What's App" />
                                         </div>
                                     </div>
                                     <div class="mb-1 row">
@@ -30,8 +29,7 @@
                                             <label for="favicon">
                                                     <span class="form-label text-capitalize">Favicon<span class="text-danger"> *</span></span>
                                                 <input id="favicon" name="favicon" type="file" hidden>
-                                                <img class="w-100 border border-2 border-primary rounded-circle" style="aspect-ratio:1/1;" id="live-favicon"
-                                                    src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
+                                                <img class="w-100 border border-2 border-primary rounded-circle" :image="$data->basic->favicon" style="aspect-ratio:1/1;" id="live-favicon"/>
                                             </label>
                                             @error('favicon')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -39,7 +37,7 @@
                                         </div>
                                         <div class="col-md-10">
                                             <label for="address" class="w-100">Address<span class="text-danger"> *</span>
-                                                <textarea name="address" class="form-control" cols="30" placeholder="Type your company address..." rows="6"></textarea>
+                                                <textarea name="address" class="form-control" cols="30" placeholder="Type your company address..." rows="6">{{ $data->basic->favicon }}</textarea>
                                             </label>
                                         </div>
                                     </div>
@@ -65,10 +63,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <x-backend.form.text-input type="number" class="mb-2" required name="commission" label="Refer Commission" />
+                                    <x-backend.form.text-input type="number" class="mb-2" :value="$data->reference->commission" required name="commission" label="Refer Commission" />
                                 </div>
                                 <div class="col-md-6">
-                                    <x-backend.form.text-input type="number" class="mb-2" required name="withdrawal" label="Withdrawal Limit" />
+                                    <x-backend.form.text-input type="number" class="mb-2" :value="$data->reference->withdrawal" required name="withdrawal" label="Withdrawal Limit" />
                                 </div>
                                 <div class="mt-2"><button class="btn btn-primary w-100 btn-sm profile-button"
                                 type="submit">Save Change</button>
@@ -131,7 +129,6 @@
                         const inputs = `
                         <div class="card">
                         <div class="card-body">
-                            <div class="row">
                             <div class="col-md-6">
                                 <div class="mt-1">
                                     <x-backend.form.text-input type="text" name="payment_methods[]" label="Pay Method" required />

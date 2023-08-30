@@ -216,14 +216,14 @@
                                             <span class="badge bg-success p-2">{{ $expert->post }}</span>
                                             <h4 class="browse_card_exp">Experience: {{ $expert->experience }} years</h4>
                                             <h5 class="text-primary fw-medium">Business, Individual, Company</h5>
-                                            <p class="browse_card_price">Fee: 500/-</p>
+                                            <p class="browse_card_price">Fee: {{$expert->price}}/-</p>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="{{ route('expert.profile', $expert->id) }}"
                                             class="btn btn-outline-primary fw-medium">View
                                             Profile</a>
-                                        <a href="#" class="btn btn-primary fw-medium">
+                                        <a href="{{ route('payment.create', ['model' => ExpertProfile::class, 'id' => $expert->id]) }}" class="btn btn-primary fw-medium">
                                             Consultation
                                         </a>
                                     </div>

@@ -28,9 +28,9 @@ return new class extends Migration
             $table->decimal('paid', 8, 2)->nullable();
             $table->decimal('due', 8, 2)->nullable();
             $table->enum('status', ['paid', 'partial', 'due', 'rejected', 'expired']);
-            $table->dateTime('due_date')->default(today()->addDays(10));
-            $table->dateTime('payment_date')->nullable();
-            $table->dateTime('expire_date')->nullable();
+            $table->date('due_date')->default(today()->addDays(10));
+            $table->date('payment_date')->nullable();
+            $table->date('expire_date')->nullable();
             $table->boolean('is_expired')->default(true)->nullable();
             $table->morphs('purchasable');
             $table->integer('approved')->default(0);

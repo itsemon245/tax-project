@@ -25,12 +25,11 @@ class PaymentController extends Controller
     {
         $table = str(str($model)->snake())->plural();
         $record = DB::table($table)->find($id);
-        $incomeSources= IncomeSource::latest()->get();
-        return view('frontend.pages.payment.create', compact('model', 'id', 'record','incomeSources'));
+        $incomeSources = IncomeSource::latest()->get();
+        return view('frontend.pages.payment.create', compact('model', 'id', 'record', 'incomeSources'));
     }
     public function store(Request $request)
     {
-
         //dd($request->all());
         $request->validate([
             'purchasable_type' => 'required',
@@ -48,6 +47,7 @@ class PaymentController extends Controller
             $data = null;
             $expireDate = null;
             $dueDate = today()->addDays(10);
+            //dd($dueDate);
             $due = null;
             $promoCode = null;
             $status = 'due';
@@ -73,7 +73,10 @@ class PaymentController extends Controller
                         break;
                 }
                 if ($request->input('promo_code') !== null) {
-                    $promoCode = $user->promoCodes()->where('code', $request->promo_code)->first();
+                    $promoCode = $user
+                        ->promoCodes()
+                        ->where('code', $request->promo_code)
+                        ->first();
                     $data = $this->applyPromoCode($promoCode, $record->price);
                     //decrement the promo code limit if all checks passes
                     if ($data['discount'] > 0) {
@@ -84,10 +87,10 @@ class PaymentController extends Controller
                 } else {
                     $data = [
                         'payable' => $record->price,
-                        'discount' => 0
+                        'discount' => 0,
                     ];
                 }
-                $paid_amount = (int)$request->paid_amount;
+                $paid_amount = (int) $request->paid_amount;
                 $payable = $data['payable'];
                 $due = $payable - $paid_amount;
                 if ($due < 0) {
@@ -100,8 +103,14 @@ class PaymentController extends Controller
                     $status = 'partial';
                 }
             }
-            $incomeSources= json_encode($request->income_source);
-
+            $metaData=null;
+            if ($request->income_source) {
+                $metaData = json_encode($request->income_source);
+            }else{    
+                $metaData = json_encode($request->metaData);
+            }
+            
+            //dd($metaData);
             Purchase::create([
                 'user_id' => auth()->id(),
                 'name' => $request->name,
@@ -117,15 +126,16 @@ class PaymentController extends Controller
                 'billing_type' => $billingType,
                 'due' => $due,
                 'status' => $status,
-                'metadata'=> $incomeSources,
+                'metadata' => $metaData,
                 'is_expired' => $isExpired,
                 'payment_date' => today(),
-                'due_date' => $dueDate,
+                'due_date' => $dueDate ,
                 'expire_date' => $expireDate,
                 'purchasable_id' => $request->purchasable_id,
                 'purchasable_type' => $request->purchasable_type,
             ]);
         } catch (Exception $e) {
+            dd($e->getMessage());
             $notification = [
                 'message' => $e->getMessage(),
                 'alert-type' => 'error',
@@ -157,7 +167,7 @@ class PaymentController extends Controller
         if ($promoCode === null) {
             throw new Exception('Invalid promo code!');
         } elseif ($isExpired) {
-            throw new Exception('Promo code expired at ' . $expire->format('d F, Y') . "!");
+            throw new Exception('Promo code expired at ' . $expire->format('d F, Y') . '!');
         } elseif ($promoCode->pivot->limit < 1) {
             throw new Exception('Limit Exceeded!');
         } else {

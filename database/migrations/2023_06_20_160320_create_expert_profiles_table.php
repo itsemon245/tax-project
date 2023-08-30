@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('availability');
             $table->longText('at_a_glance')->nullable();
             $table->longText('description');
+            $table->string('price')->nullable();
+            $table->integer('discount')->nullable();
+            $table->enum('billing_type', ['onetime'])->default('onetime');
             $table->timestamps();
         });
     }

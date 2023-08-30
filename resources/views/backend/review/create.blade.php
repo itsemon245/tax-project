@@ -12,13 +12,13 @@
     
     ];
 @endphp
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Review']" />
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Review', 'Create']" />
     <x-backend.ui.section-card name="Create Review">
         <form action="{{ route('review.store', 'Product') }}" method="post">
             <section class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <x-backend.form.select-input id="reviewable_type" label="Reviewable Type" name="reviewable_type"
+                        <x-backend.form.select-input id="reviewable_type" required label="Reviewable Type" name="reviewable_type"
                         placeholder="Choose type...">
                         @forelse ($reviewable_types as $key => $reviewable_type)
                         <option value="{{ $key }}">{{ $reviewable_type }}</option>
@@ -29,44 +29,40 @@
                     </div>
     
                     <div class="col-md-6">
-                        <x-backend.form.select-input id="reviewable_item" label="Reviewable Item" name="item_id"
+                        <x-backend.form.select-input id="reviewable_item" required label="Reviewable Item" name="item_id"
                         placeholder="Choose item...">
                             <option disabled>No Records Found!</option>
                         </x-backend.form.select-input>
                     </div>
-                    <input type="text" name="name">
+                    <x-backend.form.text-input type="text" name="name" label="Author Name" required />
+                    {{-- <input type="text"  name="name"> --}}
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card w-100 h-100">
-                            <div class="card-body">
-                                <h5 class="text-center">Write a review</h5>
-                                <label class="mb-0 form-text fs-6">Give a rating</label>
-                                <div class="rating mb-3">
-                                    <i class="fas fa-star input-star fs-5"
-                                        style="color: var(--bs-gray-400);cursor: pointer;" data-index="1"></i>
-                                    <i class="fas fa-star input-star fs-5"
-                                        style="color: var(--bs-gray-400);cursor: pointer;" data-index="2"></i>
-                                    <i class="fas fa-star input-star fs-5"
-                                        style="color: var(--bs-gray-400);cursor: pointer;" data-index="3"></i>
-                                    <i class="fas fa-star input-star fs-5"
-                                        style="color: var(--bs-gray-400);cursor: pointer;" data-index="4"></i>
-                                    <i class="fas fa-star input-star fs-5"
-                                        style="color: var(--bs-gray-400);cursor: pointer;" data-index="5"></i>
-                                    <div id="rating-error"></div>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-inputs">
-                                        <input type="hidden" value="2" name="item_id">
-                                        <input type="hidden" value="book" name="slug">
-                                        <input type="hidden" value="" name="rating">
-                                        <textarea class="form-control" rows="3" id="comment" name="comment" placeholder="Describe your experience"></textarea>
-                                        <div id="comment-error"></div>
-                                    </div>
-                                </div>
-                                <button id="submit-button" type="button" class="btn btn-primary">Submit</button>
+                        <label class="mb-0 form-text fs-6">Give a rating</label>
+                        <div class="rating mb-1">
+                            <i class="fas fa-star input-star fs-5"
+                                style="color: var(--bs-gray-400);cursor: pointer;" data-index="1"></i>
+                            <i class="fas fa-star input-star fs-5"
+                                style="color: var(--bs-gray-400);cursor: pointer;" data-index="2"></i>
+                            <i class="fas fa-star input-star fs-5"
+                                style="color: var(--bs-gray-400);cursor: pointer;" data-index="3"></i>
+                            <i class="fas fa-star input-star fs-5"
+                                style="color: var(--bs-gray-400);cursor: pointer;" data-index="4"></i>
+                            <i class="fas fa-star input-star fs-5"
+                                style="color: var(--bs-gray-400);cursor: pointer;" data-index="5"></i>
+                            <div id="rating-error"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-inputs">
+                                <input type="hidden" value="2" name="item_id">
+                                <input type="hidden" value="book" name="slug">
+                                <input type="hidden" value="" name="rating">
+                                <textarea class="form-control" rows="3" id="comment" name="comment" placeholder="Input your comment..."></textarea>
+                                <div id="comment-error"></div>
                             </div>
                         </div>
+                        <button id="submit-button" type="button" class="btn btn-primary btn-sm">Submit</button>
                     </div>
                 </div>
             </section>
