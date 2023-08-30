@@ -52,6 +52,7 @@ class ServiceController extends Controller
         //     ]
         // );
         $service = new Service();
+        // dd($request);
         $service->service_category_id = $request->service_category_id;
         $service->service_sub_category_id = $request->service_sub_category_id;
         $service->title = $request->title;
@@ -66,12 +67,13 @@ class ServiceController extends Controller
         $service->reviews = $request->reviews;
         $service->save();
         $this->setSections($request, $service, 'Service');
+        $notification = [
+            'message' => 'Service Created',
+            'alert-type' => 'success',
+        ];
         return redirect()
-            ->route("service.index", $request->service_sub_category_id)
-            ->with(array(
-                'message' => "Service Created Successfully",
-                'alert-type' => 'success',
-            ));
+            ->back()
+            ->with($notification);
     }
 
     /**
@@ -115,9 +117,9 @@ class ServiceController extends Controller
 
     public function setSections($request, $model, string $modelName)
     {
-        foreach ($request->section_titles as $key => $title) {
+        foreach ($request->sections_titles as $key => $title) {
             $image = null;
-            $description = $request->section_descriptions[$key];
+            $description = $request->sections_descriptions[$key];
             $sectionId = $request->section_ids[$key] ?? null;
             $oldSection = $model->sections->find($sectionId);
             $img = $request->section_images[$key] ?? null;
