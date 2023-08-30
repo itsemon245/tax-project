@@ -28,6 +28,7 @@ class DashboardController extends Controller
         $today = Carbon::now()->format('Y-m-d');
         $services = Calendar::get()->unique();
         $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();
-        return view('backend.dashboard.dashboard', compact('clients','projects'));
+        $currentTime = Carbon::now();
+        return view('backend.dashboard.dashboard', compact('clients', 'projects', 'events', 'today','services','currentEvents','currentTime'));
     }
 }

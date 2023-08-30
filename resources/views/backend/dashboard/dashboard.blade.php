@@ -2,8 +2,9 @@
 @section('content')
                             <!-- start page title -->
                             <div class="row mb-2">
-                                <div class="col-12">
+                                <div class="col-12 d-flex justify-content-between">
                                     <h4 class="page-title mt-3 ">Dashboard</h4>
+                                    <p id="datetime" class="mt-3"></p>
                                 </div>
                             </div>     
                             <!-- end page title --> 
@@ -223,162 +224,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <x-backend.ui.section-card name="Calendar">
-                                        {{-- calendar section  --}}
-                                        <div class="row">
-                                            <div class="col-md-10">
-                                                <div id="calendar"></div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <p class="text-center text-primary h5 mb-0">Todays Events</p>
-                                                <div class="border-start border-top border-2 border-primary h-100 p-2 my-2">
-                                                    <div class="d-flex flex-column gap-1">
-                                                        @forelse ($currentEvents as $event)
-                                                           <div class="d-flex justify-content-between">
-                                                             <h4 class="enent-type cursor-pointer d-inline-block" data-event-id={{$event->id}}>Created At </h4> <a href="{{route('delete.event', $event->id)}}"> <span class="mdi mdi-check d-inline-block w-25"></span></a>
-                                                           </div>
-                                                            
-                                                            <div id="myButton" class="myButton event-{{$event->id}}" data-tippy-content="Client: {{ $event->client->name }}"
-                                                                class="w-100 text-light bg-danger rounded" style="padding: 5px;max-width:100%;">
-                                                                <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
-                                                                    <div>
-                                                                        <strong class="">{{ $event->title }}</strong>
-                                                                        <p class='text-light m-0 text-capitalize' style="text-align:left;">
-                                                                            {{ $event->service }}</p>
-                                                                    </div>
-                                                                    <div class="" style="font-size: 12px;">
-                                                                        {{ Carbon\Carbon::parse($event->start)->format('h:m a') }}</div>
-                                                                </div>
-                                                            </div>
-                                                        @empty
-                                                            <div class="text-success text-center">
-                                                                <strong>No events for today</strong>
-                                                            </div>
-                                                        @endforelse
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="servicesData" value="{{ $services }}">
-                                        <!-- Modal for creating event -->
-                                        <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                
-                                                    <form action="{{ route('calendar.store') }}" method="post">
-                                                        @csrf
-                                
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Event</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                
-                                                        <div class="modal-body">
-                                                            <x-backend.form.text-input name="event_name" label="Event Name" />
-                                
-                                                            <x-form.selectize id="service" name="service" placeholder="Select Service..." label="Service">
-                                                                @foreach ($services as $item)
-                                                                    <option value="{{ $item->service }}">{{ $item->service }}</option>
-                                                                @endforeach
-                                                            </x-form.selectize>
-                                                            <x-backend.form.select-input id="client" label="Client" name="client"
-                                                                placeholder="Select Client">
-                                                                @foreach ($clients as $client)
-                                                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                                                @endforeach
-                                                            </x-backend.form.select-input>
-                                                            <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
-                                                                label="Start Date" />
-                                                            <x-backend.form.text-input name="event_description" label="Event Description" />
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button class="btn btn-primary">Create Event</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Modal for showing event -->
-                                        <div class="modal fade" id="eventShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title text-capitalize" id="eventTitle">Dummy Title</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="px-4">
-                                                        <p class="mb-0">
-                                                            <span>With: </span>
-                                                            <span class="badge bg-success px-1 text-caplitalize" id="client">Client name</span>
-                                                        </p>
-                                                        <p>
-                                                            <span>Service: </span>
-                                                            <span class="badge bg-blue px-1 text-caplitalize" id="service">dummy service</span>
-                                                        </p>
-                                                        <p class="text-muted" id="description">
-                                                            dummy description
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <x-backend.ui.button id="deleteBtn" type="delete" action="" class="text-capitalize btn-sm" />
-                                                        <x-backend.ui.button class="btn-info text-capitalize btn-sm" id="editBtn">Edit
-                                                        </x-backend.ui.button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Modal for updating event -->
-                                        <div class="modal fade" id="eventUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                
-                                                    <form action="" method="post">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Update Event</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                        </div>
-                                
-                                                        <div class="modal-body">
-                                                            <x-backend.form.text-input id="eventTitle" name="event_name" label="Event Name" />
-                                
-                                                            <x-form.selectize id="service" name="service" placeholder="Select Service..."
-                                                                label="Service">
-                                                                @foreach ($services as $item)
-                                                                    <option value="{{ null }}" selected disabled>Select Service</option>
-                                                                    <option value="{{ $item->service }}">{{ $item->service }}</option>
-                                                                @endforeach
-                                                            </x-form.selectize>
-                                
-                                                            <x-backend.form.select-input id="client" label="Client" name="client"
-                                                                placeholder="Select Client">
-                                                                @foreach ($clients as $client)
-                                                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                                                @endforeach
-                                                            </x-backend.form.select-input>
-                                                            <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
-                                                                label="Start Date" />
-                                                            <x-backend.form.text-input id="description" name="event_description"
-                                                                label="Event Description" />
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button class="btn btn-primary">Save Changes</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </x-backend.ui.section-card>
-                                </div>
-                            </div>
-
 @endsection
 @push('customJs')
 <script src="{{ asset('backend/assets/libs/tippy.js/tippy.all.min.js') }}"></script>
@@ -547,19 +392,16 @@
     });
 </script>
 
-<!-- Add this script below the HTML structure in your Blade view file -->
-{{-- <script>
-    $(document).ready(function() {
-        // Hide all dropdown contents initially
-        $('#myButton').hide();
-
-        // Handle click event on the title
-        $('.enent-type').click(function() {
-            // Toggle the visibility of the dropdown content
-            $(this).siblings('#myButton').slideToggle();
-        });
-    });
-</script> --}}
+<script>
+    // Function to update the date and time every second
+    function updateDateTime() {
+        const datetimeElement = document.getElementById('datetime');
+        const currentDate = new Date();
+        datetimeElement.innerText = currentDate.toLocaleString();
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+</script>
 
 <!-- Add this script below the HTML structure in your Blade view file -->
 <script>
