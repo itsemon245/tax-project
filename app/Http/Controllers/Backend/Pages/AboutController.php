@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Backend\Pages;
 
 use App\Models\About;
+use App\Models\Section;
+use App\Models\AboutSection;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAboutRequest;
 use App\Http\Requests\UpdateAboutRequest;
-use App\Models\AboutSection;
-use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
@@ -23,7 +24,8 @@ class AboutController extends Controller
      */
     public function create()
     {
-        $row= About::skip(0)->first();
+
+        $row= About::first();
         return view('backend.pages.about',compact('row'));
     }
 
@@ -32,22 +34,10 @@ class AboutController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->sections_images);
-
-        $store_about = new About();
-        $store_about->description = $request->description;
-        
-        $sections=[];
-        foreach ($request->sections_titles as $key=> $item) {
-            $array= [            
-                 'title'=>$request->sections_titles[$key],
-                 'description'=>$request->sections_descriptions[$key],
-                 'image'=> saveImage($request->sections_images[$key], 'about', 'about'),
-            ];
-             array_push($sections,  $array);
-        }
-        $store_about->sections = json_encode($sections);
-        $store_about->save();
+        $about = new About();
+        $about->description = $request->description;
+        $about->save();
+        $this->setSections($request, $about, 'About');
         $notification = [
             'message' => 'About us Created',
             'alert-type' => 'success',
@@ -77,27 +67,9 @@ class AboutController extends Controller
      */
     public function update(Request $request, About $about)
     {
-        $store_about = About::skip(0)->first();
-        $store_about->description = $request->description;
-        
-        $sections=[];
-        foreach ($request->sections_titles as $key=> $item) {
-            if(($request->sections_images!= null)){
-                $array= [            
-                     'title'=>$request->sections_titles[$key],
-                     'description'=>$request->sections_descriptions[$key],
-                     'image'=> saveImage($request->sections_images[$key], 'about', 'about'),
-                ];
-            }else{
-                $array= [            
-                    'title'=>$request->sections_titles[$key],
-                    'description'=>$request->sections_descriptions[$key],
-               ];
-            }
-             array_push($sections,  $array);
-        }
-        $store_about->sections= json_encode($sections);
-        $store_about->save();
+        $about->description = $request->description;
+        $about->save();
+        $this->setSections($request, $about, 'About');
         $notification = [
             'message' => 'About us updated',
             'alert-type' => 'success',
@@ -113,5 +85,31 @@ class AboutController extends Controller
     public function destroy(About $about)
     {
         //
+    }
+    public function setSections($request, $model, string $modelName)
+    {
+        foreach ($request->section_titles as $key => $title) {
+            $image = null;
+            $description = $request->section_descriptions[$key];
+            $sectionId = $request->section_ids[$key] ?? null;
+            $oldSection = $model->sections->find($sectionId);
+            $img = $request->section_images[$key] ?? null;
+            if ($img !== null && $oldSection !== null) {
+                $image = updateFile($img, $oldSection->image, 'industries');
+            }
+            if ($img === null && $oldSection !== null) {
+                $image = $oldSection->image;
+            }
+            if ($img !== null && $oldSection === null) {
+                $image = saveImage($img, 'industries');
+            }
+            $section = Section::updateOrCreate(['id' => $sectionId], [
+                'sectionable_type' => $modelName,
+                'sectionable_id' => $model->id,
+                'title'         => $title,
+                'description'   => $description,
+                'image'         => $image
+            ]);
+        }
     }
 }

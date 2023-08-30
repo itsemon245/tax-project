@@ -28,18 +28,7 @@
                                 </x-form.ck-editor>
                             </div>
                             <div class="col-md-12">
-                                <label for="color" class="form-label my-3"><b>SECTIONS</b></label>
-                                <div id="packacgeFeaturesInputs"></div>
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <div class="icon-item mx-1 mt-3" style="cursor: pointer" onclick="addPackageFeature()"
-                                        title="Add Package Feature">
-                                        <i data-feather="plus-square" class="icon-dual"></i>
-                                    </div>
-                                    <div id="removePackageFeatureBtn" class="icon-item mx-1 mt-3" style="cursor: pointer"
-                                        onclick="removePackageFeature()" title="Add Package Feature">
-                                        <i data-feather="minus-square" class="icon-dual"></i>
-                                    </div>
-                                </div>
+                                <x-form.sections :sections="$row->sections"/>
                             </div>
                             <div class="mt-3">
                                 <button class="btn btn-primary waves-effect waves-light profile-button submit_data">@if ($row)
