@@ -3,7 +3,7 @@
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.addEventListener('mouseenter',
@@ -15,11 +15,13 @@
         }
     })
 
-    if ("{{ Session::has('message') }}") {
-        Toast.fire({
-            icon: "{{ Session::get('alert-type') }}",
-            title: "{{ str(Session::get('alert-type'))->title() }}",
-            text: "{{ Session::get('message') }}"
-        })
-    }
+    $(document).ready(function() {
+        if ("{{ request()->session()->has('message') }}") {
+            Toast.fire({
+                icon: "{{ request()->session()->get('alert-type') }}",
+                title: "{{ str(request()->session()->get('alert-type'))->title() }}",
+                text: "{{ request()->session()->get('message') }}"
+            })
+        }
+    });
 </script>

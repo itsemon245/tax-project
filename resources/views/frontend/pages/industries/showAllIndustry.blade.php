@@ -1,35 +1,35 @@
 @extends('frontend.layouts.app')
 @section('main')
-<section class="row px-lg-5 px-2 mt-5">
-    <h3 class="text-center">Industries We Serve</h3>
-    <div class="d-flex justify-content-center">
-        <div class="container">
-            <div class="row">
-                <div class="mb-4">
-                    {!! $industries[0]->page_description !!}
-                </div>
-                @forelse ($industries as $industry)
-                <div class="col-md-4 col-sm-6 mb-3">
-                    <div class="border bg-light w-100 px-0 px-md-3 px-lg-5 py-3 rounded">
-                        <a class="text-dark">
-                            <div class="d-flex">
-                                <img style="width:48px;"
-                                src="{{ $industry->logo }}" class="rounded" alt="" />
-                            <h6 class="px-3">{{ $industry->name }}</h6>
-                            </div>
-                            <p class="tex-justify text-muted">{!! Str::limit($industry->description, 80, '...') !!}</p>
-                        </a>
+    <section class="row px-lg-5 px-2 mt-5">
+        <h3 class="text-center">Industries We Serve</h3>
+        <div class="d-flex justify-content-center">
+            <div class="container">
+                <div class="row">
+                    <div class="mb-4">
+                        {!! $industries[0]->page_description !!}
                     </div>
+                    @forelse ($industries as $industry)
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <div class="border bg-light w-100 px-0 px-md-3 px-lg-5 py-3 rounded h-100">
+                                <a class="text-dark">
+                                    <div class="d-flex mb-2">
+                                        <img style="width:64px;" src="{{ $industry->image }}" class="rounded"
+                                            alt="" />
+                                        <h6 class="px-3">{{ $industry->title }}</h6>
+                                    </div>
+                                    <p class="tex-justify text-muted">{!! Str::limit($industry->intro, 80, '...') !!}</p>
+                                </a>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="d-flex justify-content-center">
+                            <h4>No Industries Found</h4>
+                        </div>
+                    @endforelse
                 </div>
-                @empty
-                <div class="d-flex justify-content-center">
-                    <h4>No Industries Found</h4>
-                </div>
-                @endforelse
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endsection
 
 @push('customJs')

@@ -1,70 +1,50 @@
-@extends('backend.layouts.app')
-@push('customCss')
-    <style>
-        .custom-editor .ck-content.ck-editor__editable {
-            min-height: 100px !important;
-        }
-
-        .section-editor .ck-content.ck-editor__editable {
-            min-height: 160px !important;
-        }
-    </style>
-@endpush
-@section('content')
-    <x-backend.ui.breadcrumbs :list="['Pages', 'Industry', 'Create']" />
-    <x-backend.ui.section-card name="Create Industry">
-        <div class="mb-3">
-            <a href="{{ route('industry.index') }}" class="btn-info btn btn-sm">BACK</a>
-        </div>
-        <form action="{{ route('industry.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-
-            {{-- rest of the fields goes down here --}}
-            <div class="container rounded bg-white py-3 px-4">
+    <div>
+        <input type="hidden" id="section-count" value="{{ count($sections) }}" disabled>
+        <label for="" class="form-label my-3"><b>SECTIONS</b></label>
+        <div id="packacgeFeaturesInputs">
+            @foreach ($sections as $key => $section)
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="custom-editor">
-                            <x-form.ck-editor id="ck-editor2" name="page_description" placeholder="Page Description"
-                                label="Page Description">
+                    <input type="hidden" name="section_ids[]" value="{{ $section->id }}">
+                    <div class="col-md-7">
+                        <div class="mb-2">
+                            <label for=section-title${itemCount} class="form-label mb-0">Section Title
+                                {{ ++$key }}</label>
+                            <input type='text' name="section_titles[]" placeholder="Section Title"
+                                class="form-control" value="{{ $section->title }}" />
+                        </div>
+                        <div class="mb-2 section-editor">
+                            <x-form.ck-editor id="section-editor-{{ $key }}" name="section_descriptions[]"
+                                placeholder="Section Description">
+                                {!! $section->description !!}
                             </x-form.ck-editor>
+
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <x-backend.form.text-input name="title" placeholder="Title"
-                            label="Title"></x-backend.form.text-input>
-                        <x-form.text-area class="h-75" id="ck-editor-intro" name="intro" placeholder="Intro"
-                            label="Intro">
-                        </x-form.text-area>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="h-100">
-                            <x-backend.form.image-input name="image" placeholder="Logo"
-                                label="Logo"></x-backend.form.image-input>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="custom-editor">
-                            <x-form.ck-editor id="ck-editor-description" name="description" placeholder="Description"
-                                label="Description">
-                            </x-form.ck-editor>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <x-form.sections />
-                    </div>
-                    <div class="mt-3">
-                        <button type="submit"
-                            class="btn btn-primary waves-effect waves-light profile-button">Create</button>
+                    <div class="col-md-5">
+                        <x-backend.form.image-input id="section-image-{{ $key }}"
+                            lable="Section Image {{ $key }}" name="section_images[]"
+                            image="{{ $section->image }}" />
                     </div>
                 </div>
-            </div>
-        </form>
-    </x-backend.ui.section-card>
+            @endforeach
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="icon-item mx-1 mt-3" style="cursor: pointer" onclick="addPackageFeature()"
+                title="Add Package Feature">
+                <span class="mdi mdi-plus text-success bg-soft-success px-1 py-1 rounded rounded-circle"></span>
 
+            </div>
+            <div id="removePackageFeatureBtn" class="icon-item mx-1 mt-3" role="button"
+                onclick="removePackageFeature()" title="Add Package Feature">
+                <span class="mdi mdi-delete text-danger bg-soft-danger px-1 py-1 rounded rounded-circle"></span>
+            </div>
+        </div>
+    </div>
 
     @push('customJs')
         <script>
-            let itemCount = 0;
+            let itemCount = parseInt($('#section-count').val());
+
             const featureLength = () => {
                 $('#packacgeFeaturesInputs').children().length < 2 ?
                     $("#removePackageFeatureBtn").addClass('d-none') :
@@ -74,32 +54,32 @@
             const addPackageFeature = () => {
                 itemCount++
                 const inputs = `
-               <div class="row">
-                    <div class="col-md-7">
-                        <div class="mb-2">
-                            <label for=section-title${itemCount} class="form-label mb-0">Section Title ${itemCount}</label>
-                           <input type='text' name="section_titles[]" placeholder="Section Title" class="form-control" />
+                    <div class="row">
+                            <div class="col-md-7">
+                                <div class="mb-2">
+                                    <label for=section-title${itemCount} class="form-label mb-0">Section Title ${itemCount}</label>
+                                <input type='text' name="section_titles[]" placeholder="Section Title" class="form-control" />
+                                </div>
+                                <div class="mb-2 section-editor">
+                                    <label for="section-editor-${itemCount}" class="form-label mb-0">Section Description ${itemCount}</label>
+                                    <textarea class="custom-editor" id="section-editor-${itemCount}" name="section_descriptions[]" placeholder="Section Description">
+                                        
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-5">  
+                                <label for="section-image-${itemCount}" class="mb-0">
+                                        <p class="mb-0 form-label">Section Image ${itemCount}</p>
+                                        <input id="section-image-${itemCount}" class="custom-input" data-index="${itemCount}" type="file" name="section_images[]" hidden>
+                                        <img class="w-100 border border-2 border-primary" id="live-${itemCount}"
+                                            src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
+                                </label>
+                                <p class="mt-2" id="note-${itemCount}">
+                                    <span class="text-danger" style="font-weight: 500;">*</span>Accepted files : <span class="text-success" style="font-weight: 500;">jpg, png, svg, webp up to 5 MB</span> 
+                                </p>
+                            </div>
                         </div>
-                        <div class="mb-2 section-editor">
-                            <label for="section-editor-${itemCount}" class="form-label mb-0">Section Description ${itemCount}</label>
-                            <textarea class="custom-editor" id="section-editor-${itemCount}" name="section_descriptions[]" placeholder="Section Description">
-                                
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-5">  
-                        <label for="section-image-${itemCount}" class="mb-0">
-                                <p class="mb-0 form-label">Section Image ${itemCount}</p>
-                                <input id="section-image-${itemCount}" class="custom-input" data-index="${itemCount}" type="file" name="section_images[]" hidden>
-                                <img class="w-100 border border-2 border-primary" id="live-${itemCount}"
-                                    src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
-                        </label>
-                        <p class="mt-2" id="note-${itemCount}">
-                            <span class="text-danger" style="font-weight: 500;">*</span>Accepted files : <span class="text-success" style="font-weight: 500;">jpg, png, svg, webp up to 5 MB</span> 
-                        </p>
-                    </div>
-                </div>
-            `
+                    `
                 $('#packacgeFeaturesInputs').append(inputs)
 
 
@@ -260,13 +240,34 @@
 
                 featureLength()
             }
-            addPackageFeature()
+            if (itemCount === 0) {
+                addPackageFeature()
+            }
+
 
             const removePackageFeature = () => {
-                itemCount--
-                $("#packacgeFeaturesInputs").find(".row:last").remove()
-                featureLength()
+                let last = $("#packacgeFeaturesInputs").find(".row:last");
+                let id = last.find('[name="section_ids[]"]').val();
+                let url = '{{ route('ajax.section.destroy', 'ID') }}'
+                url = url.replace('ID', id)
+                $.ajax({
+                    type: "delete",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        itemCount--
+                        featureLength()
+                        last.remove()
+                        Toast.fire({
+                            icon: "success",
+                            title: "Success",
+                            text: response.message
+                        })
+                    }
+                });
+
             }
         </script>
     @endpush
-@endsection

@@ -92,7 +92,7 @@ class PageController extends Controller
     //show all industry page 
     public function showAllIndusryPage()
     {
-        $industries = Industry::get();
+        $industries = Industry::get(['title', 'image', 'intro']);
         return view('frontend.pages.industries.showAllIndustry', compact('industries'));
     }
 

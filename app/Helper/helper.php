@@ -50,12 +50,15 @@ function saveImage($image, string $dir, ?string $prefix = '', string $disk = 'pu
  */
 function updateFile($file, $old_path, $dir,  $prefix = "", $disk = "public")
 {
+    if ($file === null) {
+        return $old_path;
+    }
     $new_path = $old_path;
     $isFile = str($old_path)->contains('/storage');
     if ($isFile) {
         $old_path = explode("storage", $old_path)[1];
     }
-    $path = $old_path ? $disk ."/". $old_path : 'no file exists';
+    $path = $old_path ? $disk . "/" . $old_path : 'no file exists';
     $fileExists = Storage::exists($path);
     if ($fileExists) {
         if ($file) {
