@@ -325,22 +325,6 @@
                 }
             });
         </script>
-
-        <!-- Add this script below the HTML structure in your Blade view file -->
-        {{-- <script>
-            $(document).ready(function() {
-                // Hide all dropdown contents initially
-                $('#myButton').hide();
-
-                // Handle click event on the title
-                $('.enent-type').click(function() {
-                    // Toggle the visibility of the dropdown content
-                    $(this).siblings('#myButton').slideToggle();
-                });
-            });
-        </script> --}}
-
-        <!-- Add this script below the HTML structure in your Blade view file -->
         <script>
             $(document).ready(function() {
                 // Hide all dropdown contents initially
