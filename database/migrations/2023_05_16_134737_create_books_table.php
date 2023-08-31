@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('book_category_id');
+            $table->unsignedBigInteger('book_category_id');#filterable
             $table->text('title')->nullable();
-            $table->text('author')->nullable();
+            $table->text('author')->nullable();#filterable
             $table->longText('description');
             $table->longText('sample_pdf')->nullable();
             $table->longText('pdf')->nullable();
             $table->string('thumbnail')->nullable();
-            $table->decimal('price', 8, 2)->nullable();
+            $table->decimal('price', 8, 2)->nullable();#filterable
             $table->boolean('is_discount_fixed')->default(false)->comment('true = Discount is fixed, false = Discount is percentage');
             $table->integer('discount')->nullable();
             $table->enum('billing_type', ['onetime'])->default('onetime');

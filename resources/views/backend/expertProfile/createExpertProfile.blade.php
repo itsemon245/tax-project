@@ -30,7 +30,7 @@
                     </x-backend.form.text-input>
                 </div>
                 <div class="col-md-6">
-                    <x-backend.form.text-input label="Join Date" required type="text" name="join_date">
+                    <x-backend.form.text-input label="Join Date" required type="date" name="join_date">
                     </x-backend.form.text-input>
                 </div>
 

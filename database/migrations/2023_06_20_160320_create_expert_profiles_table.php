@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('expert_profiles', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->text('post');
+            $table->text('post');#filter পদবী
             $table->longText('bio')->nullable();
-            $table->text('image');
-            $table->integer('experience');
+            $table->text('image')->nullable();
+            $table->integer('experience');#filterable
             $table->date('join_date');
-            $table->string('availability');
+            $table->string('availability');#filterable
             $table->longText('at_a_glance')->nullable();
             $table->longText('description');
-            $table->string('price')->nullable();
+            $table->string('price')->nullable();#filterable
             $table->integer('discount')->nullable();
             $table->enum('billing_type', ['onetime'])->default('onetime');
             $table->timestamps();

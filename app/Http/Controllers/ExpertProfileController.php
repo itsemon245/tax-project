@@ -30,20 +30,10 @@ class ExpertProfileController extends Controller
      */
     public function store(StoreExpertProfileRequest $request)
     {
-        $data = (object) $request->validated();
-        ExpertProfile::create(
-            [
-                'name'          => $data->name,
-                'post'          => $data->post,
-                'bio'           => $request->bio,
-                'image'         => saveImage($data->image, 'expertProfile', 'expertProfile'),
-                'experience'    => $data->experience,
-                'join_date'     => $data->join_date,
-                'availability'  => $data->availability,
-                'at_a_glance'   => $request->at_a_glance,
-                'description'   => $data->description,
-            ]
-        );
+        $request->validated();
+        $expert = ExpertProfile::create($request->except('image'));
+        $expert->image = saveImage($request->image, 'experts');
+        $expert->save();
 
         return redirect()
             ->route("expert-profile.index")
@@ -75,23 +65,12 @@ class ExpertProfileController extends Controller
      */
     public function update(UpdateExpertProfileRequest $request, ExpertProfile $expertProfile)
     {
-        $data = (object) $request->validated();
-        $body = [
-            'name'          => $data->name,
-            'post'          => $data->post,
-            'bio'           => $request->bio,
-            'experience'    => $data->experience,
-            'join_date'     => $data->join_date,
-            'availability'  => $data->availability,
-            'at_a_glance'   => $request->at_a_glance,
-            'description'   => $data->description,
-        ];
-        if (isset($data->image) && !empty($data->image)) {
-            $body['image'] = saveImage($data->image, 'expertProfile', 'expertProfile');
+        $request->validated();
+        $expertProfile->update($request->except('image'));
+        if ($request->has('image')) {
+            $expertProfile->image = updateFile($request->image, $expertProfile->image, 'experts');
+            $expertProfile->save();
         }
-
-        ExpertProfile::find($expertProfile->id)
-            ->update($body);
 
         return redirect()
             ->route("expert-profile.index")

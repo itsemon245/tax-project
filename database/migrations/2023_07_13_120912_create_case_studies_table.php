@@ -13,15 +13,19 @@ return new class extends Migration
     {
         Schema::create('case_studies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('case_study_category_id')->nullable();
-            $table->foreignId('case_study_package_id')->constrained()->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->unsignedBigInteger('case_study_category_id')->nullable(); #filterable
+            $table->foreignId('case_study_package_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->nullable(); #filterable
             $table->text('name');
             $table->longText('intro');
             $table->longText('image');
             $table->longText('description');
             $table->unsignedBigInteger('likes')->default(0);
             $table->unsignedBigInteger('downloads')->default(0);
-            $table->decimal('price', 8, 2)->default(0);
+            $table->decimal('price', 8, 2)->default(0); #filterable
             $table->longText('download_link');
             $table->boolean('is_discount_fixed')->default(false)->comment('true = Discount is fixed, false = Discount is percentage');
             $table->integer('discount')->nullable();
