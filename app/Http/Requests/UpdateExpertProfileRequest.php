@@ -30,6 +30,7 @@ class UpdateExpertProfileRequest extends FormRequest
                 "join_date"     => 'required',
                 "availability"  => 'required',
                 "image"         => 'mimes:png,jpg,webp,jpeg',
+                "fee"         => 'required',
             ];;
     }
 }
