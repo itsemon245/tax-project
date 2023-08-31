@@ -313,6 +313,9 @@
                                         <li>
                                             <a href="{{ route('exams.index') }}">Exams</a>
                                         </li>
+                                        <li>
+                                            <a href="{{ route('exams.results') }}">Results</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -681,23 +684,6 @@
                                         <li>
                                             <a href="{{ route('review.index', 'expert-profile') }}">Expert Reviews</a>
                                         </li> --}}
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="#exams" data-bs-toggle="collapse">
-                                    <i class="mdi mdi-human-capacity-increase"></i>
-                                    <span>Exam's</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="exams">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="{{ route('exams.index') }}">Exams</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('result.index') }}">Result</a>
-                                        </li>
                                     </ul>
                                 </div>
                             </li>

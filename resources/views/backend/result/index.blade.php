@@ -2,7 +2,7 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Result']" />
 
-    <x-backend.ui.section-card name="Industries">
+    <x-backend.ui.section-card name="Show All Results">
     
         <x-backend.table.basic>
             <thead>
@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($result as $key=>$item)
+                @forelse ($results as $key=>$item)
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>{{ $item->user->user_name  }}</td>
@@ -29,7 +29,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4">
+                        <td colspan="7">
                             <h5 class="d-flex justify-content-center text-muted">No record found</h5>
                         </td>
                     </tr>

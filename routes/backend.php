@@ -114,6 +114,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
     Route::resource('exams', ExamController::class);
+    Route::get('exams-results', [ExamController::class, 'results'])->name('exams.results');// All results show backend.
     Route::resource('questions', QuestionController::class);
     Route::resource('result', ResultController::class);
     Route::resource('taxCalculator', TaxCalculatorController::class);
