@@ -398,6 +398,9 @@
                                         <li>
                                             <a href="{{ route('expert-profile.index') }}">View</a>
                                         </li>
+                                        <li>
+                                            <a href="{{ route('consultancy.order.index') }}">Appoinment List</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
