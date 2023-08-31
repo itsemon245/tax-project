@@ -43,19 +43,29 @@ class PaymentController extends Controller
         ]);
 
         try {
+            $table = str($request->purchasable_type)->snake();
+            $table = str($table)->plural();
+            $user = User::findOrFail(auth()->id());
+            $record = DB::table($table)->find($request->purchasable_id);
             $isExpired = null;
-            $data = null;
+            $data = [
+                'payable' => $record->price,
+                'discount' => 0,
+            ];
             $expireDate = null;
             $dueDate = today()->addDays(10);
             //dd($dueDate);
             $due = null;
             $promoCode = null;
             $status = 'due';
-            $table = str($request->purchasable_type)->snake();
-            $table = str($table)->plural();
-            $user = User::findOrFail(auth()->id());
-            $record = DB::table($table)->find($request->purchasable_id);
+
             //dd($record);
+            $metaData = null;
+            if ($request->income_source) {
+                $metaData = json_encode($request->income_source);
+            } else {
+                $metaData = json_encode($request->metaData);
+            }
             $billingType = $record->billing_type;
             if (!$request->has('pay_later')) {
                 switch ($billingType) {
@@ -102,38 +112,52 @@ class PaymentController extends Controller
                 } elseif ($due > 0 && $due < $payable) {
                     $status = 'partial';
                 }
+
+                Purchase::create([
+                    'user_id' => auth()->id(),
+                    'name' => $request->name,
+                    'promo_code_id' => $promoCode->id ?? null,
+                    'payable_amount' => $data['payable'],
+                    'discount' => $data['discount'],
+                    'has_promo_code_applied' => $promoCode !== null ? true : false,
+                    'paid' => $request->paid_amount,
+                    'trx_id' => $request->trx_id,
+                    'contact_number' => $request->phone,
+                    'payment_number' => $request->payment_number,
+                    'payment_method' => $request->payment_method,
+                    'billing_type' => $billingType,
+                    'due' => $due,
+                    'status' => $status,
+                    'metadata' => $metaData,
+                    'is_expired' => $isExpired,
+                    'payment_date' => today(),
+                    'due_date' => $dueDate,
+                    'expire_date' => $expireDate,
+                    'purchasable_id' => $request->purchasable_id,
+                    'purchasable_type' => $request->purchasable_type,
+                ]);
+            } else {
+                Purchase::create([
+                    'user_id' => auth()->id(),
+                    'name' => $request->name,
+                    'payable_amount' => $data['payable'],
+                    'contact_number' => $request->phone,
+                    'billing_type' => $billingType,
+                    'due' => $due,
+                    'status' => $status,
+                    'metadata' => $metaData,
+                    'is_expired' => $isExpired,
+                    'payment_date' => today(),
+                    'due_date' => $dueDate,
+                    'expire_date' => $expireDate,
+                    'purchasable_id' => $request->purchasable_id,
+                    'purchasable_type' => $request->purchasable_type,
+                ]);
             }
-            $metaData=null;
-            if ($request->income_source) {
-                $metaData = json_encode($request->income_source);
-            }else{    
-                $metaData = json_encode($request->metaData);
-            }
-            
+
+
             //dd($metaData);
-            Purchase::create([
-                'user_id' => auth()->id(),
-                'name' => $request->name,
-                'promo_code_id' => $promoCode->id ?? null,
-                'payable_amount' => $data['payable'],
-                'discount' => $data['discount'],
-                'has_promo_code_applied' => $promoCode !== null ? true : false,
-                'paid' => $request->paid_amount,
-                'trx_id' => $request->trx_id,
-                'contact_number' => $request->phone,
-                'payment_number' => $request->payment_number,
-                'payment_method' => $request->payment_method,
-                'billing_type' => $billingType,
-                'due' => $due,
-                'status' => $status,
-                'metadata' => $metaData,
-                'is_expired' => $isExpired,
-                'payment_date' => today(),
-                'due_date' => $dueDate ,
-                'expire_date' => $expireDate,
-                'purchasable_id' => $request->purchasable_id,
-                'purchasable_type' => $request->purchasable_type,
-            ]);
+
         } catch (Exception $e) {
             $notification = [
                 'message' => $e->getMessage(),

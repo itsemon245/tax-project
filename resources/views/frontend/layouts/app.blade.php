@@ -4,10 +4,9 @@
 <x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" />
 
 <body class="w-100">
-    <!-- Messenger Chat Plugin Code -->
+    {{-- Messenger Chat Plugin Code --}}
     <div id="fb-root"></div>
 
-    <!-- Your Chat Plugin code -->
     <div id="fb-customer-chat" class="fb-customerchat">
     </div>
 
@@ -17,7 +16,6 @@
         chatbox.setAttribute("attribution", "biz_inbox");
     </script>
 
-    <!-- Your SDK code -->
     <script>
         window.fbAsyncInit = function() {
             FB.init({

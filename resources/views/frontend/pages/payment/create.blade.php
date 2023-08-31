@@ -145,7 +145,7 @@
                                         </div>
                                         <div>
                                             <span class="fw-medium">Item Type:</span> <span
-                                                class="badge bg-soft-success text-success mb-0">c</span>
+                                                class="badge bg-soft-success text-success mb-0">{{ $model }}</span>
                                         </div>
                                         <div class="d-flex gap-1 align-items-center">
                                             <span class="fw-medium">Item Price:</span>
@@ -180,15 +180,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <x-backend.form.text-input name="name" label="Full Name"
-                                                placeholder="Full Name"
-                                                value="{{ auth()->user() ? auth()->user()->name : '' }}" required />
+                                                placeholder="Full Name" value="{{ auth()->user()?->name }}" required />
 
                                         </div>
                                         <div class="col-md-6">
 
                                             <x-backend.form.text-input name="phone" label="Contact No."
-                                                placeholder="Contact No."
-                                                value="{{ auth()->user() ? auth()->user()->phone : '' }}" required />
+                                                placeholder="Contact No." value="{{ auth()->user()?->phone }}" required />
                                         </div>
                                     </div>
                                     <div class="row">
