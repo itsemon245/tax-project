@@ -15,7 +15,7 @@ class RefereeController extends Controller
      */
     public function index()
     {
-        $referees = User::with('referees')->find(1, ['id'])->referees;
+        $referees = User::with('referees')->find(auth()->id(), ['id'])->referees;
         return view('frontend.pages.referee.refer-index', compact('referees'));
     }
 

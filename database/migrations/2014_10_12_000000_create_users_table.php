@@ -28,6 +28,7 @@ return new class extends Migration
             $table->longText('refer_link')->nullable();
             $table->integer('refer_discount_rate')->nullable();
             $table->string('password');
+            $table->decimal('total_commission')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

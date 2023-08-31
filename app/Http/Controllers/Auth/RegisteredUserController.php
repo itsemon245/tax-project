@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Referee;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Referee;
+use App\Models\Setting;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -50,6 +51,7 @@ class RegisteredUserController extends Controller
         }
         $user->image_url = "https://api.dicebear.com/6.x/initials/svg?seed=$seed&backgroundType=gradientLinear&backgroundRotation=0,360";
         $user->save();
+        $user->assignRole('user');
 
 
         if ($request->has('refer_code')) {
@@ -57,6 +59,7 @@ class RegisteredUserController extends Controller
             $referee = new Referee();
             $referee->user_id = $user->id;
             $referee->parent_id = $parent->id;
+            $referee->commission = Setting::first(['reference'])->reference->commission;
             $referee->save();
         }
 

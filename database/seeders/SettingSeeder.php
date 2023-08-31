@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SettingSeeder extends Seeder
 {
@@ -12,6 +13,11 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Setting::create([
+            'reference' => [
+                'commission' => random_int(5,30),
+                'withdrawal' => 500,
+            ]
+        ]);
     }
 }

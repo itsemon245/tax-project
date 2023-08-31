@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
             BookCategorySeeder::class,
             IndustrySeeder::class,
             AboutSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }
