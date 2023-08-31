@@ -135,7 +135,6 @@ class PaymentController extends Controller
                 'purchasable_type' => $request->purchasable_type,
             ]);
         } catch (Exception $e) {
-            dd($e->getMessage());
             $notification = [
                 'message' => $e->getMessage(),
                 'alert-type' => 'error',

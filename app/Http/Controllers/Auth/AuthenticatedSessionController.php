@@ -28,28 +28,29 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $userExists = User::with('authentications')->where('email', $request->email)->first();
+        $user = User::with('authentications')->where('email', $request->email)->first();
         $loginCount = null;
 
         // if user doesn't exists
-        if (!$userExists) {
+        if (!$user) {
             $alert = array(
                 'message' => "User doesn't exists",
                 'alert-type' => 'error',
             );
             return back()->with($alert);
         } else {
-            $loginCount = $userExists->authentications()->count();
+            $loginCount = $user->authentications()->count();
             if ($loginCount < 3) {
-
                 $request->authenticate();
                 $request->session()->regenerate();
 
-                $store = new Authentication();
-                $store->user_id = auth()->id();
-                $store->login_status = 1;
-                $store->login_time = Carbon::now();
-                $store->save();
+                if ($user->purchased('course')->count() > 0) {
+                    $store = new Authentication();
+                    $store->user_id = auth()->id();
+                    $store->login_status = 1;
+                    $store->login_time = Carbon::now();
+                    $store->save();
+                }
 
                 return redirect()->intended(RouteServiceProvider::ADMIN);
             } else {
