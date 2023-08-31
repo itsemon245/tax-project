@@ -16,6 +16,7 @@ return new class extends Migration
             $table->json('basic')->nullable();
             $table->json('reference')->nullable();
             $table->json('payment')->nullable();
+            $table->json('return_links')->nullable();
             $table->timestamps();
         });
     }

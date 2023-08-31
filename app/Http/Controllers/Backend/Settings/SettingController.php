@@ -9,9 +9,14 @@ use App\Models\Setting;
 class SettingController extends Controller
 {
     public $setting;
+    public $alert;
     public function __construct()
     {
-       $this->setting = Setting::first();
+        $this->setting = Setting::first();
+        $this->alert = [
+            'message' => 'Changes Saved',
+            'alert-type' => 'success',
+        ];
     }
     /**
      * Display a listing of the resource.
@@ -39,7 +44,7 @@ class SettingController extends Controller
             'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'email' => 'required|email',
             'phone' => 'required|numeric',
-            'whatsapp' =>'required|numeric',
+            'whatsapp' => 'required|numeric',
             'favicon' => 'required|image|mimes:jpeg,png,jpg|max:1024',
             'address' => 'required|string',
         ]);
@@ -51,26 +56,22 @@ class SettingController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'whatsapp' => $request->whatsapp,
-            'address' =>$request->address,
+            'address' => $request->address,
         ];
-        if($this->setting){
+        if ($this->setting) {
             $this->setting->basic = $array;
-            $this->setting->update(); 
-        }else{
+            $this->setting->update();
+        } else {
             Setting::create([
                 'basic' => $array,
             ]);
         }
-        $notification = [
-            'message' => 'Save Changed',
-            'alert-type' => 'success',
-        ];
-        return back()
-            ->with($notification);
 
+        return back()
+            ->with($this->alert);
     }
 
-        /**
+    /**
      * Store a newly created resource in reference.
      */
     public function reference(Request $request)
@@ -85,21 +86,18 @@ class SettingController extends Controller
             'commission' => $request->commission,
             'withdrawal' => $request->withdrawal,
         ];
-        if($this->setting){
+        if ($this->setting) {
             $this->setting->update(['reference' => $array]);
-        }else{
+        } else {
             Setting::create([
                 'reference' => $array,
             ]);
         }
-        $notification = [
-            'message' => 'Save Changed',
-            'alert-type' => 'success',
-        ];
+
         return back()
-            ->with($notification);
+            ->with($this->alert);
     }
-        /**
+    /**
      * Store a newly created resource in reference.
      */
     public function payment(Request $request)
@@ -113,25 +111,51 @@ class SettingController extends Controller
 
 
         $payments = [];
-        foreach($request->payment_methods as $key => $method){
+        foreach ($request->payment_methods as $key => $method) {
             $array = [
                 $method => $request->accounts[$key],
             ];
             array_push($payments, $array);
         }
-        if($this->setting){
+        if ($this->setting) {
             $this->setting->update(['payment' => $payments]);
-        }else{
+        } else {
             Setting::create([
                 'payment' => $payments,
             ]);
         }
-        $notification = [
-            'message' => 'Save Changed',
-            'alert-type' => 'success',
-        ];
+
         return back()
-            ->with($notification);
+            ->with($this->alert);
+    }
+    public function returnLinks(Request $request)
+    {
+
+        // dd($request);
+        $request->validate([
+            'titles' => 'required|array',
+            'links' => 'required|array',
+        ]);
+
+
+        $returnLinks = [];
+        foreach ($request->titles as $key => $title) {
+            $array = [
+                'title' => $title,
+                'link' => $request->links[$key],
+            ];
+            array_push($returnLinks, $array);
+        }
+        if ($this->setting) {
+            $this->setting->update(['return_links' => $returnLinks]);
+        } else {
+            Setting::create([
+                'payment' => $returnLinks,
+            ]);
+        }
+
+        return back()
+            ->with($this->alert);
     }
 
 

@@ -15,6 +15,7 @@ class Setting extends Model
         'basic' => Json::class,
         'reference' => Json::class,
         'payment' => Json::class,
-        'invoice' => Json::class,
+        // 'invoice' => Json::class,
+        'return_links' => Json::class,
     ]; 
 }

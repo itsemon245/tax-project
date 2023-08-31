@@ -114,7 +114,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('client-studio', ClientStudioController::class);
     Route::resource('expert-profile', ExpertProfileController::class);
     Route::resource('exams', ExamController::class);
-    Route::get('exams-results', [ExamController::class, 'results'])->name('exams.results');// All results show backend.
+    Route::get('exams-results', [ExamController::class, 'results'])->name('exams.results'); // All results show backend.
     Route::resource('questions', QuestionController::class);
     Route::resource('result', ResultController::class);
     Route::resource('taxCalculator', TaxCalculatorController::class);
@@ -125,6 +125,7 @@ Route::prefix('admin')->group(function () {
         ->group(function () {
             Route::post('/reference', 'reference')->name('reference');
             Route::post('/payment', 'payment')->name('payment');
+            Route::post('/return-link', 'returnLink')->name('returnLink');
         });
     Route::resource('course', CourseController::class)->names([
         'index' => 'course.backend.index',
