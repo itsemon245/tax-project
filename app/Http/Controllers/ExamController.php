@@ -6,6 +6,7 @@ use App\Http\Requests\StoreExamRequest;
 use App\Http\Requests\UpdateExamRequest;
 use App\Models\Course;
 use App\Models\Exam;
+use App\Models\Result;
 
 class ExamController extends Controller
 {
@@ -16,7 +17,6 @@ class ExamController extends Controller
     {
         $exams      = Exam::all();
         $courses    = Course::all('id', 'name');
-
         return view("backend.exams.exams", compact('exams', 'courses'));
     }
 
@@ -27,6 +27,14 @@ class ExamController extends Controller
     {
         //
     }
+
+
+    public function results()
+    {
+        $results = Result::get();
+        return view("backend.result.index", compact('results'));
+    }
+
 
     /**
      * Store a newly created resource in storage.
