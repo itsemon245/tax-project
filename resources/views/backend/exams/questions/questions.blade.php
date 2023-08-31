@@ -5,62 +5,82 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Exam', 'Questions']" />
     <!-- end page title -->
 
-    <x-backend.ui.section-card name="{{ $exam->name }} Exams Questions">
+    <x-backend.ui.section-card name="{!! $exam->name !!} Exams Questions">
         <div class="row">
             <div class="col-md-6">
-                <form action="{{ route('questions.store') }}" method="post">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input type="hidden" name="exam_id" value="{{ $exam->id }}">
-                            <x-backend.form.text-input label="Question" type="text" class="mb-2" name="question"
-                                required />
-                        </div>
-                        <div class="col-md-6">
-                            <x-backend.form.text-input label="Mark" class="mb-2" type="number" name="mark"
-                                required />
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <x-backend.form.text-input label="Option #1" type="text" name="option1" required />
-                                    <input type="radio" name="currect_ans" value="0" class="form-check-input mb-2"
-                                        id="option1">
-                                    <label class="form-check-label" for="option1">
-                                        Currect Answer
-                                    </label>
+                @if ($question !== null)
+                    <form action="{{ route('questions.store') }}" method="post">
+                        @csrf
+                        <div class="card mb- border-0">
+                            <div class="card-body">
+                                <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+                                <input type="hidden" name="question_id" value="{{ $question->id }}">
+                                <div class="d-flex gap-2">
+                                    <div class="flex-grow-1">
+                                        <x-backend.form.text-input name="question" label="Question"
+                                            placeholder="Enter a question here?" :value="$question->name" required />
+                                    </div>
+                                    <div>
+                                        <x-backend.form.text-input type="number" name="mark" label="Mark"
+                                            placeholder="Mark" required :value="$question->mark" />
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <x-backend.form.text-input label="Option #2" type="text" name="option2" required />
-                                    <input type="radio" name="currect_ans" value="1" class="form-check-input mb-2"
-                                        id="option2">
-                                    <label class="form-check-label" for="option2">
-                                        Currect Answer
-                                    </label>
+                                <div class="d-flex flex-wrap">
+                                    @foreach ($question->choices->options as $i => $option)
+                                        <div
+                                            class="w-50 {{ ($i + 1) % 2 === 0 ? 'ps-2' : 'pe-2' }} d-flex gap-2 align-items-center">
+                                            <x-backend.form.text-input name="options[]" label="Option {{ $i }}"
+                                                placeholder="Option {{ $i }}" :value="$option" required />
+                                            <div class="form-check mb-2 form-check-success mt-3">
+                                                <input class="form-check-input rounded-circle" type="radio" name="correct"
+                                                    value="{{ $i }}" id="correct-{{ $i }}"
+                                                    @checked($i === $question->choices->correct)>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                <div class="col-md-6">
-                                    <x-backend.form.text-input label="Option #3" type="text" name="option3" required />
-                                    <input type="radio" name="currect_ans" value="2" class="form-check-input mb-2"
-                                        id="option3">
-                                    <label class="form-check-label" for="option3">
-                                        Currect Answer
-                                    </label>
-                                </div>
-                                <div class="col-md-6">
-                                    <x-backend.form.text-input label="Option #4" type="text" name="option4" required />
-                                    <input type="radio" name="currect_ans" value="3" class="form-check-input mb-2"
-                                        id="option4">
-                                    <label class="form-check-label" for="option4">
-                                        Currect Answer
-                                    </label>
-                                </div>
+                                <x-backend.ui.button class="btn-primary w-100 mt-2">Update</x-backend.ui.button>
                             </div>
                         </div>
-                    </div>
-                    <x-backend.ui.button class="btn-primary w-100 btn-sm mt-1">Create</x-backend.ui.button>
-                </form>
+                    </form>
+                @else
+                    <form action="{{ route('questions.store') }}" method="post">
+                        @csrf
+                        <div class="card mb- border-0">
+                            <div class="card-body">
+                                <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+                                <div class="d-flex gap-2">
+                                    <div class="flex-grow-1">
+                                        <x-backend.form.text-input name="question" label="Question"
+                                            placeholder="Enter a question here?" required />
+                                    </div>
+                                    <div>
+                                        <x-backend.form.text-input type="number" name="mark" label="Mark"
+                                            placeholder="Mark" required />
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-wrap">
+                                    @foreach (range(1, 4) as $i)
+                                        <div
+                                            class="w-50 {{ $i % 2 === 0 ? 'ps-2' : 'pe-2' }} d-flex gap-2 align-items-center">
+                                            <x-backend.form.text-input name="options[]" label="Option {{ $i }}"
+                                                placeholder="Option {{ $i }}" required />
+                                            <div class="form-check mb-2 form-check-success mt-3">
+                                                <input class="form-check-input rounded-circle" type="radio" name="correct"
+                                                    value="{{ $i - 1 }}" id="correct-{{ $i }}">
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <x-backend.ui.button class="btn-primary w-100 mt-2">Create</x-backend.ui.button>
+
+                            </div>
+                        </div>
+                    </form>
+                @endif
             </div>
-            <div class="col-md-6 mt-3">
+            <div class="col-md-6 mt-3" style="max-height:75dvh;overflow-y:scroll;">
                 <x-backend.table.basic>
                     <thead>
                         <tr>

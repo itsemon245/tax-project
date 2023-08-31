@@ -33,11 +33,12 @@ class QuestionController extends Controller
     {
         $data =  $request->validated();
         $choices = [
-            'correct' => $data->currect_ans,
-            'options' => [$data->option1, $data->option2, $data->option3, $data->option4],
+            'options' => $data->options,
+            'correct' => $data->correct,
         ];
 
-        Question::create(
+        Question::updateOrCreate(
+            ['id', $request->question_id],
             [
                 'exam_id'   => $request->exam_id,
                 'name'      => $data->question,
@@ -60,7 +61,8 @@ class QuestionController extends Controller
     {
         $questions  = Question::where('exam_id', $exam_id)->get();
         $exam       = Exam::find($exam_id, ['id', 'name']);
-        return view('backend.exams.questions.questions', compact('questions', 'exam'));
+        $question = null;
+        return view('backend.exams.questions.questions', compact('questions', 'exam', 'question'));
     }
 
     /**
@@ -69,33 +71,9 @@ class QuestionController extends Controller
     public function edit(string $id)
     {
         $question = Question::find($id);
-        return view('backend.exams.questions.editQuestion', compact('question'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateQuestionRequest $request, string $id)
-    {
-        $data = (object) $request->validated();
-        $choices = (object) [
-            'options' => [$data->option1, $data->option2, $data->option3, $data->option4],
-            'correct' => $data->currect_ans
-        ];
-        Question::find($id)->update(
-            [
-                'name'      => $data->question,
-                'mark'      => $data->mark,
-                'choices'   => json_encode($choices),
-            ]
-        );
-
-        return redirect()
-            ->route('questions.show', $request->exam_id)
-            ->with(array(
-                'message'       => "Question Updated Successfully",
-                'alert-type'    => 'success',
-            ));
+        $exam       = Exam::find($question->exam->id, ['id', 'name']);
+        $questions  = $exam->questions;
+        return view('backend.exams.questions.questions', compact('questions', 'exam', 'question'));
     }
 
     /**
