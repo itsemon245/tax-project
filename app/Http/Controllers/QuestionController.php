@@ -33,16 +33,16 @@ class QuestionController extends Controller
     {
         $data =  $request->validated();
         $choices = [
-            'options' => $data->options,
-            'correct' => $data->correct,
+            'options' => $request->options,
+            'correct' => $request->correct,
         ];
 
         Question::updateOrCreate(
-            ['id', $request->question_id],
+            ['id' => $request->question_id],
             [
                 'exam_id'   => $request->exam_id,
-                'name'      => $data->question,
-                'mark'      => $data->mark,
+                'name'      => $request->question,
+                'mark'      => $request->mark,
                 'choices'   => $choices,
             ]
         );
