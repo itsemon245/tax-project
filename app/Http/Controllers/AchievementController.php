@@ -31,7 +31,7 @@ class AchievementController extends Controller
     public function store(StoreAchievementRequest $request)
     {
         $appointmentStore = new Achievement();
-        $appointmentStore->image = saveImage($request->image, 'achievements','public');
+        $appointmentStore->image = saveImage($request->image, 'achievements');
         $appointmentStore->user = $request->user;
         $appointmentStore->total_user = $request->total_user;
         $appointmentStore->save();
@@ -64,7 +64,7 @@ class AchievementController extends Controller
     {
         if($request->hasFile($request->image))
         {
-            $achievement->image = updateFile($request->image, $achievement->image ,'achievements','public');
+            $achievement->image = updateFile($request->image, $achievement->image ,'achievements');
         }
         $achievement->user = $request->user;
         $achievement->total_user = $request->total_user;
