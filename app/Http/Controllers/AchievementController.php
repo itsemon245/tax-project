@@ -62,7 +62,7 @@ class AchievementController extends Controller
      */
     public function update(UpdateAchievementRequest $request, Achievement $achievement)
     {
-        if($request->hasFile($request->image))
+        if($request->hasFile('image'))
         {
             $achievement->image = updateFile($request->image, $achievement->image ,'achievements');
         }
