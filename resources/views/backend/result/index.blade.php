@@ -8,8 +8,8 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>User</th>
-                    <th>Exams</th>
+                    <th>Candidate</th>
+                    <th>Exam Info.</th>
                     <th>Total Marks</th>
                     <th>Passing Marks</th>
                     <th>Right Answer</th>
@@ -18,9 +18,9 @@
             </thead>
             <tbody>
                 @forelse ($results as $key=>$item)
-                    <tr>
+                    <tr style="background-color: {{ $item->has_passed ? 'rgba(172, 255, 47, 0.200)' : 'rgba(255, 47, 64, 0.200)' }};">
                         <td>{{ ++$key }}</td>
-                        <td>{{ $item->user->user_name  }}</td>
+                        <td>Name: {{ $item->user->name }} <p>User Name: {{ $item->user->user_name  }}</p> </td>
                         <td>{{ $item->exam->name  }}</td>
                         <td>{{ $item->exam->total_marks  }}</td>
                         <td>{{ $item->exam->passing_marks  }}</td>

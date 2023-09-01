@@ -13,6 +13,7 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
+        $logo = picsum(fake()->name());
         Setting::create([
             'basic' => [
                 'logo' => picsum('logo'),
