@@ -6,7 +6,8 @@
         <form method="POST" action="{{ route('project.update', $project) }}">
             @csrf
             @method('PUT')
-            <a href="{{ route('project.index') }}" class="btn btn-info btn-sm mb-2">Back</a>
+            <x-backend.ui.button type="custom" href="{{ route('project.index') }}"
+                class="btn-dark btn-sm">Create</x-backend.ui.button>
             <div class="row">
                 <div class="col-md-12">
                     <div class="px-md-0 px-2">
