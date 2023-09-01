@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\ExpertProfile;
+use App\Models\User;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
+use App\Models\ExpertProfile;
+use App\Http\Controllers\Controller;
+use App\Models\Referee;
 
 class OrderController extends Controller
 {
@@ -18,22 +20,30 @@ class OrderController extends Controller
     public function consultancyIndex()
     {
         $payments = Purchase::with('purchasable')->where('purchasable_type', 'ExpertProfile')->latest()->get();
-        //dd($payments);
         return view('backend.payment.consultancyApproved', compact('payments'));
+    }
+
+    public function purchasesCourseByReferer()
+    {
+        $records = Referee::with('parent', 'user',)->get();
+        // $referr = Referee::where('user_id', $user[0]->user_id)->get() ?? null ;
+        // dd($payments);
+        return view('backend.referee.showRefereeAll', compact('records'));
+
     }
 
     public function status($id)
     {
         $payment = Purchase::find($id);
         $user = $payment->user;
-        $parent = $user->parent;
-        $referee = $parent->referees()->where('user_id', $user->id)->first();
+        $referee = Referee::where('user_id', $user->id)->first();
+        $parent = $referee->parent;
         if ($payment->approved === 0) {
             $payment->approved = 1;
             if ($parent) {
-                // todo: increment total commission
                 $commission = $payment->payable_amount * $referee->commission / 100;
                 $parent->total_commission = $parent->total_commission + $commission;
+                $parent->conversion = $parent->conversion + 1;
                 $parent->save();
             }
         } else {
@@ -53,7 +63,7 @@ class OrderController extends Controller
     public function consultancyStatus($id)
     {
         $payments = Purchase::find($id);
-        if ($payments->approved === 0) {
+        if ($payments->approved == 0) {
             $payments->approved = 1;
         } else {
             $payments->approved = 0;

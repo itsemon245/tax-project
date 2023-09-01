@@ -175,6 +175,7 @@ Route::prefix('admin')->group(function () {
     Route::get('order/status/{id}', [OrderController::class, 'status'])->name('order.status');
     Route::get('consultancy/status/{id}', [OrderController::class, 'consultancyStatus'])->name('consultancy.order.status');
     Route::delete('order/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+    Route::get('refreesss', [OrderController::class, 'purchasesCourseByReferer']);
 
     Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);

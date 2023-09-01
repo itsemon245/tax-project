@@ -26,8 +26,8 @@
                                     <th>#</th>
                                     <th>Expert Name</th>
                                     <th>Purchase Name</th>
-                                    <th>Subject</th>
-                                    <th>Message</th>
+                                    {{-- <th>Subject</th>
+                                    <th>Message</th> --}}
                                     <th>Payment Number</th>
                                     <th>transaction Id</th>
                                     <th>Paid</th>
@@ -46,8 +46,8 @@
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $payemnt->purchasable->name  }}</td>
                                         <td>{{ $payemnt->name  }}</td>
-                                        <td>{{ Str::limit($metaData[0], 10,'...')  }}</td>
-                                        <td>{{ Str::limit($metaData[1], 10, '...')  }}</td>
+                                        {{-- <td>{{ Str::limit($metaData[0], 10,'...')  }}</td>
+                                        <td>{{ Str::limit($metaData[1], 10, '...')  }}</td> --}}
                                         <td>{{ $payemnt->payment_number }}</td>
                                         <td>{{ $payemnt->trx_id }}</td>
                                         <td>{{ $payemnt->paid }}</td>
