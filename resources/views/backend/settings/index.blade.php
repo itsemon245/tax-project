@@ -129,15 +129,17 @@
                         const inputs = `
                         <div class="card">
                         <div class="card-body">
-                            <div class="col-md-6">
-                                <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                <div >
                                     <x-backend.form.text-input type="text" name="payment_methods[]" label="Pay Method" required />
                                 </div>
                             </div>
                             <div class="col-md-6">  
-                                <div class="mt-1">
+                                <div >
                                     <x-backend.form.text-input type="text" name="accounts[]" label="Account No."  required />
                                 </div>
+                            </div>
                             </div>
                         </div>
                         </div>
