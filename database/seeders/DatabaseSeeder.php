@@ -51,6 +51,7 @@ class DatabaseSeeder extends Seeder
             IndustrySeeder::class,
             AboutSeeder::class,
             SettingSeeder::class,
+            ExpenseSeeder::class,
         ]);
     }
 }

@@ -623,12 +623,12 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#managment" data-bs-toggle="collapse">
+                    <a href="#management" data-bs-toggle="collapse">
                         <i class="mdi mdi-manjaro"></i>
-                        <span>Managment</span>
+                        <span>Management</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="managment">
+                    <div class="collapse" id="management">
                         <ul class="nav-second-level">
                             <li>
                                 <a href="#roleSection" data-bs-toggle="collapse">
@@ -649,7 +649,7 @@
                             </li>
                             <li>
                                 <a href="#promoCodeSection" data-bs-toggle="collapse">
-                                    <i class="mdi mdi-passport-biometric"></i>
+                                    <i class="mdi mdi-sale"></i>
                                     <span> Promo Code </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -665,6 +665,24 @@
                                 </div>
                             </li>
                             <li>
+                                <a href="#expenses" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-currency-usd-off"></i>
+                                    <span>Expenses</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="expenses">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('expense.index') }}">View Expenses</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('expense.create') }}">Crete Expense</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
                                 <a href="#reviews" data-bs-toggle="collapse">
                                     <i class="mdi mdi-comment-quote-outline"></i>
                                     <span>Reviews</span>
@@ -673,17 +691,12 @@
                                 <div class="collapse" id="reviews">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="{{ route('backend.review.index') }}">All Reviews</a>
-                                        </li>
-                                        {{-- <li>
-                                            <a href="{{ route('review.index', 'service') }}">Service Reviews</a>
+                                            <a href="{{ route('backend.review.index') }}">View Reviews</a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('review.index', 'book') }}">Book Reviews</a>
+                                            <a href="{{ route('backend.review.create') }}">Crete Review</a>
                                         </li>
-                                        <li>
-                                            <a href="{{ route('review.index', 'expert-profile') }}">Expert Reviews</a>
-                                        </li> --}}
+
                                     </ul>
                                 </div>
                             </li>
