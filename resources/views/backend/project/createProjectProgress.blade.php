@@ -5,13 +5,16 @@
         <div class="container my-3">
             <form method="POST" action="{{ route('project.store') }}">
                 @csrf
+                <x-backend.ui.button type="custom" href="{{ route('project.index') }}"
+                    class="btn-dark btn-sm">Create</x-backend.ui.button>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="px-md-0 px-2">
                             <a href="{{ route('project.index') }}" class="btn btn-info btn-sm mb-2">Back</a>
                             <div id="progressbarwizard">
                                 <div class="d-flex justify-content-center">
-                                    <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
+                                    <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100"
+                                        role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <a href="#project-info" data-bs-toggle="tab" data-toggle="tab"
                                                 class="nav-link rounded-0 pt-2 pb-2 active" aria-selected="true"
@@ -66,12 +69,13 @@
                                         <div class="row">
                                             <div id="packacgeFeaturesInputs"></div>
                                             <div class="d-flex align-items-center justify-content-center">
-                                                <div class="icon-item mx-1 mt-3" style="cursor: pointer" onclick="addPackageFeature()"
-                                                    title="Add Package Feature">
+                                                <div class="icon-item mx-1 mt-3" style="cursor: pointer"
+                                                    onclick="addPackageFeature()" title="Add Package Feature">
                                                     <i data-feather="plus-square" class="icon-dual"></i>
                                                 </div>
-                                                <div id="removePackageFeatureBtn" class="icon-item mx-1 mt-3" style="cursor: pointer"
-                                                    onclick="removePackageFeature()" title="Add Package Feature">
+                                                <div id="removePackageFeatureBtn" class="icon-item mx-1 mt-3"
+                                                    style="cursor: pointer" onclick="removePackageFeature()"
+                                                    title="Add Package Feature">
                                                     <i data-feather="minus-square" class="icon-dual"></i>
                                                 </div>
                                             </div>
@@ -109,7 +113,8 @@
                                                                                     @php
                                                                                         $isAttached = $user->clients()->find($client->id);
                                                                                     @endphp
-                                                                                    <input @checked($isAttached) class="form-check-input" hidden
+                                                                                    <input @checked($isAttached)
+                                                                                        class="form-check-input" hidden
                                                                                         value="{{ $user->id }}"
                                                                                         name="client_{{ $client->id }}_users[]"
                                                                                         type="checkbox"
@@ -195,17 +200,17 @@
 
         });
     </script>
-                    <script>
-                        let itemCount = 0;
-                        const featureLength = () => {
-                            $('#packacgeFeaturesInputs').children().length < 2 ?
-                                $("#removePackageFeatureBtn").addClass('d-none') :
-                                $("#removePackageFeatureBtn").removeClass('d-none')
-                        }
-            
-                        const addPackageFeature = () => {
-                            itemCount++
-                            const inputs = `
+    <script>
+        let itemCount = 0;
+        const featureLength = () => {
+            $('#packacgeFeaturesInputs').children().length < 2 ?
+                $("#removePackageFeatureBtn").addClass('d-none') :
+                $("#removePackageFeatureBtn").removeClass('d-none')
+        }
+
+        const addPackageFeature = () => {
+            itemCount++
+            const inputs = `
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mt-1">
@@ -214,25 +219,25 @@
                                 </div>
                             </div>
                         `
-                            $('#packacgeFeaturesInputs').append(inputs)
-                            const imageInputs = $('.custom-input')
-                            imageInputs.each((i, input) => {
-                                input.addEventListener('change', e => {
-                                    const image = document.querySelector('#live-'+e.target.dataset.index)
-                                    const url = URL.createObjectURL(e.target.files[0])
-                                    image.src = url
-                                })
-                            })
-            
-            
-                            featureLength()
-                        }
-                        addPackageFeature()
-            
-                        const removePackageFeature = () => {
-                            itemCount--
-                            $("#packacgeFeaturesInputs").find(".row:last").remove()
-                            featureLength()
-                        }
-                    </script>
+            $('#packacgeFeaturesInputs').append(inputs)
+            const imageInputs = $('.custom-input')
+            imageInputs.each((i, input) => {
+                input.addEventListener('change', e => {
+                    const image = document.querySelector('#live-' + e.target.dataset.index)
+                    const url = URL.createObjectURL(e.target.files[0])
+                    image.src = url
+                })
+            })
+
+
+            featureLength()
+        }
+        addPackageFeature()
+
+        const removePackageFeature = () => {
+            itemCount--
+            $("#packacgeFeaturesInputs").find(".row:last").remove()
+            featureLength()
+        }
+    </script>
 @endpush

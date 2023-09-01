@@ -106,14 +106,15 @@ class SettingController extends Controller
         // dd($request);
         $request->validate([
             'payment_methods' => 'required|array',
-            'accounts' => 'required|array',
+            'payment_numbers' => 'required|array',
         ]);
 
 
         $payments = [];
         foreach ($request->payment_methods as $key => $method) {
             $array = [
-                $method => $request->accounts[$key],
+                'method' => $method,
+                'number' => $request->payment_numbers[$key],
             ];
             array_push($payments, $array);
         }
@@ -128,21 +129,21 @@ class SettingController extends Controller
         return back()
             ->with($this->alert);
     }
-    public function returnLinks(Request $request)
+    public function returnLink(Request $request)
     {
 
         // dd($request);
         $request->validate([
-            'titles' => 'required|array',
-            'links' => 'required|array',
+            'return_link_titles' => 'required|array',
+            'return_links' => 'required|array',
         ]);
 
 
         $returnLinks = [];
-        foreach ($request->titles as $key => $title) {
+        foreach ($request->return_link_titles as $key => $title) {
             $array = [
                 'title' => $title,
-                'link' => $request->links[$key],
+                'link' => $request->return_links[$key],
             ];
             array_push($returnLinks, $array);
         }
@@ -150,7 +151,7 @@ class SettingController extends Controller
             $this->setting->update(['return_links' => $returnLinks]);
         } else {
             Setting::create([
-                'payment' => $returnLinks,
+                'return_links' => $returnLinks,
             ]);
         }
 
