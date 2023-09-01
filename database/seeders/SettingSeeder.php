@@ -14,9 +14,41 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         Setting::create([
+            'basic' => [
+                'logo' => picsum('logo'),
+                'email' => fake()->safeEmail(),
+                'phone' => fake()->phoneNumber(),
+                'whatsapp' => fake()->phoneNumber(),
+                'favicon' => picsum('favicon'),
+                'address' => fake()->address(),
+            ],
             'reference' => [
-                'commission' => random_int(5,30),
+                'commission' => random_int(5, 30),
                 'withdrawal' => 500,
+            ],
+            'payment' => [
+                [
+                    'method' => 'bkash',
+                    'number' => fake()->phoneNumber(),
+                ],
+                [
+                    'method' => 'nagad',
+                    'number' => fake()->phoneNumber(),
+                ],
+                [
+                    'method' => 'rocket',
+                    'number' => fake()->phoneNumber(),
+                ]
+                ],
+            'return_links' => [
+                [
+                    'title' => fake()->realText(10),
+                    'link' => fake()->url(),
+                ],
+                [
+                    'title' => fake()->realText(10),
+                    'link' => fake()->url(),
+                ],
             ]
         ]);
     }
