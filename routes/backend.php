@@ -11,6 +11,7 @@ use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\IncomeSourceController;
 use App\Http\Controllers\SocialHandleController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\VideoController;
@@ -32,11 +33,13 @@ use App\Http\Controllers\Backend\UserProfileController;
 use App\Http\Controllers\Backend\Chalan\ChalanController;
 use App\Http\Controllers\Backend\Client\ClientController;
 use App\Http\Controllers\Backend\Course\CourseController;
+use App\Http\Controllers\Backend\Invoice\ReportController;
 use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\Backend\Project\ProjectController;
 use App\Http\Controllers\Backend\UserAppointmentController;
 use App\Http\Controllers\Backend\UserDoc\UserDocController;
+use App\Http\Controllers\Backend\Settings\SettingController;
 use App\Http\Controllers\Backend\Book\BookCategoryController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\CkEditor\CkEditorController;
@@ -45,7 +48,9 @@ use App\Http\Controllers\Backend\Return\ReturnFormController;
 use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
+use App\Http\Controllers\Backend\Withdrawal\WithdrawalController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
+use App\Http\Controllers\Backend\Maintenance\MaintenanceController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\TaxCalculator\TaxSettingController;
@@ -53,11 +58,7 @@ use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
-use App\Http\Controllers\Backend\Invoice\ReportController;
-use App\Http\Controllers\Backend\Maintenance\MaintenanceController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
-use App\Http\Controllers\IncomeSourceController;
-use App\Http\Controllers\Backend\Settings\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,6 +120,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('result', ResultController::class);
     Route::resource('taxCalculator', TaxCalculatorController::class);
     Route::resource('setting', SettingController::class);
+    Route::resource('withdrawal', WithdrawalController::class);
     Route::prefix('setting')
         ->controller(SettingController::class)
         ->name('setting.')
@@ -176,7 +178,6 @@ Route::prefix('admin')->group(function () {
     Route::get('order/status/{id}', [OrderController::class, 'status'])->name('order.status');
     Route::get('consultancy/status/{id}', [OrderController::class, 'consultancyStatus'])->name('consultancy.order.status');
     Route::delete('order/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
-    Route::get('refreesss', [OrderController::class, 'purchasesCourseByReferer']);
 
     Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);

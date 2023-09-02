@@ -1,6 +1,4 @@
 @extends('backend.layouts.app')
-
-
 @push('customCss')
     <link rel="stylesheet" href="{{ asset('libs/nouislider/dist/nouislider.min.css') }}">
 @endpush

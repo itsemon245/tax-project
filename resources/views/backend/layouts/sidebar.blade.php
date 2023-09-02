@@ -619,6 +619,12 @@
                                     </ul>
                                 </div>
                             </li>
+                            <li>
+                                <a href="{{ route('withdrawal.index') }}">
+                                    <i class="mdi mdi-bank-transfer-out"></i>
+                                    <span>Withdrawal</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

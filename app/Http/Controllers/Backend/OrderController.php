@@ -23,18 +23,10 @@ class OrderController extends Controller
         return view('backend.payment.consultancyApproved', compact('payments'));
     }
 
-    public function purchasesCourseByReferer()
-    {
-        $records = Referee::with('parent', 'user',)->get();
-        // $referr = Referee::where('user_id', $user[0]->user_id)->get() ?? null ;
-        // dd($payments);
-        return view('backend.referee.showRefereeAll', compact('records'));
-
-    }
-
     public function status($id)
     {
         $payment = Purchase::find($id);
+        // dd($payment);
         $user = $payment->user;
         $referee = Referee::where('user_id', $user->id)->first();
         $parent = $referee->parent;

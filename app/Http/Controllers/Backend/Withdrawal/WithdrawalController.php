@@ -1,22 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\Referee;
+namespace App\Http\Controllers\Backend\Withdrawal;
 
-use App\Models\User;
-use App\Models\Referee;
-use App\Models\Purchase;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreRefereeRequest;
-use App\Http\Requests\UpdateRefereeRequest;
 
-class RefereeController extends Controller
+class WithdrawalController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('frontend.pages.referee.refer-index');
+        return view('backend.withdrawal.viewAllWthdrawal');
     }
 
     /**
@@ -30,7 +26,7 @@ class RefereeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRefereeRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -38,7 +34,7 @@ class RefereeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Referee $referee)
+    public function show(string $id)
     {
         //
     }
@@ -46,7 +42,7 @@ class RefereeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Referee $referee)
+    public function edit(string $id)
     {
         //
     }
@@ -54,7 +50,7 @@ class RefereeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRefereeRequest $request, Referee $referee)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -62,7 +58,7 @@ class RefereeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Referee $referee)
+    public function destroy(string $id)
     {
         //
     }
