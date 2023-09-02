@@ -7,7 +7,7 @@
 
     <x-backend.ui.section-card name="Create Expense">
         <x-backend.ui.button type="custom" :href="route('expense.index')" class="btn-secondary btn-sm mb-1">Back</x-backend.ui.button>
-        <div class="container mt-3">
+        <div class="container mt-3 mb-3">
             <form class="" action="{{ route('expense.store') }}" method="post">
                 @csrf
                 <div class="row">
@@ -16,7 +16,13 @@
                             name="date" />
                     </div>
                     <div class="col-md-4 col-8">
-                        <x-backend.form.text-input type="text" label="Spend On" placehoder="Spend On" name="spend_on" />
+                        <x-form.selectize class="" id="spend_on" name="spend_on" placeholder="Spend On..."
+                            label="Spend On">
+                            @foreach ($expenses as $expense)
+                                <option value="{{ $expense->spend_on }}">
+                                    {{ $expense->spend_on }}</option>
+                            @endforeach
+                        </x-form.selectize>
                     </div>
                     <div class="col-md-4 col-4">
                         <x-backend.form.text-input type="number" label="Amount(৳)" placehoder="Amount(৳)" name="amount" />

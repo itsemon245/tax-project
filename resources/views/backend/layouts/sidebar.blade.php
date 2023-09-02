@@ -572,12 +572,12 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('invoice.index', ['type' => 'due']) }}">
+                                            <a href="{{ route('report.index', ['type' => 'due']) }}">
                                                 Arear
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('invoice.index', ['type' => 'paid']) }}">
+                                            <a href="{{ route('report.index', ['type' => 'paid']) }}">
                                                 Paid
                                             </a>
                                         </li>

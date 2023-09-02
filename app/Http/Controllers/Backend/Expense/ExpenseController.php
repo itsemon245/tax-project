@@ -22,8 +22,8 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        return view('backend.expense.create');
-        //
+        $expenses = Expense::get('spend_on');
+        return view('backend.expense.create', compact('expenses'));
     }
 
     /**
@@ -57,7 +57,8 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        return view('backend.expense.edit', compact('expense'));
+        $expenses = Expense::get('spend_on');
+        return view('backend.expense.edit', compact('expense', 'expenses'));
     }
 
     /**

@@ -7,7 +7,7 @@
 
     <x-backend.ui.section-card name="Edit Expense">
         <x-backend.ui.button type="custom" :href="route('expense.index')" class="btn-secondary btn-sm mb-1">Back</x-backend.ui.button>
-        <div class="container mt-3">
+        <div class="container mt-3 mb-3">
             <form class="" action="{{ route('expense.update', $expense->id) }}" method="post">
                 @csrf
                 @method('PATCH')
@@ -17,8 +17,13 @@
                             name="date" />
                     </div>
                     <div class="col-md-4 col-8">
-                        <x-backend.form.text-input type="text" label="Spend On" placehoder="Spend On" name="spend_on"
-                            :value="$expense->spend_on" />
+                        <x-form.selectize class="" id="spend_on" name="spend_on" placeholder="Spend On..."
+                            label="Spend On">
+                            @foreach ($expenses as $exp)
+                                <option value="{{ $exp->spend_on }}" @selected($expense->spend_on === $exp->spend_on)>
+                                    {{ $exp->spend_on }}</option>
+                            @endforeach
+                        </x-form.selectize>
                     </div>
                     <div class="col-md-4 col-4">
                         <x-backend.form.text-input type="number" label="Amount(৳)" placehoder="Amount(৳)" name="amount"
