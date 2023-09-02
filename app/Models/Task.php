@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Task extends Model
 {
     use HasFactory;
-    protected $guarded = []; 
+    protected $guarded = [];
 
     function project(): BelongsTo
     {
@@ -19,6 +19,13 @@ class Task extends Model
     }
     function clients(): BelongsToMany
     {
-        return $this->belongsToMany(Client::class);
+        return $this->belongsToMany(Client::class)->withPivot('is_completed');
+    }
+    function isCompleted($clientId): bool
+    {
+        return $this->clients()
+            ->where('client_id', $clientId)
+            ->first()
+            ->pivot->is_completed;
     }
 }

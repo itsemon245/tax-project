@@ -1,10 +1,12 @@
 <?php
 
 use App\Models\Book;
+use App\Models\Task;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Invoice;
 use App\Models\Product;
+use App\Models\Referee;
 use App\Models\Purchase;
 use App\Models\CaseStudy;
 use Illuminate\Http\Request;
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -20,16 +23,14 @@ use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\ProjectDiscussionController;
+
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\User\UserDocController;
-
 use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use App\Http\Controllers\PurchaseController;
-use App\Models\Referee;
 
 /*
 |--------------------------------------------------------------------------
@@ -137,8 +138,8 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
-    $user = User::find(1);
-    dd($user->referees);
+    $task = Task::first();
+    dd('test');
 });
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Throwable;
 use Carbon\Carbon;
+use App\Models\Task;
 use App\Models\User;
 use App\Models\Section;
 use App\Models\PromoCode;
@@ -12,8 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\CaseStudyPackage;
 use Illuminate\Http\JsonResponse;
-use PhpParser\Node\Stmt\TryCatch;
 
+use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\error;
 use Illuminate\Support\Facades\Storage;
@@ -120,6 +121,25 @@ class AjaxController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Section Deleted!'
+        ]);
+    }
+
+    function updateTask(int $client, int $task): JsonResponse
+    {
+        try {
+            $task = Task::find($task);
+            $task->clients()->updateExistingPivot($client, [
+                'is_completed' => !$task->isCompleted($client)
+            ]);
+            $success = true;
+            $message = 'Task Updated!';
+        } catch (\Throwable $th) {
+            $success = false;
+            $message = $th->getMessage();
+        }
+        return response()->json([
+            'success' => $success,
+            'message' => $message
         ]);
     }
 }

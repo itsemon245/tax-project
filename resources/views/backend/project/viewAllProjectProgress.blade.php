@@ -60,7 +60,8 @@
                                         <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
                                             <div
                                                 class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}%;">
-                                                <span class="text-light">{{ $progress }}%</span></div>
+                                                <span class="text-light">{{ $progress }}%</span>
+                                            </div>
                                         </div>
                                     @empty
                                         <h5 class="d-flex justify-content-center text-muted">No record found</h5>
@@ -161,23 +162,30 @@
             </thead>
             <tbody>
                 @forelse ($clients as $key=>$client)
-                    @foreach ($client->projects as $project)
+                    @foreach ($client->projects()->latest()->get() as $project)
                         <tr>
                             <td>{{ ++$key }}</td>
                             <td>{!! $project->name !!}</td>
                             <td>{!! $client->name !!}</td>
                             <td>{!! $client->phone !!}</td>
                             <td>
-                                <div class="d-flex flex-wrap gap-2">
+                                <div class="d-inline-flex flex-column flex-wrap gap-2">
                                     @foreach ($client->users as $user)
-                                        <span class="bg-soft-success text-dark">{{ $user->name }}</span>
+                                        <span class="text-blue bg-soft-blue p-1 rounded">{{ $user->name }}</span>
                                     @endforeach
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex flex-wrap gap-2">
-                                    @foreach ($project->tasks as $task)
-                                        <span class=" bg-soft-success text-dark rounded-3">{{ $task->name }}</span>
+                                    @foreach ($client->tasks($project->id)->latest()->get() as $i => $task)
+                                        <div class="form-check mb-2 form-check-success">
+                                            <input
+                                                data-url="{{ route('ajax.task.update', ['client' => $client->id, 'task' => $task->id]) }}"
+                                                class="form-check-input rounded-circle" type="checkbox" value=""
+                                                id="{{ "project-$key-task-$i" }}" @checked($task->isCompleted($client->id))>
+                                            <label class="form-check-label"
+                                                for="{{ "project-$key-task-$i" }}">{{ $task->name }}</label>
+                                        </div>
                                     @endforeach
                                 </div>
                             </td>
@@ -206,4 +214,34 @@
         </x-backend.table.basic>
     </x-backend.ui.section-card>
     <!-- end row-->
+    @push('customJs')
+        <script>
+            $(document).ready(function() {
+                $('.form-check-input').on('change', e => {
+                    $.ajax({
+                        type: "post",
+                        url: e.target.dataset.url,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                Toast.fire({
+                                'icon': 'success',
+                                'title': 'Success',
+                                'text': response.message
+                            }) 
+                            }else{
+                                Toast.fire({
+                                'icon': 'error',
+                                'title': 'Error',
+                                'text': response.message
+                            })
+                            }
+                        }
+                    });
+                })
+            });
+        </script>
+    @endpush
 @endsection

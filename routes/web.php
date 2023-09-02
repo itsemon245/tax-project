@@ -37,6 +37,7 @@ Route::prefix('ajax')
         Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');
         Route::post('mark-notifications', 'markNotificationsAsRead')->name('notifications.read');
         Route::post('promo-code/apply', 'applyPromoCode')->name('promo.apply');
+        Route::post('update/client/{client}/task/{task}', 'updateTask')->name('task.update');
         Route::get('get-items/{slug}', 'getItems')->name('get.items');
         Route::delete('delete/{section}/section', 'deleteSection')->name('section.destroy');
     });

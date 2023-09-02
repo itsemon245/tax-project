@@ -22,8 +22,7 @@ class ProjectController extends Controller
     public function index()
     {
 
-        $clients = Client::get();
-        $projects = Project::get();
+        $clients = Client::latest()->get();
         return view('backend.project.viewAllProjectProgress', compact('clients'));
     }
 
@@ -55,20 +54,27 @@ class ProjectController extends Controller
         $project->monthly_target = $request->daily_target * $data['weekdays'] * 4;
         $project->save();
         foreach ($request->clients as $clientId) {
+            foreach ($request->tasks as $task) {
+                $task = Task::create([
+                    'name' => $task,
+                    'project_id' => $project->id,
+                ]);
+                $task->clients()->attach($clientId);
+            }
             $project->clients()->attach($clientId);
             $users = $request["client_" . $clientId . "_users"];
-            $admins = Role::where('name','admin')->first()->users;
-            if($admins){
-                foreach($admins as $admin){
-                    if($admin->clients()->find($clientId) == null){
+            $admins = Role::where('name', 'admin')->first()->users;
+            if ($admins) {
+                foreach ($admins as $admin) {
+                    if ($admin->clients()->find($clientId) == null) {
                         $admin->clients()->attach($clientId);
                     }
                 }
             }
-            if($users){
+            if ($users) {
                 foreach ($users as $userId) {
-                    $isAttached = DB::table('client_user')->where(['client_id' => $clientId,'user_id' => $userId,])->first();
-                    if(!$isAttached){
+                    $isAttached = DB::table('client_user')->where(['client_id' => $clientId, 'user_id' => $userId,])->first();
+                    if (!$isAttached) {
                         DB::table('client_user')->insert([
                             'client_id' => $clientId,
                             'user_id' => $userId
@@ -77,12 +83,7 @@ class ProjectController extends Controller
                 };
             };
         };
-        foreach($request->tasks as $task){
-            Task::create([
-                'name' => $task,
-                'project_id' => $project->id,
-            ]);
-        }
+
 
         $notification = [
             'message' => 'Project Created With Assigned',
@@ -99,7 +100,7 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $clients = Client::with('users')->get();
-        return view('backend.project.editProjectProgress', compact('project','clients'));
+        return view('backend.project.editProjectProgress', compact('project', 'clients'));
     }
     /**
      * Update the specified resource in storage.
@@ -128,8 +129,6 @@ class ProjectController extends Controller
         ];
         return back()
             ->with($notification);
-
-
     }
     /**
      * Remove the specified resource from storage.
