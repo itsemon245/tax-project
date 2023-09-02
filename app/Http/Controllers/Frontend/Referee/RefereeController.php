@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Referee;
 
 use App\Models\User;
 use App\Models\Referee;
+use App\Models\Purchase;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRefereeRequest;
 use App\Http\Requests\UpdateRefereeRequest;
@@ -15,8 +16,7 @@ class RefereeController extends Controller
      */
     public function index()
     {
-        $referees = User::with('referees')->find(auth()->id(), ['id'])->referees;
-        return view('frontend.pages.referee.refer-index', compact('referees'));
+        return view('frontend.pages.referee.refer-index');
     }
 
     /**

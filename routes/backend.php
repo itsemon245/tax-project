@@ -49,6 +49,7 @@ use App\Http\Controllers\Backend\Return\ReturnFormController;
 use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
+use App\Http\Controllers\Backend\Withdrawal\WithdrawalController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Maintenance\MaintenanceController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
@@ -120,6 +121,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('result', ResultController::class);
     Route::resource('taxCalculator', TaxCalculatorController::class);
     Route::resource('setting', SettingController::class);
+    Route::resource('withdrawal', WithdrawalController::class);
     Route::prefix('setting')
         ->controller(SettingController::class)
         ->name('setting.')
@@ -177,7 +179,6 @@ Route::prefix('admin')->group(function () {
     Route::get('order/status/{id}', [OrderController::class, 'status'])->name('order.status');
     Route::get('consultancy/status/{id}', [OrderController::class, 'consultancyStatus'])->name('consultancy.order.status');
     Route::delete('order/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
-    Route::get('refreesss', [OrderController::class, 'purchasesCourseByReferer']);
 
     Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
     Route::resource('industry', IndustryController::class);
