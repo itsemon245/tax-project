@@ -26,7 +26,6 @@ class OrderController extends Controller
     public function status($id)
     {
         $payment = Purchase::find($id);
-        // dd($payment);
         $user = $payment->user;
         $referee = Referee::where('user_id', $user->id)->first();
         $parent = $referee->parent;

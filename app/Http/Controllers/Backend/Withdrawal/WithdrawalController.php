@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend\Withdrawal;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Withdrawal;
 
 class WithdrawalController extends Controller
 {
@@ -20,7 +22,7 @@ class WithdrawalController extends Controller
      */
     public function create()
     {
-        //
+        return view('frontend.pages.withdrawal.withdrawal');
     }
 
     /**
@@ -28,7 +30,23 @@ class WithdrawalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'account_type' => 'required',
+            'account_no' => 'required|string',
+            'amount' => 'required|string',
+        ]);
+        $withdrawal = new Withdrawal();
+        $withdrawal->user_id = $request->user_id;
+        $withdrawal->account_type = $request->account_type;
+        $withdrawal->account_no = $request->account_no;
+        $withdrawal->amount = $request->amount;
+        $withdrawal->save();
+        $notification = [
+            'message' => 'Withdrawal Submitted',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
+
     }
 
     /**

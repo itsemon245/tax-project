@@ -14,21 +14,24 @@
                 <div class="row mb-4">
                     <div class="col-md-4 mt-5 card bg-success bg-gradient text-white">
                         <div class="p-4 card-body">
-                            <p>Available Commissions Balance</p>
-                            <h2 class="mt-3 text-center">{{ $parent->total_commission - $parent->withdrawn_commission }} Tk.</h2>
-                            <hr class="bg-light my-4">
-                            <div class="text-light " style="font-size: 14px;">
-                                <div class="d-flex mt-2 justify-content-between">
-                                    <p>Total Amount Withdrawn</p>
-                                    <p>{{ $parent->total_commission }} TK</p>
+                                <form action="{{ route('withdrawal.create') }}" method="get">
+                                    @csrf
+                                <p>Available Commissions Balance</p>
+                                <h2 class="mt-3 text-center">{{ $parent->total_commission - $parent->withdrawn_commission }} Tk.</h2>
+                                <hr class="bg-light my-4">
+                                <div class="text-light " style="font-size: 14px;">
+                                    <div class="d-flex mt-2 justify-content-between">
+                                        <p>Total Amount Withdrawn</p>
+                                        <p>{{ $parent->total_commission }} TK</p>
+                                    </div>
+                                    <button href="{{ route('withdrawal.create') }}" class="btn mt-5 w-100 rounded-3 shadow d-flex align-items-center justify-content-center  bg-light bg-gradient text-success"
+                                        style="font-weight: 500;">
+                                        <span class="mdi mdi-cash p-0 m-0"></span> Request Withdrawl
+                                    </button>
+                                </form>
                                 </div>
-                                <a class="btn mt-5 rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-light bg-gradient text-success"
-                                    style="font-weight: 500;">
-                                    <span class="mdi mdi-cash p-0 m-0"></span> Request Withdrawl
-                                </a>
                             </div>
                         </div>
-                    </div>
                     <div class="col-md-8 mt-5 pt-3 mb-4">
                         <div class="card mt-5 refer-link bg-success bg-gradient">
                             <div class="card-body">

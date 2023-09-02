@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\PromoCode;
+use App\Models\Withdrawal;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -105,5 +106,9 @@ class User extends Authenticatable implements MustVerifyEmail
     function clients(): BelongsToMany
     {
         return $this->belongsToMany(Client::class);
+    }
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class);
     }
 }
