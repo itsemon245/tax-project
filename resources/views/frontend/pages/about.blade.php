@@ -29,15 +29,15 @@
                     @foreach ($about->sections as $section)
                         {{-- Sections --}}
                         <div class="row mb-4 justify-content-sm-center gap-sm-3">
-                            <h4 class="col-sm-12 col-5 p-0">{{ $section['title'] ?? '' }}</h4>
+                            <h4 class="col-sm-12 col-5 p-0">{{ $section['title'] }}</h4>
                             <div class="col-sm-3 col-6 mb-3 mb-sm-0 p-0 flex-grow-1">
                                 @isset($section['image'])
-                                    <img class="w-100 rounded" src="{{ useImage($about_sections['image']) }}" alt="" />
+                                    <img class="w-100 rounded" src="{{ useImage($section['image']) }}" alt="" />
                                 @endisset
                             </div>
                             <div class="col-sm-8 p-4 bg-secondary rounded">
                                 <p>
-                                    {!! $about_sections['description'] !!}
+                                    {!! $section['description'] !!}
                                 </p>
                             </div>
                         </div>
