@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('income_percentage')->nullable()->comment('for Income');
             $table->integer('asset_percentage')->nullable()->comment('for Asset');
             $table->bigInteger('min_tax')->nullable()->comment();
+            $table->string('service')->nullable()->comment();
             $table->json('tax_free')->nullable()->comment('male:amount,female:amount');
             $table->enum('type', ['tax', 'others']);
             $table->enum('for', ['firm', 'individual', 'company']);

@@ -42,8 +42,8 @@
                                     label="Range To" disabled />
                             </div>
                             <div class="col-md-3">
-                                <x-backend.form.text-input id="service-name" name="services[]" placeholder="Service Name"
-                                    label="Service Name" disabled />
+                                <x-backend.form.text-input id="min-Tax" name="min_taxes[]" placeholder="Min. Tax"
+                                    label="Min. Tax" disabled />
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-2">
@@ -99,10 +99,17 @@
                                 <option value="others" @selected($taxSetting->type === 'others')>Others</option>
                             </x-backend.form.select-input>
                         </div>
-                        <div class="col-md-3">
-                            <x-backend.form.text-input required type="number" name="min_tax" placeholder="Min. Tax"
-                                label="Min. Tax" :value="$taxSetting->min_tax" />
-                        </div>
+                        @if ($taxSetting->type == 'others')
+                            <div class="col-md-3">
+                                <x-backend.form.text-input required type="text" name="service" placeholder="Service Name"
+                                    label="Service Name" :value="$taxSetting->service" />
+                            </div>
+                        @else
+                            <div class="col-md-3">
+                                <x-backend.form.text-input required type="number" name="min_tax" placeholder="Min. Tax"
+                                    label="Min. Tax" :value="$taxSetting->min_tax" />
+                            </div>
+                        @endif
                     </div>
                     <div
                         class="row only-company only-tax {{ $taxSetting->for !== 'company' && $taxSetting->type === 'others' ? 'd-none' : '' }}">
@@ -127,8 +134,8 @@
 
                     <div class="row only-individual {{ $taxSetting->for !== 'individual' ? 'd-none' : '' }}">
                         <div class="col-md-6">
-                            <x-backend.form.text-input type="number" name="tax_free_male"
-                                placeholder="Tax Free Male" label="Tax Free Male(৳)" :value="$taxSetting->tax_free->male ?? null" />
+                            <x-backend.form.text-input type="number" name="tax_free_male" placeholder="Tax Free Male"
+                                label="Tax Free Male(৳)" :value="$taxSetting->tax_free->male ?? null" />
                         </div>
                         <div class="col-md-6">
                             <x-backend.form.text-input type="number" name="tax_free_female"
@@ -184,9 +191,8 @@
                                                     placeholder="Range To" label="Range To" :value="$slot->to" disabled />
                                             </div>
                                             <div class="col-md-3">
-                                                <x-backend.form.text-input id="service-name" name="services[]"
-                                                    placeholder="Service Name" label="Service Name" :value="$slot->service"
-                                                    disabled />
+                                                <x-backend.form.text-input id="min-tax" name="min_taxes[]"
+                                                    placeholder="Min. Tax" label="Min. Tax" :value="$slot->min_tax" disabled />
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="mb-2">
