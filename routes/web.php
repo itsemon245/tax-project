@@ -40,6 +40,7 @@ Route::prefix('ajax')
         Route::post('update/client/{client}/task/{task}', 'updateTask')->name('task.update');
         Route::get('get-items/{slug}', 'getItems')->name('get.items');
         Route::delete('delete/{section}/section', 'deleteSection')->name('section.destroy');
+        Route::delete('delete/{slot}/slot', 'deleteSlot')->name('slot.destroy');
     });
 Route::get('call-artisan', function () {
     $exitCode = Artisan::call('migrate:fresh');

@@ -146,11 +146,11 @@ class TaxSettingController extends Controller
                 $difference = $to - $from;
                 $slot = Slot::updateOrCreate(['id' => $id], [
                     'tax_setting_id' => $taxSetting->id,
-                    'type' => $type,
                     'from' => $from,
                     'to' => $to,
                     'difference' => $difference,
                     'tax_percentage' => $percentage,
+                    'type' => $type,
                 ]);
             }
         }
