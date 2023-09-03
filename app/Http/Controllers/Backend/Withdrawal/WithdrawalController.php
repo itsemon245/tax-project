@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Backend\Withdrawal;
 
+use App\Models\User;
+use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Withdrawal;
 
 class WithdrawalController extends Controller
 {
@@ -14,7 +15,8 @@ class WithdrawalController extends Controller
      */
     public function index()
     {
-        return view('backend.withdrawal.viewAllWthdrawal');
+        $withdrawals = Withdrawal::with('user')->where('status', 1)->get();
+        return view('backend.withdrawal.viewAllWthdrawal', compact('withdrawals'));
     }
 
     /**
@@ -56,7 +58,6 @@ class WithdrawalController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -70,7 +71,22 @@ class WithdrawalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $parent = User::find($id);
+        $withdrawal = Withdrawal::find($request->withdrawal_id);
+        $amount = floatval($withdrawal->amount);
+        if($amount >= 500){
+            $parent->withdrawn_commission = $parent->withdrawn_commission + $amount;
+            $parent->remaining_commission = $parent->total_commission - $parent->withdrawn_commission;
+            $parent->save();
+        }
+
+        $notification = [
+            'message' => 'Payment Successful',
+            'alert-type' => 'success',
+        ];
+        return redirect()
+            ->back()
+            ->with($notification);
     }
 
     /**
@@ -78,6 +94,13 @@ class WithdrawalController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $withdrawal = Withdrawal::find($id);   
+        $withdrawal->delete();
+        $notification = [
+            'message' => 'Withdrawal Deleted',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
     }
+
 }
