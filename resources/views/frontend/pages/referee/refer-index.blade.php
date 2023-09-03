@@ -10,7 +10,7 @@
                 @php
                 $parent = App\Models\User::find($reference->parent_id);
                 @endphp
-                @if ($parent->remaining_commission < 500)
+                @if ($parent->remaining_commission >= 500)
                 <div class="row mb-4">
                     <div class="col-md-4 mt-5 card bg-success bg-gradient text-white">
                         <div class="p-4 card-body">
@@ -104,11 +104,11 @@
                     <div class="col-md-4 mt-5 card bg-success bg-gradient text-white">
                         <div class="p-4 card-body">
                             <p>Available Commissions Balance</p>
-                            <h2 class="mt-3 text-center">0.00 Tk.</h2>
+                            <h2 class="mt-3 text-center">{{ $parent->remaining_commission }} Tk.</h2>
                             <hr class="bg-light my-4">
                                 <div class="d-flex justify-content-between">
                                     <p>Total Amount Withdrawn</p>
-                                    <p>0.00 TK</p>
+                                    <p>{{ $parent->total_commission }} TK</p>
                                 </div>
                                 <a class="btn disabled rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-danger bg-gradient text-light "
                                     style="font-weight: 500;">
@@ -147,19 +147,9 @@
             <div class="row">
                 <div class="col-md-4 mt-5 card bg-success bg-gradient text-white">
                     <div class="p-4 card-body">
-                        <p>Available Commissions Balance</p>
-                        <h2 class="mt-3 text-center">0.00 Tk.</h2>
-                        <hr class="bg-light my-4">
-                            <div class="d-flex justify-content-between">
-                                <p>Total Amount Withdrawn</p>
-                                <p>0.00 TK</p>
-                            </div>
-                            <a class="btn disabled rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-danger bg-gradient text-light "
-                                style="font-weight: 500;">
-                                <span class="mdi mdi-cash p-0 m-0"></span> Request Withdrawl
-                            </a>
-                        </div>
+                        <h4 class="mt-5">Your referral persons right now not buy products.</h4>
                     </div>
+                </div>
                 <div class="col-md-8 mt-5 pt-3 mb-4">
                     <div class="card mt-5 refer-link bg-success bg-gradient">
                         <div class="card-body">
@@ -191,19 +181,9 @@
         <div class="row">
                     <div class="col-md-4 mt-5 card bg-success bg-gradient text-white">
                         <div class="p-4 card-body">
-                            <p>Available Commissions Balance</p>
-                            <h2 class="mt-3 text-center">0.00 Tk.</h2>
-                            <hr class="bg-light my-4">
-                                <div class="d-flex justify-content-between">
-                                    <p>Total Amount Withdrawn</p>
-                                    <p>0.00 TK</p>
-                                </div>
-                                <a class="btn disabled rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-danger bg-gradient text-light "
-                                    style="font-weight: 500;">
-                                    <span class="mdi mdi-cash p-0 m-0"></span> Request Withdrawl
-                                </a>
-                            </div>
+                            <h4 class="mt-5">Please copy refer link and sent to your friend.</h4>
                         </div>
+                    </div>
                     <div class="col-md-8 mt-5 pt-3 mb-4">
                         <div class="card mt-5 refer-link bg-success bg-gradient">
                             <div class="card-body">
