@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Http\Controllers\Backend\Withdrawal;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\Withdrawal;
+
+class WithdrawalController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return view('backend.withdrawal.viewAllWthdrawal');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('frontend.pages.withdrawal.withdrawal');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'account_type' => 'required',
+            'account_no' => 'required|string',
+            'amount' => 'required|string',
+        ]);
+        $withdrawal = new Withdrawal();
+        $withdrawal->user_id = $request->user_id;
+        $withdrawal->account_type = $request->account_type;
+        $withdrawal->account_no = $request->account_no;
+        $withdrawal->amount = $request->amount;
+        $withdrawal->save();
+        $notification = [
+            'message' => 'Withdrawal Submitted',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
+
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}
