@@ -1,7 +1,6 @@
 @extends('backend.layouts.app')
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Project', 'Edit']" />
-
     <x-backend.ui.section-card name="Project Edit">
         <form method="POST" action="{{ route('project.update', $project) }}">
             @csrf
@@ -17,7 +16,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <x-backend.form.text-input label="Weekdays" value="{{ $project->weekdays }}" type="number" name='weekdays'
-                                    required />
+                                required />
                             </div>
                             <div class="col-md-6 mb-2">
                                 <x-backend.form.text-input label="Start Date" value="{{ $project->start_date }}"  type="date" required
@@ -46,8 +45,7 @@
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection
-{{-- @push('customJs')
-    {{-- Selectize end --}}
+@push('customJs')
     <script src="{{ asset('frontend/assets/js/jquery.bootstrap.wizard.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/form-wizard.init.js') }}"></script>
     <script>
@@ -77,10 +75,6 @@
                 const submitBtn = `<a href="javascript: void(0);" class="btn btn-primary">Next</a>`
                 nextBtn.html(submitBtn)
             })
-
-
-
-
         });
     </script>
-{{-- @endpush --}} 
+@endpush 
