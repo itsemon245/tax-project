@@ -22,8 +22,9 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\CaseStudyPackageController;
-use App\Http\Controllers\ProjectDiscussionController;
+use App\Http\Controllers\Frontend\IndustryController;
 
+use App\Http\Controllers\ProjectDiscussionController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\User\UserDocController;
@@ -69,10 +70,8 @@ Route::get('user-doc/{userDoc}/move-to', [UserDocController::class, 'moveTo'])->
 
 
 //  uncategorized pages
-
 Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
 Route::get('/make-appointment/virtual', [PageController::class, 'appointmentVirtual'])->name('appointment.virtual');
-Route::get('show-all/industries', [PageController::class, 'showAllIndusryPage'])->name('show.all.industries');
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
 
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
@@ -95,9 +94,16 @@ Route::controller(ExpertController::class)->prefix('expert')->name('expert.')->g
     Route::get('/profile/{id}', 'profile')->name('profile');
 });
 
+Route::controller(IndustryController::class)->prefix('industry')->name('industry.page.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/{id}/show', 'show')->name('show');
+});
+
 // these route will only be visible to 2nd navigation 
 // ! Do not put any new routes in this group
 Route::prefix('page')->name('page.')->controller(PageController::class)->group(function () {
+    Route::get('/industries', 'industriesPage')->name('industries');
+    Route::get('/industries', 'industriesPage')->name('industries');
     Route::get('/industries', 'industriesPage')->name('industries');
     Route::get('/about', 'aboutPage')->name('about');
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');

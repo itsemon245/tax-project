@@ -5,27 +5,25 @@
         <div class="d-flex justify-content-center">
             <div class="container">
                 <div class="row">
-                    <div class="mb-4">
+                    <div class="mb-3">
                         {!! $industries[0]->page_description !!}
                     </div>
-                    @forelse ($industries as $industry)
+                    @foreach ($industries as $industry)
                         <div class="col-md-4 col-sm-6 mb-3">
                             <div class="border bg-light w-100 px-0 px-md-3 px-lg-5 py-3 rounded h-100">
-                                <a class="text-dark">
-                                    <div class="d-flex mb-2">
-                                        <img style="width:64px;" src="{{ $industry->image }}" class="rounded"
-                                            alt="" />
+                                <a class="text-dark" href="{{ route('industry.page.show', $industry->id) }}">
+                                    <div class="d-flex">
+                                        <img style="width:64px;" src="{{ useImage($industry->image) }}" class="rounded"
+                                            alt="{{ $industry->title }}" />
                                         <h6 class="px-3">{{ $industry->title }}</h6>
                                     </div>
-                                    <p class="tex-justify text-muted">{!! Str::limit($industry->intro, 80, '...') !!}</p>
+                                    <p class="tex-justify text-muted mt-2" style="max-width: 35ch;">{!! $industry->intro !!}
+                                    </p>
                                 </a>
                             </div>
                         </div>
-                    @empty
-                        <div class="d-flex justify-content-center">
-                            <h4>No Industries Found</h4>
-                        </div>
-                    @endforelse
+                    @endforeach
+
                 </div>
             </div>
         </div>

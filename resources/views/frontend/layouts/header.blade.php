@@ -29,13 +29,15 @@
                     </li>
                     <li class="nav-item custom-nav-item position-relative dropdown-trigger ">
                         <a class="nav-link text-light" href="#">Return Status</a>
-                        <ul class="position-absolute dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item"><a target="_blank"
-                                    rel="noopener noreferrer" href="#" class="nav-link text-light">Income Tax
-                                    Return Verification</a></li>
-                            <li class="nav-item custom-nav-item dropdown-item"><a target="_blank"
-                                    rel="noopener noreferrer" href="#" class="nav-link text-light">Tax
-                                    Verification</a></li>
+                        <ul class="position-absolute dropdown">
+                            @php
+                                $returnLinks = \App\Models\Setting::first(['return_links'])->return_links;
+                            @endphp
+                            @foreach ($returnLinks as $link)
+                                <li class="nav-item custom-nav-item dropdown-item"><a target="_blank"
+                                        rel="noopener noreferrer" href="{{ $link->link }}"
+                                        class="nav-link text-light">{{ $link->title }}</a></li>
+                            @endforeach
                         </ul>
                     </li>
                     {{-- Services Caegories --}}
@@ -61,12 +63,17 @@
                         <a class=" nav-link text-light" href="{{ route('page.industries') }}">Account & Audit</a>
                     </li>
 
-                    <li
-                        class="nav-item custom-nav-item position-relative dropdown-trigger">
+                    <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                         <a class="nav-link text-light" href="{{ route('course.index') }}">Training/Education</a>
                         <ul class="position-absolute dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item"><a href="{{route('course.show', 1)}}"
-                                    class="nav-link text-light">Practical Income Tax Course</a></li>
+                            @php
+                                $courses = \App\Models\Course::get(['id', 'name']);
+                            @endphp
+                            @foreach ($courses as $course)
+                                <li class="nav-item custom-nav-item dropdown-item"><a
+                                        href="{{ route('course.show', $course->id) }}"
+                                        class="nav-link text-light">{{ $course->name }}</a></li>
+                            @endforeach
                         </ul>
 
                     </li>
@@ -85,12 +92,14 @@
                     <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                         <a class="nav-link text-light" href="#">Return Status</a>
                         <ul class="position-absolute dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item"><a target="_blank"
-                                    rel="noopener noreferrer" href="#" class="nav-link text-light">Income Tax
-                                    Return Verification</a></li>
-                            <li class="nav-item custom-nav-item dropdown-item"><a target="_blank"
-                                    rel="noopener noreferrer" href="#" class="nav-link text-light">Tax
-                                    Verification</a></li>
+                            @php
+                                $returnLinks = \App\Models\Setting::first(['return_links'])->return_links;
+                            @endphp
+                            @foreach ($returnLinks as $link)
+                                <li class="nav-item custom-nav-item dropdown-item"><a target="_blank"
+                                        rel="noopener noreferrer" href="{{ $link->link }}"
+                                        class="nav-link text-light">{{ $link->title }}</a></li>
+                            @endforeach
                         </ul>
                     </li>
 
@@ -145,16 +154,17 @@
                         class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('course.index') ? 'active-link' : '' }}">
                         <a class="nav-link text-light" href="{{ route('course.index') }}">Courses</a>
                         <ul class="position-absolute dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item"><a href="{{route('course.show', 1)}}"
-                                    class="nav-link text-light">Practical Income Tax Course</a></li>
+                            <li class="nav-item custom-nav-item dropdown-item"><a href="{{ route('course.show', 1) }}"
+                                    class="nav-link text-light">Practical Income
+                                    Tax Course</a></li>
                         </ul>
 
                     </li>
-                    <li
-                        class="nav-item custom-nav-item">
-                        <a class=" nav-link text-light" href="{{route('course.caseStudy.page')}}">Case Study Lab</a>
+                    <li class="nav-item custom-nav-item">
+                        <a class=" nav-link text-light" href="{{ route('course.caseStudy.page') }}">Case Study
+                            Lab</a>
                     </li>
-                   
+
                     <li class="nav-item custom-nav-item {{ request()->routeIs('books.view') ? 'active-link' : '' }}">
                         <a class=" nav-link text-light" href="{{ route('books.view') }}">Book Store</a>
                     </li>
@@ -267,11 +277,10 @@
 
                     </ul>
                 </li>
-                <li
-                    class="nav-item custom-nav-item position-relative dropdown-trigger">
+                <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                     <a class="nav-link text-light" href="{{ route('course.index') }}">Training/Education</a>
                     <ul class="position-absolute dropdown ">
-                        <li class="nav-item custom-nav-item dropdown-item"><a href="{{route('course.show', 1)}}"
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="{{ route('course.show', 1) }}"
                                 class="nav-link text-light">Practical Income Tax Course</a></li>
                     </ul>
                 </li>
@@ -281,10 +290,40 @@
                 </li>
             </ul>
         </nav>
+    @elseif ($isCoursePage)
+        <nav class="mx-auto menu mobile">
+            <ul class="nav justify-content-center">
+                <li class="nav-item custom-nav-item {{ request()->routeIs('home') ? 'active-link' : '' }}">
+                    <a class=" nav-link text-light" href="{{ route('home') }}">Home</a>
+                </li>
+                <li
+                    class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('course.index') ? 'active-link' : '' }}">
+                    <a class="nav-link text-light" href="{{ route('course.index') }}">Courses</a>
+                    <ul class="position-absolute dropdown ">
+                        <li class="nav-item custom-nav-item dropdown-item"><a href="{{ route('course.show', 1) }}"
+                                class="nav-link text-light">Practical Income
+                                Tax Course</a></li>
+                    </ul>
+
+                </li>
+                <li class="nav-item custom-nav-item">
+                    <a class=" nav-link text-light" href="{{ route('course.caseStudy.page') }}">Case Study
+                        Lab</a>
+                </li>
+
+                <li class="nav-item custom-nav-item {{ request()->routeIs('books.view') ? 'active-link' : '' }}">
+                    <a class=" nav-link text-light" href="{{ route('books.view') }}">Book Store</a>
+                </li>
+
+            </ul>
+        </nav>
     @else
         {{-- nav for smaller devices --}}
         <nav class="mx-auto menu mobile">
             <ul class="nav justify-content-center">
+                <li class="nav-item custom-nav-item {{ request()->routeIs('home') ? 'active-link' : '' }}">
+                    <a class=" nav-link text-light" href="{{ route('home') }}">Home</a>
+                </li>
                 <li class="nav-item custom-nav-item {{ request()->routeIs('page.industries') ? 'active-link' : '' }}">
                     <a class=" nav-link text-light" href="{{ route('page.industries') }}">Industries</a>
                 </li>

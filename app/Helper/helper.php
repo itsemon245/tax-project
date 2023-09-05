@@ -4,10 +4,13 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Crypt;
 
 /**
  * Set Image given a img from database
+ * @param string $image
+ * @return string url
  */
 function useImage($image)
 {
@@ -15,7 +18,8 @@ function useImage($image)
 }
 
 /**
- * Returns current timestamp with unique identifier
+ * Returns current timestamp in format = 'Y-m-d-H-m-s-u'
+ * @return string 
  */
 function timestamp()
 {
@@ -23,13 +27,15 @@ function timestamp()
 }
 /**
  * Stores an image given an image request and a directory
- *
- * @param string $prefix is empty 
- * getClientOriginalName will be used
+ *@param UploadedFile $image
+ * @param string $old_path
+ * @param string $dir
+ * @param string $prefix skip if you need clientOriginalName
+ * @param string $disk default = public
+ * @return string $new_path
  */
 function saveImage($image, string $dir, ?string $prefix = '', string $disk = 'public')
 {
-    // dd($image);
     if ($image) {
         if ($prefix === '' || $prefix === null) {
             $prefix = str($image->getClientOriginalName())->slug();
@@ -37,7 +43,6 @@ function saveImage($image, string $dir, ?string $prefix = '', string $disk = 'pu
         $ext = $image->extension();
         $name = $prefix . "-" . timestamp() . '.' . $ext;
         $path = $image->storeAs("uploads/$dir", $name, $disk);
-        // $url = asset('storage/' . $path);
         return $path;
     } else {
         return $image;
@@ -46,6 +51,11 @@ function saveImage($image, string $dir, ?string $prefix = '', string $disk = 'pu
 
 /**
  * Updates a file given a new file and old path
+ * @param UploadedFile $file
+ * @param string $old_path
+ * @param string $dir
+ * @param string $prefix skip if you need clientOriginalName
+ * @param string $disk default = public
  * @return string $new_path
  */
 function updateFile($file, $old_path, $dir,  $prefix = "", $disk = "public")
@@ -73,8 +83,8 @@ function updateFile($file, $old_path, $dir,  $prefix = "", $disk = "public")
 
 /**
  * Deletes a file given its path from database
- * 
- * Deletes only form public disks
+ * @param string $old_path
+ * @param string $disk default = public
  */
 function deleteFile($old_path, $disk = 'public')
 {
@@ -82,7 +92,7 @@ function deleteFile($old_path, $disk = 'public')
     if ($isFile) {
         $old_path = explode("storage", $old_path)[1];
     }
-    $path = $disk. '/' . $old_path;
+    $path = $disk . '/' . $old_path;
     $deleted = false;
     if (Storage::exists($path)) {
         $deleted = Storage::delete($path);
@@ -91,6 +101,7 @@ function deleteFile($old_path, $disk = 'public')
 }
 /**
  * An Array for social media platform data
+ * @return array
  */
 function socialItems(): array
 {
@@ -142,6 +153,10 @@ function socialItems(): array
 
 /**
  * Get records from the specified table with queries
+ * @param string $table
+ * @param array $queries
+ * @param int limit
+ * 
  */
 function getRecords($table = 'users', $queries = [], $limit = 10)
 {
@@ -158,6 +173,9 @@ function getRecords($table = 'users', $queries = [], $limit = 10)
 
 /**
  * Get count for any given table from database
+ * @param string $table
+ * @param array $queries
+ * @return int count
  */
 function countRecords($table = 'users', $queries = [])
 {
@@ -220,7 +238,10 @@ function reviewsAndStarCounts(): array
     return $array;
 }
 
-
+/**
+ * Returns current fiscal year
+ * @return string like '2023-2024'
+ */
 function currentFiscalYear(): string
 {
     $from = currentYear() - 1;
@@ -228,6 +249,11 @@ function currentFiscalYear(): string
     $currentYear = $from . "-" . $to;
     return $currentYear;
 }
+
+/**
+ * Returns current year
+ * @return int
+ */
 function currentYear(): int
 {
     $date = now();
@@ -238,11 +264,16 @@ function currentYear(): int
     }
     return $year;
 }
-
+/**
+ * Returns style for review stars based on avg rating
+ * @param float $rating
+ * @param float $avg
+ */
 function starStyle($rating, $avg)
 {
     $gt = $rating <= $avg;
     $lt = $avg <= $rating + 1;
+    $mask = '';
     if ($gt & $lt) {
         $percnetage = (round($avg, 1) - $rating) * 100;
         $black = "black $percnetage%";
@@ -251,6 +282,18 @@ function starStyle($rating, $avg)
     -webkit-mask-image: linear-gradient(to right, $black , $transparent);
     mask-image: linear-gradient(to right, $black, $transparent);
     ";
-        return $mask;
     }
+    return $mask;
+}
+
+/**
+ * Returns an integer for paginate count
+ * Returns 20 by default
+ * @param ?int count default 20
+ * @return int default 20
+ */
+function paginateCount(?int $count): int
+{
+    $count = $count === null ? 20 : $count;
+    return $count;
 }
