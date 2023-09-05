@@ -13,7 +13,7 @@ class CalendarController extends Controller
 {
     public function index()
     {
-        $events = Calendar::with('client')->latest()->get();
+        $events = Calendar::with('client')->latest()->simplePaginate(paginateCount(20));
         return view('backend.calendar.viewEvents', compact('events'));
     }
 

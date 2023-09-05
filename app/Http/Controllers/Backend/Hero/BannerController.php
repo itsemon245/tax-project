@@ -15,7 +15,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $banners = Banner::latest()->get();
+        $banners = Banner::latest()->simplePaginate(paginateCount(20));
         return view('backend.hero.view-hero', compact('banners'));
     }
 

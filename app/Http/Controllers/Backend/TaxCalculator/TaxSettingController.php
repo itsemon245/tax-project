@@ -16,7 +16,7 @@ class TaxSettingController extends Controller
      */
     public function index()
     {
-        $taxSettings = TaxSetting::get();
+        $taxSettings = TaxSetting::simplePaginate(paginateCount(20));
         return view('backend.taxCalculator.settings', compact('taxSettings'));
     }
 

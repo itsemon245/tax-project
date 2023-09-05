@@ -22,7 +22,7 @@ class ProjectController extends Controller
     public function index()
     {
 
-        $clients = Client::latest()->get();
+        $clients = Client::latest()->simplePaginate(paginateCount(20));
         return view('backend.project.viewAllProjectProgress', compact('clients'));
     }
 

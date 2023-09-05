@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = User::with('roles')->latest()->get();
+        $data = User::with('roles')->latest()->simplePaginate(paginateCount(20));
         return view('backend.users.view-users', compact('user', 'data'));
     }
 

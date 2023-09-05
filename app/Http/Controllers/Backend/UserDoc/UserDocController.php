@@ -14,7 +14,7 @@ class UserDocController extends Controller
      */
     public function index()
     {
-        $userDocs = UserDoc::latest()->where('files', '!=', null)->get();
+        $userDocs = UserDoc::latest()->where('files', '!=', null)->simplePaginate(paginateCount(20));
         return view('backend.userdoc.viewAllDoc', compact('userDocs'));
     }
 

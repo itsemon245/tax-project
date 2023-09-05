@@ -22,9 +22,9 @@ class DashboardController extends Controller
     */
     public function index()
     {
-        $clients = Client::get();
-        $projects = Project::get();
-        $events = Calendar::with('client')->latest()->get();
+        $clients = Client::simplePaginate(paginateCount(20));
+        $projects = Project::simplePaginate(paginateCount(20));
+        $events = Calendar::with('client')->latest()->simplePaginate(paginateCount(20));
         $today = Carbon::now()->format('Y-m-d');
         $services = Calendar::get()->unique();
         $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class UserAppointmentController extends Controller
 {
     function index() {
-        $appointments = UserAppointment::where('is_approved', false)->with('map', 'user')->latest()->get();
+        $appointments = UserAppointment::where('is_approved', false)->with('map', 'user')->latest()->simplePaginate(paginateCount(20));
         return view('backend.user.appointments', compact('appointments'));
     }
     function approvedList() {

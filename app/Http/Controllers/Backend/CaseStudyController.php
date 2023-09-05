@@ -16,7 +16,7 @@ class CaseStudyController extends Controller
      */
     public function index()
     {
-        $data = CaseStudy::with('caseStudyCategory', 'caseStudyPackage')->latest()->get();
+        $data = CaseStudy::with('caseStudyCategory', 'caseStudyPackage')->latest()->simplePaginate(paginateCount(20));
         return view('backend.case-study.index', compact('data'));
     }
 

@@ -15,7 +15,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::latest()->simplePaginate();
+        $appointments = Appointment::latest()->simplePaginate(paginateCount(20));
         return view('backend.appointment.view-appointment', compact('appointments'));
     }
 
