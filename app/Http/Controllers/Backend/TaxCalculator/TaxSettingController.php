@@ -38,7 +38,6 @@ class TaxSettingController extends Controller
             "name" => "string|max:255",
             "for" => "required|max:255",
             "type" => "required|max:255",
-            "min_tax" => "required|max:255",
         ]);
         $taxSetting = TaxSetting::create($validated);
         $this->setOtherAttributes($request, $taxSetting);
@@ -81,7 +80,6 @@ class TaxSettingController extends Controller
             "name" => "string|max:255",
             "for" => "required|max:255",
             "type" => "required|max:255",
-            "min_tax" => "required|max:255",
         ]);
         $updated = $taxSetting->update($validated);
         $this->setOtherAttributes($request, $taxSetting);
@@ -130,6 +128,11 @@ class TaxSettingController extends Controller
                 ];
                 break;
         }
+        if ($request->type === 'others') {
+            $taxSetting->service = $request->service;
+        } else {
+            $taxSetting->min_tax = $request->min_tax;
+        }
     }
 
     public function setSlots($request, $taxSetting)
@@ -143,11 +146,11 @@ class TaxSettingController extends Controller
                 $difference = $to - $from;
                 $slot = Slot::updateOrCreate(['id' => $id], [
                     'tax_setting_id' => $taxSetting->id,
-                    'type' => $type,
                     'from' => $from,
                     'to' => $to,
                     'difference' => $difference,
                     'tax_percentage' => $percentage,
+                    'type' => $type,
                 ]);
             }
         }
@@ -157,14 +160,14 @@ class TaxSettingController extends Controller
         if ($request->others_slot_from) {
             foreach ($request->others_slot_from as $key => $from) {
                 $id = $request->slot_ids[$key] ?? null;
-                $service = $request->services[$key];
+                $min_tax = $request->min_taxes[$key];
                 $isDiscountFixed = $request->is_discounts_fixed[$key] !== 'false';
                 $amount = $request->discount_amounts[$key];
                 $to = $request->others_slot_to[$key];
                 $difference = $to - $from;
                 $slot = Slot::updateOrCreate(['id' => $id], [
                     'tax_setting_id' => $taxSetting->id,
-                    'service' => $service,
+                    'min_tax' => $min_tax,
                     'from' => $from,
                     'to' => $to,
                     'difference' => $difference,

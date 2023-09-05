@@ -50,14 +50,8 @@ class PageController extends Controller
     }
     public function aboutPage()
     {
-        $about_data = About::skip(0)->first();
-        if ($about_data > 0) {
-            $about_sections = json_decode($about_data->sections, true);
-            return view('frontend.pages.about', compact('about_data', 'about_sections'));
-        } else {
-            $about_sections = null;
-            return view('frontend.pages.about', compact('about_data', 'about_sections'));
-        }
+        $about = About::first();
+        return view('frontend.pages.about', compact('about'));
     }
     function officePage()
     {
@@ -99,8 +93,8 @@ class PageController extends Controller
     //show all my courses in frontend
     public function myCourses()
     {
-        $user = User::where('id',auth()->id())->first();
-        $courses= $user->purchased('course');
+        $user = User::where('id', auth()->id())->first();
+        $courses = $user->purchased('course');
         return view('frontend.pages.myCourses', compact('courses'));
     }
     //show all my payments/payment history in frontend

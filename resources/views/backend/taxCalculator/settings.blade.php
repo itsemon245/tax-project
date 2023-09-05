@@ -64,6 +64,22 @@
                                         </div>
                                     </div>
                                 @endif
+
+                                @if ($tax->type === 'others')
+                                    <span class="">Service: </span>
+                                    <span class="text-success text-capitalize">{{ $tax->service }}</span>
+                                @else
+                                    <div class="mb-1">
+                                        <div class="p-1 bg-soft-dark text-dark d-inline rounded rounded-3">
+                                            <span class="">Min Tax: </span>
+                                            <span class=" text-capitalize">{{ $tax->min_tax }}</span>
+                                            <span class="mdi mdi-currency-bdt font-16"></span>
+                                        </div>
+                                    </div>
+                                @endif
+                                <div>
+
+                                </div>
                             </td>
                             <td class="fw-bold">
                                 @if ($tax->for === 'individual')
@@ -109,7 +125,7 @@
                                                     <th class="p-1">To</th>
                                                     <th class="p-1">Difference</th>
                                                     <th class="p-1">Amount</th>
-                                                    <th class="p-1">Service</th>
+                                                    <th class="p-1">Min Tax</th>
 
                                                 </tr>
                                             @endif
@@ -154,8 +170,9 @@
                                                                 <span class="mdi mdi-percent-outline font-16"></span>
                                                             @endif
                                                         </td>
-                                                        <td class="p-1 text-success text-capitalize">
-                                                            {{ $slot->service }}</span>
+                                                        <td class="p-1 text-capitalize">
+                                                            {{ $slot->min_tax }}</span>
+                                                            <span class="mdi mdi-currency-bdt font-16"></span>
                                                         </td>
                                                     </tr>
                                                 @endforeach

@@ -42,8 +42,8 @@
                                     label="Range To" disabled />
                             </div>
                             <div class="col-md-3">
-                                <x-backend.form.text-input id="service-name" name="services[]" placeholder="Service Name"
-                                    label="Service Name" disabled />
+                                <x-backend.form.text-input type="number" id="min-tax" name="min_taxes[]"
+                                    placeholder="Min Tax" label="Min Tax" disabled />
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-2">
@@ -98,16 +98,19 @@
                                 <option value="others">Others</option>
                             </x-backend.form.select-input>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 only-tax">
                             <x-backend.form.text-input type="number" name="min_tax" placeholder="Min. Tax"
-                                label="Min. Tax" required />
+                                label="Min. Tax" />
+                        </div>
+                        <div class="col-md-3 only-others d-none">
+                            <x-backend.form.text-input name="service" placeholder="Service Name" label="Service Name"
+                             />
                         </div>
                     </div>
                     <div class="row only-company only-tax d-none">
                         <div class="col-md-4">
                             <x-backend.form.text-input type='number' name="turnover_percentage"
-                                placeholder="Percentage For Turnover" label="Percentage For Turnover(%)"
-                                disabled />
+                                placeholder="Percentage For Turnover" label="Percentage For Turnover(%)" disabled />
                         </div>
                         <div class="col-md-4">
                             <x-backend.form.text-input type='number' name="income_percentage"
@@ -176,8 +179,8 @@
                                                 placeholder="Range To" label="Range To" disabled />
                                         </div>
                                         <div class="col-md-3">
-                                            <x-backend.form.text-input id="service-name" name="services[]"
-                                                placeholder="Service Name" label="Service Name" disabled />
+                                            <x-backend.form.text-input id="min-Tax" name="min_taxes[]"
+                                                placeholder="Min Tax" label="Min. Tax" disabled />
                                         </div>
                                         <div class="col-md-3">
                                             <div class="mb-2">
@@ -375,7 +378,13 @@
                             $('.slots-container').addClass('d-none')
                             $('.slots-container').find('input').attr('disabled', true)
                             $('.slots-container').find('select').attr('disabled', true)
+                            $('.only-company.only-tax').removeClass('d-none')
+                            $('.only-company.only-tax').find('input').attr('disabled', false)
+                            $('.only-company.only-tax').find('select').attr('disabled', false)
                         } else {
+                            $('.only-company.only-tax').addClass('d-none')
+                            $('.only-company.only-tax').find('input').attr('disabled', true)
+                            $('.only-company.only-tax').find('select').attr('disabled', true)
                             $('.slots-container').removeClass('d-none')
                             $('.slots-container').find('input').attr('disabled', false)
                             $('.slots-container').find('select').attr('disabled', false)

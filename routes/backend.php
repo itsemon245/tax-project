@@ -122,6 +122,12 @@ Route::prefix('admin')->group(function () {
     Route::resource('taxCalculator', TaxCalculatorController::class);
     Route::resource('setting', SettingController::class);
     Route::resource('withdrawal', WithdrawalController::class);
+    // Route::prefix('withdrawal')
+    // ->controller(WithdrawalController::class)
+    // ->name('withdrawal.')
+    // ->group(function () {
+    //     Route::post('/status/{$id}', 'status')->name('status');
+    // });
     Route::prefix('setting')
         ->controller(SettingController::class)
         ->name('setting.')
