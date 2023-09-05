@@ -83,13 +83,7 @@ class PageController extends Controller
         return view('frontend.pages.notificationPage');
     }
 
-    //show all industry page 
-    public function showAllIndusryPage()
-    {
-        $industries = Industry::get(['title', 'image', 'intro']);
-        return view('frontend.pages.industries.showAllIndustry', compact('industries'));
-    }
-
+    
     //show all my courses in frontend
     public function myCourses()
     {

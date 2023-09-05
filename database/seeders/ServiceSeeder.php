@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Section;
 use App\Models\Service;
+use Illuminate\Database\Seeder;
 use App\Models\ServiceSubCategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
 class ServiceSeeder extends Seeder
 {
@@ -92,7 +93,7 @@ class ServiceSeeder extends Seeder
             foreach ($subs as $sub_id => $services) {
                 foreach ($services as $service) {
 
-                    Service::create([
+                    $service = Service::create([
                         'title' => $service,
                         'service_category_id' => $cat_id,
                         'service_sub_category_id' => $sub_id,
@@ -103,6 +104,10 @@ class ServiceSeeder extends Seeder
                         'rating' => 5,
                         'discount' => fake()->randomNumber(2),
                         'reviews' => fake()->numberBetween(100, 1000) . " Reviews",
+                    ]);
+                    Section::factory(3)->create([
+                        'sectionable_type' => 'Service',
+                        'sectionable_id' => $service->id
                     ]);
                 }
             }

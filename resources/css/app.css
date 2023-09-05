@@ -230,16 +230,13 @@ footer .social-handles {
     .laptop {
         display: none;
     }
-    .app-logo {
-        display: none;
-    }
 }
 .mobile {
     display: none;
 }
 
 /* up to smaller devices mobile phones */
-@media (max-width: 560px) {
+@media (max-width: 579px) {
     .tablet {
         display: none;
     }
@@ -394,12 +391,15 @@ footer .social-handles {
     border: none;
     border-radius: 10px;
 }
-@media (max-width: 768px) and (min-width: 426px) {
+@media (max-width: 750px) and (min-width: 580px) {
     #contact_header {
         padding: 8% 0;
     }
     #contact_details {
         padding-bottom: 4%;
+    }
+    .app-logo {
+        display: none;
     }
 }
 @media (max-width: 1024px) and (min-width: 769px) {
@@ -689,7 +689,7 @@ footer .social-handles {
     list-style: none;
     padding: 0.5rem 1rem;
     background-color: var(--bg-dark);
-    top: 1rem;
+    top: 1.2rem;
     left: 0;
     transition: all 150ms ease-in;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,

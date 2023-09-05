@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\About;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Section;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class AboutSeeder extends Seeder
 {
@@ -16,6 +17,9 @@ class AboutSeeder extends Seeder
         $about = About::create([
             'description' => fake()->realText(),
         ]);
-        
+        Section::factory(3)->create([
+            'sectionable_type' => 'About',
+            'sectionable_id' => $about->id,
+        ]);
     }
 }

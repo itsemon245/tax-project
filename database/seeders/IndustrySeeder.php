@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Industry;
+use App\Models\Section;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,13 @@ class IndustrySeeder extends Seeder
      */
     public function run(): void
     {
-        Industry::factory(4)->create();
+        $industries = Industry::factory(4)->create();
+
+        foreach ($industries as $industry) {
+            Section::factory(3)->create([
+                'sectionable_type' => 'Industry',
+                'sectionable_id' => $industry->id,
+            ]);
+        }
     }
 }
