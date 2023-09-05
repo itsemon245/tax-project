@@ -22,7 +22,7 @@
                     <x-backend.form.text-input type="number" name="account_no" label="Account No" required />
                 </div>
                 <div class="col-md-6 ">
-                    <x-backend.form.text-input type="number" name="amount" label="Amount" required />
+                    <x-backend.form.text-input type="number" name="pay" label="Amount" required />
                 </div>
                 <div class="mt-4 mb-4">
                     <button class="btn btn-sm btn-primary w-100">
