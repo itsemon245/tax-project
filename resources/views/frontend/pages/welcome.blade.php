@@ -2,47 +2,47 @@
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
     @php
-    $productCat = \App\Models\ProductCategory::where('name', 'Standard Package (tax)')
+        $productCat = \App\Models\ProductCategory::where('name', 'Standard Package (tax)')
             ->with(['productSubCategories', 'productSubCategories.products'])
             ->first();
-@endphp
-<section class="mb-5">
-    <div class="card-body container-fluid px-5">
-        <h2 class="header-title h4 mt-4 text-center">{{ $productCat->name }}</h2>
-        <div class=" d-flex justify-content-center">
-            <p class="text-justify" style="max-width: 100ch; font-weight:500;">
-                {{ $productCat->description }}</p>
-        </div>
-        <div class="container d-flex justify-content-center">
-            <ul class="nav nav-pills navtab-bg" role="tablist">
-                @foreach ($productCat->productSubCategories as $key => $subCat)
-                    <li class="nav-item" role="presentation">
-                        <a href="#{{ str($subCat->name)->slug() . '-' . $subCat->id }}" data-bs-toggle="tab"
-                            aria-expanded="{{ $key === 0 ? 'true' : 'false' }}"
-                            aria-selected="{{ $key === 0 ? 'true' : 'false' }}" role="tab"
-                            class="text-capitalize nav-link {{ $key === 0 ? 'active' : '' }}" tabindex="-1">
-                            {{ $subCat->name }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-        <div class="container-fluid">
-            <div class="tab-content">
-                @foreach ($productCat->productSubCategories as $key => $subCat)
-                    <div class="tab-pane {{ $key === 0 ? 'active' : '' }}"
-                        id="{{ str($subCat->name)->slug() . '-' . $subCat->id }}" role="tabpanel">
-                        <div class="product-wrapper">
-                            @foreach ($subCat->products as $product)
-                                <x-frontend.product-card :$product />
-                            @endforeach
+    @endphp
+    <section class="mb-5">
+        <div class="card-body container-fluid px-5">
+            <h2 class="header-title h4 mt-4 text-center">{{ $productCat->name }}</h2>
+            <div class=" d-flex justify-content-center">
+                <p class="text-justify" style="max-width: 100ch; font-weight:500;">
+                    {{ $productCat->description }}</p>
+            </div>
+            <div class="container d-flex justify-content-center">
+                <ul class="nav nav-pills navtab-bg" role="tablist">
+                    @foreach ($productCat->productSubCategories as $key => $subCat)
+                        <li class="nav-item" role="presentation">
+                            <a href="#{{ str($subCat->name)->slug() . '-' . $subCat->id }}" data-bs-toggle="tab"
+                                aria-expanded="{{ $key === 0 ? 'true' : 'false' }}"
+                                aria-selected="{{ $key === 0 ? 'true' : 'false' }}" role="tab"
+                                class="text-capitalize nav-link {{ $key === 0 ? 'active' : '' }}" tabindex="-1">
+                                {{ $subCat->name }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="container-fluid">
+                <div class="tab-content">
+                    @foreach ($productCat->productSubCategories as $key => $subCat)
+                        <div class="tab-pane {{ $key === 0 ? 'active' : '' }}"
+                            id="{{ str($subCat->name)->slug() . '-' . $subCat->id }}" role="tabpanel">
+                            <div class="product-wrapper">
+                                @foreach ($subCat->products as $product)
+                                    <x-frontend.product-card :$product />
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
     <section class="px-lg-5 px-2 my-5">
@@ -72,15 +72,20 @@
 
     <section id="counter-section" class="px-lg-5 px-2 my-5">
         <h4 class="text-center mb-5 fs-3">Our Achievments</h4>
-        <div class="d-flex flex-wrap gap-5 justify-content-center mx-lg-5 mx-2 mb-2">
+        <div class="row justify-content-center px-2">
             @foreach ($achievements as $item)
-                <div class="min-w-md mx-3">
-                    <div class="d-flex gap-5 align-items-center">
-                        <img style="width:100px;aspect-ratio:1/1;"
-                            src="{{ useImage($item->image) }}" alt="">
-                        <div class="d-flex flex-column justify-content-center align-items-center">
-                            <h2 class="counter-up m-0" style="font-size: 46px; color: #1abcfe; font-weight: 700;">{{$item->total_user}}</h2>
-                            <p class="m-0" style="font-size: 16px;"><b>{{$item->user}}</b></p>
+                <div class="col-sm-6 col-md-4 col-xl-3 col-xxl-2 mb-2">
+                    <div class="card rounded-2">
+                        <div class="card-body p-2">
+                            <div class="d-flex gap-3 align-items-center">
+                                <img class="rounded rounded-2" style="width:80px;height:80px;"
+                                    src="{{ useImage($item->image) }}" alt="">
+                                <div class="d-flex flex-column justify-content-starr align-items-start">
+                                    <h2 class="counter-up m-0 text-primary" style="font-size: 32px; font-weight: 700;">
+                                        {{ $item->count }}</h2>
+                                    <p class="m-0 fw-medium mt-2">{{ $item->title }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
