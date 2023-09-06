@@ -14,7 +14,7 @@ class MapController extends Controller
      */
     public function index()
     {
-        $maps = Map::all();
+        $maps = Map::simplePaginate(paginateCount(20));
         return view('backend.map.showMaps', compact('maps'));
     }
 
