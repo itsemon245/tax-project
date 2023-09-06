@@ -22,7 +22,7 @@ class CourseController extends Controller
 
     public function videos($course)
     {
-        $videos= Video::where('course_id',$course)->get();
+        $videos= Video::with('users')->where('course_id',$course)->get();
         //dd($videos);
         return view('frontend.pages.course.showVideos',compact('videos'));
     }

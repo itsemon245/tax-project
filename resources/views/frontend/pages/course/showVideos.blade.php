@@ -185,13 +185,14 @@
                                                     aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
                                                         @foreach ($videos as $item)
+                                                        {{-- {{ dd($item->users) }} --}}
                                                             <div class="mb-3">
                                                                 <a href="{{route('course.videos',$item->course_id)."?videos_id=".$item->id}}">
                                                                     <div class="card">
                                                                         <div class="card-body">
                                                                             <div class="p-2">
                                                                                 <div class="form-check">
-                                                                                    <input class="form-check-input"
+                                                                                    <input class="form-check-input" @checked() data-url="{{ route('ajax.video.toggle', $item) }}"
                                                                                         type="checkbox" value=""
                                                                                         id="flexCheckDisabled-{{$item->id}}">
                                                                                     <label class="form-check-label"
@@ -219,8 +220,35 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
+    @push('customJs')
+    <script>
+        $(document).ready(function() {
+            $('.form-check-input').on('change', e => {
+                $.ajax({
+                    type: "post",
+                    url: e.target.dataset.url,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            Toast.fire({
+                            'icon': 'success',
+                            'title': 'Success',
+                            'text': response.message
+                        }) 
+                        }else{
+                            Toast.fire({
+                            'icon': 'error',
+                            'title': 'Error',
+                            'text': response.message
+                        })
+                        }
+                    }
+                });
+            })
+        });
+    </script>
+@endpush
 @endsection
