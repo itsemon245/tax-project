@@ -111,4 +111,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Withdrawal::class);
     }
+    public function videos(): BelongsToMany
+    {
+        return $this->belongsToMany(Video::class);
+    }
 }

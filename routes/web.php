@@ -38,6 +38,7 @@ Route::prefix('ajax')
         Route::post('mark-notifications', 'markNotificationsAsRead')->name('notifications.read');
         Route::post('promo-code/apply', 'applyPromoCode')->name('promo.apply');
         Route::post('update/client/{client}/task/{task}', 'updateTask')->name('task.update');
+        Route::post('video/{video}/toggle', 'toggleVideo')->name('video.toggle');
         Route::get('get-items/{slug}', 'getItems')->name('get.items');
         Route::delete('delete/{section}/section', 'deleteSection')->name('section.destroy');
         Route::delete('delete/{slot}/slot', 'deleteSlot')->name('slot.destroy');
