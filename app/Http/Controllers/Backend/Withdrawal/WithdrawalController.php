@@ -13,9 +13,9 @@ class WithdrawalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $withdrawals = Withdrawal::with('user')->where('status', 1)->get();
+        $withdrawals = Withdrawal::with('user')->where('status', $request->status)->paginate(paginateCount());
         return view('backend.withdrawal.viewAllWthdrawal', compact('withdrawals'));
     }
 
@@ -35,20 +35,16 @@ class WithdrawalController extends Controller
         $request->validate([
             'account_type' => 'required',
             'account_no' => 'required|string',
-            'amount' => 'required|string',
+            'amount' => 'required|numeric',
         ]);
-        $withdrawal = new Withdrawal();
+        $withdrawal = Withdrawal::create($request->all());
         $withdrawal->user_id = $request->user_id;
-        $withdrawal->account_type = $request->account_type;
-        $withdrawal->account_no = $request->account_no;
-        $withdrawal->amount = $request->amount;
         $withdrawal->save();
         $notification = [
             'message' => 'Withdrawal Submitted',
             'alert-type' => 'success',
         ];
         return back()->with($notification);
-
     }
 
     /**
@@ -71,19 +67,29 @@ class WithdrawalController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'account_type' => 'required',
+            'account_no' => 'required|string',
+            'amount' => 'required|numeric',
+        ]);
         $parent = User::find($id);
         $withdrawal = Withdrawal::find($request->withdrawal_id);
-        $amount = floatval($withdrawal->amount);
-        if($amount >= 500){
+        $amount = $withdrawal->amount;
+        if ($amount >= 500) {
             $parent->withdrawn_commission = $parent->withdrawn_commission + $amount;
             $parent->remaining_commission = $parent->total_commission - $parent->withdrawn_commission;
             $parent->save();
+            $notification = [
+                'message' => 'Payment Successful',
+                'alert-type' => 'success',
+            ];
+        } else {
+            $notification = [
+                'message' => 'Insufficient Amount',
+                'alert-type' => 'error',
+            ];
         }
 
-        $notification = [
-            'message' => 'Payment Successful',
-            'alert-type' => 'success',
-        ];
         return redirect()
             ->back()
             ->with($notification);
@@ -94,7 +100,7 @@ class WithdrawalController extends Controller
      */
     public function destroy(string $id)
     {
-        $withdrawal = Withdrawal::find($id);   
+        $withdrawal = Withdrawal::find($id);
         $withdrawal->delete();
         $notification = [
             'message' => 'Withdrawal Deleted',
@@ -102,5 +108,4 @@ class WithdrawalController extends Controller
         ];
         return back()->with($notification);
     }
-
 }

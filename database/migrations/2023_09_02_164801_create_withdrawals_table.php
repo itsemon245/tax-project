@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('withdrawals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');; 
-            $table->string('account_type'); 
-            $table->string('account_no'); 
-            $table->decimal('amount'); 
-            $table->boolean('status')->default(1); 
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->string('account_type');
+            $table->string('account_no');
+            $table->decimal('amount');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
