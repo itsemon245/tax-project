@@ -4,6 +4,7 @@ use App\Models\Course;
 use App\Models\TaxSetting;
 use App\Models\TaxCalculator;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\ServiceController;
@@ -236,7 +237,6 @@ Route::prefix('admin')->group(function () {
     //custom routes
     Route::get('get-invoice-data/{id}', [InvoiceController::class, 'getInvoiceData']);
     Route::delete('/invoice-item/delete/{id}', [InvoiceController::class, 'deleteInvoiceItem']);
-    Route::POST('/get-sub-categories/{categoryId}', [ProductController::class, 'getSubCategories'])->name('getSubcategory');
     Route::POST('/get-users', [PromoCodeController::class, 'getUsers'])->name('getUsers');
     Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
     Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panel

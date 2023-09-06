@@ -34,6 +34,7 @@ Route::prefix('ajax')
     ->name('ajax.')
     ->controller(AjaxController::class)->group(function () {
         Route::get('case-study/package/{id}/categories', 'caseStudyCategories')->name('caseStudyCategories');
+        Route::get('/get-sub-categories/{productCategory}', 'getProductSubCategories')->name('get.productSubCategories');
         Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');
         Route::post('mark-notifications', 'markNotificationsAsRead')->name('notifications.read');
         Route::post('promo-code/apply', 'applyPromoCode')->name('promo.apply');

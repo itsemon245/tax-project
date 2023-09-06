@@ -30,7 +30,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = $this->getCategories();
+        $categories = ProductCategory::latest()->get(['id', 'name']);
         return view('backend.product.addProduct', compact('categories'));
     }
 
@@ -39,21 +39,20 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $request->validated();
         $packageFeature = $this->createJsonPackage($request->package_feature, $request->color);
 
         Product::create(
             [
                 'product_category_id' => $request->category,
-                'type' => $request->type,
+                'product_sub_category_id' => $request->sub_category,
                 'user_id' => Auth::user()->id,
                 'title' => $request->title,
                 'sub_title' => $request->sub_title,
                 'price' => $request->price,
-                'discount' => $request->discount,
                 'package_features' => json_encode($packageFeature),
                 'description' => $request->description,
-                'is_discount_fixed' => $request->discount_type,
+                'discount' => $request->discount_amount,
+                'is_discount_fixed' => $request->is_discount_fixed === 'true' ? true : false,
                 'is_most_popular' => $request->most_popular,
             ]
         );
@@ -80,8 +79,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $product = Product::find($product->id);
-        $categories = $this->getCategories();
-        return view('backend.product.editProduct', compact('categories', 'product'));
+        $subs = ProductSubCategory::where('id', $product->product_sub_category_id)->get(['id', 'name']);
+        $categories = ProductCategory::latest()->get(['id', 'name']);
+        return view('backend.product.editProduct', compact('categories', 'product', 'subs'));
     }
 
     /**
@@ -91,22 +91,19 @@ class ProductController extends Controller
     {
         $packageFeature = $this->createJsonPackage($request->package_feature, $request->color);
 
-        Product::find($product->id)
-            ->update(
-                [
+        $product->update([
                     'product_category_id' => $request->category,
-                    'type' => $request->type,
+                    'product_sub_category_id' => $request->sub_category,
                     'user_id' => Auth::user()->id,
                     'title' => $request->title,
                     'sub_title' => $request->sub_title,
                     'price' => $request->price,
-                    'discount' => $request->discount,
                     'package_features' => json_encode($packageFeature),
                     'description' => $request->description,
-                    'is_discount_fixed' => $request->discount_type,
+                    'discount' => $request->discount_amount,
+                    'is_discount_fixed' => $request->is_discount_fixed === 'true' ? true : false,
                     'is_most_popular' => $request->most_popular,
-                ]
-            );
+                ]);
 
         return redirect()
             ->route("product.index")
@@ -128,16 +125,6 @@ class ProductController extends Controller
                 'message' => "Product Deleted Successfully",
                 'alert-type' => 'success',
             ));
-    }
-
-    /**
-     * Get Category
-     * 
-     * @return response\json 
-     */
-    public function getCategories()
-    {
-        return ProductCategory::all(['id', 'name']);
     }
 
     /**

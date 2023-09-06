@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
+use App\Models\ServiceCategory;
 
 class ServicePageController extends Controller
 {
@@ -15,16 +16,12 @@ class ServicePageController extends Controller
     {
         $infos1 = getRecords('infos', ['section_id', 1]);
         $infos2 = getRecords('infos', ['section_id', 2]);
-        $appointments= getRecords('appointments');
+        $appointments = getRecords('appointments');
         $testimonials = getRecords('testimonials');
         $banners = getRecords('banners');
-        $isTaxServices = str(url()->current())->contains('service/category/1');
-        $products = null;
-        if ($isTaxServices) {
-            $products = Product::mappedProducts(['product_category_id' => 2]);
-        }
-        $subCategories = ServiceSubCategory::where('service_category_id', $id)->with('serviceCategory')->get();
-        return view('frontend.pages.services.subCategories', compact('products','isTaxServices', 'subCategories', 'appointments', 'testimonials', 'banners', 'infos1', 'infos2'));
+        $serviceCategory = ServiceCategory::with(['serviceSubCategories'])->find($id, ['id', 'name']);
+        $subCategories = $serviceCategory->serviceSubCategories;
+        return view('frontend.pages.services.subCategories', compact('serviceCategory','subCategories', 'appointments', 'testimonials', 'banners', 'infos1', 'infos2'));
     }
 
     public function servicesUnderSub($id)

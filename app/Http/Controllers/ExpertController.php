@@ -15,7 +15,7 @@ class ExpertController extends Controller
             ->withCount(reviewsAndStarCounts())
             ->find($id);
         // dd($expert);
-        $reviews = Review::where('expert_profile_id', $expert->id)->latest()->get();
+        $reviews = Review::where(['reviewable_id' => $expert->id, 'reviewable_type' => 'ExpertProfile'])->latest()->get();
         return view('frontend.pages.expert.profile', compact('reviews', 'expert'));
     }
 
@@ -23,6 +23,10 @@ class ExpertController extends Controller
     public function browse()
     {
         $experts = ExpertProfile::withAvg('reviews', 'rating')->withCount('reviews')->get();
-        return view('frontend.pages.expert.browse', compact('experts'));
+        $minExp = ExpertProfile::min('experience');
+        $maxExp = ExpertProfile::max('experience');
+        $minPrice = ExpertProfile::min('price');
+        $maxPrice = ExpertProfile::max('price');
+        return view('frontend.pages.expert.browse', compact('experts', 'minExp', 'minPrice', 'maxExp', 'maxPrice'));
     }
 }

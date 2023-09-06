@@ -10,10 +10,11 @@ use App\Models\Task;
 use App\Models\User;
 use App\Models\Section;
 use App\Models\PromoCode;
+use App\Models\TaxSetting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\ProductCategory;
 use App\Models\CaseStudyPackage;
-use App\Models\TaxSetting;
 use Illuminate\Http\JsonResponse;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
@@ -156,6 +157,17 @@ class AjaxController extends Controller
         return response()->json([
             'success' => $success,
             'message' => $message
+        ]);
+    }
+
+
+    function getProductSubCategories(ProductCategory $productCategory): JsonResponse
+    {
+        $subs = $productCategory->productSubCategories()->get(['id', 'name']);
+        $success = true;
+        return response()->json([
+            'data' => $subs,
+            'success' => $success,
         ]);
     }
 }
