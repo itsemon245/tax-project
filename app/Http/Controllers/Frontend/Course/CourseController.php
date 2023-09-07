@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Course;
 
+use App\Models\User;
 use App\Models\Video;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class CourseController extends Controller
     public function videos($course)
     {
         $videos= Video::with('users')->where('course_id',$course)->get();
-        //dd($videos);
+        $users = User::with('videos')->where('id', auth()->id())->get();
+        dd($users);
         return view('frontend.pages.course.showVideos',compact('videos'));
     }
 
