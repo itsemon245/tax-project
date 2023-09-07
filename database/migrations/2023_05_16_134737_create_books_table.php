@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('book_category_id');#filterable
+            $table->foreignId('book_category_id')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');#filterable
             $table->text('title')->nullable();
             $table->text('author')->nullable();#filterable
             $table->longText('description');

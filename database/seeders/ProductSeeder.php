@@ -14,41 +14,60 @@ class ProductSeeder extends Seeder
     {
         $products = [
             [
-                'title' => 'Free',
+                'title' => fake()->word(),
                 'sub_title' => 'Free expert assist included',
                 'discount' => 100,
                 'is_discount_fixed' => false,
-                'type' => 'Silver'
             ],
             [
-                'title' => 'Deluxe',
+                'title' => fake()->word(),
                 'sub_title' => 'Free expert assist included',
-                'type' => 'Gold'
             ],
             [
-                'title' => 'Premium',
+                'title' => fake()->word(),
                 'sub_title' => 'Free expert assist included',
-                'type' => 'Platinum'
             ],
             [
-                'title' => 'Family Bundle',
+                'title' => fake()->word(),
                 'sub_title' => 'Free expert assist included',
-                'type' => 'Exclusive'
             ],
         ];
 
-            foreach ($products as $product) {
-                Product::factory(4)->create([
-                    ...$product,
-                    'product_category_id' => 1,
-                ]);
+        foreach ($products as $product) {
+            $catId = 1;
+            $subId = ($catId - 1) * 4;
+            $prods = Product::factory(4)->create([
+                ...$product,
+                'product_category_id' => $catId,
+            ]);
+            foreach ($prods as $key => $prod) {
+                $prod->product_sub_category_id = $subId + 1;
+                $prod->save();
             }
-            foreach ($products as $product) {
-                Product::factory(4)->create([
-                    ...$product,
-                    'product_category_id' => 2,
-                ]);
+        }
+        foreach ($products as $product) {
+            $catId = 2;
+            $subId = ($catId - 1) * 4;
+            $prods = Product::factory(4)->create([
+                ...$product,
+                'product_category_id' => $catId,
+            ]);
+            foreach ($prods as $key => $prod) {
+                $prod->product_sub_category_id = ++$subId;
+                $prod->save();
             }
-
+        }
+        foreach ($products as $product) {
+            $catId = 3;
+            $subId = ($catId - 1) * 4;
+            $prods = Product::factory(4)->create([
+                ...$product,
+                'product_category_id' => $catId,
+            ]);
+            foreach ($prods as $key => $prod) {
+                $prod->product_sub_category_id = ++$subId;
+                $prod->save();
+            }
+        }
     }
 }

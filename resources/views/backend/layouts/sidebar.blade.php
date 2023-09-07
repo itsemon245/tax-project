@@ -620,11 +620,25 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="{{ route('withdrawal.index') }}">
+                                <a href="#withdralSection" data-bs-toggle="collapse">
                                     <i class="mdi mdi-bank-transfer-out"></i>
-                                    <span>Withdrawal</span>
+                                    <span>Withdrawal Requests</span>
+                                    <span class="menu-arrow"></span>
                                 </a>
+                                <div class="collapse" id="withdralSection">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('withdrawal.index').'?status=0' }}">
+                                               Pending
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('withdrawal.index').'?status=1' }}">Approved</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
+                            
                         </ul>
                     </div>
                 </li>

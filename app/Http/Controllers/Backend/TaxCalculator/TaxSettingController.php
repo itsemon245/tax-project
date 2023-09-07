@@ -162,6 +162,7 @@ class TaxSettingController extends Controller
                 $id = $request->slot_ids[$key] ?? null;
                 $min_tax = $request->min_taxes[$key];
                 $isDiscountFixed = $request->is_discounts_fixed[$key] !== 'false';
+                $type = $request->others_slot_types[$key];
                 $amount = $request->discount_amounts[$key];
                 $to = $request->others_slot_to[$key];
                 $difference = $to - $from;
@@ -171,6 +172,7 @@ class TaxSettingController extends Controller
                     'from' => $from,
                     'to' => $to,
                     'difference' => $difference,
+                    'type' => $type,
                     'is_discount_fixed' => $isDiscountFixed,
                     'amount' => $amount,
                 ]);

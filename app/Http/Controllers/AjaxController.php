@@ -10,11 +10,11 @@ use App\Models\Task;
 use App\Models\User;
 use App\Models\Section;
 use App\Models\PromoCode;
+use App\Models\TaxSetting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\ProductCategory;
 use App\Models\CaseStudyPackage;
-use App\Models\TaxSetting;
-use App\Models\Video;
 use Illuminate\Http\JsonResponse;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
@@ -159,22 +159,15 @@ class AjaxController extends Controller
             'message' => $message
         ]);
     }
-    function toggleVideo(Video $video): JsonResponse
+
+
+    function getProductSubCategories(ProductCategory $productCategory): JsonResponse
     {
-        try {
-            $video->update([
-                'is_completed' => !$video->is_completed,
-            ]);
-            $success = true;
-            $message = $video->is_completed ? 'Video marked as completed!' : 'Video marked as not completed!';
-        } catch (\Throwable $th) {
-            $success = false;
-            $message = $th->getMessage();
-        }
+        $subs = $productCategory->productSubCategories()->get(['id', 'name']);
+        $success = true;
         return response()->json([
+            'data' => $subs,
             'success' => $success,
-            'message' => $message
         ]);
     }
-
 }
