@@ -76,6 +76,8 @@
     @php
         $banners = getRecords('banners');
         $testimonials = getRecords('testimonials');
+        $exptcategories = getRecords('expert_categories');
+        // dd($exptcategories);
     @endphp
     <x-frontend.hero-section :banners="$banners" />
 
@@ -87,7 +89,7 @@
                     <div class="circle_left"></div>
                     <div class="circle_right"></div>
                 </div>
-
+                {{-- {{ dd($experts) }} --}}
             </div>
             <div class="row">
                 <div class="col-12">
@@ -99,32 +101,6 @@
                 <div class="col-lg-3 ">
                     <div class="filter-menu p-3 shadow bg-light rounded-2 ">
                         <div class="filters">
-                            <div class="price-filter my-2">
-                                <div class="label mb-2">
-                                    <span>Price</span>
-                                </div>
-                                <div class="range-input d-flex w-100 justify-content-between" id="price-range-input">
-                                    <div class="field w-100 d-flex align-items-center">
-                                        <span>Min</span>
-                                        <input type="number" class="form-control input-min ms-2" data-key="input-min"
-                                            value="0">
-                                    </div>
-                                    <div class="field w-100 d-flex align-items-center ms-1">
-                                        <span>Max</span>
-                                        <input type="number" class="form-control input-max ms-2" data-key="input-max"
-                                            value="100000">
-                                    </div>
-                                </div>
-                                <div class="range-slider mt-3" id="price-range-slider">
-                                    <div class="progress"></div>
-                                </div>
-                                <div class="range-slider-input position-relative" id="price-range-slider-input">
-                                    <input type="range" name="minPrice" class="range-min" min="0" max="100000"
-                                        value="0">
-                                    <input type="range" name="minPrice" class="range-max" min="0" max="100000"
-                                        value="100000">
-                                </div>
-                            </div>
                             <div class="experience-filter my-2">
                                 <div class="label mb-2">
                                     <span>Experience</span>
@@ -156,41 +132,27 @@
                                     <span>Categories</span>
                                 </div>
                                 <div class="items">
-                                    <label class="filter form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="status" value="7">
-                                        <span class="ms-3">Business</span>
+                                    @foreach ($exptcategories as $exptcategory)
+                                    <label class="filter form-check-label" for="{{ $exptcategory->name}}">
+                                        <input type="checkbox" class="form-check-input" name="status" value="{{ $exptcategory->name}}" id="{{ $exptcategory->name}}"/>
+                                        <span class="ms-3">{{ $exptcategory->name }}</span>
                                     </label>
                                     <br>
-                                    <label class="filter form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="status" value="8">
-                                        <span class="ms-3">Individual</span>
-                                    </label>
-                                    <br>
-                                    <label class="filter form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="status" value="9">
-                                        <span class="ms-3">Company</span>
-                                    </label>
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="filter-group my-2" data-group-type="status">
                                 <div class="label mb-2">
-                                    <span>Types</span>
+                                    <span>Post</span>
                                 </div>
                                 <div class="items">
-                                    <label class="filter form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="status" value="7">
-                                        <span class="ms-3">Business</span>
+                                    @foreach ($experts as $expert)
+                                    <label class="filter form-check-label" for="{{ $expert->id }}">
+                                        <input type="checkbox" class="form-check-input" name="status" value="{{ $expert->id }}" id="{{ $expert->id }}">
+                                        <span class="ms-3">{{ $expert->post }}</span>
                                     </label>
                                     <br>
-                                    <label class="filter form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="status" value="8">
-                                        <span class="ms-3">Individual</span>
-                                    </label>
-                                    <br>
-                                    <label class="filter form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="status" value="9">
-                                        <span class="ms-3">Company</span>
-                                    </label>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -215,7 +177,11 @@
                                             <h2 class="browse_card_name">{{ $expert->name }}</h2>
                                             <span class="badge bg-success p-2">{{ $expert->post }}</span>
                                             <h4 class="browse_card_exp">Experience: {{ $expert->experience }} years</h4>
-                                            <h5 class="text-primary fw-medium">Business, Individual, Company</h5>
+                                            <h5 class="text-primary fw-medium d-flex ">
+                                                @foreach ($expert->expertCategories as $expertCategory)
+                                                <span>{{ $expertCategory->name }},  </span>
+                                                @endforeach
+                                            </h5>
                                             <p class="browse_card_price">Fee: {{$expert->price}}/-</p>
                                         </div>
                                     </div>
