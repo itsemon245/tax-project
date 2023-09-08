@@ -31,6 +31,9 @@ return new class extends Migration
             $table->decimal('total_commission')->default(0);
             $table->decimal('withdrawn_commission')->default(0);
             $table->decimal('remaining_commission')->default(0);
+            $table->decimal('total_temp_commission')->default(0);
+            $table->decimal('withdrawn_temp_commission')->default(0);
+            $table->decimal('remaining_temp_commission')->default(0);
             $table->integer('conversion')->default(0);
             $table->rememberToken();
             $table->timestamps();

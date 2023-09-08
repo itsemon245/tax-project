@@ -7,7 +7,9 @@ use App\Models\Purchase;
 use Illuminate\Http\Request;
 use App\Models\ExpertProfile;
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Referee;
+use App\Models\Video;
 
 class OrderController extends Controller
 {
@@ -26,20 +28,30 @@ class OrderController extends Controller
     public function status($id)
     {
         $payment = Purchase::find($id);
-        $user = $payment->user;
-        $referee = Referee::where('user_id', $user->id)->first();
-        $parent = $referee->parent;
-        if ($payment->approved === 0) {
-            $payment->approved = 1;
-            if ($parent) {
-                $commission = $payment->payable_amount * $referee->commission / 100;
-                $parent->total_commission = $parent->total_commission + $commission;
-                $parent->conversion = $parent->conversion + 1;
-                $parent->save();
+        // dd($payment);
+            $user = $payment->user;
+            $referee = Referee::with('user')->where('user_id', $user->id)->first();
+            // dd();
+            $parent = $referee->parent;
+            if ($payment->approved === 0) {
+                $payment->approved = 1;
+                if ($parent) {
+                    $commission = $payment->payable_amount * $referee->commission / 100;
+                    $parent->total_commission = $parent->total_commission + $commission;
+                    $parent->conversion = $parent->conversion + 1;
+                    $parent->save();
+                    if($payment->purchasable_type === 'Course'){
+                        $course = Course::with('videos')->find($payment->purchasable_id);
+                        $videos = $course->videos;
+                        foreach($videos as $video){
+                            $video->users()->attach($user->id);
+                        }
+                    }
+                    
+                }
+            } else {
+                $payment->approved = 0;
             }
-        } else {
-            $payment->approved = 0;
-        }
         $payment->save();
         $notification = [
             'message' => 'Order Approved Successfully',

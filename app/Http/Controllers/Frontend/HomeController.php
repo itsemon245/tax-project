@@ -26,7 +26,7 @@ class HomeController extends Controller
         $infos1 = Info::where('section_id', 1)->get();
         $infos2 = Info::where('section_id', 2)->get();
         $testimonials = Testimonial::get();
-        $achievements = Achievement::limit(4)->latest()->get();
+        $achievements = Achievement::latest()->get();
         return view('frontend.pages.welcome', compact('banners', 'appointmentSections', 'infos1', 'infos2', 'products', 'testimonials', 'subCategories','achievements'));
     }
 }

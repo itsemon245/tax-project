@@ -6,13 +6,14 @@ use App\Models\Map;
 use App\Models\Info;
 use App\Models\User;
 use App\Models\About;
+use App\Models\Course;
 use App\Models\Industry;
+use App\Models\Achievement;
 use App\Models\Testimonial;
 use App\Models\ClientStudio;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
-use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -24,7 +25,8 @@ class PageController extends Controller
     public function industriesPage()
     {
         $subCategories = ServiceSubCategory::with('serviceCategory')->where('service_category_id', 3)->get();
-        return view('frontend.pages.industries.industries', compact('subCategories'));
+        $achievements = Achievement::latest()->get();
+        return view('frontend.pages.industries.industries', compact('subCategories', 'achievements'));
     }
     public function clientStudioPage()
     {

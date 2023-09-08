@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Accounting', 'Withdrawal']" />
-    <x-backend.ui.section-card name="All Withdrawal">
+    <x-backend.ui.section-card :name="request()->query('status') == '1' ? 'Approoved Withdrawls' : 'Pending Withdrawls'">
         <x-backend.table.basic>
             <thead>
                 <tr>
@@ -30,15 +30,17 @@
                             <p class="m-0">Request Amount: {{ $withdrawal->amount }}</p>
                         </td>
                         <td>
-                           <div class="btn-group">
-                            <form action="{{ route('withdrawal.update', $withdrawal->user->id) }}" method="post">
-                                @csrf
-                                @method('PUT')
-                                <input type="text" hidden class="d-none" name="withdrawal_id" value="{{ $withdrawal->id }}">
-                                <button  class="btn btn-primary btn-sm">Payment</button>
+                            <div class="btn-group">
+                                <form action="{{ route('withdrawal.update', $withdrawal->user->id) }}" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="text" hidden class="d-none" name="withdrawal_id"
+                                        value="{{ $withdrawal->id }}">
+                                    <button class="btn btn-primary btn-sm">Payment</button>
                                 </form>
-                                <x-backend.ui.button type="delete" action="{{ route('withdrawal.destroy', $withdrawal) }}" class="btn-sm" />
-                           </div>
+                                <x-backend.ui.button type="delete" action="{{ route('withdrawal.destroy', $withdrawal) }}"
+                                    class="btn-sm" />
+                            </div>
                         </td>
                     </tr>
                 @endforeach

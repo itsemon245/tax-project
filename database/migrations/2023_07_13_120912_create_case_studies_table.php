@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('case_studies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('case_study_category_id')->nullable(); #filterable
+            $table->foreignId('case_study_category_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade'); #filterable
             $table->foreignId('case_study_package_id')
                 ->constrained()
                 ->onUpdate('cascade')
-                ->onDelete('cascade')
-                ->nullable(); #filterable
+                ->onDelete('cascade'); #filterable
             $table->text('name');
             $table->longText('intro');
             $table->longText('image');

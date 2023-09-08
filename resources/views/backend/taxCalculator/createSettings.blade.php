@@ -24,7 +24,7 @@
                     <div class="col-md-4">
                         <x-backend.form.select-input name="slot_types[]" id="slot-type" label="Slot Type"
                             placeholder="Select an option">
-                            <option value="income">Income</option>
+                            <option value="income" selected>Income</option>
                             <option value="turnover">Turnover</option>
                             <option value="asset">Asset</option>
                         </x-backend.form.select-input>
@@ -33,15 +33,15 @@
                 <div class="row services only-others d-none">
                     <div class="service-wrapper">
                         <div class="row" id="service">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <x-backend.form.text-input type="number" name="others_slot_from[]" placeholder="Range From"
                                     label="Range From" disabled />
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <x-backend.form.text-input type="number" name="others_slot_to[]" placeholder="Range To"
                                     label="Range To" disabled />
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <x-backend.form.text-input type="number" id="min-tax" name="min_taxes[]"
                                     placeholder="Min Tax" label="Min Tax" disabled />
                             </div>
@@ -69,6 +69,14 @@
 
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-3">
+                                <x-backend.form.select-input name="others_slot_types[]" id="slot-type" label="Slot Type"
+                                    placeholder="Select an option">
+                                    <option value="income" selected>Income</option>
+                                    <option value="turnover">Turnover</option>
+                                    <option value="asset">Asset</option>
+                                </x-backend.form.select-input>
                             </div>
                         </div>
                     </div>
@@ -161,7 +169,7 @@
                                 <div class="col-md-4">
                                     <x-backend.form.select-input name="slot_types[]" id="slot-type" label="Slot Type"
                                         placeholder="Select an option">
-                                        <option value="income">Income</option>
+                                        <option value="income" selected>Income</option>
                                         <option value="turnover">Turnover</option>
                                         <option value="asset">Asset</option>
                                     </x-backend.form.select-input>
@@ -170,15 +178,15 @@
                             <div class="row services only-others d-none">
                                 <div class="service-wrapper">
                                     <div class="row" id="service">
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <x-backend.form.text-input type="number" name="others_slot_from[]"
                                                 placeholder="Range From" label="Range From" disabled />
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <x-backend.form.text-input type="number" name="others_slot_to[]"
                                                 placeholder="Range To" label="Range To" disabled />
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <x-backend.form.text-input id="min-Tax" name="min_taxes[]"
                                                 placeholder="Min Tax" label="Min. Tax" disabled />
                                         </div>
@@ -207,6 +215,14 @@
 
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <x-backend.form.select-input name="others_slot_types[]" id="slot-type" label="Slot Type"
+                                                placeholder="Select an option">
+                                                <option value="income" selected>Income</option>
+                                                <option value="turnover">Turnover</option>
+                                                <option value="asset">Asset</option>
+                                            </x-backend.form.select-input>
                                         </div>
                                     </div>
                                 </div>

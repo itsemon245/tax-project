@@ -126,6 +126,7 @@
                                                     <th class="p-1">Difference</th>
                                                     <th class="p-1">Amount</th>
                                                     <th class="p-1">Min Tax</th>
+                                                    <th class="p-1">Type</th>
 
                                                 </tr>
                                             @endif
@@ -173,6 +174,9 @@
                                                         <td class="p-1 text-capitalize">
                                                             {{ $slot->min_tax }}</span>
                                                             <span class="mdi mdi-currency-bdt font-16"></span>
+                                                        </td>
+                                                        <td class="p-1 text-success text-capitalize">
+                                                            {{ $slot->type }}</span>
                                                         </td>
                                                     </tr>
                                                 @endforeach

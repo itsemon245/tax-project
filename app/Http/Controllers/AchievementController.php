@@ -32,8 +32,8 @@ class AchievementController extends Controller
     {
         $appointmentStore = new Achievement();
         $appointmentStore->image = saveImage($request->image, 'achievements');
-        $appointmentStore->user = $request->user;
-        $appointmentStore->total_user = $request->total_user;
+        $appointmentStore->title = $request->user;
+        $appointmentStore->count = $request->total_user;
         $appointmentStore->save();
         $notification = [
             'message' => 'Achievements Created',
@@ -66,8 +66,8 @@ class AchievementController extends Controller
         {
             $achievement->image = updateFile($request->image, $achievement->image ,'achievements');
         }
-        $achievement->user = $request->user;
-        $achievement->total_user = $request->total_user;
+        $achievement->title = $request->user;
+        $achievement->count = $request->total_user;
         $achievement->save();
         $notification = [
             'message' => 'Achievements Updated',

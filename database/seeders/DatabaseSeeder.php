@@ -13,12 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
         $this->call([
             UserSeeder::class,
             BannerSeeder::class,
@@ -38,7 +32,6 @@ class DatabaseSeeder extends Seeder
             InvoiceSeeder::class,
             InvoiceItemSeeder::class,
             MapSeeder::class,
-            BookSeeder::class,
             CaseStudyPackageSeeder::class,
             CaseStudyCategorySeeder::class,
             CaseStudySeeder::class,
@@ -48,10 +41,12 @@ class DatabaseSeeder extends Seeder
             CalendarSeeder::class,
             PromoCodeSeeder::class,
             BookCategorySeeder::class,
+            BookSeeder::class,
             IndustrySeeder::class,
             AboutSeeder::class,
             SettingSeeder::class,
             ExpenseSeeder::class,
+            AchievementSeeder::class,
         ]);
     }
 }

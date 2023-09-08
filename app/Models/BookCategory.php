@@ -9,11 +9,16 @@ class BookCategory extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
-    function book()
+    function books()
     {
-        return $this->hasMany(Book::class,'book_category_id');
+        return $this->hasMany(Book::class);
     }
-
+    function booksWithRatings()
+    {
+        return $this->books()
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews');
+    }
 }
