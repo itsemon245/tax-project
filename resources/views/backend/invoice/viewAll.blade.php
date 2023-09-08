@@ -4,6 +4,20 @@
 @endpush
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     @php
         $pattern = '/\[.*\]/';
         // dd(preg_replace($pattern, '', request()->query('reference')));
@@ -258,13 +272,16 @@
                                 <td>{{ $invoice->client->circle }}</td>
                                 <td>{{ $invoice->client->zone }}</td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->demand . ' Tk' }}</span>
+                                    <span
+                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->demand . ' Tk' }}</span>
                                 </td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->paid . ' Tk' }}</span>
+                                    <span
+                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->paid . ' Tk' }}</span>
                                 </td>
                                 <td>
-                                    <span class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->due . ' Tk' }}</span>
+                                    <span
+                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->due . ' Tk' }}</span>
                                 </td>
                                 <td>
                                     <div class="btn-group dropdown position-relative">
@@ -323,6 +340,9 @@
                         @endforeach
                     </tbody>
                 </x-backend.table.basic>
+                <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                    {{ $invoices->links() }}
+                </div>
 
             </div>
         </div>

@@ -2,6 +2,20 @@
 
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Backend', 'Expert Profiles', 'View']" />
 
     <x-backend.ui.section-card name="Expert List">
@@ -61,6 +75,9 @@
                                 @endforeach
                             </tbody>
                         </x-backend.table.basic>
+                        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                            {{ $profiles->links() }}
+                        </div>
 
                     </div> <!-- end card body-->
                 </div> <!-- end card -->

@@ -1,6 +1,20 @@
 @extends('backend.layouts.app')
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <!-- start page title -->
     <x-backend.ui.breadcrumbs :list="['User Data', 'Documents', 'View']" />
     <!-- end page title -->
@@ -67,6 +81,9 @@
                 {{-- {{ dd(json_decode($upload_documents[0]->files)) }} --}}
             </tbody>
         </x-backend.table.basic>
+        <div class="paginate md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+            {{ $userDocs->links() }}
+        </div>
     </x-backend.ui.section-card>
     @push('customJs')
         <script></script>

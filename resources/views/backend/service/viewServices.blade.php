@@ -2,6 +2,20 @@
 
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Service', 'View All']" />
 
     <x-backend.ui.section-card name="View All Services">
@@ -80,6 +94,9 @@
                             </tbody>
                         </x-backend.table.basic>
                     </div> <!-- end card body-->
+                    <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                        {{ $services->links() }}
+                    </div>
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>

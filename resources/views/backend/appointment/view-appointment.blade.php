@@ -1,10 +1,26 @@
 @extends('backend.layouts.app')
 
 @section('content')
+    
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Appointment', 'View']" />
 
     <x-backend.ui.section-card name="Appointments List">
-        <x-backend.ui.button type="custom" href="{{ route('appointment.create') }}" class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+        <x-backend.ui.button type="custom" href="{{ route('appointment.create') }}"
+            class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         <x-backend.table.basic>
             <thead>
                 <tr>
@@ -21,15 +37,16 @@
                 @foreach ($appointments as $key => $appointment)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td><img src="{{ useImage($appointment->image) }}" alt="{{ $appointment->title }}" width="80px" loading="lazy"/></td>
-                        <td>{{ Str::limit($appointment->title,15,'...') }}</td>
-                        <td>{{ Str::limit($appointment->sub_title,15,'...') }}</td>
-                        <td>{{ Str::limit($appointment->tag,15,'...') }}</td>
-                        <td>{{ Str::limit($appointment->description,15,'...') }}</td>
+                        <td><img src="{{ useImage($appointment->image) }}" alt="{{ $appointment->title }}" width="80px"
+                                loading="lazy" /></td>
+                        <td>{{ Str::limit($appointment->title, 15, '...') }}</td>
+                        <td>{{ Str::limit($appointment->sub_title, 15, '...') }}</td>
+                        <td>{{ Str::limit($appointment->tag, 15, '...') }}</td>
+                        <td>{{ Str::limit($appointment->description, 15, '...') }}</td>
                         <td>
-                            <a href="{{ route('appointment.edit', $appointment->id) }}"
-                                class="btn btn-info btn-sm">Edit</a>
-                            <form action="{{ route('appointment.destroy', $appointment->id) }}" method="post" class="d-inline-block">
+                            <a href="{{ route('appointment.edit', $appointment->id) }}" class="btn btn-info btn-sm">Edit</a>
+                            <form action="{{ route('appointment.destroy', $appointment->id) }}" method="post"
+                                class="d-inline-block">
                                 @csrf
                                 @method('DELETE')
                                 <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
@@ -39,6 +56,9 @@
                 @endforeach
             </tbody>
         </x-backend.table.basic>
+        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+            {{ $appointments->links() }}
+        </div>
 
     </x-backend.ui.section-card>
 

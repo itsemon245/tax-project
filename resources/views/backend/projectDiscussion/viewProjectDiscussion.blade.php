@@ -1,7 +1,21 @@
 @extends('backend.layouts.app')
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Backend', 'Project Discussion', 'List']" />
-<x-backend.ui.section-card name="Project Discussion List">
+    <x-backend.ui.section-card name="Project Discussion List">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -30,26 +44,30 @@
                                         <td>{{ Str::limit($projectDiscussion->location, 10, '...') }}</td>
                                         <td>{{ Str::limit($projectDiscussion->message, 10, '...') }}</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" href="{{ route('project-discussion.show', $projectDiscussion) }}" >
+                                            <a class="btn btn-sm btn-info"
+                                                href="{{ route('project-discussion.show', $projectDiscussion) }}">
                                                 View
                                             </a>
-                                            <form action="{{ route('project-discussion.destroy', $projectDiscussion) }}" method="post"
-                                                class="d-inline-block py-0">
+                                            <form action="{{ route('project-discussion.destroy', $projectDiscussion) }}"
+                                                method="post" class="d-inline-block py-0">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                                <x-backend.ui.button
+                                                    class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                                             </form>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </x-backend.table.basic>
-
+                        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                            {{ $projectDiscussions->links() }}
+                        </div>
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
-    </x-backend.ui.section-card>    
+    </x-backend.ui.section-card>
 
     <!-- end row-->
 

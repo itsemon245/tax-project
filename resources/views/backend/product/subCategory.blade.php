@@ -2,6 +2,20 @@
 
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Product', 'Sub-Category']" />
 
     <x-backend.ui.section-card name="Product Sub Category">
@@ -83,10 +97,12 @@
                                             <div class="btn-group">
                                                 <a href="{{ route('product-subcategory.edit', $sub_category->id) }}"
                                                     class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
-                                                <form action="{{ route('product-subcategory.destroy', $sub_category->id) }}" method="post">
+                                                <form action="{{ route('product-subcategory.destroy', $sub_category->id) }}"
+                                                    method="post">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <x-backend.ui.button class="btn-danger btn-sm">Delete</x-backend.ui.button>
+                                                    <x-backend.ui.button
+                                                        class="btn-danger btn-sm">Delete</x-backend.ui.button>
                                                 </form>
                                             </div>
                                         </td>
@@ -98,6 +114,9 @@
                                 @endforelse
                             </tbody>
                         </x-backend.table.basic>
+                        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                            {{ $sub_categories->links() }}
+                        </div>
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
