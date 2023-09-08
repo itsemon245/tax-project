@@ -15,6 +15,8 @@
 
 <table id="{{ $id }}" class="table table-striped dt-responsive nowrap w-100">
     {{ $slot }}
+
+
 </table>
 
 

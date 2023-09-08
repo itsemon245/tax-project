@@ -3,6 +3,20 @@
     <link href="{{ asset('backend/assets/libs/mohithg-switchery/switchery.min.css') }}" rel="stylesheet" type="text/css">
 @endpush
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Promo Code', 'View']" />
 
     <x-backend.ui.section-card name="Promo Code List">
@@ -51,6 +65,9 @@
                 @endforeach
             </tbody>
         </x-backend.table.basic>
+        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+            {{ $promos->links() }}
+        </div>
     </x-backend.ui.section-card>
 @endsection
 

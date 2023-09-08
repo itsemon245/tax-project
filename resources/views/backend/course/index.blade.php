@@ -1,6 +1,20 @@
 @extends('backend.layouts.app')
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Course', 'Index']" />
     <x-backend.ui.section-card name="All Courses">
         <x-backend.ui.button type="custom" :href="route('course.create')" class="btn-success btn-sm mb-2"><span
@@ -19,10 +33,11 @@
                 <tbody>
                     @forelse ($courses as $key => $course)
                         <tr>
-                            <td>{{++$key}}</td>
+                            <td>{{ ++$key }}</td>
                             <td>
 
-                                <a href="{{route('video.byCourse', $course->id)}}" class="d-flex align-items-start gap-2 text-reset">
+                                <a href="{{ route('video.byCourse', $course->id) }}"
+                                    class="d-flex align-items-start gap-2 text-reset">
                                     <div>
                                         <span data-feather="folder" class="icon-dual"></span>
                                     </div>
@@ -38,13 +53,15 @@
                             <td>
                                 <div class="d-flex align-items-start gap-2">
                                     <div>
-                                        <img src="{{asset('backend/assets/images/users/user-1.jpg')}}" class="rounded rounded-circle" width="48px" height="48px" alt="">
+                                        <img src="{{ asset('backend/assets/images/users/user-1.jpg') }}"
+                                            class="rounded rounded-circle" width="48px" height="48px" alt="">
                                     </div>
                                     <div>
                                         <div class="fw-medium">
-                                            <a href="javascript: void(0);" class="text-reset">{{ fake()->name('female') }}</a>
+                                            <a href="javascript: void(0);"
+                                                class="text-reset">{{ fake()->name('female') }}</a>
                                         </div>
-                                        <span>{{fake()->jobTitle()}}</span>
+                                        <span>{{ fake()->jobTitle() }}</span>
                                     </div>
                                 </div>
                             </td>
@@ -74,8 +91,11 @@
                     @endforelse
 
                 </tbody>
-            </table>
-        </x-backend.table.basic>
+                </table>
+            </x-backend.table.basic>
+            <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                {{ $courses->links() }}
+            </div>
 
     </x-backend.ui.section-card>
 @endsection

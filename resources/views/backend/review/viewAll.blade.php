@@ -1,6 +1,20 @@
 @extends('backend.layouts.app')
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Review']" />
     <x-backend.ui.section-card name="All Review">
         <x-backend.ui.button type="custom" href="{{ route('backend.review.create') }}" class="btn-success btn-sm mb-2"><span
@@ -18,22 +32,23 @@
                 </thead>
                 <tbody>
                     @forelse ($reviews as $key=>$review)
-                    <tr>
-                        <td>{{ ++$key }}</td>
-                        <td>{{ $review->name }}</td>
-                        <td>{{ $review->reviewable_type }}</td>
-                        <td>{!! Str::limit($review->comment, 20, '...') !!}</td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="#" class="btn btn-sm btn-success">View</a>
-                                <form action="{{ route('backend.review.destroy', $review) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ ++$key }}</td>
+                            <td>{{ $review->name }}</td>
+                            <td>{{ $review->reviewable_type }}</td>
+                            <td>{!! Str::limit($review->comment, 20, '...') !!}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="btn btn-sm btn-success">View</a>
+                                    <form action="{{ route('backend.review.destroy', $review) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-backend.ui.button
+                                            class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
                     @empty
                         <tr>
                             <td colspan="4">
@@ -43,6 +58,9 @@
                     @endforelse
                 </tbody>
             </x-backend.table.basic>
+            <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                {{ $reviews->links() }}
+            </div>
         </div>
     </x-backend.ui.section-card>
 @endsection

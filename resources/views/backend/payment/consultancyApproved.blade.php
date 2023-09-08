@@ -1,6 +1,19 @@
 @extends('backend.layouts.app')
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
 
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -40,12 +53,12 @@
                             <tbody>
                                 @foreach ($payments as $key => $payemnt)
                                     @php
-                                        $metaData= json_decode($payemnt->metadata, true);
+                                        $metaData = json_decode($payemnt->metadata, true);
                                     @endphp
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $payemnt->purchasable->name  }}</td>
-                                        <td>{{ $payemnt->name  }}</td>
+                                        <td>{{ $payemnt->purchasable->name }}</td>
+                                        <td>{{ $payemnt->name }}</td>
                                         {{-- <td>{{ Str::limit($metaData[0], 10,'...')  }}</td>
                                         <td>{{ Str::limit($metaData[1], 10, '...')  }}</td> --}}
                                         <td>{{ $payemnt->payment_number }}</td>
@@ -60,20 +73,22 @@
                                         <td>
                                             <a href="{{ route('consultancy.order.status', $payemnt->id) }}"
                                                 class="btn btn-blue btn-sm waves-effect waves-light d-inline-block">Approved</a>
-                                           
-                                            <form class="d-inline-block"
-                                                action="{{ route('order.destroy', $payemnt->id) }}" method="post">
+
+                                            <form class="d-inline-block" action="{{ route('order.destroy', $payemnt->id) }}"
+                                                method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button
-                                                class="btn btn-danger btn-sm waves-effect waves-light" id="delete">Delete</button>
+                                                <button class="btn btn-danger btn-sm waves-effect waves-light"
+                                                    id="delete">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </x-backend.table.basic>
-
+                        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                            {{ $payments->links() }}
+                        </div>
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
@@ -83,5 +98,4 @@
 @endsection
 
 @push('customJs')
-
 @endpush

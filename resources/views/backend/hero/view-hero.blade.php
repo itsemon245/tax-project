@@ -2,9 +2,23 @@
 
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display:none!important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', 'List']" />
 
-<x-backend.ui.section-card name="Hero List">
+    <x-backend.ui.section-card name="Hero List">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -39,7 +53,8 @@
                                                 class="d-inline-block py-0">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                                <x-backend.ui.button
+                                                    class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                                             </form>
                                         </td>
                                     </tr>
@@ -47,11 +62,15 @@
                             </tbody>
                         </x-backend.table.basic>
 
+                        <div class="paginate md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                            {{ $banners->links() }}
+                        </div>
+
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
-    </x-backend.ui.section-card>    
+    </x-backend.ui.section-card>
 
     <!-- end row-->
 

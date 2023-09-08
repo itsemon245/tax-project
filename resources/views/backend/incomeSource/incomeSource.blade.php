@@ -2,6 +2,20 @@
 
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Footer', 'Social-Media']" />
 
     <x-backend.ui.section-card name="All Income Sources">
@@ -16,10 +30,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <x-backend.form.text-input type="text" id="title" label="Title" name="title"
-                                        placeholder="Select Title" required/>
+                                        placeholder="Select Title" required />
                                 </div> <!-- end col -->
                                 <div class="col-md-12">
-                                    <x-backend.form.text-input type="file" label="Image" name="image" required/>
+                                    <x-backend.form.text-input type="file" label="Image" name="image" required />
                                 </div>
                                 {{-- social media link  --}}
                                 <div class="mt-3"><button class="btn btn-primary w-100 btn-sm profile-button"
@@ -47,13 +61,14 @@
                             @forelse ($data as $key => $item)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td><img src="{{useImage($item->image)}}" alt="{{$item->title}}" width="80px"> </td>
-                                    <td>{{$item->title}}</td>
+                                    <td><img src="{{ useImage($item->image) }}" alt="{{ $item->title }}" width="80px">
+                                    </td>
+                                    <td>{{ $item->title }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <x-backend.ui.button type="edit" href="{{ route('income-source.edit', $item) }}" class="btn-sm" />
-                                            <form action="{{ route('income-source.destroy', $item->id) }}"
-                                                method="POST">
+                                            <x-backend.ui.button type="edit"
+                                                href="{{ route('income-source.edit', $item) }}" class="btn-sm" />
+                                            <form action="{{ route('income-source.destroy', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <x-backend.ui.button class="text-capitalize btn-sm btn-danger">Delete
@@ -69,6 +84,9 @@
                             @endforelse
                         </tbody>
                     </x-backend.table.basic>
+                    <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                        {{ $data->links() }}
+                    </div>
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->

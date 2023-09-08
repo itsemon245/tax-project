@@ -1,6 +1,20 @@
 @extends('backend.layouts.app')
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['User', 'Appointments']" />
 
     <x-backend.ui.section-card name="User Appointments">
@@ -43,14 +57,14 @@
                             <strong class="d-block">Date:
                                 {{ Carbon\Carbon::parse($appointment->date)->format('d M, Y') }}</strong>
                             <strong class="d-block">Time: {{ $appointment->time }}</strong>
-                           
+
                         </td>
                         <td>
                             @if ($appointment->is_completed)
-                            <span class="badge bg-soft-success text-success p-1 fs-6">Completed</span>
-                        @else
-                            <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
-                        @endif
+                                <span class="badge bg-soft-success text-success p-1 fs-6">Completed</span>
+                            @else
+                                <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
+                            @endif
                         </td>
                         @isset($appointment->map_id)
                             <td>
@@ -91,6 +105,8 @@
 
 
         </x-backend.table.basic>
-
+        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+            {{ $appointments->links() }}
+        </div>
     </x-backend.ui.section-card>
 @endsection
