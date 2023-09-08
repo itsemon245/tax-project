@@ -15,4 +15,8 @@ class ExpertProfile extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
+    public function expertCategories()
+    {
+        return $this->belongsToMany(ExpertCategory::class);
+    }
 }

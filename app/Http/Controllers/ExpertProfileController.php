@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExpertProfileRequest;
 use App\Http\Requests\UpdateExpertProfileRequest;
+use App\Models\ExpertCategory;
 use App\Models\ExpertProfile;
 
 class ExpertProfileController extends Controller
@@ -22,7 +23,8 @@ class ExpertProfileController extends Controller
      */
     public function create()
     {
-        return view("backend.expertProfile.createExpertProfile");
+        $expertCategories = ExpertCategory::get();
+        return view("backend.expertProfile.createExpertProfile", compact('expertCategories'));
     }
 
     /**
@@ -31,14 +33,29 @@ class ExpertProfileController extends Controller
     public function store(StoreExpertProfileRequest $request)
     {
         $request->validated();
-        $expert = ExpertProfile::create($request->except('image'));
+        $expert = new ExpertProfile();
+        $expert->name = $request->name;
+        $expert->post = $request->post;
+        $expert->bio = $request->bio;
+        $expert->description = $request->description;
+        $expert->experience = $request->experience;
+        $expert->join_date = $request->join_date;
+        $expert->availability = $request->availability;
+        $expert->at_a_glance = $request->at_a_glance;
+        $expert->price = $request->price;
+        $expert->expert_category = json_encode($request->expert_categories);
         $expert->image = saveImage($request->image, 'experts');
         $expert->save();
-
+        if($expert->save()){
+            $fetchProfile = ExpertProfile::with('expertCategories')->orderBy('created_at', 'desc')->first();
+            foreach (json_decode($expert->expert_category) as $expert_category) {
+                $fetchProfile->expertCategories()->attach($expert_category); 
+            }
+        }
         return redirect()
-            ->route("expert-profile.index")
+            ->back()
             ->with(array(
-                'message'    => "Expert Profile Created Successfully",
+                'message'    => "Expert Profile Created",
                 'alert-type' => 'success',
             ));
     }
@@ -66,18 +83,43 @@ class ExpertProfileController extends Controller
     public function update(UpdateExpertProfileRequest $request, ExpertProfile $expertProfile)
     {
         $request->validated();
-        $expertProfile->update($request->except('image'));
         if ($request->has('image')) {
+            $expertProfile->name = $request->name;
+            $expertProfile->post = $request->post;
+            $expertProfile->bio = $request->bio;
+            $expertProfile->description = $request->description;
+            $expertProfile->experience = $request->experience;
+            $expertProfile->join_date = $request->join_date;
+            $expertProfile->availability = $request->availability;
+            $expertProfile->at_a_glance = $request->at_a_glance;
+            $expertProfile->price = $request->price;
             $expertProfile->image = updateFile($request->image, $expertProfile->image, 'experts');
             $expertProfile->save();
-        }
-
-        return redirect()
-            ->route("expert-profile.index")
+            return redirect()
+            ->back()
             ->with(array(
-                'message'    => "Expert Profile Updated Successfully",
+                'message'    => "Expert Profile Updated",
                 'alert-type' => 'success',
             ));
+        }else{
+            $expertProfile->name = $request->name;
+            $expertProfile->post = $request->post;
+            $expertProfile->bio = $request->bio;
+            $expertProfile->description = $request->description;
+            $expertProfile->experience = $request->experience;
+            $expertProfile->join_date = $request->join_date;
+            $expertProfile->availability = $request->availability;
+            $expertProfile->at_a_glance = $request->at_a_glance;
+            $expertProfile->price = $request->price;
+            $expertProfile->save();
+            return redirect()
+                ->back()
+                ->with(array(
+                    'message'    => "Expert Profile Updated",
+                    'alert-type' => 'success',
+                ));
+        }
+
     }
 
     /**
@@ -85,10 +127,10 @@ class ExpertProfileController extends Controller
      */
     public function destroy(ExpertProfile $expertProfile)
     {
-        ExpertProfile::find($expertProfile->id)->delete();
+        $expertProfile->delete();
         return back()
             ->with(array(
-                'message'    => "Expert Profile Deleted Successfully",
+                'message'    => "Expert Profile Deleted",
                 'alert-type' => 'success',
             ));
     }

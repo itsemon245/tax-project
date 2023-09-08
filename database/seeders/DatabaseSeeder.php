@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\ExpertCategory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
             CaseStudyPackageSeeder::class,
             CaseStudyCategorySeeder::class,
             CaseStudySeeder::class,
+            ExpertCategorySeeder::class,
             ExpertProfileSeeder::class,
             CourseSeeder::class,
             ExamSeeder::class,
