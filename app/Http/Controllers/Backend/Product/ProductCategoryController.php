@@ -14,7 +14,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ProductCategory::with('productSubCategories')->simplePaginate(paginateCount(20));
+        $categories = ProductCategory::with('productSubCategories')->simplePaginate(paginateCount());
         return view('backend.product.category', compact('categories'));
     }
 
@@ -50,7 +50,7 @@ class ProductCategoryController extends Controller
      */
     public function edit(ProductCategory $productCategory)
     {
-        
+
         return view('backend.product.editCategory', compact('productCategory'));
     }
 
@@ -61,7 +61,7 @@ class ProductCategoryController extends Controller
     {
         $productCategory->name = $request->category;
         $productCategory->save();
-        return back()->with('success','Category Edit Successfully');
+        return back()->with('success', 'Category Edit Successfully');
     }
 
     /**
@@ -70,6 +70,6 @@ class ProductCategoryController extends Controller
     public function destroy(ProductCategory $productCategory)
     {
         $productCategory->delete();
-        return back()->with('danger','Deleted Successfully');
+        return back()->with('danger', 'Deleted Successfully');
     }
 }

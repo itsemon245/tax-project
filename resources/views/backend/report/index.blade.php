@@ -105,7 +105,7 @@
             </div>
         </div> --}}
         <div class="container">
-            <table class="table border table-responsive ">
+            <x-backend.table.basic>
                 <thead>
                     <tr>
                         <th class="border bg-soft-dark text-dark">Year</th>
@@ -147,7 +147,7 @@
                         @endforeach
                     </tr>
                 </tbody>
-            </table>
+            </x-backend.table.basic>
         </div>
         <div class="card">
             <h5 class="card-header bg-soft-light text-dark text-capitalize">All {{ str($type)->plural() }}</h5>

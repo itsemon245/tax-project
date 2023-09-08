@@ -11,24 +11,24 @@ use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
-    
+
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
-    
+
     /*
     * create dashboard view page
     */
     public function index()
     {
-        $clients = Client::simplePaginate(paginateCount(20));
-        $projects = Project::simplePaginate(paginateCount(20));
-        $events = Calendar::with('client')->latest()->simplePaginate(paginateCount(20));
+        $clients = Client::simplePaginate(paginateCount());
+        $projects = Project::simplePaginate(paginateCount());
+        $events = Calendar::with('client')->latest()->simplePaginate(paginateCount());
         $today = Carbon::now()->format('Y-m-d');
         $services = Calendar::get()->unique();
         $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();
         $currentTime = Carbon::now();
-        return view('backend.dashboard.dashboard', compact('clients', 'projects', 'events', 'today','services','currentEvents','currentTime'));
+        return view('backend.dashboard.dashboard', compact('clients', 'projects', 'events', 'today', 'services', 'currentEvents', 'currentTime'));
     }
 }

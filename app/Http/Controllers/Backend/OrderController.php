@@ -13,7 +13,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $payments = Purchase::latest()->simplePaginate(paginateCount(20));
+        $payments = Purchase::latest()->simplePaginate(paginateCount());
         return view('backend.payment.approved', compact('payments'));
     }
 

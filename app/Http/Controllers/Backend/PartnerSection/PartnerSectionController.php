@@ -14,7 +14,7 @@ class PartnerSectionController extends Controller
      */
     public function index()
     {
-        $partnerSection = PartnerSection::simplePaginate(paginateCount(20));
+        $partnerSection = PartnerSection::simplePaginate(paginateCount());
         return view('backend.partnerSection.aboutUsPartnerSection', compact('partnerSection'));
     }
 
@@ -39,7 +39,7 @@ class PartnerSectionController extends Controller
         $partnerSection->facebook = $request->facebook;
         $partnerSection->twitter = $request->twitter;
         $partnerSection->linkedin = $request->linkedin;
-        $partnerSection->image = saveImage($request->image, 'pages', 'partner-image'); 
+        $partnerSection->image = saveImage($request->image, 'pages', 'partner-image');
         $partnerSection->save();
         $notification = array(
             'message' => "Updated Successfully",
@@ -82,6 +82,6 @@ class PartnerSectionController extends Controller
             'message' => "Deleted Successfully",
             'alert-type' => 'success',
         );
-        return back()->with($notification);  
+        return back()->with($notification);
     }
 }

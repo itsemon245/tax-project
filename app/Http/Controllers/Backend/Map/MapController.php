@@ -14,7 +14,7 @@ class MapController extends Controller
      */
     public function index()
     {
-        $maps = Map::simplePaginate(paginateCount(20));
+        $maps = Map::simplePaginate(paginateCount());
         return view('backend.map.showMaps', compact('maps'));
     }
 
@@ -38,7 +38,7 @@ class MapController extends Controller
         $map = new Map();
         $map->location = $request->location;
         $map->address = $request->address;
-        $map->src = $src; 
+        $map->src = $src;
         $map->save();
         $notification = array(
             'message' => "Added Successfully",
@@ -52,8 +52,6 @@ class MapController extends Controller
      */
     public function show(Map $map)
     {
-       
-
     }
 
     /**
@@ -73,7 +71,7 @@ class MapController extends Controller
         $src = preg_grep($pattern, explode('"', $request->iframe_link))[1];
         $map->location = $request->location;
         $map->address = $request->address;
-        $map->src = $src; 
+        $map->src = $src;
         $map->update();
         $notification = array(
             'message' => "Updated Successfully",
@@ -93,8 +91,5 @@ class MapController extends Controller
             'alert-type' => 'success',
         );
         return redirect(route('map.index'))->with($notification);
-
     }
-
-
 }

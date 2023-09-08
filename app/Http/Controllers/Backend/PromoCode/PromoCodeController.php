@@ -22,7 +22,7 @@ class PromoCodeController extends Controller
      */
     public function index()
     {
-        $promos = PromoCode::with('user:id,name')->simplePaginate(paginateCount(20));
+        $promos = PromoCode::with('user:id,name')->simplePaginate(paginateCount());
         return view('backend.promoCode.viewPormoCode', compact('promos'));
     }
 

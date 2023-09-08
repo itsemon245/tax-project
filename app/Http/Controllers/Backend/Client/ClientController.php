@@ -14,8 +14,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients= Client::latest()->simplePaginate(paginateCount(20));
-        return view('backend.client.view-client',compact('clients'));
+        $clients = Client::latest()->simplePaginate(paginateCount());
+        return view('backend.client.view-client', compact('clients'));
     }
 
     /**
@@ -31,21 +31,21 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        $client_store= new Client();
-        $client_store->name= $request->client_name;
-        $client_store->father_name= $request->father_name;
-        $client_store->mother_name= $request->mother_name;
-        $client_store->company_name= $request->company_name;
-        $client_store->spouse_name= $request->husband_wife_name;
-        $client_store->present_address= $request->present_address;
-        $client_store->permanent_address= $request->parmentat_address;
-        $client_store->phone= $request->phone;
-        $client_store->tin= $request->tin;
-        $client_store->circle= $request->circle;
-        $client_store->zone= $request->zone;
+        $client_store = new Client();
+        $client_store->name = $request->client_name;
+        $client_store->father_name = $request->father_name;
+        $client_store->mother_name = $request->mother_name;
+        $client_store->company_name = $request->company_name;
+        $client_store->spouse_name = $request->husband_wife_name;
+        $client_store->present_address = $request->present_address;
+        $client_store->permanent_address = $request->parmentat_address;
+        $client_store->phone = $request->phone;
+        $client_store->tin = $request->tin;
+        $client_store->circle = $request->circle;
+        $client_store->zone = $request->zone;
 
         $client_store->save();
-        
+
         $notification = [
             'message' => 'Client Created',
             'alert-type' => 'success',
@@ -67,7 +67,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        return view('backend.client.edit-client',compact('client'));
+        return view('backend.client.edit-client', compact('client'));
     }
 
     /**
@@ -75,20 +75,20 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        $client->name= $request->client_name;
-        $client->father_name= $request->father_name;
-        $client->mother_name= $request->mother_name;
-        $client->company_name= $request->company_name;
-        $client->spouse_name= $request->husband_wife_name;
-        $client->present_address= $request->present_address;
-        $client->permanent_address= $request->parmentat_address;
-        $client->phone= $request->phone;
-        $client->tin= $request->tin;
-        $client->circle= $request->circle;
-        $client->zone= $request->zone;
+        $client->name = $request->client_name;
+        $client->father_name = $request->father_name;
+        $client->mother_name = $request->mother_name;
+        $client->company_name = $request->company_name;
+        $client->spouse_name = $request->husband_wife_name;
+        $client->present_address = $request->present_address;
+        $client->permanent_address = $request->parmentat_address;
+        $client->phone = $request->phone;
+        $client->tin = $request->tin;
+        $client->circle = $request->circle;
+        $client->zone = $request->zone;
 
         $client->save();
-        
+
         $notification = [
             'message' => 'Client updated',
             'alert-type' => 'success',

@@ -20,7 +20,7 @@ class ProductController extends Controller
         $products = Product::with('productCategory:id,name')
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
-            ->simplePaginate(paginateCount(20));
+            ->simplePaginate(paginateCount());
 
         return view('backend.product.viewProducts', compact('products'));
     }

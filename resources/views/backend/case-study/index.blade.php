@@ -2,6 +2,7 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Case Study', 'List']" />
 <x-backend.ui.section-card name="Case Study List">
+    <x-backend.ui.button type="custom" href="{{ route('case-study.create') }}" class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         <div class="row">
             <div class="col-12">
                 <div class="card">

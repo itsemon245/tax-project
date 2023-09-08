@@ -16,7 +16,7 @@ class CaseStudyController extends Controller
      */
     public function index()
     {
-        $data = CaseStudy::with('caseStudyCategory', 'caseStudyPackage')->latest()->simplePaginate(paginateCount(20));
+        $data = CaseStudy::with('caseStudyCategory', 'caseStudyPackage')->latest()->simplePaginate(paginateCount());
         return view('backend.case-study.index', compact('data'));
     }
 
@@ -106,7 +106,7 @@ class CaseStudyController extends Controller
         $caseStudy->name = $request->name;
         $caseStudy->intro = $request->intro;
         if ($request->hasFile('image'))
-            $caseStudy->image = updateFile($request->image,$caseStudy->image, 'case-study/banners');
+            $caseStudy->image = updateFile($request->image, $caseStudy->image, 'case-study/banners');
         $caseStudy->description = $request->description;
         $caseStudy->price = $request->price;
         if ($request->hasFile('download_link'))

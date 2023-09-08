@@ -14,7 +14,7 @@ class ClientStudioController extends Controller
      */
     public function index()
     {
-        $data = ClientStudio::latest()->simplePaginate(paginateCount(20));
+        $data = ClientStudio::latest()->simplePaginate(paginateCount());
         return view('backend.clientStudio.client-studio-index', compact('data'));
     }
     /**
@@ -33,7 +33,7 @@ class ClientStudioController extends Controller
     {
         $data = new ClientStudio();
         $data->description = $request->description;
-        $data->image = saveImage($request->image, 'client-studio', 'client-studio-img'); 
+        $data->image = saveImage($request->image, 'client-studio', 'client-studio-img');
         $data->title = $request->title;
         $data->count = $request->count;
         $data->save();
@@ -42,7 +42,6 @@ class ClientStudioController extends Controller
             'alert-type' => 'success',
         );
         return back()->with($notification);
-
     }
 
     /**
@@ -68,7 +67,7 @@ class ClientStudioController extends Controller
     {
         $oldImagePath = $clientStudio->image;
         $clientStudio->description = $request->description;
-        $clientStudio->image = updateFile($request->image, $oldImagePath,'client-studio', 'client-studio-img');
+        $clientStudio->image = updateFile($request->image, $oldImagePath, 'client-studio', 'client-studio-img');
         $clientStudio->title = $request->title;
         $clientStudio->count = $request->count;
         $clientStudio->update();

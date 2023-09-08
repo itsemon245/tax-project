@@ -13,7 +13,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::latest()->simplePaginate(paginateCount(20));
+        $expenses = Expense::latest()->simplePaginate(paginateCount());
         return view('backend.expense.index', compact('expenses'));
     }
 

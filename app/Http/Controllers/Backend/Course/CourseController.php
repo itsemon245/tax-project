@@ -15,7 +15,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::latest()->simplePaginate(paginateCount(20));
+        $courses = Course::latest()->simplePaginate(paginateCount());
         return view('backend.course.index', compact('courses'));
     }
 
@@ -163,6 +163,4 @@ class CourseController extends Controller
         }
         return $paths;
     }
-
-
 }

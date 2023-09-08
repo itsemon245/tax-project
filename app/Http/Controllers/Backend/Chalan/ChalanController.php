@@ -15,8 +15,8 @@ class ChalanController extends Controller
      */
     public function index()
     {
-        $data=Chalan::latest()->simplePaginate(paginateCount(20));
-        return view('backend.chalan.index',compact('data'));
+        $data = Chalan::latest()->simplePaginate(paginateCount());
+        return view('backend.chalan.index', compact('data'));
     }
 
     /**
@@ -113,8 +113,8 @@ class ChalanController extends Controller
      */
     public function show(Chalan $chalan)
     {
-        $chalan= Chalan::find($chalan->id);
-        return view('backend.chalan.show',compact('chalan'));
+        $chalan = Chalan::find($chalan->id);
+        return view('backend.chalan.show', compact('chalan'));
     }
 
     /**
@@ -166,7 +166,6 @@ class ChalanController extends Controller
      */
     public function update(Request $request, Chalan $chalan)
     {
-     
     }
 
     /**
@@ -174,16 +173,15 @@ class ChalanController extends Controller
      */
     public function destroy(Chalan $chalan)
     {
-        Chalan::where('id',$chalan->id)->delete();
+        Chalan::where('id', $chalan->id)->delete();
 
-        
+
         $notification = [
             'message' => 'Chalan Deleted',
             'alert-type' => 'success',
         ];
 
         return back()->with($notification);
-
     }
 
     /**

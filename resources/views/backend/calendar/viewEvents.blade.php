@@ -5,7 +5,7 @@
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Event', 'List']" />
 
     <x-backend.ui.section-card name="All Events">
-
+        <x-backend.ui.button type="custom" href="{{ route('calendar.create') }}" class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         <x-backend.table.basic>
             <thead>
                 <tr>

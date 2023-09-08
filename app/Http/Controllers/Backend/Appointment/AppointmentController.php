@@ -15,7 +15,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::latest()->simplePaginate(paginateCount(20));
+        $appointments = Appointment::latest()->simplePaginate(paginateCount());
         return view('backend.appointment.view-appointment', compact('appointments'));
     }
 
@@ -72,7 +72,7 @@ class AppointmentController extends Controller
         $appointmentUpdate->sub_title = $request->sub_title;
         $appointmentUpdate->tag = $request->tag;
         $appointmentUpdate->description = $request->description;
-        $oldImagePath =$appointmentUpdate->image;
+        $oldImagePath = $appointmentUpdate->image;
         $appointmentUpdate->image = updateFile($request->image, $oldImagePath, 'appointment', 'appointment');
         $appointmentUpdate->save();
         $notification = [

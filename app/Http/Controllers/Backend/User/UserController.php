@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = User::with('roles')->latest()->simplePaginate(paginateCount(20));
+        $data = User::with('roles')->latest()->simplePaginate(paginateCount());
         return view('backend.users.view-users', compact('user', 'data'));
     }
 
@@ -28,11 +28,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles= Role::all();
-        return view('backend.users.create-users',compact('roles'));
+        $roles = Role::all();
+        return view('backend.users.create-users', compact('roles'));
     }
 
-      /**
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -47,7 +47,7 @@ class UserController extends Controller
             'confirm_password' => 'required|same:password',
             'admin_ref' => 'required',
         ]);
-        
+
         $userData = new User();
         $userData->name = $request->name;
         $userData->user_name = $request->user_name;
@@ -55,8 +55,7 @@ class UserController extends Controller
         $userData->admin_ref = $request->admin_ref;
         $userData->phone = $request->phone;
         $userData->password = Hash::make($request->password);
-        if($request->hasFile('user_image'))
-        {
+        if ($request->hasFile('user_image')) {
             $userData->image_url = saveImage($request->user_image, 'profile', 'user-image');
         }
         $userData->save();
@@ -67,7 +66,6 @@ class UserController extends Controller
             'alert-type' => 'success',
         ];
         return back()->with($notification);
-
     }
 
     /**
@@ -76,10 +74,10 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = Auth::user();
-        $userRole= User::with('roles')->where('id',$user->id)->first();
+        $userRole = User::with('roles')->where('id', $user->id)->first();
         //dd($userRole);
-        $roles= Role::all();
-        return view('backend.users.edit-users', compact('user','roles','userRole'));
+        $roles = Role::all();
+        return view('backend.users.edit-users', compact('user', 'roles', 'userRole'));
     }
 
     /**
@@ -103,8 +101,7 @@ class UserController extends Controller
         $userData->admin_ref = $request->admin_ref;
         $userData->phone = $request->phone;
         $userData->password = Hash::make($request->password);
-        if($request->hasFile('user_image'))
-        {
+        if ($request->hasFile('user_image')) {
             $old_path = $userData->image_url;
             $userData->image_url = updateFile($request->user_image,  $old_path, 'profile', 'user-image');
         }
@@ -118,20 +115,20 @@ class UserController extends Controller
         return redirect()->route('users.index')->with($notification);
     }
 
-     /**
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $user= User::find($id);
-        $explode= explode('/',$user->image_url);
-        $imageName= end($explode);
+        $user = User::find($id);
+        $explode = explode('/', $user->image_url);
+        $imageName = end($explode);
         $path = 'public/uploads/profile/' . $imageName;
         if (Storage::exists($path)) {
             Storage::delete($path);
         }
-        User::where('id',$id)->delete();
-        
+        User::where('id', $id)->delete();
+
         $notification = [
             'message' => 'User Profile Deleted Successfully',
             'alert-type' => 'success',

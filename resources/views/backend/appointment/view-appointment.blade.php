@@ -4,7 +4,7 @@
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Appointment', 'View']" />
 
     <x-backend.ui.section-card name="Appointments List">
-
+        <x-backend.ui.button type="custom" href="{{ route('appointment.create') }}" class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         <x-backend.table.basic>
             <thead>
                 <tr>

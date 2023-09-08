@@ -3,9 +3,7 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Achievement']" />
 
     <x-backend.ui.section-card name="Industries">
-        <div class="mb-2">
-            <a href="{{ route('achievements.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
-        </div>
+        <x-backend.ui.button type="custom" href="{{ route('achievements.create') }}" class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         <x-backend.table.basic>
             <thead>
                 <tr>

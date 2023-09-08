@@ -14,8 +14,8 @@ class BookCategoryController extends Controller
      */
     public function index()
     {
-        $data = BookCategory::latest()->simplePaginate(paginateCount(20));
-        return view('backend.book.book-category.index',compact('data'));
+        $data = BookCategory::latest()->simplePaginate(paginateCount());
+        return view('backend.book.book-category.index', compact('data'));
     }
 
     /**
@@ -62,7 +62,7 @@ class BookCategoryController extends Controller
      */
     public function update(UpdateBookCategoryRequest $request, BookCategory $bookCategory)
     {
-        $appointmentStore =BookCategory::find($bookCategory->id);
+        $appointmentStore = BookCategory::find($bookCategory->id);
         $appointmentStore->book_category = $request->category_name;
         $appointmentStore->save();
         $notification = [

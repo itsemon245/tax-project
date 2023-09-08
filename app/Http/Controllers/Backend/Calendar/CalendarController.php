@@ -13,7 +13,7 @@ class CalendarController extends Controller
 {
     public function index()
     {
-        $events = Calendar::with('client')->latest()->simplePaginate(paginateCount(20));
+        $events = Calendar::with('client')->latest()->simplePaginate(paginateCount());
         return view('backend.calendar.viewEvents', compact('events'));
     }
 
@@ -49,7 +49,7 @@ class CalendarController extends Controller
         ];
         return back()->with($notification);
     }
-    
+
     public function edit(Calendar $calendar)
     {
         $clients = Client::get();
@@ -107,7 +107,8 @@ class CalendarController extends Controller
         return back()->with($notification);
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         Calendar::find($id)->delete();
         $notification = [
             'message' => 'Event Deleted',

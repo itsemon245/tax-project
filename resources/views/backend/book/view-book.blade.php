@@ -5,7 +5,7 @@
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Book', 'List']" />
 
     <x-backend.ui.section-card name="Book Section">
-
+        <x-backend.ui.button type="custom" href="{{ route('book.index') }}" class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         <x-backend.table.basic>
             <thead>
                 <tr>

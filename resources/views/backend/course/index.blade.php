@@ -6,7 +6,7 @@
         <x-backend.ui.button type="custom" :href="route('course.create')" class="btn-success btn-sm mb-2"><span
                 class="fw-bold fs-5 me-1">+</span>New Course</x-backend.ui.button>
         <div class="table-responsive">
-            <table class="table table-centered table-nowrap mb-0">
+            <x-backend.table.basic>
                 <thead class="table-light">
                     <tr>
                         <th class="">No</th>
@@ -75,7 +75,7 @@
 
                 </tbody>
             </table>
-        </div>
+        </x-backend.table.basic>
 
     </x-backend.ui.section-card>
 @endsection
