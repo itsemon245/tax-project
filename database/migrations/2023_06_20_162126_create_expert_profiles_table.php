@@ -24,6 +24,7 @@ return new class extends Migration
             $table->longText('description');
             $table->decimal('price')->nullable();#filterable
             $table->integer('discount')->nullable();
+            $table->json('expert_category')->nullable();
             $table->enum('billing_type', ['onetime'])->default('onetime');
             $table->timestamps();
         });

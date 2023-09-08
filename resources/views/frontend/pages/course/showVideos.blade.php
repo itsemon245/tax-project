@@ -13,7 +13,7 @@
 
                     @php
                         $currentVideo= $videos->where('id',request()->query('videos_id'))->first();
-                        //dd($currentVideo)
+                        // dd($currentVideo)
                     @endphp
 
                     <video width="400" controls>
@@ -185,7 +185,7 @@
                                                     aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
                                                         @foreach ($videos as $item)
-                                                        {{ auth()->user()->hasCompletedVideo($item->id) }}
+                                                        {{-- {{ dd() }} --}}
                                                             <div class="mb-3">
                                                                 <a href="{{route('course.videos',$item->course_id)."?videos_id=".$item->id}}">
                                                                     <div class="card">
@@ -193,7 +193,7 @@
                                                                             <div class="p-2">
                                                                                 <div class="form-check">
                                                                                     <input class="form-check-input" data-url="{{ route('ajax.video.toggle', $item) }}"
-                                                                                        type="checkbox" value="" @checked() 
+                                                                                        type="checkbox" value="" @checked(auth()->user()->hasCompletedVideo($item->id))
                                                                                         id="flexCheckDisabled-{{$item->id}}">
                                                                                     <label class="form-check-label"
                                                                                         for="flexCheckDisabled-{{$item->id}}">

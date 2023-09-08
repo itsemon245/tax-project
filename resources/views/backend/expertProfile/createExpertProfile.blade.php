@@ -1,6 +1,7 @@
+@push('customCss')
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+@endpush
 @extends('backend.layouts.app')
-
-
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Expert Profile', 'Create']" />
 
@@ -9,6 +10,21 @@
         <form action="{{ route('expert-profile.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
+                <div class="col-md-12">
+                    <p class="m-0">Select Category <span class="text-danger">*</span></p>
+                    <div class="card p-2 d-flex justify-content-around">
+                        <div class="row">
+                            @foreach ($expertCategories as $expertCategory)
+                            {{-- <div class="col-md-4"><x-form.check-box type="checkbox" name="expert_categories[]" :label="$expertCategory->name" />
+                            </div> --}}
+                            <div class="col-md-4">
+                                <input type="checkbox" value="{{ $expertCategory->id }}" class="form-check-input" id="{{ Str::slug($expertCategory->name, '-') }}" name="expert_categories[]">
+                                <label class="form-check-label" for="{{ Str::slug($expertCategory->name, '-') }}">{{ $expertCategory->name }}</label>
+                             </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <x-backend.form.text-input label="Name" required type="text" name="name">
                     </x-backend.form.text-input>
@@ -60,6 +76,5 @@
 
 
     @push('customJs')
-        <script></script>
     @endpush
 @endsection

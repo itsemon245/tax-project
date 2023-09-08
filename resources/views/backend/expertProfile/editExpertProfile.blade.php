@@ -6,7 +6,7 @@
 
     <x-backend.ui.section-card name="Expert Section">
 
-        <form action="{{ route('expert-profile.update', $profile->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('expert-profile.update', $profile) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
