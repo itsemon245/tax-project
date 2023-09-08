@@ -1,24 +1,31 @@
 @extends('frontend.layouts.app')
 @section('main')
+    <style>
+        .now-playing {
+            background: var(--bs-primary-bg-subtle) !important;
+            border: 2px solid var(--primary) !important;
+        }
 
+        .completed {
+            background: var(--bs-dark-bg-subtle) !important;
+            opacity: 0.8;
+        }
+    </style>
+    @php
+        $currentVideo = \App\Models\Video::where('id', request()->query('videos_id'))->first();
+        //dd($currentVideo)
+    @endphp
     <div class="container row mx-auto">
         <div class="col-md-12 mt-3">
-            <h3 class="py-2 px-2">Welcome to Our Video course</h3>
+            <h3 class="py-2 px-2">{{ $currentVideo->title }}</h3>
         </div>
 
 
         <div class="col-md-12">
-            <div class="p-2 ratio ratio-16x9">
-                    {{-- <iframe width="400" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
-
-                    @php
-                        $currentVideo= $videos->where('id',request()->query('videos_id'))->first();
-                        //dd($currentVideo)
-                    @endphp
-
-                    <video width="400" controls>
-                        <source src="{{ $currentVideo->video }}" type="video/mp4">
-                    </video>
+            <div class="p-2 w-75 ratio ratio-16x9 mx-auto">
+                <video class="w-full" controls>
+                    <source src="{{ $currentVideo->video }}" type="video/mp4">
+                </video>
             </div>
             <div class="row p-3">
                 <div class="col-md-12">
@@ -171,47 +178,40 @@
                             </div>
                             <div class="tab-pane active" id="courseContent" role="tabpanel">
                                 <div class="col-md-12">
-                                    <div class="p-2 overflow-auto" style="height: 650px;">
-                                        <div class="accordion" id="accordionExample">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="headingThree">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                        aria-expanded="false" aria-controls="collapseThree">
-                                                        Milestone One
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseThree" class="accordion-collapse collapse"
-                                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                        @foreach ($videos as $item)
-                                                        {{ auth()->user()->hasCompletedVideo($item->id) }}
-                                                            <div class="mb-3">
-                                                                <a href="{{route('course.videos',$item->course_id)."?videos_id=".$item->id}}">
-                                                                    <div class="card">
-                                                                        <div class="card-body">
-                                                                            <div class="p-2">
-                                                                                <div class="form-check">
-                                                                                    <input class="form-check-input" data-url="{{ route('ajax.video.toggle', $item) }}"
-                                                                                        type="checkbox" value="" @checked() 
-                                                                                        id="flexCheckDisabled-{{$item->id}}">
-                                                                                    <label class="form-check-label"
-                                                                                        for="flexCheckDisabled-{{$item->id}}">
-                                                                                        {{ $item->title }}
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                </a>
-                                                            </div>
-                                                        @endforeach
+                                    <div class="p-2 ">
+                                        @foreach ($videos as $sectionName => $videos)
+                                            <div class="card overflow-auto" style="max-height: 650px;">
+                                                <div class="card-header py-1" role="button">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <span class="fw-bold">{{ $sectionName }}</span>
+                                                        <span class="mdi mdi-chevron-down"></span>
                                                     </div>
                                                 </div>
+                                                <div class="card-body">
+                                                    <ul class="">
+                                                        @foreach ($videos as $key => $video)
+                                                            <li
+                                                                class="{{ $video->id == request()->query('videos_id') ? 'now-playing' : '' }} {{ auth()->user()->hasCompletedVideo($video->id)? 'completed': '' }} mb-3 d-flex gap-3 align-items-center  p-2 rounded border">
+                                                                <div class="form-check form-check-success">
+                                                                    <input class="form-check-input rounded-circle"
+                                                                        data-url="{{ route('ajax.video.toggle', $video->id) }}"
+                                                                        type="checkbox" value=""
+                                                                        @checked(auth()->user()->hasCompletedVideo($video->id))>
+                                                                </div>
+                                                                <strong>{{ $key + 1 }}.</strong>
+                                                                <a class="text-dark"
+                                                                    href="{{ route('course.videos', $video->course_id) . '?videos_id=' . $video->id }}">
+                                                                    <label class="form-check-label">
+                                                                        {{ $video->title }}
+                                                                    </label>
+                                                                </a>
+
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             </div>
-                                        </div>
-
-
-
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -222,33 +222,44 @@
         </div>
     </div>
     @push('customJs')
-    <script>
-        $(document).ready(function() {
-            $('.form-check-input').on('change', e => {
-                $.ajax({
-                    type: "post",
-                    url: e.target.dataset.url,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            Toast.fire({
-                            'icon': 'success',
-                            'title': 'Success',
-                            'text': response.message
-                        }) 
-                        }else{
-                            Toast.fire({
-                            'icon': 'error',
-                            'title': 'Error',
-                            'text': response.message
-                        })
+        <script>
+            $(document).ready(function() {
+                const headers = $('.card-header')
+                headers.each((i, header) => {
+                    $(header).click(e => {
+                        let icon = $(header).find('.mdi');
+                        icon.toggleClass('mdi-chevron-down')
+                        icon.toggleClass('mdi-chevron-up')
+                        $(header).next().slideToggle();
+                    })
+                })
+            });
+            $(document).ready(function() {
+                $('.form-check-input').on('change', e => {
+                    $.ajax({
+                        type: "post",
+                        url: e.target.dataset.url,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                Toast.fire({
+                                    'icon': 'success',
+                                    'title': 'Success',
+                                    'text': response.message
+                                })
+                            } else {
+                                Toast.fire({
+                                    'icon': 'error',
+                                    'title': 'Error',
+                                    'text': response.message
+                                })
+                            }
                         }
-                    }
-                });
-            })
-        });
-    </script>
-@endpush
+                    });
+                })
+            });
+        </script>
+    @endpush
 @endsection
