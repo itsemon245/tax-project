@@ -115,9 +115,18 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Video::class)->withPivot(['is_completed']);
     }
-    public function hasCompletedVideo(int $id)
+    public function hasCompletedVideo(int $id): bool
     {
-        $id = $this->videos()->find($id);
-        return $id;
+        $isCompleted = $this->videos()->find($id)->pivot->is_completed;
+        return $isCompleted;
+    }
+    public function toggleVideoStatus(int $id): bool
+    {
+        $isCompleted = $this->videos()->find($id)->pivot->is_completed;
+        $toggle = !$isCompleted;
+        $this->videos()->updateExistingPivot($id, [
+            'is_completed' => $toggle,
+        ]);
+        return $toggle;
     }
 }

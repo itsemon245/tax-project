@@ -28,30 +28,28 @@ class OrderController extends Controller
     public function status($id)
     {
         $payment = Purchase::find($id);
-        // dd($payment);
-            $user = $payment->user;
-            $referee = Referee::with('user')->where('user_id', $user->id)->first();
-            // dd();
-            $parent = $referee->parent;
-            if ($payment->approved === 0) {
-                $payment->approved = 1;
-                if ($parent) {
-                    $commission = $payment->payable_amount * $referee->commission / 100;
-                    $parent->total_commission = $parent->total_commission + $commission;
-                    $parent->conversion = $parent->conversion + 1;
-                    $parent->save();
-                    if($payment->purchasable_type === 'Course'){
-                        $course = Course::with('videos')->find($payment->purchasable_id);
-                        $videos = $course->videos;
-                        foreach($videos as $video){
-                            $video->users()->attach($user->id);
-                        }
-                    }
-                    
-                }
-            } else {
-                $payment->approved = 0;
+        $user = $payment->user;
+        $referee = Referee::with('user')->where('user_id', $user->id)->first();
+
+        if ($payment->approved === 0) {
+            $payment->approved = 1;
+            $parent = $referee?->parent;
+            if ($parent) {
+                $commission = $payment->payable_amount * $referee->commission / 100;
+                $parent->total_commission = $parent->total_commission + $commission;
+                $parent->conversion = $parent->conversion + 1;
+                $parent->save();
             }
+        } else {
+            $payment->approved = 0;
+        }
+        if ($payment->purchasable_type === 'Course') {
+            $course = Course::with('videos')->find($payment->purchasable_id);
+            $videos = $course->videos;
+            foreach ($videos as $video) {
+                $video->users()->attach($user->id);
+            }
+        }
         $payment->save();
         $notification = [
             'message' => 'Order Approved Successfully',

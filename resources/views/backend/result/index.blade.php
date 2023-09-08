@@ -1,9 +1,23 @@
 @extends('backend.layouts.app')
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Result']" />
 
     <x-backend.ui.section-card name="Show All Results">
-    
+
         <x-backend.table.basic>
             <thead>
                 <tr>
@@ -18,14 +32,16 @@
             </thead>
             <tbody>
                 @forelse ($results as $key=>$item)
-                    <tr style="background-color: {{ $item->has_passed ? 'rgba(172, 255, 47, 0.200)' : 'rgba(255, 47, 64, 0.200)' }};">
+                    <tr
+                        style="background-color: {{ $item->has_passed ? 'rgba(172, 255, 47, 0.200)' : 'rgba(255, 47, 64, 0.200)' }};">
                         <td>{{ ++$key }}</td>
-                        <td>Name: {{ $item->user->name }} <p>User Name: {{ $item->user->user_name  }}</p> </td>
-                        <td>{{ $item->exam->name  }}</td>
-                        <td>{{ $item->exam->total_marks  }}</td>
-                        <td>{{ $item->exam->passing_marks  }}</td>
-                        <td>{{ $item->right  }}</td>
-                        <td>{{ $item->obtained_marks  }}</td>
+                        <td>Name: {{ $item->user->name }} <p>User Name: {{ $item->user->user_name }}</p>
+                        </td>
+                        <td>{{ $item->exam->name }}</td>
+                        <td>{{ $item->exam->total_marks }}</td>
+                        <td>{{ $item->exam->passing_marks }}</td>
+                        <td>{{ $item->right }}</td>
+                        <td>{{ $item->obtained_marks }}</td>
                     </tr>
                 @empty
                     <tr>
@@ -36,6 +52,9 @@
                 @endforelse
             </tbody>
         </x-backend.table.basic>
+        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+            {{ $results->links() }}
+        </div>
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection

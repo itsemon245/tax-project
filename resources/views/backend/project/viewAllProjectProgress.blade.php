@@ -1,5 +1,19 @@
 @extends('backend.layouts.app')
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Show All', 'Project']" />
     {{-- {{ dd($clients[0]->projects[0]->pivot->client_id) }} --}}
     <x-backend.ui.section-card name="Projects">
@@ -212,6 +226,9 @@
                 @endforelse
             </tbody>
         </x-backend.table.basic>
+        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+            {{ $clients->links() }}
+        </div>
     </x-backend.ui.section-card>
     <!-- end row-->
     @push('customJs')
@@ -227,16 +244,16 @@
                         success: function(response) {
                             if (response.success) {
                                 Toast.fire({
-                                'icon': 'success',
-                                'title': 'Success',
-                                'text': response.message
-                            }) 
-                            }else{
+                                    'icon': 'success',
+                                    'title': 'Success',
+                                    'text': response.message
+                                })
+                            } else {
                                 Toast.fire({
-                                'icon': 'error',
-                                'title': 'Error',
-                                'text': response.message
-                            })
+                                    'icon': 'error',
+                                    'title': 'Error',
+                                    'text': response.message
+                                })
                             }
                         }
                     });

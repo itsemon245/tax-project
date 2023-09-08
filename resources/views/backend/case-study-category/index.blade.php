@@ -1,10 +1,25 @@
 @extends('backend.layouts.app')
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Industries Section']" />
 
     <x-backend.ui.section-card name="Case Study Category">
 
-        <x-backend.ui.button type="custom" href="{{ route('case-study-category.create') }}" class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+        <x-backend.ui.button type="custom" href="{{ route('case-study-category.create') }}"
+            class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         <x-backend.table.basic>
             <thead>
                 <tr>
@@ -20,7 +35,8 @@
                         <td>{{ $CaseStudyCategory->case_study_category }}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('case-study-category.edit', $CaseStudyCategory) }}" class="btn btn-sm btn-info">Edit</a>
+                                <a href="{{ route('case-study-category.edit', $CaseStudyCategory) }}"
+                                    class="btn btn-sm btn-info">Edit</a>
                                 <form action="{{ route('case-study-category.destroy', $CaseStudyCategory) }}" method="post">
                                     @csrf
                                     @method('DELETE')
@@ -39,6 +55,9 @@
                 @endforelse
             </tbody>
         </x-backend.table.basic>
+        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+            {{ $data->links() }}
+        </div>
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection

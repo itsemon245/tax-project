@@ -6,6 +6,20 @@
 @endpush
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     @php
         $pattern = '/\[.*\]/';
         // dd(preg_replace($pattern, '', request()->query('reference')));
@@ -325,6 +339,9 @@
                         @endforeach
                     </tbody>
                 </x-backend.table.basic>
+                <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                    {{ $invoices->links() }}
+                </div>
 
             </div>
         </div>

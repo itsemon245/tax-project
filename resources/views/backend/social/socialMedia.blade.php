@@ -2,6 +2,20 @@
 
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Footer', 'Social-Media']" />
 
     <x-backend.ui.section-card name="Social-Media Handle">
@@ -58,7 +72,8 @@
                                     <td>{{ $social_media->link }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <x-backend.ui.button type="edit" href="{{ route('social-handle.edit', $social_media) }}" class="btn-sm" />
+                                            <x-backend.ui.button type="edit"
+                                                href="{{ route('social-handle.edit', $social_media) }}" class="btn-sm" />
                                             <form action="{{ route('social-handle.destroy', $social_media->id) }}"
                                                 method="POST">
                                                 @csrf
@@ -77,6 +92,9 @@
                         </tbody>
                     </x-backend.table.basic>
                 </div> <!-- end card body-->
+                <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                    {{ $socials->links() }}
+                </div>
             </div> <!-- end card -->
         </div><!-- end col-->
         </div>

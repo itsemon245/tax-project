@@ -1,8 +1,23 @@
 @extends('backend.layouts.app')
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Case Study', 'List']" />
-<x-backend.ui.section-card name="Case Study List">
-    <x-backend.ui.button type="custom" href="{{ route('case-study.create') }}" class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+    <x-backend.ui.section-card name="Case Study List">
+        <x-backend.ui.button type="custom" href="{{ route('case-study.create') }}"
+            class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -28,8 +43,8 @@
                                         <td>{{ $CaseStudy->caseStudyCategory->case_study_category ?? '' }}</td>
                                         <td>{{ $CaseStudy->caseStudyPackage->name }}</td>
                                         <td>{{ $CaseStudy->name }}</td>
-                                        <td><img src="{{ useImage($CaseStudy->image) }}" alt="" width="80px"/></td>
-                                        <td>{!! Str::limit($CaseStudy->description,10,'...') !!}</td>
+                                        <td><img src="{{ useImage($CaseStudy->image) }}" alt="" width="80px" /></td>
+                                        <td>{!! Str::limit($CaseStudy->description, 10, '...') !!}</td>
                                         <td>
                                             <a href="{{ route('case-study.edit', $CaseStudy->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
@@ -38,19 +53,22 @@
                                                 class="d-inline-block py-0">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                                <x-backend.ui.button
+                                                    class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                                             </form>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </x-backend.table.basic>
-
+                        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                            {{ $data->links() }}
+                        </div>
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>
-    </x-backend.ui.section-card>    
+    </x-backend.ui.section-card>
 
     <!-- end row-->
 

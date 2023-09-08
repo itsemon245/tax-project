@@ -1,5 +1,19 @@
 @extends('backend.layouts.app')
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -34,42 +48,46 @@
                                     <td>{{ ++$key }}</td>
                                     <td>
                                         <div class="d-flex gap-3">
-                                            <p class="fs-5 fw-bold mb-0" >
-                                                <span >Title:</span>
-                                                {{$product->title}}
+                                            <p class="fs-5 fw-bold mb-0">
+                                                <span>Title:</span>
+                                                {{ $product->title }}
                                             </p>
                                             <div>
                                                 @switch($product->type)
-                                                @case('Silver')
-                                                <span class="badge fw-bold bg-secondary bg-gradient p-1 fs-6">{{$product->type}}</span>
-                                                @break
-                                                @case('Gold')
-                                                <span class="badge fw-bold bg-warning bg-gradient p-1 fs-6">{{$product->type}}</span>
-                                                
-                                                @break
-                                                @case('Platinum')
-                                                    
-                                                <span class="badge fw-bold bg-soft-success text-success bg-gradient p-1 fs-6">{{$product->type}}</span>
-                                                @break
-                                                @case('Exclusive')
-                                                    
-                                                <span class="badge fw-bold bg-success bg-gradient p-1 fs-6">{{$product->type}}</span>
-                                                @break
-                                                @default
-                                                    
-                                            @endswitch
-                                            @if ($product->is_most_popular)
-                                            <span class="badge bg-primary p-1 fs-6 ms-1">Most Popular</span>
-                                            @endif
+                                                    @case('Silver')
+                                                        <span
+                                                            class="badge fw-bold bg-secondary bg-gradient p-1 fs-6">{{ $product->type }}</span>
+                                                    @break
+
+                                                    @case('Gold')
+                                                        <span
+                                                            class="badge fw-bold bg-warning bg-gradient p-1 fs-6">{{ $product->type }}</span>
+                                                    @break
+
+                                                    @case('Platinum')
+                                                        <span
+                                                            class="badge fw-bold bg-soft-success text-success bg-gradient p-1 fs-6">{{ $product->type }}</span>
+                                                    @break
+
+                                                    @case('Exclusive')
+                                                        <span
+                                                            class="badge fw-bold bg-success bg-gradient p-1 fs-6">{{ $product->type }}</span>
+                                                    @break
+
+                                                    @default
+                                                @endswitch
+                                                @if ($product->is_most_popular)
+                                                    <span class="badge bg-primary p-1 fs-6 ms-1">Most Popular</span>
+                                                @endif
                                             </div>
                                         </div>
                                         <p class="mb-1" style="font-weight: 500;">
-                                            <span >Sub Title:</span>
-                                            {{$product->sub_title}}
+                                            <span>Sub Title:</span>
+                                            {{ $product->sub_title }}
                                         </p>
                                         <p class="text-muted">
                                             <span class="fw-bold text-secondary">Description:</span>
-                                            {{$product->description}}
+                                            {{ $product->description }}
                                         </p>
                                     </td>
                                     <td>
@@ -105,6 +123,9 @@
                             @endforeach
                         </tbody>
                     </x-backend.table.basic>
+                    <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                        {{ $products->links() }}
+                    </div>
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->

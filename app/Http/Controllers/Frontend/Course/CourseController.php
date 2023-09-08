@@ -21,12 +21,13 @@ class CourseController extends Controller
         return view('frontend.pages.course.view', compact('course'));
     }
 
-    public function videos($course)
+    public function videos(Course $course)
     {
         $videos= Video::with('users')->where('course_id',$course)->get();
         $users = User::where('id', auth()->id())->get();
         // dd($users);
         return view('frontend.pages.course.showVideos',compact('videos',));
+        // $videos = $course->videos->groupBy('section');
+        // return view('frontend.pages.course.showVideos', compact('videos'));
     }
-
 }

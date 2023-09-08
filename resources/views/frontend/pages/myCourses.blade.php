@@ -9,7 +9,6 @@
                         <tr>
                             <th class="">No</th>
                             <th class="">Name</th>
-                            <th class="">Trainer</th>
                             <th class="" style="width: 80px;">Action</th>
                         </tr>
                     </thead>
@@ -29,21 +28,6 @@
                                             {{-- <div>{{ $course->videos()->count() }} Videos</div> --}}
                                         </div>
                                     </a>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-start gap-2">
-                                        <div>
-                                            <img src="{{ asset('backend/assets/images/users/user-1.jpg') }}"
-                                                class="rounded rounded-circle" width="48px" height="48px" alt="">
-                                        </div>
-                                        <div>
-                                            <div class="fw-medium">
-                                                <a href="javascript: void(0);"
-                                                    class="text-reset">{{ fake()->name('female') }}</a>
-                                            </div>
-                                            <span>{{ fake()->jobTitle() }}</span>
-                                        </div>
-                                    </div>
                                 </td>
                                 @php
                                     $video= $course->videos->first();

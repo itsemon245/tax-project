@@ -1,6 +1,20 @@
 @extends('backend.layouts.app')
 
 @section('content')
+    @push('customCss')
+        <style>
+            .paginate {
+                float: right;
+            }
+
+            div.dataTables_paginate {
+                margin: 0;
+                white-space: nowrap;
+                text-align: right;
+                display: none !important;
+            }
+        </style>
+    @endpush
     <x-backend.ui.breadcrumbs :list="['Management', 'Report', 'Demand']" />
 
     <x-backend.ui.section-card :name="ucwords(str($type)->plural())">
@@ -148,6 +162,9 @@
                     </tr>
                 </tbody>
             </x-backend.table.basic>
+            <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                {{ $fiscalYears->links() }}
+            </div>
         </div>
         <div class="card">
             <h5 class="card-header bg-soft-light text-dark text-capitalize">All {{ str($type)->plural() }}</h5>
@@ -203,7 +220,9 @@
                         @endforeach
                     </tbody>
                 </x-backend.table.basic>
-
+                <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
+                    {{ $invoices->links() }}
+                </div>
             </div>
         </div>
 

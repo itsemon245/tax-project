@@ -170,4 +170,20 @@ class AjaxController extends Controller
             'success' => $success,
         ]);
     }
+
+    function toggleVideo($id)
+    {
+        try {
+            $isCompleted = User::find(auth()->id())->toggleVideoStatus($id);
+            $success = true;
+            $message = $isCompleted ? 'Video marked as completed!': 'Video marked as incomplete!';
+        } catch (\Throwable $th) {
+            $success = false;
+            $message = $th->getMessage();
+        }
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
+    }
 }
