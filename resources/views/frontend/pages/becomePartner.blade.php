@@ -57,9 +57,8 @@
 
             <h4 class="title-header mb-3 text-center">Become Partner Progress</h4>
         
-            <form method="POST" action="{{ route('user-profile.update.become', $user->id) }}" >
+            <form method="POST" action="{{ route('partner-request.store') }}" >
                 @csrf
-                @method("PUT")
                 <div class="d-flex justify-content-center">
                     <div style="max-width: 650px;" class="px-md-0 px-2">
                         <div id="progressbarwizard">
