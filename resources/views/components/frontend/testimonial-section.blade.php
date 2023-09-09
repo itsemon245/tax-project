@@ -4,15 +4,36 @@
         <span id="next" class="ti-arrow-circle-left custom-icon"></span>
         <div class="media-scroller snaps-inline">
             @foreach ($testimonials as $item)
-                <div class="media-elements">
-                    <div class="p-3 d-flex align-items-center gap-3" style="width: 100%;">
-                        <img class="rounded rounded-circle image" src="{{ useImage($item->avatar) }}" alt="">
-                        <p class="comment">
-                            {{ $item->comment }}
-                        </p>
+            <div class="d-flex gap-3 align-items-start border border-3 p-3 rounded-3 mb-3 text-light">
+                <img src="{{ useImage($item->user->image_url) }}" alt="img" width="64px" height="64px" class=" rounded-circle shadow-4-strong d-block">
+                <div>
+                    <div class="mb-2">
+                        <h6 class="mb-0">{{ $item->user->name }}</h6>
+                        <small>
+                            <div class="rating">  
+                                <span class="fas fa-star" style="color:var(--bs-yellow);"></span>
+                                <span class="fas fa-star" style="color:var(--bs-yellow);"></span>
+                                <span class="fas fa-star" style="color:var(--bs-yellow);"></span>
+                                <span class="fas fa-star" style="color:var(--bs-gray-200);"></span>
+                                <span class="fas fa-star" style="color:var(--bs-gray-200);"></span>
+                                </div>
+                        </small>
                     </div>
+                    <small class="mb-0">{!! Str::limit($item->comment, 30, '...') !!}</small>
                 </div>
+            </div>
+
             @endforeach
+
+
+            {{-- <div class="media-elements">
+                <div class="p-3 d-flex align-items-center gap-3" style="width: 100%;" >
+                    <img class="rounded rounded-circle image" style="width: 100px;" src="{{ asset('frontend/assets/images/flags/russia.jpg') }}" alt="">
+                    <p class="comment">
+                        {{ $item->comment }}
+                    </p>
+                </div>
+            </div> --}}
         </div>
         <span id="prev" class="ti-arrow-circle-right custom-icon"></span>
     </div>
