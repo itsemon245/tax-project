@@ -32,6 +32,7 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\PartnerRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,6 +110,9 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
 });
+
+//Become a partner request controller
+Route::resource('partner-request', PartnerRequestController::class);
 // these route will only be visible to Courses navigation 
 // ! Do not put any new routes in this group
 Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {

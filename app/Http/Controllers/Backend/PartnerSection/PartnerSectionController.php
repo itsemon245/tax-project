@@ -6,6 +6,7 @@ use App\Models\PartnerSection;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePartnerSectionRequest;
 use App\Http\Requests\UpdatePartnerSectionRequest;
+use App\Models\PartnerRequest;
 
 class PartnerSectionController extends Controller
 {
@@ -23,7 +24,8 @@ class PartnerSectionController extends Controller
      */
     public function create()
     {
-        //
+        $partnersRequest = PartnerRequest::where('status', 0)->latest()->get();
+        return view('backend.partnerSection.partnerRequest' ,compact('partnersRequest'));
     }
 
     /**

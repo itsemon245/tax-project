@@ -75,8 +75,12 @@
 
     </div>
     <div class="bottom-footer bg-primary text-light mt-3">
-        <p class="d-flex align-items-center justify-content-center mb-0">Copyright <span
-                class="mdi mdi-copyright mx-2"></span>
-            {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by {{ env('APP_NAME') }}</p>
+        <h6 class="d-flex text-dark align-items-center justify-content-center mb-0">Copyright <span
+            class="mdi mdi-copyright mx-2"></span>
+        {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by {{ env('APP_NAME') }}
+        <span class="mx-4 text-dark" >
+            <span class="mx-4">|</span> Develop by: <a href="#">..... Soft.</a>
+        </span>
+    </h6>
     </div>
 </footer>

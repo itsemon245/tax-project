@@ -352,16 +352,16 @@
                             <li>
                                 <a href="#our-partners" data-bs-toggle="collapse">
                                     <i class="mdi mdi-vector-intersection"></i>
-                                    <span>Our Partners</span>
+                                    <span>Partners</span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <div class="collapse" id="our-partners">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="{{ route('partner-section.index') }}">View</a>
+                                            <a href="{{ route('partner-section.index') }}">Partners Section</a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('partner-section.create') }}">Create</a>
+                                            <a href="{{ route('partner-section.create') }}">Partner Request</a>
                                         </li>
                                     </ul>
                                 </div>
