@@ -7,6 +7,7 @@ use App\Models\CaseStudyPackage;
 use Symfony\Component\HttpFoundation\Request;
 use App\Http\Requests\StoreCaseStudyPageRequest;
 use App\Http\Requests\UpdateCaseStudyPageRequest;
+use App\Models\CaseStudyCategory;
 use Database\Seeders\CaseStudySeeder;
 use Ramsey\Uuid\Type\Integer;
 
@@ -14,7 +15,8 @@ class CaseStudyPackageController extends Controller
 {
     function caseStudy()
     {
-        $packages = CaseStudyPackage::get();
+        
+        $packages = CaseStudyPackage::latest()->get();
         return view('frontend.pages.course.caseStudy', compact('packages'));
     }
 
