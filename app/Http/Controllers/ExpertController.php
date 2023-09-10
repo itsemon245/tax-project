@@ -22,7 +22,7 @@ class ExpertController extends Controller
 
     public function browse()
     {
-        $experts = ExpertProfile::withAvg('reviews', 'rating')->withCount('reviews')->with('expertCategories')->get();
+        $experts = ExpertProfile::withAvg('reviews', 'rating')->withCount('reviews')->with('expertCategories')->paginate(20);
         $minExp = ExpertProfile::min('experience');
         $maxExp = ExpertProfile::max('experience');
         $minPrice = ExpertProfile::min('price');

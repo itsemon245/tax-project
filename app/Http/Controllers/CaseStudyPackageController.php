@@ -16,7 +16,7 @@ class CaseStudyPackageController extends Controller
     function caseStudy()
     {
         
-        $packages = CaseStudyPackage::latest()->get();
+        $packages = CaseStudyPackage::latest()->paginate(2)->get();
         return view('frontend.pages.course.caseStudy', compact('packages'));
     }
 
