@@ -340,11 +340,8 @@
                         @endforeach
                     </tbody>
                 </x-backend.table.basic>
-
             </div>
         </div>
-
-
     </x-backend.ui.section-card>
 
     <!-- end row-->

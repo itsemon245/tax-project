@@ -60,8 +60,5 @@
                 @endforeach
             </tbody>
         </x-backend.table.basic>
-        <div class="paginate md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-            {{ $withdrawals->links() }}
-        </div>
     </x-backend.ui.section-card>
 @endsection
