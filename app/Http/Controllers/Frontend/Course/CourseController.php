@@ -25,9 +25,6 @@ class CourseController extends Controller
     {
         $videos= Video::with('users')->where('course_id',$course)->get();
         $users = User::where('id', auth()->id())->get();
-        // dd($users);
         return view('frontend.pages.course.showVideos',compact('videos',));
-        // $videos = $course->videos->groupBy('section');
-        // return view('frontend.pages.course.showVideos', compact('videos'));
     }
 }

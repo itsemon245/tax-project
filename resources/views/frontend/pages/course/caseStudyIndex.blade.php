@@ -195,6 +195,7 @@
                             </div>
                         </div>
                     @endforeach
+                    {{ $caseStudies->links('pagination::bootstrap-5') }}
                 </div>
             </section>
         </div>

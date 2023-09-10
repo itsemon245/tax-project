@@ -94,8 +94,8 @@
                 </button>
             </div>
             <div class="col-lg-3">
-                <div class="filter-menu p-3 shadow bg-light rounded-2 ">
-                    <div class="filters">
+                <div class="filter-menu p-3 shadow bg-light rounded-2">
+                    <div class="filters" >
                         <div class="experience-filter my-2">
                             <div class="label mb-2">
                                 <span>Price</span>
