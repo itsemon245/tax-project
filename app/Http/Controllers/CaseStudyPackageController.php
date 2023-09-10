@@ -23,8 +23,9 @@ class CaseStudyPackageController extends Controller
     public function index(int $caseStudyPackage)
     {
         $caseStudies = CaseStudyPackage::find($caseStudyPackage)->caseStudies;
-        // dd($caseStudies);
-        return view('frontend.pages.course.caseStudyIndex', compact('caseStudies'));
+        $caseStudycategories = CaseStudyCategory::latest()->get();
+        $caseStudyPackages = CaseStudyPackage::latest()->get();
+        return view('frontend.pages.course.caseStudyIndex', compact('caseStudyPackages','caseStudycategories','caseStudies'));
     }
 
     /**
