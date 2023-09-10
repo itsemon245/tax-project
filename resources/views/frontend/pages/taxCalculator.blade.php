@@ -102,7 +102,7 @@
                                                 </div>
                                             @endif
                                             <div class="col-md-6">
-                                                <x-backend.form.text-input label="Tax Deduction" name="tax_deduction">
+                                                <x-backend.form.text-input label="Tax Deduction" name="deduction">
                                                 </x-backend.form.text-input>
                                             </div>
 
@@ -110,19 +110,17 @@
                                                 <h4 class="mb-2">Tax Services</h4>
                                                 <div class="clearfix d-flex flex-wrap gap-3 align-items-center">
                                                     @php
-                                                        $services = \App\Models\TaxSetting::where('for', $for)
-                                                            ->get()
-                                                            ->pluck('service');
+                                                        $services = \App\Models\TaxSetting::where(['for' => $for, 'type' => 'others'])->get(['service', 'id']);
                                                     @endphp
                                                     @foreach ($services as $key => $service)
                                                         @if ($service)
                                                             <label
                                                                 class="form-check-label d-flex gap-2 py-2 px-3 bg-light bg-gradient rounded-3"
-                                                                for="{{ $service . '-' . $key }}">
+                                                                for="{{ 'service-' . $key }}">
                                                                 <input class="form-check-input" type="checkbox" hidden
-                                                                    id="{{ $service . '-' . $key }}" name="services[]"
-                                                                    value="{{ $service }}">
-                                                                {{ $service }}
+                                                                    id="{{ 'service-' . $key }}" name="services[]"
+                                                                    value="{{ $service->id }}">
+                                                                {{ $service->service }}
                                                             </label>
                                                         @endif
                                                     @endforeach
@@ -131,7 +129,7 @@
                                             </div><!-- end col -->
                                             <div class="col-12">
                                                 <x-form.ck-editor id="ck-editor-{{ $for }}"
-                                                    name="massage"></x-form.ck-editor>
+                                                    name="message"></x-form.ck-editor>
                                             </div><!-- end col -->
                                             <div class="">
                                                 <button type="submit"

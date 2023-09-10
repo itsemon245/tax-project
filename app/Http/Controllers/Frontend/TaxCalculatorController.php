@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\TaxCalculator;
 use App\Models\TaxSetting;
 use Illuminate\Http\Request;
 
@@ -27,27 +28,48 @@ class TaxCalculatorController extends Controller
             "services" => 'array|nullable',
             "message" => "string|nullable",
         ]);
+        $others = 0;
+
         $tax = 0;
         $taxSetting = TaxSetting::where(['for' => $request->tax_for, 'type' => 'tax'])->first();
         $minTax = $taxSetting->min_tax;
         $income = (int) $request->yearly_income;
         $turnover = (int) $request->yearly_turnover;
         $asset = (int) $request->total_asset;
+        // get taxes
         $incomeTax = $this->calcTax($income, $request, 'income');
         $turnoverTax = $this->calcTax($turnover, $request, 'turnover');
         $assetTax = $this->calcTax($asset, $request, 'asset');
 
         $tax = ($incomeTax > $turnoverTax) ? $incomeTax + $assetTax : $turnoverTax + $assetTax;
         $totalTax = $tax;
-
         if ($request->has('rebate')) {
             $rebate = (int) $request->rebate;
             $afterRebate = $tax - $rebate;
             $totalTax = $minTax > $afterRebate ? $minTax : $afterRebate;
         }
-        $totalTax -= (int) $request->tax_deduction;
-        dd($totalTax);
-        return view('frontend.pages.taxCalculator');
+        $totalTax -= (int) $request->deduction;
+
+
+        // get others
+        $incomeOther = $this->calcOthers($income, $request, 'income');
+        $turnoverOther = $this->calcOthers($turnover, $request, 'turnover');
+        $assetOther = $this->calcOthers($asset, $request, 'asset');
+        $otherTaxes = collect($incomeOther)->mergeRecursive($turnoverOther)->mergeRecursive($assetOther);
+        $others = [];
+        foreach ($otherTaxes as $key => $values) {
+            $max = collect($values)->max();
+            $others = [...$others, $key => $max];
+        }
+
+        TaxCalculator::create([
+            ...$request->except('services'),
+            'tax' => $tax,
+            'others' => $others
+        ]);
+
+
+        return back();
     }
     public function result()
     {
@@ -111,5 +133,42 @@ class TaxCalculatorController extends Controller
         }
 
         return $totalTax;
+    }
+    function calcOthers(int $value, $request, string $type)
+    {
+        $otherTaxes = [];
+        if ($request->services) {
+            foreach ($request->services as $key => $service) {
+                $otherTax = 0;
+                $othersSetting = TaxSetting::find($service);
+                // dd($othersSetting);
+                $valueSlots = $othersSetting->slots()->where('type', $type)->get();
+                $lastValueSlot = $valueSlots
+                    ->where('to', '>=', $value)
+                    ->first() ??
+                    $valueSlots
+                    ->where('from', '<=', $value)
+                    ->last();
+                foreach ($valueSlots as $key => $slot) {
+                    $minTax = (int) $slot->min_tax ?? 0;
+                    $tax = (float) 0;
+                    if ($slot->difference < $value) {
+                        $tax =  $slot->is_discount_fixed ? $slot->amount : $slot->difference * $slot->amount / 100;
+                        $tax = $tax < $minTax ? $minTax : $tax;
+                        $value -= $slot->difference;
+                    } elseif ($value > 0) {
+                        $tax =  $slot->is_discount_fixed ? $slot->amount : $slot->difference * $slot->amount / 100;
+                        $tax = $tax < $minTax ? $minTax : $tax;
+                        $value = 0;
+                    }
+                    $otherTax += $tax;
+                    // if ($slot->id === $lastValueSlot->id || $value <= 0) {
+                    //     break;
+                    // }
+                }
+                $otherTaxes = [...$otherTaxes, $othersSetting->service => $otherTax];
+            }
+        }
+        return $otherTaxes;
     }
 }
