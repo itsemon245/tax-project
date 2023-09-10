@@ -24,12 +24,10 @@ class TaxCalculatorController extends Controller
             "yearly_turnover" => "required|numeric",
             "total_asset" => "required|numeric",
             "yearly_income" => "required|numeric",
-            "gender" => "required|string",
             "services" => 'array|nullable',
             "message" => "string|nullable",
         ]);
         $tax = 0;
-        $totalTax = 0;
         $taxSetting = TaxSetting::where(['for' => $request->tax_for, 'type' => 'tax'])->first();
         $minTax = $taxSetting->min_tax;
         $income = (int) $request->yearly_income;
@@ -40,17 +38,15 @@ class TaxCalculatorController extends Controller
         $assetTax = $this->calcTax($asset, $request, 'asset');
 
         $tax = ($incomeTax > $turnoverTax) ? $incomeTax + $assetTax : $turnoverTax + $assetTax;
-        $rebate = (int) $request->rebate;
-        $afterRebate = $tax - $rebate;
-        $totalTax = $minTax > $afterRebate ? $minTax : $afterRebate;
+        $totalTax = $tax;
+
+        if ($request->has('rebate')) {
+            $rebate = (int) $request->rebate;
+            $afterRebate = $tax - $rebate;
+            $totalTax = $minTax > $afterRebate ? $minTax : $afterRebate;
+        }
+        $totalTax -= (int) $request->tax_deduction;
         dd($totalTax);
-        dd([
-            'taxes' => [
-                'income' => $incomeTax,
-                // 'asset' => $assetTax,
-                // 'turnover' => $turnoverTax,
-            ]
-        ]);
         return view('frontend.pages.taxCalculator');
     }
     public function result()
@@ -64,37 +60,56 @@ class TaxCalculatorController extends Controller
         $for = $request->tax_for;
         $gender = $request->gender;
         $totalTax = 0;
+        $mainValue = $value;
         $taxSetting = TaxSetting::where(['for' => $for, 'type' => 'tax'])->first();
-        // dd($taxSetting);
+        $taxFree = match ($gender) {
+            'male' => (int) $taxSetting->tax_free->male,
+            'female' => (int) $taxSetting->tax_free->female,
+            null => (int) $taxSetting->tax_free->amount,
+        };
         $valueSlots = $taxSetting->slots()->where('type', $type)->get();
-        $minTax = $taxSetting->min_tax;
+        $minTax = $taxSetting->min_tax ?? 0;
         $lastValueSlot = $valueSlots
             ->where('to', '>=', $value)
             ->where('from', '<=', $value)
-            ->first();
+            ->first() ??
+            $valueSlots
+            ->where('from', '<=', $value)
+            ->last();
 
-        if ($gender) {
-            $value -= $gender === 'male' ? $taxSetting->tax_free->male : $taxSetting->tax_free->female;
-        } else {
-            $value -= $taxSetting->tax_free->amount;
-        }
-        // dd($value);
-        foreach ($valueSlots as $key => $slot) {
-            $tax = (float) 0;
-            if ($slot->difference < $value) {
-                $tax =  $slot->difference * $slot->tax_percentage / 100;
-                $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
-                $value -= $slot->difference;
-            } elseif ($value > 0) {
-                $tax =  $value * $slot->tax_percentage / 100;
-                $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
-                $value = 0;
+        $value -= $taxFree;
+        if ($for === 'company') {
+            $totalTax = $value * $taxSetting[$type . "_percentage"] / 100;
+        } elseif ($valueSlots->count() > 0) {
+            foreach ($valueSlots as $key => $slot) {
+                $tax = (float) 0;
+                if ($slot->difference < $value) {
+                    if ($taxFree > 0 && $key === 0) {
+                        $tax =  ($slot->difference - $taxFree) * $slot->tax_percentage / 100;
+
+                        $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
+                        $value -= ($slot->difference - $taxFree);
+                    } else {
+                        $tax =  $slot->difference * $slot->tax_percentage / 100;
+                        $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
+                        $value -= $slot->difference;
+                    }
+                } elseif ($value > 0) {
+                    if ($taxFree > 0 && $key === 0) {
+                        $tax =  ($value - $taxFree) * $slot->tax_percentage / 100;
+                    } else {
+                        $tax =  $value * $slot->tax_percentage / 100;
+                    }
+                    $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
+                    $value = 0;
+                }
+                $totalTax += $tax;
+                if ($slot->id === $lastValueSlot->id || $value <= 0) {
+                    break;
+                }
             }
-            $totalTax += $tax;
-            if ($slot->id === $lastValueSlot->id || $value <= 0) {
-                break;
-            }
         }
+
         return $totalTax;
     }
 }
