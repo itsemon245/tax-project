@@ -13,9 +13,9 @@ use App\Models\Video;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $payments = Purchase::latest()->simplePaginate(paginateCount());
+        $payments = Purchase::where('approved', $request->status)->latest()->simplePaginate(paginateCount());
         return view('backend.payment.approved', compact('payments'));
     }
 

@@ -52,33 +52,31 @@
     <section class="mt-5 py-5" style="background: #474646;">
         <h3 class="text-light text-center">Our Valuable Partners</h3>
         <div class="scroll-wrapper">
-            <span id="next" class="ti-arrow-circle-left custom-icon"></span>
+            <span id="next" class="mdi mdi-arrow-left-drop-circle-outline text-primary custom-icon"
+                role="button"></span>
             <div class="media-scroller snaps-inline">
 
                 {{-- Patner section is starting --}}
                 @foreach ($partners as $partner)
                     <div class="media-elements">
-                        <div class="d-flex align-items-center gap-3 p-3" style="width: 100%;">
+                        <div class="d-flex align-items-start gap-3 p-3" style="width: 100%;">
                             <div>
-                                <img class="border image rounded-circle"
-                                    src="{{ useImage($partner->image) == !null ? 'useImage($partner->image)' : 'https://api.dicebear.com/6.x/bottts/png' }}"
-                                    alt="">
+                                <img class="border image rounded-circle" src="{{ useImage($partner->image) }}"
+                                    width="80px" height="80px" style="object-fit: cover" alt="">
 
                             </div>
                             <div>
-                                <h3 class="mb-0">{{ $partner->name }}</h3>
+                                <h4 class="mb-0">{{ $partner->name }}</h4>
                                 <small class="mb-0 text-muted">{{ $partner->designation }}</small>
                                 <div class="d-flex mb-0 mt-2 text-primary">
                                     <a href="mailto:{{ $partner->email }}">
-                                        <p class="me-2 mb-0"><i class="fe-mail"></i></p>
-                                        <p class="mb-0">{{ $partner->email }}</p>
+                                        <span class="mdi mdi-email font-16 me-2"></span><span>{{ $partner->email }}</span>
                                     </a>
                                 </div>
+                                <a href="tel:{{ $partner->phone }}">
+                                    <span class="mdi mdi-phone font-16 me-2"></span><span>{{ $partner->phone }}</span>
+                                </a>
                                 <div class="d-flex text-primary">
-                                    <p class="me-2 mb-0"> <i class="fe-phone"></i></p>
-                                    <p class="mb-0">{{ $partner->phone }}</p>
-                                </div>
-                                <div class="d-flex mt-3 text-primary">
                                     <a href="{{ $partner->facebook }}">
                                         <i class="fe-facebook me-3"></i>
                                     </a>
@@ -95,7 +93,8 @@
                 @endforeach
 
             </div>
-            <span id="prev" class="ti-arrow-circle-right custom-icon"></span>
+            <span id="prev" class="mdi mdi-arrow-right-drop-circle-outline text-primary custom-icon"
+                role="button"></span>
         </div>
     </section>
     {{-- About us content --}}
@@ -137,27 +136,13 @@
             align-items: center;
             background: white;
             border-radius: 10px;
+            max-width: 45ch;
         }
 
         .media-elements .comment {
-            width: 100px;
             display: inline;
             margin: 0;
             text-align: justify;
-        }
-
-        .media-elements .image {
-            max-width: 70px;
-        }
-
-        @media (min-width:600px) {
-            .media-elements .image {
-                max-width: 120px;
-            }
-
-            .media-elements .comment {
-                width: 200px
-            }
         }
 
         #next,
@@ -165,13 +150,6 @@
             background: none;
             border: none;
             padding: 0;
-        }
-
-        .custom-icon {
-            color: var(--bs-primary);
-            font-size: 28px;
-            margin: 0 5px;
-            cursor: pointer;
         }
 
         .media-scroller::-webkit-scrollbar {

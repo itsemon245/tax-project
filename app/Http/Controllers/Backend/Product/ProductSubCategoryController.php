@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateProductSubCategoryRequest;
 use App\Models\ProductCategory;
 use App\Models\Referee;
 use App\Models\User;
+use App\View\Components\frontend\ProductCard;
 
 class ProductSubCategoryController extends Controller
 {
@@ -17,9 +18,9 @@ class ProductSubCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ProductCategory::simplePaginate(paginateCount());
-        $sub_categories = ProductSubCategory::with('productCategory')->get();
-        return view('backend.product.subCategory', compact('categories', 'sub_categories'));
+        $subCategories = ProductSubCategory::with('productCategory')->latest()->simplePaginate(paginateCount());
+        $categories = ProductCategory::latest()->get(['id', 'name']);
+        return view('backend.product.subCategory', compact('subCategories', 'categories'));
     }
 
     /**
@@ -55,7 +56,7 @@ class ProductSubCategoryController extends Controller
      */
     public function edit(ProductSubCategory $productSubCategory)
     {
-        $categories = ProductCategory::get();
+        $categories = ProductCategory::get(['name', 'id']);
         return view('backend.product.editSubCategory', compact('productSubCategory', 'categories'));
     }
 
@@ -64,7 +65,15 @@ class ProductSubCategoryController extends Controller
      */
     public function update(UpdateProductSubCategoryRequest $request, ProductSubCategory $productSubCategory)
     {
-        //
+        $productSubCategory->update([
+            'product_category_id' => $request->category,
+            'name' => $request->name,
+        ]);
+        $alert = [
+            'alert-type' => 'success',
+            'message' => 'Updated Successfully!'
+        ];
+        return back()->with($alert);
     }
 
     /**
@@ -73,6 +82,10 @@ class ProductSubCategoryController extends Controller
     public function destroy(ProductSubCategory $productSubCategory)
     {
         $productSubCategory->delete();
-        return back()->with('success', 'Deleted Successfully');
+        $alert = [
+            'alert-type' => 'success',
+            'message' => 'Deleted Successfully!'
+        ];
+        return back()->with($alert);
     }
 }

@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('partner_sections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('designation');
-            $table->string('email');
-            $table->string('phone');
-            $table->longText('facebook');
-            $table->longText('twitter');
-            $table->longText('linkedin');
-            $table->longText('image');
+            $table->string('designation')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->longText('facebook')->nullable();
+            $table->longText('twitter')->nullable();
+            $table->longText('linkedin')->nullable();
+            $table->longText('image')->nullable();
             $table->timestamps();
         });
     }

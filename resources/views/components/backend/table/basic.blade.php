@@ -1,6 +1,7 @@
 @php
     $id = $attributes->has('id') ? $attributes->get('id') : 'basic-datatable';
 @endphp
+@props(['data' => null])
 @pushOnce('customCss')
     {{-- data table css --}}
     <link href="{{ asset('backend/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
@@ -11,6 +12,18 @@
         type="text/css" />
     <link href="{{ asset('backend/assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
+    <style>
+        .paginate {
+            float: right;
+        }
+
+        div.dataTables_paginate {
+            margin: 0;
+            white-space: nowrap;
+            text-align: right;
+            display: none !important;
+        }
+    </style>
 @endPushOnce
 
 <table id="{{ $id }}" class="table table-striped dt-responsive nowrap w-100">
@@ -18,6 +31,9 @@
 
 
 </table>
+<div id="myPaginator" class="paginate my-2">
+    {{ $data?->links() }}
+</div>
 
 
 @pushOnce('customJs')
@@ -30,17 +46,20 @@
     <script src="{{ asset('backend/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}">
     </script>
+    <script>
+        // replace the default paginatior with my paginator
 
-    @if ($id === 'datatable-buttons')
-        {{-- datatables buttons  --}}
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
-        {{-- /datatables buttons  --}}
-    @endif
+        $(document).ready(function() {
+            let paginator = $('#basic-datatable_paginate').parent()
+            let recordLength = $('#basic-datatable_length').parent()
+            let search = $('#basic-datatable_filter')
+            search.parent().removeClass('col-md-6')
+            search.addClass('float-end')
+            recordLength.remove()
+            let myPaginator = $('#myPaginator')
+            paginator.children().remove()
+            paginator.append(myPaginator)
+        });
+    </script>
     <!-- datatable js ends -->
 @endPushOnce

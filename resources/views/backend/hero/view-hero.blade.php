@@ -12,7 +12,7 @@
                 margin: 0;
                 white-space: nowrap;
                 text-align: right;
-                display:none!important;
+                display: none !important;
             }
         </style>
     @endpush
@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <x-backend.table.basic>
+                        <x-backend.table.basic :data="$banners">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -61,10 +61,6 @@
                                 @endforeach
                             </tbody>
                         </x-backend.table.basic>
-
-                        <div class="paginate md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                            {{ $banners->links() }}
-                        </div>
 
                     </div> <!-- end card body-->
                 </div> <!-- end card -->

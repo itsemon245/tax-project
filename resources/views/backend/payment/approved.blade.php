@@ -14,18 +14,8 @@
             }
         </style>
     @endpush
-    <!-- start page title -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <div class="page-title-right">
-                    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Purchase', 'View']" />
-                </div>
-                <h4 class="page-title">View Info</h4>
-            </div>
-        </div>
-    </div>
-    <!-- end page title -->
+    <x-backend.ui.breadcrumbs :list="['Management', 'Purchase', 'View']" />
+
 
     <x-backend.ui.section-card name="Order">
         <div class="row">
@@ -33,15 +23,15 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <x-backend.table.basic>
+                        <x-backend.table.basic :data="$payments">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Payment Number</th>
-                                    <th>transaction Id</th>
+                                    <th>Transaction Id</th>
                                     <th>Paid</th>
-                                    <th>due</th>
+                                    <th>Due</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -52,34 +42,32 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $payemnt->name }}</td>
-                                        <td>{{ $payemnt->payment_number }}</td>
-                                        <td>{{ $payemnt->trx_id }}</td>
-                                        <td>{{ $payemnt->paid }}</td>
-                                        <td>{{ $payemnt->due }}</td>
+                                        <td>{!! $payemnt->payment_number ??
+                                            "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Pay Later</span>" !!}</td>
+                                        <td>{!! $payemnt->trx_id ?? "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Pay Later</span>" !!}</td>
+                                        <td>{{ $payemnt->paid ?? '0' }}</td>
+                                        <td>{{ $payemnt->due ?? '0' }}</td>
                                         <td>
                                             {!! $payemnt->approved === 1
                                                 ? "<span class='badge bg-success'>Approved</span>"
                                                 : "<span class='badge bg-danger'>Not-Approved</span>" !!}
                                         </td>
                                         <td>
-                                            <a href="{{ route('order.status', $payemnt->id) }}"
-                                                class="btn btn-blue btn-sm waves-effect waves-light d-inline-block">Approved</a>
+                                            @if (request()->query('status') == 0)
+                                                <x-backend.ui.button type="custom"
+                                                    href="{{ route('order.status', $payemnt->id) }}"
+                                                    class="btn-sm btn-blue">Approve</x-backend.ui.button>
+                                            @endif
 
-                                            <form class="d-inline-block" action="{{ route('order.destroy', $payemnt->id) }}"
-                                                method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger btn-sm waves-effect waves-light"
-                                                    id="delete">Delete</button>
-                                            </form>
+                                            <x-backend.ui.button type="delete"
+                                                action="{{ route('order.destroy', $payemnt->id) }}" class="btn-sm" />
+
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </x-backend.table.basic>
-                        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                            {{ $payments->links() }}
-                        </div>
+                        
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->

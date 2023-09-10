@@ -72,10 +72,10 @@
                                         </li>
                                         {{-- <li>
                                             <a href="{{ route('product-category.index') }}">Category</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('product-subcategory.index') }}">Sub-Category</a>
                                         </li> --}}
+                                        <li>
+                                            <a href="{{ route('product-sub-category.index') }}">Sub-Category</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -350,21 +350,10 @@
                     <div class="collapse" id="peoples">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="#our-partners" data-bs-toggle="collapse">
+                                <a href="{{ route('partner-section.index') }}">
                                     <i class="mdi mdi-vector-intersection"></i>
                                     <span>Our Partners</span>
-                                    <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="our-partners">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="{{ route('partner-section.index') }}">View</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('partner-section.create') }}">Create</a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                             <li>
                                 <a href="#clientStudio" data-bs-toggle="collapse">
@@ -628,21 +617,21 @@
                                 <div class="collapse" id="withdralSection">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="{{ route('withdrawal.index').'?status=0' }}">
-                                               Pending
+                                            <a href="{{ route('withdrawal.index') . '?status=0' }}">
+                                                Pending
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('withdrawal.index').'?status=1' }}">Approved</a>
+                                            <a href="{{ route('withdrawal.index') . '?status=1' }}">Approved</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </li>
-                <li>
+                <li class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
                     <a href="#management" data-bs-toggle="collapse">
                         <i class="mdi mdi-manjaro"></i>
                         <span>Management</span>
@@ -726,7 +715,7 @@
                                     <span>Social Media</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
                                 <a href="#payments" data-bs-toggle="collapse">
                                     <i class="mdi mdi-order-bool-descending-variant"></i>
                                     <span>Order</span>
@@ -734,8 +723,10 @@
                                 </a>
                                 <div class="collapse" id="payments">
                                     <ul class="nav-second-level">
-                                        <li>
-                                            <a href="{{ route('order.index') }}">Order</a>
+                                        <li
+                                            class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
+                                            <a href="{{ route('order.index') . '?status=' . 0 }}">Pending Orders</a>
+                                            <a href="{{ route('order.index') . '?status=' . 1 }}">Approved Orders</a>
                                         </li>
                                     </ul>
                                 </div>

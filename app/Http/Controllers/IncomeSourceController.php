@@ -14,7 +14,7 @@ class IncomeSourceController extends Controller
      */
     public function index()
     {
-        $data= IncomeSource::latest()->get();
+        $data= IncomeSource::latest()->paginate(paginateCount());
         return view('backend.incomeSource.incomeSource',compact('data'));
     }
 

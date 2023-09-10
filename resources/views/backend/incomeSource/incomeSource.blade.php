@@ -48,7 +48,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">All Income Sources</h4>
-                    <x-backend.table.basic>
+                    <x-backend.table.basic :data="$data">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -84,9 +84,6 @@
                             @endforelse
                         </tbody>
                     </x-backend.table.basic>
-                    <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                        {{ $data->links() }}
-                    </div>
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->

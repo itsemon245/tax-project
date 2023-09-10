@@ -13,8 +13,8 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        $data = Achievement::latest()->get();
-        return view('backend.achievment.index',compact('data'));
+        $data = Achievement::latest()->simplePaginate(paginateCount());
+        return view('backend.achievment.index', compact('data'));
     }
 
     /**
@@ -47,7 +47,6 @@ class AchievementController extends Controller
      */
     public function show(Achievement $achievement)
     {
-        
     }
 
     /**
@@ -62,9 +61,8 @@ class AchievementController extends Controller
      */
     public function update(UpdateAchievementRequest $request, Achievement $achievement)
     {
-        if($request->hasFile('image'))
-        {
-            $achievement->image = updateFile($request->image, $achievement->image ,'achievements');
+        if ($request->hasFile('image')) {
+            $achievement->image = updateFile($request->image, $achievement->image, 'achievements');
         }
         $achievement->title = $request->user;
         $achievement->count = $request->total_user;

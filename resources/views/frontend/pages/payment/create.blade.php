@@ -33,26 +33,28 @@
         @csrf
 
         @if ($model === Product::class)
-            <div id="app_header">
-                <div class="container">
-                    <div class="row">
-                        <div class="app_header_content text-center">
-                            <h2>What are your sources of income?</h2>
-                        </div>
+            <div class="container my-3">
+                <div class="row">
+                    <div class="mb-2 text-center">
+                        <h3>What are your sources of income?</h3>
                     </div>
-                    <div class="custom-grid">
-                        @foreach ($incomeSources as $item)
+                </div>
+                <div class="row justify-content-center">
+                    @foreach ($incomeSources as $item)
+                        <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-2">
                             <label
-                                class="bg-light d-flex justify-content-center align-items-center border rounded position-relative">
-                                <input type="checkbox" name="income_source[]" class="position-absolute top-0 end-0"
-                                    value="{{ $item->title }}">
-                                <div class="text-dark d-flex flex-column align-items-center">
-                                    <img src="{{ useImage($item->image) }}" width="80" height="60" alt="">
+                                class="bg-light d-flex justify-content-center align-items-center border rounded position-relative p-2"
+                                for="income-{{ $item->id }}">
+                                <input id="income-{{ $item->id }}" type="checkbox" name="income_source[]"
+                                    class="position-absolute top-0 end-0" value="{{ $item->title }}">
+                                <div class="text-dark d-flex flex-column align-items-center ">
+                                    <img class="rounded mb-2" src="{{ useImage($item->image) }}" width="64"
+                                        height="64" alt="" style="object-fit: cover;">
                                     <h6 class="text-center">{{ $item->title }}</h6>
                                 </div>
                             </label>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         @endif
@@ -186,7 +188,8 @@
                                         <div class="col-md-6">
 
                                             <x-backend.form.text-input name="phone" label="Contact No."
-                                                placeholder="Contact No." value="{{ auth()->user()?->phone }}" required />
+                                                placeholder="Contact No." value="{{ auth()->user()?->phone }}"
+                                                required />
                                         </div>
                                     </div>
                                     <div class="row">

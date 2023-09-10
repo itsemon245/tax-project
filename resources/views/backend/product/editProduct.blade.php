@@ -4,7 +4,8 @@
 
     <!-- end row-->
     <x-backend.ui.section-card name="Edit Product">
-
+        <x-backend.ui.button class="btn-sm btn-info mb-3" href="{{ route('product.index') }}"
+            type="custom">Back</x-backend.ui.button>
         <!-- Add product Form -->
         <form action="{{ route('product.store') }}" method="POST">
             @csrf

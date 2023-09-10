@@ -20,7 +20,7 @@
         <div class="mb-2">
             <a href="{{ route('industry.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
         </div>
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$industries">
             <thead>
                 <tr>
                     <th>#</th>
@@ -65,9 +65,6 @@
                 @endforelse
             </tbody>
         </x-backend.table.basic>
-        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-            {{ $industries->links() }}
-        </div>
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection

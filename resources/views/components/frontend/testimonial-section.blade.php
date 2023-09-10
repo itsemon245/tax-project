@@ -1,28 +1,36 @@
+@php
+    $reviews = \App\Models\Review::with('user')
+        ->latest()
+        ->limit(10)
+        ->get();
+    
+@endphp
 <section class="mt-5 py-5" style="background: #474646;">
-    <h3 class="text-center text-light">Our Valuable Partners</h3>
+    <h3 class="text-center text-light">Testimonials</h3>
     <div class="scroll-wrapper">
         <span id="next" class="ti-arrow-circle-left custom-icon"></span>
         <div class="media-scroller snaps-inline">
-            @foreach ($testimonials as $item)
-            <div class="d-flex gap-3 align-items-start border border-3 p-3 rounded-3 mb-3 text-light">
-                <img src="{{ useImage($item->user->image_url) }}" alt="img" width="64px" height="64px" class=" rounded-circle shadow-4-strong d-block">
-                <div>
-                    <div class="mb-2">
-                        <h6 class="mb-0">{{ $item->user->name }}</h6>
-                        <small>
-                            <div class="rating">  
-                                <span class="fas fa-star" style="color:var(--bs-yellow);"></span>
-                                <span class="fas fa-star" style="color:var(--bs-yellow);"></span>
-                                <span class="fas fa-star" style="color:var(--bs-yellow);"></span>
-                                <span class="fas fa-star" style="color:var(--bs-gray-200);"></span>
-                                <span class="fas fa-star" style="color:var(--bs-gray-200);"></span>
-                                </div>
-                        </small>
+            @foreach ($reviews as $item)
+                <div class="media-elements">
+                    <img src="{{ useImage($item->avatar) }}" alt="img" width="48px" height="48px"
+                        class=" rounded-circle shadow-4-strong d-block">
+                    <div>
+                        <div class="mb-2">
+                            <h5 class="mb-0">{{ $item->name }}</h5>
+                            <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
+                            <div class="rating">
+                                @foreach (range(1, 5) as $rating)
+                                    @php
+                                        $color = $rating > $item->rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)';
+                                    @endphp
+                                    <span class="fas fa-star" style="color: {{ $color }};"></span>
+                                @endforeach
+                            </div>
+                        </div>
+                        <p class="text-muted mb-0">{{ $item->comment }}
+                        </p>
                     </div>
-                    <small class="mb-0">{!! Str::limit($item->comment, 30, '...') !!}</small>
                 </div>
-            </div>
-
             @endforeach
 
 
@@ -73,9 +81,12 @@
 
         .media-elements {
             display: flex;
-            align-items: center;
+            align-items: start;
             background: white;
             border-radius: 10px;
+            gap: 1rem;
+            padding: 1rem;
+            max-width: 45ch;
         }
 
         .media-elements .comment {
@@ -135,7 +146,7 @@
         const next = document.getElementById('next')
         const prev = document.getElementById('prev')
         const scrollElementWidth = parseInt($('.media-elements').css('width').split('px')[0])
-        const scrollUnit = scrollElementWidth+20;
+        const scrollUnit = scrollElementWidth + 20;
         container.addEventListener('wheel', e => {
             e.preventDefault();
             container.scrollLeft += e.deltaY;

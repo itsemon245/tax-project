@@ -87,7 +87,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('book-category', BookCategoryController::class);
     Route::resource('case-study-category', CaseStudyCategoryController::class);
     Route::resource('product-category', ProductCategoryController::class);
-    Route::resource('product-subcategory', ProductSubCategoryController::class);
+    Route::resource('product-sub-category', ProductSubCategoryController::class);
     Route::resource('banner', BannerController::class);
     Route::resource('info', InfoController::class);
     Route::resource('appointment', AppointmentController::class);

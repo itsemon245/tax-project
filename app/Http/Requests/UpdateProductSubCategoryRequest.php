@@ -22,7 +22,8 @@ class UpdateProductSubCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'category' => 'required',
+            'name' => 'required',
         ];
     }
 }

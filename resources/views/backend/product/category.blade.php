@@ -57,7 +57,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">All Categories</h4>
-                        <x-backend.table.basic>
+                        <x-backend.table.basic :data="$categories">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -71,17 +71,12 @@
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>
-                                            <div class="btn-group">
-                                                <a href="{{ route('product-category.edit', $category) }}"
-                                                    class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
-                                                <form action="{{ route('product-category.destroy', $category->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <x-backend.ui.button
-                                                        class="btn-danger btn-sm">Delete</x-backend.ui.button>
-                                                </form>
-                                            </div>
+                                                <x-backend.ui.button type="edit"
+                                                    href="{{ route('product-category.edit', $category->id) }}"
+                                                    class="btn-sm" />
+                                                <x-backend.ui.button type="delete"
+                                                    action="{{ route('product-category.destroy', $category->id) }}"
+                                                    class="btn-sm" />
                                         </td>
                                     </tr>
                                 @empty
@@ -90,9 +85,6 @@
                                 @endforelse
                             </tbody>
                         </x-backend.table.basic>
-                        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                            {{ $categories->links() }}
-                        </div>
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->

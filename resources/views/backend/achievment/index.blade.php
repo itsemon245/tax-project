@@ -16,10 +16,10 @@
     @endpush
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Achievement']" />
 
-    <x-backend.ui.section-card name="Industries">
+    <x-backend.ui.section-card name="Achievements">
         <x-backend.ui.button type="custom" href="{{ route('achievements.create') }}"
             class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$data">
             <thead>
                 <tr>
                     <th>#</th>
@@ -30,22 +30,15 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($data as $key=>$item)
+                @forelse ($data as $key => $item)
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td><img src="{{ useImage($item->image) }}" alt="" width="80px"></td>
-                        <td>{{ $item->total_user }}</td>
-                        <td>{{ $item->user }}</td>
+                        <td>{{ $item->count }}</td>
+                        <td>{{ $item->title }}</td>
                         <td>
-                            <div class="btn-group">
-                                <a href="{{ route('achievements.edit', $item) }}" class="btn btn-sm btn-info">Edit</a>
-                                <form action="{{ route('achievements.destroy', $item) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete
-                                    </x-backend.ui.button>
-                                </form>
-                            </div>
+                            <x-backend.ui.button type="edit" class="btn-sm" :href="route('achievements.edit', $item->id)" />
+                            <x-backend.ui.button type="delete" class="btn-sm" :action="route('achievements.destroy', $item->id)" />
                         </td>
                     </tr>
                 @empty
@@ -57,9 +50,6 @@
                 @endforelse
             </tbody>
         </x-backend.table.basic>
-        <div class="paginate md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-            {{ $banners->links() }}
-        </div>
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection

@@ -18,11 +18,11 @@
                         <div class="col-lg-6">
                             <div class="col-md-12 mb-2">
                                 <x-backend.form.text-input label="Total Achivement" placeholder="Total Achivement"
-                                    type="number" name="total_user" value="{{ $achievement->total_user }}" />
+                                    type="number" name="total_user" value="{{ $achievement->count }}" />
                             </div>
                             <div class="col-md-12 mb-2">
                                 <x-backend.form.text-input label="Title" placeholder="Title" type="text" name="user"
-                                    value="{{ $achievement->user }}" />
+                                    value="{{ $achievement->title }}" />
                             </div>
                         </div>
                     </div>
