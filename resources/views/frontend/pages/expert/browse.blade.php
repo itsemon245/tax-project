@@ -89,7 +89,6 @@
                     <div class="circle_left"></div>
                     <div class="circle_right"></div>
                 </div>
-                {{-- {{ dd($experts) }} --}}
             </div>
             <div class="row">
                 <div class="col-12">
