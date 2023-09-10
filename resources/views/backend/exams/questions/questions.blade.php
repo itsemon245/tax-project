@@ -95,7 +95,7 @@
                 @endif
             </div>
             <div class="col-md-6 mt-3" style="max-height:75dvh;overflow-y:scroll;">
-                <x-backend.table.basic>
+                <x-backend.table.basic :data="$questions">
                     <thead>
                         <tr>
                             <th>#</th>

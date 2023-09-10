@@ -20,7 +20,7 @@
         <x-backend.ui.button type="custom" :href="route('course.create')" class="btn-success btn-sm mb-2"><span
                 class="fw-bold fs-5 me-1">+</span>New Course</x-backend.ui.button>
         <div class="table-responsive">
-            <x-backend.table.basic>
+            <x-backend.table.basic :data="$courses">
                 <thead class="table-light">
                     <tr>
                         <th class="">No</th>
@@ -93,9 +93,5 @@
                 </tbody>
                 </table>
             </x-backend.table.basic>
-            <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                {{ $courses->links() }}
-            </div>
-
     </x-backend.ui.section-card>
 @endsection

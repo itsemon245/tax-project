@@ -22,7 +22,7 @@
     <x-backend.ui.section-card name="All Expenses">
         <x-backend.ui.button type="custom" :href="route('expense.create')" class="btn-success btn-sm mb-1">Create</x-backend.ui.button>
         <div class="container">
-            <x-backend.table.basic>
+            <x-backend.table.basic :data="$expenses">
                 <thead>
                     <tr>
                         <td>No.</td>
@@ -58,9 +58,6 @@
                 </tbody>
                 </thead>
             </x-backend.table.basic>
-            <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                {{ $expenses->links() }}
-            </div>
         </div>
     </x-backend.ui.section-card>
     @push('customJs')

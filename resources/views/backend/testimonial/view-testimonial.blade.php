@@ -18,7 +18,7 @@
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Testimonial', 'View']" />
 
     <x-backend.ui.section-card name="Testimonial List">
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$testimonials">
             <thead>
                 <tr>
                     <th>#</th>
@@ -49,8 +49,5 @@
                 @endforeach
             </tbody>
         </x-backend.table.basic>
-        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-            {{ $testimonials->links() }}
-        </div>
     </x-backend.ui.section-card>
 @endsection

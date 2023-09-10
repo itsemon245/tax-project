@@ -105,7 +105,7 @@
             <x-frontend.info-card :$info />
         @endforeach
     </x-frontend.info-section>
-    <x-frontend.testimonial-section>
+    <x-frontend.testimonial-section :testimonials="$reviews">
     </x-frontend.testimonial-section>
 @endsection
 

@@ -27,7 +27,7 @@
             <div class="card-body">
                 <x-backend.ui.button type="custom" class="btn-success text-capitalize mb-2 btn-sm"
                     href="{{ route('service.subs.create', $categoryId) }}">New Sub Category</x-backend.ui.button>
-                <x-backend.table.basic>
+                <x-backend.table.basic :data="$subCategories">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -72,9 +72,6 @@
                     </tbody>
                 </x-backend.table.basic>
             </div> <!-- end card body-->
-            <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                {{ $subCategories->links() }}
-            </div>
         </div> <!-- end card -->
 
     </x-backend.ui.section-card>

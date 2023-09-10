@@ -162,9 +162,6 @@
                     </tr>
                 </tbody>
             </x-backend.table.basic>
-            <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                {{ $fiscalYears->links() }}
-            </div>
         </div>
         <div class="card">
             <h5 class="card-header bg-soft-light text-dark text-capitalize">All {{ str($type)->plural() }}</h5>

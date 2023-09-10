@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <x-backend.table.basic>
+                        <x-backend.table.basic :data="$services">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -94,9 +94,6 @@
                             </tbody>
                         </x-backend.table.basic>
                     </div> <!-- end card body-->
-                    <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                        {{ $services->links() }}
-                    </div>
                 </div> <!-- end card -->
             </div><!-- end col-->
         </div>

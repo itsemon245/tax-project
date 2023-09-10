@@ -19,7 +19,7 @@
     <x-backend.ui.section-card name="Industries">
         <x-backend.ui.button type="custom" href="{{ route('book-category.create') }}"
             class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$data">
             <thead>
                 <tr>
                     <th>#</th>
@@ -54,9 +54,6 @@
                 @endforelse
             </tbody>
         </x-backend.table.basic>
-        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-            {{ $data->links() }}
-        </div>
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection

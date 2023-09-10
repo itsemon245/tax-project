@@ -25,7 +25,7 @@
                         <x-backend.ui.button type="custom" :href="route('video.create') . '?course_id=' . $course->id" class="btn-success btn-sm mb-2"><span
                                 class="fw-bold fs-5 me-1">+</span>New Video</x-backend.ui.button>
 
-                        <x-backend.table.basic>
+                        <x-backend.table.basic :data="$videos">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -70,11 +70,6 @@
                                 @endforeach
                             </tbody>
                         </x-backend.table.basic>
-
-                        <div class="paginate md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                            {{ $videos->links() }}
-                        </div>
-
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->

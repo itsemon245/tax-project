@@ -15,7 +15,6 @@
         </style>
     @endpush
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Show All', 'Project']" />
-    {{-- {{ dd($clients[0]->projects[0]->pivot->client_id) }} --}}
     <x-backend.ui.section-card name="Projects">
         <div class="mb-2">
             <x-backend.ui.button type="custom" href="{{ route('project.create') }}"
@@ -162,7 +161,7 @@
                 </div>
             </div>
         </div>
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$clients">
             <thead>
                 <tr>
                     <th>#</th>
@@ -226,9 +225,6 @@
                 @endforelse
             </tbody>
         </x-backend.table.basic>
-        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-            {{ $clients->links() }}
-        </div>
     </x-backend.ui.section-card>
     <!-- end row-->
     @push('customJs')

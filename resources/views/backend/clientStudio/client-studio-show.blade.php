@@ -16,7 +16,7 @@
     @endpush
     <x-backend.ui.breadcrumbs :list="['Backend', 'Client Studio', 'View', 'All']" />
     <x-backend.ui.section-card name="Client Studios">
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$data">
             <thead>
                 <tr>
                     <th>#</th>
@@ -49,9 +49,6 @@
                 @endforelse
             </tbody>
         </x-backend.table.basic>
-        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-            {{ $data->links() }}
-        </div>
     </x-backend.ui.section-card>
     @push('customJs')
         <script></script>

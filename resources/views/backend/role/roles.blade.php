@@ -23,7 +23,7 @@
         <a href="{{ route('role.create') }}" class="btn waves-effect waves-light text-uppercase btn-success btn-sm mb-2">
             New+
         </a>
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$roles">
             <thead>
                 <tr>
                     <th>#</th>
@@ -50,9 +50,6 @@
                 @endforeach
             </tbody>
         </x-backend.table.basic>
-        <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-            {{ $roles->links() }}
-        </div>
     </x-backend.ui.section-card>
     @push('customJs')
         <script></script>
