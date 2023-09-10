@@ -23,7 +23,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <x-backend.table.basic>
+                        <x-backend.table.basic :data="$data">
                             <thead>
                                 <tr>
                                     <th>#</th>

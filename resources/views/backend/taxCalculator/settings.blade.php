@@ -29,7 +29,7 @@
         <div class="container">
             <x-btn-back class="mb-2"></x-btn-back>
             <x-backend.ui.button type="custom" :href="route('tax-setting.create')" class="btn-sm btn-success mb-2">Create</x-backend.ui.button>
-            <x-backend.table.basic>
+            <x-backend.table.basic :data="$taxSettings">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -210,9 +210,6 @@
                 </tbody>
                 </thead>
             </x-backend.table.basic>
-            <div class="paginate  md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-                {{ $taxSettings->links() }}
-            </div>
         </div>
 
     </x-backend.ui.section-card>

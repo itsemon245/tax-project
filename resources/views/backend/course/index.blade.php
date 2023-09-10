@@ -20,7 +20,7 @@
         <x-backend.ui.button type="custom" :href="route('course.create')" class="btn-success btn-sm mb-2"><span
                 class="fw-bold fs-5 me-1">+</span>New Course</x-backend.ui.button>
         <div class="table-responsive">
-            <x-backend.table.basic>
+            <x-backend.table.basic :data="$courses">
                 <thead class="table-light">
                     <tr>
                         <th class="">No</th>

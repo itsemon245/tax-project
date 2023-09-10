@@ -20,7 +20,7 @@
 
         <x-backend.ui.button type="custom" href="{{ route('case-study-category.create') }}"
             class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$data">
             <thead>
                 <tr>
                     <th>#</th>

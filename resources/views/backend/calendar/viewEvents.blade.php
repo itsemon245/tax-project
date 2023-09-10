@@ -21,7 +21,7 @@
     <x-backend.ui.section-card name="All Events">
         <x-backend.ui.button type="custom" href="{{ route('calendar.create') }}"
             class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$events">
             <thead>
                 <tr>
                     <th>#</th>

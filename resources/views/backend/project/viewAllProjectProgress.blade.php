@@ -15,7 +15,6 @@
         </style>
     @endpush
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Show All', 'Project']" />
-    {{-- {{ dd($clients[0]->projects[0]->pivot->client_id) }} --}}
     <x-backend.ui.section-card name="Projects">
         <div class="mb-2">
             <x-backend.ui.button type="custom" href="{{ route('project.create') }}"
@@ -162,7 +161,7 @@
                 </div>
             </div>
         </div>
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$clients">
             <thead>
                 <tr>
                     <th>#</th>

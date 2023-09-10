@@ -22,7 +22,7 @@
     <x-backend.ui.section-card name="All Expenses">
         <x-backend.ui.button type="custom" :href="route('expense.create')" class="btn-success btn-sm mb-1">Create</x-backend.ui.button>
         <div class="container">
-            <x-backend.table.basic>
+            <x-backend.table.basic :data="$expenses">
                 <thead>
                     <tr>
                         <td>No.</td>

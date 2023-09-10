@@ -192,7 +192,7 @@
             <h5 class="card-header bg-soft-light text-dark">Ledger</h5>
             <div class="card-body">
 
-                <x-backend.table.basic>
+                <x-backend.table.basic :data="$invoices">
                     <thead>
                         <tr>
                             <th>SL</th>

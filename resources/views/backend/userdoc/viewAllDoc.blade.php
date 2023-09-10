@@ -23,7 +23,7 @@
         <x-btn-back class="me-2 mb-3"></x-btn-back>
         <x-backend.ui.button type="custom" href="{{ route('userDoc.backend.create') }}" class="mb-3 btn-sm btn-success">New
             Name</x-backend.ui.button>
-        <x-backend.table.basic>
+        <x-backend.table.basic :data="$userDocs">
             <thead>
                 <tr>
                     <th>#</th>
@@ -81,9 +81,6 @@
                 {{-- {{ dd(json_decode($upload_documents[0]->files)) }} --}}
             </tbody>
         </x-backend.table.basic>
-        <div class="paginate md-md-0 mt-3 mt-md-0 me-4 me-md-0">
-            {{ $userDocs->links() }}
-        </div>
     </x-backend.ui.section-card>
     @push('customJs')
         <script></script>

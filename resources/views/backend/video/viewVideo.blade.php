@@ -25,7 +25,7 @@
                         <x-backend.ui.button type="custom" :href="route('video.create') . '?course_id=' . $course->id" class="btn-success btn-sm mb-2"><span
                                 class="fw-bold fs-5 me-1">+</span>New Video</x-backend.ui.button>
 
-                        <x-backend.table.basic>
+                        <x-backend.table.basic :data="$videos">
                             <thead>
                                 <tr>
                                     <th>No</th>

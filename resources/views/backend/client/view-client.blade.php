@@ -20,7 +20,7 @@
 
         <x-backend.ui.section-card name="Client Section">
 
-            <x-backend.table.basic>
+            <x-backend.table.basic :data="$clients">
                 <thead>
                     <tr>
                         <th>#</th>
