@@ -10,11 +10,12 @@ class TaxCalculatorController extends Controller
 {
     public function calculator()
     {
-        $settings = TaxSetting::where('type', 'others')->get()->groupBy('for');
+        $settings = TaxSetting::get()->groupBy('for');
         return view('frontend.pages.taxCalculator', compact('settings'));
     }
     public function calculate(Request $request)
     {
+        // $request->dd();
         $request->validate([
             "name" => "required|string",
             "email" => "required|email",
@@ -27,12 +28,22 @@ class TaxCalculatorController extends Controller
             "services" => 'array|nullable',
             "message" => "string|nullable",
         ]);
+        $tax = 0;
+        $totalTax = 0;
+        $taxSetting = TaxSetting::where(['for' => $request->tax_for, 'type' => 'tax'])->first();
+        $minTax = $taxSetting->min_tax;
         $income = (int) $request->yearly_income;
         $turnover = (int) $request->yearly_turnover;
         $asset = (int) $request->total_asset;
-        $incomeTax = $this->getTax($income, $request->tax_for, 'income');
-        // $turnoverTax = $this->getTax($turnover, $request->tax_for, 'turnover');
-        // $assetTax = $this->getTax($asset, $request->tax_for, 'asset');
+        $incomeTax = $this->calcTax($income, $request, 'income');
+        $turnoverTax = $this->calcTax($turnover, $request, 'turnover');
+        $assetTax = $this->calcTax($asset, $request, 'asset');
+
+        $tax = ($incomeTax > $turnoverTax) ? $incomeTax + $assetTax : $turnoverTax + $assetTax;
+        $rebate = (int) $request->rebate;
+        $afterRebate = $tax - $rebate;
+        $totalTax = $minTax > $afterRebate ? $minTax : $afterRebate;
+        dd($totalTax);
         dd([
             'taxes' => [
                 'income' => $incomeTax,
@@ -48,26 +59,39 @@ class TaxCalculatorController extends Controller
     }
 
 
-    function getTax(int $value, string $for, string $type): int
+    function calcTax(int $value, $request, string $type): int
     {
+        $for = $request->tax_for;
+        $gender = $request->gender;
         $totalTax = 0;
-        $taxSetting = TaxSetting::where(['for' => 'individual', 'type' => 'tax'])->first();
+        $taxSetting = TaxSetting::where(['for' => $for, 'type' => 'tax'])->first();
+        // dd($taxSetting);
         $valueSlots = $taxSetting->slots()->where('type', $type)->get();
-        $lastValueSlot = $valueSlots->where('to', '>=', $value)->first();
+        $minTax = $taxSetting->min_tax;
+        $lastValueSlot = $valueSlots
+            ->where('to', '>=', $value)
+            ->where('from', '<=', $value)
+            ->first();
 
-        foreach ($valueSlots as $slot) {
+        if ($gender) {
+            $value -= $gender === 'male' ? $taxSetting->tax_free->male : $taxSetting->tax_free->female;
+        } else {
+            $value -= $taxSetting->tax_free->amount;
+        }
+        // dd($value);
+        foreach ($valueSlots as $key => $slot) {
             $tax = (float) 0;
             if ($slot->difference < $value) {
                 $tax =  $slot->difference * $slot->tax_percentage / 100;
-                $tax = $tax > $slot->min_tax ? $tax : $slot->min_tax;
+                $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
                 $value -= $slot->difference;
-            } else {
+            } elseif ($value > 0) {
                 $tax =  $value * $slot->tax_percentage / 100;
-                $tax = $tax > $slot->min_tax ? $tax : $slot->min_tax;
+                $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
+                $value = 0;
             }
             $totalTax += $tax;
-
-            if ($slot->id === $lastValueSlot->id) {
+            if ($slot->id === $lastValueSlot->id || $value <= 0) {
                 break;
             }
         }
