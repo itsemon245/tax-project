@@ -13,7 +13,7 @@ class ProjectDiscussionController extends Controller
      */
     public function index()
     {
-        $projectDiscussions = ProjectDiscussion::get();
+        $projectDiscussions = ProjectDiscussion::simplePaginate(paginateCount());
         return view('backend.projectDiscussion.viewProjectDiscussion', compact('projectDiscussions'));
     }
 

@@ -15,7 +15,7 @@ class ServiceController extends Controller
      */
     public function index($subCategoryId)
     {
-        $services = Service::with(['serviceSubCategory', 'serviceCategory'])->where('service_sub_category_id', $subCategoryId)->get();
+        $services = Service::with(['serviceSubCategory', 'serviceCategory'])->where('service_sub_category_id', $subCategoryId)->simplePaginate(paginateCount());
         return view('backend.service.viewServices', compact("services"));
     }
 
