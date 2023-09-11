@@ -13,19 +13,24 @@ return new class extends Migration
     {
         Schema::create('tax_calculators', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->nullable();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('tax_for')->nullable();
             $table->string('income_source')->nullable();
-            $table->integer('yearly_turnover')->nullable();
-            $table->integer('yearly_income')->nullable();
-            $table->integer('total_asset')->nullable();
-            $table->integer('rebate')->nullable();
-            $table->integer('deduction')->nullable();
+            $table->unsignedBigInteger('yearly_turnover')->nullable();
+            $table->unsignedBigInteger('yearly_income')->nullable();
+            $table->unsignedBigInteger('total_asset')->nullable();
+            $table->unsignedBigInteger('rebate')->nullable();
+            $table->unsignedBigInteger('deduction')->nullable();
             $table->string('gender')->nullable();
-            $table->longText('message')->nullable();    
-            $table->decimal('tax')->nullable();
+            $table->longText('message')->nullable();
+            $table->double('tax')->nullable();
             $table->json('others')->nullable();
             $table->timestamps();
         });

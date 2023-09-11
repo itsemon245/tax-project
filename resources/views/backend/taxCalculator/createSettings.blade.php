@@ -18,7 +18,7 @@
                             label="Range To" />
                     </div>
                     <div class="col-md-2">
-                        <x-backend.form.text-input type="number" name="slot_percentage[]" placeholder="Percentage"
+                        <x-backend.form.text-input type="text" name="slot_percentage[]" placeholder="Percentage"
                             label="Percentage(%)" />
                     </div>
                     <div class="col-md-4">
@@ -52,7 +52,7 @@
                                         style="overflow: hidden;">
                                         <input type="text" id="is-discount" name="is_discounts_fixed[]" value="false"
                                             hidden disabled>
-                                        <input type="number" id="discount-amount" name="discount_amounts[]"
+                                        <input type="text" id="discount-amount" name="discount_amounts[]"
                                             class="amount border-0 rounded-0 w-100 ps-2" style="outline:transparent;"
                                             placeholder="0" aria-label="Discont" disabled>
 
@@ -117,15 +117,15 @@
                     </div>
                     <div class="row only-company only-tax d-none">
                         <div class="col-md-4">
-                            <x-backend.form.text-input type='number' name="turnover_percentage"
+                            <x-backend.form.text-input type='text' name="turnover_percentage"
                                 placeholder="Percentage For Turnover" label="Percentage For Turnover(%)" disabled />
                         </div>
                         <div class="col-md-4">
-                            <x-backend.form.text-input type='number' name="income_percentage"
+                            <x-backend.form.text-input type='text' name="income_percentage"
                                 placeholder="Percentage For Income" label="Percentage For Income(%)" disabled />
                         </div>
                         <div class="col-md-4">
-                            <x-backend.form.text-input type='number' name="asset_percentage"
+                            <x-backend.form.text-input type='text' name="asset_percentage"
                                 placeholder="Percentage For Asset" label="Percentage For Asset(%)" disabled />
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                                         label="Range To" />
                                 </div>
                                 <div class="col-md-2">
-                                    <x-backend.form.text-input type="number" name="slot_percentage[]"
+                                    <x-backend.form.text-input type="text" name="slot_percentage[]"
                                         placeholder="Percentage" label="Percentage(%)" />
                                 </div>
                                 <div class="col-md-4">
@@ -197,7 +197,7 @@
                                                     style="overflow: hidden;">
                                                     <input type="text" id="is-discount" name="is_discounts_fixed[]"
                                                         value="false" hidden disabled>
-                                                    <input type="number" id="discount-amount" name="discount_amounts[]"
+                                                    <input type="text" id="discount-amount" name="discount_amounts[]"
                                                         class="amount border-0 rounded-0 w-100 ps-2"
                                                         style="outline:transparent;" placeholder="0" aria-label="Discont"
                                                         disabled>

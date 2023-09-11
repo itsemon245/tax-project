@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Currency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +12,12 @@ class Slot extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $casts = [
+        // 'from' => Currency::class,
+        // 'to' => Currency::class,
+        // 'difference' => Currency::class,
+        // 'min_tax' => Currency::class,
+    ];
 
 
     function taxSettings(): BelongsTo

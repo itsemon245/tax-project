@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use App\Models\TaxCalculator;
+use App\Models\User;
 use App\Models\TaxSetting;
 use Illuminate\Http\Request;
+use App\Models\TaxCalculator;
+use App\Http\Controllers\Controller;
 
 class TaxCalculatorController extends Controller
 {
@@ -44,11 +45,11 @@ class TaxCalculatorController extends Controller
         $tax = ($incomeTax > $turnoverTax) ? $incomeTax + $assetTax : $turnoverTax + $assetTax;
         $totalTax = $tax;
         if ($request->has('rebate')) {
-            $rebate = (int) $request->rebate;
+            $rebate = (float) $request->rebate;
             $afterRebate = $tax - $rebate;
             $totalTax = $minTax > $afterRebate ? $minTax : $afterRebate;
         }
-        $totalTax -= (int) $request->deduction;
+        $totalTax -= (float) $request->deduction;
 
 
         // get others
@@ -60,20 +61,26 @@ class TaxCalculatorController extends Controller
         foreach ($otherTaxes as $key => $values) {
             $max = collect($values)->max();
             $others = [...$others, $key => $max];
-        }
-
-        TaxCalculator::create([
+    }
+        $result = TaxCalculator::create([
             ...$request->except('services'),
             'tax' => $tax,
-            'others' => $others
+            'others' => $others,
+            'user_id' => auth()?->id()
         ]);
 
 
-        return back();
+        return view('frontend.pages.taxCalculator.result', compact('result'));
     }
-    public function result()
+    public function results()
     {
-        return view('frontend.pages.taxCalculator');
+        $results = User::find(auth()->id())->taxCalulators;
+        return view('frontend.pages.taxCalculator.results', compact('results'));
+    }
+    public function result($id)
+    {
+        $result = User::find(auth()->id())->taxCalulators()->find($id);
+        return view('frontend.pages.taxCalculator.result', compact('result'));
     }
 
 

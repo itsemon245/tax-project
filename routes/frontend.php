@@ -183,4 +183,5 @@ Route::prefix('purchase')
 
 Route::get('tax/calculator', [TaxCalculatorController::class, 'calculator'])->name('tax.calculator');
 Route::post('tax/calculate', [TaxCalculatorController::class, 'calculate'])->name('tax.calculate');
-Route::get('tax/calculator/result', [TaxCalculatorController::class, 'result'])->name('tax.calculation.result');
+Route::get('tax/calculator/{id}/result', [TaxCalculatorController::class, 'result'])->name('tax.calculation.result');
+Route::get('tax/calculator/results', [TaxCalculatorController::class, 'results'])->name('tax.calculation.results');

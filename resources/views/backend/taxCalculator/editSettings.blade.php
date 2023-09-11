@@ -18,7 +18,7 @@
                             label="Range To" />
                     </div>
                     <div class="col-md-2">
-                        <x-backend.form.text-input type="number" name="slot_percentage[]" placeholder="Percentage"
+                        <x-backend.form.text-input type="text" name="slot_percentage[]" placeholder="Percentage"
                             label="Percentage(%)" />
                     </div>
                     <div class="col-md-4">
@@ -52,7 +52,7 @@
                                         style="overflow: hidden;">
                                         <input type="text" id="is-discount" name="is_discounts_fixed[]" value="false"
                                             hidden>
-                                        <input type="number" id="discount-amount" name="discount_amounts[]"
+                                        <input type="text" id="discount-amount" name="discount_amounts[]"
                                             class="amount border-0 rounded-0 w-100 ps-2" style="outline:transparent;"
                                             placeholder="0" aria-label="Discont">
 
@@ -120,17 +120,17 @@
                     <div
                         class="row only-company only-tax {{ $taxSetting->for !== 'company' && $taxSetting->type === 'others' ? 'd-none' : '' }}">
                         <div class="col-md-4">
-                            <x-backend.form.text-input type='number' name="turnover_percentage"
+                            <x-backend.form.text-input type='text' name="turnover_percentage"
                                 placeholder="Percentage For Turnover" label="Percentage For Turnover(%)"
                                 @if ($taxSetting->for === 'company' && $taxSetting->type === 'tax') :value="$taxSetting->turnover_percentage" @endif />
                         </div>
                         <div class="col-md-4">
-                            <x-backend.form.text-input type='number' name="income_percentage"
+                            <x-backend.form.text-input type='text' name="income_percentage"
                                 placeholder="Percentage For Income" label="Percentage For Income(%)"
                                 @if ($taxSetting->for === 'company' && $taxSetting->type === 'tax') :value="$taxSetting->income_percentage" @endif />
                         </div>
                         <div class="col-md-4">
-                            <x-backend.form.text-input type='number' name="asset_percentage"
+                            <x-backend.form.text-input type='text' name="asset_percentage"
                                 placeholder="Percentage For Asset" label="Percentage For Asset(%)"
                                 @if ($taxSetting->for === 'company' && $taxSetting->type === 'tax') :value="$taxSetting->asset_percentage" @endif />
                         </div>
@@ -172,7 +172,7 @@
                                             placeholder="Range To" label="Range To" :value="$slot->to" />
                                     </div>
                                     <div class="col-md-2">
-                                        <x-backend.form.text-input type="number" name="slot_percentage[]"
+                                        <x-backend.form.text-input type="text" name="slot_percentage[]"
                                             placeholder="Percentage" label="Percentage(%)" :value="$slot->tax_percentage" />
                                     </div>
                                     <div class="col-md-4">
@@ -208,7 +208,7 @@
                                                             name="is_discounts_fixed[]"
                                                             value="{{ $slot->is_discount_fixed ? 'true' : 'false' }}"
                                                             hidden>
-                                                        <input type="number" id="discount-amount"
+                                                        <input type="text" id="discount-amount"
                                                             name="discount_amounts[]" value="{{ $slot->amount }}"
                                                             class="amount border-0 rounded-0 w-100 ps-2"
                                                             style="outline:transparent;" placeholder="0"

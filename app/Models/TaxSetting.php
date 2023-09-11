@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Currency;
 use App\Casts\Json;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ class TaxSetting extends Model
     protected $guarded = [];
     protected $casts = [
         'tax_free' => Json::class,
+        // 'min_tax' => Currency::class
     ];
 
     function slots(): HasMany

@@ -32,6 +32,12 @@
                         </a>
                     </li>
                 @endforeach
+                <li class="ms-auto">
+                    <x-backend.ui.button type="custom" :href="route('tax.calculation.results')" class="btn-success">
+                        <span class="mdi mdi-file-document-outline text-white font-16"></span>
+                        <span class="text-white">View Results</span>
+                    </x-backend.ui.button>
+                </li>
             </ul>
         </div>
         <div class="container-fluid">

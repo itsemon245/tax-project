@@ -61,6 +61,7 @@ use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\Backend\Tax\ResultsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,7 +121,6 @@ Route::prefix('admin')->group(function () {
     Route::get('exams-results', [ExamController::class, 'results'])->name('exams.results'); // All results show backend.
     Route::resource('questions', QuestionController::class);
     Route::resource('result', ResultController::class);
-    Route::resource('taxCalculator', TaxCalculatorController::class);
     Route::resource('setting', SettingController::class);
     Route::resource('withdrawal', WithdrawalController::class);
     // Route::prefix('withdrawal')
@@ -193,6 +193,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('achievements', AchievementController::class);
     Route::resource('return-form', ReturnFormController::class);
     Route::resource('tax-setting', TaxSettingController::class);
+    Route::get('tax-results', [ResultsController::class, 'index'])->name('tax.results');
+    Route::delete('tax-results/{id}', [ResultsController::class, 'destroy'])->name('tax.result.destroy');
     Route::resource('member', MemberController::class);
     Route::resource('expense', ExpenseController::class);
 

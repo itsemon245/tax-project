@@ -782,6 +782,13 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="collapse" id="taxCalculator">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('tax.results') }}">Results</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>
