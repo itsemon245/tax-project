@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = User::with('roles')->latest()->simplePaginate(paginateCount());
+        $data = User::with('roles')->whereNot('id', auth()->id())->latest()->simplePaginate(paginateCount());
         return view('backend.users.view-users', compact('user', 'data'));
     }
 
@@ -52,6 +52,7 @@ class UserController extends Controller
         $userData->name = $request->name;
         $userData->user_name = $request->user_name;
         $userData->email = $request->email;
+        $userData->email_veified_at = now();
         $userData->admin_ref = $request->admin_ref;
         $userData->phone = $request->phone;
         $userData->password = Hash::make($request->password);
