@@ -16,7 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::latest()->get();
+        $roles = Role::latest()->paginate(paginateCount());
         return view('backend.role.roles', compact('roles'));
     }
 

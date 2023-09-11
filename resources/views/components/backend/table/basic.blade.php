@@ -31,9 +31,11 @@
 
 
 </table>
-<div id="myPaginator" class="paginate my-2">
-    {{ $data?->links() }}
-</div>
+@if (method_exists($data, 'links'))
+    <div id="myPaginator" class="paginate my-2">
+        {{ $data?->links() }}
+    </div>
+@endif
 
 
 @pushOnce('customJs')
