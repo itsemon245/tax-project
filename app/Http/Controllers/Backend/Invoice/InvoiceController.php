@@ -28,7 +28,7 @@ class InvoiceController extends Controller
         $recentInvoices = Invoice::with('client', 'currentFiscal')->latest()->limit(5)->get();
         $fiscalYear = currentFiscalYear();
         // dd($recentInvoices[0]->currentFiscal[0]->pivot->status);
-        $invoices = Invoice::with('client', 'currentFiscal')->latest()->get();
+        $invoices = Invoice::with('client', 'currentFiscal')->latest()->simplePaginate(paginateCount());
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
         $zones = Client::select('zone')->distinct()->get()->pluck('zone');
         $circles = Client::select('circle')->distinct()->get()->pluck('circle');

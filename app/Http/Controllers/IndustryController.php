@@ -13,7 +13,7 @@ class IndustryController extends Controller
      */
     public function index()
     {
-        $industries = Industry::latest()->get(['id', 'title', 'image', 'intro', 'description']);
+        $industries = Industry::latest()->simplePaginate(paginateCount());
         return view('backend.industry.viewAllIndustry', compact('industries'));
     }
 

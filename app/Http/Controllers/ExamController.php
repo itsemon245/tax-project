@@ -15,7 +15,7 @@ class ExamController extends Controller
      */
     public function index()
     {
-        $exams      = Exam::all();
+        $exams      = Exam::simplePaginate(paginateCount());
         $courses    = Course::all('id', 'name');
         return view("backend.exams.exams", compact('exams', 'courses'));
     }
