@@ -43,9 +43,9 @@ class PermissionSeeder extends Seeder
             ],
             'uncategorized' => //group
             [
-                'visit' => //operation
+                'admin panel' => //operation
                 [
-                    'admin panel', //action
+                    'visit', //action
                 ],
             ],
         ];

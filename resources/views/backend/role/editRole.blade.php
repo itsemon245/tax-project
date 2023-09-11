@@ -14,10 +14,22 @@
 
                 <h5 class="mt-2">Assign Permissions</h5>
                 <div class="row">
-                    @foreach ($permissions as $permission)
-                        <div class="col-lg-3 col-md-4 col-6 mb-1">
-                            <x-form.check-box :id="$permission->id" name="permissions[]" :label="$permission->name" :value="$permission->name"
-                                :checked="$rolePermissions->search($permission->id) !== false" />
+
+                    @foreach ($permissions as $group => $permissions)
+                        <div class="col-xxl-4 col-md-6 mb-2">
+                            <div class="border rounded p-2 pt-1">
+                                <ul class="fw-bold fs-5 text-muted list-unstyled row mb-0">
+                                    <li class="">{{ str($group)->headline() }}</li>
+                                    <div class="bg-secondary mb-1" style="height: 2px;opacity:0.3;"></div>
+                                    @foreach ($permissions as $permission)
+                                        <li class="col-sm-6 col-md-12 ">
+                                            <x-form.check-box :id="$permission->id" name="permissions[]"
+                                                label="{{ $permission->name }}" value="{{ $permission->name }}"
+                                                :checked="$rolePermissions->search($permission->id) !== false" />
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     @endforeach
                 </div>

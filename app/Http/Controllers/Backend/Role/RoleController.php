@@ -51,7 +51,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $permissions = Permission::get();
+        $permissions = Permission::get()->groupBy('group');
         $rolePermissions = $role->permissions()->pluck('id');
         return view('backend.role.editRole', compact('role', 'permissions', 'rolePermissions'));
     }
