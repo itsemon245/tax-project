@@ -62,18 +62,26 @@
     @endauth
     @include('frontend.layouts.sidebar')
 
-
+@php
+    $settings = getRecords('settings');
+    $basic = json_decode($settings[0]->basic);
+    $reference = json_decode($settings[0]->reference);
+    $payment = json_decode($settings[0]->payment);
+    $return_links_one = json_decode($settings[0]->return_links)[0];
+    $return_links_two = json_decode($settings[0]->return_links)[1];
+    // dd($basic);
+@endphp
     {{-- Chat bot --}}
     <aside
         style="z-index: 50; top:50%; right:0;transform: translateY(-50%);border-radius: 0.5rem 0 0 0.5rem;max-width:max-content;"
         class="w-100 d-flex flex-column shadow bg-light border border-primary position-fixed">
-        <a href="mailto:someone@example.com" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+        <a href="mailto:{{ $basic->email }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
             <span class="mdi mdi-email"></span>
         </a>
-        <a href="tel:555-555-5555" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+        <a href="tel:{{ $basic->phone }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
             <span class="mdi mdi-phone"></span>
         </a>
-        <a href="https://wa.me/+8801885518864/?text=Hi Sam, Whatsup" class="d-inline-block px-2 pb-1"
+        <a href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi Sam, Whatsup" class="d-inline-block px-2 pb-1"
             style="cursor: pointer;">
             <span class="mdi mdi-whatsapp"></span>
         </a>

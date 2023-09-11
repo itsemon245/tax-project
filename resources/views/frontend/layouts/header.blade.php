@@ -2,6 +2,8 @@
     $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
+    $settings = getRecords('settings');
+    $basic = json_decode($settings[0]->basic);
     
 @endphp
 <header class="d-flex flex-column justify-items-center">
@@ -15,7 +17,7 @@
                 </button>
             </div>
             <a href="{{ route('home') }}">
-                <img class="app-logo" style="width:100px;" src="{{ asset('frontend/assets/images/logo/app.png') }}"
+                <img class="app-logo" style="width:100px; height:40px;" src="{{ useImage($basic->logo) }}"
                     alt="Text Act Logo">
             </a>
         </div>
