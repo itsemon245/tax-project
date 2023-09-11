@@ -35,7 +35,7 @@ class RoleSeeder extends Seeder
                     $newRole->syncPermissions($sudoPermissions);
                     break;
                 case 'admin':
-                    $newRole->syncPermissions($adminPermissions);
+                    $newRole->syncPermissions($sudoPermissions);
                     break;
                 case 'partner':
                     $newRole->syncPermissions($partnerPermissions);
@@ -60,7 +60,7 @@ class RoleSeeder extends Seeder
         }
 
         $admin = User::where('user_name', 'admin')->first();
-        $admin->assignRole('admin');
+        $admin->assignRole('super admin');
         $superAdmin = User::factory(1)->create([
             'email' => 'superadmin@gmail.com',
             'user_name' => 'super_admin',

@@ -15,11 +15,13 @@
 
                 <h5 class="mt-2">Assign Permissions</h5>
                 <div class="row">
-                    @foreach ($permissions as $permission)
-                        <div class="col-lg-3 col-md-4 col-6 mb-1">
-                            <x-form.check-box :id="$permission->id" name="permissions[]" label="{{ $permission->name }}"
-                                value="{{ $permission->name }}" />
-                        </div>
+                    @foreach ($permissions as $group => $permissions)
+                        @foreach ($permissions as $permission)
+                            <div class="col-lg-3 col-md-4 col-6 mb-1">
+                                <x-form.check-box :id="$permission->id" name="permissions[]" label="{{ $permission->name }}"
+                                    value="{{ $permission->name }}" />
+                            </div>
+                        @endforeach
                     @endforeach
                 </div>
                 <div class="d-flex mt-1">

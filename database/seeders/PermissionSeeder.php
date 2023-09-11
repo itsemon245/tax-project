@@ -14,79 +14,50 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'create' => [
-                'user',
-                'role',
-                'banner',
-                'info',
-                'testimonial',
-                'product category',
-                'product sub category',
-                'product',
-                'promo code',
-                'invoice',
-                'social handle',
-                'book',
-                'map',
-                'course',
-                'video',
+            'homepage' => //group
+            [
+                'homepage' => //operation
+                [
+                    'manage', //action
+                ],
+                'banner' => //operation
+                [
+                    'manage', //action
+                ],
+                'product' => //operation
+                [
+                    'manage', //action
+                ],
+                'appointment section' => //operation
+                [
+                    'manage', //action
+                ],
+                'achievement' => //operation
+                [
+                    'manage', //action
+                ],
+                'info section' => //operation
+                [
+                    'manage', //action
+                ],
             ],
-            'read' => [
-                'user',
-                'role',
-                'banner',
-                'info',
-                'testimonial',
-                'product category',
-                'product sub category',
-                'product',
-                'promo code',
-                'invoice',
-                'social handle',
-                'book',
-                'map',
-                'course',
-                'video',
-            ],
-            'update' => [
-                'user',
-                'role',
-                'banner',
-                'info',
-                'testimonial',
-                'product category',
-                'product sub category',
-                'product',
-                'promo code',
-                'invoice',
-                'social handle',
-                'book',
-                'map',
-                'course',
-                'video',
-            ],
-            'delete' => [
-                'user',
-                'role',
-                'banner',
-                'info',
-                'testimonial',
-                'product category',
-                'product sub category',
-                'product',
-                'promo code',
-                'invoice',
-                'social handle',
-            ],
-            'visit' => [
-                'admin panel',
-                'control panel',
+            'uncategorized' => //group
+            [
+                'visit' => //operation
+                [
+                    'admin panel', //action
+                ],
             ],
         ];
 
-        foreach ($permissions as $do => $items) {
-            foreach ($items as $operation) {
-                Permission::create(['name'=> "$do $operation"]);
+        foreach ($permissions as $group => $items) {
+            foreach ($items as $operation => $actions) {
+                foreach ($actions as $action) {
+                    Permission::create([
+                        'name' => "$action $operation",
+                        'group' => $group
+                    ]);
+                }
             }
         }
     }
