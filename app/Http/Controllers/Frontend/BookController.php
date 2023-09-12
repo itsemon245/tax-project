@@ -16,8 +16,9 @@ class BookController extends Controller
 {
     public function index()
     {
-        $bookCategories = BookCategory::get(['id', 'name']);
-        return view('frontend.pages.book.books', compact('bookCategories'));
+        $books = Book::with('bookCategory')->latest()->paginate(18);
+        $bookCategories = BookCategory::get();
+        return view('frontend.pages.book.books', compact('books', 'bookCategories'));
     }
     public function show(int $book)
     {

@@ -16,13 +16,13 @@ class CaseStudyPackageController extends Controller
     function caseStudy()
     {
         
-        $packages = CaseStudyPackage::latest()->get();
+        $packages = CaseStudyPackage::latest()->paginate(20);
         return view('frontend.pages.course.caseStudy', compact('packages'));
     }
 
     public function index(int $caseStudyPackage)
     {
-        $caseStudies = CaseStudyPackage::find($caseStudyPackage)->caseStudies;
+        $caseStudies = CaseStudy::latest()->paginate(18);
         $caseStudycategories = CaseStudyCategory::latest()->get();
         $caseStudyPackages = CaseStudyPackage::latest()->get();
         return view('frontend.pages.course.caseStudyIndex', compact('caseStudyPackages','caseStudycategories','caseStudies'));
