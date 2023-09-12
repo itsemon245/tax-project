@@ -14,6 +14,10 @@
     $class = $attributes->has('class') ? $attributes->get('class') : '';
 @endphp
 
+@pushOnce('customCss')
+    <link rel="stylesheet" href="{{ asset('libs/nouislider/dist/nouislider.min.css') }}">
+@endPushOnce
+
 <div class="card">
     <div class="card-header bg-white">
         <label for="{{ $id }}" class="form-label">{{ $label }}</label>
@@ -26,10 +30,12 @@
                 </div>
             </div>
             <div class="col-6">
-                <input type="text" placeholder="From" class="form-control w-100 p-1 {{$class}}" name='{{ $name . '_from' }}' />
+                <input type="text" placeholder="From" class="form-control w-100 p-1 {{ $class }}"
+                    name='{{ $name . '_from' }}' value="{{ $from }}" />
             </div>
             <div class="col-6">
-                <input type="text" placeholder="To" class="form-control w-100 p-1 {{$class}}" name='{{ $name . '_to' }}' />
+                <input type="text" placeholder="To" class="form-control w-100 p-1 {{ $class }}"
+                    name='{{ $name . '_to' }}' value="{{ $to }}" />
             </div>
         </div>
     </div>
@@ -87,6 +93,9 @@
                 },
             });
 
+            if (tooltips == 'false') {
+                slider.noUiSlider.removeTooltips()
+            }
             slider.noUiSlider.on('slide', (values, handle) => {
                 let from = parseInt(values[0])
                 let to = parseInt(values[1])

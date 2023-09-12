@@ -25,133 +25,140 @@
 
                 </li>
                 <li class="menu-title mt-2">Frontend Manage</li>
-                <li>
-                    <a href="#homepage" data-bs-toggle="collapse">
-                        <i class="mdi mdi-home-outline"></i>
-                        <span>Homepage</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="homepage">
-                        <ul class="nav-second-level">
-                            @canany(['manage banner'])
-                                <li>
-                                    <a href="#sidebarHeroSection" data-bs-toggle="collapse">
-                                        <i class="mdi mdi-image-frame"></i>
-                                        <span> Hero Section </span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="sidebarHeroSection">
-                                        <ul class="nav-second-level">
-                                            <li>
-                                                <a href="{{ route('banner.create') }}">Create Hero
+                @php
+                    $homepagePermissions = \Spatie\Permission\Models\Permission::where('group', 'homepage')
+                        ->get(['name'])
+                        ->pluck('name');
+                @endphp
+                @canany($homepagePermissions)
+                    <li>
+                        <a href="#homepage" data-bs-toggle="collapse">
+                            <i class="mdi mdi-home-outline"></i>
+                            <span>Homepage</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="homepage">
+                            <ul class="nav-second-level">
+                                @canany(['manage banner'])
+                                    <li>
+                                        <a href="#sidebarHeroSection" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-image-frame"></i>
+                                            <span> Hero Section </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="sidebarHeroSection">
+                                            <ul class="nav-second-level">
+                                                <li>
+                                                    <a href="{{ route('banner.create') }}">Create Hero
 
-                                                </a>
-                                                <a href="{{ route('banner.index') }}">
-                                                    View Hero
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcanany
-                            @canany(['manage product'])
-                                <li>
-                                    <a href="#productSection" data-bs-toggle="collapse">
-                                        <i class="mdi mdi-gift-outline"></i>
-                                        <span> Products </span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="productSection">
-                                        <ul class="nav-second-level">
-                                            <li>
-                                                <a href="{{ route('income-source.index') }}">Create Income Source</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('product.create') }}">Create Product</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('product.index') }}">View Products</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('product-sub-category.index') }}">Sub-Category</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcanany
+                                                    </a>
+                                                    <a href="{{ route('banner.index') }}">
+                                                        View Hero
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
+                                @canany(['manage product'])
+                                    <li>
+                                        <a href="#productSection" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-gift-outline"></i>
+                                            <span> Products </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="productSection">
+                                            <ul class="nav-second-level">
+                                                <li>
+                                                    <a href="{{ route('income-source.index') }}">Create Income Source</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('product.create') }}">Create Product</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('product.index') }}">View Products</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('product-sub-category.index') }}">Sub-Category</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
 
-                            @canany(['manage appointment section'])
-                                <li>
-                                    <a href="#appointmentSection" data-bs-toggle="collapse">
-                                        <i class="mdi mdi-comment-edit-outline"></i>
-                                        <span> Appointment Section </span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="appointmentSection">
-                                        <ul class="nav-second-level">
-                                            <li>
-                                                <a href="{{ route('appointment.index') }}">
-                                                    View All
-                                                </a>
-                                                <a href="{{ route('appointment.create') }}">Create
+                                @canany(['manage appointment section'])
+                                    <li>
+                                        <a href="#appointmentSection" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-comment-edit-outline"></i>
+                                            <span> Appointment Section </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="appointmentSection">
+                                            <ul class="nav-second-level">
+                                                <li>
+                                                    <a href="{{ route('appointment.index') }}">
+                                                        View All
+                                                    </a>
+                                                    <a href="{{ route('appointment.create') }}">Create
 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcanany
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
 
-                            @canany(['manage achievement'])
-                                <li>
-                                    <a href="#achievements" data-bs-toggle="collapse">
-                                        <i class="mdi mdi-chart-box-outline"></i>
-                                        <span>Achievements</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="achievements">
-                                        <ul class="nav-second-level">
-                                            <li>
-                                                <a href="{{ route('achievements.index') }}">
-                                                    <span>View</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('achievements.create') }}">
-                                                    <span>Create</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcanany
+                                @canany(['manage achievement'])
+                                    <li>
+                                        <a href="#achievements" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-chart-box-outline"></i>
+                                            <span>Achievements</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="achievements">
+                                            <ul class="nav-second-level">
+                                                <li>
+                                                    <a href="{{ route('achievements.index') }}">
+                                                        <span>View</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('achievements.create') }}">
+                                                        <span>Create</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
 
-                            @canany(['manage info section'])
-                                <li>
-                                    <a href="#sidebarInfoSection" data-bs-toggle="collapse">
-                                        <i class="mdi mdi-information-outline"></i>
-                                        <span> Info Section </span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="sidebarInfoSection">
-                                        <ul class="nav-second-level">
-                                            <li>
-                                                <a href="{{ route('info.index') }}">
-                                                    View Info
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('info.create') }}">Create Info
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcanany
+                                @canany(['manage info section'])
+                                    <li>
+                                        <a href="#sidebarInfoSection" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-information-outline"></i>
+                                            <span> Info Section </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="sidebarInfoSection">
+                                            <ul class="nav-second-level">
+                                                <li>
+                                                    <a href="{{ route('info.index') }}">
+                                                        View Info
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('info.create') }}">Create Info
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
 
-                        </ul>
-                    </div>
-                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
                 <li>
                     <a href="#services" data-bs-toggle="collapse">
                         <i class="mdi mdi-badge-account-horizontal-outline"></i>
@@ -211,21 +218,43 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="{{ route('industry.index') }}">
+                                <a href="#industryPage" data-bs-toggle="collapse">
                                     <i class="mdi mdi-factory"></i>
-                                    <span>Industries</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#sidebarAboutPage" data-bs-toggle="collapse">
-                                    <i class="mdi mdi-format-text-variant-outline"></i>
-                                    <span> About Page</span>
+                                    <span> Industries </span>
                                     <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="sidebarAboutPage">
+                                <div class="collapse" id="industryPage">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="{{ route('about.create') }}">Create
+                                            <a href="{{ route('industry.index') }}">View
+
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('industry.create') }}">Create
+
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+
+                            <li>
+                                <a href="#socialHandles" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-microsoft-edge-legacy"></i>
+                                    <span>Social Media</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="socialHandles">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="{{ route('social-handle.index') }}">View
+
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('social-handle.create') }}">Create
 
                                             </a>
                                         </li>
@@ -233,9 +262,26 @@
                                 </div>
                             </li>
                             <li>
+                                <a href="{{ route('about.create') }}">
+                                    <i class="mdi mdi-format-text-variant-outline"></i>
+                                    <span>About Page</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#branch" data-bs-toggle="collapse">
+                        <i class="mdi mdi-source-branch"></i>
+                        <span>Branch</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="branch">
+                        <ul class="nav-second-level">
+                            <li>
                                 <a href="#map-section" data-bs-toggle="collapse">
                                     <i class="fe-map-pin"></i>
-                                    <span>Maps</span>
+                                    <span>Locations</span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <div class="collapse" id="map-section">
@@ -248,12 +294,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
-                            <li>
-                                <a href="{{ route('social-handle.index') }}">
-                                    <i class="mdi mdi-microsoft-edge-legacy"></i>
-                                    <span>Social Media</span>
-                                </a>
                             </li>
                         </ul>
                     </div>
@@ -706,12 +746,6 @@
 
                                     </ul>
                                 </div>
-                            </li>
-                            <li>
-                                <a href="{{ route('social-handle.index') }}">
-                                    <i class="mdi mdi-microsoft-edge-legacy"></i>
-                                    <span>Social Media</span>
-                                </a>
                             </li>
                             <li class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
                                 <a href="#payments" data-bs-toggle="collapse">

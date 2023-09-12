@@ -2,66 +2,6 @@
 
 @section('main')
     <style>
-        /* Range Slider */
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none !important;
-            -moz-appearance: none !important;
-        }
-
-        .range-slider,
-        .range-slider>.progress {
-            height: 5px;
-            border-radius: 5px;
-            background-color: #ddd;
-        }
-
-        .range-slider {
-            background-color: #ddd;
-            position: relative;
-        }
-
-        .range-slider>.progress {
-            background-color: var(--primary);
-            position: absolute;
-            left: 0%;
-            right: 0%;
-        }
-
-        .range-slider-input>input {
-            position: absolute;
-            top: -5px;
-            height: 5px;
-            width: 100%;
-            pointer-events: none;
-            background: none;
-            -webkit-appearance: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            height: 17px;
-            width: 17px;
-            border-radius: 50%;
-            pointer-events: auto;
-            -webkit-appearance: none;
-            background: var(--primary);
-        }
-
-        input[type="range"]::-moz-slider-thumb {
-            height: 17px;
-            width: 17px;
-            border-radius: 50%;
-            pointer-events: auto;
-            -moz-appearance: none;
-            background: var(--primary);
-        }
-
-        .filter-btn-box {
-            display: none;
-            padding: 10px;
-            background: #F1EBEB;
-        }
-
         @media (max-width: 992px) {
             .filter-menu {
                 width: 50%;
@@ -75,7 +15,6 @@
 
     @php
         $banners = getRecords('banners');
-        $testimonials = getRecords('testimonials');
         $exptcategories = getRecords('expert_categories');
         // dd($exptcategories);
     @endphp
@@ -98,9 +37,12 @@
                     </button>
                 </div>
                 <div class="col-lg-3 ">
-                    <div class="filter-menu p-3 shadow bg-light rounded-2 ">
-                        <div class="filters">
-                            <div class="experience-filter my-2">
+                    <form action="{{ route('expert.browse') }}" method="get">
+                        <div class="filter-menu p-3 shadow bg-light rounded-2 ">
+                            <div class="filters">
+                                <x-range-slider class="" tooltips="false" name="experience" id="experience"
+                                    from="1" to="50" step='1' icon="Yrs"></x-range-slider>
+                                {{-- <div class="experience-filter my-2">
                                 <div class="label mb-2">
                                     <span>Experience</span>
                                 </div>
@@ -125,37 +67,44 @@
                                     <input type="range" name="minexperience" class="range-max" min="0"
                                         max="25" value="25">
                                 </div>
-                            </div>
-                            <div class="filter-group my-2" data-group-type="status">
-                                <div class="label mb-2">
-                                    <span>Categories</span>
+                            </div> --}}
+                                <div class="card">
+                                    <div class="card-header">Categories</div>
+                                    <div class="card-body">
+                                        @foreach ($exptcategories as $exptcategory)
+                                            <label class="filter form-check-label" for="{{ $exptcategory->name }}">
+                                                <input type="checkbox" class="form-check-input" name="category_id"
+                                                    value="{{ $exptcategory->name }}" id="{{ $exptcategory->name }}" />
+                                                <span class="ms-3">{{ $exptcategory->name }}</span>
+                                            </label>
+                                            <br>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div class="items">
-                                    @foreach ($exptcategories as $exptcategory)
-                                    <label class="filter form-check-label" for="{{ $exptcategory->name}}">
-                                        <input type="checkbox" class="form-check-input" name="status" value="{{ $exptcategory->name}}" id="{{ $exptcategory->name}}"/>
-                                        <span class="ms-3">{{ $exptcategory->name }}</span>
-                                    </label>
-                                    <br>
-                                    @endforeach
+                                <div class="filter-group my-2" data-group-type="status">
+                                    <div class="label mb-2">
+                                        <span>Post</span>
+                                    </div>
+                                    <div class="items">
+                                        @foreach ($posts as $post)
+                                            <label class="filter form-check-label" for="{{ str($post)->slug() }}">
+                                                <input type="checkbox" class="form-check-input" name="post"
+                                                    value="{{ $post }}" id="{{ str($post)->slug() }}">
+                                                <span class="ms-3">{{ $post }}</span>
+                                            </label>
+                                            <br>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="filter-group my-2" data-group-type="status">
-                                <div class="label mb-2">
-                                    <span>Post</span>
-                                </div>
-                                <div class="items">
-                                    @foreach ($experts as $expert)
-                                    <label class="filter form-check-label" for="{{ $expert->id }}">
-                                        <input type="checkbox" class="form-check-input" name="status" value="{{ $expert->id }}" id="{{ $expert->id }}">
-                                        <span class="ms-3">{{ $expert->post }}</span>
-                                    </label>
-                                    <br>
-                                    @endforeach
+                                <div class="d-flex gap-3 justify-content-center mt-3">
+                                    <x-backend.ui.button type="custom" :href="route('expert.browse')"
+                                        class="btn-outline-primary mb-0">Clear</x-backend.ui.button>
+                                    <x-backend.ui.button class="btn-primary">Apply</x-backend.ui.button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
+
                 </div>
                 <div class="col-lg-9">
                     <div class="row mt-0">
@@ -178,17 +127,18 @@
                                             <h4 class="browse_card_exp">Experience: {{ $expert->experience }} years</h4>
                                             <h5 class="text-primary fw-medium d-flex ">
                                                 @foreach ($expert->expertCategories as $expertCategory)
-                                                <span>{{ $expertCategory->name }},  </span>
+                                                    <span>{{ $expertCategory->name }}, </span>
                                                 @endforeach
                                             </h5>
-                                            <p class="browse_card_price">Fee: {{$expert->price}}/-</p>
+                                            <p class="browse_card_price">Fee: {{ $expert->price }}/-</p>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="{{ route('expert.profile', $expert->id) }}"
                                             class="btn btn-outline-primary fw-medium">View
                                             Profile</a>
-                                        <a href="{{ route('payment.create', ['model' => ExpertProfile::class, 'id' => $expert->id]) }}" class="btn btn-primary fw-medium">
+                                        <a href="{{ route('payment.create', ['model' => ExpertProfile::class, 'id' => $expert->id]) }}"
+                                            class="btn btn-primary fw-medium">
                                             Consultation
                                         </a>
                                     </div>
@@ -201,7 +151,15 @@
         </div>
     </div>
 
-    <x-frontend.testimonial-section :testimonials="$testimonials">
+    @php
+        $reviews = \App\Models\Review::with('user')
+            ->latest()
+            ->limit(10)
+            ->get();
+        
+    @endphp
+
+    <x-frontend.testimonial-section :testimonials="$reviews">
     </x-frontend.testimonial-section>
 @endsection
 
@@ -217,56 +175,56 @@
             }
         })
 
-        const rangeSlider = (rangeSliderInputs, rangeInputs, progress, priceGap) => {
-            rangeInputs.forEach(input => {
-                input.addEventListener("input", e => {
-                    let minVal = parseInt(rangeInputs[0].value)
-                    let maxVal = parseInt(rangeInputs[1].value)
+        // const rangeSlider = (rangeSliderInputs, rangeInputs, progress, priceGap) => {
+        //     rangeInputs.forEach(input => {
+        //         input.addEventListener("input", e => {
+        //             let minVal = parseInt(rangeInputs[0].value)
+        //             let maxVal = parseInt(rangeInputs[1].value)
 
-                    if ((maxVal - minVal >= priceGap) && maxVal <= 100000) {
-                        if (e.target.dataset.key === "input-min") {
-                            rangeSliderInputs[0].value = minVal
-                            progress.style.left = (minVal / rangeSliderInputs[0].max) * 100 + "%"
-                        } else {
-                            rangeSliderInputs[1].value = maxVal
-                            progress.style.right = 100 - (maxVal / rangeSliderInputs[1].max) * 100 + "%"
-                        }
-                    }
+        //             if ((maxVal - minVal >= priceGap) && maxVal <= 100000) {
+        //                 if (e.target.dataset.key === "input-min") {
+        //                     rangeSliderInputs[0].value = minVal
+        //                     progress.style.left = (minVal / rangeSliderInputs[0].max) * 100 + "%"
+        //                 } else {
+        //                     rangeSliderInputs[1].value = maxVal
+        //                     progress.style.right = 100 - (maxVal / rangeSliderInputs[1].max) * 100 + "%"
+        //                 }
+        //             }
 
-                })
-            });
+        //         })
+        //     });
 
-            rangeSliderInputs.forEach(input => {
-                input.addEventListener("input", e => {
-                    let minVal = parseInt(rangeSliderInputs[0].value)
-                    let maxVal = parseInt(rangeSliderInputs[1].value)
+        //     rangeSliderInputs.forEach(input => {
+        //         input.addEventListener("input", e => {
+        //             let minVal = parseInt(rangeSliderInputs[0].value)
+        //             let maxVal = parseInt(rangeSliderInputs[1].value)
 
-                    if (maxVal - minVal < priceGap) {
-                        e.target.className === "range-min" ?
-                            rangeSliderInputs[0].value = maxVal - priceGap :
-                            rangeSliderInputs[1].value = minVal - priceGap
-                    } else {
-                        rangeInputs[0].value = minVal
-                        rangeInputs[1].value = maxVal
-                        progress.style.left = (minVal / rangeSliderInputs[0].max) * 100 + "%"
-                        progress.style.right = 100 - (maxVal / rangeSliderInputs[1].max) * 100 + "%"
-                    }
+        //             if (maxVal - minVal < priceGap) {
+        //                 e.target.className === "range-min" ?
+        //                     rangeSliderInputs[0].value = maxVal - priceGap :
+        //                     rangeSliderInputs[1].value = minVal - priceGap
+        //             } else {
+        //                 rangeInputs[0].value = minVal
+        //                 rangeInputs[1].value = maxVal
+        //                 progress.style.left = (minVal / rangeSliderInputs[0].max) * 100 + "%"
+        //                 progress.style.right = 100 - (maxVal / rangeSliderInputs[1].max) * 100 + "%"
+        //             }
 
-                })
-            });
-        }
+        //         })
+        //     });
+        // }
 
-        const priceRangeSliderInputs = document.querySelectorAll("#price-range-slider-input>input")
-        const priceRangeInputs = document.querySelectorAll("#price-range-input input")
-        const priceProgress = document.querySelector("#price-range-slider>.progress")
-        const pricePriceGap = 1000
+        // const priceRangeSliderInputs = document.querySelectorAll("#price-range-slider-input>input")
+        // const priceRangeInputs = document.querySelectorAll("#price-range-input input")
+        // const priceProgress = document.querySelector("#price-range-slider>.progress")
+        // const pricePriceGap = 1000
 
-        const experienceRangeSliderInputs = document.querySelectorAll("#experience-range-slider-input>input")
-        const experienceRangeInputs = document.querySelectorAll("#experience-range-input input")
-        const experienceProgress = document.querySelector("#experience-range-slider>.progress")
-        const experienceGap = 1
+        // const experienceRangeSliderInputs = document.querySelectorAll("#experience-range-slider-input>input")
+        // const experienceRangeInputs = document.querySelectorAll("#experience-range-input input")
+        // const experienceProgress = document.querySelector("#experience-range-slider>.progress")
+        // const experienceGap = 1
 
-        rangeSlider(priceRangeSliderInputs, priceRangeInputs, priceProgress, pricePriceGap)
-        rangeSlider(experienceRangeSliderInputs, experienceRangeInputs, experienceProgress, experienceGap)
+        // rangeSlider(priceRangeSliderInputs, priceRangeInputs, priceProgress, pricePriceGap)
+        // rangeSlider(experienceRangeSliderInputs, experienceRangeInputs, experienceProgress, experienceGap)
     </script>
 @endpush
