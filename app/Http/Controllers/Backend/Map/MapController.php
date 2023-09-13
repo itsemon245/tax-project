@@ -9,6 +9,22 @@ use App\Http\Requests\UpdateMapRequest;
 
 class MapController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('can:read map', [
+            'only' => ['index', 'show']
+        ]);
+        $this->middleware('can:create map',   [
+            'only' => ['create', 'store']
+        ]);
+        $this->middleware('can:update map',   [
+            'only' => ['update', 'edit']
+        ]);
+        $this->middleware('can:delete map',  [
+            'only' => ['destroy']
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */

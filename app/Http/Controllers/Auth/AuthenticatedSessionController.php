@@ -51,8 +51,11 @@ class AuthenticatedSessionController extends Controller
                     $store->login_time = Carbon::now();
                     $store->save();
                 }
-
-                return redirect()->intended(RouteServiceProvider::ADMIN);
+                if ($user->hasPermissionTo('visit admin panel')) {
+                    return redirect()->intended(RouteServiceProvider::ADMIN);
+                } else {
+                    return redirect()->intended(RouteServiceProvider::HOME);
+                }
             } else {
                 $alert = array(
                     'message' => "Can't log in into more then 3 devices at once",

@@ -13,6 +13,22 @@ use App\Http\Requests\backend\UserProfileUpdateRequest;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:read user', [
+            'only' => ['index', 'show']
+        ]);
+        $this->middleware('can:create user',   [
+            'only' => ['create', 'store']
+        ]);
+        $this->middleware('can:update user',   [
+            'only' => ['update', 'edit']
+        ]);
+        $this->middleware('can:delete user',  [
+            'only' => ['destroy']
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */
