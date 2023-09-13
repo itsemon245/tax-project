@@ -29,6 +29,7 @@
                     $homepagePermissions = \Spatie\Permission\Models\Permission::where('group', 'homepage')
                         ->get(['name'])
                         ->pluck('name');
+                        // dd($homepagePermissions);
                 @endphp
                 @canany($homepagePermissions)
                     <li>

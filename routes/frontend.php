@@ -74,7 +74,6 @@ Route::get('user-doc/{userDoc}/move-to', [UserDocController::class, 'moveTo'])->
 Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
 Route::get('/make-appointment/virtual', [PageController::class, 'appointmentVirtual'])->name('appointment.virtual');
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
-
 Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
 Route::get('/contact', [PageController::class, 'contactPage'])->name('contact');
 Route::get('/office', [PageController::class, 'officePage'])->name('office');
@@ -85,10 +84,6 @@ Route::get('/my-courses', [PageController::class, 'myCourses'])->name('page.my.c
 Route::get('/my-payments', [PageController::class, 'myPayments'])->name('page.my.payments');
 // user generated refer link
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
-
-
-
-
 
 Route::controller(ExpertController::class)->prefix('expert')->name('expert.')->group(function () {
     Route::get('/browse', 'browse')->name('browse');
@@ -126,8 +121,6 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
     });
 });
 
-
-
 // Review Routes
 Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function () {
     Route::get('/{slug}/{id}', 'itemReview')->name('item');
@@ -152,10 +145,8 @@ Route::get('test', function () {
     dd('test');
 });
 
-
 Route::get('/test-mcq', [MCQController::class, 'index'])->name('mcq.index');
 Route::post('/test-submit/{exam}', [MCQController::class, 'store'])->name('mcq.submit');
-
 
 // Route for payment
 Route::prefix('payment')
@@ -179,7 +170,6 @@ Route::prefix('purchase')
         Route::get('success/{model}/{id}', 'success')->name('success');
         Route::get('cancel', 'cancel')->name('cancel');
     });
-
 
 Route::get('tax/calculator', [TaxCalculatorController::class, 'calculator'])->name('tax.calculator');
 Route::post('tax/calculate', [TaxCalculatorController::class, 'calculate'])->name('tax.calculate');
