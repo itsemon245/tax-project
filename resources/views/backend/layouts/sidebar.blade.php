@@ -159,39 +159,43 @@
                         </div>
                     </li>
                 @endcanany
-                <li>
-                    <a href="#services" data-bs-toggle="collapse">
-                        <i class="mdi mdi-badge-account-horizontal-outline"></i>
-                        <span>Service Page</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="services">
-                        <ul class="nav-second-level">
+                @canany(['manage service'])
+                    <li>
+                        <a href="#services" data-bs-toggle="collapse">
+                            <i class="mdi mdi-badge-account-horizontal-outline"></i>
+                            <span>Service Page</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="services">
+                            <ul class="nav-second-level">
 
-                            <li>
-                                <a href="#sidebarSerivces" data-bs-toggle="collapse">
-                                    <i class="mdi mdi-badge-account-horizontal-outline"></i>
-                                    <span>Services </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="sidebarSerivces">
-                                    <ul class="nav-second-level">
-                                        @php
-                                            $categories = getRecords('service_categories');
-                                        @endphp
-                                        @foreach ($categories as $category)
-                                            <li>
-                                                <a href="{{ route('service.subs.view', $category->id) }}">
-                                                    <span>{{ $category->name }}</span>
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                                @canany(['manage service'])
+                                    <li>
+                                        <a href="#sidebarSerivces" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-badge-account-horizontal-outline"></i>
+                                            <span>Services </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="sidebarSerivces">
+                                            <ul class="nav-second-level">
+                                                @php
+                                                    $categories = getRecords('service_categories');
+                                                @endphp
+                                                @foreach ($categories as $category)
+                                                    <li>
+                                                        <a href="{{ route('service.subs.view', $category->id) }}">
+                                                            <span>{{ $category->name }}</span>
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
                 <li>
                     <a href="#pageandsection" data-bs-toggle="collapse">
                         <i class="mdi mdi-newspaper-variant-outline"></i>
@@ -270,34 +274,47 @@
                         </ul>
                     </div>
                 </li>
-                <li>
-                    <a href="#branch" data-bs-toggle="collapse">
-                        <i class="mdi mdi-source-branch"></i>
-                        <span>Branch</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="branch">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#map-section" data-bs-toggle="collapse">
-                                    <i class="fe-map-pin"></i>
-                                    <span>Locations</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="map-section">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="{{ route('map.create') }}">Create</a>
-                                            <a href="{{ route('map.index') }}">
-                                                View All
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @php
+                   $branchPermissions = \Spatie\Permission\Models\Permission::where('group', 'branch')
+                        ->get(['name'])
+                        ->pluck('name');
+                @endphp
+                @canany($branchPermissions)
+                    <li>
+                        <a href="#branch" data-bs-toggle="collapse">
+                            <i class="mdi mdi-source-branch"></i>
+                            <span>Branch</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="branch">
+                            <ul class="nav-second-level">
+                                @canany(['read map', 'create map'])
+                                    <li>
+                                        <a href="#map-section" data-bs-toggle="collapse">
+                                            <i class="fe-map-pin"></i>
+                                            <span>Locations</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="map-section">
+                                            <ul class="nav-second-level">
+                                                <li>
+                                                    @canany(['create map'])
+                                                        <a href="{{ route('map.create') }}">Create</a>
+                                                    @endcanany
+                                                    @canany(['read map'])
+                                                        <a href="{{ route('map.index') }}">
+                                                            View All
+                                                        </a>
+                                                    @endcanany
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
                 <li>
                     <a href="#training" data-bs-toggle="collapse">
                         <i class="mdi mdi-book-education-outline"></i>

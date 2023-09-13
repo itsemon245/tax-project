@@ -43,10 +43,6 @@ class PermissionSeeder extends Seeder
                 [
                     'manage', //action
                 ],
-                'service sub category' => //operation
-                [
-                    'manage', //action
-                ],
             ],
             'pages & sections' => //group
             [
