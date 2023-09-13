@@ -9,6 +9,22 @@ use App\Models\ExpertProfile;
 
 class ExpertProfileController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:read expert', [
+            'only' => ['index', 'show']
+        ]);
+        $this->middleware('can:create expert',   [
+            'only' => ['create', 'store']
+        ]);
+        $this->middleware('can:update expert',   [
+            'only' => ['update', 'edit']
+        ]);
+        $this->middleware('can:delete expert',  [
+            'only' => ['destroy']
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */

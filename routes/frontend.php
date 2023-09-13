@@ -1,16 +1,7 @@
 <?php
 
-use App\Models\Book;
 use App\Models\Task;
-use App\Models\User;
-use App\Models\Course;
-use App\Models\Invoice;
-use App\Models\Product;
-use App\Models\Referee;
-use App\Models\Purchase;
-use App\Models\CaseStudy;
 use Illuminate\Http\Request;
-use function Clue\StreamFilter\fun;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
 use App\Http\Controllers\ExpertController;

@@ -16,6 +16,22 @@ use App\Models\Task;
 
 class ProjectController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:read progress', [
+            'only' => ['index', 'show']
+        ]);
+        $this->middleware('can:create progress',   [
+            'only' => ['create', 'store']
+        ]);
+        $this->middleware('can:update progress',   [
+            'only' => ['update', 'edit']
+        ]);
+        $this->middleware('can:delete progress',  [
+            'only' => ['destroy']
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */
