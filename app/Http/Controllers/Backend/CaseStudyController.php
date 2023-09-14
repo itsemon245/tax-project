@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Validator;
 
 class CaseStudyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can: read case study',   [
+            'only' => ['index']
+        ]);
+        $this->middleware('can:manage case study',   [
+            'except' => ['index']
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */

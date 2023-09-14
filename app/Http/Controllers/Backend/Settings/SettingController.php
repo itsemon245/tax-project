@@ -12,6 +12,21 @@ class SettingController extends Controller
     public $alert;
     public function __construct()
     {
+        $this->middleware('permission:read basic setting|read referral setting|read payment setting|read return link setting',   [
+            'only' => ['index']
+        ]);
+        $this->middleware('can:manage basic setting',   [
+            'only' => ['store']
+        ]);
+        $this->middleware('can:manage referral setting',   [
+            'only' => ['reference']
+        ]);
+        $this->middleware('can:manage payment setting',  [
+            'only' => ['payment']
+        ]);
+        $this->middleware('can:manage return link setting',  [
+            'only' => ['returnLink']
+        ]);
         $this->setting = Setting::first();
         $this->alert = [
             'message' => 'Changes Saved',

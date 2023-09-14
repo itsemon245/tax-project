@@ -6,7 +6,6 @@ use App\Http\Controllers\ResultController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\UiElementController;
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\IncomeSourceController;
 use App\Http\Controllers\SocialHandleController;
@@ -78,24 +77,141 @@ Route::prefix('admin')
 
         //Routes for backend CRUD operation
         Route::resource('user-profile', UserProfileController::class);
-        Route::resource('users', UserController::class);
-        Route::resource('product', ProductController::class);
-        Route::resource('book-category', BookCategoryController::class);
-        Route::resource('case-study-category', CaseStudyCategoryController::class);
-        Route::resource('product-category', ProductCategoryController::class);
-        Route::resource('product-sub-category', ProductSubCategoryController::class);
-        Route::resource('banner', BannerController::class);
-        Route::resource('info', InfoController::class);
-        Route::resource('appointment', AppointmentController::class);
-        Route::resource('testimonial', TestimonialController::class);
-        Route::resource('social-handle', SocialHandleController::class);
-        Route::resource('ui-element', UiElementController::class);
-        Route::resource('promo-code', PromoCodeController::class);
-        Route::resource('map', MapController::class);
-        Route::resource('role', RoleController::class);
-        Route::resource('invoice', InvoiceController::class);
-        Route::get('filtered-invoices', [InvoiceController::class, 'filterInvoices'])->name('invoice.filter');
-        Route::patch('invoice/{invoice}/markAs/{status}', [InvoiceController::class, 'markAs'])->name('invoice.markAs');
+        Route::resource('users', UserController::class); // middlewares are in constructor
+
+        Route::resource('product', ProductController::class)
+            ->except('index')
+            ->middleware('can:manage product');
+        Route::resource('product', ProductController::class)
+            ->only('index')
+            ->middleware('can:read product');
+
+        Route::resource('income-source', IncomeSourceController::class)
+            ->except('index')
+            ->middleware('can:manage product');
+        Route::resource('income-source', IncomeSourceController::class)
+            ->only('index')
+            ->middleware('can:read product');
+
+
+        Route::resource('book', BookController::class)
+            ->except('index')
+            ->middleware('can:manage book');
+        Route::resource('book', BookController::class)
+            ->only('index')
+            ->middleware('can:read book');
+
+
+        Route::resource('book-category', BookCategoryController::class)
+            ->except('index')
+            ->middleware('can:manage book');
+        Route::resource('book-category', BookCategoryController::class)
+            ->only('index')
+            ->middleware('can:read book');
+
+        Route::resource('case-study-category', CaseStudyCategoryController::class)
+            ->except('index')
+            ->middleware('can:manage case study');
+        Route::resource('case-study-category', CaseStudyCategoryController::class)
+            ->only('index')
+            ->middleware('can:read case study');
+
+        Route::resource('product-category', ProductCategoryController::class)
+            ->except('index')
+            ->middleware('can:manage product');
+        Route::resource('product-category', ProductCategoryController::class)
+            ->only('index')
+            ->middleware('can:read product');
+
+        Route::resource('product-sub-category', ProductSubCategoryController::class)
+            ->except('index')
+            ->middleware('can:manage product');
+        Route::resource('product-sub-category', ProductSubCategoryController::class)
+            ->only('index')
+            ->middleware('can:read product');
+
+        Route::resource('banner', BannerController::class)
+            ->except('index')
+            ->middleware('can:manage banner');
+        Route::resource('banner', BannerController::class)
+            ->only('index')
+            ->middleware('can:read banner');
+
+        Route::resource('info', InfoController::class)
+            ->only('index')
+            ->middleware('can:read info section');
+        Route::resource('info', InfoController::class)
+            ->except('index')
+            ->middleware('can:manage info section');
+
+        Route::resource('appointment', AppointmentController::class)
+            ->only('index')
+            ->middleware('can:read appointment section');
+        Route::resource('appointment', AppointmentController::class)
+            ->except('index')
+            ->middleware('can:manage appointment section');
+
+        Route::resource('social-handle', SocialHandleController::class)
+            ->only('index')
+            ->middleware('can:read social media');
+        Route::resource('social-handle', SocialHandleController::class)
+            ->except('index')
+            ->middleware('can:manage social media');
+
+        Route::resource('promo-code', PromoCodeController::class)
+            ->only('index')
+            ->middleware('can:read promo code');
+        Route::resource('promo-code', PromoCodeController::class)
+            ->except('index')
+            ->middleware('can:manage promo code');
+
+        // Route and middlewares for map
+        Route::resource('map', MapController::class)
+            ->only(['index'])
+            ->middleware('can:read map');
+        Route::resource('map', MapController::class)
+            ->only(['create', 'store'])
+            ->middleware('can:create map');
+        Route::resource('map', MapController::class)
+            ->only(['edit', 'update'])
+            ->middleware('can:update map');
+        Route::resource('map', MapController::class)
+            ->only(['destroy'])
+            ->middleware('can:delete map');
+
+
+        // Route and middlewares for role
+        Route::resource('role', RoleController::class)
+            ->only(['index'])
+            ->middleware('can:read role');
+        Route::resource('role', RoleController::class)
+            ->only(['create', 'store'])
+            ->middleware('can:create role');
+        Route::resource('role', RoleController::class)
+            ->only(['edit', 'update'])
+            ->middleware('can:update role');
+        Route::resource('role', RoleController::class)
+            ->only(['destroy'])
+            ->middleware('can:delete role');
+
+
+        // Route and middlewares for invoice
+        Route::resource('invoice', InvoiceController::class)
+            ->only(['index'])
+            ->middleware('can:read invoice');
+        Route::resource('invoice', InvoiceController::class)
+            ->only(['create', 'store'])
+            ->middleware('can:create invoice');
+        Route::resource('invoice', InvoiceController::class)
+            ->only(['edit', 'update'])
+            ->middleware('can:update invoice');
+        Route::resource('invoice', InvoiceController::class)
+            ->only(['destroy'])
+            ->middleware('can:delete invoice');
+        Route::post('send-invoice-mail/{id}', [InvoiceController::class, 'sendInvoiceMail'])->name('send_invoice_mail')->middleware('can:send invoice');
+        Route::get('filtered-invoices', [InvoiceController::class, 'filterInvoices'])->name('invoice.filter')->middleware('can:read invoice');
+        Route::patch('invoice/{invoice}/markAs/{status}', [InvoiceController::class, 'markAs'])->name('invoice.markAs')->middleware('can:update invoice');
+
         Route::prefix('report')
             ->controller(ReportController::class)
             ->name('report.')
@@ -103,49 +219,126 @@ Route::prefix('admin')
                 Route::get('/{type}/index', 'index')->name('index');
                 Route::get('/ledger', 'ledger')->name('ledger');
             });
-        Route::resource('invoice-item', InvoiceItemController::class);
-        Route::resource('training', TrainingController::class);
-        Route::resource('video', VideoController::class);
-        Route::get('course/{course}/videos', [VideoController::class, 'videosByCourse'])->name('video.byCourse');
-        Route::resource('partner-section', PartnerSectionController::class);
-        Route::resource('about', AboutController::class);
-        Route::resource('client-studio', ClientStudioController::class);
-        Route::resource('expert-profile', ExpertProfileController::class);
-        Route::resource('exams', ExamController::class);
-        Route::get('exams-results', [ExamController::class, 'results'])->name('exams.results'); // All results show backend.
-        Route::resource('questions', QuestionController::class);
-        Route::resource('result', ResultController::class);
-        Route::resource('setting', SettingController::class);
-        Route::resource('withdrawal', WithdrawalController::class);
-        // Route::prefix('withdrawal')
-        // ->controller(WithdrawalController::class)
-        // ->name('withdrawal.')
-        // ->group(function () {
-        //     Route::post('/status/{$id}', 'status')->name('status');
-        // });
+        // Route and middlewares for invoice item
+        Route::resource('invoice-item', InvoiceItemController::class)
+            ->only(['index'])
+            ->middleware('can:read invoice');
+        Route::resource('invoice-item', InvoiceItemController::class)
+            ->only(['create', 'store'])
+            ->middleware('can:create invoice');
+        Route::resource('invoice-item', InvoiceItemController::class)
+            ->only(['edit', 'update'])
+            ->middleware('can:update invoice');
+        Route::resource('invoice-item', InvoiceItemController::class)
+            ->only(['destroy'])
+            ->middleware('can:delete invoice');
+
+        Route::resource('video', VideoController::class)
+            ->only(['index'])
+            ->middleware('can:read course');
+        Route::resource('video', VideoController::class)
+            ->except(['index'])
+            ->middleware('can:manage course');
+        Route::get('course/{course}/videos', [VideoController::class, 'videosByCourse'])
+            ->name('video.byCourse')
+            ->middleware('can:read course');
+
+        Route::resource('partner-section', PartnerSectionController::class)
+            ->only(['index'])
+            ->middleware('can:read partner');
+        Route::resource('partner-section', PartnerSectionController::class)
+            ->except(['index'])
+            ->middleware('can:manage partner');
+
+        Route::resource('about', AboutController::class)
+            ->only(['index'])
+            ->middleware('can:read about');
+        Route::resource('about', AboutController::class)
+            ->except(['index'])
+            ->middleware('can:manage about');
+
+        Route::resource('client-studio', ClientStudioController::class)
+            ->only(['index'])
+            ->middleware('can:read client studio');
+        Route::resource('client-studio', ClientStudioController::class)
+            ->except(['index'])
+            ->middleware('can:manage client studio');
+
+        // Route and middlewares for expert
+        Route::resource('expert-profile', ExpertProfileController::class)
+            ->only(['index'])
+            ->middleware('can:read expert');
+        Route::resource('expert-profile', ExpertProfileController::class)
+            ->only(['create', 'store'])
+            ->middleware('can:create expert');
+        Route::resource('expert-profile', ExpertProfileController::class)
+            ->only(['edit', 'update'])
+            ->middleware('can:update expert');
+        Route::resource('expert-profile', ExpertProfileController::class)
+            ->only(['destroy'])
+            ->middleware('can:delete expert');
+
+        // routes for exam & questions
+        Route::resource('exams', ExamController::class)
+            ->only(['index'])
+            ->middleware('can:read exam');
+        Route::resource('exams', ExamController::class)
+            ->except(['index'])
+            ->middleware('can:manage exam');
+        Route::get('exams-results', [ExamController::class, 'results'])->name('exams.results')->middleware('can:read exam');
+        Route::resource('questions', QuestionController::class)
+            ->only(['index'])
+            ->middleware('can:read exam');
+        Route::resource('questions', QuestionController::class)
+            ->except(['index'])
+            ->middleware('can:manage exam');
+        Route::resource('result', ResultController::class)->middleware('can:manage exam');
+
+
         Route::prefix('setting')
             ->controller(SettingController::class)
             ->name('setting.')
             ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'store')->name('store');
                 Route::post('/reference', 'reference')->name('reference');
                 Route::post('/payment', 'payment')->name('payment');
                 Route::post('/return-link', 'returnLink')->name('returnLink');
             });
-        Route::resource('course', CourseController::class)->names([
-            'index' => 'course.backend.index',
-            'show' => 'course.backend.show',
-        ]);
-        Route::resource('income-source', IncomeSourceController::class);
+
+        Route::resource('withdrawal', WithdrawalController::class) //TODO: move the store method to frontend
+            ->only(['index'])
+            ->middleware('can:read withdrawal request');
+        Route::resource('withdrawal', WithdrawalController::class) //TODO: move the store method to frontend
+            ->except(['index'])
+            ->middleware('can:manage withdrawal request');
+
+
+        Route::resource('course', CourseController::class)
+            ->names([
+                'index' => 'course.backend.index',
+                'show' => 'course.backend.show',
+            ])
+            ->only(['index'])
+            ->middleware('can:read course');
+        Route::resource('course', CourseController::class)
+            ->names([
+                'index' => 'course.backend.index',
+                'show' => 'course.backend.show',
+            ])
+            ->except(['index'])
+            ->middleware('can:manage course');
+
+
         Route::resource('userDoc', UserDocController::class)->names([
             'index' => 'userDoc.backend.index',
             'create' => 'userDoc.backend.create',
             'store' => 'userDoc.backend.store',
             'show' => 'userDoc.backend.show',
             'destroy' => 'userDoc.backend.destroy',
-        ]);
+        ]); // middlewares are in the constructor
         Route::get('userDoc/{userDoc}/download/{fileIndex}', [UserDocController::class, 'download'])->name('userDoc.backend.download');
 
-        Route::post('send-invoice-mail/{id}', [InvoiceController::class, 'sendInvoiceMail'])->name('send_invoice_mail');
         Route::prefix('case-study-package-backend')
             ->name('case.study.package.backend.')
             ->controller(CaseStudyPackageController::class)
@@ -157,7 +350,7 @@ Route::prefix('admin')
                 Route::delete('destroy/{id}', 'destroy')->name('delete');
                 Route::PUT('update/{id}', 'update')->name('update');
                 Route::get('user/{id}', 'user')->name('user');
-            });
+            }); // middlewares are in the constructor
         Route::prefix('project')
             ->name('project.')
             ->controller(ProjectController::class)
@@ -168,14 +361,17 @@ Route::prefix('admin')
                 Route::get('edit/{id}', 'edit')->name('edit');
                 Route::PUT('update/{id}', 'update')->name('update');
                 Route::delete('destroy/{id}', 'destroy')->name('destroy');
-                // Route::post('store', 'store')->name('store');
-                // Route::get('show-all', 'showAll')->name('show.all');
-                // Route::get('user/{id}', 'user')->name('user');
-            });
+            }); // middlewares are in the constructor
 
-        Route::resource('case-study', CaseStudyController::class);
+        Route::resource('case-study', CaseStudyController::class); // middlewares are in the constructor
 
-        Route::get('order', [OrderController::class, 'index'])->name('order.index');
+        Route::get('order', [OrderController::class, 'index'])->name('order.index')
+            ->only(['index'])
+            ->middleware('can:read order');
+        Route::get('order', [OrderController::class, 'index'])->name('order.index')
+            ->except(['index'])
+            ->middleware('can:manage order');
+            
         Route::get('consultancy/order', [OrderController::class, 'consultancyIndex'])->name('consultancy.order.index');
         Route::get('order/status/{id}', [OrderController::class, 'status'])->name('order.status');
         Route::get('consultancy/status/{id}', [OrderController::class, 'consultancyStatus'])->name('consultancy.order.status');

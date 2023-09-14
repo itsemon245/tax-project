@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Storage;
 
 class UserDocController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can: read document',   [
+            'only' => ['index']
+        ]);
+        $this->middleware('can:manage document',   [
+            'except' => ['index']
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */

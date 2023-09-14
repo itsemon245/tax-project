@@ -13,9 +13,18 @@ use Ramsey\Uuid\Type\Integer;
 
 class CaseStudyPackageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can: read case study',   [
+            'only' => ['index']
+        ]);
+        $this->middleware('can:manage case study',   [
+            'except' => ['index']
+        ]);
+    }
     function caseStudy()
     {
-        
+
         $packages = CaseStudyPackage::latest()->paginate(20);
         return view('frontend.pages.course.caseStudy', compact('packages'));
     }
@@ -25,7 +34,7 @@ class CaseStudyPackageController extends Controller
         $caseStudies = CaseStudy::latest()->paginate(18);
         $caseStudycategories = CaseStudyCategory::latest()->get();
         $caseStudyPackages = CaseStudyPackage::latest()->get();
-        return view('frontend.pages.course.caseStudyIndex', compact('caseStudyPackages','caseStudycategories','caseStudies'));
+        return view('frontend.pages.course.caseStudyIndex', compact('caseStudyPackages', 'caseStudycategories', 'caseStudies'));
     }
 
     /**
@@ -110,7 +119,7 @@ class CaseStudyPackageController extends Controller
             $caseStudy->limit = $request->limit;
             $caseStudy->price = $request->price;
             if ($request->hasFile('image')) {
-            $caseStudy->page_image = updateFile($request->image, $caseStudy->page_image,'page/caseStudy', 'case-study');
+                $caseStudy->page_image = updateFile($request->image, $caseStudy->page_image, 'page/caseStudy', 'case-study');
             }
             $caseStudy->save();
         } else {
@@ -142,8 +151,8 @@ class CaseStudyPackageController extends Controller
     {
         $datum = CaseStudyPackage::findOrFail($id);
         $caseStudyData = (string) CaseStudyPackage::skip(0)->value('id');
-        if($datum->id == $caseStudyData){
-            $caseStudy= CaseStudyPackage::skip(1)->first();
+        if ($datum->id == $caseStudyData) {
+            $caseStudy = CaseStudyPackage::skip(1)->first();
             $caseStudy->page_title = $datum->page_title;
             $caseStudy->page_description = $datum->page_description;
             $caseStudy->page_image = $datum->page_image;

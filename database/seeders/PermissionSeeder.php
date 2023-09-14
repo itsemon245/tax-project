@@ -277,6 +277,10 @@ class PermissionSeeder extends Seeder
                 [
                     'visit', //action
                 ],
+                'withdrawal request'=> //operation
+                [
+                    'manage'
+                ]
 
 
             ],
