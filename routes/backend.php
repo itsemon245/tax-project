@@ -365,12 +365,9 @@ Route::prefix('admin')
 
         Route::resource('case-study', CaseStudyController::class); // middlewares are in the constructor
 
-        Route::get('order', [OrderController::class, 'index'])->name('order.index')
-            ->only(['index'])
-            ->middleware('can:read order');
-        Route::get('order', [OrderController::class, 'index'])->name('order.index')
-            ->except(['index'])
-            ->middleware('can:manage order');
+        Route::get('order', [OrderController::class, 'index'])
+        ->name('order.index')
+        ->middleware('can:read order');
             
         Route::get('consultancy/order', [OrderController::class, 'consultancyIndex'])->name('consultancy.order.index');
         Route::get('order/status/{id}', [OrderController::class, 'status'])->name('order.status');
