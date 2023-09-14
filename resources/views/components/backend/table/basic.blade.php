@@ -31,11 +31,11 @@
 
 
 </table>
-@if (method_exists($data, 'links'))
-    <div id="myPaginator" class="paginate my-2">
-        {{ $data?->links() }}
-    </div>
-@endif
+{{-- @if (method_exists($data, 'links')) --}}
+    {{-- <div id="myPaginator" class="paginate my-2">
+        {{ $data?->links('pagination::simple-bootstrap-5')}}
+    </div> --}}
+{{-- @endif --}}
 
 
 @pushOnce('customJs')
