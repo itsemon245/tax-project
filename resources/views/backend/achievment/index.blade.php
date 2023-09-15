@@ -17,8 +17,10 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Achievement']" />
 
     <x-backend.ui.section-card name="Achievements">
+        @can('manage achievement')
         <x-backend.ui.button type="custom" href="{{ route('achievements.create') }}"
-            class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+        class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+        @endcan
         <x-backend.table.basic :data="$data">
             <thead>
                 <tr>
@@ -26,7 +28,9 @@
                     <th>Image</th>
                     <th>Total Achievements</th>
                     <th>Title</th>
+                    @can('manage achievement')
                     <th>Action</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -36,10 +40,12 @@
                         <td><img src="{{ useImage($item->image) }}" alt="" width="80px"></td>
                         <td>{{ $item->count }}</td>
                         <td>{{ $item->title }}</td>
+                        @can('manage achievement')
                         <td>
                             <x-backend.ui.button type="edit" class="btn-sm" :href="route('achievements.edit', $item->id)" />
                             <x-backend.ui.button type="delete" class="btn-sm" :action="route('achievements.destroy', $item->id)" />
                         </td>
+                        @endcan
                     </tr>
                 @empty
                     <tr>

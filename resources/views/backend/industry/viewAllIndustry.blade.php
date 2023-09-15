@@ -17,16 +17,20 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Industries Section']" />
 
     <x-backend.ui.section-card name="Industries">
+        @can('manage industry')
         <div class="mb-2">
             <a href="{{ route('industry.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
-        </div>
+        </div>  
+        @endcan
         <x-backend.table.basic :data="$industries">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Details</th>
                     <th>Description</th>
+                    @canany(['manage industry', 'read industry'])
                     <th>Action</th>
+                    @endcanany
                 </tr>
             </thead>
             <tbody>
@@ -49,10 +53,14 @@
                             </div>
                         </td>
                         <td>
+                            @can('read industry')
                             <x-backend.ui.button type="custom" class="btn-sm btn-dark"
-                                :href="route('industry.show', $industry->id)">View</x-backend.ui.button>
+                            :href="route('industry.show', $industry->id)">View</x-backend.ui.button>
+                            @endcan
+                            @can('manage industry')
                             <x-backend.ui.button type="edit" class="btn-sm" :href="route('industry.edit', $industry->id)" />
                             <x-backend.ui.button type="delete" class="btn-sm" :action="route('industry.destroy', $industry->id)" />
+                            @endcan
 
                         </td>
                     </tr>

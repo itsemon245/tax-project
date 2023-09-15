@@ -169,10 +169,6 @@ class PermissionSeeder extends Seeder
             ],
             'accounting' => //group
             [
-                'invoice' => //operation
-                [
-                    'manage',
-                ],
                 'report' => //operation
                 [
                     'manage',

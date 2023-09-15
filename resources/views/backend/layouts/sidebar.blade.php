@@ -54,11 +54,11 @@
                                                     <a href="{{ route('banner.create') }}">Create Hero
                                                     </a>
                                                     @endcan
-                                                    @can('read banner')
+                                                    @canany(['read banner','manage banner'])
                                                     <a href="{{ route('banner.index') }}">
                                                         View Hero
                                                     </a>
-                                                    @endcan
+                                                    @endcanany
                                                 </li>
                                             </ul>
                                         </div>
@@ -83,12 +83,12 @@
                                                     <a href="{{ route('product.create') }}">Create Product</a>
                                                 </li>
                                                 @endcan
-                                                @can('read product')
+                                                @can('read product', 'manage product')
                                                 <li>
                                                     <a href="{{ route('product.index') }}">View Products</a>
                                                 </li>
                                                 @endcan
-                                                @can('read product')
+                                                @can('read product', 'manage product')
                                                 <li>
                                                     <a href="{{ route('product-sub-category.index') }}">Sub-Category</a>
                                                 </li>
@@ -113,7 +113,7 @@
                                                   @endcan
                                                   @can('read appointment section')
                                                   <a href="{{ route('appointment.index') }}">
-                                                    View All
+                                                    View
                                                     </a>
                                                   @endcan
                                                 </li>
@@ -161,17 +161,17 @@
                                             <ul class="nav-second-level">
                                                 @can('manage info section')
                                                 <li>
-                                                    <a href="{{ route('info.create') }}">Create Info
+                                                    <a href="{{ route('info.create') }}">Create
                                                     </a>
                                                 </li>
                                                 @endcan
-                                                @can('read info section')
+                                                @canany(['read info section', 'manage info section'])
                                                 <li>
                                                     <a href="{{ route('info.index') }}">
-                                                        View Info
+                                                        View
                                                     </a>
                                                 </li>
-                                                @endcan
+                                                @endcanany
                                             </ul>
                                         </div>
                                     </li>
@@ -272,41 +272,22 @@
                                             </a>
                                         </li>
                                         @endcan
-                                        @can('read industry')
+                                        @canany(['read industry', 'manage industry'])
                                         <li>
                                             <a href="{{ route('industry.index') }}">View
                                             </a>
                                         </li>
-                                        @endcan
+                                        @endcanany
                                     </ul>
                                 </div>
                             </li>
                             @endcanany
                             @canany(['manage social media', 'read social media'])
                             <li>
-                                <a href="#socialHandles" data-bs-toggle="collapse">
+                                <a href="{{ route('social-handle.index') }}">
                                     <i class="mdi mdi-microsoft-edge-legacy"></i>
                                     <span>Social Media</span>
-                                    <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="socialHandles">
-                                    <ul class="nav-second-level">
-                                        @can('manage social media')
-                                        <li>
-                                            <a href="{{ route('social-handle.create') }}">Create
-
-                                            </a>
-                                        </li>
-                                        @endcan
-                                        @can('read social media')
-                                        <li>
-                                            <a href="{{ route('social-handle.index') }}">View
-
-                                            </a>
-                                        </li>
-                                        @endcan
-                                    </ul>
-                                </div>
                             </li>
                             @endcanany
                             @canany(['manage about'])
@@ -345,10 +326,10 @@
                                         <div class="collapse" id="map-section">
                                             <ul class="nav-second-level">
                                                 <li>
-                                                    @canany(['create map'])
+                                                    @can('create map')
                                                         <a href="{{ route('map.create') }}">Create</a>
-                                                    @endcanany
-                                                    @canany(['read map'])
+                                                    @endcan
+                                                    @canany(['read map', 'create map', 'update map', 'delete map'])
                                                         <a href="{{ route('map.index') }}">
                                                             View
                                                         </a>

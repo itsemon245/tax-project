@@ -32,7 +32,9 @@
                                     <th>Title</th>
                                     <th>Sub Title</th>
                                     <th>Button Link</th>
+                                    @can('manage banner')
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
 
@@ -45,6 +47,7 @@
                                         <td>{{ Str::limit($banner->title, 20, '...') }}</td>
                                         <td>{{ Str::limit($banner->sub_title, 20, '...') }}</td>
                                         <td>{{ $banner->button }}</td>
+                                        @can('manage banner')
                                         <td>
                                             <a href="{{ route('banner.edit', $banner->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
@@ -57,6 +60,7 @@
                                                     class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                                             </form>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>
