@@ -43,6 +43,7 @@
         </div>
         <input type="hidden" name="servicesData" value="{{ $services }}">
         <!-- Modal for creating event -->
+        @can('create event')
         <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -81,7 +82,9 @@
                 </div>
             </div>
         </div>
+        @endcan
         <!-- Modal for showing event -->
+        @canany(['delete event', 'update event', 'read event'])
         <div class="modal fade" id="eventShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -103,13 +106,18 @@
                         </p>
                     </div>
                     <div class="modal-footer">
+                        @can('delete event')
                         <x-backend.ui.button id="deleteBtn" type="delete" action="" class="text-capitalize btn-sm" />
+                        @endcan
+                        @can('update event')
                         <x-backend.ui.button class="btn-info text-capitalize btn-sm" id="editBtn">Edit
                         </x-backend.ui.button>
+                        @endcan
                     </div>
                 </div>
             </div>
         </div>
+        @endcanany
         <!-- Modal for updating event -->
         <div class="modal fade" id="eventUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -156,9 +164,6 @@
             </div>
         </div>
     </x-backend.ui.section-card>
-
-
-
     @push('customJs')
         <script src="{{ asset('backend/assets/libs/tippy.js/tippy.all.min.js') }}"></script>
         {{-- full calender plugin  --}}

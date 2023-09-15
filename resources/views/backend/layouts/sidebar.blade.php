@@ -884,7 +884,7 @@
                                     <ul class="nav-second-level">
                                         @can('create expense')
                                         <li>
-                                            <a href="{{ route('expense.create') }}">Crete</a>
+                                            <a href="{{ route('expense.create') }}">Create</a>
                                         </li>
                                         @endcan
                                         @canany(['update expense', 'update expense', 'delete expense', 'print expense', 'read expense'])
@@ -907,7 +907,7 @@
                                     <ul class="nav-second-level">
                                         @can('manage reviews')
                                         <li>
-                                            <a href="{{ route('backend.review.create') }}">Crete Review</a>
+                                            <a href="{{ route('backend.review.create') }}">Create Review</a>
                                         </li>
                                         @endcan
                                         @canany(['manage reviews', 'read reviews'])
@@ -959,12 +959,12 @@
                     </a>
                     <div class="collapse" id="timeTracking">
                         <ul class="nav-second-level">
-                            @canany(['create event', 'read event'])
+                            @canany(['create event', 'read event', 'delete event', 'update event'])
                             <li>
                                 <a href="{{ route('calendar.create') }}">Calendar</a>
                             </li>
                             @endcanany
-                            @canany(['update event', 'read event', 'delete event'])
+                            @canany(['update event', 'read event', 'delete event', 'create event'])
                             <li>
                                 <a href="{{ route('calendar.index') }}">View Events</a>
                             </li>
@@ -978,7 +978,7 @@
                     ->get(['name'])
                     ->pluck('name');
                 @endphp
-                @canany($taxCalculatorPermissions, 'read tax setting', 'manage result', 'read result', 'manage basic setting', 'read basic setting', 'read referral setting', 'manage referral setting', 'read payment setting', 'manage payment setting', 'manage return link setting', 'read return link setting')
+                @canany($taxCalculatorPermissions, 'read tax setting', 'manage result', 'read result')
                 <li>
                     <a href="#taxCalculator" data-bs-toggle="collapse">
                         <i class="mdi mdi-calculator-variant-outline"></i>

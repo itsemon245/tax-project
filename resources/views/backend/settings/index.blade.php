@@ -1,14 +1,21 @@
 @extends('backend.layouts.app')
 @section('content')
+@php
+$basicSettingPermissions = \Spatie\Permission\Models\Permission::where('group', 'setting')
+    ->get(['name'])
+    ->pluck('name');
+@endphp
     <x-backend.ui.breadcrumbs :list="['Web Site', 'Settings']" />
     <x-backend.ui.section-card name="Web Site Settings">
-        <form action="{{ route('setting.store') }}" method="POST" enctype="multipart/form-data">
+        @canany($basicSettingPermissions, 'read basic setting', 'read referral setting', 'read payment setting', 'read return link setting')
+                    {{-- Basic Settings --}}
+        @canany(['manage basic setting', 'read basic setting'])
+        <form action="{{ route('setting.store') }}" method="POST" class="d-none" enctype="multipart/form-data">
             @csrf
             <div class="card">
                 <h4 class="p-2">Basic Setting</h4>
                 <div class="card-body">
                     <div class="row">
-                        {{-- {{ dd($data->basic->logo) }} --}}
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
@@ -48,15 +55,17 @@
                             </div>
                         </div> <!-- end col -->
                         {{-- Add sub-category --}}
+                        @can('manage basic setting')
                         <div class="mt-2">
                             <x-backend.ui.button class="btn-primary btn-sm float-end">Save
                                 Changes</x-backend.ui.button>
                         </div>
+                        @endcan
                     </div>
                 </div> <!-- end card-body -->
             </div>
         </form>
-
+        @endcanany
         <div class="row">
             {{-- Referance  --}}
             <form class="col-lg-6 mb-3" action="{{ route('setting.reference') }}" method="post">
@@ -243,6 +252,7 @@
             </form>
             {{-- Return end --}}
         </div>
+        @endcanany
     </x-backend.ui.section-card>
     @push('customJs')
         <script>
