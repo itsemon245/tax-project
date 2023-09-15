@@ -20,8 +20,10 @@
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Promo Code', 'View']" />
 
     <x-backend.ui.section-card name="Promo Code List">
+        @can('manage promo code')
         <x-backend.ui.button type="custom" :href="route('promo-code.create')" class="btn-success rounded-3 btn-sm mb-2">Create New
         </x-backend.ui.button>
+        @endcan
         <x-backend.table.basic :data="$promos">
             <thead>
                 <tr>
@@ -29,8 +31,10 @@
                     <th>Promo Code</th>
                     <th>Discount</th>
                     <th>Expired</th>
+                    @can('manage promo code')
                     <th>Status</th>
                     <th>Action</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -46,21 +50,23 @@
                             @endif
                         </td>
                         <td>{{ Carbon\Carbon::parse($promo->expired_at)->diffForHumans() }}</td>
-                        <td>
-                            <div class="form-check form-switch ">
-                                <input data-id="{{ $promo->id }}" type="checkbox" class="form-check-input toggle-status"
-                                    id="toggle-status" @checked($promo->status)>
-                            </div>
-                        </td>
-                        <td>
-                            <button id="{{ $promo->id }}"
-                                class="delete-promo btn btn-danger btn-sm waves-effect waves-light">Delete</button>
-                            <form action="{{ route('promo-code.destroy', $promo->id) }}"
-                                id="delete-form-{{ $promo->id }}" method="post" class="d-none">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-                        </td>
+                        @can('manage promo code')
+                            <td>
+                                <div class="form-check form-switch ">
+                                    <input data-id="{{ $promo->id }}" type="checkbox" class="form-check-input toggle-status"
+                                        id="toggle-status" @checked($promo->status)>
+                                </div>
+                            </td>
+                            <td>
+                                <button id="{{ $promo->id }}"
+                                    class="delete-promo btn btn-danger btn-sm waves-effect waves-light">Delete</button>
+                                <form action="{{ route('promo-code.destroy', $promo->id) }}"
+                                    id="delete-form-{{ $promo->id }}" method="post" class="d-none">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </td>
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

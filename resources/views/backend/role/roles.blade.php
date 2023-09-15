@@ -30,7 +30,9 @@
                     <th>Role</th>
                     <th>Created At</th>
                     <th>Updated At</th>
+                    @canany(['update role', 'delete role', 'read role'])
                     <th>Action</th>
+                    @endcanany
                 </tr>
             </thead>
 
@@ -41,11 +43,17 @@
                         <td class="text-uppercase">{{ $role->name }}</td>
                         <td>{{ Carbon\Carbon::parse($role->created_at)->format('d M Y') }}</td>
                         <td>{{ Carbon\Carbon::parse($role->updated_at)->diffForHumans() }}</td>
+                        @canany(['update role', 'delete role'])
                         <td>
+                            @can('update role')
                             <x-backend.ui.button type="edit" href="{{ route('role.edit', $role->id) }}" class="btn-sm" />
+                            @endcan
+                            @can('delete role')
                             <x-backend.ui.button type="delete" action="{{ route('role.destroy', $role->id) }}"
                                 class="btn-sm" />
+                            @endcan
                         </td>
+                        @endcanany
                     </tr>
                 @endforeach
             </tbody>
