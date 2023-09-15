@@ -16,10 +16,12 @@
     @endpush
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Show All', 'Project']" />
     <x-backend.ui.section-card name="Projects">
+        @can('create progress')
         <div class="mb-2">
             <x-backend.ui.button type="custom" href="{{ route('project.create') }}"
                 class="btn-success btn-sm">Create</x-backend.ui.button>
         </div>
+        @endcan
         <div class="row border-bottom mb-1">
             <div class="col-md-12">
                 <div id="progressbarwizard">
@@ -169,8 +171,12 @@
                     <th>Client Name</th>
                     <th>Client Phone</th>
                     <th>User</th>
+                    @can('update task')
                     <th>Task List</th>
+                    @endcan
+                    @canany(['update progress', 'update task', 'delete progress'])
                     <th>Action</th>
+                    @endcanany
                 </tr>
             </thead>
             <tbody>
@@ -188,6 +194,7 @@
                                     @endforeach
                                 </div>
                             </td>
+                            @can('update task')
                             <td>
                                 <div class="d-flex flex-wrap gap-2">
                                     @foreach ($client->tasks($project->id)->latest()->get() as $i => $task)
@@ -202,18 +209,25 @@
                                     @endforeach
                                 </div>
                             </td>
+                            @endcan
+                            @canany(['update progress', 'update task', 'delete progress'])
                             <td>
                                 <div class="btn-group">
+                                    @can('update progress')
                                     <a href="{{ route('project.edit', $project) }}"
-                                        class="btn btn-sm btn-success">Edit</a>
+                                    class="btn btn-sm btn-success">Edit</a>
+                                    @endcan
+                                    @can('delete progress')
                                     <form action="{{ route('project.destroy', $project->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <x-backend.ui.button
                                             class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                                     </form>
+                                    @endcan
                                 </div>
                             </td>
+                            @endcanany
                         </tr>
                     @endforeach
                 @empty

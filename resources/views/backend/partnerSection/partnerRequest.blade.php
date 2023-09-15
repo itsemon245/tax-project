@@ -13,7 +13,9 @@
                     <th>Phone</th>
                     <th>Area</th>
                     <th>Address</th>
-                    <th>Action</th>
+                    @can('manage partner request')
+                    <th>Action</th>  
+                    @endcan
                 </tr>
             </thead>
 
@@ -29,6 +31,7 @@
                             <p class="m-0"><small>Thana: {{ $Request->thana }}</small></p>
                         </td>
                         <td><small>{{ $Request->address }}</small></td>
+                        @can('manage partner request')
                         <td>
                             <form action="{{ route('partner-request.update', $Request) }}" method="post">
                                 @csrf
@@ -36,6 +39,7 @@
                             <x-backend.ui.button class="btn-success btn-sm">Approve</x-backend.ui.button>
                             </form>
                         </td>
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

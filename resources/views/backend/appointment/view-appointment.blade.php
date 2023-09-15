@@ -19,8 +19,10 @@
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Appointment', 'View']" />
 
     <x-backend.ui.section-card name="Appointments List">
+        @can('manage appointment section')
         <x-backend.ui.button type="custom" href="{{ route('appointment.create') }}"
-            class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+        class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+        @endcan
         <x-backend.table.basic :data="$appointments">
             <thead>
                 <tr>
@@ -30,7 +32,9 @@
                     <th>Sub Title</th>
                     <th>Tag</th>
                     <th>Text</th>
-                    <th>Action</th>
+                    @can('manage appointment section')
+                    <th>Action</th>  
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -43,6 +47,7 @@
                         <td>{{ Str::limit($appointment->sub_title, 15, '...') }}</td>
                         <td>{{ Str::limit($appointment->tag, 15, '...') }}</td>
                         <td>{{ Str::limit($appointment->description, 15, '...') }}</td>
+                        @can('manage appointment section')
                         <td>
                             <a href="{{ route('appointment.edit', $appointment->id) }}" class="btn btn-info btn-sm">Edit</a>
                             <form action="{{ route('appointment.destroy', $appointment->id) }}" method="post"
@@ -51,7 +56,8 @@
                                 @method('DELETE')
                                 <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                             </form>
-                        </td>
+                        </td> 
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

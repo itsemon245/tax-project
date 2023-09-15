@@ -21,6 +21,7 @@
     <x-backend.ui.section-card name="Product Category">
 
         {{-- add category field --}}
+        @can('manage product')
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -51,6 +52,7 @@
                 </div> <!-- end card -->
             </div><!-- end col -->
         </div>
+        @endcan
         {{-- Show all categories table --}}
         <div class="row">
             <div class="col-12">
@@ -62,7 +64,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Category Name</th>
+                                    @can('manage product')
                                     <th>Actions</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,14 +74,16 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $category->name }}</td>
+                                        @can('manage product')
                                         <td>
-                                                <x-backend.ui.button type="edit"
-                                                    href="{{ route('product-category.edit', $category->id) }}"
-                                                    class="btn-sm" />
-                                                <x-backend.ui.button type="delete"
-                                                    action="{{ route('product-category.destroy', $category->id) }}"
-                                                    class="btn-sm" />
+                                            <x-backend.ui.button type="edit"
+                                                href="{{ route('product-category.edit', $category->id) }}"
+                                                class="btn-sm" />
+                                            <x-backend.ui.button type="delete"
+                                                action="{{ route('product-category.destroy', $category->id) }}"
+                                                class="btn-sm" />
                                         </td>
+                                        @endcan
                                     </tr>
                                 @empty
                                     <td valign="top" colspan="3" class="dataTables_empty">No data available in table

@@ -26,7 +26,9 @@
                     <th>Date & Time</th>
                     <th>Status</th>
                     <th>Location</th>
-                    <th>Action</th>
+                    @canany(['update appointment', 'approve appointment'])
+                    <th>Action</th>  
+                    @endcanany
                 </tr>
             </thead>
 
@@ -81,6 +83,7 @@
                                 </span>
                             </td>
                         @endisset
+                        @canany(['update appointment', 'approve appointment'])
                         <td>
                             <form action="{{ route('user-appointments.approve', $appointment->id) }}" method="post">
                                 @csrf
@@ -90,6 +93,7 @@
                                 </button>
                             </form>
                         </td>
+                        @endcanany
                     </tr>
                 @empty
                     <tr>

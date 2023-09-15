@@ -23,7 +23,10 @@
                     <th>User Detiles</th>
                     <th>Account Info</th>
                     <th>Commission</th>
+                    @can('approve withdraw request')
                     <th>Action</th>
+                    @endcan
+                   
                 </tr>
             </thead>
 
@@ -43,6 +46,7 @@
                             <p class="m-0">Remaining Amount: {{ $withdrawal->user->remaining_commission }}</p>
                             <p class="m-0">Request Amount: {{ $withdrawal->amount }}</p>
                         </td>
+                        @can('approve withdraw request')
                         <td>
                             <div class="btn-group">
                                 <form action="{{ route('withdrawal.update', $withdrawal->user->id) }}" method="post">
@@ -56,6 +60,7 @@
                                     class="btn-sm" />
                             </div>
                         </td>
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

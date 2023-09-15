@@ -25,8 +25,12 @@
                             <p class="">
                                 <small class="text-muted">{{ $map->updated_at->diffForHumans() }}</small>
                             </p>
+                            @can('update map')
                             <x-backend.ui.button class="btn-sm" type='edit' href="{{route('map.edit', $map)}}"></x-backend.ui.button>
-                            <x-backend.ui.button class="btn-sm" type='delete' action="{{route('map.destroy', $map)}}"></x-backend.ui.button>
+                            @endcan
+                           @can('delete map')
+                           <x-backend.ui.button class="btn-sm" type='delete' action="{{route('map.destroy', $map)}}"></x-backend.ui.button>
+                           @endcan
                         </div>
                     </div> <!-- end card-->
                 </div> <!-- end col -->

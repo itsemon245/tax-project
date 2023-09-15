@@ -22,16 +22,19 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        @can('manage video')
                         <x-backend.ui.button type="custom" :href="route('video.create') . '?course_id=' . $course->id" class="btn-success btn-sm mb-2"><span
-                                class="fw-bold fs-5 me-1">+</span>New Video</x-backend.ui.button>
-
+                            class="fw-bold fs-5 me-1">+</span>New Video</x-backend.ui.button>
+                        @endcan
                         <x-backend.table.basic :data="$videos">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Name</th>
                                     <th>Description</th>
+                                    @canany(['read video', 'manage video'])
                                     <th>Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
 
@@ -55,16 +58,20 @@
                                         </td>
                                         <td>{!! Str::limit($video->description, 100, '...') !!}</td>
                                         <td>
+                                            @can('read video')
                                             <x-backend.ui.button type="custom" class="btn-sm btn-dark" :href="route('video.show', $video->id)">
                                                 View</x-backend.ui.button>
+                                            @endcan
+                                            @can('manage video')
                                             <x-backend.ui.button type="edit" class="btn-sm" :href="route('video.edit', $video->id)" />
-                                            <button onclick='deleteVideo("videoDelete-{{ $video->id }}")'
-                                                class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
-                                            <form class="d-none" id="videoDelete-{{ $video->id }}"
-                                                action="{{ Route('video.destroy', $video->id) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
+                                                <button onclick='deleteVideo("videoDelete-{{ $video->id }}")'
+                                                    class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
+                                                <form class="d-none" id="videoDelete-{{ $video->id }}"
+                                                    action="{{ Route('video.destroy', $video->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

@@ -42,7 +42,9 @@
                                     <th>Section</th>
                                     <th>Description</th>
                                     <th>Status</th>
+                                    @can('manage info section')
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
 
@@ -60,6 +62,7 @@
                                                 ? "<span class='badge bg-success'>Active</span>"
                                                 : "<span class='badge bg-danger'>Deactive</span>" !!}
                                         </td>
+                                        @can('manage info section')
                                         <td>
                                             <a href="{{ Route('info.edit', $info) }}"
                                                 class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
@@ -71,6 +74,8 @@
                                                 @method('DELETE')
                                             </form>
                                         </td>
+                                        @endcan
+
                                     </tr>
                                 @endforeach
                             </tbody>

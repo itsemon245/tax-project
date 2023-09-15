@@ -28,7 +28,9 @@
                                     <th>Chalan Name</th>
                                     <th>Date</th>
                                     <th>Ammount</th>
-                                    <th>Action</th>
+                                    @canany(['manage chalan', 'read chalan'])
+                                    <th>Action</th> 
+                                    @endcanany
                                 </tr>
                             </thead>
 
@@ -39,11 +41,15 @@
                                         <td>{{ $chalan->chalan_title }}</td>
                                         <td>{{ $chalan->date }}</td>
                                         <td>{{ $chalan->total_ammount }}</td>
+                                        @canany(['manage chalan', 'read chalan'])
                                         <td>
 
+                                            @can('read chalan')
                                             <a href="{{ route('chalan.show', $chalan->id) }}"
                                                 class="btn btn-warning btn-sm">Show</a>
+                                            @endcan
 
+                                            @can('manage chalan')
                                             <a href="{{ route('chalan.edit', $chalan->id) }}"
                                                 class="btn btn-info btn-sm">Copy</a>
 
@@ -56,7 +62,9 @@
                                                 <x-backend.ui.button
                                                     class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                                             </form>
+                                            @endcan
                                         </td>
+                                        @endcanany
                                     </tr>
                                 @endforeach
                             </tbody>

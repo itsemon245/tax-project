@@ -20,7 +20,6 @@
     @endpush
     @php
         $pattern = '/\[.*\]/';
-        // dd(preg_replace($pattern, '', request()->query('reference')));
     @endphp
     <x-backend.ui.breadcrumbs :list="['Management', 'Invoice', 'List']" />
 
@@ -206,7 +205,9 @@
                             <th>Demand</th>
                             <th>Paid</th>
                             <th>Arear</th>
+                            @can('create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read invoice')
                             <th>Actions</th>
+                            @endcan
                         </tr>
                     </thead>
 
@@ -283,6 +284,7 @@
                                     <span
                                         class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->due . ' Tk' }}</span>
                                 </td>
+                                @canany(['create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read invoice'])
                                 <td>
                                     <div class="btn-group dropdown position-relative">
                                         <a href="javascript: void(0);"
@@ -291,40 +293,47 @@
                                                 class="mdi mdi-dots-horizontal"></i></a>
                                         <div class="bg-white py-2 px-3 position-absolute d-none rounded shadow"
                                             style="inset: 2rem 2rem auto auto!important; z-index:2;">
-                                            <a class="dropdown-item d-flex align-items-center gap-2"
+                                           @can('read invoice')
+                                                <a class="dropdown-item d-flex align-items-center gap-2"
                                                 href="{{ route('invoice.show', $invoice->id) . '?year=' . $fiscalYear }}"><span
                                                     class="mdi mdi-eye text-primary font-20"></span>View</a>
-                                            <a class="dropdown-item d-flex align-items-center gap-2"
+                                           @endcan
+                                           @can('update invoice')
+                                                <a class="dropdown-item d-flex align-items-center gap-2"
                                                 href="{{ route('invoice.edit', $invoice->id) . '?year=' . $fiscalYear }}"><span
                                                     class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
-
-                                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#send-email-modal-{{ $invoice->id }}"><span
-                                                    class="mdi mdi-telegram text-warning font-20"></span>Send
-                                                to...</button>
-                                            <form action="{{ route('invoice.markAs', [$invoice->id, 'sent']) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('patch')
-                                                <input type="text" name="year" value="{{ currentFiscalYear() }}"
-                                                    hidden>
-                                                <button type="submit"
-                                                    class="dropdown-item d-flex align-items-center gap-2"><span
-                                                        class="mdi mdi-check text-success font-20"></span>Mark as
-                                                    Sent</button>
-                                            </form>
-                                            <form action="{{ route('invoice.markAs', [$invoice->id, 'paid']) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('patch')
-                                                <input type="text" name="year" value="{{ currentFiscalYear() }}"
-                                                    hidden>
-                                                <button type="submit"
-                                                    class="dropdown-item d-flex align-items-center gap-2"><span
-                                                        class="mdi mdi-cash-check text-success font-20"></span>Mark as
-                                                    Paid</button>
-                                            </form>
+                                           @endcan
+                                            @can('send invoice')
+                                                    <button type="submit" class="dropdown-item d-flex align-items-center gap-2"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#send-email-modal-{{ $invoice->id }}"><span
+                                                        class="mdi mdi-telegram text-warning font-20"></span>Send
+                                                    to...</button>
+                                                <form action="{{ route('invoice.markAs', [$invoice->id, 'sent']) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('patch')
+                                                    <input type="text" name="year" value="{{ currentFiscalYear() }}"
+                                                        hidden>
+                                                    <button type="submit"
+                                                        class="dropdown-item d-flex align-items-center gap-2"><span
+                                                            class="mdi mdi-check text-success font-20"></span>Mark as
+                                                        Sent</button>
+                                                </form>
+                                                <form action="{{ route('invoice.markAs', [$invoice->id, 'paid']) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('patch')
+                                                    <input type="text" name="year" value="{{ currentFiscalYear() }}"
+                                                        hidden>
+                                                    <button type="submit"
+                                                        class="dropdown-item d-flex align-items-center gap-2"><span
+                                                            class="mdi mdi-cash-check text-success font-20"></span>Mark as
+                                                        Paid</button>
+                                                </form>
+                                            @endcan
+                                 
+                                            @can('delete invoice')
                                             <form action="" method="POST">
                                                 @csrf
                                                 <button type="submit"
@@ -332,10 +341,13 @@
                                                         class="mdi mdi-delete text-danger font-20"></span
                                                         class="text-danger">Delete</button>
                                             </form>
+                                            @endcan
 
                                         </div>
                                     </div>
                                 </td>
+                                @endcanany
+                         
                             </tr>
                         @endforeach
                     </tbody>

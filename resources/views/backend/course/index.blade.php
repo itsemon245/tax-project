@@ -17,8 +17,10 @@
     @endpush
     <x-backend.ui.breadcrumbs :list="['Course', 'Index']" />
     <x-backend.ui.section-card name="All Courses">
+        @can('manage course')
         <x-backend.ui.button type="custom" :href="route('course.create')" class="btn-success btn-sm mb-2"><span
-                class="fw-bold fs-5 me-1">+</span>New Course</x-backend.ui.button>
+            class="fw-bold fs-5 me-1">+</span>New Course</x-backend.ui.button>
+        @endcan
         <div class="table-responsive">
             <x-backend.table.basic :data="$courses">
                 <thead class="table-light">
@@ -27,7 +29,9 @@
                         <th class="">Name</th>
                         <th class="">Price</th>
                         <th class="">Trainer</th>
+                        @canany(['manage course', 'read course'])
                         <th class="" style="width: 80px;">Action</th>
+                        @endcanany
                     </tr>
                 </thead>
                 <tbody>
@@ -69,16 +73,20 @@
 
                             <td>
                                 <div>
+                                    @can('read course')
                                     <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark "
-                                        href="{{ route('course.backend.show', $course->id) }}">
-                                        Preview
+                                    href="{{ route('course.backend.show', $course->id) }}">
+                                    Preview
                                     </x-backend.ui.button>
+                                    @endcan
+                                    @can('manage course')
                                     <x-backend.ui.button type="edit" class="btn-sm text-capitalize btn-info mx-1"
-                                        href="{{ route('course.edit', $course->id) }}">
+                                    href="{{ route('course.edit', $course->id) }}">
                                     </x-backend.ui.button>
                                     <x-backend.ui.button type="delete" class="btn-sm text-capitalize btn-danger "
                                         action="{{ route('course.destroy', $course->id) }}">
                                     </x-backend.ui.button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

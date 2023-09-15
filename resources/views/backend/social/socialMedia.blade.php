@@ -24,6 +24,7 @@
         <form action="{{ route('social-handle.store') }}" method="POST">
             @csrf
             <div class="row">
+                @can('manage social media')
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
@@ -50,6 +51,7 @@
                         </div> <!-- end card-body -->
                     </div> <!-- end card -->
                 </div>
+                @endcan
         </form>
         <div class="col-md-8">
             <div class="card">
@@ -61,7 +63,9 @@
                                 <th>#</th>
                                 <th>Platform</th>
                                 <th>Link</th>
+                                @can('manage social media')
                                 <th>Actions</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -70,6 +74,7 @@
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $social_media->name }}</td>
                                     <td>{{ $social_media->link }}</td>
+                                    @can('manage social media')
                                     <td>
                                         <div class="btn-group">
                                             <x-backend.ui.button type="edit"
@@ -83,6 +88,7 @@
                                             </form>
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @empty
                                 <tr>

@@ -16,8 +16,10 @@
     @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Case Study', 'List']" />
     <x-backend.ui.section-card name="Case Study List">
+        @can('manage case study')
         <x-backend.ui.button type="custom" href="{{ route('case.study.package.backend.index') }}"
-            class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+        class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+        @endcan
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -31,7 +33,9 @@
                                     <th>Title</th>
                                     <th>Duration</th>
                                     <th>Type</th>
+                                    @can('manage case study')
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
 
@@ -43,6 +47,7 @@
                                         <td>{{ $CaseStudyPackage->limit }}</td>
                                         <td>{{ $CaseStudyPackage->price }}</td>
                                         <td>{{ $CaseStudyPackage->billing_type }}</td>
+                                        @can('manage case study')
                                         <td>
                                             <a href="{{ route('case.study.package.backend.edit', $CaseStudyPackage->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
@@ -56,6 +61,7 @@
                                                     class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
                                             </form>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>

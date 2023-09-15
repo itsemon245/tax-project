@@ -18,8 +18,10 @@
 
     <!-- end page title -->
     <x-backend.ui.section-card name="Products">
+        @can('manage product')
         <x-backend.ui.button class="btn-sm btn-success mb-3" href="{{ route('product.create') }}"
-            type="custom">Create</x-backend.ui.button>
+        type="custom">Create</x-backend.ui.button> 
+        @endcan
         <x-backend.table.basic :data="$products">
             <thead>
                 <tr>
@@ -27,7 +29,9 @@
                     <th>Product Details</th>
                     <th>Product Pricing</th>
                     <th>Product Features</th>
+                    @can('manage product')
                     <th>Action</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -91,10 +95,12 @@
                                 @endforeach
                             </ul>
                         </td>
+                        @can('manage product')
                         <td>
                             <x-backend.ui.button type="edit" class="btn-sm" :href="route('product.edit', $product->id)" />
                             <x-backend.ui.button type="delete" class="btn-sm" :action="route('product.destroy', $product->id)" />
                         </td>
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

@@ -21,7 +21,8 @@
 
     <x-backend.ui.section-card name="Exams">
         <div class="row">
-            <div class="col-md-6">
+            @can('manage exam')
+            <div class="col-md-4">
                 <form action="{{ route('exams.store') }}" method="post">
                     @csrf
                     <div class="row">
@@ -49,13 +50,16 @@
                     <x-backend.ui.button class="btn-primary w-100 btn-sm mt-1">Create</x-backend.ui.button>
                 </form>
             </div>
-            <div class="col-md-6 mt-3">
+            @endcan
+            <div class="col-md-8 mt-3">
                 <x-backend.table.basic :data="$exams">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            @can('manage exam')
                             <th>Action</th>
+                            @endcan
                         </tr>
                     </thead>
 
@@ -69,6 +73,7 @@
                                     <small class="text-muted">Total Marks: {{ $exam->total_marks }}</small><br>
                                     <small class="text-muted">Passing Marks: {{ $exam->passing_marks }}</small>
                                 </td>
+                                @can('manage exam')
                                 <td>
                                     <a href="{{ Route('questions.show', $exam->id) }}"
                                         class="btn btn-success btn-sm waves-effect waves-light">Questions</a>
@@ -82,6 +87,7 @@
                                         @method('DELETE')
                                     </form>
                                 </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>
