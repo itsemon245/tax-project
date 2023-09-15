@@ -12,7 +12,10 @@
                         <th>Details</th>
                         <th>Tax</th>
                         <th>Others</th>
+                        @can('manage result')
                         <th>Action</th>
+                        @endcan
+
                     </tr>
                 </thead>
                 <tbody>
@@ -38,10 +41,12 @@
                                     @endforeach
                                 </ul>
                             </td>
+                            @can('manage result')
                             <td>
                                 <x-backend.ui.button type="delete" :href="route('tax.result.destroy', $result)"
                                     class="btn-sm"></x-backend.ui.button>
                             </td>
+                            @endcan
                         </tr>
                     @empty
                         <tr>
