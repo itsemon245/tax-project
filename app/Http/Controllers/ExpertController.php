@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Models\ExpertProfile;
+use Illuminate\Database\Eloquent\Builder;
 
 class ExpertController extends Controller
 {
@@ -20,25 +21,44 @@ class ExpertController extends Controller
 
     public function browse(Request $request)
     {
-        dd('Hello');
         $paramMap = [
-            'experience_from' => '<=',
-            'experience_to' => '>=',
-            'category_id' => '=',
-            'post' => 'like',
+            'experience_from' => '>=',
+            'experience_to' => '<=',
+            'categories' => '=',
+            'posts' => 'like',
         ];
-        $colunmMap = [
+        $columnMap = [
             'experience_from' => 'experience',
             'experience_to' => 'experience',
-            'category_id' => 'category_id',
-            'post' => 'post',
+            'posts' => 'post',
+            'categories' => 'category_id',
         ];
+
         $queries = [];
-        dd($request->all());
-        // foreach ($request->all() as $key => $value) {
-        //     dd($value);
-        // }
-        $experts = ExpertProfile::withAvg('reviews', 'rating')->withCount('reviews')->with('expertCategories')->get();
+
+        $experts = ExpertProfile::where(function (Builder $q) use ($columnMap, $request, $paramMap) {
+            $posts = $request->query('posts');
+            $expTo = $request->query('experience_to');
+            $expFrom = $request->query('experience_from');
+            if ($posts) {
+                $q->whereIn('post', $posts);
+            }
+            if ($expTo) {
+                $q->where('experience', '<=', $expTo);
+            }
+            if ($expFrom) {
+                $q->where('experience', '>=', $expFrom);
+            }
+        })
+            ->whereHas('expertCategories', function (Builder $q) use ($request) {
+                if ($request->query('categories')) {
+                    $q->whereIn('name', $request->query('categories'));
+                }
+            })
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with('expertCategories')
+            ->get();
         $posts = ExpertProfile::distinct()->get('post')->pluck('post');
         $minExp = ExpertProfile::min('experience');
         $maxExp = ExpertProfile::max('experience');

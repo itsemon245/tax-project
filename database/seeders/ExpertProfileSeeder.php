@@ -13,6 +13,6 @@ class ExpertProfileSeeder extends Seeder
      */
     public function run(): void
     {
-        ExpertProfile::factory(500)->create();
+        ExpertProfile::factory(10)->create();
     }
 }

@@ -71,10 +71,16 @@
                                 <div class="card">
                                     <div class="card-header">Categories</div>
                                     <div class="card-body">
+                                        @php
+                                            $catCollection = collect(request()->query('categories'));
+                                        @endphp
                                         @foreach ($exptcategories as $exptcategory)
-                                            <label class="filter form-check-label" for="{{ $exptcategory->name }}">
-                                                <input type="checkbox" class="form-check-input" name="category_id"
-                                                    value="{{ $exptcategory->name }}" id="{{ $exptcategory->name }}" />
+                                            <label class="filter form-check-label"
+                                                for="{{ str($exptcategory->name)->slug() }}">
+                                                <input type="checkbox" class="form-check-input" name="categories[]"
+                                                    value="{{ $exptcategory->name }}"
+                                                    id="{{ str($exptcategory->name)->slug() }}"
+                                                    @checked($catCollection->contains(fn($val) => $val === $exptcategory->name)) />
                                                 <span class="ms-3">{{ $exptcategory->name }}</span>
                                             </label>
                                             <br>
@@ -86,10 +92,14 @@
                                         <span>Post</span>
                                     </div>
                                     <div class="items">
+                                        @php
+                                            $postCollection = collect(request()->query('posts'));
+                                        @endphp
                                         @foreach ($posts as $post)
                                             <label class="filter form-check-label" for="{{ str($post)->slug() }}">
-                                                <input type="checkbox" class="form-check-input" name="post"
-                                                    value="{{ $post }}" id="{{ str($post)->slug() }}">
+                                                <input type="checkbox" class="form-check-input" name="posts[]"
+                                                    value="{{ $post }}" id="{{ str($post)->slug() }}"
+                                                    @checked($postCollection->contains(fn($val) => $val === $post))>
                                                 <span class="ms-3">{{ $post }}</span>
                                             </label>
                                             <br>
@@ -145,7 +155,6 @@
                                 </div>
                             </div>
                         @endforeach
-                        {{ $experts->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>
