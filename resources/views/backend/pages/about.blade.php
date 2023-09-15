@@ -49,7 +49,7 @@
     </x-backend.ui.section-card>
 
 
-    @push('customJs')
+    {{-- @push('customJs')
         <script>
             let itemCount = 0;
             const featureLength = () => {
@@ -259,5 +259,5 @@
             //     console.log(description)
             // })
         </script>
-    @endpush
+    @endpush --}}
 @endsection

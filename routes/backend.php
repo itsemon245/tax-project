@@ -369,6 +369,7 @@ Route::prefix('admin')
         ->name('order.index')
         ->middleware('can:read order');
             
+        // TODO: add rest of the middlewares from here
         Route::get('consultancy/order', [OrderController::class, 'consultancyIndex'])->name('consultancy.order.index');
         Route::get('order/status/{id}', [OrderController::class, 'status'])->name('order.status');
         Route::get('consultancy/status/{id}', [OrderController::class, 'consultancyStatus'])->name('consultancy.order.status');

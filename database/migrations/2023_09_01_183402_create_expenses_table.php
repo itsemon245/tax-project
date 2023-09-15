@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->date('date')->nullable();
-            $table->string('spend_on')->nullable();
-            $table->longText('description')->nullable();
-            $table->integer('amount')->nullable();
+            $table->string('merchant')->nullable();
+            $table->string('category')->nullable();
+            // $table->string('spend_on')->nullable();
+            $table->json('items')->nullable()->comment('description, amount');
+            $table->enum('type', ['credit', 'debit'])->default('debit');
+            $table->unsignedDecimal('amount')->nullable();
+            $table->decimal('balance')->nullable();
             $table->timestamps();
         });
     }

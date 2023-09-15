@@ -22,8 +22,9 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $expenses = Expense::get('spend_on');
-        return view('backend.expense.create', compact('expenses'));
+        $merchants = Expense::select('merchant')->distinct()->get()->pluck('merchant');
+        $categories = Expense::select('category')->distinct()->get()->pluck('category');
+        return view('backend.expense.create', compact('merchants', 'categories'));
     }
 
     /**
@@ -31,18 +32,40 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'date' => 'date|required',
-            'spend_on' => 'string|required',
-            'amount' => 'numeric|required',
-            'description' => 'string|required',
+        $validated = $request->validate([
+            'date' => 'date',
+            'category' => 'string',
+            'merchant' => 'string',
+            'type' => 'string',
+            'amounts' => 'array|required',
+            'descriptions' => 'array',
         ]);
-        $expense = Expense::create($request->all());
+        $amounts = [];
+        $descriptions = [];
+        $items = [];
+        foreach ($request->amounts as $key => $amount) {
+            $amounts[] = (float) $amount;
+            $descriptions[] = $request->descriptions[$key] ?? null;
+            $items[] = [
+                'amount' => (float) $amount,
+                'description' => $request->descriptions[$key] ?? null
+            ];
+        }
+        $amount = array_reduce($amounts, fn ($curr, $item) => $curr += $item, 0);
+        $balance = $request->type === 'credit' ? $amount : $amount * (-1);
+        $lastBalance = Expense::latest()->first('balance')->balance;
+        $balance += $lastBalance;
+        $expense = Expense::create([
+            ...$request->except('amounts', 'descriptions'),
+            'amount' => $amount,
+            'balance' => $balance,
+            'items' => $items
+        ]);
         $alert = [
             'alert-type' => 'success',
             'message' => 'Expense Created'
         ];
-        return back()->with($alert);
+        return redirect(route('expense.show', $expense->id))->with($alert);
     }
 
     /**
@@ -50,6 +73,9 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
+        $merchants = Expense::select('merchant')->distinct()->get()->pluck('merchant');
+        $categories = Expense::select('category')->distinct()->get()->pluck('category');
+        return view('backend.expense.create', compact('expense', 'merchants', 'categories'));
     }
 
     /**
