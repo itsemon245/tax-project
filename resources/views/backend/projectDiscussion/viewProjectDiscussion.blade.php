@@ -30,7 +30,9 @@
                                     <th>Email</th>
                                     <th>Location</th>
                                     <th>Message</th>
+                                    @canany(['manage discussion', 'read discussion'])
                                     <th>Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
 
@@ -43,19 +45,25 @@
                                         <td>{{ Str::limit($projectDiscussion->email, 10, '...') }}</td>
                                         <td>{{ Str::limit($projectDiscussion->location, 10, '...') }}</td>
                                         <td>{{ Str::limit($projectDiscussion->message, 10, '...') }}</td>
+                                        @canany(['manage discussion', 'read discussion'])
                                         <td>
+                                            @can('read discussion')
                                             <a class="btn btn-sm btn-info"
-                                                href="{{ route('project-discussion.show', $projectDiscussion) }}">
-                                                View
+                                            href="{{ route('project-discussion.show', $projectDiscussion) }}">
+                                            View
                                             </a>
+                                            @endcan
+                                            @can('manage discussion')
                                             <form action="{{ route('project-discussion.destroy', $projectDiscussion) }}"
-                                                method="post" class="d-inline-block py-0">
-                                                @csrf
-                                                @method('DELETE')
-                                                <x-backend.ui.button
-                                                    class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
-                                            </form>
+                                            method="post" class="d-inline-block py-0">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-backend.ui.button
+                                                class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                        </form>
+                                            @endcan
                                         </td>
+                                        @endcanany
                                     </tr>
                                 @endforeach
                             </tbody>

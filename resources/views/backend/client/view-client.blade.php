@@ -28,7 +28,9 @@
                         <th>Company Name</th>
                         <th>Present Address</th>
                         <th>Prmentat Address</th>
+                        @can('manage client')
                         <th>Action</th>
+                        @endcan
                     </tr>
                 </thead>
 
@@ -40,12 +42,14 @@
                             <td>{{ $client->company_name }}</td>
                             <td>{{ $client->present_address }}</td>
                             <td>{{ $client->parmentat_address }}</td>
+                            @can('manage client')
                             <td>
                                 <x-backend.ui.button type="edit" class="btn-primary btn-sm"
-                                    href="{{ route('client.edit', $client->id) }}">Create</x-backend.ui.button>
+                                    href="{{ route('client.edit', $client->id) }}"></x-backend.ui.button>
                                 <x-backend.ui.button type="delete" class="btn-primary btn-sm"
                                     action="{{ route('client.destroy', $client->id) }}"></x-backend.ui.button>
                             </td>
+                            @endcan
                         </tr>
                     @endforeach
                 </tbody>

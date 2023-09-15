@@ -21,8 +21,10 @@
 
     <x-backend.ui.section-card name="Users Documents">
         <x-btn-back class="me-2 mb-3"></x-btn-back>
+        @can('update document')
         <x-backend.ui.button type="custom" href="{{ route('userDoc.backend.create') }}" class="mb-3 btn-sm btn-success">New
             Name</x-backend.ui.button>
+        @endcan
         <x-backend.table.basic :data="$userDocs">
             <thead>
                 <tr>
@@ -30,7 +32,10 @@
                     <th>User Info</th>
                     <th>Document Info</th>
                     <th>Images</th>
+                    @canany(['update document', 'approve document', 'delete document', 'read document'])
                     <th>Action</th>
+                    @endcanany
+      
                 </tr>
             </thead>
 
@@ -65,16 +70,22 @@
                                 @endforeach
                             </div>
                         </td>
+                        @canany(['update document', 'approve document', 'delete document', 'read document'])
                         <td>
                             <div class="btn-group">
+                                @can('read document')
                                 <x-backend.ui.button type="custom" href="{{ route('userDoc.backend.show', $doc->id) }}"
                                     class="btn-sm btn-info me-1">View</x-backend.ui.button>
-                                @if (!$doc->user->hasRole('user') && !$doc->user->hasRole('partner'))
-                                    <x-backend.ui.button type="delete"
-                                        action="{{ route('userDoc.backend.destroy', $doc->id) }}" class="btn-sm" />
-                                @endif
+                                @endcan
+                               @can('delete document')
+                                  @if (!$doc->user->hasRole('user') && !$doc->user->hasRole('partner'))
+                                  <x-backend.ui.button type="delete"
+                                    action="{{ route('userDoc.backend.destroy', $doc->id) }}" class="btn-sm" />
+                                    @endif
+                               @endcan
                             </div>
                         </td>
+                        @endcanany
                     </tr>
                 @empty
                 @endforelse

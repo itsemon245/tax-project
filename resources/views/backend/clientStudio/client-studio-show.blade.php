@@ -22,7 +22,9 @@
                     <th>#</th>
                     <th>Image</th>
                     <th>Title</th>
+                    @can('manage client studio')
                     <th>Action</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +33,7 @@
                         <td>{{ ++$key }}</td>
                         <td>{{ useImage($datum->image) }}</td>
                         <td>{{ $datum->title }}</td>
+                        @can('manage client studio')
                         <td>
                             <div class="btn-group">
                                 <x-backend.ui.button type="edit" href="{{ route('client-studio.edit', $datum->id) }}"
@@ -39,6 +42,7 @@
                                     class="btn-sm" />
                             </div>
                         </td>
+                        @endcan
                     </tr>
                 @empty
                     <tr>

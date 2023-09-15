@@ -31,7 +31,9 @@
                                     <th>Profile Details</th>
                                     <th>Profile Descriptions</th>
                                     <th>Image</th>
+                                    @canany(['update expert', 'delete expert'])
                                     <th>Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
 
@@ -59,9 +61,13 @@
                                             <img src="{{ useImage($profile->image) }}" alt="image" width="80px"
                                                 loading="lazy" class="mb-2" />
                                         </td>
+                                        @canany(['update expert', 'delete expert'])
                                         <td>
+                                            @can('update expert')
                                             <a href="{{ route('expert-profile.edit', $profile->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
+                                            @endcan
+                                            @can('delete expert')
                                             <button onclick='deleteProfile("profileDelete-{{ $profile->id }}")'
                                                 class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
                                             <form class="d-none" id="profileDelete-{{ $profile->id }}"
@@ -70,7 +76,9 @@
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
+                                            @endcan
                                         </td>
+                                        @endcanany
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -26,7 +26,9 @@
                     <th>Date & Time</th>
                     <th>Status</th>
                     <th>Location</th>
-                    <th>Action</th>
+                    @can('delete appointment')
+                    <th>Action</th>  
+                    @endcan
                 </tr>
             </thead>
 
@@ -81,6 +83,7 @@
                                 </span>
                             </td>
                         @endisset
+                        @can('delete appointment')
                         <td>
                             <form action="{{ route('user-appointments.complete', $appointment->id) }}" method="post"
                                 class="d-inline-block">
@@ -102,6 +105,7 @@
 
 
                         </td>
+                        @endcan
                     </tr>
                 @empty
                     <tr>

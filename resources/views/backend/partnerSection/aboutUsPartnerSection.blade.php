@@ -20,14 +20,12 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card name="Partner Section">
-        <form action="{{ route('partner-section.store') }}" method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-                <div class="col-md-6">
-
-
-
-                    <div class="row">
+        <div class="row">
+            @can('manage partner')
+            <div class="col-md-6">
+                <div class="row">
+                        <form action="{{ route('partner-section.store') }}" class="d-none" method="post" enctype="multipart/form-data">
+                            @csrf
                         <div class="col-md-6">
                             <x-backend.form.image-input class="mt-1 border rounded" name="image" />
                         </div>
@@ -63,15 +61,18 @@
                     </div>
 
                     <x-backend.ui.button class="btn-primary w-100 btn-sm mt-1">Create</x-backend.ui.button>
-        </form>
-        </div>
+                </form>
+            </div>
+            @endcan
         <div class="col-md-6 mt-3">
             <x-backend.table.basic :data="$partnerSection">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Details</th>
+                        @can('manage partner')
                         <th>Action</th>
+                        @endcan
                     </tr>
                 </thead>
 
@@ -93,6 +94,7 @@
                                     </div>
                                 </div>
                             </td>
+                            @can('manage partner')
                             <td>
                                 <form action="{{ route('partner-section.destroy', $item->id) }}" method="post">
                                     @csrf
@@ -100,6 +102,8 @@
                                     <x-backend.ui.button class="btn-danger btn-sm">Delete</x-backend.ui.button>
                                 </form>
                             </td>
+                            @endcan
+
                         </tr>
                     @endforeach
                 </tbody>

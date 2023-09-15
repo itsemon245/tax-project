@@ -371,21 +371,21 @@
                                             <a href="{{ route('course.create') }}">Create Course</a>
                                         </li>
                                         @endcan
-                                        @can('read course')
+                                        @canany(['read course', 'manage course'])
                                         <li>
                                             <a href="{{ route('course.backend.index') }}">View Courses</a>
                                         </li>
-                                        @endcan
+                                        @endcanany
                                         @can('manage video')
                                         <li>
                                             <a href="{{ route('video.create') . '?course_id=1' }}">Create Video</a>
                                         </li>
                                         @endcan
-                                        @can('read video')
+                                        @canany(['read video', 'manage video'])
                                         <li>
                                             <a href="{{ route('video.index') . '?course_id=1' }}">View Videos</a>
                                         </li>
-                                        @endcan
+                                        @endcanany
                                     </ul>
                                 </div>
                             </li>
@@ -422,11 +422,11 @@
                                             @can('manage case study')
                                             <a href="{{ route('case.study.package.backend.index') }}">Create Package                                            </a>
                                             @endcan
-                                            @can('read case study')
+                                            @canany(['read case study', 'manage case study'])
                                             <a href="{{ route('case.study.package.backend.show.all') }}">
                                                 View Package
                                             </a>
-                                            @endcan
+                                            @endcanany
                                         </li>
                                     </ul>
                                 </div>
@@ -484,18 +484,18 @@
                                             </a>
                                         </li>
                                         @endcan
-                                        @can('read client studio')
+                                        @canany(['read client studio', 'manage client studio'])
                                         <li>
                                             <a href="{{ route('client-studio.create') }}">
                                                 View
                                             </a>
                                         </li>
-                                        @endcan
+                                        @endcanany
                                     </ul>
                                 </div>
                             </li>
                             @endcanany
-                            @canany(['create expert', 'update expert', 'delete expert', 'read expert'])
+                            @canany(['create expert', 'update expert', 'delete expert', 'read expert', 'approved consultation', 'update consultation', 'delete consultation', 'read consultation'])
                             <li>
                                 <a href="#expertProfile" data-bs-toggle="collapse">
                                     <i class="mdi mdi-account-tie"></i>
@@ -509,11 +509,11 @@
                                             <a href="{{ route('expert-profile.create') }}">Create</a>
                                         </li>
                                         @endcan
-                                        @can('read expert','update expert', 'delete expert')
+                                        @canany(['read expert','update expert', 'delete expert'])
                                         <li>
                                             <a href="{{ route('expert-profile.index') }}">View</a>
                                         </li>
-                                        @endcan
+                                        @endcanany
                                         @canany(['approved consultation', 'update consultation', 'delete consultation', 'read consultation'])
                                         <li>
                                             <a href="{{ route('consultancy.order.index') }}">Appoinment List</a>
@@ -545,7 +545,7 @@
                                 </a>
                             </li>
                             @endcanany
-                            @canany(['create progress', 'update progress', 'delete progress', 'update task progress', 'read task progress'])
+                            @canany(['create progress', 'update progress', 'read progress', 'delete progress', 'update task progress', 'read task progress'])
                             <li>
                                 <a href="{{ route('project.index') }}">
                                     <i class="mdi mdi-chart-line"></i>
@@ -580,11 +580,6 @@
                     </div>
                 </li>
                 @endcanany
-                @php
-                $usersDataPermissions = \Spatie\Permission\Models\Permission::where('group', 'user\'s data')
-                    ->get(['name'])
-                    ->pluck('name');
-                @endphp
                 @canany(['update document', 'approve document', 'delete document', 'read document', 'update appointment', 'arrpove appointment', 'delete appointment', 'read appointment', 'create user', 'update user', 'delete user', 'read user'])
                 <li>
                     <a href="#user" data-bs-toggle="collapse">
@@ -654,7 +649,7 @@
                                             <a href="{{ route('users.create') }}">Create</a>
                                         </li>
                                         @endcan
-                                        @canany(['update user', 'create user', 'delete user', 'read user'])
+                                        @canany(['update user', 'delete user', 'read user'])
                                         <li>
                                             <a href="{{ route('users.index') }}">Show</a>
                                         </li>
@@ -672,7 +667,7 @@
                     ->get(['name'])
                     ->pluck('name');
                 @endphp
-                @canany([$accountingPermissions, 'read invoice', 'read report', 'read chalan', 'read return', 'read withdraw request'])
+                @canany([$accountingPermissions, 'create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read invoice', 'read report', 'read chalan', 'read return', 'read withdraw request'])
                 <li>
                     <a href="#accounting" data-bs-toggle="collapse">
                         <i class="mdi mdi-alarm-panel"></i>
@@ -681,7 +676,7 @@
                     </a>
                     <div class="collapse" id="accounting">
                         <ul class="nav-second-level">
-                            @canany(['manage invoice', 'read invoice'])
+                            @canany(['create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read invoice'])
                             <li>
                                 <a href="#invoiceSection" data-bs-toggle="collapse">
                                     <i class="mdi mdi-printer-settings"></i>
@@ -690,14 +685,14 @@
                                 </a>
                                 <div class="collapse" id="invoiceSection">
                                     <ul class="nav-second-level">
-                                        @can('manage invoice')
+                                        @can('create invoice')
                                         <li>
                                             <a href="{{ route('invoice.create') }}">
                                                 Create
                                             </a>
                                         </li>
                                         @endcan
-                                        @canany('manage invoice', 'read invoice')
+                                        @canany(['create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read invoice'])
                                         <li>
                                             <a href="{{ route('invoice.index') }}">
                                                 View
