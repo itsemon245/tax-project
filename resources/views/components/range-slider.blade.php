@@ -1,11 +1,14 @@
 @props([
     'from' => 0,
     'to' => 100,
+    'minValue' => null,
+    'maxValue' => null,
     'step' => 1,
     'id' => 'slider',
     'label' => str($id)->title(),
     'name' => str($id)->snake(),
     'icon' => '',
+    'isDropdown' => false,
 ])
 @php
     $label = str($id)->title();
@@ -20,7 +23,12 @@
 
 <div class="card">
     <div class="card-header bg-white">
-        <label for="{{ $id }}" class="form-label">{{ $label }}</label>
+        <div class="d-flex justify-content-between align-items-center">
+            <label for="{{ $id }}" class="form-label">{{ $label }}</label>
+            @if ($isDropdown)
+                <span class="mdi mdi-chevron-down"></span>
+            @endif
+        </div>
     </div>
     <div class="card-body">
         <div class="row align-items-center justify-content-between">
@@ -31,11 +39,11 @@
             </div>
             <div class="col-6">
                 <input type="text" placeholder="From" class="form-control w-100 p-1 {{ $class }}"
-                    name='{{ $name . '_from' }}' value="{{ $from }}" />
+                    name='{{ $name . '_from' }}' value="{{ $minValue ?? $from }}" />
             </div>
             <div class="col-6">
                 <input type="text" placeholder="To" class="form-control w-100 p-1 {{ $class }}"
-                    name='{{ $name . '_to' }}' value="{{ $to }}" />
+                    name='{{ $name . '_to' }}' value="{{ $maxValue ?? $to }}" />
             </div>
         </div>
     </div>

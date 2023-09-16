@@ -57,15 +57,16 @@ class ExpertProfileController extends Controller
         $expert->experience = $request->experience;
         $expert->join_date = $request->join_date;
         $expert->availability = $request->availability;
+        $expert->district = $request->district;
+        $expert->thana = $request->thana;
         $expert->at_a_glance = $request->at_a_glance;
-        $expert->price = $request->price;
         $expert->expert_category = json_encode($request->expert_categories);
         $expert->image = saveImage($request->image, 'experts');
         $expert->save();
-        if($expert->save()){
+        if ($expert->save()) {
             $fetchProfile = ExpertProfile::with('expertCategories')->orderBy('created_at', 'desc')->first();
             foreach (json_decode($expert->expert_category) as $expert_category) {
-                $fetchProfile->expertCategories()->attach($expert_category); 
+                $fetchProfile->expertCategories()->attach($expert_category);
             }
         }
         return redirect()
@@ -112,12 +113,12 @@ class ExpertProfileController extends Controller
             $expertProfile->image = updateFile($request->image, $expertProfile->image, 'experts');
             $expertProfile->save();
             return redirect()
-            ->back()
-            ->with(array(
-                'message'    => "Expert Profile Updated",
-                'alert-type' => 'success',
-            ));
-        }else{
+                ->back()
+                ->with(array(
+                    'message'    => "Expert Profile Updated",
+                    'alert-type' => 'success',
+                ));
+        } else {
             $expertProfile->name = $request->name;
             $expertProfile->post = $request->post;
             $expertProfile->bio = $request->bio;
@@ -135,7 +136,6 @@ class ExpertProfileController extends Controller
                     'alert-type' => 'success',
                 ));
         }
-
     }
 
     /**

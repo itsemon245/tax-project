@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('availability');
             $table->longText('at_a_glance')->nullable();
             $table->longText('description');
-            $table->decimal('price')->nullable();#filterable
+            $table->string('district')->nullable();
+            $table->string('thana')->nullable();
             $table->integer('discount')->nullable();
             $table->json('expert_category')->nullable();
             $table->enum('billing_type', ['onetime'])->default('onetime');

@@ -41,7 +41,8 @@
                         <div class="filter-menu p-3 shadow bg-light rounded-2 ">
                             <div class="filters">
                                 <x-range-slider class="" tooltips="false" name="experience" id="experience"
-                                    from="1" to="50" step='1' icon="Yrs"></x-range-slider>
+                                    :from="$minExp" :to="$maxExp" :min-value="request()->query('experience_from')" :max-value="request()->query('experience_to')" step='1'
+                                    icon="Yrs" :is-dropdown="true"></x-range-slider>
                                 {{-- <div class="experience-filter my-2">
                                 <div class="label mb-2">
                                     <span>Experience</span>
@@ -69,7 +70,12 @@
                                 </div>
                             </div> --}}
                                 <div class="card">
-                                    <div class="card-header">Categories</div>
+                                    <div class="card-header py-1" role="button">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="">Categories</div>
+                                            <span class="mdi mdi-chevron-down"></span>
+                                        </div>
+                                    </div>
                                     <div class="card-body">
                                         @php
                                             $catCollection = collect(request()->query('categories'));
@@ -87,11 +93,15 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="filter-group my-2" data-group-type="status">
-                                    <div class="label mb-2">
-                                        <span>Post</span>
+
+                                <div class="card">
+                                    <div class="card-header py-1" role="button">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="">Job Title</div>
+                                            <span class="mdi mdi-chevron-down"></span>
+                                        </div>
                                     </div>
-                                    <div class="items">
+                                    <div class="card-body">
                                         @php
                                             $postCollection = collect(request()->query('posts'));
                                         @endphp
@@ -140,7 +150,6 @@
                                                     <span>{{ $expertCategory->name }}, </span>
                                                 @endforeach
                                             </h5>
-                                            <p class="browse_card_price">Fee: {{ $expert->price }}/-</p>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -183,6 +192,15 @@
                 e.target.dataset.target = 'closed'
                 $('.filter-menu').css('transform', 'translateX(-1000px)');
             }
+        })
+        const headers = $('form .card-header')
+        headers.each((i, header) => {
+            $(header).click(e => {
+                let icon = $(header).find('.mdi');
+                icon.toggleClass('mdi-chevron-down')
+                icon.toggleClass('mdi-chevron-up')
+                $(header).next().slideToggle();
+            })
         })
 
         // const rangeSlider = (rangeSliderInputs, rangeInputs, progress, priceGap) => {

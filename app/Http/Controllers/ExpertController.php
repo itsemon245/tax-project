@@ -62,8 +62,6 @@ class ExpertController extends Controller
         $posts = ExpertProfile::distinct()->get('post')->pluck('post');
         $minExp = ExpertProfile::min('experience');
         $maxExp = ExpertProfile::max('experience');
-        $minPrice = ExpertProfile::min('price');
-        $maxPrice = ExpertProfile::max('price');
-        return view('frontend.pages.expert.browse', compact('experts', 'minExp', 'minPrice', 'maxExp', 'maxPrice', 'posts'));
+        return view('frontend.pages.expert.browse', compact('experts', 'minExp', 'maxExp',  'posts'));
     }
 }

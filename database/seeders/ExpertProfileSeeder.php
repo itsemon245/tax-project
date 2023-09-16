@@ -13,6 +13,11 @@ class ExpertProfileSeeder extends Seeder
      */
     public function run(): void
     {
-        ExpertProfile::factory(10)->create();
+        $experts = ExpertProfile::factory(10)->create();
+        foreach ($experts as $expert) {
+            $expert->expertCategories()->attach(1);
+            $expert->expertCategories()->attach(2);
+            $expert->expertCategories()->attach(3);
+        }
     }
 }
