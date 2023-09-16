@@ -2,8 +2,8 @@
     $categories = \App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
-    $settings = getRecords('settings');
-    $basic = $settings->first()->basic;
+    $settings = \App\Models\Setting::first()->basic;
+    $basic = $settings->basic;
     $user = \App\Models\User::find(auth()->id());
 @endphp
 <header class="d-flex flex-column justify-items-center">
