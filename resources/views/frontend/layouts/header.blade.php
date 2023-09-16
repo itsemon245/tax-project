@@ -4,7 +4,7 @@
     $isCoursePage = str(url()->current())->contains('course');
     $settings = getRecords('settings');
     $basic = $settings->first()->basic;
-    $user = \Models\User::find(auth()->user()->id);
+    $user = \App\Models\User::find(auth()->user()->id);
 @endphp
 <header class="d-flex flex-column justify-items-center">
     <div class="d-flex align-items-center flex-grow-1 space-between">
