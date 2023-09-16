@@ -32,11 +32,23 @@ class InvoiceSeeder extends Seeder
             ]
         ];
         $fiscalYear = FiscalYear::create(['year' => currentFiscalYear()]);
+        $fiscalYear2 = FiscalYear::create(['year' => currentYear() - 2 . '-' . currentYear() - 1]);
         foreach (range(1, 10) as $key) {
             $invoice = Invoice::factory(1)->create();
 
             $invoice[0]->fiscalYears()->attach($fiscalYear->id, [
                 'discount' => $discount,
+                'sub_total' => $subTotal,
+                'demand' => $total,
+                'paid' => $paid,
+                'due' => $due,
+                'status' => $due == 0 ? 'paid' : fake()->randomElement(['overdue', 'due', 'draft', 'partial', 'sent']),
+                'payment_date' => $due == 0 ? now() : null,
+                'due_date' => now()->addDays(7)->format('Y-m-d'),
+                'issue_date' => now()->format('Y-m-d'),
+            ]);
+            $invoice[0]->fiscalYears()->attach($fiscalYear2->id, [
+                'discount' => $discount - random_int(1, 5),
                 'sub_total' => $subTotal,
                 'demand' => $total,
                 'paid' => $paid,

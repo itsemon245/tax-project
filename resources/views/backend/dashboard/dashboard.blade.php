@@ -1,4 +1,7 @@
 @extends('backend.layouts.app')
+@pushOnce('customCss')
+    <link rel="stylesheet" href="{{ asset('libs/apexcharts/dist/apexcharts.css') }}">
+@endPushOnce
 @section('content')
     <!-- start page title -->
 
@@ -6,22 +9,67 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard']" />
 
     <x-backend.ui.section-card>
-        <div>
-            <div class="row mb-5">
-                {{-- calendar section  --}}
+        {{-- Calendar --}}
+        <div class="mb-3">
+            <div class="row">
                 <input type="hidden" id="events" value="{{ $events }}">
-                <div class="row">
-                    <div class="col-md-10">
+
+                <div class="col-md-9">
+                    <div class="h-100">
                         <div id="calendar"></div>
                     </div>
-                    <div class="col-md-2">
+                </div>
+                <div class="col-md-3">
+                    <div class="h-100">
                         <p class="text-center text-primary h5 mb-0">Todays Events</p>
-                        <div class="border-start border-top border-2 border-primary h-100 p-2 my-2">
-                            <div class="d-flex flex-column gap-1">
-                                @forelse ($currentEvents as $event)
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            {{ str($event->name)->limit(10, '...') }}
+                        <div class="border-start border-top border-2 border-primary h-100 p-2 my-2 bg-light">
+                            <div class="d-flex flex-column gap-1 currentEvents "
+                                style="max-height: 70dvh;overflow-y:scroll;">
+                                @forelse ($currentEvents as $group => $events)
+                                    <div class="card mb-2 shadow-md" id="event-group-{{ str($group)->slug() }}">
+                                        <div class="card-header py-1 px-2 bg-white border-bottom" role="button">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="text-dark fw-bold">
+                                                    {{ $group === 'others' ? 'Others' : 'Invoice ' . str($group)->headline() }}
+                                                </div>
+                                                <span data-items="{{ $events->pluck('id') }}"
+                                                    data-url="{{ route('mark.event.completed') }}"
+                                                    data-parent="#event-group-{{ str($group)->slug() }}"
+                                                    data-tippy-content="Check All"
+                                                    class="complete-event tippy mdi mdi-check-all font-16 text-success"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-1 ">
+                                            <ul class="list-unstyled mb-0 ps-2">
+                                                @foreach ($events as $key => $event)
+                                                    <li class="mb-2" id="event-{{ $event->id }}">
+                                                        <div class="d-flex gap-1 align-items-center">
+                                                            <div data-tippy-content="Client: {{ $event->client?->name }}"
+                                                                class="tippy w-100 bg-danger text-white rounded"
+                                                                style="padding: 3px;max-width:100%;">
+                                                                <div class="d-flex justify-content-between align-items-baseline"
+                                                                    style="gap:3px;">
+                                                                    <div>
+                                                                        <div
+                                                                            class="text-capitalize fw-bold text-wrap text-start">
+                                                                            {{ ++$key }}.
+                                                                            {{ $event->title }}</div>
+                                                                        <p class='text-white m-0 text-capitalize'
+                                                                            style="text-align:left;">
+                                                                            Service: {{ $event->service }}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <span data-items="{{ $event->id }}"
+                                                                data-url="{{ route('mark.event.completed') }}"
+                                                                data-parent="#event-{{ $event->id }}"
+                                                                data-tippy-content="Check" style="padding: 0.2rem 0.3rem;"
+                                                                class="complete-event tippy mdi mdi-check font-16 bg-soft-success text-success rounded-circle"></span>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
                                         </div>
                                     </div>
 
@@ -47,10 +95,11 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="servicesData" value="{{ $services }}">
-                <!-- Modal for creating event -->
-                <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+            </div>
+            <input type="hidden" name="servicesData" value="{{ $services }}">
+            <!-- Modal for creating event -->
+            @can('create event')
+                <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
 
@@ -90,7 +139,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- Modal for showing event -->
+            @endcan
+            <!-- Modal for showing event -->
+            @canany(['delete event', 'update event', 'read event'])
                 <div class="modal fade" id="eventShowModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -114,297 +165,146 @@
                                 </p>
                             </div>
                             <div class="modal-footer">
-                                <x-backend.ui.button id="deleteBtn" type="delete" action=""
-                                    class="text-capitalize btn-sm" />
-                                <x-backend.ui.button class="btn-info text-capitalize btn-sm" id="editBtn">Edit
-                                </x-backend.ui.button>
+                                @can('delete event')
+                                    <x-backend.ui.button id="deleteBtn" type="delete" action=""
+                                        class="text-capitalize btn-sm" />
+                                @endcan
+                                @can('update event')
+                                    <x-backend.ui.button class="btn-info text-capitalize btn-sm" id="editBtn">Edit
+                                    </x-backend.ui.button>
+                                @endcan
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Modal for updating event -->
-                <div class="modal fade" id="eventUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
+            @endcanany
+            <!-- Modal for updating event -->
+            <div class="modal fade" id="eventUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
 
-                            <form action="" method="post">
-                                @csrf
-                                @method('PUT')
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Update Event</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-
-                                <div class="modal-body">
-                                    <x-backend.form.text-input id="eventTitle" name="event_name" label="Event Name" />
-
-                                    <x-form.selectize id="service" name="service" placeholder="Select Service..."
-                                        label="Service">
-                                        @foreach ($services as $item)
-                                            <option value="{{ null }}" selected disabled>Select Service</option>
-                                            <option value="{{ $item->service }}">{{ $item->service }}</option>
-                                        @endforeach
-                                    </x-form.selectize>
-
-                                    <x-backend.form.select-input id="client" label="Client" name="client"
-                                        placeholder="Select Client">
-                                        @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                        @endforeach
-                                    </x-backend.form.select-input>
-                                    <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
-                                        label="Start Date" />
-                                    <x-backend.form.text-input id="description" name="event_description"
-                                        label="Event Description" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button class="btn btn-primary">Save Changes</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="widget-rounded-circle card W-100">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="avatar-lg rounded-circle bg-primary border-primary border shadow">
-                                        <i class="fe-heart font-22 avatar-title text-white"></i>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="text-end">
-                                        <h3 class="text-dark mt-1"><span data-plugin="counterup">127</span>&#2547</h3>
-                                        <p class="text-muted mb-1 text-truncate">Expenses</p>
-                                    </div>
-                                </div>
-                            </div> <!-- end row-->
-                        </div>
-                    </div> <!-- end widget-rounded-circle-->
-                </div> <!-- end col-->
-                <div class="col-md-4">
-                    <div class="widget-rounded-circle card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="avatar-lg rounded-circle bg-success border-success border shadow">
-                                        <i class="fe-shopping-cart font-22 avatar-title text-white"></i>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="text-end">
-                                        <h3 class="text-dark mt-1"><span data-plugin="counterup">127</span>&#2547</h3>
-                                        <p class="text-muted mb-1 text-truncate">Demand</p>
-                                    </div>
-                                </div>
-                            </div> <!-- end row-->
-                        </div>
-                    </div> <!-- end widget-rounded-circle-->
-                </div> <!-- end col-->
-
-                <div class="col-md-4">
-                    <div class="widget-rounded-circle card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="avatar-lg rounded-circle bg-info border-info border shadow">
-                                        <i class="fe-bar-chart-line- font-22 avatar-title text-white"></i>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="text-end">
-                                        <h3 class="text-dark mt-1"><span data-plugin="counterup">0.58</span>%</h3>
-                                        <p class="text-muted mb-1 text-truncate">Arrear</p>
-                                    </div>
-                                </div>
-                            </div> <!-- end row-->
-                        </div>
-                    </div> <!-- end widget-rounded-circle-->
-                </div> <!-- end col-->
-            </div>
-            <!-- end row-->
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="widget-rounded-circle card W-100">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="avatar-lg w-100 rounded-circle bg-pink border-pink border shadow"
-                                        style="height: 240px;">
-                                        <h4 class="avatar-title text-white">Total Clients<span>300</span></h4>
-                                    </div>
-                                </div>
-                            </div> <!-- end row-->
-                        </div>
-                    </div> <!-- end widget-rounded-circle-->
-                </div> <!-- end col-->
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="text-center">Projects</h4>
-                            <div id="progressbarwizard ">
-                                <div class="d-flex justify-content-center">
-                                    <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100"
-                                        role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <a href="#daily" data-bs-toggle="tab" data-toggle="tab"
-                                                class="nav-link rounded-0 active" aria-selected="true" role="tab"
-                                                tabindex="-1">
-                                                <i class="mdi mdi-clock-time-two-outline"></i>
-                                                <span class="d-none d-sm-inline">Daily</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a href="#weekly" data-bs-toggle="tab" data-toggle="tab"
-                                                class="nav-link rounded-0" aria-selected="false" role="tab"
-                                                tabindex="-1">
-                                                <i class="mdi mdi-table-clock"></i>
-                                                <span class="d-none d-sm-inline">Weekly</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a href="#monthly" data-bs-toggle="tab" data-toggle="tab"
-                                                class="nav-link rounded-0" aria-selected="false" role="tab"
-                                                tabindex="-1">
-                                                <i class="mdi mdi-table-clock"></i>
-                                                <span class="d-none d-sm-inline">Monthly</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a href="#total" data-bs-toggle="tab" data-toggle="tab"
-                                                class="nav-link rounded-0" aria-selected="false" role="tab"
-                                                tabindex="-1">
-                                                <i class="mdi mdi-table-clock"></i>
-                                                <span class="d-none d-sm-inline">Total</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="tab-content ">
-                                    <div class="tab-pane my-3 active" id="daily" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @forelse ($clients[0]->projects as $project)
-                                                    @php
-                                                        $progress = $project->daily_target === 0 ? 100 : ($project->daily_progress * 100) / $project->daily_target;
-                                                        $progress = round($progress);
-                                                        $color = match (true) {
-                                                            $progress <= 30 => 'bg-danger',
-                                                            $progress <= 60 => 'bg-warning',
-                                                            default => 'bg-success',
-                                                        };
-                                                    @endphp
-                                                    <span class="text-dark">{{ $project->name }}:</span>
-                                                    <div id="bar" class="progress mb-2 w-100"
-                                                        style="height: 15px;">
-                                                        <div
-                                                            class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}%;">
-                                                            <span class="text-light">{{ $progress }}%</span>
-                                                        </div>
-                                                    </div>
-                                                @empty
-                                                    <h5 class="d-flex justify-content-center text-muted">No record found
-                                                    </h5>
-                                                @endforelse
-                                            </div>
-                                        </div> <!-- end row -->
-                                    </div>
-                                    <div class="tab-pane my-3" id="weekly" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @forelse ($clients[0]->projects as $project)
-                                                    @php
-                                                        $progress = $project->weekly_target === 0 ? 100 : ($project->weekly_progress * 100) / $project->weekly_target;
-                                                        $progress = round($progress);
-                                                        $color = match (true) {
-                                                            $progress <= 30 => 'bg-danger',
-                                                            $progress <= 60 => 'bg-warning',
-                                                            default => 'bg-success',
-                                                        };
-                                                    @endphp
-                                                    <span class="text-dark">{{ $project->name }}:</span>
-                                                    <div id="bar" class="progress mb-2 w-100"
-                                                        style="height: 15px;">
-                                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
-                                                            style="width: {{ $progress }}%;"><span
-                                                                class="text-light">{{ $progress }}%</span></div>
-                                                    </div>
-                                                @empty
-                                                    <h5 class="d-flex justify-content-center text-muted">No record found
-                                                    </h5>
-                                                @endforelse
-                                            </div>
-                                        </div> <!-- end row -->
-                                    </div>
-                                    <div class="tab-pane my-3" id="monthly" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @forelse ($clients[0]->projects as $project)
-                                                    @php
-                                                        $progress = $project->monthly_target === 0 ? 100 : ($project->monthly_progress * 100) / $project->monthly_target;
-                                                        $progress = round($progress);
-                                                        $color = match (true) {
-                                                            $progress <= 30 => 'bg-danger',
-                                                            $progress <= 60 => 'bg-warning',
-                                                            default => 'bg-success',
-                                                        };
-                                                    @endphp
-                                                    <span class="text-dark">{{ $project->name }}:</span>
-                                                    <div id="bar" class="progress mb-2 w-100"
-                                                        style="height: 15px;">
-                                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
-                                                            style="width: {{ $progress }}%;"><span
-                                                                class="text-light">{{ $progress }}%</span></div>
-                                                    </div>
-                                                @empty
-                                                    <h5 class="d-flex justify-content-center text-muted">No record found
-                                                    </h5>
-                                                @endforelse
-                                            </div>
-                                        </div> <!-- end row -->
-                                    </div>
-                                    <div class="tab-pane my-3" id="total" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @forelse ($clients[0]->projects as $project)
-                                                    @php
-                                                        $progress = $project->total_clients === 0 ? 100 : ($project->total_progress * 100) / $project->total_clients;
-                                                        $progress = round($progress);
-                                                        $color = match (true) {
-                                                            $progress <= 30 => 'bg-danger',
-                                                            $progress <= 60 => 'bg-warning',
-                                                            default => 'bg-success',
-                                                        };
-                                                    @endphp
-                                                    <span class="text-dark">{{ $project->name }}:</span>
-                                                    <div id="bar" class="progress mb-2 w-100"
-                                                        style="height: 15px;">
-                                                        <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
-                                                            style="width:{{ $progress }}%;"><span
-                                                                class="text-light">{{ $progress }}%</span></div>
-                                                    </div>
-                                                @empty
-                                                    <h5 class="d-flex justify-content-center text-muted">No record found
-                                                    </h5>
-                                                @endforelse
-                                            </div>
-                                        </div> <!-- end row -->
-                                    </div>
-                                </div> <!-- tab-content -->
+                        <form action="" method="post">
+                            @csrf
+                            @method('PUT')
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Update Event</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
-                        </div>
+
+                            <div class="modal-body">
+                                <x-backend.form.text-input id="eventTitle" name="event_name" label="Event Name" />
+
+                                <x-form.selectize id="service" name="service" placeholder="Select Service..."
+                                    label="Service">
+                                    @foreach ($services as $item)
+                                        <option value="{{ null }}" selected disabled>Select Service</option>
+                                        <option value="{{ $item->service }}">{{ $item->service }}</option>
+                                    @endforeach
+                                </x-form.selectize>
+
+                                <x-backend.form.select-input id="client" label="Client" name="client"
+                                    placeholder="Select Client">
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                    @endforeach
+                                </x-backend.form.select-input>
+                                <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
+                                    label="Start Date" />
+                                <x-backend.form.text-input id="description" name="event_description"
+                                    label="Event Description" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        {{-- Calender ends --}}
+        @php
+            $number = new \NumberFormatter('en_IN', \NumberFormatter::DEFAULT_STYLE);
+        @endphp
+        <div class="row my-5">
+            <div class="fs-4 fw-bold mb-2">Invoices</div>
+            <div class="col-lg-4 col-md-6">
+                <div class="widget-rounded-circle card w-100 bg-light">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-lg rounded-circle bg-warning border-warning border shadow">
+                                    <span class="mdi mdi-cash-usd font-22 avatar-title text-white"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <h3 class="text-dark mt-1"><span
+                                            data-plugin="counterup">{{ $number->format($fiscalYear->invoices()->select('demand')->sum('demand')) }}</span>&#2547
+                                    </h3>
+                                    <p class="text-dark fs-4 fw-bold mb-1 text-truncate">Demand</p>
+                                </div>
+                            </div>
+                        </div> <!-- end row-->
+                    </div>
+                </div> <!-- end widget-rounded-circle-->
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="widget-rounded-circle card w-100 bg-light">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-lg rounded-circle bg-success border-success border shadow">
+                                    <span class="mdi mdi-cash-check font-22 avatar-title text-white"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <h3 class="text-dark mt-1"><span
+                                            data-plugin="counterup">{{ $number->format($fiscalYear->invoices()->select('paid')->sum('paid')) }}</span>&#2547
+                                    </h3>
+                                    <p class="text-dark fs-4 fw-bold mb-1 text-truncate">Paid</p>
+                                </div>
+                            </div>
+                        </div> <!-- end row-->
+                    </div>
+                </div> <!-- end widget-rounded-circle-->
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="widget-rounded-circle card w-100 bg-light">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-lg rounded-circle bg-danger border-danger border shadow">
+                                    <span class="mdi mdi-account-cash font-22 avatar-title text-white"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-end">
+                                    <h3 class="text-dark mt-1"><span
+                                            data-plugin="counterup">{{ $number->format($fiscalYear->invoices()->select('due')->sum('due')) }}</span>&#2547
+                                    </h3>
+                                    <p class="text-dark fs-4 fw-bold mb-1 text-truncate">Arear</p>
+                                </div>
+                            </div>
+                        </div> <!-- end row-->
+                    </div>
+                </div> <!-- end widget-rounded-circle-->
+            </div>
+        </div>
+
+        <div class="row mb-2 justify-content-center">
+            @foreach ($chartData as $key => $item)
+                <div class="col-6">
+                    <div id="chart-{{ $key }}"></div>
+                </div>
+            @endforeach
+        </div>
+
+
+
     </x-backend.ui.section-card>
 @endsection
 @push('customJs')
@@ -419,7 +319,6 @@
     {{-- tippy js --}}
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var myEvents = $('#events').val()
@@ -440,10 +339,10 @@
                     let time = info.timeText
                     let bg = info.isToday ? 'bg-danger' : 'bg-blue'
                     let html = `
-                    <div id="myButton" data-tippy-content="Client: ${client}" class="w-100 text-light ${bg} rounded" style="padding: 3px;max-width:100%;">
+                    <div data-tippy-content="Client: ${client}" class="tippy w-100 text-light ${bg} rounded" style="padding: 3px;max-width:100%;">
                         <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
                             <div>
-                                <strong class="">${title}</strong>
+                                <div class="text-capitalize fw-bold text-wrap text-start">${title}</div>
                                 <p class='text-light m-0 text-capitalize' style="text-align:left;">${service}</p>
                             </div>
                             <sup class="">${time}</sup>
@@ -562,7 +461,7 @@
             });
             calendar.render();
 
-            tippy('#myButton', {
+            tippy('.tippy', {
                 animation: 'scale',
             });
 
@@ -573,8 +472,6 @@
             }
         });
     </script>
-
-    <!-- Add this script below the HTML structure in your Blade view file -->
     <script>
         $(document).ready(function() {
             // Hide all dropdown contents initially
@@ -591,6 +488,81 @@
                 // Toggle the visibility of the selected dropdown content
                 dropdownContent.slideToggle();
             });
+
+            $('.complete-event').click(e => {
+                let url = e.target.dataset.url
+                let items = e.target.dataset.items
+                if (items.indexOf('[') >= 0) {
+                    items = items.replace('[', '')
+                    items = items.replace(']', '')
+                }
+                items = items.split(',')
+                let parent = $(e.target.dataset.parent)
+
+                $.ajax({
+                    type: "patch",
+                    url: url,
+                    data: {
+                        'ids': items
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            Toast.fire({
+                                'icon': 'success',
+                                'title': 'Success',
+                                'text': response.message
+                            })
+                            parent.remove()
+                        }
+                    }
+                });
+            })
+        });
+    </script>
+
+    {{-- Apex Charts --}}
+    <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+
+    <script>
+        let url = "{{ route('get.chart.data') }}"
+        $.ajax({
+            type: "get",
+            url: url,
+            success: function(response) {
+                console.log(response);
+                response.forEach((item, i) => {
+                    let options = {
+                        chart: {
+                            type: 'bar'
+                        },
+                        series: [{
+                            name: item.year,
+                            data: item.data
+                        }],
+                        tooltip: {
+                            y: {
+                                formatter: function(val) {
+                                    return val + " Invoices"
+                                }
+                            }
+                        },
+                        title: {
+                            text: 'Invoice Status Count for Year ' + item.year,
+                            floating: true,
+                            offsetY: 0,
+                            style: {
+                                color: '#444'
+                            }
+                        }
+                    }
+
+                    let chart = new ApexCharts(document.querySelector("#chart-" + i), options);
+                    chart.render();
+                });
+            }
         });
     </script>
 @endpush

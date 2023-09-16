@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\Calendar;
+use Carbon\CarbonTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Models\FiscalYear;
 
 class DashboardController extends Controller
 {
@@ -22,13 +24,54 @@ class DashboardController extends Controller
     */
     public function index()
     {
-        $clients = Client::simplePaginate(paginateCount());
-        $projects = Project::simplePaginate(paginateCount());
+        $fiscalYear = FiscalYear::where('year', currentFiscalYear())->first();
+        $chartData = $this->getChartData();
         $events = Calendar::with('client')->latest()->get();
-        $today = Carbon::now()->format('Y-m-d');
+        $tz = new CarbonTimeZone('Asia/Dhaka');
+        $today = today($tz)->format('Y-m-d');
+        $clients = Client::get();
         $services = Calendar::get()->unique();
-        $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();
-        $currentTime = Carbon::now();
-        return view('backend.dashboard.dashboard', compact('clients', 'projects', 'events', 'today', 'services', 'currentEvents', 'currentTime'));
+        $currentEvents = Calendar::where('start', 'like', "$today%")->where('is_completed', false)->latest()->get()->groupBy('type');
+        return view('backend.dashboard.dashboard', compact('clients', 'events', 'today', 'services', 'currentEvents', 'fiscalYear', 'chartData'));
+    }
+
+    public function getChartData()
+    {
+        $fiscalYears = FiscalYear::orderBy('year', 'desc')->latest()->take(3)->get();
+
+        $mappedItems = $fiscalYears->map(function ($fy) {
+            $data = collect([
+                [
+                    'x' => 'Overdue',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'overdue')->count()
+                ],
+                [
+                    'x' => 'Draft',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'draft')->count()
+                ],
+                [
+                    'x' => 'Sent',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'sent')->count()
+                ],
+                [
+                    'x' => 'Paid',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'paid')->count()
+                ],
+                [
+                    'x' => 'Partial',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->count()
+                ],
+                [
+                    'x' => 'Due',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'due')->count()
+                ],
+            ]);
+            return [
+                'year' => $fy->year,
+                'data' => $data
+            ];
+        });
+
+        return $mappedItems;
     }
 }

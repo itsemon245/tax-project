@@ -18,15 +18,16 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignId('invoice_id')
+                ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
-                ->onDelete('cascade')
-                ->nullable();
+                ->onDelete('cascade');
             $table->string('service')->nullable();
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->string('title');
             $table->dateTime('start');
             $table->text('description')->nullable();
+            $table->boolean('is_completed')->default(0);
             $table->timestamps();
         });
     }

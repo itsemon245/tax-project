@@ -8,6 +8,8 @@ use App\Models\Calendar;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
+use Carbon\CarbonTimeZone;
+use Illuminate\Http\Request;
 
 class CalendarController extends Controller
 {
@@ -23,10 +25,11 @@ class CalendarController extends Controller
     public function create()
     {
         $events = Calendar::with('client')->latest()->get();
-        $today = Carbon::now()->format('Y-m-d');
+        $tz = new CarbonTimeZone('Asia/Dhaka');
+        $today = today($tz)->format('Y-m-d');
         $clients = Client::get();
         $services = Calendar::get()->unique();
-        $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();
+        $currentEvents = Calendar::where('start', 'like', "$today%")->where('is_completed', false)->latest()->get()->groupBy('type');
         return view('backend.calendar.create-calendar', compact('events', 'currentEvents', 'clients', 'services'));
     }
 
@@ -107,13 +110,19 @@ class CalendarController extends Controller
         return back()->with($notification);
     }
 
-    public function delete($id)
+    public function markCompleted(Request $request)
     {
-        Calendar::find($id)->delete();
-        $notification = [
-            'message' => 'Event Deleted',
-            'alert-type' => 'success',
+        $message = count($request->ids) > 1 ? 'All Events Completed' : 'Event Completed';
+        foreach ($request->ids as $id) {
+            // Calendar::find($id)->update([
+            //     'is_completed' => true
+            // ]);
+            Calendar::find($id)->delete();
+        }
+        $response = [
+            'success' => true,
+            'message' => $message,
         ];
-        return back()->with($notification);
+        return response($response);
     }
 }

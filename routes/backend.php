@@ -73,6 +73,7 @@ Route::prefix('admin')
         //General Routes
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/', 'index')->name('dashboard');
+            Route::get('/get-chart-data', 'getChartData')->name('get.chart.data');
         });
 
         //Routes for backend CRUD operation
@@ -366,16 +367,15 @@ Route::prefix('admin')
         Route::resource('case-study', CaseStudyController::class); // middlewares are in the constructor
 
         Route::get('order', [OrderController::class, 'index'])
-        ->name('order.index')
-        ->middleware('can:read order');
-            
+            ->name('order.index')
+            ->middleware('can:read order');
+
         // TODO: add rest of the middlewares from here
         Route::get('consultancy/order', [OrderController::class, 'consultancyIndex'])->name('consultancy.order.index');
         Route::get('order/status/{id}', [OrderController::class, 'status'])->name('order.status');
         Route::get('consultancy/status/{id}', [OrderController::class, 'consultancyStatus'])->name('consultancy.order.status');
         Route::delete('order/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
 
-        Route::get('delete-event/{id}', [CalendarController::class, 'delete'])->name('delete.event');
         Route::resource('industry', IndustryController::class);
         Route::resource('chalan', ChalanController::class);
         Route::resource('achievements', AchievementController::class);
@@ -431,6 +431,7 @@ Route::prefix('admin')
         Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
         Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panel
         Route::resource('calendar', CalendarController::class);
+        Route::patch('mark-event-completed', [CalendarController::class, 'markCompleted'])->name('mark.event.completed');
         Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
         Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
         Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become'); //User profile to become a partner update

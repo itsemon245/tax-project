@@ -3,22 +3,62 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Backend', 'Calender']" />
     {{-- {{dd($events)}} --}}
-    <input type="hidden" id="events" value="{{ $events }}">
 
     <x-backend.ui.section-card name="Calendar">
         {{-- calendar section  --}}
+        <input type="hidden" id="events" value="{{ $events }}">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <div id="calendar"></div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <p class="text-center text-primary h5 mb-0">Todays Events</p>
-                <div class="border-start border-top border-2 border-primary h-100 p-2 my-2">
-                    <div class="d-flex flex-column gap-1">
-                        @forelse ($currentEvents as $event)
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    {{ $event->name }}
+                <div class="border-start border-top border-2 border-primary h-100 p-2 my-2 bg-light">
+                    <div class="d-flex flex-column gap-1 currentEvents">
+                        @forelse ($currentEvents as $group => $events)
+                            <div class="card mb-2 shadow-md" id="event-group-{{ str($group)->slug() }}">
+                                <div class="card-header py-1 px-2 bg-white border-bottom" role="button">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="text-dark fw-bold">
+                                            {{ $group === 'others' ? 'Others' : 'Invoice ' . str($group)->headline() }}
+                                        </div>
+                                        <span data-items="{{ $events->pluck('id') }}"
+                                            data-url="{{ route('mark.event.completed') }}"
+                                            data-parent="#event-group-{{ str($group)->slug() }}"
+                                            data-tippy-content="Check All"
+                                            class="complete-event tippy mdi mdi-check-all font-16 text-success"></span>
+                                    </div>
+                                </div>
+                                <div class="card-body p-1 ">
+                                    <ul class="list-unstyled mb-0 ps-2">
+                                        @foreach ($events as $key => $event)
+                                            <li class="mb-2" id="event-{{ $event->id }}">
+                                                <div class="d-flex gap-1 align-items-center">
+                                                    <div data-tippy-content="Client: {{ $event->client?->name }}"
+                                                        class="tippy w-100 bg-danger text-white rounded"
+                                                        style="padding: 3px;max-width:100%;">
+                                                        <div class="d-flex justify-content-between align-items-baseline"
+                                                            style="gap:3px;">
+                                                            <div>
+                                                                <div class="text-capitalize fw-bold text-wrap text-start">
+                                                                    {{ ++$key }}.
+                                                                    {{ $event->title }}</div>
+                                                                <p class='text-white m-0 text-capitalize'
+                                                                    style="text-align:left;">
+                                                                    Service: {{ $event->service }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <span data-items="{{ $event->id }}"
+                                                        data-url="{{ route('mark.event.completed') }}"
+                                                        data-parent="#event-{{ $event->id }}" data-tippy-content="Check"
+                                                        style="padding: 0.2rem 0.3rem;"
+                                                        class="complete-event tippy mdi mdi-check font-16 bg-soft-success text-success rounded-circle"></span>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </div>
 
@@ -47,79 +87,80 @@
         <input type="hidden" name="servicesData" value="{{ $services }}">
         <!-- Modal for creating event -->
         @can('create event')
-        <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+            <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
 
-                    <form action="{{ route('calendar.store') }}" method="post">
-                        @csrf
+                        <form action="{{ route('calendar.store') }}" method="post">
+                            @csrf
 
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Event</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Event</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
 
-                        <div class="modal-body">
-                            <x-backend.form.text-input name="event_name" label="Event Name" />
+                            <div class="modal-body">
+                                <x-backend.form.text-input name="event_name" label="Event Name" />
 
-                            <x-form.selectize id="service" name="service" placeholder="Select Service..." label="Service">
-                                @foreach ($services as $item)
-                                    <option value="{{ $item->service }}">{{ $item->service }}</option>
-                                @endforeach
-                            </x-form.selectize>
-                            <x-backend.form.select-input id="client" label="Client" name="client"
-                                placeholder="Select Client">
-                                @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                @endforeach
-                            </x-backend.form.select-input>
-                            <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
-                                label="Start Date" />
-                            <x-backend.form.text-input name="event_description" label="Event Description" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button class="btn btn-primary">Create Event</button>
-                        </div>
-                    </form>
+                                <x-form.selectize id="service" name="service" placeholder="Select Service..." label="Service">
+                                    @foreach ($services as $item)
+                                        <option value="{{ $item->service }}">{{ $item->service }}</option>
+                                    @endforeach
+                                </x-form.selectize>
+                                <x-backend.form.select-input id="client" label="Client" name="client"
+                                    placeholder="Select Client">
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                    @endforeach
+                                </x-backend.form.select-input>
+                                <x-backend.form.text-input type="datetime-local" name="start_date" id="start-date"
+                                    label="Start Date" />
+                                <x-backend.form.text-input name="event_description" label="Event Description" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">Create Event</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
         @endcan
         <!-- Modal for showing event -->
         @canany(['delete event', 'update event', 'read event'])
-        <div class="modal fade" id="eventShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-capitalize" id="eventTitle">Dummy Title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="px-4">
-                        <p class="mb-0">
-                            <span>With: </span>
-                            <span class="badge bg-success px-1 text-caplitalize" id="client">Client name</span>
-                        </p>
-                        <p>
-                            <span>Service: </span>
-                            <span class="badge bg-blue px-1 text-caplitalize" id="service">dummy service</span>
-                        </p>
-                        <p class="text-muted" id="description">
-                            dummy description
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        @can('delete event')
-                        <x-backend.ui.button id="deleteBtn" type="delete" action="" class="text-capitalize btn-sm" />
-                        @endcan
-                        @can('update event')
-                        <x-backend.ui.button class="btn-info text-capitalize btn-sm" id="editBtn">Edit
-                        </x-backend.ui.button>
-                        @endcan
+            <div class="modal fade" id="eventShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-capitalize" id="eventTitle">Dummy Title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="px-4">
+                            <p class="mb-0">
+                                <span>With: </span>
+                                <span class="badge bg-success px-1 text-caplitalize" id="client">Client name</span>
+                            </p>
+                            <p>
+                                <span>Service: </span>
+                                <span class="badge bg-blue px-1 text-caplitalize" id="service">dummy service</span>
+                            </p>
+                            <p class="text-muted" id="description">
+                                dummy description
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            @can('delete event')
+                                <x-backend.ui.button id="deleteBtn" type="delete" action=""
+                                    class="text-capitalize btn-sm" />
+                            @endcan
+                            @can('update event')
+                                <x-backend.ui.button class="btn-info text-capitalize btn-sm" id="editBtn">Edit
+                                </x-backend.ui.button>
+                            @endcan
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endcanany
         <!-- Modal for updating event -->
         <div class="modal fade" id="eventUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -200,10 +241,10 @@
                         let time = info.timeText
                         let bg = info.isToday ? 'bg-danger' : 'bg-blue'
                         let html = `
-                            <div id="myButton" data-tippy-content="Client: ${client}" class="w-100 text-light ${bg} rounded" style="padding: 3px;max-width:100%;">
+                            <div data-tippy-content="Client: ${client}" class="tippy w-100 text-light ${bg} rounded" style="padding: 3px;max-width:100%;">
                                 <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
                                     <div>
-                                        <strong class="">${title}</strong>
+                                        <div class="text-capitalize fw-bold text-wrap text-start">${title}</div>
                                         <p class='text-light m-0 text-capitalize' style="text-align:left;">${service}</p>
                                     </div>
                                     <sup class="">${time}</sup>
@@ -322,7 +363,7 @@
                 });
                 calendar.render();
 
-                tippy('#myButton', {
+                tippy('.tippy', {
                     animation: 'scale',
                 });
 
@@ -349,6 +390,38 @@
                     // Toggle the visibility of the selected dropdown content
                     dropdownContent.slideToggle();
                 });
+
+                $('.complete-event').click(e => {
+                    let url = e.target.dataset.url
+                    let items = e.target.dataset.items
+                    if (items.indexOf('[') >= 0) {
+                        items = items.replace('[', '')
+                        items = items.replace(']', '')
+                    }
+                    items = items.split(',')
+                    let parent = $(e.target.dataset.parent)
+
+                    $.ajax({
+                        type: "patch",
+                        url: url,
+                        data: {
+                            'ids': items
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                Toast.fire({
+                                    'icon': 'success',
+                                    'title': 'Success',
+                                    'text': response.message
+                                })
+                                parent.remove()
+                            }
+                        }
+                    });
+                })
             });
         </script>
     @endpush
