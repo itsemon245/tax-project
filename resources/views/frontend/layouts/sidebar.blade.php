@@ -2,6 +2,7 @@
     $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
+    $user = App\Models\User::find(auth()->user()->id);
 @endphp
 <nav class="relative">
     {{-- Sidebar 1-> page navigation --}}
@@ -125,10 +126,10 @@
                                     <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
                                 </form>
                             </div>
+                            <a class="btn btn-secondary{{ $user->division !== null ? 'd-none' : '' }}" href="">Become a partner</a>
                         @else
                             <a class="btn btn-primary" href="{{ route('login') }}">Sign in</a>
                         @endauth
-                        <a class="btn btn-secondary" href="">Become a partner</a>
                     </div>
                 </div>
             </li>
@@ -194,14 +195,16 @@
                 </li>
                 <li class="mt-auto mb-5">
                     <hr class="my-3">
+                    @auth
                     <div class="d-flex flex-column justify-items-center gap-2 justify-content-end mb-5">
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <input type="hidden" name="auth_id" class="d-none" value="{{ auth()->id() }}">
                             <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
                         </form>
-                        <a class="btn btn-secondary" href="{{ route('page.become.partner') }}">Become a partner</a>
-                    </div>
+                        <a class="btn btn-secondary {{ $user->division !== null ? 'd-none' : '' }}" href="{{ route('page.become.partner') }}">Become a partner</a>
+                    </div>  
+                    @endauth
                 </li>
             </ul>
         </div>
