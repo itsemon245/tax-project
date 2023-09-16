@@ -28,7 +28,9 @@
     <x-backend.ui.section-card name="Settings">
         <div class="container">
             <x-btn-back class="mb-2"></x-btn-back>
+            @can('create tax setting')
             <x-backend.ui.button type="custom" :href="route('tax-setting.create')" class="btn-sm btn-success mb-2">Create</x-backend.ui.button>
+            @endcan
             <x-backend.table.basic :data="$taxSettings">
                 <thead>
                     <tr>
@@ -36,7 +38,9 @@
                         <th>Details</th>
                         <th>Free</th>
                         <th class="text-center">Slots</th>
+                        @canany(['update tax setting', 'delete tax setting'])
                         <th>Actions</th>
+                        @endcanany
                     </tr>
                 </thead>
                 <tbody>
@@ -201,10 +205,16 @@
                                     <div class="text-center text-muted">No slots available</div>
                                 @endif
                             </td>
+                            @canany(['update tax setting', 'delete tax setting'])
                             <td>
+                                @can('update tax setting')
                                 <x-backend.ui.button type="edit" :href="route('tax-setting.edit', $tax->id)" class="btn-sm"></x-backend.ui.button>
+                                @endcan
+                                @can('delete tax setting')
                                 <x-backend.ui.button type="delete" :action="route('tax-setting.destroy', $tax->id)" class="btn-sm"></x-backend.ui.button>
+                                @endcan
                             </td>
+                            @endcanany
                         </tr>
                     @endforeach
                 </tbody>

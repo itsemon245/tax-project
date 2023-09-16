@@ -20,8 +20,10 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card name="All Expenses">
+        @can('create expense')
         <x-backend.ui.button type="custom" :href="route('expense.create')"
-            class="btn-success btn-sm mb-1 d-print-none">Create</x-backend.ui.button>
+        class="btn-success btn-sm mb-1 d-print-none">Create</x-backend.ui.button>
+        @endcan
         <div class="container ">
             <x-backend.table.basic :data="$expenses">
                 <thead>
@@ -40,7 +42,9 @@
                         <th>Cr</th>
                         <th>Dr</th>
                         <th>Balance</th>
+                        @canany(['update expense', 'update expense', 'delete expense', 'print expense', 'read expense'])
                         <th>Actions</th>
+                        @endcanany
                     </tr>
                 <tbody>
                     @forelse ($expenses as $key=> $expense)
@@ -71,12 +75,17 @@
                                     <span class="fw-bold text-success">{{ $expense->balance }} ৳</span>
                                 @endif
                             </td>
+                            @canany(['update expense', 'update expense', 'delete expense', 'print expense', 'read expense'])
                             <td>
+                                @can('read expense')
                                 <x-backend.ui.button type="custom" class="btn-info btn-sm print-btn"
-                                    :href="route('expense.show', $expense->id)">View</x-backend.ui.button>
+                                :href="route('expense.show', $expense->id)">View</x-backend.ui.button>
+                                @endcan
+                                @can('delete expense')
                                 <x-backend.ui.button type="delete" :href="route('expense.destroy', $expense->id)" class="btn-sm" />
-
+                                @endcan
                             </td>
+                            @endcanany
                         </tr>
                     @empty
                         <tr>
