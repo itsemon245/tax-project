@@ -24,7 +24,7 @@ class DashboardController extends Controller
     {
         $clients = Client::simplePaginate(paginateCount());
         $projects = Project::simplePaginate(paginateCount());
-        $events = Calendar::with('client')->latest()->simplePaginate(paginateCount());
+        $events = Calendar::with('client')->latest()->get();
         $today = Carbon::now()->format('Y-m-d');
         $services = Calendar::get()->unique();
         $currentEvents = Calendar::where('start', 'like', "$today%")->latest()->get();

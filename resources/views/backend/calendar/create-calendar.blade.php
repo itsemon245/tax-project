@@ -16,11 +16,14 @@
                 <div class="border-start border-top border-2 border-primary h-100 p-2 my-2">
                     <div class="d-flex flex-column gap-1">
                         @forelse ($currentEvents as $event)
-                           <div class="d-flex justify-content-between">
-                             <h4 class="enent-type cursor-pointer d-inline-block" data-event-id={{$event->id}}>Created At </h4> <a href="{{route('delete.event', $event->id)}}"> <span class="mdi mdi-check d-inline-block w-25"></span></a>
-                           </div>
-                            
-                            <div id="myButton" class="myButton event-{{$event->id}}" data-tippy-content="Client: {{ $event->client->name }}"
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    {{ $event->name }}
+                                </div>
+                            </div>
+
+                            <div id="myButton" class="myButton event-{{ $event->id }}"
+                                data-tippy-content="Client: {{ $event->client->name }}"
                                 class="w-100 text-light bg-danger rounded" style="padding: 5px;max-width:100%;">
                                 <div class="d-flex justify-content-between align-items-baseline" style="gap:3px;">
                                     <div>
