@@ -4,7 +4,7 @@
     $isCoursePage = str(url()->current())->contains('course');
     $settings = getRecords('settings');
     $basic = json_decode($settings[0]->basic);
-    
+    $user = App\Models\User::find(auth()->user()->id);
 @endphp
 <header class="d-flex flex-column justify-items-center">
     <div class="d-flex align-items-center flex-grow-1 space-between">
@@ -230,10 +230,11 @@
 
         {{-- btns --}}
         <div class="">
+            {{-- {{ dd($user) }} --}}
             <div class="d-flex align-items-center gap-3 justify-content-end">
-                <a class="btn btn-secondary rounded-1 partner-btn-hide"
-                    href="{{ route('page.become.partner') }}">Become a partner</a>
                 @auth
+                <a class="btn btn-secondary rounded-1 partner-btn-hide {{ $user->division !== null ? 'd-none' : '' }}"
+                href="{{ route('page.become.partner') }}">Become a partner</a>
                     <div id="sidebar-2" class="d-flex align-items-center menu-btn">
                         <span class="mdi mdi-account-outline text-light" style="font-size: 32px"></span>
                         <span class="mdi mdi-chevron-down text-light" style="font-size: 16px;margin-left:-8px;"></span>

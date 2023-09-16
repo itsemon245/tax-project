@@ -86,24 +86,27 @@ class PartnerRequestController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
+    {       
         $findRequest = PartnerRequest::find($id);
-        $approved = DB::table('users')->update([
-            'name' => $findRequest->name,
-            'phone' => $findRequest->phone,
-            'division' => $findRequest->division,
-            'thana' => $findRequest->thana,
-            'address' => $findRequest->address,
-        ]);
-        if($approved == 0){
-            DB::table('partner_requests')->update([
-                'status' => 1,
-            ]);
-            $notification = array(
-                'message' => 'Approved Success',
-                'alert-type' => 'Success',
-            );
-            return back()->with($notification);
+        // dd( $findRequest);
+        if($findRequest){
+            $findRequest->status = 1;
+            $findRequest->save();
+            if($findRequest->save()){
+                $updateUser = User::find($findRequest->user_id);
+                $updateUser->name = $findRequest->name;
+                $updateUser->phone = $findRequest->phone;
+                $updateUser->division = $findRequest->division;
+                $updateUser->district = $findRequest->district;
+                $updateUser->thana = $findRequest->thana;
+                $updateUser->address = $findRequest->address;
+                $updateUser->save();
+                $notification = array(
+                    'message' => 'Approved Success',
+                    'alert-type' => 'Success',
+                );
+                return back()->with($notification);
+            }
         }
     }
 

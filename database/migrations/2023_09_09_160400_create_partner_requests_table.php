@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('partner_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('phone')->nullable();
             $table->string('division')->nullable();
             $table->string('district')->nullable();
