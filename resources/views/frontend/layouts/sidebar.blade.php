@@ -2,7 +2,7 @@
     $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
-    $user = App\Models\User::find(auth()->user()->id);
+    $user = App\Models\User::find(auth()->id());
 @endphp
 <nav class="relative">
     {{-- Sidebar 1-> page navigation --}}
