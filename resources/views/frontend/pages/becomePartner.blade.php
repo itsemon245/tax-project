@@ -102,20 +102,20 @@
                             <div class="tab-pane my-3 active" id="account-2" role="tabpanel">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <x-backend.form.text-input label="Full Name" name='name' :value="$user->name"
+                                        <x-backend.form.text-input label="Full Name" name='name' :value="$user?->name"
                                             required placeholder="John Doe" />
                                     </div>
                                     <div class="col-md-6">
                                         <x-backend.form.text-input label="Username" name='username' disabled
-                                            :value="$user->user_name" />
+                                            :value="$user?->user_name" />
                                     </div>
                                     <div class="col-md-6">
                                         <x-backend.form.text-input label="Phone No." required name='phone'
-                                            :value="$user->phone" />
+                                            :value="$user?->phone" />
                                     </div>
                                     <div class="col-md-6">
                                         <x-backend.form.text-input label="Email" name='email' disabled
-                                            :value="$user->email" />
+                                            :value="$user?->email" />
                                     </div>
 
                                 </div> <!-- end row -->

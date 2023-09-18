@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateMapRequest;
 
 class MapController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->middleware('can:read map', [
@@ -49,13 +49,12 @@ class MapController extends Controller
     {
         // dd($request->iframe_link);
         $pattern = '/https:\/\/www\.google\.com\/maps\/embed/i';
-        $src = preg_grep($pattern, explode('"', $request->iframe_link))[1];
+        $src = str($request->iframe_link)->contains('<iframe') ? preg_grep($pattern, explode('"', $request->iframe_link))[1] : $request->iframe_link;
         // dd($src);
-        $map = new Map();
-        $map->location = $request->location;
-        $map->address = $request->address;
-        $map->src = $src;
-        $map->save();
+        $map = Map::create([
+            ...$request->except(['iframe_link']),
+            'src' => $src
+        ]);
         $notification = array(
             'message' => "Added Successfully",
             'alert-type' => 'success',
@@ -84,11 +83,11 @@ class MapController extends Controller
     public function update(UpdateMapRequest $request, Map $map)
     {
         $pattern = '/https:\/\/www\.google\.com\/maps\/embed/i';
-        $src = preg_grep($pattern, explode('"', $request->iframe_link))[1];
-        $map->location = $request->location;
-        $map->address = $request->address;
-        $map->src = $src;
-        $map->update();
+        $src = str($request->iframe_link)->contains('<iframe') ? preg_grep($pattern, explode('"', $request->iframe_link))[1] : $request->iframe_link;
+        $map->update([
+            ...$request->except(['iframe_link', '_token', '_method']),
+            'src' => $src
+        ]);
         $notification = array(
             'message' => "Updated Successfully",
             'alert-type' => 'success',

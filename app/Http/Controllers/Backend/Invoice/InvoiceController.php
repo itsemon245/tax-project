@@ -20,6 +20,21 @@ use App\Http\Resources\InvoiceItemCollection;
 
 class InvoiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:read invoice', [
+            'only' => ['index', 'show']
+        ]);
+        $this->middleware('can:create invoice',   [
+            'only' => ['create', 'store']
+        ]);
+        $this->middleware('can:update invoice',   [
+            'only' => ['update', 'edit']
+        ]);
+        $this->middleware('can:delete invoice',  [
+            'only' => ['destroy']
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */

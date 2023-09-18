@@ -22,6 +22,8 @@ class StoreMapRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'district' => ['string', 'required'],
+            'thana' => ['string', 'required'],
             'location' => ['string', 'required'],
             'address' => ['string', 'required'],
             'iframe_link' => ['required', 'string', 'regex:/https:\/\/www\.google\.com\/maps\/embed/i'],

@@ -1,8 +1,6 @@
 @props([
     'hasImage' => false,
 ])
-
-
 @php
     $id = $attributes->get('id');
     $label = $attributes->has('label') ? $attributes->get('label') : $attributes->get('name');

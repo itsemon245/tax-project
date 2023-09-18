@@ -197,18 +197,7 @@ Route::prefix('admin')
 
 
         // Route and middlewares for invoice
-        Route::resource('invoice', InvoiceController::class)
-            ->only(['index'])
-            ->middleware('can:read invoice');
-        Route::resource('invoice', InvoiceController::class)
-            ->only(['create', 'store'])
-            ->middleware('can:create invoice');
-        Route::resource('invoice', InvoiceController::class)
-            ->only(['edit', 'update'])
-            ->middleware('can:update invoice');
-        Route::resource('invoice', InvoiceController::class)
-            ->only(['destroy'])
-            ->middleware('can:delete invoice');
+        Route::resource('invoice', InvoiceController::class);
         Route::post('send-invoice-mail/{id}', [InvoiceController::class, 'sendInvoiceMail'])->name('send_invoice_mail')->middleware('can:send invoice');
         Route::get('filtered-invoices', [InvoiceController::class, 'filterInvoices'])->name('invoice.filter')->middleware('can:read invoice');
         Route::patch('invoice/{invoice}/markAs/{status}', [InvoiceController::class, 'markAs'])->name('invoice.markAs')->middleware('can:update invoice');
