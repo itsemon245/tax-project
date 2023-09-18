@@ -14,18 +14,22 @@ return new class extends Migration
         Schema::create('expert_profiles', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->text('post');#filter পদবী
+            $table->text('post'); #filter পদবী
             $table->longText('bio')->nullable();
             $table->text('image')->nullable();
-            $table->integer('experience');#filterable
+            $table->integer('experience'); #filterable
             $table->date('join_date');
             $table->string('availability');
             $table->longText('at_a_glance')->nullable();
             $table->longText('description');
             $table->string('district')->nullable();
             $table->string('thana')->nullable();
+            $table->foreignId('map_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->integer('discount')->nullable();
-            $table->json('expert_category')->nullable();
             $table->enum('billing_type', ['onetime'])->default('onetime');
             $table->timestamps();
         });

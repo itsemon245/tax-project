@@ -1,7 +1,12 @@
 @push('customCss')
-    <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css" />
+    <style>
+        .ck-content.ck-editor__editable {
+            min-height: 100px !important;
+        }
+    </style>
 @endpush
 @extends('backend.layouts.app')
+
 @section('content')
     @php
         $jsonString =
@@ -10,38 +15,38 @@
         $districts = collect($jsonObject);
         
     @endphp
-    <x-backend.ui.breadcrumbs :list="['Frontend', 'Expert Profile', 'Create']" />
+    <x-backend.ui.breadcrumbs :list="['Peoples', 'Expert', 'Create']" />
 
-    <x-backend.ui.section-card name="Expert Section">
+    <x-backend.ui.section-card name="Create Expert">
 
-        <form action="{{ route('expert-profile.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('expert-profile.store') }}" class="container" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-md-12">
-                    <p class="m-0">Select Category <span class="text-danger">*</span></p>
-                    <div class="card p-2 d-flex justify-content-around">
-                        <div class="row">
-                            @foreach ($expertCategories as $expertCategory)
-                                {{-- <div class="col-md-4"><x-form.check-box type="checkbox" name="expert_categories[]" :label="$expertCategory->name" />
-                            </div> --}}
-                                <div class="col-md-4">
-                                    <input type="checkbox" value="{{ $expertCategory->id }}" class="form-check-input"
-                                        id="{{ Str::slug($expertCategory->name, '-') }}" name="expert_categories[]">
-                                    <label class="form-check-label"
-                                        for="{{ Str::slug($expertCategory->name, '-') }}">{{ $expertCategory->name }}</label>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
+                <div class="col-sm-6">
+                    <x-backend.form.image-input class="" label="Expert Avatar" name="image" />
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6 mt-3">
                     <x-backend.form.text-input label="Name" required type="text" name="name">
                     </x-backend.form.text-input>
+
+                    <div>
+                        <x-backend.form.text-input label="Post" required type="text" name="post">
+                        </x-backend.form.text-input>
+                    </div>
+
+                    <div>
+                        <label for="expert-category">Select Category</label>
+                        <select id="expert-category" name="categories[]" label="Category" placeholder="Select Category"
+                            :can-create="true" multiple>
+                            @foreach ($expertCategories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
                 </div>
-                <div class="col-md-6">
-                    <x-backend.form.text-input label="Post" required type="text" name="post">
-                    </x-backend.form.text-input>
-                </div>
+
                 <div class="col-md-6">
                     <x-form.ck-editor id="ck-editor1" name="bio" placeholder="Bio" label="Bio">
                     </x-form.ck-editor>
@@ -50,12 +55,20 @@
                     <x-form.ck-editor id="ck-editor2" name="description" placeholder="description" label="Description">
                     </x-form.ck-editor>
                 </div>
-                <div class="col-md-6 col-lg-3">
+                <div class="col-sm-6 col-lg-4">
                     <x-backend.form.text-input label="Experience" required type="number" name="experience">
                     </x-backend.form.text-input>
                 </div>
-                <div class="col-md-6 col-lg-3">
-
+                <div class="col-sm-6 col-lg-4">
+                    <x-backend.form.text-input label="Join Date" required type="date" name="join_date">
+                    </x-backend.form.text-input>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <x-backend.form.text-input label="Availability Date" required type="text" name="availability"
+                        placeholder="Sat-Fri(08:00AM-11:55PM)">
+                    </x-backend.form.text-input>
+                </div>
+                <div class="col-sm-6 col-lg-4">
                     <div>
                         <label for="district">District <span class="text-danger">*</span></label>
                         <select id="district" name="district" required placeholder="Select District...">
@@ -66,37 +79,29 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3">
+                <div class="col-sm-6 col-lg-4">
 
-                    <div>
+                    <div class="mb-2">
                         <label for="thana">Thana <span class="text-danger">*</span></label>
                         <select id="thana" name="thana" required placeholder="Select Thana...">
                             <option disabled selected>Select District First</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3">
-                    <x-backend.form.text-input label="Join Date" required type="date" name="join_date">
-                    </x-backend.form.text-input>
+                <div class="col-sm-6 col-lg-4">
+                    <div>
+                        <x-backend.form.select-input id="branch-select" label="Branch" name="branch_id"
+                            placeholder="Select Thana First...">
+                        </x-backend.form.select-input>
+                    </div>
                 </div>
 
-                <div class="col-md-6">
-                    <x-backend.form.text-input label="Availability Date" required type="text" name="availability"
-                        placeholder="Sat-Fri(08:00AM-11:55PM)">
-                    </x-backend.form.text-input>
-                    <br>
-                    <x-form.ck-editor id="ck-editor3" name="at_a_glance" placeholder="Sat-Fri(08:00AM-11:55PM)"
-                        label="At a Glance">
-                    </x-form.ck-editor>
-
-                </div>
-
-                <div class="col-md-6 mt-3">
-                    <x-backend.form.image-input name="image" />
-                </div>
+                <x-form.ck-editor id="ck-editor3" name="at_a_glance" placeholder="Sat-Fri(08:00AM-11:55PM)"
+                    label="At a Glance">
+                </x-form.ck-editor>
 
                 <div class="col-md-12">
-                    <x-backend.ui.button type="submit" class="btn-primary mt-2">Create</x-backend.ui.button>
+                    <x-backend.ui.button type="submit" class="btn-primary mb-3">Create</x-backend.ui.button>
                 </div>
             </div>
         </form>
@@ -136,7 +141,16 @@
                     valueField: 'thana',
                     searchField: ['thana', 'id'],
                 });
+                let categorySelect = $('#expert-category').selectize({
+                    sortField: 'text',
+                    create: true,
+                    labelField: 'name',
+                    valueField: 'name',
+                    searchField: ['name', 'id'],
+                });
+                const categorySelectize = categorySelect[0].selectize
 
+                const thanaSelecize = thanaSelect[0].selectize
                 $('#district').on('input', e => {
                     // grab ups based on district
                     const jsonString =
@@ -151,12 +165,41 @@
                             id: item.toLowerCase
                         }
                     })
-                    const thanaSelecize = thanaSelect[0].selectize
                     thanaSelecize.clear();
                     thanaSelecize.clearOptions();
                     thanaSelecize.load(set => set(upazillas));
-
                 })
+
+                $('#thana').on('change', e => {
+                    let thana = e.target.value
+                    let url = '{{ route('ajax.get.branches', 'THANA') }}'
+                    if (thana !== '') {
+                        url = url.replace('THANA', thana)
+                        $.ajax({
+                            type: "get",
+                            url: url,
+                            success: function(response) {
+                                $('#branch-select').children().remove()
+                                $('#branch-select').append(
+                                    `<option disabled>No branches available</option>`
+                                )
+                                if (response.length > 0) {
+                                    $('#branch-select').children().remove()
+                                    $('#branch-select').append(
+                                        `<option disabled selected>Select Branches</option>`
+                                    )
+                                    response.forEach(item => {
+                                        $('#branch-select').append(
+                                            `<option value="${item.id}">${item.location}</option>`
+                                        )
+                                    });
+                                }
+                            }
+                        });
+                    }
+                })
+
+
             });
         </script>
     @endpush

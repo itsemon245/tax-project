@@ -33,6 +33,7 @@ Route::prefix('ajax')
     ->middleware(['auth'])
     ->name('ajax.')
     ->controller(AjaxController::class)->group(function () {
+        Route::get('get-branches/{thana}', 'getBranches')->name('get.branches');
         Route::get('case-study/package/{id}/categories', 'caseStudyCategories')->name('caseStudyCategories');
         Route::get('/get-sub-categories/{productCategory}', 'getProductSubCategories')->name('get.productSubCategories');
         Route::post('toggle-status/{id}', 'toggleStatus')->name('toggle-status');

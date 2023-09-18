@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Map;
+use App\Models\ExpertProfile;
+use App\Models\ExpertCategory;
 use App\Http\Requests\StoreExpertProfileRequest;
 use App\Http\Requests\UpdateExpertProfileRequest;
-use App\Models\ExpertCategory;
-use App\Models\ExpertProfile;
 
 class ExpertProfileController extends Controller
 {
@@ -48,26 +49,30 @@ class ExpertProfileController extends Controller
      */
     public function store(StoreExpertProfileRequest $request)
     {
-        $request->validated();
         $expert = new ExpertProfile();
         $expert->name = $request->name;
         $expert->post = $request->post;
         $expert->bio = $request->bio;
         $expert->description = $request->description;
-        $expert->experience = $request->experience;
-        $expert->join_date = $request->join_date;
-        $expert->availability = $request->availability;
         $expert->district = $request->district;
         $expert->thana = $request->thana;
+        $expert->map_id = $request->branch_id;
+        $expert->join_date = $request->join_date;
+        $expert->availability = $request->availability;
+        $expert->experience = $request->experience;
         $expert->at_a_glance = $request->at_a_glance;
-        $expert->expert_category = json_encode($request->expert_categories);
         $expert->image = saveImage($request->image, 'experts');
         $expert->save();
-        if ($expert->save()) {
-            $fetchProfile = ExpertProfile::with('expertCategories')->orderBy('created_at', 'desc')->first();
-            foreach (json_decode($expert->expert_category) as $expert_category) {
-                $fetchProfile->expertCategories()->attach($expert_category);
-            }
+
+
+        $categoryIds = [];
+        foreach ($request->categories as $category) {
+            $cat = ExpertCategory::firstOrCreate(['name' => $category]);
+            $categoryIds[] = $cat->id;
+        }
+        // attaching categories
+        foreach ($categoryIds as $id) {
+            $expert->expertCategories()->attach($id);
         }
         return redirect()
             ->back()
@@ -90,8 +95,8 @@ class ExpertProfileController extends Controller
      */
     public function edit(ExpertProfile $expertProfile)
     {
-        $profile = ExpertProfile::find($expertProfile->id);
-        return view("backend.expertProfile.editExpertProfile", compact('profile'));
+        $expertCategories = ExpertCategory::get();
+        return view("backend.expertProfile.editExpertProfile", compact('expertProfile', 'expertCategories'));
     }
 
     /**
@@ -100,42 +105,39 @@ class ExpertProfileController extends Controller
     public function update(UpdateExpertProfileRequest $request, ExpertProfile $expertProfile)
     {
         $request->validated();
-        if ($request->has('image')) {
-            $expertProfile->name = $request->name;
-            $expertProfile->post = $request->post;
-            $expertProfile->bio = $request->bio;
-            $expertProfile->description = $request->description;
-            $expertProfile->experience = $request->experience;
-            $expertProfile->join_date = $request->join_date;
-            $expertProfile->availability = $request->availability;
-            $expertProfile->at_a_glance = $request->at_a_glance;
-            $expertProfile->price = $request->price;
-            $expertProfile->image = updateFile($request->image, $expertProfile->image, 'experts');
-            $expertProfile->save();
-            return redirect()
-                ->back()
-                ->with(array(
-                    'message'    => "Expert Profile Updated",
-                    'alert-type' => 'success',
-                ));
-        } else {
-            $expertProfile->name = $request->name;
-            $expertProfile->post = $request->post;
-            $expertProfile->bio = $request->bio;
-            $expertProfile->description = $request->description;
-            $expertProfile->experience = $request->experience;
-            $expertProfile->join_date = $request->join_date;
-            $expertProfile->availability = $request->availability;
-            $expertProfile->at_a_glance = $request->at_a_glance;
-            $expertProfile->price = $request->price;
-            $expertProfile->save();
-            return redirect()
-                ->back()
-                ->with(array(
-                    'message'    => "Expert Profile Updated",
-                    'alert-type' => 'success',
-                ));
+        $expertProfile->name = $request->name;
+        $expertProfile->post = $request->post;
+        $expertProfile->bio = $request->bio;
+        $expertProfile->district = $request->district;
+        $expertProfile->thana = $request->thana;
+        $expertProfile->map_id = $request->branch_id;
+        $expertProfile->description = $request->description;
+        $expertProfile->experience = $request->experience;
+        $expertProfile->join_date = $request->join_date;
+        $expertProfile->availability = $request->availability;
+        $expertProfile->at_a_glance = $request->at_a_glance;
+        $expertProfile->price = $request->price;
+        $expertProfile->image = $request->has('image') ? updateFile($request->image, $expertProfile->image, 'experts') : $expertProfile->image;
+        $expertProfile->save();
+
+        // Detach previous categories
+        $expertProfile->expertCategories()->detach();
+        $categoryIds = [];
+        foreach ($request->categories as $category) {
+            $cat = ExpertCategory::firstOrCreate(['name' => $category]);
+            $categoryIds[] = $cat->id;
         }
+        // attaching new categories
+        foreach ($categoryIds as $id) {
+            $expertProfile->expertCategories()->attach($id);
+        }
+
+        return redirect()
+            ->back()
+            ->with(array(
+                'message'    => "Expert Profile Updated",
+                'alert-type' => 'success',
+            ));
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Throwable;
 use Carbon\Carbon;
+use App\Models\Map;
 use App\Models\Slot;
 use App\Models\Task;
 use App\Models\User;
@@ -176,7 +177,7 @@ class AjaxController extends Controller
         try {
             $isCompleted = User::find(auth()->id())->toggleVideoStatus($id);
             $success = true;
-            $message = $isCompleted ? 'Video marked as completed!': 'Video marked as incomplete!';
+            $message = $isCompleted ? 'Video marked as completed!' : 'Video marked as incomplete!';
         } catch (\Throwable $th) {
             $success = false;
             $message = $th->getMessage();
@@ -185,5 +186,12 @@ class AjaxController extends Controller
             'success' => $success,
             'message' => $message
         ]);
+    }
+
+    public function getBranches(string $thana)
+    {
+        $branches = Map::where('thana', $thana)->get();
+
+        return response($branches);
     }
 }
