@@ -1,7 +1,7 @@
 @php
     $id = $attributes->has('id') ? $attributes->get('id') : 'basic-datatable';
 @endphp
-@props(['data' => null])
+@props(['items' => ''])
 @pushOnce('customCss')
     {{-- data table css --}}
     <link href="{{ asset('backend/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
@@ -28,15 +28,12 @@
 
 <table id="{{ $id }}" class="table table-striped dt-responsive nowrap w-100">
     {{ $slot }}
-
-
 </table>
-{{-- @if (method_exists($data, 'links')) --}}
-    {{-- <div id="myPaginator" class="paginate my-2">
-        {{ $data?->links('pagination::simple-bootstrap-5')}}
-    </div> --}}
-{{-- @endif --}}
-
+@if (method_exists($items, 'links'))
+<div id="myPaginator" class="paginate my-2">
+    {{ $items->links()}}
+</div>
+@endif
 
 @pushOnce('customJs')
     <!-- Datatables init -->

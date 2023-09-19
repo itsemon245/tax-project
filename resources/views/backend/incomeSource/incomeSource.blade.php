@@ -48,7 +48,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">All Income Sources</h4>
-                    <x-backend.table.basic :data="$data">
+                    <x-backend.table.basic :items="$data">
                         <thead>
                             <tr>
                                 <th>#</th>
