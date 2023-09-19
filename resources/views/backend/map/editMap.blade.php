@@ -48,12 +48,13 @@
                                     {{ $thana }}</option>
                             @endforeach
                         </select>
+                        <div class="text-success fw-bold mt-1 mb-2">Selected: {{$map->thana}}</div>
                     </div>
                     <div class="col-md-6">
                         <x-backend.form.text-input class="mb-1" label="Location" type="text" name="location"
                             :value="$map->location" required />
                         <x-form.text-area id="iframe-link" name="iframe_link" label="Iframe Link"
-                            placeholder="<iframe ....></iframe>" rows="4" required>
+                            placeholder="<iframe ....></iframe>" rows="8" required>
                             {{ $map->src }}
                         </x-form.text-area>
 

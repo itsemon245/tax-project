@@ -29,8 +29,7 @@ class UpdateExpertProfileRequest extends FormRequest
                 "experience"    => 'required',
                 "join_date"     => 'required',
                 "availability"  => 'required',
-                "image"         => 'mimes:png,jpg,webp,jpeg',
-                "fee"         => 'required',
-            ];;
+                "image"         => 'mimes:png,jpg,webp,jpeg|nullable',
+            ];
     }
 }

@@ -84,10 +84,13 @@ class MapController extends Controller
     {
         $pattern = '/https:\/\/www\.google\.com\/maps\/embed/i';
         $src = str($request->iframe_link)->contains('<iframe') ? preg_grep($pattern, explode('"', $request->iframe_link))[1] : $request->iframe_link;
-        $map->update([
-            ...$request->except(['iframe_link', '_token', '_method']),
-            'src' => $src
-        ]);
+        $map->location = $request->location;
+        $map->district = $request->district;
+        $map->thana = $request->thana !== null ? $request->thana :  $map->thana;
+        $map->address = $request->address;
+        $map->src = $request->src;
+        $map->update();
+
         $notification = array(
             'message' => "Updated Successfully",
             'alert-type' => 'success',

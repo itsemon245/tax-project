@@ -26,9 +26,9 @@ class ExpertProfileFactory extends Factory
             'join_date' => fake()->date(),
             'availability' => "09:00 am to 05:00pm (Monday to Thursday)",
             'at_a_glance' => fake()->realText(100),
-            'description' => fake()->realText(300),
-            'district' => fake()->realText(10),
-            'thana' => fake()->realText(10),
+            'description' => fake()->realText(10),
+            'district' => 'Chattogram',
+            'thana' => 'Karnaphuli',
         ];
     }
 }

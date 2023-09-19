@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->text('post'); #filter পদবী
+            $table->foreignId('map_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->longText('bio')->nullable();
             $table->text('image')->nullable();
             $table->integer('experience'); #filterable
@@ -24,11 +29,6 @@ return new class extends Migration
             $table->longText('description');
             $table->string('district')->nullable();
             $table->string('thana')->nullable();
-            $table->foreignId('map_id')
-                ->nullable()
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->integer('discount')->nullable();
             $table->enum('billing_type', ['onetime'])->default('onetime');
             $table->timestamps();

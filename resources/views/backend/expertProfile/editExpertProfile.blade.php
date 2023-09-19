@@ -44,6 +44,12 @@
                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                             @endforeach
                         </select>
+                        <div class="text-success fw-bold mt-1">Selected:
+                            @foreach ($expertProfile->expertCategories as $key => $cat)
+                                <span>{{ $cat->name }}</span>
+                                <span>{{ $key + 1 !== $expertProfile->expertCategories->count() ? ',' : '' }}</span>
+                            @endforeach
+                        </div>
                     </div>
 
 
@@ -75,30 +81,39 @@
                 </div>
                 <div class="col-sm-6 col-lg-4">
                     <div>
-                        <label for="district">District <span class="text-danger">*</span></label>
-                        <select id="district" name="district" required placeholder="Select District...">
-                            <option selected disabled></option>
+                        @php
+                            $selectedDis = $districts->filter(fn($dis) => $dis->district === $expertProfile->district)->first();
+                        @endphp
+                        {{-- <label for="district">District <span class="text-danger">*</span></label> --}}
+                        <x-form.selectize id="district" label="District" name="district" required
+                            placeholder="Select District...">
                             @foreach ($districts as $district)
-                                <option value="{{ $district->district }}" @selected($district->district === $expertProfile->district)>
+                                <option value="{{ $district->district }}" @selected($district->district === $selectedDis->district)>
                                     {{ $district->district }}</option>
                             @endforeach
-                        </select>
+                            </x-form.selecti>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
 
                     <div class="mb-2">
-                        <label for="thana">Thana <span class="text-danger">*</span></label>
-                        <select id="thana" name="thana" required placeholder="Select Thana...">
-                            <option disabled selected>Select District First</option>
-
-                        </select>
+                        @php
+                            $thanas = $selectedDis->upazilla;
+                        @endphp
+                        {{-- <label for="thana">Thana <span class="text-danger">*</span></label> --}}
+                        <x-form.selectize label="Thana" id="thana-select" name="thana" required
+                            placeholder="Select Thana...">
+                            @foreach ($thanas as $thana)
+                                <option value="{{ $thana }}" @selected($thana === $expertProfile->thana)>{{ $thana }}
+                                </option>
+                            @endforeach
+                        </x-form.selectize>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
                     <div>
                         <x-backend.form.select-input id="branch-select" label="Branch" name="branch_id"
-                            placeholder="Select Thana First..." multiple>
+                            placeholder="Select Thana First...">
                         </x-backend.form.select-input>
                     </div>
                 </div>
@@ -132,6 +147,10 @@
     @push('customJs')
         <script>
             $(document).ready(function() {
+                const jsonString =
+                    '[{"_id":"bandarban","district":"Bandarban","coordinates":"21.8311, 92.3686","upazilla":["Ali Kadam","Thanchi","Lama","Bandarban Sadar","Rowangchhari","Naikhongchhari","Ruma"]},{"_id":"brahmanbaria","district":"Brahmanbaria","coordinates":"23.9608, 91.1115","upazilla":["Akhaura","Nasirnagar","Bancharampur","Sarail","Ashuganj","Bijoynagar","Nabinagar","Kasba","Brahmanbaria Sadar"]},{"_id":"chandpur","district":"Chandpur","coordinates":"23.2513, 90.8518","upazilla":["Haziganj","Faridganj","Matlab Dakshin","Chandpur Sadar","Kachua","Haimchar","Shahrasti","Matlab Uttar"]},{"_id":"chattogram","district":"Chattogram","coordinates":"22.5150, 91.7539","upazilla":["Rangunia","Sitakunda","Boalkhali","Patiya","Banshkhali","Karnaphuli","Lohagara","Hathazari","Mirsharai","Sandwip","Raozan","Chandanaish","Fatikchhari","Anwara","Satkania"]},{"_id":"cox\'s bazar","district":"Cox\'s Bazar","coordinates":"21.5641, 92.0282","upazilla":["Maheshkhali","Chakaria","Cox\'s Bazar Sadar","Ukhia","Pekua","Ramu","Teknaf","Kutubdia"]},{"_id":"cumilla","district":"Cumilla","coordinates":"23.4576, 91.1809","upazilla":["Titas","Monohargonj","Chandina","Cumilla Adarsha Sadar","Meghna","Nangalkot","Chauddagram","Barura","Cumilla Sadar Dakshin","Laksam","Daudkandi","Homna","Burichang","Debidwar","Muradnagar","Brahmanpara","Lalmai"]},{"_id":"feni","district":"Feni","coordinates":"22.9409, 91.4067","upazilla":["Fulgazi","Parshuram","Feni Sadar","Sonagazi","Daganbhuiyan","Chhagalnaiya"]},{"_id":"khagrachari","district":"Khagrachari","coordinates":"23.1322, 91.9490","upazilla":["Lakshmichhari","Panchhari","Mahalchhari","Dighinala","Manikchhari","Matiranga","Ramgarh","Khagrachhari Sadar"]},{"_id":"lakshmipur","district":"Lakshmipur","coordinates":"22.9447, 90.8282","upazilla":["Raipur","Ramganj","Lakshmipur Sadar","Ramgati","Kamalnagar"]},{"_id":"noakhali","district":"Noakhali","coordinates":"22.8724, 91.0973","upazilla":["Subarnachar","Hatiya","Kabirhat","Noakhali Sadar","Begumganj","Senbagh","Sonaimuri","Chatkhil","Companiganj"]},{"_id":"rangamati","district":"Rangamati","coordinates":"22.7324, 92.2985","upazilla":["Rajasthali","Kawkhali","Belaichhari","Kaptai","Barkal","Juraichhari","Naniyachar","Rangamati Sadar","Bagaichhari","Langadu"]}]';
+                const data = JSON.parse(jsonString)
+                const defaultDis = data.filter(item => item.district === '{{ $expertProfile->district }}')[0]
 
                 let districtSelctize = $('#district').selectize({
                     maxItems: 1,
@@ -139,10 +158,10 @@
                     create: false,
                     labelField: 'district',
                     valueField: 'district',
-                    searchField: 'district',
+                    searchField: ['district', 'id'],
                 });
-                districtSelctize[0].selectize.setValue('Chattogram', true)
-                let thanaSelect = $('#thana').selectize({
+
+                let thanaSelect = $('#thana-select').selectize({
                     maxItems: 1,
                     sortField: 'text',
                     create: false,
@@ -157,31 +176,38 @@
                     valueField: 'name',
                     searchField: ['name', 'id'],
                 });
-                const categorySelectize = categorySelect[0].selectize
 
-                const thanaSelecize = thanaSelect[0].selectize
-                $('#district').on('input', e => {
-                    // grab ups based on district
-                    const jsonString =
-                        '[{"_id":"bandarban","district":"Bandarban","coordinates":"21.8311, 92.3686","upazilla":["Ali Kadam","Thanchi","Lama","Bandarban Sadar","Rowangchhari","Naikhongchhari","Ruma"]},{"_id":"brahmanbaria","district":"Brahmanbaria","coordinates":"23.9608, 91.1115","upazilla":["Akhaura","Nasirnagar","Bancharampur","Sarail","Ashuganj","Bijoynagar","Nabinagar","Kasba","Brahmanbaria Sadar"]},{"_id":"chandpur","district":"Chandpur","coordinates":"23.2513, 90.8518","upazilla":["Haziganj","Faridganj","Matlab Dakshin","Chandpur Sadar","Kachua","Haimchar","Shahrasti","Matlab Uttar"]},{"_id":"chattogram","district":"Chattogram","coordinates":"22.5150, 91.7539","upazilla":["Rangunia","Sitakunda","Boalkhali","Patiya","Banshkhali","Karnaphuli","Lohagara","Hathazari","Mirsharai","Sandwip","Raozan","Chandanaish","Fatikchhari","Anwara","Satkania"]},{"_id":"cox\'s bazar","district":"Cox\'s Bazar","coordinates":"21.5641, 92.0282","upazilla":["Maheshkhali","Chakaria","Cox\'s Bazar Sadar","Ukhia","Pekua","Ramu","Teknaf","Kutubdia"]},{"_id":"cumilla","district":"Cumilla","coordinates":"23.4576, 91.1809","upazilla":["Titas","Monohargonj","Chandina","Cumilla Adarsha Sadar","Meghna","Nangalkot","Chauddagram","Barura","Cumilla Sadar Dakshin","Laksam","Daudkandi","Homna","Burichang","Debidwar","Muradnagar","Brahmanpara","Lalmai"]},{"_id":"feni","district":"Feni","coordinates":"22.9409, 91.4067","upazilla":["Fulgazi","Parshuram","Feni Sadar","Sonagazi","Daganbhuiyan","Chhagalnaiya"]},{"_id":"khagrachari","district":"Khagrachari","coordinates":"23.1322, 91.9490","upazilla":["Lakshmichhari","Panchhari","Mahalchhari","Dighinala","Manikchhari","Matiranga","Ramgarh","Khagrachhari Sadar"]},{"_id":"lakshmipur","district":"Lakshmipur","coordinates":"22.9447, 90.8282","upazilla":["Raipur","Ramganj","Lakshmipur Sadar","Ramgati","Kamalnagar"]},{"_id":"noakhali","district":"Noakhali","coordinates":"22.8724, 91.0973","upazilla":["Subarnachar","Hatiya","Kabirhat","Noakhali Sadar","Begumganj","Senbagh","Sonaimuri","Chatkhil","Companiganj"]},{"_id":"rangamati","district":"Rangamati","coordinates":"22.7324, 92.2985","upazilla":["Rajasthali","Kawkhali","Belaichhari","Kaptai","Barkal","Juraichhari","Naniyachar","Rangamati Sadar","Bagaichhari","Langadu"]}]';
-                    const data = JSON.parse(jsonString)
-                    console.log(data);
-                    const UP = data.filter(item => item.district == e.target.value)[0]
+                const categorySelectize = categorySelect[0].selectize
+                const disControl = districtSelctize[0].selectize
+                const thanaControl = thanaSelect[0].selectize
+
+
+                disControl.on('change', value => {
+                    let dropdown = $('#thana-select')
+                    // .next().find('.selectize-dropdown-content')
+                    const upazillas = data.filter(item => item.district == value)[0]
                         .upazilla
-                    const upazillas = UP.map(item => {
+                    const upMap = upazillas.map(up => {
                         return {
-                            thana: item,
-                            id: item.toLowerCase
+                            id: up,
+                            thana: up
                         }
                     })
-                    thanaSelecize.clear();
-                    thanaSelecize.clearOptions();
-                    thanaSelecize.load(set => set(upazillas));
+                    thanaControl.clear();
+                    thanaControl.clearOptions();
+                    dropdown.children().remove()
+                    upazillas.forEach(thana => {
+                        let option = `
+                        <option  value="${thana}">${thana}
+                            </option>`
+                        dropdown.append(option)
+                    })
+                    thanaControl.load(set => set(upMap));
                 })
 
-                $('#thana').on('change', e => {
+                $('#thana-select').on('change', e => {
                     let thana = e.target.value
-                    let url = '{{ route('ajax.get.branches', 'THANA') }}'
+                    let url = "{{ route('ajax.get.branches', 'THANA') }}"
                     if (thana !== '') {
                         url = url.replace('THANA', thana)
                         $.ajax({
