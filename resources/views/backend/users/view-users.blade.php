@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <x-backend.table.basic :data="$data">
+                        <x-backend.table.basic :items="$data">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -76,9 +76,6 @@
                                 @endforeach
                             </tbody>
                         </x-backend.table.basic>
-                        <div id="myPaginator" class="paginate my-2">
-                            {{ $data?->links('pagination::simple-bootstrap-5')}}
-                        </div>
                     </div> <!-- end card body-->
                 </div> <!-- end card -->
             </div><!-- end col-->

@@ -16,7 +16,7 @@
     @endpush
     <x-backend.ui.breadcrumbs :list="['Backend', 'Client Studio', 'View', 'All']" />
     <x-backend.ui.section-card name="Client Studios">
-        <x-backend.table.basic :data="$data">
+        <x-backend.table.basic :items="$data">
             <thead>
                 <tr>
                     <th>#</th>
