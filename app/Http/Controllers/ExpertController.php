@@ -38,10 +38,18 @@ class ExpertController extends Controller
 
         $experts = ExpertProfile::where(function (Builder $q) use ($columnMap, $request, $paramMap) {
             $posts = $request->query('posts');
+            $district = $request->query('district');
+            $thana = $request->query('thana');
             $expTo = $request->query('experience_to');
             $expFrom = $request->query('experience_from');
             if ($posts) {
                 $q->whereIn('post', $posts);
+            }
+            if ($district) {
+                $q->where('district', $district);
+            }
+            if ($thana) {
+                $q->where('thana', $thana);
             }
             if ($expTo) {
                 $q->where('experience', '<=', $expTo);
@@ -60,8 +68,10 @@ class ExpertController extends Controller
             ->with('expertCategories')
             ->get();
         $posts = ExpertProfile::distinct()->get('post')->pluck('post');
+        $districts = ExpertProfile::distinct()->get('district')->pluck('district');
+        $thanas = ExpertProfile::distinct()->get('thana')->pluck('thana');
         $minExp = ExpertProfile::min('experience');
         $maxExp = ExpertProfile::max('experience');
-        return view('frontend.pages.expert.browse', compact('experts', 'minExp', 'maxExp',  'posts'));
+        return view('frontend.pages.expert.browse', compact('experts', 'minExp', 'maxExp',  'posts','districts', 'thanas'));
     }
 }

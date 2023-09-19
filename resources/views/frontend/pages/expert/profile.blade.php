@@ -7,21 +7,15 @@
                     <img class="rounded-3 w-100" src="{{ useImage($expert->image) }}" alt="{{ $expert->name }}"
                         style="aspect-ratio:1/1; object-fit:cover;">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <h2><b>{{ $expert->name }}</b></h2>
                     <p class="m-0 text-muted">{{ $expert->post }}</p>
                     <p class="mt-3">
                         {!! $expert->bio !!}
                     </p>
+                    <a class="btn btn-primary " href="#">Consult Now</a>
                 </div>
-                <div class="col-md-3">
-                    <div class="d-flex justify-content-center align-items-center flex-column h-100">
-                        <h4><b>Consultation Fee</b></h4>
-                        <p class="m-0"><span class="text-primary">$470 </span>(Including VAT)</p>
-                        <p class="m-0 text-muted">Before <s>$650</s></p>
-                        <a class="btn btn-primary text-capitalize mt-2" href="#">See Doctor Now</a>
-                    </div>
-                </div>
+
             </div>
             <div class="expert-details clearfix mt-4">
                 <div class="p-3 ps-0 me-3" style="float: left">

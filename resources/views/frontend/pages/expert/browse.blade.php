@@ -72,6 +72,38 @@
                                 <div class="card">
                                     <div class="card-header py-1" role="button">
                                         <div class="d-flex justify-content-between align-items-center">
+                                            <div class="">Location</div>
+                                            <span class="mdi mdi-chevron-down"></span>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        @php
+                                            $selectedDistrict = request()->query('district');
+                                            $selectedThana = request()->query('thana');
+                                            $selectedBranch = request()->query('branch');
+                                        @endphp
+                                        <x-form.selectize class="mb-2" id="district" name="district" label="District"
+                                            placeholder="District">
+                                            @foreach ($districts as $district)
+                                                <option value="{{ $district }}" @selected($district === $selectedDistrict)>
+                                                    {{ $district }}</option>
+                                            @endforeach
+                                        </x-form.selectize>
+                                        <x-form.selectize class="mb-2" id="thana" name="thana" label="Thana"
+                                            placeholder="Thana">
+                                            @foreach ($thanas as $thana)
+                                                <option value="{{ $thana }}" @selected($thana === $selectedThana)>
+                                                    {{ $thana }}</option>
+                                            @endforeach
+                                        </x-form.selectize>
+                                        <x-backend.form.select-input id="branch" name="branch" label="Branch"
+                                            placeholder="Choose Branch">
+                                        </x-backend.form.select-input>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header py-1" role="button">
+                                        <div class="d-flex justify-content-between align-items-center">
                                             <div class="">Categories</div>
                                             <span class="mdi mdi-chevron-down"></span>
                                         </div>
@@ -127,6 +159,16 @@
 
                 </div>
                 <div class="col-lg-9">
+                    @if (count(request()->query()) > 0)
+                        <div class="d-flex justify-content-center align-items-center gap-3 p-2 my-2">
+                            <h5 class="mb-0 text-warning"><span class="mdi mdi-alert-outline text-warning font-18"></span>
+                                Filters Applied</h5>
+                            <x-backend.ui.button type="custom" :href="route('expert.browse')"
+                                class="btn-sm btn-outline-danger text-bold">
+                                <span class="mdi mdi-close font-14"></span>
+                                Clear Filters</x-backend.ui.button>
+                        </div>
+                    @endif
                     <div class="row mt-0">
                         @foreach ($experts as $expert)
                             <div class="col-12 col-sm-6 col-xxl-4 mb-3">
@@ -144,10 +186,13 @@
                                         <div class="">
                                             <h2 class="browse_card_name">{{ $expert->name }}</h2>
                                             <span class="badge bg-success p-2">{{ $expert->post }}</span>
-                                            <h4 class="browse_card_exp">Experience: {{ $expert->experience }} years</h4>
-                                            <h5 class="text-primary fw-medium d-flex ">
-                                                @foreach ($expert->expertCategories as $expertCategory)
-                                                    <span>{{ $expertCategory->name }}, </span>
+                                            <h4 class="browse_card_exp mb-0">Experience: {{ $expert->experience }} years
+                                            </h4>
+                                            <h5 class="text-primary fw-medium text-wrap">
+                                                @foreach ($expert->expertCategories as $key => $expertCategory)
+                                                    <span class="p-0">{{ $expertCategory->name }}</span>
+                                                    <span
+                                                        class="p-0 me-1">{{ $key + 1 !== $expert->expertCategories->count() ? ',' : '' }}</span>
                                                 @endforeach
                                             </h5>
                                         </div>
@@ -203,56 +248,35 @@
             })
         })
 
-        // const rangeSlider = (rangeSliderInputs, rangeInputs, progress, priceGap) => {
-        //     rangeInputs.forEach(input => {
-        //         input.addEventListener("input", e => {
-        //             let minVal = parseInt(rangeInputs[0].value)
-        //             let maxVal = parseInt(rangeInputs[1].value)
-
-        //             if ((maxVal - minVal >= priceGap) && maxVal <= 100000) {
-        //                 if (e.target.dataset.key === "input-min") {
-        //                     rangeSliderInputs[0].value = minVal
-        //                     progress.style.left = (minVal / rangeSliderInputs[0].max) * 100 + "%"
-        //                 } else {
-        //                     rangeSliderInputs[1].value = maxVal
-        //                     progress.style.right = 100 - (maxVal / rangeSliderInputs[1].max) * 100 + "%"
-        //                 }
-        //             }
-
-        //         })
-        //     });
-
-        //     rangeSliderInputs.forEach(input => {
-        //         input.addEventListener("input", e => {
-        //             let minVal = parseInt(rangeSliderInputs[0].value)
-        //             let maxVal = parseInt(rangeSliderInputs[1].value)
-
-        //             if (maxVal - minVal < priceGap) {
-        //                 e.target.className === "range-min" ?
-        //                     rangeSliderInputs[0].value = maxVal - priceGap :
-        //                     rangeSliderInputs[1].value = minVal - priceGap
-        //             } else {
-        //                 rangeInputs[0].value = minVal
-        //                 rangeInputs[1].value = maxVal
-        //                 progress.style.left = (minVal / rangeSliderInputs[0].max) * 100 + "%"
-        //                 progress.style.right = 100 - (maxVal / rangeSliderInputs[1].max) * 100 + "%"
-        //             }
-
-        //         })
-        //     });
-        // }
-
-        // const priceRangeSliderInputs = document.querySelectorAll("#price-range-slider-input>input")
-        // const priceRangeInputs = document.querySelectorAll("#price-range-input input")
-        // const priceProgress = document.querySelector("#price-range-slider>.progress")
-        // const pricePriceGap = 1000
-
-        // const experienceRangeSliderInputs = document.querySelectorAll("#experience-range-slider-input>input")
-        // const experienceRangeInputs = document.querySelectorAll("#experience-range-input input")
-        // const experienceProgress = document.querySelector("#experience-range-slider>.progress")
-        // const experienceGap = 1
-
-        // rangeSlider(priceRangeSliderInputs, priceRangeInputs, priceProgress, pricePriceGap)
-        // rangeSlider(experienceRangeSliderInputs, experienceRangeInputs, experienceProgress, experienceGap)
+        $('#thana').on('change', e => {
+            let thana = e.target.value
+            let url = "{{ route('ajax.get.branches', 'THANA') }}"
+            if (thana !== '') {
+                url = url.replace('THANA', thana)
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    success: function(response) {
+                        $('#branch').children().remove()
+                        console.log(response);
+                        console.log($('#branch'));
+                        $('#branch').append(
+                            `<option disabled>No branches available</option>`
+                        )
+                        if (response.length > 0) {
+                            $('#branch').children().remove()
+                            $('#branch').append(
+                                `<option disabled selected>Select Branches</option>`
+                            )
+                            response.forEach(item => {
+                                $('#branch').append(
+                                    `<option value="${item.id}">${item.location}</option>`
+                                )
+                            });
+                        }
+                    }
+                });
+            }
+        })
     </script>
 @endpush

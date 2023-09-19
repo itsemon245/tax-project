@@ -47,7 +47,7 @@
                         <div class="text-success fw-bold mt-1">Selected:
                             @foreach ($expertProfile->expertCategories as $key => $cat)
                                 <span>{{ $cat->name }}</span>
-                                <span>{{ $key + 1 !== $expertProfile->expertCategories->count() ? ',' : '' }}</span>
+                                <span>{{ $key + 1 !== $expertProfile->expertCategories->count() ? ', ' : '' }}</span>
                             @endforeach
                         </div>
                     </div>
