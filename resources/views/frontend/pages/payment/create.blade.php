@@ -48,7 +48,7 @@
                                 <input id="income-{{ $item->id }}" type="checkbox" name="income_source[]"
                                     class="position-absolute top-0 end-0" value="{{ $item->title }}">
                                 <div class="text-dark d-flex flex-column align-items-center ">
-                                    <img class="rounded mb-2" src="{{ useImage($item->image) }}" width="64"
+                                    <img loading="lazy" class="rounded mb-2" src="{{ useImage($item->image) }}" width="64"
                                         height="64" alt="" style="object-fit: cover;">
                                     <h6 class="text-center">{{ $item->title }}</h6>
                                 </div>

@@ -37,7 +37,7 @@
                 @forelse ($data as $key => $item)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td><img src="{{ useImage($item->image) }}" alt="" width="80px"></td>
+                        <td><img loading="lazy" src="{{ useImage($item->image) }}" alt="" width="80px"></td>
                         <td>{{ $item->count }}</td>
                         <td>{{ $item->title }}</td>
                         @can('manage achievement')

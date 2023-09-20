@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-md-5">
                             <div class="h-100">
-                                <img class="w-100 rounded rounded-3" style="aspect-ratio:4/3;"
+                                <img loading="lazy" class="w-100 rounded rounded-3" style="aspect-ratio:4/3;"
                                     src="{{ $course->page_banner }}">
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                     <div class="row mb-2">
                         @foreach ($course->page_learn_more->images as $image)
                             <div class="col-md-4 align-self-center justify-self-center">
-                                <img class="w-75 h-75 rounded rounded-3 shadow" src="{{ $image }}" alt="">
+                                <img loading="lazy" class="w-75 h-75 rounded rounded-3 shadow" src="{{ $image }}" alt="">
                             </div>
                         @endforeach
                     </div>

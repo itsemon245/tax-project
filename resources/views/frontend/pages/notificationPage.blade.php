@@ -33,7 +33,7 @@
                         <div class="card show w-100 mb-3 {{ $isRead ? 'read' : 'unread' }}" role="alert" aria-live="assertive"
                             aria-atomic="true">
                             <div class="card-header bg-primary text-white">
-                                <img src="{{ asset('backend/assets/images/users/user-6.jpg') }}" alt="" height="30"
+                                <img loading="lazy" src="{{ asset('backend/assets/images/users/user-6.jpg') }}" alt="" height="30"
                                     class="me-1 rounded-circle shadow">
                                 <strong class="me-auto">{{ $notification->data['title'] }}</span></strong>
                                 <small>{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</small>
@@ -50,7 +50,7 @@
                         <div class="row">
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
-                                <img src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100vh;" class="img-fluid p-5" alt="Responsive image">
+                                <img loading="lazy" src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100vh;" class="img-fluid p-5" alt="Responsive image">
                             </div>
                             <div class="col-md-2"></div>
                         </div>

@@ -23,7 +23,7 @@
                                 </a>
                             </div>
                         </div>
-                        <img id="{{ $banner->id }}" class="hero-image" src="{{ useImage($banner->image_url) }}"
+                        <img loading="lazy" id="{{ $banner->id }}" class="hero-image" src="{{ useImage($banner->image_url) }}"
                             alt="" crossOrigin="anonymous" style="height: 350px; object-fit: cover;"
                             loading="lazy">
                     </div>

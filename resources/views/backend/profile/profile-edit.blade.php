@@ -17,7 +17,7 @@
                             @enderror"
                                 type="file" id="imagefile" name="profile_img" hidden>
                             <div class="relative">
-                                <img class="border border-5 border-primary" id="liveImage"
+                                <img loading="lazy" class="border border-5 border-primary" id="liveImage"
                                     style=" height:100%; width:100%; border-radius:50%;"
                                     src="{{ useImage($user->image_url) ? useImage($user->image_url) : 'https://api.dicebear.com/6.x/initials/svg?seed=' . auth()->user()->name }}"
                                     alt="{{ auth()->user()->name }}">

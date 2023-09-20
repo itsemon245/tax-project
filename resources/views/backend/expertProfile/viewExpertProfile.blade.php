@@ -58,7 +58,7 @@
                                             <span class="text-muted">At a Glance: {!! $profile->at_a_glance !!}</span>
                                         </td>
                                         <td>
-                                            <img src="{{ useImage($profile->image) }}" alt="image" width="80px"
+                                            <img loading="lazy" src="{{ useImage($profile->image) }}" alt="image" width="80px"
                                                 loading="lazy" class="mb-2" />
                                         </td>
                                         @canany(['update expert', 'delete expert'])

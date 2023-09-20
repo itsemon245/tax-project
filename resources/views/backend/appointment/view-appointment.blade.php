@@ -41,7 +41,7 @@
                 @foreach ($appointments as $key => $appointment)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td><img src="{{ useImage($appointment->image) }}" alt="{{ $appointment->title }}" width="80px"
+                        <td><img loading="lazy" src="{{ useImage($appointment->image) }}" alt="{{ $appointment->title }}" width="80px"
                                 loading="lazy" /></td>
                         <td>{{ Str::limit($appointment->title, 15, '...') }}</td>
                         <td>{{ Str::limit($appointment->sub_title, 15, '...') }}</td>

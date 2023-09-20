@@ -77,7 +77,7 @@
             <div class="review-list">
                 @forelse ($reviews as $review)
                     <div class="d-flex gap-3 align-items-start border p-3 rounded-3 mb-3">
-                        <img src="{{ useImage($review->avatar) }}" alt="img" width="48px"
+                        <img loading="lazy" src="{{ useImage($review->avatar) }}" alt="img" width="48px"
                             height="48px" class=" rounded-circle shadow-4-strong d-block">
                         <div>
                             <div class="mb-2">
@@ -158,7 +158,7 @@
 
                         let review = ` 
                             <div class="d-flex gap-3 align-items-start border p-3 rounded-3 mb-3">
-                                <img src="${data.avatar}" alt="img"
+                                <img loading="lazy" src="${data.avatar}" alt="img"
                                     width="64px" height="64px" class=" rounded-circle shadow-4-strong d-block">
                                 <div>
                                     <div class="mb-2">

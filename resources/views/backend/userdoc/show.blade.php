@@ -13,19 +13,19 @@
                             <div class="col-12" style="max-height: 20rem;height:15rem;">
                                 @switch($file->mimeType)
                                     @case('pdf')
-                                        <img style="object-fit: cover;" class="w-100 h-100 border rounded rounded-3"
+                                        <img loading="lazy" style="object-fit: cover;" class="w-100 h-100 border rounded rounded-3"
                                             src="https://www.associationservicesgroup.net/wp-content/uploads/2017/07/PDF-Placeholder-e1500896019213.png"
                                             alt="{{ $userDoc->name }}">
                                     @break
 
                                     @case('zip')
-                                        <img style="object-fit: cover;" class="w-100 h-100 border rounded rounded-3"
+                                        <img loading="lazy" style="object-fit: cover;" class="w-100 h-100 border rounded rounded-3"
                                             src="{{ asset('images/zip-placeholder.png') }}" alt="{{ $userDoc->name }}">
                                     @break
 
                                     @default
                                         <a href="{{ useImage($file->file) }}">
-                                            <img style="object-fit: cover;" class="w-100 h-100  border rounded rounded-3"
+                                            <img loading="lazy" style="object-fit: cover;" class="w-100 h-100  border rounded rounded-3"
                                                 src="{{ useImage($file->file) }}" alt="{{ $userDoc->name }}">
                                         </a>
                                     @break

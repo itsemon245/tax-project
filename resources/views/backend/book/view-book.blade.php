@@ -46,9 +46,9 @@
                         <td>{{ $book->title }}</td>
                         <td>{{ $book->bookCategory->name }}</td>
                         <td>{{ Str::limit($book->description, 20, '...') }}</td>
-                        <td><a href="{{ useImage($book->sample_pdf) }}"><img src="{{ asset('images/pdf-icon-4.png') }}"
+                        <td><a href="{{ useImage($book->sample_pdf) }}"><img loading="lazy" src="{{ asset('images/pdf-icon-4.png') }}"
                                     alt="" width="40"></a></td>
-                        <td><a href="{{ useImage($book->pdf) }}"><img src="{{ asset('images/pdf-icon-4.png') }}" alt=""
+                        <td><a href="{{ useImage($book->pdf) }}"><img loading="lazy" src="{{ asset('images/pdf-icon-4.png') }}" alt=""
                                     width="40"></a></td>
                         <td>{{ $book->price }}/-</td>
                         @can('manage book')

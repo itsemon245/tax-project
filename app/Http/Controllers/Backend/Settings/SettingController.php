@@ -93,14 +93,14 @@ class SettingController extends Controller
     {
 
         $request->validate([
-            'commission' => 'required|numeric',
-            'withdrawal' => 'required|numeric',
-            'partner_commission' => 'required|numeric',
+            'commission' => 'numeric',
+            'withdrawal' => 'numeric',
+            'partner_commission' => 'numeric',
         ]);
         $array = [
-            'commission' => $request->commission,
-            'withdrawal' => $request->withdrawal,
-            'partner_commission' => $request->partner_commission,
+            'commission' => $request->commission ?? 0,
+            'withdrawal' => $request->withdrawal ?? 0,
+            'partner_commission' => $request->partner_commission ?? 0,
         ];
         if ($this->setting) {
             $this->setting->update(['reference' => $array]);

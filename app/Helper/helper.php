@@ -202,10 +202,12 @@ function picsum(string $seed = null, int $width = 720, int $height = null)
         $height = $width;
     }
     if (!$seed) {
-        $picsum = "https://picsum.photos/$width/$height";
+        // $picsum = "https://picsum.photos/$width/$height";
+        $picsum = "/$width/$height";
     } else {
         $seed = str($seed)->slug();
-        $picsum = "https://picsum.photos/seed/$seed/$width/$height";
+        // $picsum = "https://picsum.photos/seed/$seed/$width/$height";
+        $picsum = "/seed/$seed/$width/$height";
     }
 
     return $picsum;

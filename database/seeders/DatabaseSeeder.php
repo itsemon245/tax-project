@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             BannerSeeder::class,
+            SettingSeeder::class,
             ProductCategorySeeder::class,
             ProductSeeder::class,
             AppointmentSeeder::class,
@@ -45,7 +46,6 @@ class DatabaseSeeder extends Seeder
             BookSeeder::class,
             IndustrySeeder::class,
             AboutSeeder::class,
-            SettingSeeder::class,
             ExpenseSeeder::class,
             AchievementSeeder::class,
         ]);

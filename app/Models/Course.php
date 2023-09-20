@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\Json;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -40,5 +41,14 @@ class Course extends Model
     function exam()
     {
         return $this->hasOne(Exam::class);
+    }
+
+    public function price(): Attribute
+    {
+        $commission = Setting::first(['reference'])->reference->partner_commission;
+        $user = User::find(auth()->id());
+        return Attribute::make(
+            get: fn ($value) => $user?->isPartner() ? $value - ($value * $commission / 100) : $value
+        );
     }
 }

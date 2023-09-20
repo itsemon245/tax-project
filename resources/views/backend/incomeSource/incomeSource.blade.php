@@ -61,7 +61,7 @@
                             @forelse ($data as $key => $item)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td><img src="{{ useImage($item->image) }}" alt="{{ $item->title }}" width="80px">
+                                    <td><img loading="lazy" src="{{ useImage($item->image) }}" alt="{{ $item->title }}" width="80px">
                                     </td>
                                     <td>{{ $item->title }}</td>
                                     <td>

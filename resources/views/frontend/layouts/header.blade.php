@@ -17,7 +17,7 @@
                 </button>
             </div>
             <a href="{{ route('home') }}">
-                <img class="app-logo" style="width:100px; height:40px;" src="{{ useImage($basic->logo) }}"
+                <img loading="lazy" class="app-logo" style="width:100px; height:40px;" src="{{ useImage($basic->logo) }}"
                     alt="Text Act Logo">
             </a>
         </div>

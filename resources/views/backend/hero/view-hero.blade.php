@@ -42,7 +42,7 @@
                                 @foreach ($banners as $key => $banner)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td><img src="{{ useImage($banner->image_url) }}" alt="{{ $banner->title }}"
+                                        <td><img loading="lazy" src="{{ useImage($banner->image_url) }}" alt="{{ $banner->title }}"
                                                 width="80px" loading="lazy"></td>
                                         <td>{{ Str::limit($banner->title, 20, '...') }}</td>
                                         <td>{{ Str::limit($banner->sub_title, 20, '...') }}</td>

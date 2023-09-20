@@ -12,7 +12,7 @@
         <div class="media-scroller snaps-inline">
             @foreach ($reviews as $item)
                 <div class="media-elements">
-                    <img src="{{ useImage($item->avatar) }}" alt="img" width="48px" height="48px"
+                    <img loading="lazy" src="{{ useImage($item->avatar) }}" alt="img" width="48px" height="48px"
                         class=" rounded-circle shadow-4-strong d-block">
                     <div>
                         <div class="mb-2">
@@ -36,7 +36,7 @@
 
             {{-- <div class="media-elements">
                 <div class="p-3 d-flex align-items-center gap-3" style="width: 100%;" >
-                    <img class="rounded rounded-circle image" style="width: 100px;" src="{{ asset('frontend/assets/images/flags/russia.jpg') }}" alt="">
+                    <img loading="lazy" class="rounded rounded-circle image" style="width: 100px;" src="{{ asset('frontend/assets/images/flags/russia.jpg') }}" alt="">
                     <p class="comment">
                         {{ $item->comment }}
                     </p>

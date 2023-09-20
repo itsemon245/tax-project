@@ -21,7 +21,7 @@
                 <div class="col-lg-2 col-md-4 my-2">
                     <div class="bg-primary rounded-3 overflow-hidden">
                         <div class="d-flex bg-white justify-content-around align-items-center p-3">
-                            <img style="width:80px;aspect-ratio:1/1;" class="rounded rounded-circle"
+                            <img loading="lazy" style="width:80px;aspect-ratio:1/1;" class="rounded rounded-circle"
                                 src="{{ useImage($datum->image) }}" alt="{{ $datum->image }}">
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <h2 class="counter-up m-0" style="font-size: 36px; color: #1abcfe; font-weight: 700;">
@@ -48,7 +48,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mb-3 mb-md-0">
-                    <img style="object-fit: cover;" class="rounded shadow w-100 h-100"
+                    <img loading="lazy" style="object-fit: cover;" class="rounded shadow w-100 h-100"
                         src="{{ asset('frontend/assets/images/small/img-6.jpg') }}" />
                 </div>
                 <div class="col-md-6">
@@ -88,7 +88,7 @@
                     <div class="media-elements">
                         <div class="d-flex align-items-start gap-3 p-3" style="width: 100%;">
                             <div>
-                                <img class="border image rounded-circle" src="{{ useImage($partner->image) }}"
+                                <img loading="lazy" class="border image rounded-circle" src="{{ useImage($partner->image) }}"
                                     width="80px" height="80px" style="object-fit: cover" alt="">
 
                             </div>

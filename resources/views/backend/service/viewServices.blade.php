@@ -68,7 +68,7 @@
                                             @foreach (json_decode($service->sections) as $section)
                                                 <div class="card">
                                                     <div class="card-body">
-                                                        <img src="{{ useImage($section->image) }}" alt="image"
+                                                        <img loading="lazy" src="{{ useImage($section->image) }}" alt="image"
                                                             width="80px" loading="lazy" class="mb-2">
                                                         <h3>{{ $section->title }}</h3>
                                                         <p>{{ Str::limit($section->description, 100, '...') }}</p>

@@ -15,7 +15,7 @@
                         @enderror"
                             type="file" id="imagefile" name="avatar" hidden>
                         <div class="relative">
-                            <img class="border rounded rounded-circle border-5 border-primary" id="liveImage"
+                            <img loading="lazy" class="border rounded rounded-circle border-5 border-primary" id="liveImage"
                                 style="height:220px; width:220px;object-fit:cover;aspect-ratio:1;"
                                 src="{{ useImage($user->image_url) }}" alt="">
                             <div class="d-flex justify-content-center">

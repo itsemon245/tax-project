@@ -26,6 +26,7 @@ class SettingSeeder extends Seeder
             'reference' => [
                 'commission' => random_int(5, 30),
                 'withdrawal' => 500,
+                'partner_commission' => 15,
             ],
             'payment' => [
                 [
@@ -40,7 +41,7 @@ class SettingSeeder extends Seeder
                     'method' => 'rocket',
                     'number' => fake()->phoneNumber(),
                 ]
-                ],
+            ],
             'return_links' => [
                 [
                     'title' => fake()->realText(10),

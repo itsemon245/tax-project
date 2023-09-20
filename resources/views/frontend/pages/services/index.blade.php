@@ -32,7 +32,7 @@
                         <div class="w-100 h-100">
                             <div class="d-flex flex-column align-items-center border p-3">
                                 <a href="{{ route('service.view', $service->id) }}">
-                                    <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
+                                    <img loading="lazy" style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
                                         src="{{ useImage($service->image) }}" alt="">
                                 </a>
                                 <a class="text-dark text-capitalize" href="{{ route('service.view', $service->id) }}">

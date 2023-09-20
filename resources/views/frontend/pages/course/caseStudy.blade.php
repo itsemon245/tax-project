@@ -84,7 +84,7 @@
         </div>
         <div class="col-md-4 ">
             <div class=" card overflow-hidden">
-                <img class="shadow-lg" src="{{ useImage($packages[0]->page_image) }}" alt="" width="100%" height="300px">
+                <img loading="lazy" class="shadow-lg" src="{{ useImage($packages[0]->page_image) }}" alt="" width="100%" height="300px">
             </div>
         </div>
     </div>

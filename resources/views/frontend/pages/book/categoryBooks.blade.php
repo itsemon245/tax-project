@@ -35,7 +35,7 @@
                                     <div>
                                         <div
                                             class="d-grid grid-cols-1 mw-md mx-auto pb-10 px-10 bg-primary border border-3 border-gray-800 rounded overflow-hidden">
-                                            <img src="{{ useImage($book->thumbnail) }}" alt="{{ $book->title }}"
+                                            <img loading="lazy" src="{{ useImage($book->thumbnail) }}" alt="{{ $book->title }}"
                                                 style="object-fit: cover; width: 100%" />
 
                                             <div class="mt-auto px-3 pt-3 pb-1 w-100 bg-white">

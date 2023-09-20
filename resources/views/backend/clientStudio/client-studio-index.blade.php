@@ -66,7 +66,7 @@
                         <label for="section-image-${itemCount}">
                                 <p>Section Image ${itemCount}</p>
                                 <input id="section-image-${itemCount}" type="file" name="sections_images[]" hidden>
-                                <img class="w-100 border border-2 border-primary" id="live-${itemCount}"
+                                <img loading="lazy" class="w-100 border border-2 border-primary" id="live-${itemCount}"
                                     src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
                         </label>
                         <p class="mt-2" id="note-${itemCount}">

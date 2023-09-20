@@ -57,7 +57,7 @@
                             <td>
                                 <div class="d-flex align-items-start gap-2">
                                     <div>
-                                        <img src="{{ asset('backend/assets/images/users/user-1.jpg') }}"
+                                        <img loading="lazy" src="{{ asset('backend/assets/images/users/user-1.jpg') }}"
                                             class="rounded rounded-circle" width="48px" height="48px" alt="">
                                     </div>
                                     <div>

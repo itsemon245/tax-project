@@ -11,7 +11,7 @@
         <div class="container px-2">
             <div class="row mb-24">
                 <div class="col-md-4 mb-3 mb-md-0">
-                    <img style="object-fit: cover;" class="rounded w-100 h-100 border" src="https://picsum.photos/seed/random/300"
+                    <img loading="lazy" style="object-fit: cover;" class="rounded w-100 h-100 border" src="https://picsum.photos/seed/random/300"
                         alt="" />
                 </div>
                 <div class="col-md-8">

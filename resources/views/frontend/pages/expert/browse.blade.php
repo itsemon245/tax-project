@@ -151,7 +151,7 @@
                                     <div class="card-body">
                                         <div class="d-flex gap-3 justify-content-center mb-3">
                                             <div class="d-flex flex-column align-items-center">
-                                                <img src="{{ useImage($expert->image) }}" width="64px" height="64px;"
+                                                <img loading="lazy" src="{{ useImage($expert->image) }}" width="64px" height="64px;"
                                                     alt="" class="rounded rounded-circle mb-2"
                                                     style="object-fit: cover;">
                                                 <div class="d-block">

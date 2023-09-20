@@ -82,7 +82,7 @@
                             <td>{{ ++$key }}</td>
                             <td>
                                 <div class="d-flex gap-3">
-                                    <img src="{{ useImage($item->image) }}" alt="{{ $item->name }}" width="64px"
+                                    <img loading="lazy" src="{{ useImage($item->image) }}" alt="{{ $item->name }}" width="64px"
                                         height="64px" class="rounded-circle " style="object-fit: cover;">
                                     <div>
                                         <div class="font-16 fw-bold">{{ $item->name }}</div>

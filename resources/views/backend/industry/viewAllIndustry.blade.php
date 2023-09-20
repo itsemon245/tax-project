@@ -39,7 +39,7 @@
                         <td>{{ ++$key }}</td>
                         <td>
                             <div class="d-flex mb-2">
-                                <img style="width:48px;" src="{{ useImage($industry->image) }}" class="rounded"
+                                <img loading="lazy" style="width:48px;" src="{{ useImage($industry->image) }}" class="rounded"
                                     alt="" />
                                 <h6 class="px-3">{{ $industry->title }}</h6>
                             </div>

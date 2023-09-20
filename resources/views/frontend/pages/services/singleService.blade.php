@@ -47,7 +47,7 @@
                     <div class="row mb-4 justify-content-sm-center gap-sm-3">
                         <h4 class="col-sm-12 col-5 p-0">{{$section->title}}</h4>
                         <div class="col-sm-3 col-6 mb-3 mb-sm-0 p-0 flex-grow-1">
-                            <img class="w-100 rounded" src="{{ useImage($section->image) }}" alt="{{$section->title}}"/>
+                            <img loading="lazy" class="w-100 rounded" src="{{ useImage($section->image) }}" alt="{{$section->title}}"/>
                         </div>
                         <div class="col-sm-8 p-4 bg-secondary rounded">
                             {!! $section->description !!}
@@ -86,7 +86,7 @@
                 <div class="media-elements">
                     <div class="d-flex align-items-center gap-3 p-3" style="width: 100%;">
                         <div>
-                            <img class="border image rounded-circle"
+                            <img loading="lazy" class="border image rounded-circle"
                                 src="{{ asset('backend/assets/images/users/user-8.jpg') }}" alt="">
 
                         </div>

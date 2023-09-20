@@ -154,7 +154,7 @@
                                             <h4 class="">Recent Reviews</h4>
                                             <div class="review-list">
                                                 <div class="d-flex gap-3 align-items-start border p-3 rounded-3 mb-3">
-                                                    <img src="{{ asset('frontend/assets/images/attached-files/img-1.jpg') }}"
+                                                    <img loading="lazy" src="{{ asset('frontend/assets/images/attached-files/img-1.jpg') }}"
                                                         alt="img" width="48px" height="48px"
                                                         class=" rounded-circle shadow-4-strong d-block">
                                                     <div>

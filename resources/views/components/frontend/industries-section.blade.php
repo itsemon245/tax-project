@@ -15,7 +15,7 @@
                         <div class="border bg-light w-100 px-0 px-md-3 px-lg-5 py-3 rounded h-100">
                             <a class="text-dark" href="{{ route('industry.page.show', $industry->id) }}">
                                 <div class="d-flex">
-                                    <img style="width:64px;" src="{{ useImage($industry->image) }}" class="rounded"
+                                    <img loading="lazy" style="width:64px;" src="{{ useImage($industry->image) }}" class="rounded"
                                         alt="{{ $industry->title }}" />
                                     <h6 class="px-3">{{ $industry->title }}</h6>
                                 </div>

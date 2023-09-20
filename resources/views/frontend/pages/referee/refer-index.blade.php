@@ -145,7 +145,7 @@
                             </td>
                             <td>
                                 <div class="d-flex gap-2 align-items-start">
-                                    <img class="rounded rounded-circle" src="{{ useImage($referee->user->image_url) }}"
+                                    <img loading="lazy" class="rounded rounded-circle" src="{{ useImage($referee->user->image_url) }}"
                                         width="48px" height="48px" style="object-fit: cover;" alt="">
                                     <div>
                                         <div class="fw-bold">{{ $referee->user->name }}</div>

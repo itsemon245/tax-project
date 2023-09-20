@@ -65,7 +65,7 @@
                 <div class="col-md-4 col-lg-3 col-sm-6">
                     <div class="d-flex flex-column align-items-center border rounded shadow p-2">
                         <a href="{{ route('service.sub', $sub->id) }}">
-                            <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
+                            <img loading="lazy" style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
                                 src="{{ useImage($sub->image) }}" alt="">
                         </a>
                         <a class="text-dark text-capitalize" href="{{ route('service.sub', $sub->id) }}">

@@ -123,7 +123,7 @@
 
                         let review = ` 
                             <div class="d-flex gap-3 align-items-start border p-3 rounded-3 mb-3">
-                                <img src="${data.avatar}" alt="img"
+                                <img loading="lazy" src="${data.avatar}" alt="img"
                                     width="64px" height="64px" class=" rounded-circle shadow-4-strong d-block">
                                 <div>
                                     <div class="mb-2">

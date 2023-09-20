@@ -43,7 +43,7 @@
                                         <td>{{ $CaseStudy->caseStudyCategory->case_study_category ?? '' }}</td>
                                         <td>{{ $CaseStudy->caseStudyPackage->name }}</td>
                                         <td>{{ $CaseStudy->name }}</td>
-                                        <td><img src="{{ useImage($CaseStudy->image) }}" alt="" width="80px" /></td>
+                                        <td><img loading="lazy" src="{{ useImage($CaseStudy->image) }}" alt="" width="80px" /></td>
                                         <td>{!! Str::limit($CaseStudy->description, 10, '...') !!}</td>
                                         <td>
                                             <a href="{{ route('case-study.edit', $CaseStudy->id) }}"

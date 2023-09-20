@@ -13,7 +13,7 @@
                     <div class="row align-items-cetner justify-content-center mx-3">
                         <div class="col-md-5">
                             <div class="row justify-content-center">
-                                <img style="max-width:350px;"
+                                <img loading="lazy" style="max-width:350px;"
                                     src="{{ useImage($item->image) }}" alt="">
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div>
                                     <a class="text-capitalize a d-flex align-items-center gap-2" href="{{route('expert.browse')}}">
-                                        <img src="{{ asset('frontend/assets/icons/tax-expert-icon.svg') }}"
+                                        <img loading="lazy" src="{{ asset('frontend/assets/icons/tax-expert-icon.svg') }}"
                                             alt="">
                                         Tax Expert
                                     </a>

@@ -15,7 +15,7 @@
                         <span class="mdi mdi-close"></span>
                     </button>
                     <a href="/">
-                        <img style="max-width:120px;" src="{{ asset('frontend/assets/images/logo/app.png') }}"
+                        <img loading="lazy" style="max-width:120px;" src="{{ asset('frontend/assets/images/logo/app.png') }}"
                             alt="Text Act Logo">
                     </a>
                 </div>
@@ -151,7 +151,7 @@
                             <span class="mdi mdi-close"></span>
                         </button>
                         <a href="{{ route('home') }}">
-                            <img style="max-width:120px;" src="{{ asset('frontend/assets/images/logo/app.png') }}"
+                            <img loading="lazy" style="max-width:120px;" src="{{ asset('frontend/assets/images/logo/app.png') }}"
                                 alt="Text Act Logo">
                         </a>
                     </div>

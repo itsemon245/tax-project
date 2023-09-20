@@ -38,7 +38,7 @@
                         class="bg-light d-flex justify-content-center align-items-center border rounded position-relative">
                         <input type="checkbox" name="income_source" class="position-absolute top-0 end-0">
                         <div class="text-dark d-flex flex-column align-items-center">
-                            <img src="{{ asset('frontend/assets/images/Frame.png') }}" width="80" height="60"
+                            <img loading="lazy" src="{{ asset('frontend/assets/images/Frame.png') }}" width="80" height="60"
                                 alt="">
                             <h6 class="text-center">Lorem Ipsum</h6>
                         </div>

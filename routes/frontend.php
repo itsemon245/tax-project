@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Task;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
@@ -11,10 +12,11 @@ use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
+use App\Http\Controllers\PartnerRequestController;
 use App\Http\Controllers\UserAppointmentController;
+
 use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\Frontend\IndustryController;
-
 use App\Http\Controllers\ProjectDiscussionController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -23,7 +25,7 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use App\Http\Controllers\PartnerRequestController;
+use App\Models\CaseStudy;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,8 +135,9 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('test', function () {
-    $task = Task::first();
-    dd('test');
+
+    $product = CaseStudy::where('price', '>', 0)->first('price');
+    dd(auth()->user()->isPartner(), $product->price);
 });
 
 Route::get('/test-mcq', [MCQController::class, 'index'])->name('mcq.index');

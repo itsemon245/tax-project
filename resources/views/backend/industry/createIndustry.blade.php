@@ -91,7 +91,7 @@
                         <label for="section-image-${itemCount}" class="mb-0">
                                 <p class="mb-0 form-label">Section Image ${itemCount}</p>
                                 <input id="section-image-${itemCount}" class="custom-input" data-index="${itemCount}" type="file" name="section_images[]" hidden>
-                                <img class="w-100 border border-2 border-primary" id="live-${itemCount}"
+                                <img loading="lazy" class="w-100 border border-2 border-primary" id="live-${itemCount}"
                                     src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
                         </label>
                         <p class="mt-2" id="note-${itemCount}">

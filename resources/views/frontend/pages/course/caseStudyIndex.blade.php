@@ -158,7 +158,7 @@
                                 <div class="d-flex flex-column justify-content-between border border-2 rounded"
                                     style="overflow:hidden;">
                                     <div class="px flex-grow-1">
-                                        <img src="{{ useImage($caseStudy->image) }}" class="mb-2" style="max-width:100%;"
+                                        <img loading="lazy" src="{{ useImage($caseStudy->image) }}" class="mb-2" style="max-width:100%;"
                                             alt="">
                                         <h4 class="fs-5 mb-1 text-center text-dark text-uppercase">
                                             <b>{{ $caseStudy->name }}</b>

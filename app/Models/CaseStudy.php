@@ -35,18 +35,21 @@ class CaseStudy extends Model
     }
 
 
-    /**
-     * Interact with the models billing_type
-     */
-    protected function price(): Attribute
+    public function price(): Attribute
     {
+        $commission = Setting::first(['reference'])->reference->partner_commission;
+        $user = User::find(auth()->id());
         return Attribute::make(
-            get: function (int $value) {
-                if ($value === 0) {
+            get: function ($value) use ($commission, $user) {
+                if ($value > 0) {
+                    $value = $user?->isPartner() ? $value - ($value * $commission / 100) : $value;
+                } else {
                     $value = 'Free';
                 }
+
                 return $value;
             }
+
         );
     }
 }

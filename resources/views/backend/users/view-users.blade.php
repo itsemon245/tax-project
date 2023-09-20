@@ -44,7 +44,7 @@
                                 @foreach ($data as $key => $user)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td><img src="{{ useImage($user->image_url) }}" alt="{{ $user->user_name }}"
+                                        <td><img loading="lazy" src="{{ useImage($user->image_url) }}" alt="{{ $user->user_name }}"
                                                 width="80px" loading="lazy"></td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>

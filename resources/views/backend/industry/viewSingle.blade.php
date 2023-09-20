@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-md-4">
                 <h4>Logo: </h4>
-                <img src="{{ useImage($industry->image) }}" class="w-100" alt="">
+                <img loading="lazy" src="{{ useImage($industry->image) }}" class="w-100" alt="">
             </div>
             <div class="col-md-8">
                 <div class="row">

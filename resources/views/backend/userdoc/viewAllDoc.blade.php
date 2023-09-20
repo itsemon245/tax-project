@@ -64,7 +64,7 @@
                                     <a href="{{ useImage($file->file) }}" class="avatar-group-item"
                                         data-bs-container="#tooltip-container" data-bs-toggle="tooltip"
                                         data-bs-placement="top">
-                                        <img src="{{ useImage($file->file) }}"
+                                        <img loading="lazy" src="{{ useImage($file->file) }}"
                                             class="rounded-circle border border-light border-3 avatar-md" alt="friend">
                                     </a>
                                 @endforeach

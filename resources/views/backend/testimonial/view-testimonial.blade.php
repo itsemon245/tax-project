@@ -32,7 +32,7 @@
                 @foreach ($testimonials as $key => $testimonial)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td><img src="{{ useImage($testimonial->avatar) }}" alt="{{ $testimonial->title }}" width="80px"
+                        <td><img loading="lazy" src="{{ useImage($testimonial->avatar) }}" alt="{{ $testimonial->title }}" width="80px"
                                 loading="lazy" /></td>
                         <td>{{ $testimonial->name }}</td>
                         <td>{{ Str::limit($testimonial->comment, 20, '...') }}</td>

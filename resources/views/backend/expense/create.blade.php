@@ -83,11 +83,11 @@
                                 </td>
                                 <td>
                                     @if ($expense->type === 'credit')
-                                        <img id="voucher-img" src="{{ asset('images/Credit-Voucher.png') }}"
+                                        <img loading="lazy" id="voucher-img" src="{{ asset('images/Credit-Voucher.png') }}"
                                             class="w-75 rounded rounded-3 float-end"
                                             style="max-width: 300px;height:70%;margin-top:-2rem;" alt="">
                                     @else
-                                        <img id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
+                                        <img loading="lazy" id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
                                             class="w-75 rounded rounded-3 float-end"
                                             style="max-width: 300px;height:70%;margin-top:-2rem;" alt="">
                                     @endif
@@ -193,10 +193,10 @@
                     </div>
                     <div class="col-md-6 col-xl-4 mb-2">
                         @if ($expense->type === 'credit')
-                            <img id="voucher-img" src="{{ asset('images/Credit-Voucher.png') }}"
+                            <img loading="lazy" id="voucher-img" src="{{ asset('images/Credit-Voucher.png') }}"
                                 class="w-75 rounded rounded-3 shadow" alt="">
                         @else
-                            <img id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
+                            <img loading="lazy" id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
                                 class="w-75 rounded rounded-3 shadow" alt="">
                         @endif
                     </div>
@@ -283,7 +283,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-xl-4 mb-2">
-                        <img id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
+                        <img loading="lazy" id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
                             class="w-100 h-100 w-xl-75 rounded rounded-3 float-end" style="max-width: 300px;" alt="">
                     </div>
                     <div class="row justify-content-center mt-3 px-0">

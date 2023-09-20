@@ -13,14 +13,14 @@
                             <div class="auth-logo">
                                 <a href="{{ route('login') }}" class="logo logo-dark text-center">
                                     <span class="logo-lg">
-                                        <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
+                                        <img loading="lazy" src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
                                             height="22">
                                     </span>
                                 </a>
 
                                 <a href="{{ route('login') }}" class="logo logo-light text-center">
                                     <span class="logo-lg">
-                                        <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
+                                        <img loading="lazy" src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
                                             height="22">
                                     </span>
                                 </a>

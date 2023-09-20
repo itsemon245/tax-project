@@ -145,4 +145,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(TaxCalculator::class);
     }
+
+    function isPartner(): bool
+    {
+        return $this->hasRole('partner');
+    }
 }

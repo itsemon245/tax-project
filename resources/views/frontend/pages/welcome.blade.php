@@ -54,7 +54,7 @@
                 <div class="col-md-4 col-lg-3 col-sm-6">
                     <div class="d-flex flex-column align-items-center border rounded shadow p-2">
                         <a href="{{ route('service.sub', $sub->id) }}">
-                            <img style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
+                            <img loading="lazy" style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
                                 src="{{ useImage($sub->image) }}" alt="">
                         </a>
                         <a class="text-dark text-capitalize" href="{{ route('service.sub', $sub->id) }}">
@@ -79,7 +79,7 @@
                     <div class="card rounded-2">
                         <div class="card-body p-2">
                             <div class="d-flex gap-3 align-items-center">
-                                <img class="rounded rounded-2" style="width:80px;height:80px;"
+                                <img loading="lazy" class="rounded rounded-2" style="width:80px;height:80px;"
                                     src="{{ useImage($item->image) }}" alt="">
                                 <div class="d-flex flex-column justify-content-starr align-items-start">
                                     <h2 class="counter-up m-0 text-primary" style="font-size: 32px; font-weight: 700;">

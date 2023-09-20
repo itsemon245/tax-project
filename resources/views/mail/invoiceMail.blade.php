@@ -96,7 +96,7 @@
             <tr>
                 <td colspan="4">
                     <div style="max-width: 1920px;margin-bottom:1.5rem;">
-                        <img src="{{ useImage($invoice->header_image) }}"
+                        <img loading="lazy" src="{{ useImage($invoice->header_image) }}"
                             style="width:100%;height:25vw;object-fit:cover;">
                     </div>
                 </td>

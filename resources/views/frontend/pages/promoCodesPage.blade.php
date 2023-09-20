@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-8">
-                        <img src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100vh;" class="img-fluid p-5" alt="Responsive image">
+                        <img loading="lazy" src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100vh;" class="img-fluid p-5" alt="Responsive image">
                     </div>
                     <div class="col-md-2"></div>
                 </div>

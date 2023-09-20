@@ -52,7 +52,7 @@
                                 @foreach ($infos as $key => $info)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td><img src="{{ useImage($info->image_url) }}" alt="{{ $info->title }}"
+                                        <td><img loading="lazy" src="{{ useImage($info->image_url) }}" alt="{{ $info->title }}"
                                                 width="80px" loading="lazy"></td>
                                         <td>{{ Str::limit($info->title, 20, '...') }}</td>
                                         <td>{{ $info->section_id === 1 ? 'Section 1' : 'Section 2' }}</td>

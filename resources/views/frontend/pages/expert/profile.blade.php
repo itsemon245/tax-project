@@ -4,7 +4,7 @@
         <div class="container shadow p-3 rounded-3 bg-white mt-5">
             <div class="row align-items-start">
                 <div class="col-md-3 mb-3 mb-md-0">
-                    <img class="rounded-3 w-100" src="{{ useImage($expert->image) }}" alt="{{ $expert->name }}"
+                    <img loading="lazy" class="rounded-3 w-100" src="{{ useImage($expert->image) }}" alt="{{ $expert->name }}"
                         style="aspect-ratio:1/1; object-fit:cover;">
                 </div>
                 <div class="col-md-9">

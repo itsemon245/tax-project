@@ -119,7 +119,7 @@
                 @csrf
                 @method('PATCH')
                 <div>
-                    <img src="" alt="">
+                    <img loading="lazy" src="" alt="">
                     <div class="d-flex border mb-5 justify-content-center">
                         <x-backend.form.image-input name="header_image" :image="$invoice->header_image"
                             class="d-flex justify-content-center" style="aspect-ratio:4/1;object-fit:contain;" />
