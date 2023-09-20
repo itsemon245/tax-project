@@ -38,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
             'ExpertProfile' => 'App\Models\ExpertProfile',
             'Book' => 'App\Models\Book',
             'Course' => 'App\Models\Course',
+            'CaseStudy' => 'App\Models\CaseStudy',
+            'CaseStudyPackage' => 'App\Models\CaseStudyPackage',
             'User' => 'App\Models\User',
             'Industry' => 'App\Models\Industry',
             'About' => 'App\Models\About',

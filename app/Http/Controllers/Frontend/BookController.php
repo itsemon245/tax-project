@@ -17,8 +17,26 @@ class BookController extends Controller
 {
     public function index(Request $request, int $id)
     {
+
         $bookCategory = BookCategory::find($id, ['name', 'id']);
-        $books = $bookCategory->booksWithRatings()->simplePaginate(30);
+        $books = Book::where('book_category_id', $id)
+            ->where(function (Builder $q) use ($request) {
+                $minPrice = (int)$request->query('price_from');
+                $maxPrice = (int)$request->query('price_to');
+                $author = $request->query('author');
+                if ($minPrice) {
+                    $q->where('price', '>=', $minPrice, 'or');
+                }
+                if ($maxPrice) {
+                    $q->where('price', '<=', $maxPrice, 'or');
+                }
+                if ($author) {
+                    $q->where('author', 'like', $author);
+                }
+            })
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->simplePaginate(30);
         $reviews = Review::with('user')->latest()->limit(10)->get();
         $authors = Book::distinct()->get('author')->pluck('author');
         $minPrice = Book::min('price');

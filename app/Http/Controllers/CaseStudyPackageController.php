@@ -22,20 +22,7 @@ class CaseStudyPackageController extends Controller
             'except' => ['index']
         ]);
     }
-    function caseStudy()
-    {
-
-        $packages = CaseStudyPackage::latest()->paginate(20);
-        return view('frontend.pages.course.caseStudy', compact('packages'));
-    }
-
-    public function index(int $caseStudyPackage)
-    {
-        $caseStudies = CaseStudy::latest()->paginate(18);
-        $caseStudycategories = CaseStudyCategory::latest()->get();
-        $caseStudyPackages = CaseStudyPackage::latest()->get();
-        return view('frontend.pages.course.caseStudyIndex', compact('caseStudyPackages', 'caseStudycategories', 'caseStudies'));
-    }
+    
 
     /**
      * Display a listing of the resource.

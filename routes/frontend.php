@@ -2,6 +2,7 @@
 
 use App\Models\Task;
 use App\Models\Product;
+use App\Models\CaseStudy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
@@ -13,11 +14,12 @@ use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\PartnerRequestController;
-use App\Http\Controllers\UserAppointmentController;
 
+use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\Frontend\IndustryController;
 use App\Http\Controllers\ProjectDiscussionController;
+use App\Http\Controllers\Frontend\CaseStudyController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\User\UserDocController;
@@ -25,7 +27,6 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use App\Models\CaseStudy;
 
 /*
 |--------------------------------------------------------------------------
@@ -108,10 +109,12 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
     Route::get('index', 'index')->name('index');
     Route::get('{course}/show', 'show')->name('show');
     Route::get('course/{course}/videos/', 'videos')->name('videos');
-    Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyPackageController::class)->group(function () {
+    Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
         Route::get('/', 'caseStudy')->name('page');
         Route::get('index/{package_id}', 'index')->name('index');
-        Route::get('show/{case_study_id}', 'show')->name('show');
+        Route::get('show/{caseStudy}', 'show')->name('show');
+        Route::post('download/{caseStudy}', 'download')->name('download');
+        Route::patch('like/{caseStudy}', 'like')->name('like');
     });
 });
 

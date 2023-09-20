@@ -26,7 +26,7 @@ class CaseStudyFactory extends Factory
             'likes' => 0,
             'downloads' => 0,
             'price' => 0,
-            'download_link' => 1,
+            'download_link' => picsum($name),
         ];
     }
 }

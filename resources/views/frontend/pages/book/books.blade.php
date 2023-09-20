@@ -6,7 +6,17 @@
     <x-frontend.hero-section :banners="$banners" />
 
     <section class="my-3 mx-xl-5 mx-lg-3 p-2">
-        <div class="text-center fs-4 fw-medium text-dark my-3">Showing all books from {{ $bookCategory->name }}</div>
+        @if (count(request()->query()) > 0)
+            <div class="d-flex justify-content-center align-items-center gap-3 p-2 my-2">
+                <h5 class="mb-0 text-warning"><span class="mdi mdi-alert-outline text-warning font-18"></span>
+                    Filters Applied</h5>
+                <x-backend.ui.button type="custom" :href="route('books.view.all', $bookCategory->id)" class="btn-sm btn-outline-danger text-bold">
+                    <span class="mdi mdi-close font-14"></span>
+                    Clear Filters</x-backend.ui.button>
+            </div>
+        @else
+            <div class="text-center fs-4 fw-medium text-dark my-3">Showing all books from {{ $bookCategory->name }}</div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <button onclick="filter.clickHandler(event)" id="filter-menu-btn" data-target="#filter-menu"
@@ -16,12 +26,12 @@
                 </button>
             </div>
             <div id="filter-menu" class="col-lg-3 d-none d-lg-block ">
-                <form action="{{ route('expert.browse') }}" method="get">
+                <form action="{{ route('books.view.all', $bookCategory->id) }}" method="get">
                     <div class="filter-menu p-3 shadow bg-light rounded-2 ">
                         <div class="filters">
-                            <x-range-slider class="" tooltips="false" name="experience" id="experience"
-                                :from="$minPrice" :to="$maxPrice" :min-value="request()->query('experience_from')" :max-value="request()->query('experience_to')" step='1'
-                                icon="Yrs" :is-dropdown="true"></x-range-slider>
+                            <x-range-slider class="" tooltips="false" name="price" id="price" :from="$minPrice"
+                                :to="$maxPrice" :min-value="request()->query('price_from')" :max-value="request()->query('price_to')" step='1' icon="Yrs"
+                                :is-dropdown="true"></x-range-slider>
 
                             <div class="card">
                                 <div class="card-header py-1" role="button">
@@ -32,17 +42,15 @@
                                 </div>
                                 <div class="card-body">
                                     @php
-                                        $authorCollection = collect(request()->query('authors'));
+                                        $slectedAuthor = request()->query('author');
                                     @endphp
-                                    @foreach ($authors as $author)
-                                        <label class="filter form-check-label" for="{{ str($author)->slug() }}">
-                                            <input type="checkbox" class="form-check-input" name="authors[]"
-                                                value="{{ $author }}" id="{{ str($author)->slug() }}"
-                                                @checked($authorCollection->contains(fn($val) => $val === $author)) />
-                                            <span class="ms-3">{{ $author }}</span>
-                                        </label>
-                                        <br>
-                                    @endforeach
+                                    <x-form.selectize id="author" name="author" label="Filter by Author"
+                                        placeholder="Select Author" :can-create="false">
+                                        @foreach ($authors as $author)
+                                            <option value="{{ $author }}" @selected($author === $slectedAuthor)>
+                                                {{ $author }}</option>
+                                        @endforeach
+                                    </x-form.selectize>
                                 </div>
                             </div>
 
