@@ -30,7 +30,6 @@ class PaymentController extends Controller
     }
     public function store(Request $request)
     {
-        //dd($request->all());
         $request->validate([
             'purchasable_type' => 'required',
             'purchasable_id' => 'required',
