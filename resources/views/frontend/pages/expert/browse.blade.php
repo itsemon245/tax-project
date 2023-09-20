@@ -31,44 +31,20 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <button id="filter-menu-btn" data-target="closed" class="btn btn-secondary rounded-1 d-lg-none my-3">
+                    <button onclick="filter.clickHandler(event)" id="filter-menu-btn" data-target="#filter-menu"
+                        class="btn btn-secondary text-dark rounded-1 d-lg-none mb-3 fw-medium waves-effect waves-dark">
                         <span class="mdi mdi-filter font-14"></span>
                         Filter
                     </button>
                 </div>
-                <div class="col-lg-3 ">
+                <div id="filter-menu" class="col-lg-3 d-none d-lg-block ">
                     <form action="{{ route('expert.browse') }}" method="get">
                         <div class="filter-menu p-3 shadow bg-light rounded-2 ">
                             <div class="filters">
                                 <x-range-slider class="" tooltips="false" name="experience" id="experience"
                                     :from="$minExp" :to="$maxExp" :min-value="request()->query('experience_from')" :max-value="request()->query('experience_to')" step='1'
                                     icon="Yrs" :is-dropdown="true"></x-range-slider>
-                                {{-- <div class="experience-filter my-2">
-                                <div class="label mb-2">
-                                    <span>Experience</span>
-                                </div>
-                                <div class="range-input d-flex w-100 justify-content-between" id="experience-range-input">
-                                    <div class="field w-100 d-flex align-items-center">
-                                        <span>Min</span>
-                                        <input type="number" class="form-control input-min ms-2" data-key="input-min"
-                                            value="0">
-                                    </div>
-                                    <div class="field w-100 d-flex align-items-center ms-1">
-                                        <span>Max</span>
-                                        <input type="number" class="form-control input-max ms-2" data-key="input-max"
-                                            value="25">
-                                    </div>
-                                </div>
-                                <div class="range-slider mt-3" id="experience-range-slider">
-                                    <div class="progress"></div>
-                                </div>
-                                <div class="range-slider-input position-relative" id="experience-range-slider-input">
-                                    <input type="range" name="minexperience" class="range-min" min="0"
-                                        max="25" value="0">
-                                    <input type="range" name="minexperience" class="range-max" min="0"
-                                        max="25" value="25">
-                                </div>
-                            </div> --}}
+
                                 <div class="card">
                                     <div class="card-header py-1" role="button">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -156,7 +132,6 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
                 <div class="col-lg-9">
                     @if (count(request()->query()) > 0)
@@ -169,75 +144,74 @@
                                 Clear Filters</x-backend.ui.button>
                         </div>
                     @endif
-                    <div class="row mt-0">
+                    <div class="row">
                         @foreach ($experts as $expert)
-                            <div class="col-12 col-sm-6 col-xxl-4 mb-3">
-                                <div class="browse_content_wrapper h-100">
-                                    <div class="d-flex gap-3 justify-content-center mb-3">
-                                        <div class="d-flex flex-column align-items-center">
-                                            <img src="{{ useImage($expert->image) }}" width="64px" height="64px;"
-                                                alt="" class="rounded rounded-circle mb-2">
-                                            <div class="d-block">
-                                                <x-avg-review-stars icon-font="font-14" :avg="$expert->reviews_avg_rating" />
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xxl-3 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex gap-3 justify-content-center mb-3">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <img src="{{ useImage($expert->image) }}" width="64px" height="64px;"
+                                                    alt="" class="rounded rounded-circle mb-2"
+                                                    style="object-fit: cover;">
+                                                <div class="d-block">
+                                                    <x-avg-review-stars icon-font="font-14" :avg="$expert->reviews_avg_rating" />
+                                                    <div>Rating: {{ $expert->reviews_avg_rating ?? 0 }}</div>
+                                                </div>
                                             </div>
-                                            <div class="text-center">{{ $expert->reviews_avg_rating ?? 0 }} Ratings</div>
-                                            <div class="text-center">{{ $expert->reviews_count }} Reviews</div>
+                                            <div class="">
+                                                <div class="font-lg-18 fw-bold">{{ $expert->name }}</div>
+                                                <span
+                                                    class="badge bg-success text-wrap">{{ str($expert->post)->limit(15, '...') }}</span>
+                                                <div class="mt-1 fw-medium">Experience: {{ $expert->experience }} years
+                                                </div>
+                                                <h5 class="text-primary fw-medium" style="text-wrap:balance!important;">
+                                                    @foreach ($expert->expertCategories as $key => $expertCategory)
+                                                        {{ $expertCategory->name }}
+                                                        @if ($key + 1 !== $expert->expertCategories->count())
+                                                            ,
+                                                        @endif
+                                                    @endforeach
+                                                </h5>
+                                            </div>
                                         </div>
-                                        <div class="">
-                                            <h2 class="browse_card_name">{{ $expert->name }}</h2>
-                                            <span class="badge bg-success p-2">{{ $expert->post }}</span>
-                                            <h4 class="browse_card_exp mb-0">Experience: {{ $expert->experience }} years
-                                            </h4>
-                                            <h5 class="text-primary fw-medium text-wrap">
-                                                @foreach ($expert->expertCategories as $key => $expertCategory)
-                                                    <span class="p-0">{{ $expertCategory->name }}</span>
-                                                    <span
-                                                        class="p-0 me-1">{{ $key + 1 !== $expert->expertCategories->count() ? ',' : '' }}</span>
-                                                @endforeach
-                                            </h5>
+                                        <div class="row justify-content-center">
+                                            <div class="col-12">
+                                                <a href="{{ route('payment.create', ['model' => ExpertProfile::class, 'id' => $expert->id]) }}"
+                                                    class="btn btn-primary fw-medium  w-100 mb-2">
+                                                    Consultation
+                                                </a>
+                                            </div>
+                                            <div class="col-12">
+                                                <a href="{{ route('expert.profile', $expert->id) }}"
+                                                    class="btn btn-outline-primary fw-medium w-100 mb-2">Profile</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="d-flex gap-3 justify-content-center">
-                                        <a href="{{ route('expert.profile', $expert->id) }}"
-                                            class="btn btn-outline-primary fw-medium">View
-                                            Profile</a>
-                                        <a href="{{ route('payment.create', ['model' => ExpertProfile::class, 'id' => $expert->id]) }}"
-                                            class="btn btn-primary fw-medium">
-                                            Consultation
-                                        </a>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+                        <div class="col-12 mt-2">
+                            <div class="paginator float-end">
+                                {{ $experts->links() }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    @php
-        $reviews = \App\Models\Review::with('user')
-            ->latest()
-            ->limit(10)
-            ->get();
-        
-    @endphp
-
     <x-frontend.testimonial-section :testimonials="$reviews">
     </x-frontend.testimonial-section>
 @endsection
 
+@pushOnce('customJs')
+    <script src="{{ asset('frontend/filter.js') }}"></script>
+@endPushOnce
+
 @push('customJs')
     <script>
-        $('#filter-menu-btn').click(e => {
-            if (e.target.dataset.target === 'closed') {
-                e.target.dataset.target = 'opened'
-                $('.filter-menu').css('transform', 'translateX(0)');
-            } else {
-                e.target.dataset.target = 'closed'
-                $('.filter-menu').css('transform', 'translateX(-1000px)');
-            }
-        })
         const headers = $('form .card-header')
         headers.each((i, header) => {
             $(header).click(e => {

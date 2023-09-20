@@ -5,42 +5,94 @@
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
 
-    <section class="container-lg my-5">
-        <div class="text-center fs-5 fw-bold text-primary my-3">Showing all books from {{ $bookCategory->name }}</div>
+    <section class="my-3 mx-xl-5 mx-lg-3 p-2">
+        <div class="text-center fs-4 fw-medium text-dark my-3">Showing all books from {{ $bookCategory->name }}</div>
         <div class="row">
-            @foreach ($books as $book)
-                <div class="col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-3">
-                    <a href="{{ route('books.show', $book->id) }}" class="h-100">
-                        <div>
-                            <div
-                                class="d-grid grid-cols-1 mw-md mx-auto pb-10 px-10 bg-primary border border-3 border-gray-800 rounded overflow-hidden">
-                                <img src="{{ useImage($book->thumbnail) }}" alt="{{ $book->title }}"
-                                    style="object-fit: cover; width: 100%" />
+            <div class="col-12">
+                <button onclick="filter.clickHandler(event)" id="filter-menu-btn" data-target="#filter-menu"
+                    class="btn btn-secondary text-dark rounded-1 d-lg-none mb-3 fw-medium waves-effect waves-dark">
+                    <span class="mdi mdi-filter font-14"></span>
+                    Filter
+                </button>
+            </div>
+            <div id="filter-menu" class="col-lg-3 d-none d-lg-block ">
+                <form action="{{ route('expert.browse') }}" method="get">
+                    <div class="filter-menu p-3 shadow bg-light rounded-2 ">
+                        <div class="filters">
+                            <x-range-slider class="" tooltips="false" name="experience" id="experience"
+                                :from="$minPrice" :to="$maxPrice" :min-value="request()->query('experience_from')" :max-value="request()->query('experience_to')" step='1'
+                                icon="Yrs" :is-dropdown="true"></x-range-slider>
 
-                                <div class="mt-auto px-3 pt-3 pb-1 w-100 bg-white">
-                                    <h4 class="fs-5 mb-1 text-center text-dark text-uppercase">
-                                        <b>{{ $book->title }}</b>
-                                    </h4>
-                                    <p class="text-center text-dark mt-3" style="font-size: 13px; line-height: 16px;">
-                                        {!! str($book->description)->limit(100, '<span class="text-danger font-20 fw-bold">...</span>') !!}
-                                    </p>
+                            <div class="card">
+                                <div class="card-header py-1" role="button">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="">Authors</div>
+                                        <span class="mdi mdi-chevron-down"></span>
+                                    </div>
                                 </div>
-                                <div class="mt-auto px-2 d-flex justify-content-between align-items-center py-2 w-100"
-                                    style='background: rgba(14, 14, 14, 0.758);'>
-                                    <x-avg-review-stars :avg="$book->reviews_avg_rating" icon-font="font-16" class="text-white" />
-                                    <p class="mb-0 text-white fw-mideum">
-                                        {{ $book->price }}
-                                        <span class="mdi mdi-currency-bdt font-16"></span>
-                                    </p>
+                                <div class="card-body">
+                                    @php
+                                        $authorCollection = collect(request()->query('authors'));
+                                    @endphp
+                                    @foreach ($authors as $author)
+                                        <label class="filter form-check-label" for="{{ str($author)->slug() }}">
+                                            <input type="checkbox" class="form-check-input" name="authors[]"
+                                                value="{{ $author }}" id="{{ str($author)->slug() }}"
+                                                @checked($authorCollection->contains(fn($val) => $val === $author)) />
+                                            <span class="ms-3">{{ $author }}</span>
+                                        </label>
+                                        <br>
+                                    @endforeach
                                 </div>
                             </div>
+
+                            <div class="d-flex gap-3 justify-content-center mt-3">
+                                <x-backend.ui.button type="custom" :href="route('books.view.all', $bookCategory->id)"
+                                    class="btn-outline-primary mb-0">Clear</x-backend.ui.button>
+                                <x-backend.ui.button class="btn-primary">Apply</x-backend.ui.button>
+                            </div>
                         </div>
-                    </a>
-                </div>
-            @endforeach
-            <div class="col-12 mt-2">
-                <div class="paginator float-end">
-                    {{ $books->links() }}
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    @foreach ($books as $book)
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xxl-3 mb-3">
+                            <a href="{{ route('books.show', $book->id) }}" class="h-100">
+                                <div>
+                                    <div
+                                        class="d-grid grid-cols-1 mw-md mx-auto pb-10 px-10 bg-primary border border-3 border-gray-800 rounded overflow-hidden">
+                                        <img src="{{ useImage($book->thumbnail) }}" alt="{{ $book->title }}"
+                                            style="object-fit: cover; width: 100%" />
+
+                                        <div class="mt-auto px-3 pt-3 pb-1 w-100 bg-white">
+                                            <h4 class="fs-5 mb-1 text-center text-dark text-uppercase">
+                                                <b>{{ $book->title }}</b>
+                                            </h4>
+                                            <p class="text-center text-dark mt-3"
+                                                style="font-size: 13px; line-height: 16px;">
+                                                {!! str($book->description)->limit(100, '<span class="text-danger font-20 fw-bold">...</span>') !!}
+                                            </p>
+                                        </div>
+                                        <div class="mt-auto px-2 d-flex justify-content-between align-items-center py-2 w-100"
+                                            style='background: rgba(14, 14, 14, 0.758);'>
+                                            <x-avg-review-stars :avg="$book->reviews_avg_rating" icon-font="font-16" class="text-white" />
+                                            <p class="mb-0 text-white fw-mideum">
+                                                {{ $book->price }}
+                                                <span class="mdi mdi-currency-bdt font-16"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                    <div class="col-12 mt-2">
+                        <div class="paginator float-end">
+                            {{ $books->links() }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,6 +100,9 @@
     <x-frontend.testimonial-section :testimonials="$reviews">
     </x-frontend.testimonial-section>
 @endsection
+@pushOnce('customJs')
+    <script src="{{ asset('frontend/filter.js') }}"></script>
+@endPushOnce
 @push('customJs')
     <script>
         // const headers = $('section .card-header')
