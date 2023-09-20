@@ -14,6 +14,7 @@ use App\Models\ClientStudio;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
+use App\Models\ExpertProfile;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -35,20 +36,20 @@ class PageController extends Controller
 
         return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description'));
     }
-    public function appointmentPage()
+    public function appointmentPage(?ExpertProfile $expertProfile = null)
     {
         $maps = Map::get();
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->get();
-        $testimonials = Testimonial::get();
-        return view('frontend.pages.appointment.makeAppointment', compact('banners', 'infos1', 'testimonials', 'maps'));
+        $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->get();
+        return view('frontend.pages.appointment.makeAppointment', compact('banners', 'expertProfile', 'infos1','testimonials', 'maps'));
     }
-    public function appointmentVirtual()
+    public function appointmentVirtual(?ExpertProfile $expertProfile = null)
     {
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->get();
-        $testimonials = Testimonial::get();
-        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('banners', 'infos1', 'testimonials'));
+        $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->get();
+        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('banners', 'expertProfile','testimonials', 'infos1'));
     }
     public function aboutPage()
     {
@@ -85,7 +86,7 @@ class PageController extends Controller
         return view('frontend.pages.notificationPage');
     }
 
-    
+
     //show all my courses in frontend
     public function myCourses()
     {

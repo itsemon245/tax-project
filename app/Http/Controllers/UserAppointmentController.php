@@ -16,6 +16,7 @@ class UserAppointmentController extends Controller
     {
         $appointment = UserAppointment::create([
             "date" => $request->date,
+            "expert_profile_id" => $request->expert_id,
             "time" => $request->time,
             "name" => $request->name,
             "email" => $request->email,
@@ -27,11 +28,9 @@ class UserAppointmentController extends Controller
             "user_id" => $request->user_id,
         ]);
         $alert = [
-            'alert-type' => 'success', 
+            'alert-type' => 'success',
             'message' => 'Request Submitted'
         ];
         return back()->with($alert);
     }
-
-    
 }

@@ -23,11 +23,12 @@
                 <tr>
                     <th>#</th>
                     <th>User Info</th>
+                        <th>Appointment With</th>
                     <th>Date & Time</th>
                     <th>Status</th>
                     <th>Location</th>
                     @canany(['update appointment', 'approve appointment'])
-                    <th>Action</th>  
+                        <th>Action</th>
                     @endcanany
                 </tr>
             </thead>
@@ -55,6 +56,17 @@
                                 </p>
                             </div>
                         </td>
+                        @if ($appointment->expertProfile)
+                            <td>
+                                <p class="mb-1">
+                                    <strong>Expert Name:</strong> <span>{{ $appointment->expertProfile?->name }}</span>
+                                </p>
+                                <p class="mb-1">
+                                    <strong>Post:</strong> <span
+                                        class="badge bg-success p-2">{{ $appointment->expertProfile?->post }}</span>
+                                </p>
+                            </td>
+                        @endif
                         <td>
                             <strong class="d-block">Date:
                                 {{ Carbon\Carbon::parse($appointment->date)->format('d M, Y') }}</strong>
@@ -84,15 +96,15 @@
                             </td>
                         @endisset
                         @canany(['update appointment', 'approve appointment'])
-                        <td>
-                            <form action="{{ route('user-appointments.approve', $appointment->id) }}" method="post">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    Approve
-                                </button>
-                            </form>
-                        </td>
+                            <td>
+                                <form action="{{ route('user-appointments.approve', $appointment->id) }}" method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        Approve
+                                    </button>
+                                </form>
+                            </td>
                         @endcanany
                     </tr>
                 @empty

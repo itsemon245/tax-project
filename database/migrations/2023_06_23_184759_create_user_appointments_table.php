@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('map_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('expert_profile_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->text('name');
             $table->text('email');
             $table->text('phone');

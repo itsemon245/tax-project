@@ -14,6 +14,10 @@
             gap: 1rem;
         }
 
+        .border-focus-2:focus {
+            border-width: 2px !important;
+        }
+
         @media (min-width:550px) {
             .custom-grid {
                 grid-template-columns: 170px 170px 170px;
@@ -48,8 +52,8 @@
                                 <input id="income-{{ $item->id }}" type="checkbox" name="income_source[]"
                                     class="position-absolute top-0 end-0" value="{{ $item->title }}">
                                 <div class="text-dark d-flex flex-column align-items-center ">
-                                    <img loading="lazy" class="rounded mb-2" src="{{ useImage($item->image) }}" width="64"
-                                        height="64" alt="" style="object-fit: cover;">
+                                    <img loading="lazy" class="rounded mb-2" src="{{ useImage($item->image) }}"
+                                        width="64" height="64" alt="" style="object-fit: cover;">
                                     <h6 class="text-center">{{ $item->title }}</h6>
                                 </div>
                             </label>
@@ -88,7 +92,8 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label for="">Message</label>
-                                                    <textarea name="metaData[]" id="" cols="30" rows="10" class="form-control" placeholder="Message"></textarea>
+                                                    <textarea name="metaData[]" id="" cols="30" rows="10" class="form-control border-focus-2"
+                                                        placeholder="Message"></textarea>
                                                 </div>
                                             </div>
 
@@ -174,81 +179,84 @@
 
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="row my-3">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <div class="row my-2">
+                                            <label for="amoutn-to-pay" class="d-block fs-3 fw-medium">Amount To Pay</label>
+                                            <input id="amount-to-pay" name="paid_amount" type="text"
+                                                value="{{ $record->price }}"
+                                                class=" text-center border-success rounded-3 fs-2 fw-bold py-5">
+                                        </div>
 
-                                    <input type="text" name="purchasable_type" value="{{ $model }}" hidden>
-                                    <input type="text" name="purchasable_id" value="{{ $id }}" hidden>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <input type="text" name="purchasable_type" value="{{ $model }}"
+                                            hidden>
+                                        <input type="text" name="purchasable_id" value="{{ $id }}" hidden>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="">
                                             <x-backend.form.text-input name="name" label="Full Name"
                                                 placeholder="Full Name" value="{{ auth()->user()?->name }}" required />
 
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="">
 
                                             <x-backend.form.text-input name="phone" label="Contact No."
                                                 placeholder="Contact No." value="{{ auth()->user()?->phone }}"
                                                 required />
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-4 mb-2">
-                                                    <label class="form-label mb-0" for="pay-later-switch">Pay
-                                                        Later</label>
-                                                    <div class="form-check form-switch">
-                                                        <input type="checkbox" name="pay_later" class="form-check-input"
-                                                            id="pay-later-switch">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <x-backend.form.text-input type="text" name="payment_number"
+                                                    label="Payment Number" placeholder="Number You Have Paid From" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <x-backend.form.select-input label="Payment Method" name="payment_method"
+                                                    placeholder="Choose Payment Method">
+                                                    <option value="bkash">Bkash</option>
+                                                    <option value="nagad">Nagad</option>
+                                                    <option value="rocket">Rocket</option>
+                                                </x-backend.form.select-input>
+                                            </div>
 
+                                        </div>
+                                        <div class="row payment_field">
+                                            <div class="col-md-6">
+                                                <x-backend.form.text-input name="trx_id" label="Trx ID"
+                                                    placeholder="Trx ID" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="flex-grow-1">
+                                                        <label for="promo-code">Promo Code</label>
+                                                        <input id="promo-code"
+                                                            class="form-control border-focus-2 py-2 px-3"
+                                                            name="promo_code" placeholder="Promo Code" />
+                                                        <span id="promo-code-message" class="text-danger ms-2"></span>
                                                     </div>
+                                                    <button onclick="code.apply()" type="button"
+                                                        class="btn btn-warning h-100 py-2 px-3">Apply</button>
                                                 </div>
-                                                <div class="col-lg-9 col-8 payment_field">
-                                                    <x-backend.form.text-input class="" type="number"
-                                                        name="paid_amount" label="Amount To Pay(৳)"
-                                                        placeholder="0.00 ৳" />
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="d-flex gap-3 justify-content-center align-items-center">
+                                                    <x-backend.ui.button type="custom"
+                                                        class="btn-outline-primary fw-medium p-3">Pay
+                                                        Later</x-backend.ui.button>
+                                                    <x-backend.ui.button type="submit"
+                                                        class="btn-primary fw-medium p-3">Buy
+                                                        Now</x-backend.ui.button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 payment_field">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <x-backend.form.text-input type="text" name="payment_number"
-                                                        label="Payment Number" placeholder="Number You Have Paid From" />
-                                                </div>
-                                                <div class="col-6">
-                                                    <x-backend.form.select-input label="Payment Method"
-                                                        name="payment_method" placeholder="Choose Payment Method">
-                                                        <option value="bkash">Bkash</option>
-                                                        <option value="nagad">Nagad</option>
-                                                        <option value="rocket">Rocket</option>
-                                                    </x-backend.form.select-input>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row payment_field">
-                                        <div class="col-md-6">
-                                            <x-backend.form.text-input name="trx_id" label="Trx ID"
-                                                placeholder="Trx ID" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="d-flex align-items-center gap-3">
-                                                <div class="flex-grow-1">
-                                                    <label for="promo-code">Promo Code</label>
-                                                    <input id="promo-code" class="form-control" name="promo_code"
-                                                        placeholder="Promo Code" />
-                                                    <span id="promo-code-message" class="text-danger ms-2"></span>
-                                                </div>
-                                                <button onclick="code.apply()" type="button"
-                                                    class="btn btn-warning h-100">Apply</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-primary rounded rounded-3">Submit Payment</button>
 
+                                    </div>
+                                    <div class="col-md-2"></div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

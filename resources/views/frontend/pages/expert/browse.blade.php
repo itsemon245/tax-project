@@ -151,8 +151,8 @@
                                     <div class="card-body">
                                         <div class="d-flex gap-3 justify-content-center mb-3">
                                             <div class="d-flex flex-column align-items-center">
-                                                <img loading="lazy" src="{{ useImage($expert->image) }}" width="64px" height="64px;"
-                                                    alt="" class="rounded rounded-circle mb-2"
+                                                <img loading="lazy" src="{{ useImage($expert->image) }}" width="64px"
+                                                    height="64px;" alt="" class="rounded rounded-circle mb-2"
                                                     style="object-fit: cover;">
                                                 <div class="d-block">
                                                     <x-avg-review-stars icon-font="font-14" :avg="$expert->reviews_avg_rating" />
@@ -177,7 +177,7 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-12">
-                                                <a href="{{ route('payment.create', ['model' => ExpertProfile::class, 'id' => $expert->id]) }}"
+                                                <a href="{{ route('consultation.make', $expert->id) }}"
                                                     class="btn btn-primary fw-medium  w-100 mb-2">
                                                     Consultation
                                                 </a>

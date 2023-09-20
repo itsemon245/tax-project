@@ -105,8 +105,10 @@
                                             <h4 class="text-center mb-2">
                                                 Choose Appointment Type
                                             </h4>
-                                            <a href="{{ route('appointment.make') }}" for="appointment-input"
-                                                class="row mb-1" style="cursor: pointer;">
+                                            <a @if ($expertProfile) href="{{ route('consultation.make', $expertProfile->id) }}"
+                                             @else
+                                            href="{{ route('appointment.make') }}" @endif
+                                                for="appointment-input" class="row mb-1" style="cursor: pointer;">
                                                 <d id="appointment-type"
                                                     class="border rounded p-3 appointment-type selected appointment">
                                                     <h4>Together in Office</h4>
@@ -118,8 +120,10 @@
                                                     data-effected="#appointment-type" data-cards=".appointment"
                                                     id="appointment-input" value="{{ true }}" hidden checked>
                                             </a>
-                                            <a href="{{ route('appointment.virtual') }}" for="appointment-input-2"
-                                                class="row mb-1" style="cursor: pointer;">
+                                            <a @if ($expertProfile) href="{{ route('consultation.virtual', $expertProfile->id) }}"
+                                                @else
+                                               href="{{ route('appointment.virtual') }}" @endif
+                                                for="appointment-input-2" class="row mb-1" style="cursor: pointer;">
                                                 <div id="appointment-type-2"
                                                     class="border bg-light rounded p-3 appointment-type selected appointment">
                                                     <h4>Virtually</h4>
@@ -137,8 +141,8 @@
                                             </h4>
                                             <div class="row">
                                                 @foreach ($maps as $map)
-                                                    <label for="location-input-{{ $map->id }}" class="col-md-12 col-6 mb-md-1"
-                                                        style="cursor: pointer;">
+                                                    <label for="location-input-{{ $map->id }}"
+                                                        class="col-md-12 col-6 mb-md-1" style="cursor: pointer;">
                                                         <div id="location-{{ $map->id }}"
                                                             class="border rounded p-3 map location {{ $maps[0]->id === $map->id ? 'selected' : 'bg-light' }}">
                                                             <h5>{{ $map->location }}</h5>
@@ -233,6 +237,12 @@
                                     <div class="card">
                                         <p class="card-header text-center">Appointment Details</p>
                                         <div class="card-body px-5">
+                                            @if ($expertProfile)
+                                            <div class="d-none">
+                                                <input type="text" name="expert_id"
+                                                    value="{{ $expertProfile?->id }}">
+                                            </div>
+                                            @endif
                                             <p class="text-dark p-2 border bg-light rounded"><span class="fw-bold">Name:
                                                 </span><span
                                                     id="push-name">{{ auth()->user() ? auth()->user()->name : '' }}</span>

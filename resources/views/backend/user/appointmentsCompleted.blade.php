@@ -23,6 +23,9 @@
                 <tr>
                     <th>#</th>
                     <th>User Info</th>
+                    @if ($appointment->expertProfile)
+                        <th>Appointment With</th>
+                    @endif
                     <th>Date & Time</th>
                     <th>Status</th>
                     <th>Location</th>
@@ -55,6 +58,7 @@
                                 </p>
                             </div>
                         </td>
+                        
                         <td>
                             <strong class="d-block">Date:
                                 {{ Carbon\Carbon::parse($appointment->date)->format('d M, Y') }}</strong>

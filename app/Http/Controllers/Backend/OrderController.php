@@ -9,6 +9,7 @@ use App\Models\ExpertProfile;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Referee;
+use App\Models\UserAppointment;
 use App\Models\Video;
 
 class OrderController extends Controller
@@ -21,8 +22,8 @@ class OrderController extends Controller
 
     public function consultancyIndex()
     {
-        $payments = Purchase::with('purchasable')->where('purchasable_type', 'ExpertProfile')->latest()->get();
-        return view('backend.payment.consultancyApproved', compact('payments'));
+        $appointments = UserAppointment::with('expertProfile')->whereNot('expert_profile_id', null)->latest()->get();
+        return view('backend.payment.consultancyApproved', compact('appointments'));
     }
 
     public function status($id)

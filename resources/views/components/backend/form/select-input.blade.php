@@ -6,15 +6,15 @@
     $placeholder = $attributes->get('placeholder');
 @endphp
 
-<div class="mb-2">
+<div class="mb-3">
     @if ($label)
-        <label for="{{ $id }}" class="form-label mb-0">{{ $label }}
+        <label for="{{ $id }}" class="form-label mb-1">{{ $label }}
             @if ($required)
                 <span class="text-danger">*</span>
             @endif
         </label>
     @endif
-    <select {{ $attributes->merge(['class' => 'form-select text-capitalize'])->merge() }}>
+    <select {{ $attributes->merge(['class' => 'form-select text-capitalize px-3 py-2'])->merge() }}>
         <option selected disabled>{{ $placeholder }}</option>
         {{ $slot }}
     </select>
