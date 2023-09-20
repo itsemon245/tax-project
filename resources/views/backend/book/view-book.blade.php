@@ -27,8 +27,8 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Book Category Name</th>
                     <th>Title</th>
+                    <th>Book Category Name</th>
                     <th>Description</th>
                     <th>Sample Pdf</th>
                     <th>Pdf</th>
@@ -43,8 +43,8 @@
                 @foreach ($books as $key => $book)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $book->bookCategory->book_category }}</td>
                         <td>{{ $book->title }}</td>
+                        <td>{{ $book->bookCategory->name }}</td>
                         <td>{{ Str::limit($book->description, 20, '...') }}</td>
                         <td><a href="{{ useImage($book->sample_pdf) }}"><img src="{{ asset('images/pdf-icon-4.png') }}"
                                     alt="" width="40"></a></td>

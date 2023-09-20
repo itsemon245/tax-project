@@ -23,9 +23,8 @@
                             <x-backend.form.select-input id="section" label="Book Category Name" name="book_category_id"
                                 placeholder="Choose Book Category...">
                                 @forelse ($bookCategories as $bookCategory)
-                                <option value="{{$bookCategory->id}}">{{$bookCategory->book_category}}</option>
+                                    <option value="{{ $bookCategory->id }}">{{ $bookCategory->book_category }}</option>
                                 @empty
-                                    
                                 @endforelse
                             </x-backend.form.select-input>
                         </div>
@@ -42,7 +41,7 @@
 
 
                         <div class="col-md-6">
-                            <x-backend.form.text-input label="Sample pdf" required type="file" name="sample_pdf">
+                            <x-backend.form.text-input label="Sample pdf" type="file" name="sample_pdf">
                             </x-backend.form.text-input>
                         </div>
 

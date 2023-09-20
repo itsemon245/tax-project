@@ -17,43 +17,90 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Frontend', 'Industries Section']" />
 
     <x-backend.ui.section-card name="Industries">
-        <x-backend.ui.button type="custom" href="{{ route('book-category.create') }}"
-            class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
-        <x-backend.table.basic :items="$data">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Category Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($data as $key=>$bookCategory)
-                    <tr>
-                        <td>{{ ++$key }}</td>
-                        <td>{{ $bookCategory->book_category }}</td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="{{ route('book-category.edit', $bookCategory) }}"
-                                    class="btn btn-sm btn-info">Edit</a>
-                                <form action="{{ route('book-category.destroy', $bookCategory) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-backend.ui.button class="btn-danger btn-sm text-capitalize">Delete
-                                    </x-backend.ui.button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4">
-                            <h5 class="d-flex justify-content-center text-muted">No record found</h5>
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </x-backend.table.basic>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card">
+                    @isset($bookCategory)
+                        <div class="card-header text-center bg-white fw-bold">Update Category</div>
+                        <div class="card-body">
+                            <form action="{{ route('book-category.update', $bookCategory->id) }}" method="post">
+                                @csrf
+                                @method('PATCH')
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-2">
+                                                <x-backend.form.text-input label="Category Name" placeholder="Category Name"
+                                                    type="text" name="category_name" :value="$bookCategory->name" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <x-backend.ui.button class="btn-primary btn btn-sm">Update</x-backend.ui.button>
+                                </div>
+                            </form>
+                        </div>
+                    @else
+                        <div class="card-header text-center bg-white fw-bold">Create Category</div>
+                        <div class="card-body">
+                            <form action="{{ route('book-category.store') }}" method="post">
+                                @csrf
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-2">
+                                                <x-backend.form.text-input label="Category Name" placeholder="Category Name"
+                                                    type="text" name="category_name" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <x-backend.ui.button class="btn-primary btn btn-sm">Create</x-backend.ui.button>
+                                </div>
+                            </form>
+                        </div>
+                    @endisset
+                </div>
+            </div>
+            <div class="col-md-7">
+                <x-backend.table.basic :items="$data">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($data as $key=>$bookCategory)
+                            <tr>
+                                <td>{{ ++$key }}</td>
+                                <td>{{ str($bookCategory->name)->headline() }}</td>
+                                <td>
+
+
+                                    <x-backend.ui.button type="edit" :href="route('book-category.edit', $bookCategory)"
+                                        class="btn-sm"></x-backend.ui.button>
+                                    <x-backend.ui.button type="delete" :action="route('book-category.destroy', $bookCategory)" class="btn-sm" />
+
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4">
+                                    <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </x-backend.table.basic>
+            </div>
+        </div>
+
     </x-backend.ui.section-card>
     <!-- end row-->
 @endsection

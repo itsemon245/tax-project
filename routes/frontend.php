@@ -51,7 +51,8 @@ Route::prefix('product')->name('product.')->controller(ProductPageController::cl
 Route::resource('project-discussion', ProjectDiscussionController::class);
 
 Route::prefix('/books')->name('books.')->group(function () {
-    Route::get('/', [BookController::class, 'index'])->name('view');
+    Route::get('/categories', [BookController::class, 'getCategoryBooks'])->name('view');
+    Route::get('/{categoryId}', [BookController::class, 'index'])->name('view.all');
     Route::get('/book/{book}', [BookController::class, 'show'])->name('show');
 });
 // routes for user docs

@@ -1,5 +1,6 @@
 @props([
     'avg' => 0,
+    'iconFont' => 'font-16',
 ])
 @php
     $class = $attributes->has('class') ? $attributes->get('class') : '';

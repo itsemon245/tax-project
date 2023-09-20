@@ -41,7 +41,9 @@ class BookController extends Controller
         $book_store->description = $request->book_desc;
         $book_store->price = $request->price;
         $book_store->thumbnail = saveImage($request->book_image, 'book-thumbail', 'book');
-        $book_store->sample_pdf = saveImage($request->sample_pdf, 'book-pdf-sample', 'book');
+        if ($request->hasFile('sample_pdf')) {
+            $book_store->sample_pdf = saveImage($request->sample_pdf, 'book-pdf-sample', 'book');
+        }
         $book_store->pdf = saveImage($request->pdf, 'book-pdf', 'book');
         $book_store->save();
         $notification = [
@@ -84,8 +86,12 @@ class BookController extends Controller
         if ($request->hasFile('book_image')) {
             $book->thumbnail = updateFile($request->book_image, $book->thumbnail, 'book-thumbnail', 'book');
         }
-        $book->sample_pdf = updateFile($request->sample_pdf, $book->sample_pdf, 'book-pdf-sample', 'book');
-        $book->pdf = updateFile($request->pdf, $book->pdf, 'book-pdf', 'book');
+        if ($request->hasFile('sample_pdf')) {
+            $book->sample_pdf = updateFile($request->sample_pdf, $book->sample_pdf, 'book-pdf-sample', 'book');
+        }
+        if ($request->hasFile('pdf')) {
+            $book->pdf = updateFile($request->pdf, $book->pdf, 'book-pdf', 'book');
+        }
         $book->price = $request->price;
         $book->save();
         $notification = [

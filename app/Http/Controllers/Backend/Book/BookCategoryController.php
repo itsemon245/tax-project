@@ -23,7 +23,7 @@ class BookCategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.book.book-category.create');
+        return redirect(route('book-category.index'));
     }
 
     /**
@@ -54,7 +54,8 @@ class BookCategoryController extends Controller
      */
     public function edit(BookCategory $bookCategory)
     {
-        return view('backend.book.book-category.edit', compact('bookCategory'));
+        $data = BookCategory::latest()->simplePaginate(paginateCount());
+        return view('backend.book.book-category.index', compact('bookCategory', 'data'));
     }
 
     /**
@@ -62,7 +63,7 @@ class BookCategoryController extends Controller
      */
     public function update(UpdateBookCategoryRequest $request, BookCategory $bookCategory)
     {
-        $appointmentStore =BookCategory::find($bookCategory->id);
+        $appointmentStore = BookCategory::find($bookCategory->id);
         $appointmentStore->name = $request->category_name;
         $appointmentStore->save();
         $notification = [

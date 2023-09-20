@@ -11,7 +11,7 @@ class AvgReviewStars extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $avg = 0, public $iconFont = '')
+    public function __construct(public $avg = 0, public $iconFont = 'font-16')
     {
     }
 

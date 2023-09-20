@@ -244,12 +244,17 @@
                                     <ul class="nav-second-level">
                                         @can('manage book')
                                         <li>
-                                            <a href="{{ route('book.create') }}">Create</a>
+                                            <a href="{{ route('book.create') }}">Create Book</a>
                                         </li>
                                         @endcan
                                         @can('read book')
                                         <li>
-                                            <a href="{{ route('book.index') }}">View</a>
+                                            <a href="{{ route('book.index') }}">View Books</a>
+                                        </li>
+                                        @endcan
+                                        @can('manage book')
+                                        <li>
+                                            <a href="{{ route('book-category.index') }}">View Categories</a>
                                         </li>
                                         @endcan
                                     </ul>

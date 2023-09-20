@@ -26,7 +26,7 @@ class StoreBookRequest extends FormRequest
             'book_category_id' => ['required', 'image'],
             'book_title' => ['required'],
             'author' => ['required'],
-            'sample_pdf' => ['required', 'mimes:pdf'],
+            'sample_pdf' => ['mimes:pdf'],
             'pdf' => ['required', 'mimes:pdf'],
             'book_desc' => ['required'],
             'price' => ['required'],
