@@ -92,14 +92,15 @@ class SettingController extends Controller
     public function reference(Request $request)
     {
 
-        // dd($request);
         $request->validate([
             'commission' => 'required|numeric',
             'withdrawal' => 'required|numeric',
+            'partner_commission' => 'required|numeric',
         ]);
         $array = [
             'commission' => $request->commission,
             'withdrawal' => $request->withdrawal,
+            'partner_commission' => $request->partner_commission,
         ];
         if ($this->setting) {
             $this->setting->update(['reference' => $array]);

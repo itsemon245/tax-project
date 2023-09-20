@@ -82,6 +82,12 @@ $basicSettingPermissions = \Spatie\Permission\Models\Permission::where('group', 
                                 <x-backend.form.text-input type="number" class="mb-2" :value="$data->reference->withdrawal" required
                                     name="withdrawal" label="Withdrawal Limit" />
                             </div>
+                        </div> <!-- end card-body -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <x-backend.form.text-input type="number" class="mb-2" :value="$data->reference->partner_commission" required
+                                    name="partner_commission" label="Refer Partner Commissionn" />
+                            </div>
                             <div class="mt-2">
                                 <x-backend.ui.button class="btn-primary btn-sm float-end">Save Changes</x-backend.ui.button>
                             </div>
