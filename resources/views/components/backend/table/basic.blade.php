@@ -30,9 +30,9 @@
     {{ $slot }}
 </table>
 @if (method_exists($items, 'links'))
-<div id="myPaginator" class="paginate my-2">
-    {{ $items->links()}}
-</div>
+    <div id="myPaginator" class="paginate my-2">
+        {{ $items->links() }}
+    </div>
 @endif
 
 @pushOnce('customJs')

@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-
 // Route::get('/dashboard', function () {
 //     return view('backend.dashboard.dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');

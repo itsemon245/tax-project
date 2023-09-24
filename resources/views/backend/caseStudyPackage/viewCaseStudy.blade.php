@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <x-backend.table.basic :data="$CaseStudyPackages">
+                        <x-backend.table.basic :items="$CaseStudyPackages">
                             <thead>
                                 <tr>
                                     <th>#</th>

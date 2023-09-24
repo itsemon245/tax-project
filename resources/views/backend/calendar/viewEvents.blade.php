@@ -23,7 +23,7 @@
         <x-backend.ui.button type="custom" href="{{ route('calendar.create') }}"
         class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         @endcan
-        <x-backend.table.basic :data="$events">
+        <x-backend.table.basic :items="$events">
             <thead>
                 <tr>
                     <th>#</th>

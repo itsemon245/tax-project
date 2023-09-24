@@ -7,6 +7,17 @@
 
 <body data-layout-mode="default" data-theme="light" data-topbar-color="dark" data-menu-position="fixed"
     data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='false'>
+    <style>
+        @media print {
+            .container-fluid {
+                padding: 0 !important;
+            }
+            .content-page {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+        }
+    </style>
 
     <!-- Begin page -->
     <div id="wrapper">

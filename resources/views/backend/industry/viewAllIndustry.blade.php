@@ -22,7 +22,7 @@
             <a href="{{ route('industry.create') }}" class="btn btn-sm btn-primary">(+) Create</a>
         </div>  
         @endcan
-        <x-backend.table.basic :data="$industries">
+        <x-backend.table.basic :items="$industries">
             <thead>
                 <tr>
                     <th>#</th>

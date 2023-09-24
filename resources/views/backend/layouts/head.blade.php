@@ -26,18 +26,6 @@
             font-size: 24px;
         }
 
-        .dotted-border {
-            border: 3px dotted var(--ct-gray-400);
-            border-top: 0;
-            border-right: 0;
-            border-left: 0;
-        }
-
-        @page {
-            size: 21cm 29.7cm;
-            margin: 1.5cm;
-            /* change the margins as you want them to be. */
-        }
     </style>
     @stack('customCss')
     <!-- Head js -->

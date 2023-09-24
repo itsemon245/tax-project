@@ -5,7 +5,7 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card name="Partner Requests">
-        <x-backend.table.basic :data="$partnersRequest">
+        <x-backend.table.basic :items="$partnersRequest">
             <thead>
                 <tr>
                     <th>#</th>

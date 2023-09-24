@@ -16,7 +16,7 @@ class ClientStudioSeeder extends Seeder
         $seed = fake()->word();
         ClientStudio::create([
             'description' => fake()->realText(),
-            'title' => fake()->realText(),
+            'title' => fake()->realText(10),
             'image' => "https://api.dicebear.com/6.x/adventurer/svg?seed=$seed",
             'count' => fake()->numberBetween(1,1000),
 

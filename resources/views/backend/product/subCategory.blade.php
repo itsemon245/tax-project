@@ -56,7 +56,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">All Sub-Categories</h4>
-                        <x-backend.table.basic :data="$subCategories">
+                        <x-backend.table.basic :items="$subCategories">
                             <thead>
                                 <tr>
                                     <th>#</th>

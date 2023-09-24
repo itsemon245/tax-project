@@ -4,7 +4,7 @@
 
     <x-backend.ui.section-card name="All Results">
         <section class="my-5 container">
-            <x-backend.table.basic :data="$results">
+            <x-backend.table.basic :items="$results">
                 <thead>
                     <tr>
                         <th>No.</th>

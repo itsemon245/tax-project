@@ -23,7 +23,7 @@
         <a href="{{ route('role.create') }}" class="btn waves-effect waves-light text-uppercase btn-success btn-sm mb-2">
             New+
         </a>
-        <x-backend.table.basic :data="$roles">
+        <x-backend.table.basic :items="$roles">
             <thead>
                 <tr>
                     <th>#</th>

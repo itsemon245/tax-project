@@ -191,7 +191,7 @@
             <h5 class="card-header bg-soft-light text-dark">All Invoices</h5>
             <div class="card-body">
 
-                <x-backend.table.basic :data="$invoices">
+                <x-backend.table.basic :items="$invoices">
                     <thead>
                         <tr>
                             <th>SL</th>

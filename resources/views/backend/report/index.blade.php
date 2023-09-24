@@ -119,7 +119,7 @@
             </div>
         </div> --}}
         <div class="container">
-            <x-backend.table.basic :data="$fiscalYears">
+            <x-backend.table.basic :items="$fiscalYears">
                 <thead>
                     <tr>
                         <th class="border bg-soft-dark text-dark">Year</th>
@@ -167,7 +167,7 @@
             <h5 class="card-header bg-soft-light text-dark text-capitalize">All {{ str($type)->plural() }}</h5>
             <div class="card-body">
 
-                <x-backend.table.basic :data="$fiscalYears">
+                <x-backend.table.basic :items="$fiscalYears">
                     <thead>
                         <tr>
                             <th>No.</th>

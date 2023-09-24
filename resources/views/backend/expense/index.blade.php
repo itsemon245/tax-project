@@ -25,7 +25,7 @@
         class="btn-success btn-sm mb-1 d-print-none">Create</x-backend.ui.button>
         @endcan
         <div class="container ">
-            <x-backend.table.basic :data="$expenses">
+            <x-backend.table.basic :items="$expenses">
                 <thead>
                     <tr>
                         <th>No.</th>

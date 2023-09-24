@@ -163,7 +163,7 @@
                 </div>
             </div>
         </div>
-        <x-backend.table.basic :data="$clients">
+        <x-backend.table.basic :items="$clients">
             <thead>
                 <tr>
                     <th>#</th>

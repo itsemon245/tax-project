@@ -20,7 +20,7 @@
             class="fw-bold fs-5 me-1">+</span>Create Review</x-backend.ui.button>
         @endcan
         <div class="table-responsive">
-            <x-backend.table.basic :data="$reviews">
+            <x-backend.table.basic :items="$reviews">
                 <thead>
                     <tr>
                         <th>#</th>

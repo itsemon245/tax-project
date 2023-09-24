@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <x-backend.table.basic :data="$infos">
+                        <x-backend.table.basic :items="$infos">
                             <thead>
                                 <tr>
                                     <th>#</th>

@@ -31,7 +31,7 @@
             @can('create tax setting')
             <x-backend.ui.button type="custom" :href="route('tax-setting.create')" class="btn-sm btn-success mb-2">Create</x-backend.ui.button>
             @endcan
-            <x-backend.table.basic :data="$taxSettings">
+            <x-backend.table.basic :items="$taxSettings">
                 <thead>
                     <tr>
                         <th>No.</th>

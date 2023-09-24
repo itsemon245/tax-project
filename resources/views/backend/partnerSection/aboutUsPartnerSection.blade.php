@@ -65,7 +65,7 @@
             </div>
             @endcan
         <div class="col-md-6 mt-3">
-            <x-backend.table.basic :data="$partnerSection">
+            <x-backend.table.basic :items="$partnerSection">
                 <thead>
                     <tr>
                         <th>#</th>

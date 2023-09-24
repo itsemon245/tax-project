@@ -20,7 +20,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <x-backend.table.basic :data="$payments">
+                        <x-backend.table.basic :items="$payments">
                             <thead>
                                 <tr>
                                     <th>#</th>

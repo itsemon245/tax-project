@@ -18,7 +18,7 @@
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Testimonial', 'View']" />
 
     <x-backend.ui.section-card name="Testimonial List">
-        <x-backend.table.basic :data="$testimonials">
+        <x-backend.table.basic :items="$testimonials">
             <thead>
                 <tr>
                     <th>#</th>

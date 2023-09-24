@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <x-backend.table.basic :data="$banners">
+                        <x-backend.table.basic :items="$banners">
                             <thead>
                                 <tr>
                                     <th>#</th>

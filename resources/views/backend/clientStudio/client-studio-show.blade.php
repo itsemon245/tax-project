@@ -20,10 +20,11 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Image</th>
                     <th>Title</th>
+                    <th>Count</th>
+                    <th>Image</th>
                     @can('manage client studio')
-                    <th>Action</th>
+                        <th>Action</th>
                     @endcan
                 </tr>
             </thead>
@@ -31,17 +32,21 @@
                 @forelse ($data as $key=>$datum)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ useImage($datum->image) }}</td>
                         <td>{{ $datum->title }}</td>
-                        @can('manage client studio')
+                        <td>{{ $datum->count }}</td>
                         <td>
-                            <div class="btn-group">
-                                <x-backend.ui.button type="edit" href="{{ route('client-studio.edit', $datum->id) }}"
-                                    class="btn-sm" />
-                                <x-backend.ui.button type="delete" action="{{ route('client-studio.destroy', $datum->id) }}"
-                                    class="btn-sm" />
-                            </div>
+                            <img src="{{ useImage($datum->image) }}" alt="Client Studio {{ $datum->title }}" width="64px"
+                                height="64px" class="rounded-circle">
                         </td>
+                        @can('manage client studio')
+                            <td>
+                                <div class="btn-group">
+                                    <x-backend.ui.button type="edit" href="{{ route('client-studio.edit', $datum->id) }}"
+                                        class="btn-sm" />
+                                    <x-backend.ui.button type="delete" action="{{ route('client-studio.destroy', $datum->id) }}"
+                                        class="btn-sm" />
+                                </div>
+                            </td>
                         @endcan
                     </tr>
                 @empty

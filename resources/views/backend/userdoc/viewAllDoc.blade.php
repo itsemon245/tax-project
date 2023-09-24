@@ -25,7 +25,7 @@
         <x-backend.ui.button type="custom" href="{{ route('userDoc.backend.create') }}" class="mb-3 btn-sm btn-success">New
             Name</x-backend.ui.button>
         @endcan
-        <x-backend.table.basic :data="$userDocs">
+        <x-backend.table.basic :items="$userDocs">
             <thead>
                 <tr>
                     <th>#</th>

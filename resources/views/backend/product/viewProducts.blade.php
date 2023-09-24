@@ -22,7 +22,7 @@
         <x-backend.ui.button class="btn-sm btn-success mb-3" href="{{ route('product.create') }}"
         type="custom">Create</x-backend.ui.button> 
         @endcan
-        <x-backend.table.basic :data="$products">
+        <x-backend.table.basic :items="$products">
             <thead>
                 <tr>
                     <th>#</th>

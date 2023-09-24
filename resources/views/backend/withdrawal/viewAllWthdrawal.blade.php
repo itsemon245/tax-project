@@ -16,7 +16,7 @@
     @endpush
     <x-backend.ui.breadcrumbs :list="['Accounting', 'Withdrawal']" />
     <x-backend.ui.section-card :name="request()->query('status') == '1' ? 'Approoved Withdrawls' : 'Pending Withdrawls'">
-        <x-backend.table.basic :data="$withdrawals">
+        <x-backend.table.basic :items="$withdrawals">
             <thead>
                 <tr>
                     <th>#</th>

@@ -27,7 +27,7 @@
             <div class="card-body">
                 <x-backend.ui.button type="custom" class="btn-success text-capitalize mb-2 btn-sm"
                     href="{{ route('service.subs.create', $categoryId) }}">New Sub Category</x-backend.ui.button>
-                <x-backend.table.basic :data="$subCategories">
+                <x-backend.table.basic :items="$subCategories">
                     <thead>
                         <tr>
                             <th>#</th>

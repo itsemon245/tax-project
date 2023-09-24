@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <x-backend.table.basic :data="$profiles">
+                        <x-backend.table.basic :items="$profiles">
                             <thead>
                                 <tr>
                                     <th>#</th>

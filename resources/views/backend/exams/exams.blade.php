@@ -52,7 +52,7 @@
             </div>
             @endcan
             <div class="col-md-8 mt-3">
-                <x-backend.table.basic :data="$exams">
+                <x-backend.table.basic :items="$exams">
                     <thead>
                         <tr>
                             <th>#</th>

@@ -22,7 +22,7 @@
             class="fw-bold fs-5 me-1">+</span>New Course</x-backend.ui.button>
         @endcan
         <div class="table-responsive">
-            <x-backend.table.basic :data="$courses">
+            <x-backend.table.basic :items="$courses">
                 <thead class="table-light">
                     <tr>
                         <th class="">No</th>

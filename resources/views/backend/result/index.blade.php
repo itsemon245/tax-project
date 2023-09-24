@@ -18,7 +18,7 @@
 
     <x-backend.ui.section-card name="Show All Results">
 
-        <x-backend.table.basic :data="$results">
+        <x-backend.table.basic :items="$results">
             <thead>
                 <tr>
                     <th>#</th>

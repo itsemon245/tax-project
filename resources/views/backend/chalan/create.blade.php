@@ -2,409 +2,370 @@
 @section('content')
     @push('customCss')
         <style>
-            .copy {
-                border: 1px solid #333;
-                font-size: 10px;
-                color: #000;
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800&family=Noto+Serif+Bengali:wght@400;500;600;700;800&display=swap');
+
+            @page {
+                size: A4 landscape;
+                font: 12pt;
+            }
+            @page{
+                @top-left{
+                    content: 'Hello World'
+                }
             }
 
-            .chalan_title {
-                font-size: 24px;
-                font-weight: 500;
-                color: #000;
+            @media print {
+
+                .table th,
+                td {
+                    font-size: 12pt !important;
+                }
+
+            }
+
+            .dotted-border {
+                border: 4px dotted var(--ct-dark);
+                height: 1.2rem;
+                border-top: 0;
+                border-right: 0;
+                border-left: 0;
             }
 
             .chalan {
-                color: #000;
+                position: relative;
             }
 
-            .chalan_title_input {
-                width: 200px;
+            /* .upper-table input {
+                        text-align: center;
+                        height: 1.4rem;
+                        vertical-align: middle;
+                        min-width: 5rem;
+                        max-width: 10rem;
+
+                    } */
+            .upper-table td {
+                font-weight: 500;
+                font-size: 1.1rem;
             }
 
-            .code input {
-                border: 1px solid #333;
-                width: 30px;
-                height: 30px;
+            .extra-info {
+                padding: 0 .5rem;
             }
 
-            .chala_table {
-                border: 1px solid #333;
-                margin: 20px 0 0 0;
+            .extra-info>li {
+                border-bottom: 1px solid black;
+                margin-top: 1.5rem;
             }
 
-            .chalan_table_row {
-                border: 1px solid #333;
-                padding: 8px;
-                font-size: 10px !important;
+            .chalan>* {
+                font-family: 'Noto Sans Bengali', sans-serif !important;
             }
 
-            .chalan_table_row1 {
-                border: 1px solid #333;
-                padding: 10px 10px 24px 10px;
-                border-right: transparent;
+            .chalan .indicators {
+                position: absolute;
+                right: 0;
+                top: 0;
             }
 
-            label,
-            input {
-                display: block;
-                margin-bottom: 10px;
+            .parent {
+                position: relative;
+                /* margin-bottom: 1.5rem; */
             }
 
-            option {
-                font-size: 10px;
+            .parent .center {
+                position: absolute;
+                left: 50%;
+                /* transform: translate(); */
             }
+
+            .parent .right {
+                position: absolute;
+                right: 0;
+            }
+
+            .table th,
+            td {
+                color: black;
+                font-size: 1rem;
+                font-weight: 400;
+                vertical-align: top;
+                padding: 0.2rem !important;
+            }
+
+            .table {
+                margin-bottom: 0.2rem !important;
+            }
+
+            .table th {
+                text-wrap: balance;
+                font-size: 0.9rem;
+                font-weight: 400;
+                text-align: center !important;
+            }
+
+            .table td span {
+                font-weight: 600;
+            }
+
+            .footnote>* {
+                color: black;
+                font-family: 'Noto Sans Bengali', sans-serif !important;
+                font-size: .9rem;
+                font-weight: 300;
+                padding-left: 1rem;
+            }
+
+            /* .copy {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size: 10px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: #000;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan_title {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size: 24px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-weight: 500;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: #000;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: #000;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan_title_input {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                width: 200px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .code input {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                width: 30px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                height: 30px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chala_table {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin: 20px 0 0 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan_table_row {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding: 8px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size: 10px !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan_table_row1 {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding: 10px 10px 24px 10px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border-right: transparent;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            label,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            input {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: block;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-bottom: 10px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            option {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size: 10px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
         </style>
     @endpush
     <x-backend.ui.breadcrumbs :list="['Management', 'Chalan', 'Create']" />
 
-    <x-backend.ui.section-card name="Create Chalan">
+    <x-backend.ui.section-card style="box-shadow: none!important;">
 
-        <div class="row">
-            <div class="col-lg-6"></div>
-            <div class="col-lg-6 mb-3">
-                <div class="d-flex justify-content-end text-center">
-                    <div class="col-lg-3 copy">১ম (মূল) কপি</div>
-                    <div class="col-lg-3 copy">২য় কপি</div>
-                    <div class="col-lg-3 copy">৩য় কপি</div>
+        <div class="chalan">
+            <div class="parent">
+                <div class="d-inline-block right">
+                    <table class="table table-bordered border-dark">
+                        <tr>
+                            <td class="px-3">১ম (মূল) কপি</td>
+                            <td class="px-3">২য় কপি</td>
+                            <td class="px-3">৩য় কপি</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <form action="{{ route('chalan.store') }}" method="post">
-                @csrf
-                <div class="text-center chalan">
-                    <p class="chalan_title" style="font-size: 10px;">চালান ফরম</p>
-                    <h5>টি, আর ফরম নং ৬ (এস, আর ৩৭ দ্রষ্টব্য)</h5>
-                    <div class="row">
-                        <div class="col-md-8 mx-auto">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <small>চালান নং</small>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="dotted-border" required name="chalan_no">
-                                        </div>
-                                    </div>
+            <div>
+                <div class="d-block fs-3 fw-medium text-dark text-center">চালান ফরম</div>
+                <table class="mx-auto upper-table">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">টি, আর ফরম নংঃ ৬ (এস, আর ৩৭ দ্রষ্টব্য)</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                চালান নংঃ
+                                <input type="text" class="dotted-border" style="width: 4rem;" name=""
+                                    id="" />
+                                তারিখঃ <input type="date" class="dotted-border" name="" id="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">বাংলাদেশ ব্যাংক/সোনালি ব্যাংকের চট্টগ্রাম জেলার
+                                <input type="text" class="dotted-border" name="" id="">
+                                টাকা জমা দেওয়ার চালান
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input :range="range(1, 13)" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <table class="table table-bordered border-dark">
+                <thead>
+                    <tr>
+                        <th colspan="4">জমা প্রদানকারী কতৃক পূরণ করিতে হইবে</th>
+                        <th colspan="2">টাকার অঙ্ক</th>
+                        <th rowspan="2">বিভাগের নাম এবং
+                            চালানের পৃষ্টাংকনকারী কর্মকর্তা নাম, পদবী ও দপ্তর।*</th>
+                    </tr>
+                    <tr>
+                        <th>যাহার মারফত প্রদত্ত হইল তাহার নাম
+                            ঠিকানা।</th>
+                        <th>যে ব্যক্তির/ প্রতিষ্ঠানের পক্ষ হইতে
+                            টাকা প্রদত্ত হইল তাহার নাম, পদবী ও ঠিকানা</th>
+                        <th>কি বাবদ ফি জমা দেওয়া হইল তাহার
+                            বিবরন</th>
+                        <th>মুদ্রা ও নোটের বিবরণ / ড্রাফট,
+                            পে-অর্ডার ও চেকের বিবরন</th>
+                        <th>টাকা</th>
+                        <th>পয়সা</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="max-width: 24ch;">
+                            <div>
+                                <span>Name:</span> {{ fake()->name() }}
+                            </div>
+                            <div>
+                                <span>
+                                    Phone:
+                                </span>
+                                {{ fake()->phoneNumber() }}
+                            </div>
+                            <div>
+                                <span>Location:</span>
+                                <div class="ps-2">
+                                    {{ fake()->address() }}
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <small>তারিখ</small>
-                                        </div>
-                                        <div class="col-md-10 d-flex">
-                                            <input class="dotted-border" required type="date" name="date">
-                                        </div>
-                                    </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span>Client Name:</span>
+                                {{ fake()->name() }}
+                            </div>
+                            <div>
+                                <span>Company Name:</span>
+                                {{ fake()->company() }}
+                            </div>
+                            <div>
+                                <span>Location:</span>
+                                <div>
+                                    Location
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 mx-auto">
-                        <div class="d-flex align-item-center">
-                            <p class="w-100" style="font-size: 10px;">বাংলাদেশ ব্যাংক/ <b> সোনালী ব্যাংকের </b> চট্টগ্রাম
-                                জেলার </p>
-                            <x-backend.form.text-input type="text" name="chalan_title"
-                                class="chalan_title_input dotted-border" required style="font-size: 10px;" required />
-                            <p class="w-100" style="font-size: 10px;"> টাকা জমা দেওয়ার চালান </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-10 mx-auto d-flex">
-                        <p class="me-2" style="font-size: 10px;"> কোড নংঃ </p>
-                        <div class="code d-flex mx-auto">
-                            <div class="d-inline-block me-3 d-flex">
-                                <input type="number" class="" style="font-size: 10px;" name="code1" required>
+                            <div>
+                                <span>Tin/Circle:</span>
+                                <div>
+                                    Tin
+                                </div>
                             </div>
-                            <div class="d-inline-block me-3 d-flex">
-                                <input type="number" class="g-0" style="font-size: 10px;" name="code2" required>
-                                <input type="number" class="g-0" style="font-size: 10px;" name="code3" required>
-                                <input type="number" class="g-0" style="font-size: 10px;" name="code4" required>
-                                <input type="number" class="g-0" style="font-size: 10px;" name="code5" required>
+                        </td>
+                        <td>
+                            <div>
+                                <span>Purpose:</span> Purpose
                             </div>
-                            <div class="code_no d-inline-block me-3 d-flex">
-                                <input type="number" class="" style="font-size: 10px;" name="code6" required>
-                                <input type="number" class="" style="font-size: 10px;" name="code7" required>
-                                <input type="number" class="" style="font-size: 10px;" name="code8" required>
-                                <input type="number" class="" style="font-size: 10px;" name="code9" required>
+                            <div>
+                                <span>Year:</span> Year
                             </div>
-                            <div class="code_no d-inline-block d-flex">
-                                <input type="number" class="" style="font-size: 10px;" name="code10" required>
-                                <input type="number" class="" style="font-size: 10px;" name="code11" required>
-                                <input type="number" class="" style="font-size: 10px;" name="code12" required>
-                                <input type="number" class="" style="font-size: 10px;" name="code13" required>
+                            <div>
+                                <span>Description:</span>
+                                <div class="ps-2">
+                                    Description
+                                </div>
                             </div>
-                        </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span>Cheque No.:</span> {{ random_int(10000000, 1000000000) }}
+                            </div>
+                            <div>
+                                <span>Date:</span> {{ now()->format('d/m/Y') }}
+                            </div>
+                            <span class="d-block">Random Bank Bangladesh,</span>
+                            <span class="d-block">Chattogram Branch</span>
+                        </td>
+                        <td style="vertical-align: middle!important;">
+                            <span>200/-</span>
+                        </td>
+                        <td style="vertical-align: middle!important;">
+                            <span>.00</span>
+                        </td>
+                        <td style="max-width: 24ch;" style="vertical-align: middle;">
+                            <ul class="list-unstyled extra-info">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">টাকা কথায়ঃ দুই শত টাকা মাত্র
+                            <span class="float-end">
+                                মোট টাকাঃ
+                            </span>
+                        </td>
+                        <td>200/-</td>
+                        <td>.00</td>
+                        <td colspan="2" rowspan="3" style="vertical-align: bottom;">
+                            <div class="text-center">ম্যানেজার</div>
+                            <div class="text-center">বাংলাদেশ ব্যাংক/সোনালি ব্যাংক
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="vertical-align: middle;">
+                            টাকা পাওয় গেলঃ 200/- (দুই শত টাকা মাত্র)
+                        </td>
 
-                    </div>
-                    <div class="col-lg-12 table-responsive">
-                        <table class="w-100 chala_table">
-                            <tbody>
-                                <tr>
-                                    <td colspan="4" class="col-lg-4 chalan_table_row">জমা প্রদানকারী কতৃক পূরণ করিতে হইবে
-                                    </td>
-                                    <td colspan="2" class="col-lg-2 chalan_table_row">টাকার অ ংক</td>
-                                    <td colspan="1" rowspan="2" class="col-lg-2 chalan_table_row">বিভাগের নাম এবং
-                                        চালানের পৃষ্টাংকনকারী কর্মকর্তা নাম, পদবী ও দপ্তর।*</td>
-                                </tr>
-                                <tr>
-                                    <td style="width:80px" class="chalan_table_row">যাহার মারফত প্রদত্ত হইল তাহার নাম
-                                        ঠিকানা।</td>
-                                    <td style="width:80px" class="chalan_table_row">যে ব্যক্তির/ প্রতিষ্ঠানের পক্ষ হইতে
-                                        টাকা প্রদত্ত হইল তাহার নাম, পদবী ও ঠিকানা</td>
-                                    <td style="width:80px" class="chalan_table_row">কি বাবদ ফি জমা দেওয়া হইল তাহার
-                                        বিবরন </td>
-                                    <td style="width:80px" class="chalan_table_row">মুদ্রা ও নোটের বিবরণ ড্রাফট,
-                                        পে-অর্ডার ও চেকের বিবরন</td>
-                                    <td style="width:80px" class="chalan_table_row">টাকা</td>
-                                    <td style="width:40px!important" class="chalan_table_row">পয়সা</td>
-                                </tr>
-                                <tr>
-                                    <td style="width:80px">
-                                        <div class="d-flex">
-                                            <div style="width:80px">
-                                                <input type="text" placeholder="Name"
-                                                    class="w-100 dotted-border @error('name') is-invalid @enderror"
-                                                    style="font-size:10px" name="name">
-                                                @error('name')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div style="width:80px">
-                                                <input type="text" placeholder="Location"
-                                                    class="w-100 dotted-border @error('location') is-invalid @enderror"
-                                                    style="font-size:10px" name="location">
-                                                @error('location')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div style="width:80px">
-                                                <input type="text" placeholder="Phone Number"
-                                                    class="w-100 dotted-border @error('phone_number') is-invalid @enderror"
-                                                    style="font-size:10px" name="phone_number">
-                                                @error('phone_number')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td style="width:80px; border-left:1px solid #333;">
-                                        <div>
-                                            <div style="width:80px">
-                                                {{-- <input type="text"
-                                                    class="w-100 dotted-border @error('client_name') is-invalid @enderror"
-                                                    placeholder="Client Name" style="font-size:10px" name="client_name">
-                                                @error('client_name')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror --}}
-
-                                                <select style="width:80px;" id="userSelect"
-                                                    class="w-100 dotted-border @error('client_name') is-invalid @enderror"
-                                                    style="font-size:10px" name="client_name">
-                                                    <option disabled selected style="font-size:10px!important">Select
-                                                        Client</option>
-                                                    @foreach ($clients as $client)
-                                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                                    @endforeach
-
-                                                </select>
-                                                @error('client_name')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror
-
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div style="width:80px">
-                                                <input type="text"
-                                                    class="w-100 dotted-border @error('company_name') is-invalid @enderror"
-                                                    placeholder="Company Name" id="company" style="font-size:10px"
-                                                    name="company_name">
-                                                @error('company_name')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror
-
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div style="width:80px">
-                                                <input type="text"
-                                                    class="w-100 dotted-border @error('location') is-invalid @enderror"
-                                                    placeholder="Location" id="adress" style="font-size:10px"
-                                                    name="location">
-                                                @error('location')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div style="width:80px">
-                                            <input type="text"
-                                                class="w-100 dotted-border @error('tin_circle') is-invalid @enderror"
-                                                placeholder="Tin:/Circle" id="circle" style="font-size:10px"
-                                                name="tin_circle">
-                                            @error('tin_circle')
-                                                <span class="text-bold text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </td>
-                                    <td style="width:80px; border-left:1px solid #333;">
-                                        <div>
-                                            <div style="width:80px">
-                                                <input type="text"
-                                                    class="w-100 dotted-border @error('purpose') is-invalid @enderror"
-                                                    placeholder="Purpose:" style="font-size:10px" name="purpose">
-                                                @error('purpose')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div style="width:80px">
-                                                <input type="date"
-                                                    class="w-100 dotted-border @error('year') is-invalid @enderror"
-                                                    placeholder="Year:" style="font-size:10px" name="year">
-                                                @error('year')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div style="width:80px">
-                                                <input type="text"
-                                                    class="w-100 dotted-border @error('distription') is-invalid @enderror"
-                                                    placeholder="Distription:" style="font-size:10px" name="distription">
-                                                @error('distription')
-                                                    <span class="text-bold text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td style="width:80px; border-left:1px solid #333;">
-                                        <select style="width:80px; " id="payment" onchange="toggleInputFields()"
-                                            class="w-100 dotted-border @error('payment_method') is-invalid @enderror"
-                                            style="font-size:10px" name="payment_method">
-                                            <option disabled selected style="font-size:10px!important">Select Payment
-                                                Method:</option>
-                                            <option value="cash">Cash</option>
-                                            <option value="bank">Bank</option>
-                                        </select>
-                                        @error('payment_method')
-                                            <span class="text-bold text-danger">{{ $message }}</span>
-                                        @enderror
-
-                                        <div id="bankInputs" style="display: none; width:80px;">
-                                            <input type="text" id="bankName" class="w-100 dotted-border"
-                                                placeholder="Bank Name:" style="font-size: 10px" name="bank_name">
-
-                                            <input type="text" id="accountNumber"
-                                                class="w-100 dotted-border @error('account_number') is-invalid @enderror"
-                                                placeholder="Account Number:" style="font-size: 10px"
-                                                name="account_number">
-                                            @error('account_number')
-                                                <span class="text-bold text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div id="bankInput" style="display: none; width:80px;">
-                                            <input type="number" id="cash" class="w-100 dotted-border"
-                                                placeholder="Cash:" style="font-size: 10px" name="cash">
-
-
-                                        </div>
-                                    </td>
-                                    <td style="width:80px; border-left:1px solid #333;">
-                                        <input type="number"
-                                            class="w-100 dotted-border @error('taka_kothay') is-invalid @enderror"
-                                            placeholder="Ammount" style="font-size: 10px; width:80px" name="taka_kothay">
-                                        @error('taka_kothay')
-                                            <span class="text-bold text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </td>
-                                    <td style="width:40px; border-left:1px solid #333;">
-                                        .00
-                                    </td>
-                                    <td style="width:80px; border-left:1px solid #333;">
-                                        <input type="text"
-                                            class="w-100 dotted-border @error('org_name_text') is-invalid @enderror"
-                                            placeholder="Org Name Text" style="font-size: 10px; width:80px"
-                                            name="org_name_text">
-                                        @error('org_name_text')
-                                            <span class="text-bold text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" class="col-lg-4 chalan_table_row text-start"> <span
-                                            class="d-inline-block" style="font-size: 10px;"> টাকা কথায়</span> <input
-                                            type="text"
-                                            class="d-inline-block w-50 dotted-border @error('taka_kothay') is-invalid @enderror"
-                                            name="taka_kothay">
-                                        @error('taka_kothay')
-                                            <span class="text-bold text-danger">{{ $message }}</span>
-                                        @enderror
-                                        <span class="text-end ms-5 w-25" style="font-size: 10px;"> মোট টাকা </span>
-                                    </td>
-                                    <td colspan="1" class="col-lg-1 chalan_table_row">
-                                        <input type="number"
-                                            class="form-control @error('total_ammount') is-invalid @enderror"
-                                            placeholder="Total Ammount" style="font-size: 10px;" name="total_ammount">
-                                        @error('total_ammount')
-                                            <span class="text-bold text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </td>
-                                    <td colspan="1" class="col-lg-1 chalan_table_row">
-                                        <input type="number" class="form-control" placeholder="Total Ammount"
-                                            style="font-size: 10px;">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6" class="col-lg-6 chalan_table_row text-start"> <span
-                                            class="d-inline-block" style="font-size: 10px;"> টাকা পাওয়া গেল </span> <input
-                                            type="text"
-                                            class="d-inline-block w-75 dotted-border @error('take_poua_gelo') is-invalid @enderror"
-                                            style="font-size: 10px;" name="take_poua_gelo"> </td>
-                                    @error('take_poua_gelo')
-                                        <span class="text-bold text-danger">{{ $message }}</span>
-                                    @enderror
-                                </tr>
-                                <tr>
-                                    <td colspan="6" class="col-lg-6 chalan_table_row1 text-start"
-                                        style="font-size: 10px;"> <span class="d-inline-block"
-                                            style="font-size: 10px;">তারিখ</span> <input type="date"
-                                            class="d-inline-block w-25 @error('date') is-invalid @enderror"
-                                            name="date" style="padding:2px;">
-                                        @error('data')
-                                            <span class="text-bold text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </td>
-                                    <td colspan="4" rowspan="4" class="text-center" style="font-size: 10px;">
-                                        <span class="d-block">ম্যানেজার </span>
-                                        <span class="">বাংলাদেশ ব্যাংক/সোনালী ব্যাংক </span>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-                        <div class=" d-flex flex-column text-start">
-                            <span style="font-size:10px">নোটঃ ১। সংলিষ্ট দপ্তরের সহিত যোগাযোগ করিয়া সঠিক নাম্বার জানিয়া
-                                লইবেন</span>
-                            <span style="font-size:10px">নোটঃ ২। * যেঁ সকল ক্ষেত্রে কর্মকর্তা কতৃক পৃষ্টাংকন প্রয়োজন, সে
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="vertical-align: middle;">
+                            তারিখঃ {{ now('Asia/Dhaka')->locale('bn_BD')->format('d/m/Y') }} ইং
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class='footnote'>
+                <ul class="list-unstyled">
+                    <li>
+                        নোটঃ
+                        <ul style="list-style: bengali;">
+                            <li>
+                                সংলিষ্ট দপ্তরের সহিত যোগাযোগ করিয়া সঠিক নাম্বার জানিয়া
+                                লইবেন
+                            </li>
+                            <li>
+                                * যেঁ সকল ক্ষেত্রে কর্মকর্তা কতৃক পৃষ্টাংকন প্রয়োজন, সে
                                 সকল ক্ষেত্রে প্রযোজ্য
-                                হইবে।</span>
-                            <span style="font-size:10px">বাঃ নিঃ মুঃ ৬৩/২০১১-১২, ৫০ লক্ষ কপি, মুদ্রণাদেশ নং-৫৩/১১-১২</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mt-3">
-                    <x-backend.ui.button class="btn-primary btn btn-sm">Create</x-backend.ui.button>
-                </div>
-
-            </form>
+                                হইবে।
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        বাঃ নিঃ মুঃ ৬৩/২০১১-১২, ৫০ লক্ষ কপি, মুদ্রণাদেশ নং-৫৩/১১-১২
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <x-backend.ui.button class="btn-primary btn btn-sm d-print-none">Create</x-backend.ui.button>
         </div>
     </x-backend.ui.section-card>
     <!-- end row-->
@@ -459,7 +420,5 @@
                 });
             });
         </script>
-
-       
     @endpush
 @endsection

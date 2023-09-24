@@ -59,7 +59,7 @@ class QuestionController extends Controller
      */
     public function show(string $exam_id)
     {
-        $questions  = Question::where('exam_id', $exam_id)->get();
+        $questions  = Question::where('exam_id', $exam_id)->simplePaginate(paginateCount());
         $exam       = Exam::find($exam_id, ['id', 'name']);
         $question = null;
         return view('backend.exams.questions.questions', compact('questions', 'exam', 'question'));
