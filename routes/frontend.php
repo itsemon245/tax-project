@@ -142,7 +142,7 @@ Route::post('/upload', function (Request $request) {
 Route::get('test', function () {
 
     $product = CaseStudy::where('price', '>', 0)->first('price');
-    dd(auth()->user()->isPartner(), $product->price);
+    // dd(auth()->user()->isPartner(), $product->price);
 });
 
 Route::get('/test-mcq', [MCQController::class, 'index'])->name('mcq.index');
