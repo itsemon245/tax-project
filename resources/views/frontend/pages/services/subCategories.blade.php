@@ -15,45 +15,48 @@
             'Vat Services' => \App\Models\ProductCategory::where('name', 'Vat Packages')
                 ->with(['productSubCategories', 'productSubCategories.products'])
                 ->first(),
+            default => null,
         };
     @endphp
-    <section class="mb-5">
-        <div class="card-body container-fluid px-5">
-            <h2 class="header-title h4 mt-4 text-center">{{ $productCat->name }}</h2>
-            <div class=" d-flex justify-content-center">
-                <p class="text-justify" style="max-width: 100ch; font-weight:500;">
-                    {{ $productCat->description }}</p>
-            </div>
-            <div class="container d-flex justify-content-center">
-                <ul class="nav nav-pills navtab-bg" role="tablist">
-                    @foreach ($productCat->productSubCategories as $key => $subCat)
-                        <li class="nav-item" role="presentation">
-                            <a href="#{{ str($subCat->name)->slug() . '-' . $subCat->id }}" data-bs-toggle="tab"
-                                aria-expanded="{{ $key === 0 ? 'true' : 'false' }}"
-                                aria-selected="{{ $key === 0 ? 'true' : 'false' }}" role="tab"
-                                class="text-capitalize nav-link {{ $key === 0 ? 'active' : '' }}" tabindex="-1">
-                                {{ $subCat->name }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            <div class="container-fluid">
-                <div class="tab-content">
-                    @foreach ($productCat->productSubCategories as $key => $subCat)
-                        <div class="tab-pane {{ $key === 0 ? 'active' : '' }}"
-                            id="{{ str($subCat->name)->slug() . '-' . $subCat->id }}" role="tabpanel">
-                            <div class="product-wrapper">
-                                @foreach ($subCat->products as $product)
-                                    <x-frontend.product-card :$product />
-                                @endforeach
+    @if ($productCat)
+        <section class="mb-5">
+            <div class="card-body container-fluid px-5">
+                <h2 class="header-title h4 mt-4 text-center">{{ $productCat->name }}</h2>
+                <div class=" d-flex justify-content-center">
+                    <p class="text-justify" style="max-width: 100ch; font-weight:500;">
+                        {{ $productCat->description }}</p>
+                </div>
+                <div class="container d-flex justify-content-center">
+                    <ul class="nav nav-pills navtab-bg" role="tablist">
+                        @foreach ($productCat->productSubCategories as $key => $subCat)
+                            <li class="nav-item" role="presentation">
+                                <a href="#{{ str($subCat->name)->slug() . '-' . $subCat->id }}" data-bs-toggle="tab"
+                                    aria-expanded="{{ $key === 0 ? 'true' : 'false' }}"
+                                    aria-selected="{{ $key === 0 ? 'true' : 'false' }}" role="tab"
+                                    class="text-capitalize nav-link {{ $key === 0 ? 'active' : '' }}" tabindex="-1">
+                                    {{ $subCat->name }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="container-fluid">
+                    <div class="tab-content">
+                        @foreach ($productCat->productSubCategories as $key => $subCat)
+                            <div class="tab-pane {{ $key === 0 ? 'active' : '' }}"
+                                id="{{ str($subCat->name)->slug() . '-' . $subCat->id }}" role="tabpanel">
+                                <div class="product-wrapper">
+                                    @foreach ($subCat->products as $product)
+                                        <x-frontend.product-card :$product />
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
 
     {{-- Services --}}

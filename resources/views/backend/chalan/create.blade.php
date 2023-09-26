@@ -8,11 +8,6 @@
                 size: A4 landscape;
                 font: 12pt;
             }
-            @page{
-                @top-left{
-                    content: 'Hello World'
-                }
-            }
 
             @media print {
 

@@ -7,7 +7,7 @@
             ->first();
         $reviews = \App\Models\Review::with('user')->latest()->limit(10)->get();
     @endphp
-    <section class="mb-5">
+     <section class="mb-5">
         <div class="card-body container-fluid px-5">
             <h2 class="header-title h4 mt-4 text-center">{{ $productCat->name }}</h2>
             <div class=" d-flex justify-content-center">
