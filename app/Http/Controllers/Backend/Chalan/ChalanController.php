@@ -25,9 +25,6 @@ class ChalanController extends Controller
     public function create()
     {
         $clients = Client::latest()->get();
-        // $location = $users->location;
-        // $company = $users->company;
-        // $circle = $users->circle;
         return view('backend.chalan.create', compact('clients'));
         //
     }
@@ -37,36 +34,10 @@ class ChalanController extends Controller
      */
     public function store(Request $request)
     {
+        $request->dd();
         $request->validate([
-            'chalan_no' => 'required',
-            'date' => 'required',
-            'chalan_title' => 'required',
-            'code1' => 'required',
-            'code2' => 'required',
-            'code3' => 'required',
-            'code4' => 'required',
-            'code5' => 'required',
-            'code6' => 'required',
-            'code7' => 'required',
-            'code8' => 'required',
-            'code9' => 'required',
-            'code10' => 'required',
-            'code11' => 'required',
-            'code12' => 'required',
-            'code13' => 'required',
-            'name' => 'required',
-            'location' => 'required',
-            'phone_number' => 'required',
-            'client_name' => 'required',
-            'company_name' => 'required',
-            'tin_circle' => 'required',
-            'purpose' => 'required',
-            'year' => 'required',
-            'payment_method' => 'required',
-            'org_name_text' => 'required',
-            'taka_kothay' => 'required',
-            'total_ammount' => 'required',
-            'take_poua_gelo' => 'required',
+            'chalan_no' => 'numeric',
+            ''
         ]);
 
         Chalan::create([
@@ -187,16 +158,9 @@ class ChalanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function user($id)
+    public function clientInfo($id)
     {
-        $client = Client::find($id);
-        $location = $client->present_address;
-        $company = $client->company_name;
-        $circle = $client->circle;
-        return response()->json([
-            'location' => $location,
-            'company' => $company,
-            'circle' => $circle,
-        ]);
+        $client = Client::find($id, ['id', 'present_address', 'company_name', 'circle', 'tin'])->toArray();
+        return response()->json($client);
     }
 }

@@ -20,8 +20,9 @@
 
             .dotted-border {
                 border: 4px dotted var(--ct-dark);
-                height: 1.2rem;
+                height: 1.4rem;
                 border-top: 0;
+                padding-top: 4px;
                 border-right: 0;
                 border-left: 0;
             }
@@ -30,14 +31,7 @@
                 position: relative;
             }
 
-            /* .upper-table input {
-                        text-align: center;
-                        height: 1.4rem;
-                        vertical-align: middle;
-                        min-width: 5rem;
-                        max-width: 10rem;
 
-                    } */
             .upper-table td {
                 font-weight: 500;
                 font-size: 1.1rem;
@@ -109,66 +103,14 @@
                 font-weight: 300;
                 padding-left: 1rem;
             }
-
-            /* .copy {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size: 10px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: #000;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan_title {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size: 24px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-weight: 500;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: #000;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                color: #000;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan_title_input {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                width: 200px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .code input {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                width: 30px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                height: 30px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chala_table {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin: 20px 0 0 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan_table_row {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding: 8px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size: 10px !important;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .chalan_table_row1 {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 1px solid #333;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding: 10px 10px 24px 10px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border-right: transparent;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            label,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            input {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: block;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-bottom: 10px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            option {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size: 10px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
         </style>
     @endpush
     <x-backend.ui.breadcrumbs :list="['Management', 'Chalan', 'Create']" />
 
     <x-backend.ui.section-card style="box-shadow: none!important;">
 
-        <div class="chalan">
+        <form action="{{ route('chalan.store') }}" method="post" class="chalan">
+            @csrf
             <div class="parent">
                 <div class="d-inline-block right">
                     <table class="table table-bordered border-dark">
@@ -190,14 +132,15 @@
                         <tr>
                             <td class="text-center">
                                 চালান নংঃ
-                                <input type="text" class="dotted-border" style="width: 4rem;" name=""
-                                    id="" />
-                                তারিখঃ <input type="date" class="dotted-border" name="" id="">
+                                <input name="chalan_no" type="text" class="dotted-border" style="width: 4rem;"
+                                    name="" id="" />
+                                তারিখঃ <input name="date" type="date" class="dotted-border" name=""
+                                    id="">
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center">বাংলাদেশ ব্যাংক/সোনালি ব্যাংকের চট্টগ্রাম জেলার
-                                <input type="text" class="dotted-border" name="" id="">
+                                <input type="text" class="dotted-border text-center" name="bank_name" id="">
                                 টাকা জমা দেওয়ার চালান
                             </td>
                         </tr>
@@ -233,70 +176,105 @@
                 <tbody>
                     <tr>
                         <td style="max-width: 24ch;">
-                            <div>
-                                <span>Name:</span> {{ fake()->name() }}
+                            <div class="mb-2">
+                                <span>Name:</span> <input type="text" name="name" class="dotted-border"
+                                    style="max-width: 8rem;" name="" id="" />
                             </div>
-                            <div>
+                            <div class="mb-2">
                                 <span>
                                     Phone:
                                 </span>
-                                {{ fake()->phoneNumber() }}
+                                <input type="text" name="phone" class="dotted-border" style="max-width: 8rem;"
+                                    name="" id="" />
                             </div>
                             <div>
                                 <span>Location:</span>
-                                <div class="ps-2">
-                                    {{ fake()->address() }}
+                                <textarea name="" name="location" class="dotted-border ms-2" rows="10" id=""></textarea>
+                            </div>
+                        </td>
+                        <td style="max-width: 25ch;">
+                            <div class="px-2">
+                                <x-form.selectize name="client_id" id="client_id" label="Select Client"
+                                    placeholder="Select Client" :can-create="false">
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                    @endforeach
+
+                                </x-form.selectize>
+                            </div>
+                            <div class="d-none" id="client-info">
+                                <div class="mb-1">
+                                    <span>Company:</span>
+                                    <span id="company" class="text-capitalize"></span>
+                                </div>
+
+                                <div class="mb-1">
+                                    <span>Tin:</span>
+                                    <span id="tin"></span>
+                                </div>
+                                <div class="mb-1">
+                                    <span>Circle:</span>
+                                    <span id="circle"></span>
+                                </div>
+                                <div class="mb-1">
+                                    <span>Location:</span>
+                                    <div id="location">
+                                        Location
+                                    </div>
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            <div>
-                                <span>Client Name:</span>
-                                {{ fake()->name() }}
+                        <td style="max-width: 25ch;">
+                            <div class="mb-2">
+                                <span>Purpose:</span> <input type="text" name="purpose" class="dotted-border"
+                                    style="max-width: 8rem;" name="" id="" />
                             </div>
-                            <div>
-                                <span>Company Name:</span>
-                                {{ fake()->company() }}
-                            </div>
-                            <div>
-                                <span>Location:</span>
-                                <div>
-                                    Location
-                                </div>
-                            </div>
-                            <div>
-                                <span>Tin/Circle:</span>
-                                <div>
-                                    Tin
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <span>Purpose:</span> Purpose
-                            </div>
-                            <div>
-                                <span>Year:</span> Year
+                            <div class="d-flex gap-1 align-items-center mb-2">
+                                <label for="year" class="d-inline">Year:</label>
+                                <select id="year" class="form-select d-inline" placeholder="Select Year..."
+                                    name="year">
+                                    @foreach (range(currentYear(), 2020) as $year)
+                                        <option value="{{ $year - 1 . '-' . $year }}">
+                                            {{ $year - 1 . '-' . $year }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div>
                                 <span>Description:</span>
-                                <div class="ps-2">
-                                    Description
-                                </div>
+                                <textarea name="" name="location" class="dotted-border ms-2" rows="10" id=""></textarea>
                             </div>
                         </td>
                         <td>
-                            <div>
-                                <span>Cheque No.:</span> {{ random_int(10000000, 1000000000) }}
+                            <div class="d-flex gap-3 p-2">
+                                <div class="form-check form-check-success">
+                                    <input class="form-check-input rounded-circle" type="radio" name="payment_type"
+                                        value="cash" id="cash" checked>
+                                    <label class="form-check-label" for="cash">Cash</label>
+                                </div>
+                                <div class="form-check form-check-primary">
+                                    <input class="form-check-input rounded-circle" type="radio" name="payment_type"
+                                        value="bank" id="bank">
+                                    <label class="form-check-label" for="bank">Bank</label>
+                                </div>
                             </div>
-                            <div>
-                                <span>Date:</span> {{ now()->format('d/m/Y') }}
+                            <div id="payment-info" class="d-none">
+                                <div class="mb-2">
+                                    <span>Cheque No.:</span> <input type="text" name="cheque_no" class="dotted-border"
+                                        style="max-width: 8rem;" name="" id="" />
+                                </div>
+                                <div class="mb-2">
+                                    <span class="d-block">Bank: </span> <input type="text" name="bank"
+                                        class="dotted-border ms-2" name="" id="" />
+                                </div>
+                                <div class="mb-2">
+                                    <span class="d-block">Branch: </span> <input type="text" name="branch"
+                                        class="dotted-border ms-2" name="" id="" />
+                                </div>
                             </div>
-                            <span class="d-block">Random Bank Bangladesh,</span>
-                            <span class="d-block">Chattogram Branch</span>
                         </td>
                         <td style="vertical-align: middle!important;">
-                            <span>200/-</span>
+                            <input type="text" name="amount" class="dotted-border mx-1" name=""
+                                id="" style="max-width: 6rem;" />
                         </td>
                         <td style="vertical-align: middle!important;">
                             <span>.00</span>
@@ -316,7 +294,9 @@
                                 মোট টাকাঃ
                             </span>
                         </td>
-                        <td>200/-</td>
+                        <td>
+                            <span class="amount"></span>/-
+                        </td>
                         <td>.00</td>
                         <td colspan="2" rowspan="3" style="vertical-align: bottom;">
                             <div class="text-center">ম্যানেজার</div>
@@ -326,13 +306,13 @@
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            টাকা পাওয় গেলঃ 200/- (দুই শত টাকা মাত্র)
+                            টাকা পাওয় গেলঃ <span class="amount"></span>/- (দুই শত টাকা মাত্র)
                         </td>
 
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            তারিখঃ {{ now('Asia/Dhaka')->locale('bn_BD')->format('d/m/Y') }} ইং
+                            তারিখঃ <span class="date"></span>
                         </td>
                     </tr>
                 </tbody>
@@ -358,7 +338,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </form>
         <div>
             <x-backend.ui.button class="btn-primary btn btn-sm d-print-none">Create</x-backend.ui.button>
         </div>
@@ -367,51 +347,43 @@
 
     @push('customJs')
         <script>
-            function toggleInputFields() {
-                const paymentMethod = document.getElementById('payment').value;
-                const bankInputsDiv = document.getElementById('bankInputs');
-                const bankInputs = document.getElementById('bankInput');
-
-                if (paymentMethod === 'bank') {
-                    bankInputsDiv.style.display = 'block';
-                } else {
-                    bankInputsDiv.style.display = 'none';
-                }
-
-                if (paymentMethod === 'cash') {
-                    bankInputs.style.display = 'block';
-                } else {
-                    bankInputs.style.display = 'none';
-                }
-            }
-        </script>
-
-
-        <script>
             $(document).ready(function() {
-                $('#userSelect').on('change', function() {
-                    var userId = $(this).val();
-                    //alert(userId)
-                    var url = "{{ route('admin.chalan.client', ':userID') }}";
-                    url = url.replace(':userID', userId);
-                    if (userId) {
-                        $.ajax({
-                            url: url,
-                            type: 'GET',
-                            success: function(data) {
-
-                                console.log(data)
-
-                                $('#adress').val(data.location);
-                                $('#company').val(data.company);
-                                $('#circle').val(data.circle);
-                            }
-                        });
+                let paymentType = $('input[name="payment_type"]')
+                let date = $('input[name="date"]')
+                let amount = $('input[name="amount"]')
+                paymentType.on('change', function(e) {
+                    let paymentInfo = $('#payment-info')
+                    if (e.target.value == 'cash') {
+                        paymentInfo.addClass('d-none')
+                        paymentInfo.find('input').val(null)
                     } else {
-                        $('#location').val('');
-                        $('#company').val('');
-                        $('#circle').val('');
+                        paymentInfo.removeClass('d-none')
                     }
+                })
+
+                date.on('input', e => {
+                    $('.date').text(e.target.value)
+                })
+                amount.on('input', e => {
+                    $('.amount').text(e.target.value)
+                })
+
+
+                $('#client_id').on('change', function(e) {
+                    var userId = e.target.value
+                    var url = "{{ route('get.client.info', ':userID') }}";
+                    url = url.replace(':userID', userId);
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function(data) {
+                            $('#location').text(data.present_address);
+                            $('#company').text(data.company_name);
+                            $('#circle').text(data.circle);
+                            $('#tin').text(data.tin);
+                            $('#client-info').removeClass('d-none')
+                        }
+                    });
                 });
             });
         </script>

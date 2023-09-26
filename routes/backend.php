@@ -380,7 +380,7 @@ Route::prefix('admin')
 
         // custom Routes
 
-        Route::get('chalan/clintes/{id}', [ChalanController::class, 'user'])->name('admin.chalan.client');
+        Route::get('get/client/{id}', [ChalanController::class, 'clientInfo'])->name('get.client.info');
         //Review backend 
         Route::prefix('/review')->name('backend.review.')->controller(ReviewController::class)->group(function () {
             Route::get('/index', 'index')->name('index');
