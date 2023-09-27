@@ -10,8 +10,8 @@ class Currency implements CastsAttributes
     public $number;
     public function __construct()
     {
-        $this->number = new \NumberFormatter('en_IN', \NumberFormatter::DEFAULT_STYLE);
-        $this->number->setSymbol(\NumberFormatter::CURRENCY_SYMBOL, "BDT");
+        $this->number = new \NumberFormatter('en_BD', \NumberFormatter::DEFAULT_STYLE);
+        $this->number->setSymbol(\NumberFormatter::CURRENCY_SYMBOL, " ৳ ");
     }
     /**
      * Cast the given value.

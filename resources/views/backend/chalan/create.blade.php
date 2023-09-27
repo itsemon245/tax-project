@@ -72,6 +72,7 @@
                 right: 0;
             }
 
+
             .table th,
             td {
                 color: black;
@@ -132,8 +133,8 @@
                         <tr>
                             <td class="text-center">
                                 চালান নংঃ
-                                <input name="chalan_no" type="text" class="dotted-border" style="width: 4rem;"
-                                    name="" id="" />
+                                <input name="chalan_no" type="text" class="dotted-border text-center"
+                                    style="width: 4rem;" name="" id="" />
                                 তারিখঃ <input name="date" type="date" class="dotted-border" name=""
                                     id="">
                             </td>
@@ -145,7 +146,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input :range="range(1, 13)" />
+                            <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input name="code"
+                                    :range="range(1, 13)" />
                             </td>
                         </tr>
                     </tbody>
@@ -289,7 +291,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4">টাকা কথায়ঃ দুই শত টাকা মাত্র
+                        <td colspan="4" class="py-1">টাকা কথায়ঃ <input type="text" name="amount_in_words"
+                                class="dotted-border mx-1 py-2" style="width: 70%;" />
                             <span class="float-end">
                                 মোট টাকাঃ
                             </span>
@@ -306,7 +309,7 @@
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            টাকা পাওয় গেলঃ <span class="amount"></span>/- (দুই শত টাকা মাত্র)
+                            টাকা পাওয় গেলঃ <span class="amount"></span>/- (<span id="in-words"></span>)
                         </td>
 
                     </tr>
@@ -337,11 +340,9 @@
                         বাঃ নিঃ মুঃ ৬৩/২০১১-১২, ৫০ লক্ষ কপি, মুদ্রণাদেশ নং-৫৩/১১-১২
                     </li>
                 </ul>
+                <x-backend.ui.button class="btn-primary btn btn-sm d-print-none text-white">Create</x-backend.ui.button>
             </div>
         </form>
-        <div>
-            <x-backend.ui.button class="btn-primary btn btn-sm d-print-none">Create</x-backend.ui.button>
-        </div>
     </x-backend.ui.section-card>
     <!-- end row-->
 
@@ -351,6 +352,7 @@
                 let paymentType = $('input[name="payment_type"]')
                 let date = $('input[name="date"]')
                 let amount = $('input[name="amount"]')
+                let inWords = $('input[name="amount_in_words"]')
                 paymentType.on('change', function(e) {
                     let paymentInfo = $('#payment-info')
                     if (e.target.value == 'cash') {
@@ -366,6 +368,9 @@
                 })
                 amount.on('input', e => {
                     $('.amount').text(e.target.value)
+                })
+                inWords.on('input', e => {
+                    $('#in-words').text(e.target.value)
                 })
 
 

@@ -34,42 +34,27 @@ class ChalanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->dd();
-        $request->validate([
-            'chalan_no' => 'numeric',
-            ''
-        ]);
+        $validated = $request->validate([
+            'chalan_no' => 'nullable|numeric',
+            'date' => 'nullable|date',
+            'bank_name' => 'nullable|string',
+            'code' => 'nullable|string',
+            'name' => 'nullable|string',
+            'phone' => 'nullable|string',
+            'location' => 'nullable|string',
+            'client_id' => 'nullable|numeric',
+            'purpose' => 'nullable|string',
+            'year' => 'nullable|string',
+            'payment_type' => 'nullable|string',
+            'cheque_no' => 'nullable|string',
+            'bank_name' => 'nullable|string',
+            'branch' => 'nullable|string',
+            'amount' => 'nullable|numeric',
+            'amount_in_words' => 'nullable|string',
 
+        ]);
         Chalan::create([
-            'chalan_no' => $request->chalan_no,
-            'date' => $request->date,
-            'chalan_title' => $request->chalan_title,
-            'code1' => $request->code1,
-            'code2' => $request->code2,
-            'code3' => $request->code3,
-            'code4' => $request->code4,
-            'code5' => $request->code5,
-            'code6' => $request->code6,
-            'code7' => $request->code7,
-            'code8' => $request->code8,
-            'code9' => $request->code9,
-            'code10' => $request->code10,
-            'code11' => $request->code11,
-            'code12' => $request->code12,
-            'code13' => $request->code13,
-            'name' => $request->name,
-            'location' => $request->location,
-            'phone_number' => $request->phone_number,
-            'client_name' => $request->client_name,
-            'company_name' => $request->company_name,
-            'tin_circle' => $request->tin_circle,
-            'purpose' => $request->purpose,
-            'year' => $request->year,
-            'payment_method' => $request->payment_method,
-            'total_ammount' => $request->total_ammount,
-            'take_poua_gelo' => $request->take_poua_gelo,
-            'org_name_text' => $request->org_name_text,
-            'taka_kothay' => $request->taka_kothay,
+            ...$validated
         ]);
 
         $notification = [

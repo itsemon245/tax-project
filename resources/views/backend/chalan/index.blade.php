@@ -25,11 +25,11 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Chalan Name</th>
+                                    <th>Chalan No.</th>
                                     <th>Date</th>
                                     <th>Ammount</th>
                                     @canany(['manage chalan', 'read chalan'])
-                                    <th>Action</th> 
+                                        <th>Action</th>
                                     @endcanany
                                 </tr>
                             </thead>
@@ -38,32 +38,24 @@
                                 @foreach ($data as $key => $chalan)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $chalan->chalan_title }}</td>
+                                        <td>{{ $chalan->chalan_no }}</td>
                                         <td>{{ $chalan->date }}</td>
-                                        <td>{{ $chalan->total_ammount }}</td>
+                                        <td>{{ $chalan->amount }}</td>
                                         @canany(['manage chalan', 'read chalan'])
-                                        <td>
+                                            <td>
 
-                                            @can('read chalan')
-                                            <a href="{{ route('chalan.show', $chalan->id) }}"
-                                                class="btn btn-warning btn-sm">Show</a>
-                                            @endcan
+                                                @can('read chalan')
+                                                    <a href="{{ route('chalan.show', $chalan->id) }}"
+                                                        class="btn btn-warning btn-sm">Show</a>
+                                                @endcan
 
-                                            @can('manage chalan')
-                                            <a href="{{ route('chalan.edit', $chalan->id) }}"
-                                                class="btn btn-info btn-sm">Copy</a>
-
-
-
-                                            <form action="{{ route('case-study.destroy', $chalan->id) }}" method="post"
-                                                class="d-inline-block py-0">
-                                                @csrf
-                                                @method('DELETE')
-                                                <x-backend.ui.button
-                                                    class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
-                                            </form>
-                                            @endcan
-                                        </td>
+                                                @can('manage chalan')
+                                                    <x-backend.ui.button type="edit" href="{{ route('chalan.edit', $chalan->id) }}"
+                                                        class="btn-sm" />
+                                                    <x-backend.ui.button type="delete"
+                                                        action="{{ route('chalan.destroy', $chalan->id) }}" class="btn-sm" />
+                                                @endcan
+                                            </td>
                                         @endcanany
                                     </tr>
                                 @endforeach
