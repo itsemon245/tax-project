@@ -197,7 +197,7 @@
                                 চালান নংঃ
                                 <input type="text" class="dotted-border" style="width: 4rem;" name=""
                                     id="" />
-                                তারিখঃ <input type="date" class="dotted-border" name="" id="">
+                                তারিখঃ <input type="date" class="dotted-border" name="" id=""/>
                             </td>
                         </tr>
                         <tr>
