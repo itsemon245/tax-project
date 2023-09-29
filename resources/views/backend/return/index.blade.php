@@ -145,7 +145,7 @@
     <x-backend.ui.breadcrumbs :list="['Management', 'Return', 'List']" />
 
     <x-backend.ui.section-card style="box-shadow: none!important;">     
-        <table style="border-collapse: collapse; width: 100%;" class="mt-5 mb-4">
+        <table style="border-collapse: collapse; width: 100%;" class="mt-3">
             <tbody>
             <tr>
             <td style="width: 26.8615%;"></td>
@@ -156,16 +156,16 @@
             <td style="width: 48.1558%; text-align: center;" colspan="3">www.nbr.gov.bd.</td>
             </tr>
             <tr>
-            <td style="width: 26.8615%;">&nbsp;</td>
-            <td style="width: 48.1558%; text-align: center;">&nbsp;</td>
-            <td style="width: 24.9826%;">&nbsp;</td>
+            <td style="width: 26.8615%;"></td>
+            <td style="width: 48.1558%; text-align: center;"></td>
+            <td style="width: 24.9826%;"></td>
             </tr>
             <tr>
             <td style="width: 26.8615%;">
-            <table style="border-collapse: collapse; width: 100%; height: 36px;">
+            <table style="border-collapse: collapse; width: 100%;">
             <tbody>
-            <tr style="height: 36px;">
-            <td style="width: 100%; height: 36px;">
+            <tr>
+            <td style="width: 100%;">
             <table style="border-collapse: collapse; width: 100%;" >
             <tbody>
             <tr>
@@ -190,7 +190,7 @@
             </tbody>
             </table>
             </td>
-            <td style="width: 35%; text-align: center;">
+            <td style="width: 30%; text-align: center;">
             <table style="border-collapse: collapse; width: 100%;" border="1">
             <tbody>
             <tr>
@@ -205,28 +205,28 @@
             </tr>
             </tbody>
             </table>
-            <div class="container mx-auto border border-2 border-dark mt-4 fw-bold" style="max-width: 100%" >
-                <ol class="mt-5 h4">
-                    <li class="mb-4">
+            <div class="container mx-auto border border-2 border-dark mt-3" style="max-width: 100%" >
+                <ol class="mt-2 h6">
+                    <li class="mb-2">
                         <div class="d-flex">
                             <div class="col-md-3">Name of the Assessee: </div>
                             <div class="col-md-9"><input id="" class="dotted-border w-100" name="" type="text" /></div>
                         </div>
                     </li>
                   
-                    <li class="mb-4">
+                    <li class="mb-2">
                         <div class="d-flex">
                             <div class="col-md-6">National ID/Passport Number No (if NID not) available :</div>
                             <div class="col-md-6"><input id="" class="dotted-border w-100" name="" type="text" /></div>
                         </div>
                     </li>
-                    <li class="mb-4">TIN:
+                    <li class="mb-2">TIN:
                         <x-backend.form.box-input :range="range(1, 12)" />
                     </li>
-                    <li class="mb-4">
+                    <li class="mb-2">
                         (a) Circle:<input id="" class="dotted-border" name="" type="text"/>54<input id="" class="dotted-border" name="" type="text"/>(b) Taxes Zone:<input id="" class="dotted-border" name="" type="text"/>03<input id="" class="dotted-border" name="" type="text"/>Chattogram.
                     </li>
-                    <div class="mb-4">
+                    <div class="mb-2">
                         <span class="d-inline-block me-3">
                         <li>
                                 Assessment Year: <x-backend.form.box-input :range="range(1, 6)" />
@@ -246,7 +246,7 @@
                             </li>
                         </span>
                     </div>
-                    <li class="mb-4">
+                    <li class="mb-2">
                         Assessee status:(Tick one):
                         Normal
                             <input class="form-check-input" type="radio" value="" name="assessee_status" id="normal">
@@ -265,7 +265,7 @@
                             <label class="form-check-label" for="other">
                             </label>
                     </li>
-                    <li class="mb-4">
+                    <li class="mb-2">
                         <span class="text-decoration-underline mb-2 d-block">Tick on the box(es) below if you are:</span>
                         <div>
                             <label class="form-check-label mb-1" for="freedom">
@@ -293,7 +293,7 @@
                             <input class="form-check-input" type="checkbox" value="" name="legal_guardian" id="legal_guardian">
                             </label>
                     </li>
-                    <li class="mb-5">
+                    <li class="mb-2">
                         <div class="d-flex">
                             <table class="me-4" style="border-collapse: collapse; width: 40%;" border="1">
                                 <tbody>
@@ -325,7 +325,7 @@
                             </table>
                         </div>
                     </li>
-                    <li class="mb-5">
+                    <li class="mb-2">
                         <p>
                             Contract Address: 
                             <span><input id="" class="dotted-border w-100" name="" type="text"/></span>
@@ -349,7 +349,7 @@
                             </span>
                         </div>
                     </li>
-                    <li class="mb-5">
+                    <li class="mb-2">
                         <div class="row">
                             <div class="col-md-4">
                                 If employed, employer’s name:
@@ -359,8 +359,8 @@
                              </div>
                         </div>
                     </li>
-                    <li class="mb-5">
-                        <div class="row mb-5">
+                    <li class="mb-2">
+                        <div class="row mb-2">
                             <div class="col-md-3">
                                 (a) Name of Business:
                             </div>
@@ -382,6 +382,89 @@
                         <input id="" class="dotted-border w-100" name="" type="text" />
                     </li>
                 </ol>
+            </div>
+        </x-backend.ui.section-card>
+        <x-backend.ui.section-card>
+            <h4 class="mx-auto text-center mt-4 fw-bold">
+                Statement of income & Income Tax for the year ended of the<input id="" class="dotted-border" name="" type="text" />
+            </h4>
+            <h6 class="mx-auto text-center mt-3">
+                Name of assessee:<input id="" class="dotted-border" name="" type="text" /> TIN <x-backend.form.box-input :range="range(1, 10)" />
+            </h6>
+            @php
+                $array = [
+                    'Income from Salary (as in schedule 1)',
+                    'Income from House property (as in schedule 2)',
+                    'Income from Agricultural (as in schedule 3)',
+                    'Income from Business or Profession (as in schedule 4)',
+                    'Capital gains',
+                    'Income from financial resources (Bank interest / profit, dividend, securities etc)',
+                    'Income from Other sources (royality, license fee, honorarium, fee, cash incentive etc.)',
+                    'Income from Firm or private partnership',
+                    'Income of minor or spouse under section (if not a taxpayer)',
+                    'Foreign income',
+                    'Total income (aggregate of 1 to 10)',
+                ];
+                $secondArray = [
+                    'Income tax leviable on gross taxable income',
+                    'Tax rebate (annex Schedule 5)',
+                    'Net tax after tax rebate (12-13)',
+                    'Minimum tax',
+                    'Tax payable (between serial 14 and 15, whichever is greater)'
+                ];
+            @endphp
+            <div class="container mx-auto mt-3 h6" style="max-width: 100%">
+                <table style="border-collapse: collapse; width: 100%; height: 28px;" border="1">
+                    <tbody>
+                    <tr style="height: 10px;">
+                    <th style="width: 10.9951%; text-align: center; height: 10px; border: 1px solid black;">Serial<br />No</th>
+                    <th style="width: 63.1872%; text-align: center; height: 10px; border: 1px solid black;">Particulars of Total Income</th>
+                    <th style="width: 25.8176%; height: 10px; text-align: center; border: 1px solid black;">Amount in taka</th>
+                    </tr>
+                    @foreach ($array as $key =>$item)
+                    <tr style="height: 33px;">
+                        <td style="width: 10.9951%; height: 18px; border: 1px solid black;" class="text-center">{{ ++$key }}.</td>
+                        <td style="width: 63.1872%; height: 18px; border: 1px solid black;">{{ $item }}</td>
+                        <td style="width: 25.8176%; height: 18px; border: 1px solid black;"></td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                <table style="border-collapse: collapse; width: 100%; height: 28px;" border="1" class="mt-4">
+                    <tbody>
+                    <h5 class="d-flex justify-content-between mt-3 mb-0"><span>Tax Computation</span><span>Amount in taka</span></h5>
+                    @foreach ($secondArray as $key =>$itemTwo)
+                    <tr style="height: 34px;">
+                        <td style="width: 10.9951%; height: 18px; border: 1px solid black;" class="text-center">{{ 12+$key }}.</td>
+                        <td style="width: 63.1872%; height: 18px; border: 1px solid black;">{{ $itemTwo }}</td>
+                        <td style="width: 25.8176%; height: 18px; border: 1px solid black;"></td>
+                    </tr>
+                    @endforeach
+                    <tr style="height: 34px;">
+                        <td rowspan="2" style="width: 10.9951%; height: 18px; border: 1px solid black;" class="text-center">17.</td>
+                        <td style="width: 63.1872%; height: 18px; border: 1px solid black;">(a) Surcharge payable for net wealth (if any)
+                        </td>
+                        <td style="width: 25.8176%; height: 18px; border: 1px solid black;"></td>
+                    </tr>
+                    <tr style="height: 34px;">
+                        <td style="width: 63.1872%; height: 18px; border: 1px solid black;">(b) Environmental surcharge (if any)
+                        </td>
+                        <td style="width: 25.8176%; height: 18px; border: 1px solid black;"></td>
+                    </tr>
+                    <tr style="height: 34px;">
+                        <td style="width: 10.9951%; height: 18px; border: 1px solid black;" class="text-center">18.</td>
+                        <td style="width: 63.1872%; height: 18px; border: 1px solid black;">Deferred interest, penalty or any other amount under the income tax act (in any)
+                        </td>
+                        <td style="width: 25.8176%; height: 18px; border: 1px solid black;"></td>
+                    </tr>
+                    <tr style="height: 34px;">
+                        <td style="width: 10.9951%; height: 18px; border: 1px solid black;" class="text-center">19.</td>
+                        <td style="width: 63.1872%; height: 18px; border: 1px solid black;" class="fw-bold">Total amount payable (16 + 17 + 18)
+                        </td>
+                        <td style="width: 25.8176%; height: 18px; border: 1px solid black;"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </x-backend.ui.section-card>
     <!-- end row-->
