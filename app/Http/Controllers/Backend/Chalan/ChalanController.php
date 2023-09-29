@@ -42,12 +42,13 @@ class ChalanController extends Controller
             'name' => 'nullable|string',
             'phone' => 'nullable|string',
             'location' => 'nullable|string',
+            'description' => 'nullable|string',
             'client_id' => 'nullable|numeric',
             'purpose' => 'nullable|string',
             'year' => 'nullable|string',
             'payment_type' => 'nullable|string',
             'cheque_no' => 'nullable|string',
-            'bank_name' => 'nullable|string',
+            'bank' => 'nullable|string',
             'branch' => 'nullable|string',
             'amount' => 'nullable|numeric',
             'amount_in_words' => 'nullable|string',
@@ -78,43 +79,9 @@ class ChalanController extends Controller
      */
     public function edit(Chalan $chalan)
     {
-        Chalan::create([
-            'chalan_no' => $chalan->chalan_no,
-            'date' => $chalan->date,
-            'chalan_title' => $chalan->chalan_title,
-            'code1' => $chalan->code1,
-            'code2' => $chalan->code2,
-            'code3' => $chalan->code3,
-            'code4' => $chalan->code4,
-            'code5' => $chalan->code5,
-            'code6' => $chalan->code6,
-            'code7' => $chalan->code7,
-            'code8' => $chalan->code8,
-            'code9' => $chalan->code9,
-            'code10' => $chalan->code10,
-            'code11' => $chalan->code11,
-            'code12' => $chalan->code12,
-            'code13' => $chalan->code13,
-            'name' => $chalan->name,
-            'location' => $chalan->location,
-            'phone_number' => $chalan->phone_number,
-            'client_name' => $chalan->client_name,
-            'company_name' => $chalan->company_name,
-            'tin_circle' => $chalan->tin_circle,
-            'purpose' => $chalan->purpose,
-            'year' => $chalan->year,
-            'payment_method' => $chalan->payment_method,
-            'total_ammount' => $chalan->total_ammount,
-            'take_poua_gelo' => $chalan->take_poua_gelo,
-            'org_name_text' => $chalan->org_name_text,
-        ]);
-
-        $notification = [
-            'message' => 'Chalan Copy',
-            'alert-type' => 'success',
-        ];
-
-        return back()->with($notification);
+     
+        $clients = Client::latest()->get();
+        return view('backend.chalan.clone', compact('chalan', 'clients'));
     }
 
     /**

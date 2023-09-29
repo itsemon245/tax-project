@@ -39,19 +39,19 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $chalan->chalan_no }}</td>
-                                        <td>{{ $chalan->date }}</td>
+                                        <td>{{ $chalan->date->format('d/m/Y') }}</td>
                                         <td>{{ $chalan->amount }}</td>
                                         @canany(['manage chalan', 'read chalan'])
                                             <td>
 
                                                 @can('read chalan')
-                                                    <a href="{{ route('chalan.show', $chalan->id) }}"
-                                                        class="btn btn-warning btn-sm">Show</a>
+                                                <x-backend.ui.button type="custom" href="{{ route('chalan.show', $chalan->id) }}"
+                                                    class="btn-sm btn-dark">Show</x-backend.ui.button>
                                                 @endcan
 
                                                 @can('manage chalan')
-                                                    <x-backend.ui.button type="edit" href="{{ route('chalan.edit', $chalan->id) }}"
-                                                        class="btn-sm" />
+                                                    <x-backend.ui.button type="custom" href="{{ route('chalan.edit', $chalan->id) }}"
+                                                        class="btn-sm btn-info">Clone</x-backend.ui.button>
                                                     <x-backend.ui.button type="delete"
                                                         action="{{ route('chalan.destroy', $chalan->id) }}" class="btn-sm" />
                                                 @endcan

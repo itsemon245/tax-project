@@ -134,9 +134,8 @@
                             <td class="text-center">
                                 চালান নংঃ
                                 <input name="chalan_no" type="text" class="dotted-border text-center"
-                                    style="width: 4rem;" name="" id="" />
-                                তারিখঃ <input name="date" type="date" class="dotted-border" name=""
-                                    id="">
+                                    style="width: 4rem;"/>
+                                তারিখঃ <input name="date" type="date" class="dotted-border">
                             </td>
                         </tr>
                         <tr>
@@ -191,7 +190,7 @@
                             </div>
                             <div>
                                 <span>Location:</span>
-                                <textarea name="" name="location" class="dotted-border ms-2" rows="10" id=""></textarea>
+                                <textarea style="width: 90%;min-height:4rem;" name="location" class="dotted-border ms-2" rows="10" id=""></textarea>
                             </div>
                         </td>
                         <td style="max-width: 25ch;">
@@ -243,7 +242,7 @@
                             </div>
                             <div>
                                 <span>Description:</span>
-                                <textarea name="" name="location" class="dotted-border ms-2" rows="10" id=""></textarea>
+                                <textarea name="description" class="dotted-border ms-2" rows="10" id="" style="width: 90%;min-height:4rem;"></textarea>
                             </div>
                         </td>
                         <td>

@@ -7,6 +7,7 @@
             @page {
                 size: A4 landscape;
                 font: 12pt;
+                margin: auto;
             }
 
             @media print {
@@ -20,8 +21,9 @@
 
             .dotted-border {
                 border: 4px dotted var(--ct-dark);
-                height: 1.2rem;
+                height: 1.4rem;
                 border-top: 0;
+                padding-top: 4px;
                 border-right: 0;
                 border-left: 0;
             }
@@ -29,6 +31,7 @@
             .chalan {
                 position: relative;
             }
+
 
             .upper-table td {
                 font-weight: 500;
@@ -70,6 +73,7 @@
                 right: 0;
             }
 
+
             .table th,
             td {
                 color: black;
@@ -100,7 +104,7 @@
                 font-size: .9rem;
                 font-weight: 300;
                 padding-left: 1rem;
-            }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
+            }
         </style>
     @endpush
     <x-backend.ui.breadcrumbs :list="['Management', 'Chalan', 'Create']" />
@@ -129,19 +133,21 @@
                         <tr>
                             <td class="text-center">
                                 চালান নংঃ
-                                <input type="text" class="dotted-border" style="width: 4rem;" name=""
-                                    id="" />
-                                তারিখঃ <input type="text" class="dotted-border" name="" id="">
+                                <input type="text" class="dotted-border text-center text-dark" style="width: 4rem;"
+                                    value="{{ $chalan->chalan_no }}" disabled />
+                                তারিখঃ {{ $chalan->date->format('d/m/Y') }}
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center">বাংলাদেশ ব্যাংক/সোনালি ব্যাংকের চট্টগ্রাম জেলার
-                                <input type="text" class="dotted-border" name="" id="">
+                                <input type="text" class="dotted-border text-center text-dark"
+                                    value="{{ $chalan->bank_name }}" disabled>
                                 টাকা জমা দেওয়ার চালান
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input :range="range(1, 13)" />
+                            <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input name="code"
+                                    :value="$chalan->code" />
                             </td>
                         </tr>
                     </tbody>
@@ -172,70 +178,87 @@
                 <tbody>
                     <tr>
                         <td style="max-width: 24ch;">
-                            <div>
-                                <span>Name:</span> {{ fake()->name() }}
+                            <div class="mb-2">
+                                <span>Name:</span> <input type="text" name="name" class="dotted-border"
+                                    style="max-width: 8rem;" value="{{ $chalan->name }}" />
                             </div>
-                            <div>
+                            <div class="mb-2">
                                 <span>
                                     Phone:
                                 </span>
-                                {{ fake()->phoneNumber() }}
+                                <input type="text" name="phone" class="dotted-border" style="max-width: 8rem;"
+                                    value="{{ $chalan->phone }}" />
                             </div>
                             <div>
                                 <span>Location:</span>
-                                <div class="ps-2">
-                                    {{ fake()->address() }}
+                                <div class="font-14">
+                                    {{ $chalan->location }}
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            <div>
-                                <span>Client Name:</span>
-                                {{ fake()->name() }}
+                        <td style="max-width: 25ch;">
+                            <div class="">
+                                <span>Client:</span>
+                                <span id="name" class="text-capitalize">{{ $chalan->client?->name }}</span>
                             </div>
-                            <div>
-                                <span>Company Name:</span>
-                                {{ fake()->company() }}
-                            </div>
-                            <div>
-                                <span>Location:</span>
-                                <div>
-                                    Location
+                            <div class="" id="client-info">
+                                <div class="">
+                                    <span>Company:</span>
+                                    <span id="company" class="text-capitalize">{{ $chalan->client?->company_name }}</span>
                                 </div>
-                            </div>
-                            <div>
-                                <span>Tin/Circle:</span>
-                                <div>
-                                    Tin
+
+                                <div class="">
+                                    <span>Tin:</span>
+                                    <span id="tin">{{ $chalan->client?->tin }}</span>
+                                </div>
+                                <div class="">
+                                    <span>Circle:</span>
+                                    <span id="circle">{{ $chalan->client?->circle }}</span>
+                                </div>
+                                <div class="">
+                                    <span>Location:</span>
+                                    <div class="font-14" id="location" style="line-break: word;">
+                                        {{ $chalan->client?->present_address }}
+                                    </div>
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            <div>
-                                <span>Purpose:</span> Purpose
+                        <td style="max-width: 25ch;">
+                            <div class="mb-2">
+                                <span>Purpose:</span> <input type="text" name="purpose" class="dotted-border"
+                                    style="max-width: 8rem;" value="{{ $chalan->purpose }}" />
                             </div>
-                            <div>
-                                <span>Year:</span> Year
+                            <div class="d-flex gap-1 align-items-center mb-2">
+                                <label for="year" class="d-inline">Year:</label>
+                                <span>{{ $chalan->year }}</span>
+
                             </div>
                             <div>
                                 <span>Description:</span>
-                                <div class="ps-2">
-                                    Description
-                                </div>
+                                <div class="font-14">{{ $chalan->description }}</div>
                             </div>
                         </td>
                         <td>
-                            <div>
-                                <span>Cheque No.:</span> {{ random_int(10000000, 1000000000) }}
+                            <div class="d-flex gap-3 p-2">
+                                <span>Payment Type: </span>
+                                <span class="text-capitalize">{{ $chalan->payment_type }}</span>
                             </div>
-                            <div>
-                                <span>Date:</span> {{ now()->format('d/m/Y') }}
-                            </div>
-                            <span class="d-block">Random Bank Bangladesh,</span>
-                            <span class="d-block">Chattogram Branch</span>
+                            @if ($chalan->payment_type === 'bank')
+                                <div id="payment-info" class="d-none">
+                                    <div class="mb-2">
+                                        <span>Cheque No.:</span> <span>{{$chalan->cheque_no}}</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="d-block">Bank: </span> <span>{{$chalan->bank}}</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="d-block">Branch: </span><span>{{$chalan->branch}}</span>
+                                    </div>
+                                </div>
+                            @endif
                         </td>
                         <td style="vertical-align: middle!important;">
-                            <span>200/-</span>
+                            <span>{{$chalan->amount}}/-</span>
                         </td>
                         <td style="vertical-align: middle!important;">
                             <span>.00</span>
@@ -250,12 +273,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4">টাকা কথায়ঃ দুই শত টাকা মাত্র
+                        <td colspan="4" class="py-1">টাকা কথায়ঃ <span>{{$chalan->amount_in_words}}</span>
                             <span class="float-end">
-                                মোট টাকাঃ
+                                মোট টাকাঃ 
                             </span>
                         </td>
-                        <td>200/-</td>
+                        <td>
+                            <span>{{$chalan->amount}}</span>/-
+                        </td>
                         <td>.00</td>
                         <td colspan="2" rowspan="3" style="vertical-align: bottom;">
                             <div class="text-center">ম্যানেজার</div>
@@ -265,13 +290,13 @@
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            টাকা পাওয় গেলঃ 200/- (দুই শত টাকা মাত্র)
+                            টাকা পাওয় গেলঃ <span>{{$chalan->amount}}</span>/- (<span>{{$chalan->amount_in_words}}</span>)
                         </td>
 
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            তারিখঃ {{ now('Asia/Dhaka')->locale('bn_BD')->format('d/m/Y') }} ইং
+                            তারিখঃ <span class="date">{{$chalan->date->format('d/m/Y')}}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -298,61 +323,20 @@
                 </ul>
             </div>
         </div>
-        <div>
-            <x-backend.ui.button class="btn-primary btn btn-sm d-print-none">Create</x-backend.ui.button>
-        </div>
+        <button id="print-btn" class="btn btn-primary d-print-none my-2 rounded-2 fw-medium">
+            <span class="mdi mdi-printer font-16"></span>
+            Print
+        </button>
     </x-backend.ui.section-card>
     <!-- end row-->
-
-    @push('customJs')
-        <script>
-            function toggleInputFields() {
-                const paymentMethod = document.getElementById('payment').value;
-                const bankInputsDiv = document.getElementById('bankInputs');
-                const bankInputs = document.getElementById('bankInput');
-
-                if (paymentMethod === 'bank') {
-                    bankInputsDiv.style.display = 'block';
-                } else {
-                    bankInputsDiv.style.display = 'none';
-                }
-
-                if (paymentMethod === 'cash') {
-                    bankInputs.style.display = 'block';
-                } else {
-                    bankInputs.style.display = 'none';
-                }
-            }
-        </script>
-
-
-        <script>
-            $(document).ready(function() {
-                $('#userSelect').on('change', function() {
-                    var userId = $(this).val();
-                    //alert(userId)
-                    var url = "{{ route('admin.chalan.client', ':userID') }}";
-                    url = url.replace(':userID', userId);
-                    if (userId) {
-                        $.ajax({
-                            url: url,
-                            type: 'GET',
-                            success: function(data) {
-
-                                console.log(data)
-
-                                $('#adress').val(data.location);
-                                $('#company').val(data.company);
-                                $('#circle').val(data.circle);
-                            }
-                        });
-                    } else {
-                        $('#location').val('');
-                        $('#company').val('');
-                        $('#circle').val('');
-                    }
-                });
-            });
-        </script>
-    @endpush
 @endsection
+
+@push('customJs')
+    <script>
+        $(document).ready(function () {
+            $('#print-btn').click(e=>{
+                window.print()
+            })
+        });
+    </script>
+@endpush
