@@ -257,8 +257,8 @@
                                 </div>
                             @endif
                         </td>
-                        <td style="vertical-align: middle!important;">
-                            <span>{{$chalan->amount}}/-</span>
+                        <td style="vertical-align: middle!important;" class="text-end">
+                            <span>{{$chalan->amount}}</span>
                         </td>
                         <td style="vertical-align: middle!important;">
                             <span>.00</span>
@@ -278,8 +278,8 @@
                                 মোট টাকাঃ 
                             </span>
                         </td>
-                        <td>
-                            <span>{{$chalan->amount}}</span>/-
+                        <td class="text-end">
+                            <span>{{$chalan->amount}}</span>
                         </td>
                         <td>.00</td>
                         <td colspan="2" rowspan="3" style="vertical-align: bottom;">

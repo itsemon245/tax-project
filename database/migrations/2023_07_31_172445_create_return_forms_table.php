@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('assessment_year');
             $table->enum('residential_status', ['resident', 'non resident']);
             $table->enum('assessee_status', ['normal', 'firm', 'hindu undivided family', 'other']);
-            $table->json('');
             $table->timestamps();
         });
     }

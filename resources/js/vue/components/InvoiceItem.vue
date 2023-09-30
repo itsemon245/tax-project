@@ -78,7 +78,7 @@
             <div class="d-flex align-items-start">
                 <span class="me-2">Tk</span>
                 <input aria-label="item-total" id="item-total-0" data-index="0" name="item_totals[]" type="text"
-                    v-model="props.item.total" placeholder="00" class="d-inline-block" style="width: 7rem;" disabled />
+                    v-model="props.item.total" placeholder="00" class="d-inline-block" style="width: 7rem;" />
                 <span @click="deleteInvoiceItem(props.item.id, isEditMode)" data-index="0"
                     class="mdi mdi-trash-can-outline text-danger item-delete-btn" style="cursor:pointer;"></span>
             </div>
@@ -113,7 +113,11 @@ const {
 
 
 watch([() => props.item.rate, () => props.item.qty], () => {
-    props.item.total = props.item.rate * props.item.qty
+    if(props.item.rate !== undefined){
+        props.item.total = props.item.rate * props.item.qty
+    }else{
+        props.item.total = 0 * props.item.qty;
+    }
     calcTaxes(props.item.id)
 })
 
