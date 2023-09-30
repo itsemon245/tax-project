@@ -385,7 +385,7 @@
             </div>
         </x-backend.ui.section-card>
         <x-backend.ui.section-card>
-            <h4 class="mx-auto text-center mt-4 fw-bold">
+            <h4 class="mx-auto text-center mt-5 fw-bold">
                 Statement of income & Income Tax for the year ended of the<input id="" class="dotted-border" name="" type="text" />
             </h4>
             <h6 class="mx-auto text-center mt-3">
@@ -413,7 +413,7 @@
                     'Tax payable (between serial 14 and 15, whichever is greater)'
                 ];
             @endphp
-            <div class="container mx-auto mt-3 h6" style="max-width: 100%">
+            <div class="container mx-auto mt-5 h6" style="max-width: 100%">
                 <table style="border-collapse: collapse; width: 100%; height: 28px;" border="1">
                     <tbody>
                     <tr style="height: 10px;">
@@ -465,6 +465,66 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+        </x-backend.ui.section-card>
+        <x-backend.ui.section-card>
+            <div class="container mx-auto mt-3 mb-5 h6" style="max-width: 100%">
+               <h4 class="text-center mt-3 text-decoration-underline">Verification</h4>
+               <h3 class="text-center mt-3">I<input id="" class="dotted-border" name="" type="text" />father/Husband<input id="" class="dotted-border" name="" type="text" /></h3>
+               <h4 class="text-center mt-3">E-TIN: <x-backend.form.box-input :range="range(1, 12)" /> <span>Solemnly declare that to the best of my
+                knowledge and belief the information given in this return and statements and documents annexed herewith is correct
+                and complete.</span> </h4>
+                <table class="mt-2">
+                    <tr>
+                        <td>
+                            <h4 class="mt-2 mb-0">Place: Chattogram.</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4 class="mb-0">Date: <input id="" class="dotted-border" name="" type="text" /></h4>
+                        </td>
+                    </tr>
+                </table>
+                <div class="w-100 d-flex justify-content-end">
+                    <div style="width: 40%; float:right; mb-3">
+                        <h4 class="text-center">Signature</h4>
+                        <h3 class="text-center">(Abdullah Al Mamun)</h3>
+                    </div>
+                </div>
+            </div>
+            <h4 class="text-center text-decoration-underline">Schedule-3 (Investment tax credit)</h4>
+            <h5 class="text-center mt-3">(Section 44(2)(b) read with part ‘B’ of Sixth Schedule)</h5>
+            @php
+                $thirdArray = [
+                    'Life insurance premium',
+                    'Contribution to deferred annuity',
+                    'contribution to Provident Fund to which Provident Fund Act,1925 applies ',
+                    'Self contribution & employer’s contribution to Recognized Provident Fund',
+                    'Contribution to Super annuation Fund',
+                    'Investment in approved debenture or debenture stock, Stock or Shares',
+                    'Contribution to deposit pension scheme ',
+                    'Contribution to Benevolent Fund and group insurance premium',
+                    'Contribution to Zakat Fund',
+                    ' Others, if any ( give details )',
+                ];
+            @endphp
+            <div class="container mx-auto mt-3 h6" style="max-width: 100%">
+                <table class="table">
+                    <tbody>
+                        @foreach ($thirdArray as $key => $itemThree)
+                            <tr>
+                                <td style="width:5%;"  class="py-0">{{ ++$key }}</td>
+                                <td style="width: 70%;" class="py-0">{{ $itemThree }}</td>
+                                <td style="width: 25%; border-bottom: 1px dotted black;" class="text-left" class="py-0">Tk</td>
+                           </tr>
+                        @endforeach
+                        <tr class="h5">
+                            <td colspan="2" class="py-0 text-center">{{ $itemThree }}</td>
+                            <td style="width: 25%; border-bottom: 1px dotted black;" class="text-left" class="py-0">Tk</td>
+                       </tr>
+                    </tbody>
+                  </table>
             </div>
         </x-backend.ui.section-card>
     <!-- end row-->
