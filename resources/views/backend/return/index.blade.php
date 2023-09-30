@@ -468,7 +468,7 @@
             </div>
         </x-backend.ui.section-card>
         <x-backend.ui.section-card>
-            <div class="container mx-auto mt-3 mb-5 h6" style="max-width: 100%">
+            <div class="container mx-auto mt-2 mb-5 h6" style="max-width: 100%">
                <h4 class="text-center mt-3 text-decoration-underline">Verification</h4>
                <h3 class="text-center mt-3">I<input id="" class="dotted-border" name="" type="text" />father/Husband<input id="" class="dotted-border" name="" type="text" /></h3>
                <h4 class="text-center mt-3">E-TIN: <x-backend.form.box-input :range="range(1, 12)" /> <span>Solemnly declare that to the best of my
@@ -494,7 +494,7 @@
                 </div>
             </div>
             <h4 class="text-center text-decoration-underline">Schedule-3 (Investment tax credit)</h4>
-            <h5 class="text-center mt-3">(Section 44(2)(b) read with part ‘B’ of Sixth Schedule)</h5>
+            <h5 class="text-center mt-1">(Section 44(2)(b) read with part ‘B’ of Sixth Schedule)</h5>
             @php
                 $thirdArray = [
                     'Life insurance premium',
@@ -509,9 +509,9 @@
                     ' Others, if any ( give details )',
                 ];
             @endphp
-            <div class="container mx-auto mt-3 h6" style="max-width: 100%">
+            <div class="container mx-auto mt-1 h6" style="max-width: 100%">
                 <table class="table">
-                    <tbody>
+                    <tbody class="border border-2 border-dark">
                         @foreach ($thirdArray as $key => $itemThree)
                             <tr>
                                 <td style="width:5%;"  class="py-0">{{ ++$key }}</td>
@@ -525,58 +525,152 @@
                        </tr>
                     </tbody>
                   </table>
+                  <span>*Please attach certificates of investment.</span>
+            </div>
+
+        </x-backend.ui.section-card>
+        <x-backend.ui.section-card>
+            <div class="container mx-auto mt-3 h6" style="max-width: 100%; margin-bottom: 450px;">
+                <h4 class="text-center text-decoration-underline mb-3">List of documents furnished</h4>
+                <div class="d-flex px-3 border border-2 border-dark">
+                    <div style="width: 50%">
+                        @foreach (range(1, 5) as $key => $item)
+                        <h4 class="mb-5">{{ ++$key }}.</h4>
+                        @endforeach
+                    </div>
+                    <div style="width: 50%">
+                        @foreach (range(1, 5) as $key => $item)
+                        <h4 class="mb-5">{{ 6+$key }}.</h4>
+                        @endforeach
+                    </div>
+                </div>
+                <h4 class="mt-3 mb-5">*Incomplete return is not acceptable</h4>
+            </div>
+        </x-backend.ui.section-card>
+        <x-backend.ui.section-card>
+            <div class="container mx-auto mt-5 h5" style="max-width: 100%">
+                <h4 class="text-center">SCHEDULES SHOWING DETAILS OF INCOME</h4>
+                <div class="mt-2 d-flex justify-content-between">
+                    <h4 class="mt-2">Name of the Assessee: <span class="fw-bold">Abdullah Al Mamun</span></h4>
+                    <h4>TIN:<x-backend.form.box-input :range="range(1, 8)" /></h4>
+                </div>
+                <h5 class="text-decoration-underline text-center">Schedule-1 (Salaries)</h5>
+                @php
+                    $arrayFour = [
+                        'Basic pay',
+                        'Special pay',
+                        'Dearness allowance',
+                        'Conveyance allowance',
+                        'House rent allowance',
+                        'Medical allowance',
+                        'Servant allowance',
+                        'Leave allowance',
+                        'Honorarium / Reward/ Fee',
+                        'Overtime allowance',
+                        'Bonus / Ex-gratia',
+                        'Other allowances',
+                        'Employee’s Contribution to Recognized Provident Fund',
+                        'Interest accrued on Recognized Provident Fund',
+                        'Deemed income for transport facility',
+                        'Deemed income for free furnished/unfurnished accommodation',
+                        'Other, if any (give detail)',
+                        'Net taxable income from salary',
+
+                    ];
+                @endphp
+                <table style="border-collapse: collapse; width: 100%;" border="1">
+                    <tbody>
+                    <tr>
+                    <td style="width: 70%; text-align: center; border:1px solid black; border:1px solid black;">Pay &amp; Allowance</td>
+                    <td style="width: 10%; text-align: center; border:1px solid black;">Amount of<br />Income (Tk.)</td>
+                    <td style="width: 10%; text-align: center; border:1px solid black;">Amount of exempted<br />income (Tk.)</td>
+                    <td style="width: 10%; text-align: center; border:1px solid black;">Net taxable<br />Income (Tk.)</td>
+                    </tr>
+                        @foreach ($arrayFour as $itemFour)
+                        <tr>
+                            <td style="width: 55%; border:1px solid black;">{{ $itemFour }}</td>
+                            <td style="width: 10%; border:1px solid black;"></td>
+                            <td style="width: 10%; border:1px solid black;"></td>
+                            <td style="width: 10%; border:1px solid black;"></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    </table>
+                <h5 class="text-center text-decoration-underline mt-3">Schedule-2 (House Property income)</h5>
+                @php
+                    $arrayFive = [
+                        '1. Annual rental income',
+                        '2. Claimed Expenses :',
+                        'Repair, Collection, etc.',
+                        'Municipal or local tax',
+                        'Land Revenue',
+                        'Interest on loan/Mortgage/Capital charge',
+                        'Insurance Premium',
+                        ' Other, if any',
+                    ];
+                @endphp
+                <table style="border-collapse: collapse; width: 100%;">
+                    <tbody>
+                    <tr>
+                        <td style="width: 25%; border: 1px solid black;" class="text-center">
+                            Location and description of property
+                        </td>
+                        <td style="width: 25%; border: 1px solid black;" class="text-center">
+                            Particulars
+                        </td>
+                        <td style="width: 25%; border: 1px solid black;" class="text-center">Tk.</td>
+                        <td style="width: 25%; border: 1px solid black;" class="text-center">Tk.</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" style="width: 25%; border: 1px solid black;" class="text-center">
+                        </td>
+                        <td style="width: 25%;" class="text-left">
+                            <table style="border-collapse: collapse;">
+                                @foreach ($arrayFive as $itemFive)
+                                <tr>
+                                    <td style="width: 25%; border-bottom: 1px solid black;">{{ $itemFive }}</td>
+                                </tr>
+                                @endforeach
+                                <tr class="text-right">
+                                    <td style="width: 25%; border-bottom: 1px solid black;" >Total = </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 25%;" class="text-left">
+                            <table style="border-collapse: collapse;">
+                                @foreach ($arrayFive as $itemFive)
+                                <tr>
+                                    <td style="width: 25%; border-bottom: 1px solid black; border-left:1px solid black;" class="text-white">{{ $itemFive }}</td>
+                                </tr>
+                                @endforeach
+                                <tr>
+                                    <td style="width: 25%; border-bottom: 1px solid black;" class="text-white">{{ $itemFive }}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td rowspan="2" style="width: 25%; border: 1px solid black;" class="text-center"></td>
+                    </tr>
+                    
+                    {{-- <tr>
+                        <td style="width: 25%; border: 1px solid black;">kdfjsk</td>
+                        <td style="width: 25%; border: 1px solid black;"></td>
+                    </tr> --}}
+                    </tbody>
+                    </table>
+            </div>
+        </x-backend.ui.section-card>
+        <x-backend.ui.section-card>
+            <div class="container mx-auto mt-4 h5" style="max-width: 100%">
+                <h4 style="text-align: end;" class="pe-4">IT-10B</h4>
+                <p class="text-center">Statement of assets and liabilities (as on <input id="" class="dotted-border" name="" type="text" />)</p>
+                <p class="text-center">Name of the Assessee: <span class="fw-bold me-3">Abdullah Al Mamun</span>TIN <x-backend.form.box-input :range="range(1, 8)"/></p>
             </div>
         </x-backend.ui.section-card>
     <!-- end row-->
 
     @push('customJs')
         <script>
-            function toggleInputFields() {
-                const paymentMethod = document.getElementById('payment').value;
-                const bankInputsDiv = document.getElementById('bankInputs');
-                const bankInputs = document.getElementById('bankInput');
-
-                if (paymentMethod === 'bank') {
-                    bankInputsDiv.style.display = 'block';
-                } else {
-                    bankInputsDiv.style.display = 'none';
-                }
-
-                if (paymentMethod === 'cash') {
-                    bankInputs.style.display = 'block';
-                } else {
-                    bankInputs.style.display = 'none';
-                }
-            }
-        </script>
-
-
-        <script>
-            $(document).ready(function() {
-                $('#userSelect').on('change', function() {
-                    var userId = $(this).val();
-                    //alert(userId)
-                    url = url.replace(':userID', userId);
-                    if (userId) {
-                        $.ajax({
-                            url: url,
-                            type: 'GET',
-                            success: function(data) {
-
-                                console.log(data)
-
-                                $('#adress').val(data.location);
-                                $('#company').val(data.company);
-                                $('#circle').val(data.circle);
-                            }
-                        });
-                    } else {
-                        $('#location').val('');
-                        $('#company').val('');
-                        $('#circle').val('');
-                    }
-                });
-            });
+           
         </script>
     @endpush
 @endsection
