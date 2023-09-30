@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('return_forms', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('client_id')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->string('assessment_year');
+            $table->enum('residential_status', ['resident', 'non resident']);
+            $table->enum('assessee_status', ['normal', 'firm', 'hindu undivided family', 'other']);
+            $table->json('');
             $table->timestamps();
         });
     }

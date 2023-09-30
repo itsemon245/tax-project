@@ -496,7 +496,6 @@
                 $('#userSelect').on('change', function() {
                     var userId = $(this).val();
                     //alert(userId)
-                    var url = "{{ route('admin.chalan.client', ':userID') }}";
                     url = url.replace(':userID', userId);
                     if (userId) {
                         $.ajax({
