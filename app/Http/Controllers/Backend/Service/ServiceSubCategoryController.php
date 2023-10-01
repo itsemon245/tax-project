@@ -9,10 +9,6 @@ use App\Http\Requests\UpdateServiceSubCategoryRequest;
 
 class ServiceSubCategoryController extends Controller
 {
-
-
-
-
     /**
      * Display a listing of the resource depending on category
      */

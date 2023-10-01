@@ -66,9 +66,17 @@ use App\Http\Controllers\Backend\Tax\ResultsController;
 |
 */
 
+
+
 Route::prefix('admin')
     ->middleware(['auth', 'can:visit admin panel'])
     ->group(function () {
+
+        // test
+        Route::get('test', function(){
+            return view('test');
+        });
+        
 
         //General Routes
         Route::controller(DashboardController::class)->group(function () {
