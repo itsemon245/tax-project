@@ -53,6 +53,27 @@
                                     </x-form.selectize>
                                 </div>
                             </div>
+                            <div class="card">
+                                <div class="card-header py-1" role="button">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="">Categories</div>
+                                        <span class="mdi mdi-chevron-down"></span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    @php
+                                        $slectedCategories = request()->query('categories');
+                                    @endphp
+                                    @foreach ($categories as $category)
+                                        <div>
+                                            <input id="cat-{{ $category->id }}" type="checkbox" name="categories[]"
+                                                value="{{ $category->id }}" />
+                                            <label
+                                                for="cat-{{ $category->id }}">{{ str($category->name)->headline() }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
 
                             <div class="d-flex gap-3 justify-content-center mt-3">
                                 <x-backend.ui.button type="custom" :href="route('books.view.all', $bookCategory->id)"
@@ -71,8 +92,8 @@
                                 <div>
                                     <div
                                         class="d-grid grid-cols-1 mw-md mx-auto pb-10 px-10 bg-primary border border-3 border-gray-800 rounded overflow-hidden">
-                                        <img loading="lazy" src="{{ useImage($book->thumbnail) }}" alt="{{ $book->title }}"
-                                            style="object-fit: cover; width: 100%" />
+                                        <img loading="lazy" src="{{ useImage($book->thumbnail) }}"
+                                            alt="{{ $book->title }}" style="object-fit: cover; width: 100%" />
 
                                         <div class="mt-auto px-3 pt-3 pb-1 w-100 bg-white">
                                             <h4 class="fs-5 mb-1 text-center text-dark text-uppercase">

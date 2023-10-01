@@ -19,16 +19,17 @@ class BookController extends Controller
     {
 
         $bookCategory = BookCategory::find($id, ['name', 'id']);
+        $categories = BookCategory::get(['name', 'id']);
         $books = Book::where('book_category_id', $id)
             ->where(function (Builder $q) use ($request) {
                 $minPrice = (int)$request->query('price_from');
                 $maxPrice = (int)$request->query('price_to');
                 $author = $request->query('author');
                 if ($minPrice) {
-                    $q->where('price', '>=', $minPrice, 'or');
+                    $q->where('price', '>=', $minPrice);
                 }
                 if ($maxPrice) {
-                    $q->where('price', '<=', $maxPrice, 'or');
+                    $q->where('price', '<=', $maxPrice);
                 }
                 if ($author) {
                     $q->where('author', 'like', $author);
@@ -41,7 +42,7 @@ class BookController extends Controller
         $authors = Book::distinct()->get('author')->pluck('author');
         $minPrice = Book::min('price');
         $maxPrice = Book::max('price');
-        return view('frontend.pages.book.books', compact('bookCategory', 'reviews', 'books', 'authors', 'minPrice', 'maxPrice'));
+        return view('frontend.pages.book.books', compact('bookCategory', 'reviews', 'books', 'authors', 'minPrice', 'maxPrice', 'categories'));
     }
     public function getCategoryBooks(Request $request)
     {
