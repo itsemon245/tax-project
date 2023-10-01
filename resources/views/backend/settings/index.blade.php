@@ -7,15 +7,20 @@
     @endphp
     <x-backend.ui.breadcrumbs :list="['Web Site', 'Settings']" />
     <x-backend.ui.section-card name="Web Site Settings">
-        @canany($basicSettingPermissions,
-            'read basic setting',
-            'read referral setting',
-            'read payment setting',
-            'read
-            return link setting')
+        @canany([
+        'manage basic setting',
+        'read basic setting',
+        'manage referral setting',
+        'read referral setting',
+        'manage payment setting',
+        'manage payment setting',
+        'read payment setting',
+        'read return link setting',
+        'manage return link setting',
+        ])
             {{-- Basic Settings --}}
             @canany(['manage basic setting', 'read basic setting'])
-                <form action="{{ route('setting.store') }}" method="POST" class="d-none" enctype="multipart/form-data">
+                <form action="{{ route('setting.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card">
                         <h4 class="p-2">Basic Setting</h4>
@@ -73,42 +78,44 @@
             @endcanany
             <div class="row">
                 {{-- Referance  --}}
-                <form class="col-lg-6 mb-3" action="{{ route('setting.reference') }}" method="post">
-                    @csrf
-                    <div class="card h-100">
-                        <h4 class="p-2">Referance Setting</h4>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <x-backend.form.text-input type="text" class="mb-2" :value="$data->reference->commission" name="commission"
-                                        label="Refer Commission" />
+            @canany(['manage referral setting', 'read referral setting'])
+            <form class="col-lg-6 mb-3" action="{{ route('setting.reference') }}" method="post">
+                @csrf
+                <div class="card h-100">
+                    <h4 class="p-2">Referance Setting</h4>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <x-backend.form.text-input type="text" class="mb-2" :value="$data->reference->commission" name="commission"
+                                    label="Refer Commission" />
+                            </div>
+                            <div class="col-sm-6">
+                                <x-backend.form.text-input type="text" class="mb-2" :value="$data->reference->withdrawal" name="withdrawal"
+                                    label="Withdrawal Limit" />
+                            </div>
+                        </div> <!-- end card-body -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="partner-commission">Partner Commission</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" class="mb-2"
+                                        value="{{ $data->reference->partner_commission }}" name="partner_commission">
+                                    <span class="input-group-text" id="partner-commission">%</span>
                                 </div>
-                                <div class="col-sm-6">
-                                    <x-backend.form.text-input type="text" class="mb-2" :value="$data->reference->withdrawal" name="withdrawal"
-                                        label="Withdrawal Limit" />
-                                </div>
-                            </div> <!-- end card-body -->
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label for="partner-commission">Partner Commission</label>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" class="mb-2"
-                                            value="{{ $data->reference->partner_commission }}" name="partner_commission">
-                                        <span class="input-group-text" id="partner-commission">%</span>
-                                    </div>
-                                </div>
-                                <div class="mt-2">
-                                    <x-backend.ui.button class="btn-primary btn-sm float-end">Save Changes</x-backend.ui.button>
-                                </div>
-                            </div> <!-- end card-body -->
-                        </div> <!-- end card -->
-                    </div>
-                </form>
-                {{-- Referance  --}}
-
-                {{-- Payment  --}}
-
-                {{-- template --}}
+                            </div>
+                            @can('manage referral setting')
+                            <div class="mt-2">
+                                <x-backend.ui.button class="btn-primary btn-sm float-end">Save Changes</x-backend.ui.button>
+                            </div>
+                            @endcan
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div>
+            </form>
+            @endcanany
+            {{-- Referance  --}}
+                {{-- Payment --}}
+                @canany(['manage payment setting', 'read payment setting'])
                 <div class="row d-none" id="payment-template">
                     <div class="col-sm-6">
                         <x-backend.form.select-input label="Payment Method" name="payment_methods[]"
@@ -191,16 +198,17 @@
                                         class="increment mdi mdi-plus text-success bg-soft-success px-1 rounded rounded-circle"></span>
                                 </div>
                             </div>
+                            @can('manage payment setting')
                             <x-backend.ui.button class="btn-primary btn-sm float-end">Save Changes</x-backend.ui.button>
+                            @endcan
                         </div> <!-- end card -->
                     </div>
                 </form>
                 {{-- Payment end --}}
-
-
+                @endcanany
                 {{-- Return  --}}
-
-                {{-- template --}}
+                @canany(['read return link setting', 'manage return link setting'])
+                                    {{-- template --}}
                 <div class="row d-none" id="return-template">
                     <div class="col-sm-6">
                         <x-backend.form.text-input label="Return Link Title" name="return_link_titles[]"
@@ -262,10 +270,13 @@
                                         class="increment mdi mdi-plus text-success bg-soft-success px-1 rounded rounded-circle"></span>
                                 </div>
                             </div>
+                            @can('manage return link setting')
                             <x-backend.ui.button class="btn-primary btn-sm float-end">Save Changes</x-backend.ui.button>
+                            @endcan
                         </div> <!-- end card -->
                     </div>
                 </form>
+                @endcanany
                 {{-- Return end --}}
             </div>
         @endcanany

@@ -230,11 +230,23 @@
 
         {{-- btns --}}
         <div class="">
-            {{-- {{ dd($user) }} --}}
             <div class="d-flex align-items-center gap-3 justify-content-end">
                 @auth
+                    @if (auth()->user()->hasRole('user'))
                     <a class="btn btn-secondary rounded-1 partner-btn-hide {{ $user->division !== null ? 'd-none' : '' }}"
                         href="{{ route('page.become.partner') }}">Become a partner</a>
+                    @else
+                        <div class="btn-group">
+                            <a class="btn btn-light"
+                                href="{{ route('dashboard') }}">Dashboard</a>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="auth_id" class="d-none" value="{{ auth()->id() }}">
+                                    <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
+                                </form>
+                        </div>
+                    @endif
+
                     <div id="sidebar-2" class="d-flex align-items-center menu-btn">
                         <span class="mdi mdi-account-outline text-light" style="font-size: 32px"></span>
                         <span class="mdi mdi-chevron-down text-light" style="font-size: 16px;margin-left:-8px;"></span>
