@@ -146,8 +146,8 @@
                     @endif
                     <div class="row">
                         @foreach ($experts as $expert)
-                            <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xxl-3 mb-3">
-                                <div class="card h-100">
+                            <div class="col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-3">
+                                <div class="card h-100 mx-3 mx-sm-0">
                                     <div class="card-body">
                                         <div class="d-flex gap-3 justify-content-center mb-3">
                                             <div class="d-flex flex-column align-items-center">
@@ -175,17 +175,13 @@
                                                 </h5>
                                             </div>
                                         </div>
-                                        <div class="row justify-content-center">
-                                            <div class="col-12">
-                                                <a href="{{ route('consultation.make', $expert->id) }}"
-                                                    class="btn btn-primary fw-medium  w-100 mb-2">
-                                                    Consultation
-                                                </a>
-                                            </div>
-                                            <div class="col-12">
-                                                <a href="{{ route('expert.profile', $expert->id) }}"
-                                                    class="btn btn-outline-primary fw-medium w-100 mb-2">Profile</a>
-                                            </div>
+                                        <div class="row justify-content-center px-md-3">
+                                            <a href="{{ route('consultation.make', $expert->id) }}"
+                                                class="btn btn-primary fw-medium  w-100 mb-2">
+                                                Consultation
+                                            </a>
+                                            <a href="{{ route('expert.profile', $expert->id) }}"
+                                                class="btn btn-outline-primary fw-medium w-100 mb-2">Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -206,12 +202,39 @@
     </x-frontend.testimonial-section>
 @endsection
 
-@pushOnce('customJs')
-    <script src="{{ asset('frontend/filter.js') }}"></script>
-@endPushOnce
 
 @push('customJs')
     <script>
+        const filter = {
+            toggle: {
+                btnIcon: function(jQBtn) {
+                    jQBtn.find('.mdi')
+                        .toggleClass('mdi-filter')
+                        .toggleClass('mdi-close')
+
+                },
+                content: function(target) {
+                    target.next().toggleClass('col-6 col-sm-8')
+                    target.next().find('.row').children()
+                        .toggleClass('col-sm-6 col-md-4')
+                        .toggleClass('col-sm-12 col-md-6')
+                },
+                menu: function(target) {
+                    return target
+                        .toggleClass('col-lg-3 d-none d-lg-block ')
+                        .toggleClass('d-block col-6 col-sm-4')
+                },
+
+            },
+            clickHandler: function(event) {
+                let btn = $(event.target)
+                let target = $(event.target.dataset.target)
+                this.toggle.btnIcon(btn)
+                this.toggle.menu(target)
+                this.toggle.content(target)
+
+            }
+        }
         const headers = $('form .card-header')
         headers.each((i, header) => {
             $(header).click(e => {

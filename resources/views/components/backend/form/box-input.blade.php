@@ -20,7 +20,6 @@
         $(document).ready(function() {
             let codeVal = [];
             const codeInput = $('input[name="{{ $name }}"]')
-            console.log(codeInput);
             $('.box-input').each((i, element) => {
                 const input = $(element)
                 codeVal[i] = input.val();
