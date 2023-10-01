@@ -25,6 +25,7 @@ class BookController extends Controller
                 $minPrice = (int)$request->query('price_from');
                 $maxPrice = (int)$request->query('price_to');
                 $author = $request->query('author');
+                $categories = $request->query('categories');
                 if ($minPrice) {
                     $q->where('price', '>=', $minPrice);
                 }
@@ -33,6 +34,9 @@ class BookController extends Controller
                 }
                 if ($author) {
                     $q->where('author', 'like', $author);
+                }
+                if ($categories) {
+                    $q->whereIn('book_category_id', $categories);
                 }
             })
             ->withAvg('reviews', 'rating')

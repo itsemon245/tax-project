@@ -62,12 +62,12 @@
                                 </div>
                                 <div class="card-body">
                                     @php
-                                        $slectedCategories = request()->query('categories');
+                                        $slectedCategories = collect(request()->query('categories'));
                                     @endphp
                                     @foreach ($categories as $category)
                                         <div>
                                             <input id="cat-{{ $category->id }}" type="checkbox" name="categories[]"
-                                                value="{{ $category->id }}" />
+                                                value="{{ $category->id }}" @checked($slectedCategories->contains(fn($val) => $val == $category->id))/>
                                             <label
                                                 for="cat-{{ $category->id }}">{{ str($category->name)->headline() }}</label>
                                         </div>
@@ -85,8 +85,8 @@
                 </form>
             </div>
             <div class="col-lg-9">
-                <div class="row">
-                    @foreach ($books as $book)
+                <div class="row h-100">
+                    @forelse ($books as $book)
                         <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xxl-3 mb-3">
                             <a href="{{ route('books.show', $book->id) }}" class="h-100">
                                 <div>
@@ -116,7 +116,13 @@
                                 </div>
                             </a>
                         </div>
-                    @endforeach
+                        @empty
+                        <div class="col-12">
+                            <div class="bg-light text-center font-18 fw-medium py-5 h-100">
+                               <div class="my-5">No Books Found!</div>
+                            </div>
+                        </div>
+                    @endforelse
                     <div class="col-12 mt-2">
                         <div class="paginator float-end">
                             {{ $books->links() }}
@@ -134,14 +140,14 @@
 @endPushOnce
 @push('customJs')
     <script>
-        // const headers = $('section .card-header')
-        // headers.each((i, header) => {
-        //     $(header).click(e => {
-        //         let icon = $(header).find('.mdi');
-        //         icon.toggleClass('mdi-chevron-down')
-        //         icon.toggleClass('mdi-chevron-up')
-        //         $(header).next().slideToggle();
-        //     })
-        // })
+        const headers = $('section .card-header')
+        headers.each((i, header) => {
+            $(header).click(e => {
+                let icon = $(header).find('.mdi');
+                icon.toggleClass('mdi-chevron-down')
+                icon.toggleClass('mdi-chevron-up')
+                $(header).next().slideToggle();
+            })
+        })
     </script>
 @endpush
