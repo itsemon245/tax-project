@@ -156,6 +156,7 @@
                         </a>
                     </div>
                 </li>
+                @if (auth()->user()->hasRole('user'))
                 <li class="sidebar-item">
                     <a href="{{ route('user-profile.create') }}" class="">Profile</a>
                 </li>
@@ -193,6 +194,12 @@
                     <a class="btn btn-success waves-effect waves-light" href="{{ route('user-doc.create') }}">Upload
                         Documents</a>
                 </li>
+                @else
+                <li class="sidebar-item">
+                    <a class="" href="{{ route('dashboard') }}">Dashboard</a>
+                </li>
+                @endif
+              
                 <li class="mt-auto mb-5">
                     <hr class="my-3">
                     @auth
@@ -202,7 +209,9 @@
                             <input type="hidden" name="auth_id" class="d-none" value="{{ auth()->id() }}">
                             <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
                         </form>
+                        @if (auth()->user()->hasRole('user'))
                         <a class="btn btn-secondary {{ $user->division !== null ? 'd-none' : '' }}" href="{{ route('page.become.partner') }}">Become a partner</a>
+                        @endif
                     </div>  
                     @endauth
                 </li>

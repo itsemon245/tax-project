@@ -39,7 +39,7 @@
                         text-align: center;
                         height: 1.4rem;
                         vertical-align: middle;
-                        min-width: 5rem;
+                        min-width: 5re;m;
                         max-width: 10rem;
 
                     } */
@@ -664,6 +664,126 @@
                 <h4 style="text-align: end;" class="pe-4">IT-10B</h4>
                 <p class="text-center">Statement of assets and liabilities (as on <input id="" class="dotted-border" name="" type="text" />)</p>
                 <p class="text-center">Name of the Assessee: <span class="fw-bold me-3">Abdullah Al Mamun</span>TIN <x-backend.form.box-input :range="range(1, 8)"/></p>
+                <table style="border-collapse: collapse; width: 100%;" class="mb-4">
+                    <tr>
+                        <td style="width: 70%;" class="pt-2 ps-3">(a) Business Capital (Closing balance)</td>
+                        <td>Tk. .......................... </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%;" class="pt-2 ps-3">(b) Directors Shareholdings in Limited Companies ( at cost).</td>
+                        <td>Tk. .......................... </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%;" class="pt-2 ps-3 d-flex justify-content-between"><span class="text-decoration-underline">Name of Companies </span><span class="text-decoration-underline">Number of shares</span></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <table style="border-collapse: collapse; width: 100%;" class="mb-4">
+                    <tr class="h4">
+                        <td style="width: 70%;" class="pt-2 ps-3">2. Non-Agricultural Property (at cost with legal expenses ) :</td>
+                        <td>Tk. .......................... </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%;" class="pt-2 ps-3">Land/House property (Description & location of property)</td>
+                       
+                    </tr>
+                </table>
+                <table style="border-collapse: collapse; width: 100%;" class="mb-2">
+                    <tr class="h4">
+                        <td style="width: 70%;" class="pt-2 ps-3">3. Agricultural Property (at cost with legal expenses ) :</td>
+                        <td>Tk. .......................... </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%;" class="pt-2 ps-3">Land/House property (Description & location of property)</td>
+                       
+                    </tr>
+                </table>
+                <table style="border-collapse: collapse; width: 100%;" class="mb-2">
+                    <tr class="h4">
+                        <td style="width: 50%;" class="pt-2 ps-3">4. Investments:</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5">(a) Shares/Debentures</td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                        <td style="width: 25%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5">(b) Saving Certificate/Unit Certificate/Bond </td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                        <td style="width: 25%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5">(c) Prize bond/Savings Scheme.</td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                        <td style="width: 25%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5">(d) Loans given</td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                        <td style="width: 25%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5">(e) Other Investment</td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                        <td style="width: 25%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5"></td>
+                        <td style="width: 25%;" >Total = </td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                    </tr>
+                </table>
+                <table style="border-collapse: collapse; width: 100%;" class="mb-2">
+                    <tr>
+                        <td style="width: 70%;" class="ps-3 h4">5. Motor Vehicles (at cost) :</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%;" class="ps-5"><small>Type of motor vehicle and Registration number.</small></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%;" class="pt-4 ps-3 h4">6. Jewellery (quantity and cost) :</td>
+                        <td class="h4">Tk. ..........................</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%;" class="pt-4 ps-3 h4">7. Furniture (at cost) :</td>
+                        <td class="h4">Tk. ..........................</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%;" class="pt-4 ps-3 h4">8. Electronic Equipment (at cost) :</td>
+                        <td class="h4">Tk. ..........................</td>
+                    </tr>
+                </table>
+                <table style="border-collapse: collapse; width: 100%;" class="mb-2">
+                    <tr class="h4">
+                        <td style="width: 50%;" class="pt-2 ps-3">9. Cash asset Outside Business:</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5">(a) Cash in hand</td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                        <td style="width: 25%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5">(b) Cash at bank</td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                        <td style="width: 25%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5">(c) Other deposits</td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                        <td style="width: 25%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;" class="pt-2 ps-5"></td>
+                        <td style="width: 25%;">Total = </td>
+                        <td style="width: 25%;">Tk. .............................</td>
+                    </tr>
+                </table>
             </div>
         </x-backend.ui.section-card>
     <!-- end row-->
