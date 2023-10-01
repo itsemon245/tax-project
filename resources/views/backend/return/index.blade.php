@@ -790,23 +790,7 @@
 
     @push('customJs')
         <script>
-            function toggleInputFields() {
-                const paymentMethod = document.getElementById('payment').value;
-                const bankInputsDiv = document.getElementById('bankInputs');
-                const bankInputs = document.getElementById('bankInput');
-
-                if (paymentMethod === 'bank') {
-                    bankInputsDiv.style.display = 'block';
-                } else {
-                    bankInputsDiv.style.display = 'none';
-                }
-
-                if (paymentMethod === 'cash') {
-                    bankInputs.style.display = 'block';
-                } else {
-                    bankInputs.style.display = 'none';
-                }
-            }
+           
         </script>
     @endpush
 @endsection

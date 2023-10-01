@@ -3,7 +3,7 @@ export interface InvoiceItem {
     baseId?: number;
     name: string | undefined | null;
     description: undefined | null | string;
-    rate: number;
+    rate: number | undefined;
     qty: number;
     total: number;
     taxes: Array<{
@@ -20,7 +20,7 @@ export const item: InvoiceItem = {
     id: 0,
     name: "Item Name",
     description: undefined,
-    rate: 0,
+    rate: undefined,
     qty: 1,
     total: 0,
     taxes: [
