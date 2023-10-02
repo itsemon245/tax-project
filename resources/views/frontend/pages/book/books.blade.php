@@ -118,8 +118,10 @@
                         </div>
                         @empty
                         <div class="col-12">
-                            <div class="bg-light text-center font-18 fw-medium py-5 h-100">
-                               <div class="my-5">No Books Found!</div>
+                            <div class="bg-light text-center">
+                                <div class="d-flex flex-column justify-content-center" style="height: 50vh;">
+                                    No Experts Found!
+                                </div>
                             </div>
                         </div>
                     @endforelse

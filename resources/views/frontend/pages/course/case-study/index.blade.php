@@ -63,7 +63,7 @@
             </div>
             <div class="col-lg-9">
                 <div class="row">
-                    @foreach ($caseStudies as $caseStudy)
+                    @forelse ($caseStudies as $caseStudy)
                         <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xxl-3 mb-3">
                             <div class="h-100">
                                 <div class="d-flex flex-column justify-content-between border border-2 rounded"
@@ -72,7 +72,7 @@
 
                                         <div class="px flex-grow-1">
                                             <img loading="lazy" src="{{ useImage($caseStudy->image) }}" class="mb-2"
-                                                style="max-width:100%;" alt="{{$caseStudy->name}}">
+                                                style="max-width:100%;" alt="{{ $caseStudy->name }}">
                                             <h4 class="fs-5 mb-1 text-center text-dark text-uppercase">
                                                 <b>{{ $caseStudy->name }}</b>
                                             </h4>
@@ -118,7 +118,15 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="col-12">
+                            <div class="bg-light text-center">
+                                <div class="d-flex flex-column justify-content-center" style="height: 50vh;">
+                                    No Studies Found!
+                                </div>
+                            </div>
+                        </div>
+                    @endforelse
                     <div class="col-12 mt-2">
                         <div class="paginator float-end">
                             {{ $caseStudies->links() }}

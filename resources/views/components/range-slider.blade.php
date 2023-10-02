@@ -26,7 +26,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <label for="{{ $id }}" class="form-label">{{ $label }}</label>
             @if ($isDropdown)
-                <span class="mdi mdi-chevron-down"></span>
+                <span role="button" class="mdi mdi-chevron-down"></span>
             @endif
         </div>
     </div>

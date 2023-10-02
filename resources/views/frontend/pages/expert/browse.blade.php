@@ -1,17 +1,6 @@
 @extends('frontend.layouts.app')
 
 @section('main')
-    <style>
-        @media (max-width: 992px) {
-            .filter-menu {
-                width: 50%;
-                position: absolute;
-                transform: translateX(-1000px);
-                z-index: 5;
-                transition: all 250ms ease-in-out;
-            }
-        }
-    </style>
 
     @php
         $banners = getRecords('banners');
@@ -37,7 +26,7 @@
                         Filter
                     </button>
                 </div>
-                <div id="filter-menu" class="col-lg-3 d-none d-lg-block ">
+                <div id="filter-menu" class="col-6 col-sm-6 col-md-4 col-lg-3 d-none d-lg-block">
                     <form action="{{ route('expert.browse') }}" method="get">
                         <div class="filter-menu p-3 shadow bg-light rounded-2 ">
                             <div class="filters">
@@ -145,7 +134,7 @@
                         </div>
                     @endif
                     <div class="row">
-                        @foreach ($experts as $expert)
+                        @forelse ($experts as $expert)
                             <div class="col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-3">
                                 <div class="card h-100 mx-3 mx-sm-0">
                                     <div class="card-body">
@@ -186,7 +175,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                            @empty
+                            <div class="col-12">
+                                <div class="bg-light text-center">
+                                    <div class="d-flex flex-column justify-content-center" style="height: 50vh;">
+                                        No Experts Found!
+                                    </div>
+                                </div>
+                            </div>
+                        @endforelse
                         <div class="col-12 mt-2">
                             <div class="paginator float-end">
                                 {{ $experts->links() }}
@@ -214,15 +211,14 @@
 
                 },
                 content: function(target) {
-                    target.next().toggleClass('col-6 col-sm-8')
+                    target.next().toggleClass('col-6 col-sm-6 col-md-8')
                     target.next().find('.row').children()
                         .toggleClass('col-sm-6 col-md-4')
                         .toggleClass('col-sm-12 col-md-6')
                 },
                 menu: function(target) {
                     return target
-                        .toggleClass('col-lg-3 d-none d-lg-block ')
-                        .toggleClass('d-block col-6 col-sm-4')
+                        .toggleClass('d-none d-lg-block')
                 },
 
             },
