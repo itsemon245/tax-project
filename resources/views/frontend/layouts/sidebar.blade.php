@@ -156,7 +156,12 @@
                         </a>
                     </div>
                 </li>
-                @if (auth()->user()->hasRole('user'))
+                @can('visit admin panel')
+                <li class="sidebar-item">
+                    <a class="" href="{{ route('dashboard') }}">Control Panel</a>
+                </li>
+                @endcan
+
                 <li class="sidebar-item">
                     <a href="{{ route('user-profile.create') }}" class="">Profile</a>
                 </li>
@@ -194,11 +199,8 @@
                     <a class="btn btn-success waves-effect waves-light" href="{{ route('user-doc.create') }}">Upload
                         Documents</a>
                 </li>
-                @else
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('dashboard') }}">Dashboard</a>
-                </li>
-                @endif
+
+                
               
                 <li class="mt-auto mb-5">
                     <hr class="my-3">

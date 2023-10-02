@@ -232,20 +232,18 @@
         <div class="">
             <div class="d-flex align-items-center gap-3 justify-content-end">
                 @auth
-                    @if (auth()->user()->hasRole('user'))
-                    <a class="btn btn-secondary rounded-1 partner-btn-hide {{ $user->division !== null ? 'd-none' : '' }}"
-                        href="{{ route('page.become.partner') }}">Become a partner</a>
+                    @can('visit admin panel')
+                        <a class="btn btn-secondary" href="{{ route('dashboard') }}">Control Panel</a>
                     @else
-                        <div class="btn-group">
-                            <a class="btn btn-light"
-                                href="{{ route('dashboard') }}">Dashboard</a>
-                                <form action="{{ route('logout') }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="auth_id" class="d-none" value="{{ auth()->id() }}">
-                                    <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
-                                </form>
-                        </div>
-                    @endif
+                        @if (
+                            !auth()->user()
+                                ?->hasRole('partner'))
+                            <a class="btn btn-secondary rounded-1 partner-btn-hide {{ $user->division !== null ? 'd-none' : '' }}"
+                                href="{{ route('page.become.partner') }}">Become a partner</a>
+                                @else
+                                <span class="fw-bold text-warning">You are a partner</span>
+                        @endif
+                    @endcan
 
                     <div id="sidebar-2" class="d-flex align-items-center menu-btn">
                         <span class="mdi mdi-account-outline text-light" style="font-size: 32px"></span>
