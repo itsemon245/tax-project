@@ -1,5 +1,6 @@
 @php
     $categories = App\Models\ServiceCategory::get();
+    $fetch = App\Models\Setting::get()[0]->basic;
 @endphp
 <footer class="top-footer bg-dark">
     <div class="px-5 mx-3 text-white py-3">
@@ -56,6 +57,32 @@
                     <div class="d-flex justify-content-center gap-5" style="font-weight: 500; font-size: 16px;">
                         <a href="#" target="_blank" rel="noopener noreferrer" class="">Terms & Codition</a>
                         <a href="#" target="_blank" rel="noopener noreferrer" class="">Help & Support</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-md-6">
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <p class="mb-1 text-center" style="font-weight: 500;font-size:18px;">
+                            <a href="{{ route('page.about') }}">Contact us</a>
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <div style="font-weight: 500; font-size: 16px;">
+                            {{ $fetch->address }}
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                        <a href="mailto:{{ $basic->email }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+                            E-mail : {{ $basic->email }}
+                        </a>
+                        <a href="tel:{{ $basic->phone }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+                            Phone : {{ $basic->phone }}
+                        </a>
+                        <a href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi Sam, Whatsup" class="d-inline-block px-2 pb-1"
+                            style="cursor: pointer;">
+                            WhatsApp : {{ $basic->whatsapp }}
+                        </a>
                     </div>
                 </div>
             </div>
