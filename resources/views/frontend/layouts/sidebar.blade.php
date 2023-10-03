@@ -1,10 +1,10 @@
 @php
-    $categories = App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
+    $categories = \App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
-    $user = App\Models\User::find(auth()->id());
-    $user = App\Models\User::find(auth()->id());
-    $isRead = count($user->unreadNotifications) === 0;
+    $user = \App\Models\User::find(auth()->id());
+    $user = \App\Models\User::find(auth()->id());
+    $isRead = $user !== null ? count($user->unreadNotifications) === 0 : true;
 @endphp
 <nav class="relative">
     {{-- Sidebar 1-> page navigation --}}
