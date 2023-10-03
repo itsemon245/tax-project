@@ -66,7 +66,7 @@ class ChalanController extends Controller
             'message' => 'Chalan Created',
             'alert-type' => 'success',
         ];
-        return back()->with($notification);
+        return redirect(route('chalan.index'))->with($notification);
     }
 
     /**
@@ -85,6 +85,15 @@ class ChalanController extends Controller
     {
      
         $clients = Client::latest()->get();
+        return view('backend.chalan.edit', compact('chalan', 'clients'));
+    }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function clone(Chalan $chalan)
+    {
+     
+        $clients = Client::latest()->get();
         return view('backend.chalan.clone', compact('chalan', 'clients'));
     }
 
@@ -93,6 +102,36 @@ class ChalanController extends Controller
      */
     public function update(Request $request, Chalan $chalan)
     {
+        $validated = $request->validate([
+            'chalan_no' => 'nullable|numeric',
+            'date' => 'nullable|date',
+            'bank_name' => 'nullable|string',
+            'code' => 'nullable|string',
+            'name' => 'nullable|string',
+            'phone' => 'nullable|string',
+            'location' => 'nullable|string',
+            'description' => 'nullable|string',
+            'client_id' => 'nullable|numeric',
+            'purpose' => 'nullable|string',
+            'year' => 'nullable|string',
+            'payment_type' => 'nullable|string',
+            'cheque_no' => 'nullable|string',
+            'cheque_expire_date' => 'nullable|date',
+            'bank' => 'nullable|string',
+            'branch' => 'nullable|string',
+            'amount' => 'nullable|string',
+            'amount_in_words' => 'nullable|string',
+
+        ]);
+        $chalan->update([
+            ...$validated
+        ]);
+
+        $notification = [
+            'message' => 'Chalan Updated',
+            'alert-type' => 'success',
+        ];
+        return back()->with($notification);
     }
 
     /**

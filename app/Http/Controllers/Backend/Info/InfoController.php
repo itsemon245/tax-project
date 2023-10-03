@@ -24,7 +24,8 @@ class InfoController extends Controller
      */
     public function create()
     {
-        return view('backend.info.createInfo');
+        $pageNames = Info::select('page_name')->whereNotNull('page_name')->distinct()->get('page_name')->pluck('page_name');
+        return view('backend.info.createInfo', compact('pageNames'));
     }
 
     /**
@@ -32,16 +33,14 @@ class InfoController extends Controller
      */
     public function store(StoreInfoRequest $request)
     {
-        $request->validated();
         $this->titleUpdate($request->title, $request->old_title, $request->section);
-        Info::create(
-            [
+        Info::create([
                 'section_id'  => $request->section,
+                'page_name' => $request->validated('page_name'),
                 'title' => $request->title,
                 'image_url'   => saveImage($request->info_image, 'info', 'info'),
-                'description' => $request->description
-            ]
-        );
+                'description' => $request->description,
+            ]);
 
         return redirect()
             ->route("info.index")
@@ -64,7 +63,8 @@ class InfoController extends Controller
      */
     public function edit(Info $info)
     {
-        return view('backend.info.editInfo', compact('info'));
+        $pageNames = Info::select('page_name')->whereNotNull('page_name')->distinct()->get('page_name')->pluck('page_name');
+        return view('backend.info.editInfo', compact('info', 'pageNames'));
     }
 
     /**
@@ -74,20 +74,20 @@ class InfoController extends Controller
     {
         $request->validated();
         $this->titleUpdate($request->title, $request->old_title, $request->section);
-        Info::find($info->id)
-            ->update(
+        $info->update(
                 [
                     'section_id'  => $request->section,
                     'title' => $request->title,
                     'description' => $request->description,
-                    'status' => $request->status
+                    'status' => $request->status,
+                    'page_name' => $request->page_name,
+
                 ]
             );
 
         if (!empty($request->info_image)) {
             $this->imageDelete($info->image_url);
-            Info::find($info->id)
-                ->update(
+            $info->update(
                     [
                         'image_url'   => saveImage($request->info_image, 'info', 'info'),
                     ]

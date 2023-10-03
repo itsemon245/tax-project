@@ -14,20 +14,8 @@
             }
         </style>
     @endpush
-    <!-- start page title -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <div class="page-title-right">
-                    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Info', 'View Info']" />
-                </div>
-                <h4 class="page-title">View Info</h4>
-            </div>
-        </div>
-    </div>
-    <!-- end page title -->
-
-    <x-backend.ui.section-card name="Hero List">
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', 'List']" />
+    <x-backend.ui.section-card name="Info List">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -41,9 +29,8 @@
                                     <th>Title</th>
                                     <th>Section</th>
                                     <th>Description</th>
-                                    <th>Status</th>
                                     @can('manage info section')
-                                    <th>Action</th>
+                                        <th>Action</th>
                                     @endcan
                                 </tr>
                             </thead>
@@ -52,28 +39,18 @@
                                 @foreach ($infos as $key => $info)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td><img loading="lazy" src="{{ useImage($info->image_url) }}" alt="{{ $info->title }}"
-                                                width="80px" loading="lazy"></td>
+                                        <td><img loading="lazy" src="{{ useImage($info->image_url) }}"
+                                                alt="{{ $info->title }}" width="80px" loading="lazy"></td>
                                         <td>{{ Str::limit($info->title, 20, '...') }}</td>
                                         <td>{{ $info->section_id === 1 ? 'Section 1' : 'Section 2' }}</td>
-                                        <td>{!! Str::limit($info->description, 80, '...') !!}</td>
-                                        <td>
-                                            {!! $info->status === 1
-                                                ? "<span class='badge bg-success'>Active</span>"
-                                                : "<span class='badge bg-danger'>Deactive</span>" !!}
-                                        </td>
+                                        <td>{!! Str::limit($info->description, 40, '...') !!}</td>
                                         @can('manage info section')
-                                        <td>
-                                            <a href="{{ Route('info.edit', $info) }}"
-                                                class="btn btn-blue btn-sm waves-effect waves-light">Edit</a>
-                                            <button onclick='deleteinfo("infoDelete-{{ $info->id }}")'
-                                                class="btn btn-danger btn-sm waves-effect waves-light">Delete</button>
-                                            <form class="d-none" id="infoDelete-{{ $info->id }}"
-                                                action="{{ Route('info.destroy', $info) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </td>
+                                            <td>
+                                                <x-backend.ui.button type="edit" href="{{ route('info.edit', $info) }}"
+                                                    class="btn-sm" />
+                                                <x-backend.ui.button type="delete" action="{{ route('info.destroy', $info) }}"
+                                                    class="btn-sm" />
+                                            </td>
                                         @endcan
 
                                     </tr>
@@ -85,32 +62,11 @@
             </div><!-- end col-->
         </div>
     </x-backend.ui.section-card>
+
     <!-- end row-->
+
+    @push('customJs')
+        <script>
+        </script>
+    @endpush
 @endsection
-
-@push('customJs')
-    <script>
-        const deleteinfo = id => {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'Deleted',
-                        text: "Your file has been deleted.",
-                        icon: 'success',
-                        showConfirmButton: false
-                    })
-                    $("#" + id).submit()
-                }
-            })
-
-        }
-    </script>
-@endpush

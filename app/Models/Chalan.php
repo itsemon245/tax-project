@@ -14,7 +14,6 @@ class Chalan extends Model
     protected $guarded = [];
     protected $casts = [
         'date' => 'date',
-        'amount' => Currency::class
     ];
 
     public function client(): BelongsTo

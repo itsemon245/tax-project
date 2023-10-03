@@ -25,7 +25,8 @@ class StoreInfoRequest extends FormRequest
             'section' => 'required',
             'title' => 'required|max:100',
             'description' => 'required|max:200',
-            'info_image' => 'required|max:5120|image'
+            'info_image' => 'required|max:5120|image',
+            'page_name' => 'required|string'
         ];
     }
 }

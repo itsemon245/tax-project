@@ -24,7 +24,9 @@ class UpdateInfoRequest extends FormRequest
         return [
             'section'       => 'required',
             'title'         => 'required|max:100',
-            'description'   => 'required|max:200'
+            'description'   => 'required|max:200',
+            'page_name' => 'required|string'
+
         ];
     }
 }

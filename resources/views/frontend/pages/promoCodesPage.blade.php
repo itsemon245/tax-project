@@ -2,9 +2,10 @@
 @section('main')
     <div class="container">
         <div class="row mt-3">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h3 class="p-4 text-muted" >Promo Code</h3>
             @forelse ($promoCodes as $code)
-            <h3 class="p-4 text-center text-muted" >Promo Code Here....</h3>
-            <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="d-felx">
@@ -26,18 +27,17 @@
                         </div>
                     </span>
                 </div>
-            </div>
             @empty
             <div class="row">
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-8">
-                        <img loading="lazy" src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100vh;" class="img-fluid p-5" alt="Responsive image">
-                    </div>
-                    <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-8" style="max-width:800px;">
+                    <img loading="lazy" src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100%;" class="img-fluid p-5" alt="Responsive image">
                 </div>
+                <div class="col-md-2"></div>
             </div>
-            @endforelse   
+            @endforelse  
+            </div>
+            <div class="col-md-2"></div> 
         </div>
     </div>
 @endsection

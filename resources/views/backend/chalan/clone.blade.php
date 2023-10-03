@@ -110,6 +110,9 @@
 
     <x-backend.ui.section-card style="box-shadow: none!important;">
 
+        <x-backend.ui.button type="custom" href="{{ route('chalan.index') }}"
+            class="btn-dark btn-sm mb-2 d-print-none">Back</x-backend.ui.button>
+
         <form action="{{ route('chalan.store') }}" method="post" class="chalan">
             @csrf
             <div class="parent">
@@ -202,7 +205,8 @@
                                 <x-form.selectize name="client_id" id="client_id" label="Select Client"
                                     placeholder="Select Client" :can-create="false">
                                     @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}" @selected($client->id === $chalan->client_id)>{{ $client->name }}
+                                        <option value="{{ $client->id }}" @selected($client->id === $chalan->client_id)>
+                                            {{ $client->name }}
                                         </option>
                                     @endforeach
 
@@ -285,9 +289,9 @@
                         </td>
                         <td style="vertical-align: middle!important;">
                             @php
-                                $number = new \NumberFormatter('en_BD',\NumberFormatter::DEFAULT_STYLE);
+                                $number = new \NumberFormatter('en_BD', \NumberFormatter::DEFAULT_STYLE);
                             @endphp
-                            <input type="text" name="amount" value="{{$number->parse($chalan->amount)}}"
+                            <input type="text" name="amount" value="{{ $number->parse($chalan->amount) }}"
                                 class="dotted-border mx-1" style="max-width: 6rem;" />
                         </td>
                         <td style="vertical-align: middle!important;">
@@ -304,7 +308,7 @@
                     </tr>
                     <tr>
                         <td colspan="4" class="py-1">টাকা কথায়ঃ <input type="text" name="amount_in_words"
-                                value="{{ $chalan->amount_in_words }}" class="dotted-border mx-1 py-2"
+                                value="{{ $chalan->amount_in_words }}" class="dotted-border mx-1 py-2 text-capitalize"
                                 style="width: 70%;" />
                             <span class="float-end">
                                 মোট টাকাঃ
@@ -322,8 +326,8 @@
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            টাকা পাওয় গেলঃ <span class="amount">{{ $chalan->amount }}</span>/- (<span
-                                id="in-words">{{ $chalan->amount_in_words }}</span>)
+                            টাকা পাওয় গেলঃ <span class="amount">{{ $chalan->amount }}</span>/- (<span id="in-words"
+                                class="text-capitalize">{{ $chalan->amount_in_words }}</span>)
                         </td>
 
                     </tr>
@@ -383,6 +387,17 @@
                 })
                 amount.on('input', e => {
                     $('.amount').text(e.target.value)
+                    let url = '{{ route('spell.number', ':number') }}'
+                    url = url.replace(':number', e.target.value)
+                    $.ajax({
+                        type: "get",
+                        url: url,
+                        success: function(response) {
+                            let amountInWords = response.concat(' taka only');
+                            $('[name="amount_in_words"]').val(amountInWords)
+                            $('#in-words').text(amountInWords)
+                        }
+                    });
                 })
                 inWords.on('input', e => {
                     $('#in-words').text(e.target.value)

@@ -375,6 +375,7 @@ Route::prefix('admin')
 
         Route::resource('industry', IndustryController::class);
         Route::resource('chalan', ChalanController::class);
+        Route::post('chalan/{chalan}/clone', [ChalanController::class, 'clone'])->name('chalan.clone');
         Route::resource('achievements', AchievementController::class);
         Route::resource('return-form', ReturnFormController::class);
         Route::resource('tax-setting', TaxSettingController::class);

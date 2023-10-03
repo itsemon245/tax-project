@@ -106,14 +106,16 @@
             }
         </style>
     @endpush
-    <x-backend.ui.breadcrumbs :list="['Management', 'Chalan', 'Create']" />
+    <x-backend.ui.breadcrumbs :list="['Management', 'Chalan', 'Clone']" />
 
     <x-backend.ui.section-card style="box-shadow: none!important;">
+
         <x-backend.ui.button type="custom" href="{{ route('chalan.index') }}"
             class="btn-dark btn-sm mb-2 d-print-none">Back</x-backend.ui.button>
 
-        <form action="{{ route('chalan.store') }}" method="post" class="chalan">
+        <form action="{{ route('chalan.update', $chalan->id) }}" method="post" class="chalan">
             @csrf
+            @method('PATCH')
             <div class="parent">
                 <div class="d-inline-block right">
                     <table class="table table-bordered border-dark">
@@ -135,20 +137,22 @@
                         <tr>
                             <td class="text-center">
                                 চালান নংঃ
-                                <input name="chalan_no" type="text" class="dotted-border text-center"
-                                    style="width: 4rem;"/>
-                                তারিখঃ <input name="date" type="date" class="dotted-border">
+                                <input name="chalan_no" type="text" value="{{ $chalan->chalan_no }}"
+                                    class="dotted-border text-center" style="width: 4rem;" />
+                                তারিখঃ <input name="date" value="{{ $chalan->date->format('Y-m-d') }}" type="date"
+                                    class="dotted-border">
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center">বাংলাদেশ ব্যাংক/সোনালি ব্যাংকের চট্টগ্রাম জেলার
-                                <input type="text" class="dotted-border text-center" name="bank_name" id="">
+                                <input type="text" class="dotted-border text-center" name="bank_name"
+                                    value="{{ $chalan->bank_name }}">
                                 টাকা জমা দেওয়ার চালান
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input name="code"
-                                    :range="range(1, 13)" />
+                                    value="{{ $chalan->code }}" />
                             </td>
                         </tr>
                     </tbody>
@@ -181,18 +185,20 @@
                         <td style="max-width: 24ch;">
                             <div class="mb-2">
                                 <span>Name:</span> <input type="text" name="name" class="dotted-border"
-                                    style="max-width: 8rem;" name="" id="" />
+                                    style="max-width: 8rem;" value="{{ $chalan->name }}" />
                             </div>
                             <div class="mb-2">
                                 <span>
                                     Phone:
                                 </span>
                                 <input type="text" name="phone" class="dotted-border" style="max-width: 8rem;"
-                                    name="" id="" />
+                                    value="{{ $chalan->phone }}" />
                             </div>
                             <div>
                                 <span>Location:</span>
-                                <textarea style="width: 90%;min-height:4rem;" name="location" class="dotted-border ms-2" rows="10" id=""></textarea>
+                                <textarea style="width: 90%;min-height:4rem;" name="location" class="dotted-border ms-2" rows="10" id="">
+                                    {{ $chalan->location }}
+                                </textarea>
                             </div>
                         </td>
                         <td style="max-width: 25ch;">
@@ -200,29 +206,32 @@
                                 <x-form.selectize name="client_id" id="client_id" label="Select Client"
                                     placeholder="Select Client" :can-create="false">
                                     @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        <option value="{{ $client->id }}" @selected($client->id === $chalan->client_id)>
+                                            {{ $client->name }}
+                                        </option>
                                     @endforeach
 
                                 </x-form.selectize>
                             </div>
-                            <div class="d-none" id="client-info">
+                            <div class="" id="client-info">
                                 <div class="mb-1">
                                     <span>Company:</span>
-                                    <span id="company" class="text-capitalize"></span>
+                                    <span id="company"
+                                        class="text-capitalize">{{ $chalan->client?->company_name }}</span>
                                 </div>
 
                                 <div class="mb-1">
                                     <span>Tin:</span>
-                                    <span id="tin"></span>
+                                    <span id="tin"> {{ $chalan->client?->tin }}</span>
                                 </div>
                                 <div class="mb-1">
                                     <span>Circle:</span>
-                                    <span id="circle"></span>
+                                    <span id="circle">{{ $chalan->client?->circle }}</span>
                                 </div>
                                 <div class="mb-1">
                                     <span>Location:</span>
                                     <div id="location">
-                                        Location
+                                        {{ $chalan->client?->present_address }}
                                     </div>
                                 </div>
                             </div>
@@ -230,7 +239,7 @@
                         <td style="max-width: 25ch;">
                             <div class="mb-2">
                                 <span>Purpose:</span> <input type="text" name="purpose" class="dotted-border"
-                                    style="max-width: 8rem;" name="" id="" />
+                                    style="max-width: 8rem;" value="{{ $chalan->purpose }}" />
                             </div>
                             <div class="d-flex gap-1 align-items-center mb-2">
                                 <label for="year" class="d-inline">Year:</label>
@@ -244,43 +253,47 @@
                             </div>
                             <div>
                                 <span>Description:</span>
-                                <textarea name="description" class="dotted-border ms-2" rows="10" id="" style="width: 90%;min-height:4rem;"></textarea>
+                                <textarea name="description" class="dotted-border ms-2" rows="10" id=""
+                                    style="width: 90%;min-height:4rem;">
+                                    {{ $chalan->description }}
+                                </textarea>
                             </div>
                         </td>
                         <td>
                             <div class="d-flex gap-3 p-2">
                                 <div class="form-check form-check-success">
                                     <input class="form-check-input rounded-circle" type="radio" name="payment_type"
-                                        value="cash" id="cash" checked>
+                                        value="cash" id="cash" @checked($chalan->payment_type === 'cash')>
                                     <label class="form-check-label" for="cash">Cash</label>
                                 </div>
                                 <div class="form-check form-check-primary">
                                     <input class="form-check-input rounded-circle" type="radio" name="payment_type"
-                                        value="bank" id="bank">
+                                        value="bank" id="bank" @checked($chalan->payment_type === 'bank')>
                                     <label class="form-check-label" for="bank">Bank</label>
                                 </div>
                             </div>
-                            <div id="payment-info" class="d-none">
+                            <div id="payment-info" class="{{ $chalan->payment_type === 'bank' ? 'd-none' : '' }}">
                                 <div class="mb-2">
-                                    <span>Cheque No.:</span> <input type="text" name="cheque_no" class="dotted-border"
-                                        style="max-width: 8rem;" name="" id="" />
-                                </div>
-                                <div class="mb-2">
-                                    <span class="d-block">Expire Date: </span> <input type="date" name="cheque_expire_date"
-                                        class="dotted-border ms-2 w-75" name="" id="" />
+                                    <span>Cheque No.:</span> <input type="text" name="cheque_no"
+                                        value="{{ $chalan->cheque_no }}" class="dotted-border"
+                                        style="max-width: 8rem;" />
                                 </div>
                                 <div class="mb-2">
                                     <span class="d-block">Bank: </span> <input type="text" name="bank"
-                                        class="dotted-border ms-2" name="" id="" />
+                                        value="{{ $chalan->bank }}" class="dotted-border ms-2" />
                                 </div>
                                 <div class="mb-2">
                                     <span class="d-block">Branch: </span> <input type="text" name="branch"
-                                        class="dotted-border ms-2" name="" id="" />
+                                        value="{{ $chalan->branch }}" class="dotted-border ms-2" />
                                 </div>
                             </div>
                         </td>
                         <td style="vertical-align: middle!important;">
-                            <input type="text" name="amount" class="dotted-border mx-1" style="max-width: 6rem;" />
+                            @php
+                                $number = new \NumberFormatter('en_BD', \NumberFormatter::DEFAULT_STYLE);
+                            @endphp
+                            <input type="text" name="amount" value="{{ $number->parse($chalan->amount) }}"
+                                class="dotted-border mx-1" style="max-width: 6rem;" />
                         </td>
                         <td style="vertical-align: middle!important;">
                             <span>.00</span>
@@ -296,13 +309,14 @@
                     </tr>
                     <tr>
                         <td colspan="4" class="py-1">টাকা কথায়ঃ <input type="text" name="amount_in_words"
-                                class="dotted-border mx-1 py-2 text-capitalize" style="width: 70%;" />
+                                value="{{ $chalan->amount_in_words }}" class="dotted-border mx-1 py-2 text-capitalize"
+                                style="width: 70%;" />
                             <span class="float-end">
                                 মোট টাকাঃ
                             </span>
                         </td>
                         <td>
-                            <span class="amount"></span>/-
+                            <span class="amount">{{ $chalan->amount }}</span>/-
                         </td>
                         <td>.00</td>
                         <td colspan="2" rowspan="3" style="vertical-align: bottom;">
@@ -313,13 +327,14 @@
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            টাকা পাওয় গেলঃ <span class="amount"></span>/- (<span id="in-words" class="text-capitalize"></span>)
+                            টাকা পাওয় গেলঃ <span class="amount">{{ $chalan->amount }}</span>/- (<span id="in-words"
+                                class="text-capitalize">{{ $chalan->amount_in_words }}</span>)
                         </td>
 
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            তারিখঃ <span class="date"></span>
+                            তারিখঃ <span class="date">{{ $chalan->date->format('d/m/Y') }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -344,8 +359,9 @@
                         বাঃ নিঃ মুঃ ৬৩/২০১১-১২, ৫০ লক্ষ কপি, মুদ্রণাদেশ নং-৫৩/১১-১২
                     </li>
                 </ul>
-                <x-backend.ui.button class="btn-primary btn btn-sm d-print-none text-white">Create</x-backend.ui.button>
             </div>
+            <x-backend.ui.button class="btn-primary btn btn-sm d-print-none text-white fw-bold"
+                style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif!important;">Clone</x-backend.ui.button>
         </form>
     </x-backend.ui.section-card>
     <!-- end row-->
@@ -372,12 +388,12 @@
                 })
                 amount.on('input', e => {
                     $('.amount').text(e.target.value)
-                    let url = '{{route("spell.number", ":number")}}'
+                    let url = '{{ route('spell.number', ':number') }}'
                     url = url.replace(':number', e.target.value)
                     $.ajax({
                         type: "get",
                         url: url,
-                        success: function (response) {
+                        success: function(response) {
                             let amountInWords = response.concat(' taka only');
                             $('[name="amount_in_words"]').val(amountInWords)
                             $('#in-words').text(amountInWords)

@@ -24,6 +24,7 @@ class InfoFactory extends Factory
             'description' => fake()->realText(100),
             'image_url' => "https://picsum.photos/seed/$seed/200",
             'section_id' => $sectionId,
+            'page_name' => 'homepage',
         ];
     }
 }
