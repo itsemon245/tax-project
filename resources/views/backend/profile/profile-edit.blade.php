@@ -15,7 +15,7 @@
                             @error('profile_img')
                             is-invalid
                             @enderror"
-                                type="file" id="imagefile" name="profile_img" hidden>
+                                type="file" id="imagefile" name="avatar" hidden>
                             <div class="relative">
                                 <img loading="lazy" class="border border-5 border-primary" id="liveImage"
                                     style=" height:100%; width:100%; border-radius:50%;"

@@ -61,15 +61,15 @@ class UserProfileController extends Controller
      */
     public function update(UserProfileUpdateRequest $request, $id)
     {
-        $request->user()->fill($request->except('avatar'));
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user = User::find(auth()->id());
+        $user->update($request->except('avatar'));
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
         if ($request->hasFile('avatar')) {
-            $request->user()->image_url = updateFile($request->avatar, $request->user()->image_url, 'profile', $request->user_name);
+            $user->image_url = updateFile($request->avatar, $user->image_url, 'profile', $request->user_name);
         }
-        $request->user()->save();
+        $user->save();
 
         $notification = array(
             'message' => "Profile Updated",
