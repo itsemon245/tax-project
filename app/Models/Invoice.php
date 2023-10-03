@@ -53,8 +53,8 @@ class Invoice extends Model
 
     protected static function booted(): void
     {
-        static::updating(function (Invoice $invoice) {
-            $invoice->setUpdatedAt(now());
+        static::created(function (Invoice $invoice) {
+            
         });
     }
 }

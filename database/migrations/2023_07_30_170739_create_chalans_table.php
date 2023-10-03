@@ -18,7 +18,7 @@ return new class extends Migration
             ->onUpdate('CASCADE')
             ->onDelete('CASCADE');
             $table->string('chalan_no')->nullable();
-            $table->string('date')->nullable();
+            $table->date('date')->nullable();
             $table->string('code')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('name')->nullable();
@@ -29,9 +29,10 @@ return new class extends Migration
             $table->string('year')->nullable();
             $table->string('payment_type')->nullable();
             $table->string('cheque_no')->nullable();
+            $table->date('cheque_expire_date')->nullable();
             $table->string('bank')->nullable();
             $table->string('branch')->nullable();
-            $table->string('amount')->nullable();
+            $table->decimal('amount')->nullable();
             $table->string('amount_in_words')->nullable();
             $table->timestamps();
         });

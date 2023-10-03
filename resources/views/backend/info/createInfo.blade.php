@@ -11,12 +11,21 @@
                 </div>
 
                 <div class="col-md-6">
-                    <x-backend.form.select-input id="section" label="SECTION" name="section" placeholder="Choose Section..."
-                        onchange="getSectionTitle(this)">
-                        {{-- <option selected disabled>Choose Section...</option> --}}
-                        <option value="1">Section 1</option>
-                        <option value="2">Section 2</option>
-                    </x-backend.form.select-input>
+                    <div class="row">
+                        <div class="col-6">
+                            <x-backend.form.select-input id="section" label="SECTION" name="section"
+                                placeholder="Choose Section..." onchange="getSectionTitle(this)">
+                                {{-- <option selected disabled>Choose Section...</option> --}}
+                                <option value="1">Section 1</option>
+                                <option value="2">Section 2</option>
+                            </x-backend.form.select-input>
+                        </div>
+                        <div class="col-6">
+                            <x-backend.form.select-input id="page Title" label="Page Title" name="page_title"
+                            placeholder="Choose Page Title...">
+                        </x-backend.form.select-input>
+                        </div>
+                    </div>
 
                     <x-backend.form.text-input label="Title" type="text" required name="title" />
                     <input type="hidden" name="old_title">

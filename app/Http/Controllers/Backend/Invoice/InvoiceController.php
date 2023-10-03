@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Backend\Invoice;
 use Throwable;
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\Calendar;
 use App\Mail\InvoiceMail;
 use App\Models\FiscalYear;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use App\Filter\InvoiceFilter;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\InvoiceResource;
@@ -92,8 +94,6 @@ class InvoiceController extends Controller
         $status = $due === 0 ? 'due' : '';
         $status = $paid > 0 && $paid === $demand ? 'paid' : 'partial';
 
-
-
         $invoice->fiscalYears()->attach($fiscalYear->id, [
             'discount' => $request->discount,
             'sub_total' => $request->sub_total,
@@ -101,9 +101,17 @@ class InvoiceController extends Controller
             'paid' => $paid,
             'due' => $due,
             'status' => $status,
-            'payment_date' => $due == 0 ? now() : null,
+            'payment_date' => $due == 0 ? today('Asia/Dhaka') : null,
             'due_date' => $request->due_date,
             'issue_date' => $request->issue_date,
+        ]);
+        Calendar::create([
+            'title' => 'Invoice ' .$status,
+            'client_id' => $invoice->client_id,
+            'service' => 'Invoice',
+            'type' => 'Invoice ' . $status,
+            'start' => today('Asia/Dhaka'),
+            'description' => null
         ]);
 
 
@@ -215,12 +223,20 @@ class InvoiceController extends Controller
             'payment_note' => $request->payment_note,
             'payment_method' => $request->payment_method,
         ]);
+       
         $demand = (int) $request->total;
         $paid = (int) $request->paid;
         $due = (int) $request->due;
         $status = $due === 0 ? 'due' : '';
         $status = $paid > 0 && $paid === $demand ? 'paid' : 'partial';
-
+        Calendar::create([
+            'title' => 'Invoice ' .$status,
+            'client_id' => $invoice->client_id,
+            'service' => 'Invoice',
+            'type' => 'Invoice ' . $status,
+            'start' => today('Asia/Dhaka'),
+            'description' => null
+        ]);
 
 
         if ($fiscalYear->wasRecentlyCreated) {

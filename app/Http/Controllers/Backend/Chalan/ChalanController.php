@@ -7,6 +7,9 @@ use App\Models\Chalan;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use NumberFormatter as NF;
 
 class ChalanController extends Controller
 {
@@ -15,7 +18,7 @@ class ChalanController extends Controller
      */
     public function index()
     {
-        $data = Chalan::latest()->simplePaginate(paginateCount());
+        $data = Chalan::with('client')->latest()->simplePaginate(paginateCount());
         return view('backend.chalan.index', compact('data'));
     }
 
@@ -48,9 +51,10 @@ class ChalanController extends Controller
             'year' => 'nullable|string',
             'payment_type' => 'nullable|string',
             'cheque_no' => 'nullable|string',
+            'cheque_expire_date' => 'nullable|date',
             'bank' => 'nullable|string',
             'branch' => 'nullable|string',
-            'amount' => 'nullable|numeric',
+            'amount' => 'nullable|string',
             'amount_in_words' => 'nullable|string',
 
         ]);
@@ -114,5 +118,14 @@ class ChalanController extends Controller
     {
         $client = Client::find($id, ['id', 'present_address', 'company_name', 'circle', 'tin'])->toArray();
         return response()->json($client);
+    }
+    /**
+     * Spells a given amount
+     */
+    public function spellNumber(int $number): JsonResponse
+    {
+        $formatter = new NF('en_BD', NF::SPELLOUT);
+        $spelled = $formatter->format($number);
+        return response()->json($spelled);
     }
 }

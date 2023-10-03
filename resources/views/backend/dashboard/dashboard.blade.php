@@ -30,7 +30,7 @@
                                         <div class="card-header py-1 px-2 bg-white border-bottom" role="button">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="text-dark fw-bold">
-                                                    {{ $group === 'others' ? 'Others' : 'Invoice ' . str($group)->headline() }}
+                                                    {{ $group === 'others' ? 'Others' : str($group)->headline() }}
                                                 </div>
                                                 <span data-items="{{ $events->pluck('id') }}"
                                                     data-url="{{ route('mark.event.completed') }}"

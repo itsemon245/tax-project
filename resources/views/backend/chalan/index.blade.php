@@ -25,8 +25,9 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Chalan No.</th>
                                     <th>Date</th>
+                                    <th>Chalan No.</th>
+                                    <th>Client Info</th>
                                     <th>Ammount</th>
                                     @canany(['manage chalan', 'read chalan'])
                                         <th>Action</th>
@@ -38,19 +39,44 @@
                                 @foreach ($data as $key => $chalan)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $chalan->chalan_no }}</td>
                                         <td>{{ $chalan->date->format('d/m/Y') }}</td>
+                                        <td>{{ $chalan->chalan_no }}</td>
+                                        <td>
+                                            <div class="fw-bold">
+                                                <span>Client:</span>
+                                                <span id="name"
+                                                    class="text-capitalize">{{ $chalan->client?->name }}</span>
+                                            </div>
+                                            <div class="fw-medium" id="client-info">
+                                                <div class="">
+                                                    <span>Company:</span>
+                                                    <span id="company"
+                                                        class="text-capitalize">{{ $chalan->client?->company_name }}</span>
+                                                </div>
+
+                                                <div class="">
+                                                    <span>Tin:</span>
+                                                    <span id="tin">{{ $chalan->client?->tin }}</span>
+                                                </div>
+                                                <div class="">
+                                                    <span>Circle:</span>
+                                                    <span id="circle">{{ $chalan->client?->circle }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>{{ $chalan->amount }}</td>
                                         @canany(['manage chalan', 'read chalan'])
                                             <td>
 
                                                 @can('read chalan')
-                                                <x-backend.ui.button type="custom" href="{{ route('chalan.show', $chalan->id) }}"
-                                                    class="btn-sm btn-dark">Show</x-backend.ui.button>
+                                                    <x-backend.ui.button type="custom"
+                                                        href="{{ route('chalan.show', $chalan->id) }}"
+                                                        class="btn-sm btn-dark">Show</x-backend.ui.button>
                                                 @endcan
 
                                                 @can('manage chalan')
-                                                    <x-backend.ui.button type="custom" href="{{ route('chalan.edit', $chalan->id) }}"
+                                                    <x-backend.ui.button type="custom"
+                                                        href="{{ route('chalan.edit', $chalan->id) }}"
                                                         class="btn-sm btn-info">Clone</x-backend.ui.button>
                                                     <x-backend.ui.button type="delete"
                                                         action="{{ route('chalan.destroy', $chalan->id) }}" class="btn-sm" />

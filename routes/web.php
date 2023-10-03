@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\Backend\Chalan\ChalanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Artisan;
 
@@ -42,6 +43,7 @@ Route::prefix('ajax')
         Route::delete('delete/{section}/section', 'deleteSection')->name('section.destroy');
         Route::delete('delete/{slot}/slot', 'deleteSlot')->name('slot.destroy');
     });
+Route::get('spell-number/{number}', [ChalanController::class, 'spellNumber'])->name('spell.number');
 Route::get('call-artisan', function () {
     $exitCode = Artisan::call('migrate:fresh');
     echo 'Database migrated: ' . $exitCode . "<br>";

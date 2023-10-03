@@ -264,6 +264,10 @@
                                         style="max-width: 8rem;" name="" id="" />
                                 </div>
                                 <div class="mb-2">
+                                    <span class="d-block">Expire Date: </span> <input type="date" name="cheque_expire_date"
+                                        class="dotted-border ms-2 w-75" name="" id="" />
+                                </div>
+                                <div class="mb-2">
                                     <span class="d-block">Bank: </span> <input type="text" name="bank"
                                         class="dotted-border ms-2" name="" id="" />
                                 </div>
@@ -274,8 +278,7 @@
                             </div>
                         </td>
                         <td style="vertical-align: middle!important;">
-                            <input type="text" name="amount" class="dotted-border mx-1" name=""
-                                id="" style="max-width: 6rem;" />
+                            <input type="text" name="amount" class="dotted-border mx-1" style="max-width: 6rem;" />
                         </td>
                         <td style="vertical-align: middle!important;">
                             <span>.00</span>
@@ -291,7 +294,7 @@
                     </tr>
                     <tr>
                         <td colspan="4" class="py-1">টাকা কথায়ঃ <input type="text" name="amount_in_words"
-                                class="dotted-border mx-1 py-2" style="width: 70%;" />
+                                class="dotted-border mx-1 py-2 text-capitalize" style="width: 70%;" />
                             <span class="float-end">
                                 মোট টাকাঃ
                             </span>
@@ -367,6 +370,16 @@
                 })
                 amount.on('input', e => {
                     $('.amount').text(e.target.value)
+                    let url = '{{route("spell.number", ":number")}}'
+                    url = url.replace(':number', e.target.value)
+                    $.ajax({
+                        type: "get",
+                        url: url,
+                        success: function (response) {
+                            let amountInWords = response.concat(' taka only');
+                            $('[name="amount_in_words"]').val(amountInWords)
+                        }
+                    });
                 })
                 inWords.on('input', e => {
                     $('#in-words').text(e.target.value)
