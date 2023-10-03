@@ -27,6 +27,7 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\Frontend\WithdrawalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -168,6 +169,14 @@ Route::prefix('purchase')
         Route::post('store/', 'store')->name('store');
         Route::get('success/{model}/{id}', 'success')->name('success');
         Route::get('cancel', 'cancel')->name('cancel');
+    });
+// Route for payment
+Route::prefix('withdraw')
+    ->name('withdraw.client.')
+    ->controller(WithdrawalController::class)
+    ->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::post('request/', 'store')->name('request');
     });
 
 Route::get('tax/calculator', [TaxCalculatorController::class, 'calculator'])->name('tax.calculator');

@@ -38,6 +38,7 @@ class OrderController extends Controller
             if ($parent) {
                 $commission = $payment->payable_amount * $referee->commission / 100;
                 $parent->total_commission = $parent->total_commission + $commission;
+                $parent->remaining_commission = $parent->remaining_commission + $commission;
                 $parent->conversion = $parent->conversion + 1;
                 $parent->save();
             }

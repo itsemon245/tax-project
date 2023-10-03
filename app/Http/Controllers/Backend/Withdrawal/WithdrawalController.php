@@ -21,41 +21,6 @@ class WithdrawalController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'account_type' => 'required',
-            'account_no' => 'required|string',
-            'amount' => 'required|numeric',
-        ]);
-        $withdrawLimit = Setting::first()->reference->withdrawal;
-        if ($request->amount < $withdrawLimit) {
-            $notification = [
-                'message' => 'Insufficient Amount',
-                'alert-type' => 'error',
-            ];
-        } elseif ($request->amount > auth()->user()->remaining_temp_commission) {
-            $notification = [
-                'message' => 'Invalid Amount',
-                'alert-type' => 'error',
-            ];
-        } else {
-            $withdrawal = Withdrawal::create($request->all());
-            $withdrawal->user_id = $request->user_id;
-            $withdrawal->save();
-            auth()->user()->remaining_temp_commission = auth()->user()->remaining_temp_commission - $withdrawal->amount;
-            auth()->user->save();
-            $notification = [
-                'message' => 'Withdrawal Request Submitted',
-                'alert-type' => 'success',
-            ];
-        }
-        return back()->with($notification);
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(string $id)
@@ -75,12 +40,12 @@ class WithdrawalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $parent = User::find($id);
+        $user = User::find($id);
         $withdrawal = Withdrawal::find($request->withdrawal_id);
         $amount = $withdrawal->amount;
-        $parent->withdrawn_commission = $parent->withdrawn_commission + $amount;
-        $parent->remaining_commission = $parent->total_commission - $parent->withdrawn_commission;
-        $parent->save();
+        $user->withdrawn_commission = $user->withdrawn_commission + $amount;
+        $user->remaining_commission = $user->total_commission - $user->withdrawn_commission;
+        $user->save();
         $withdrawal->status = 1;
         $withdrawal->save();
         $notification = [

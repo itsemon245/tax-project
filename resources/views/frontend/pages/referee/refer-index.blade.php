@@ -2,7 +2,13 @@
 @section('main')
     @php
         $withdrwalAmount = \App\Models\Setting::first()->reference->withdrawal;
-        $canWithdraw = auth()->user()->remaining_temp_commission >= $withdrwalAmount;
+        $user = \App\Models\User::find(auth()->id());
+        $lastWithdrawal = $user
+            ->withdrawals()
+            ->latest()
+            ->first();
+        $isLastRequestCompleted = $lastWithdrawal === null ? true : $lastWithdrawal->status;
+        $canWithdraw = $user->canWithdraw();
     @endphp
     <div class="container">
         <div class="row">
@@ -10,15 +16,19 @@
             <div class="col-md-4 mt-5 card bg-success bg-gradient text-white">
                 <div class="p-4 card-body">
                     <p>Available Commissions Balance</p>
-                    <h2 class="mt-3 text-center">{{ auth()->user()->remaining_temp_commission }}</h2>
+                    <h2 class="mt-3 text-center">{{ $user->remaining_commission }} TK</h2>
                     <hr class="bg-light my-4">
                     <div class="d-flex justify-content-between">
                         <p>Total Commission</p>
-                        <p>{{ auth()->user()->total_temp_commission }} TK</p>
+                        <p>{{ $user->total_commission }} TK</p>
+                    </div>
+                    <div class="d-flex justify-content-between text-dark">
+                        <p>Last Requested For</p>
+                        <p>{{ $lastWithdrawal->amount }} TK</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p>Total Amount Withdrawn</p>
-                        <p>{{ auth()->user()->withdrawn_temp_commission }} TK</p>
+                        <p>{{ $user->withdrawn_commission }} TK</p>
                     </div>
                     <div class="d-flex justify-content-between ">
                         <p class="fw-medium text-warninig">Minmum withdrawl limit</p>
@@ -28,19 +38,19 @@
                         <button type="button" data-bs-toggle="modal" data-bs-target="#centermodal"
                             class="w-100 btn rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-dark text-light mt-3 "
                             style="font-weight: 500;">
-                            <span class="mdi mdi-cash p-0 m-0"></span> Request Withdrawl
+                            <span class="mdi mdi-cash p-0 m-0"></span> Request Withdrawal
                         </button>
                         <div class="modal fade" id="centermodal" tabindex="-1" style="display: none;" aria-modal="true"
                             role="dialog">
                             <div class="modal-dialog modal-dialog-centered" style="max-width: 40rem;">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title text-dark" id="myCenterModalLabel">Make an widthdrawl</h4>
+                                        <h4 class="modal-title text-dark" id="myCenterModalLabel">Make an widthdrawal</h4>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-dark">
-                                        <form action="{{ route('withdrawal.store') }}" method="post" class="row">
+                                        <form action="{{ route('withdraw.client.request') }}" method="post" class="row">
                                             @csrf
                                             <div class="col-md-12">
                                                 <div class="">
@@ -51,8 +61,6 @@
                                                         <option value="rocket">Rocket (Personal)</option>
                                                     </x-backend.form.select-input>
                                                 </div>
-                                                <x-backend.form.text-input type="text" hidden class="d-none"
-                                                    name="user_id" :value="auth()->id()" required />
                                             </div>
 
                                             <div class="col-md-6 ">
@@ -74,11 +82,18 @@
                             </div><!-- /.modal-dialog -->
                         </div>
                     @else
-                        <p
-                            class="btn rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-dark text-warning fw-medium mt-3">
-                            <span>You need at least {{ $withdrwalAmount }}</span>
-                            <span class="mdi mdi-currency-bdt font-16"></span>
-                        </p>
+                        @if (!$isLastRequestCompleted)
+                            <p
+                                class="btn rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-dark text-warning fw-medium mt-3">
+                                <span>Your last request is still proccessing</span>
+                            </p>
+                        @else
+                            <p
+                                class="btn rounded-3 shadow d-flex align-items-center justify-content-center gap-3 bg-dark text-warning fw-medium mt-3">
+                                <span>You need at least {{ $withdrwalAmount }}</span>
+                                <span class="mdi mdi-currency-bdt font-16"></span>
+                            </p>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -113,9 +128,9 @@
                             </p>
                             <div class="d-flex gap-2">
                                 <div class="bg-light bg-gradient p-3 rounded shadow-sm">
-                                    {{ auth()->user()->refer_link }}
+                                    {{ $user->refer_link }}
                                 </div>
-                                <div data-refer-link="{{ auth()->user()->refer_link }}"
+                                <div data-refer-link="{{ $user->refer_link }}"
                                     class="copy-btn bg-light text-center py-2 px-3 rounded shoadow-sm">
                                     <span class="mdi mdi-content-copy">
 
@@ -138,15 +153,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse (auth()->user()->referees as $key=> $referee)
+                    @forelse ($user->referees as $key=> $referee)
                         <tr>
                             <td>
                                 {{ $key + 1 }}
                             </td>
                             <td>
                                 <div class="d-flex gap-2 align-items-start">
-                                    <img loading="lazy" class="rounded rounded-circle" src="{{ useImage($referee->user->image_url) }}"
-                                        width="48px" height="48px" style="object-fit: cover;" alt="">
+                                    <img loading="lazy" class="rounded rounded-circle"
+                                        src="{{ useImage($referee->user->image_url) }}" width="48px" height="48px"
+                                        style="object-fit: cover;" alt="">
                                     <div>
                                         <div class="fw-bold">{{ $referee->user->name }}</div>
                                         <div class="fw-medium">{{ $referee->user->email }}</div>

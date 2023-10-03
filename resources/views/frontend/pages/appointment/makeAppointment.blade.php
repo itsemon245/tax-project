@@ -24,6 +24,14 @@
     ];
 @endphp
 
+@php
+    $jsonString =
+        '[{"_id":"bandarban","district":"Bandarban","coordinates":"21.8311, 92.3686","upazilla":["Ali Kadam","Thanchi","Lama","Bandarban Sadar","Rowangchhari","Naikhongchhari","Ruma"]},{"_id":"brahmanbaria","district":"Brahmanbaria","coordinates":"23.9608, 91.1115","upazilla":["Akhaura","Nasirnagar","Bancharampur","Sarail","Ashuganj","Bijoynagar","Nabinagar","Kasba","Brahmanbaria Sadar"]},{"_id":"chandpur","district":"Chandpur","coordinates":"23.2513, 90.8518","upazilla":["Haziganj","Faridganj","Matlab Dakshin","Chandpur Sadar","Kachua","Haimchar","Shahrasti","Matlab Uttar"]},{"_id":"chattogram","district":"Chattogram","coordinates":"22.5150, 91.7539","upazilla":["Rangunia","Sitakunda","Boalkhali","Patiya","Banshkhali","Karnaphuli","Lohagara","Hathazari","Mirsharai","Sandwip","Raozan","Chandanaish","Fatikchhari","Anwara","Satkania"]},{"_id":"cox\'s bazar","district":"Cox\'s Bazar","coordinates":"21.5641, 92.0282","upazilla":["Maheshkhali","Chakaria","Cox\'s Bazar Sadar","Ukhia","Pekua","Ramu","Teknaf","Kutubdia"]},{"_id":"cumilla","district":"Cumilla","coordinates":"23.4576, 91.1809","upazilla":["Titas","Monohargonj","Chandina","Cumilla Adarsha Sadar","Meghna","Nangalkot","Chauddagram","Barura","Cumilla Sadar Dakshin","Laksam","Daudkandi","Homna","Burichang","Debidwar","Muradnagar","Brahmanpara","Lalmai"]},{"_id":"feni","district":"Feni","coordinates":"22.9409, 91.4067","upazilla":["Fulgazi","Parshuram","Feni Sadar","Sonagazi","Daganbhuiyan","Chhagalnaiya"]},{"_id":"khagrachari","district":"Khagrachari","coordinates":"23.1322, 91.9490","upazilla":["Lakshmichhari","Panchhari","Mahalchhari","Dighinala","Manikchhari","Matiranga","Ramgarh","Khagrachhari Sadar"]},{"_id":"lakshmipur","district":"Lakshmipur","coordinates":"22.9447, 90.8282","upazilla":["Raipur","Ramganj","Lakshmipur Sadar","Ramgati","Kamalnagar"]},{"_id":"noakhali","district":"Noakhali","coordinates":"22.8724, 91.0973","upazilla":["Subarnachar","Hatiya","Kabirhat","Noakhali Sadar","Begumganj","Senbagh","Sonaimuri","Chatkhil","Companiganj"]},{"_id":"rangamati","district":"Rangamati","coordinates":"22.7324, 92.2985","upazilla":["Rajasthali","Kawkhali","Belaichhari","Kaptai","Barkal","Juraichhari","Naniyachar","Rangamati Sadar","Bagaichhari","Langadu"]}]';
+    $jsonObject = json_decode($jsonString);
+    $districts = collect($jsonObject);
+    
+@endphp
+
 
 @extends('frontend.layouts.app')
 
@@ -45,7 +53,7 @@
             <form method="POST" action="{{ route('user-appointment.store') }}" class="">
                 @csrf
                 <div class="d-flex justify-content-center">
-                    <div class="w-100" style="max-width: 720px;" class="px-md-0 px-2">
+                    <div class="w-100" style="max-width: 1024px;" class="px-md-0 px-2">
                         <div id="progressbarwizard">
 
                             <div class="d-flex justify-content-center">
@@ -140,13 +148,48 @@
                                                 Which Office Do You Prefer?
                                             </h4>
                                             <div class="row">
+                                                <div class="col-12">
+                                                    <div class="text-center bg-light p-2 rounded">
+                                                        Filter Branches
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div>
+                                                        <label for="branch-district">District <span
+                                                                class="text-danger">*</span></label>
+                                                        <select id="branch-district" name="branch-district" required
+                                                            placeholder="Select District...">
+                                                            <option selected disabled></option>
+                                                            @foreach ($districts as $district)
+                                                                <option value="{{ $district->district }}">
+                                                                    {{ $district->district }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                    <div class="mb-2">
+                                                        <label for="branch-thana">Thana <span
+                                                                class="text-danger">*</span></label>
+                                                        <select id="branch-thana" name="branch-thana" required
+                                                            placeholder="Select Thana...">
+                                                            <option disabled selected>Select District First</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row" id="branch-wrapper">
+                                                <div class="text-muted mb-2">Select Branches</div>
+
                                                 @foreach ($maps as $map)
                                                     <label for="location-input-{{ $map->id }}"
                                                         class="col-md-12 col-6 mb-md-1" style="cursor: pointer;">
                                                         <div id="location-{{ $map->id }}"
                                                             class="border rounded p-3 map location {{ $maps[0]->id === $map->id ? 'selected' : 'bg-light' }}">
                                                             <h5>{{ $map->location }}</h5>
-                                                            <p class="text-muted mb-0">{{ $map->address }}</p>
+                                                            <p class="text-muted mb-0 text-wrap">{{ $map->address }}</p>
                                                         </div>
                                                         <input type="radio" name="location" class="location-input"
                                                             data-effected="#location-{{ $map->id }}"
@@ -238,10 +281,10 @@
                                         <p class="card-header text-center">Appointment Details</p>
                                         <div class="card-body px-5">
                                             @if ($expertProfile)
-                                            <div class="d-none">
-                                                <input type="text" name="expert_id"
-                                                    value="{{ $expertProfile?->id }}">
-                                            </div>
+                                                <div class="d-none">
+                                                    <input type="text" name="expert_id"
+                                                        value="{{ $expertProfile?->id }}">
+                                                </div>
                                             @endif
                                             <p class="text-dark p-2 border bg-light rounded"><span class="fw-bold">Name:
                                                 </span><span
@@ -272,9 +315,9 @@
                                                 <div class="card">
                                                     <div class="card-header fs-5">Office</div>
                                                     <div class="card-body" id="address-body">
-                                                        <p class='fw-bold mb-1' id="">{{ $maps[0]->location }}
+                                                        <p class='fw-bold mb-1' id="location">{{ $maps[0]->location }}
                                                         </p>
-                                                        <div class="text-muted" id="">{!! $maps[0]->address !!}
+                                                        <div class="text-muted" id="address">{!! $maps[0]->address !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -398,28 +441,31 @@
                 })
 
                 //on location click
-                $('.location-input[type="radio"]').each(function(i, input) {
-                    input.addEventListener('input', function() {
-                        const itemToEffect = $(input.dataset.effected)
-                        const cards = $(input.dataset.cards)
-                        cards.addClass('bg-light')
-                        itemToEffect.removeClass('bg-light');
-                        itemToEffect.addClass('selected');
+                function locatonInputListener() {
+                    $('.location-input[type="radio"]').each(function(i, input) {
+                        input.addEventListener('input', function() {
+                            const itemToEffect = $(input.dataset.effected)
+                            const cards = $(input.dataset.cards)
+                            cards.addClass('bg-light')
+                            itemToEffect.removeClass('bg-light');
+                            itemToEffect.addClass('selected');
 
-                        if (this.name == 'location') {
-                            const mapsData = JSON.parse($('#maps-data').val())
-                            const mapId = parseInt(input.value)
-                            office = mapsData.filter(item => item.id === mapId)[0]
-                            $('.selected-location iframe').attr('src', office.src)
-                            $('.selected-location h5').html(office.location +
-                                "<span class='text-muted'>(selected)</span>")
-                            $('#address-body').html(`
+                            if (this.name == 'location') {
+                                const mapsData = JSON.parse($('#maps-data').val())
+                                const mapId = parseInt(input.value)
+                                office = mapsData.filter(item => item.id === mapId)[0]
+                                $('.selected-location iframe').attr('src', office.src)
+                                $('.selected-location h5').html(office.location +
+                                    "<span class='text-muted'>(selected)</span>")
+                                $('#address-body').html(`
                             <p class='fw-bold mb-1' id="">${office.location}</p>
                             <div class="text-muted" id="">${office.address}</div>
                             `)
-                        }
+                            }
+                        })
                     })
-                })
+                }
+                locatonInputListener()
                 // on time click
                 $('.time-input').each((i, input) => {
                     if (i === 0) {
@@ -463,6 +509,101 @@
                     const submitBtn = `<a href="javascript: void(0);" class="btn btn-primary">Next</a>`
                     nextBtn.html(submitBtn)
                 })
+
+                function branchSelection() {
+                    let districtSelctize = $('#branch-district').selectize({
+                        maxItems: 1,
+                        sortField: 'text',
+                        create: false,
+                        labelField: 'district',
+                        valueField: 'district',
+                        searchField: 'district',
+                    });
+                    let thanaSelect = $('#branch-thana').selectize({
+                        maxItems: 1,
+                        sortField: 'text',
+                        create: false,
+                        labelField: 'thana',
+                        valueField: 'thana',
+                        searchField: ['thana', 'id'],
+                    });
+                    const thanaSelecize = thanaSelect[0].selectize
+
+
+                    $('#branch-district').on('input', e => {
+                        // grab ups based on district
+                        const jsonString =
+                            '[{"_id":"bandarban","district":"Bandarban","coordinates":"21.8311, 92.3686","upazilla":["Ali Kadam","Thanchi","Lama","Bandarban Sadar","Rowangchhari","Naikhongchhari","Ruma"]},{"_id":"brahmanbaria","district":"Brahmanbaria","coordinates":"23.9608, 91.1115","upazilla":["Akhaura","Nasirnagar","Bancharampur","Sarail","Ashuganj","Bijoynagar","Nabinagar","Kasba","Brahmanbaria Sadar"]},{"_id":"chandpur","district":"Chandpur","coordinates":"23.2513, 90.8518","upazilla":["Haziganj","Faridganj","Matlab Dakshin","Chandpur Sadar","Kachua","Haimchar","Shahrasti","Matlab Uttar"]},{"_id":"chattogram","district":"Chattogram","coordinates":"22.5150, 91.7539","upazilla":["Rangunia","Sitakunda","Boalkhali","Patiya","Banshkhali","Karnaphuli","Lohagara","Hathazari","Mirsharai","Sandwip","Raozan","Chandanaish","Fatikchhari","Anwara","Satkania"]},{"_id":"cox\'s bazar","district":"Cox\'s Bazar","coordinates":"21.5641, 92.0282","upazilla":["Maheshkhali","Chakaria","Cox\'s Bazar Sadar","Ukhia","Pekua","Ramu","Teknaf","Kutubdia"]},{"_id":"cumilla","district":"Cumilla","coordinates":"23.4576, 91.1809","upazilla":["Titas","Monohargonj","Chandina","Cumilla Adarsha Sadar","Meghna","Nangalkot","Chauddagram","Barura","Cumilla Sadar Dakshin","Laksam","Daudkandi","Homna","Burichang","Debidwar","Muradnagar","Brahmanpara","Lalmai"]},{"_id":"feni","district":"Feni","coordinates":"22.9409, 91.4067","upazilla":["Fulgazi","Parshuram","Feni Sadar","Sonagazi","Daganbhuiyan","Chhagalnaiya"]},{"_id":"khagrachari","district":"Khagrachari","coordinates":"23.1322, 91.9490","upazilla":["Lakshmichhari","Panchhari","Mahalchhari","Dighinala","Manikchhari","Matiranga","Ramgarh","Khagrachhari Sadar"]},{"_id":"lakshmipur","district":"Lakshmipur","coordinates":"22.9447, 90.8282","upazilla":["Raipur","Ramganj","Lakshmipur Sadar","Ramgati","Kamalnagar"]},{"_id":"noakhali","district":"Noakhali","coordinates":"22.8724, 91.0973","upazilla":["Subarnachar","Hatiya","Kabirhat","Noakhali Sadar","Begumganj","Senbagh","Sonaimuri","Chatkhil","Companiganj"]},{"_id":"rangamati","district":"Rangamati","coordinates":"22.7324, 92.2985","upazilla":["Rajasthali","Kawkhali","Belaichhari","Kaptai","Barkal","Juraichhari","Naniyachar","Rangamati Sadar","Bagaichhari","Langadu"]}]';
+                        const data = JSON.parse(jsonString)
+                        const UP = data.filter(item => item.district == e.target.value.trim())[0]
+                            .upazilla
+                        const upazillas = UP.map(item => {
+                            return {
+                                thana: item,
+                                id: item.toLowerCase
+                            }
+                        })
+                        thanaSelecize.clear();
+                        thanaSelecize.clearOptions();
+                        thanaSelecize.load(set => set(upazillas));
+                    })
+
+                    $('#branch-thana').on('change', e => {
+                        let thana = e.target.value
+                        let url = "{{ route('ajax.get.branches', 'THANA') }}"
+                        if (thana !== '') {
+                            url = url.replace('THANA', thana)
+                            $.ajax({
+                                type: "get",
+                                url: url,
+                                success: function(response) {
+                                    console.log(response);
+                                    let branchWrapper = $('#branch-wrapper')
+                                    branchWrapper.children().remove()
+                                    branchWrapper.append(
+                                        `<div class="text-center">
+                                            <div class="d-flex flex-column justify-content-center" style="height:300px;">
+                                                No branches available
+                                            </div>    
+                                        </div>`
+                                    )
+                                    $('#address').text('')
+                                    $('#location').text('')
+                                    if (response.length > 0) {
+                                        branchWrapper.children().remove()
+                                        $('#address').text(response[0].address)
+                                        $('#location').text(response[0].location)
+                                        branchWrapper.append(
+                                            `<div class="text-muted mb-2">Select Branches</div>`
+                                        )
+                                        response.forEach((item, i) => {
+                                            let branchInput = `
+                                            <label for="location-input-${item.id}"
+                                                        class="col-md-12 col-6 mb-md-1" style="cursor: pointer;">
+                                                        <div id="location-${item.id}"
+                                                            class="border rounded p-3 map location ${ i == 0 ? 'selected' : 'bg-light' }">
+                                                            <h5>${item.location}</h5>
+                                                            <p class="text-muted mb-0">${item.address}</p>
+                                                        </div>
+                                                        <input type="radio" name="location" class="location-input"
+                                                            data-effected="#location-${item.id}"
+                                                            data-cards=".location"
+                                                            id="location-input-${item.id}"
+                                                            value="${item.id}" hidden
+                                                            ${i == 0 ? 'checked': ''}>
+                                                    </label>
+                                            `
+                                            branchWrapper.append(branchInput)
+                                        });
+                                        locatonInputListener()
+
+                                    }
+                                }
+                            });
+                        }
+                    })
+                }
+                branchSelection();
             });
         </script>
     @endPush

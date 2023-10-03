@@ -150,4 +150,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasRole('partner');
     }
+
+
+    function canWithdraw() {
+        $withdrawalAmount = Setting::first()->reference->withdrawal;
+        $lastWithdrawal = $this
+        ->withdrawals()
+        ->latest()
+        ->first();
+        $hasAmount = $this->remaining_commission >= $withdrawalAmount;
+        $isLastRequestCompleted = $lastWithdrawal === null ? true : $lastWithdrawal->status;
+
+        return ($hasAmount && $isLastRequestCompleted);
+    }
 }
