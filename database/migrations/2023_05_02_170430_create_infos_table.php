@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('infos', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('section_id')->comment('1 = Section1 and 2 = Section2');
+            $table->enum('page_name', [1, 2, 3, 4, 5])->default(1);
             $table->string('title');
             $table->string('image_name')->nullable();
             $table->string('image_url');

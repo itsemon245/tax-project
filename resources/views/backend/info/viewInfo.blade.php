@@ -14,20 +14,8 @@
             }
         </style>
     @endpush
-    <!-- start page title -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <div class="page-title-right">
-                    <x-backend.ui.breadcrumbs :list="['Dashboard', 'Info', 'View Info']" />
-                </div>
-                <h4 class="page-title">View Info</h4>
-            </div>
-        </div>
-    </div>
-    <!-- end page title -->
-
-    <x-backend.ui.section-card name="Hero List">
+    <x-backend.ui.breadcrumbs :list="['Frontend', 'Hero', 'List']" />
+    <x-backend.ui.section-card name="Info List">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -41,7 +29,6 @@
                                     <th>Title</th>
                                     <th>Section</th>
                                     <th>Description</th>
-                                    <th>Status</th>
                                     @can('manage info section')
                                     <th>Action</th>
                                     @endcan
@@ -56,12 +43,7 @@
                                                 width="80px" loading="lazy"></td>
                                         <td>{{ Str::limit($info->title, 20, '...') }}</td>
                                         <td>{{ $info->section_id === 1 ? 'Section 1' : 'Section 2' }}</td>
-                                        <td>{!! Str::limit($info->description, 80, '...') !!}</td>
-                                        <td>
-                                            {!! $info->status === 1
-                                                ? "<span class='badge bg-success'>Active</span>"
-                                                : "<span class='badge bg-danger'>Deactive</span>" !!}
-                                        </td>
+                                        <td>{!! Str::limit($info->description, 40, '...') !!}</td>
                                         @can('manage info section')
                                         <td>
                                             <a href="{{ Route('info.edit', $info) }}"
@@ -85,10 +67,10 @@
             </div><!-- end col-->
         </div>
     </x-backend.ui.section-card>
-    <!-- end row-->
-@endsection
 
-@push('customJs')
+    <!-- end row-->
+
+    @push('customJs')
     <script>
         const deleteinfo = id => {
             Swal.fire({
@@ -114,3 +96,6 @@
         }
     </script>
 @endpush
+@endsection
+
+
