@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'Product' => 'App\Models\Product',
             'Service' => 'App\Models\Service',
-            'ExpertProfile' => 'App\Models\ExpertProfile',
+            // 'ExpertProfile' => 'App\Models\ExpertProfile',
             'Book' => 'App\Models\Book',
             'Course' => 'App\Models\Course',
             'CaseStudy' => 'App\Models\CaseStudy',

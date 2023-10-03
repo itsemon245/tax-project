@@ -11,13 +11,13 @@
             @foreach ($sections as $item)
                 <div class="carousel-item {{ $sections[0]->id === $item->id ? 'active' : '' }}">
                     <div class="row align-items-cetner justify-content-center mx-3">
-                        <div class="col-md-5">
+                        <div class="col-md-5 pe-3">
                             <div class="row justify-content-center">
-                                <img loading="lazy" style="max-width:350px;"
+                                <img class="mb-2 rounded-3 p-0" loading="lazy" style="max-width:350px; object-fit:cover;"
                                     src="{{ useImage($item->image) }}" alt="">
                             </div>
                         </div>
-                        <div class="col-md-5 align-self-center justify-self-center">
+                        <div class="col-md-5 align-self-center justify-self-center ps-3">
                             <div>
                                 <h2 class="mb-0" style="font-size:30px;font-weight:600;">{{$item->title}}</h2>
                                 <p class="mb-1" style="font-size:20px;font-weight:400;">{{$item->sub_title}}</p>
@@ -27,10 +27,10 @@
                             <div class="my-4" style="max-width:500px;text-align:justify;">
                                 {{$item->description}}
                             </div>
-                            <div class="d-flex gap-5 align-items-center flex-wrap">
+                            <div class="d-flex gap-3 align-items-center flex-wrap">
                                  <!-- Center modal -->
                                 <a class="btn btn-primary waves-effect waves-light" href="{{route('appointment.make')}}">Make Appointment</a>
-                                <div>
+                                <div class="mx-2">
                                     <a class="text-capitalize a d-flex align-items-center gap-2" href="{{route('office')}}">
                                         <span class="mdi mdi-map-marker-outline  text-primary"></span>
                                         Our Office

@@ -153,6 +153,7 @@ Route::prefix('payment')
     ->group(function () {
         Route::get('create/{model}/{id}', 'create')->name('create');
         Route::post('store/', 'store')->name('store');
+        Route::post('later/', 'later')->name('later');
         Route::get('success/{model}/{id}', 'success')->name('success');
         Route::get('cancel', 'cancel')->name('cancel');
     });
