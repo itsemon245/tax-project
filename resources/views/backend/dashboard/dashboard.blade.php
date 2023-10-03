@@ -196,7 +196,7 @@
                             <div class="modal-body">
                                 <x-backend.form.text-input id="eventTitle" name="event_name" label="Event Name" />
 
-                                <x-form.selectize id="service" name="service" placeholder="Select Service..."
+                                <x-form.selectize id="edit-service" name="service" placeholder="Select Service..."
                                     label="Service">
                                     @foreach ($services as $item)
                                         <option value="{{ null }}" selected disabled>Select Service</option>
