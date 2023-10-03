@@ -28,8 +28,8 @@
                         <span class="font-14">Mark all as read</span>
                     </div>
                 </div>
+                @forelse (request()->user()->notifications as $notification)
                 <div class="overflow-scroll" style=" height:400px;">
-                    @forelse (request()->user()->notifications as $notification)
                         <div class="card show w-100 mb-3 {{ $isRead ? 'read' : 'unread' }}" role="alert" aria-live="assertive"
                             aria-atomic="true">
                             <div class="card-header bg-primary text-white">
@@ -45,18 +45,16 @@
                                 <a href="{{ $notification->data['url'] }}">Explore more</a>
                             </div>
                         </div>
+                    </div>
                     @empty
                     <div class="row">
-                        <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8">
-                                <img loading="lazy" src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100vh;" class="img-fluid p-5" alt="Responsive image">
-                            </div>
-                            <div class="col-md-2"></div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8" style="max-width:800px;">
+                            <img loading="lazy" src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100%;" class="img-fluid p-5" alt="Responsive image">
                         </div>
+                        <div class="col-md-2"></div>
                     </div>
                     @endforelse
-                </div>
             </div>
         </div>
     </div>
