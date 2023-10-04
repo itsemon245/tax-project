@@ -23,7 +23,7 @@ class StoreProductSubCategoryRequest extends FormRequest
     {
 
         return[
-            'category_id' => ['required'],
+            'category' => ['required'],
             'sub_category' => ['string', 'required', 'max:20', 'unique:product_sub_categories,name'],
         ];
 

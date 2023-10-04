@@ -23,7 +23,7 @@ class StoreBookRequest extends FormRequest
     {
         return [
             'book_image' => ['required', 'image'],
-            'book_category_id' => ['required', 'image'],
+            'book_category_id' => ['required'],
             'book_title' => ['required'],
             'author' => ['required'],
             'sample_pdf' => ['mimes:pdf'],

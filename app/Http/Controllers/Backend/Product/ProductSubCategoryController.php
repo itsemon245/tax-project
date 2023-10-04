@@ -37,7 +37,7 @@ class ProductSubCategoryController extends Controller
     public function store(StoreProductSubCategoryRequest $request)
     {
         $sub_category = new ProductSubCategory();
-        $sub_category->product_category_id = $request->category_id;
+        $sub_category->product_category_id = $request->category;
         $sub_category->name = $request->sub_category;
         $sub_category->save();
         return redirect()->back()->with('success', 'Sub-Category Added Successfully');

@@ -31,7 +31,7 @@
                                 </div> <!-- end col -->
                                 {{-- Add sub-category --}}
                                 <div class="col-md-6">
-                                    <x-backend.form.text-input name="name" label="Sub Category"
+                                    <x-backend.form.text-input name="sub_category" label="Sub Category"
                                         placeholder="Sub Category" :value="$productSubCategory->name" />
                                 </div> <!-- end col -->
                                 <div class="mt-1">

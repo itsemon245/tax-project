@@ -24,6 +24,7 @@
             type="custom">Back</x-backend.ui.button>
         {{-- Select category option --}}
         <form action="{{ route('product-sub-category.store') }}" method="POST">
+            @csrf
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -41,7 +42,7 @@
                         </div> <!-- end col -->
                         {{-- Add sub-category --}}
                         <div class="col-md-6">
-                            <x-backend.form.text-input name="name" label="Sub Category" placeholder="Sub Category" />
+                            <x-backend.form.text-input name="sub_category" label="Sub Category" placeholder="Sub Category" />
                         </div> <!-- end col -->
                         <div class="mt-1">
                             <x-backend.ui.button class="btn-sm btn-primary" type="submit">Create</x-backend.ui.button>
@@ -69,8 +70,8 @@
                                 @forelse ($subCategories as $key => $sub)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $sub->name }}</td>
                                         <td>{{ $sub->productCategory->name }}</td>
+                                        <td>{{ $sub->name }}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <x-backend.ui.button type="edit" :href="route('product-sub-category.edit', $sub->id)" class="btn-sm" />
