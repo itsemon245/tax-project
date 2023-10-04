@@ -7,6 +7,22 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+# About This Project
+This is a real-world application that handles tax related operation like managing clients, sending invoices, handling reports, tracking events & appointments etc.
+
+### Core Features:
+- Used Laravel, Bootstrap, jQuery & vanilla JavaScript
+- Developed in-app affiliate & bonus system
+- Enabled e-commerce capabilities by providing options to buy Books & Services
+- Integrated features Client Management, Invoice Management, Report Handling, Manual Payments Management, & Custom CMS etc
+- Developed LMS to buy and sell courses
+- Role & permission based administritive panel
+
+### Test Credentials:
+- [Test Website](https://tax-project.wisedev.xyz)
+- Email: superadmin@gmail.com
+- Password: 12345678
+
 ## Getting Started
 
 - Fork this project.
