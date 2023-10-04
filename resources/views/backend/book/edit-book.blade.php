@@ -25,7 +25,7 @@
                             <x-backend.form.select-input id="section" label="Book Category Name" name="book_category_id"
                                 placeholder="Choose Book Category...">
                                 @forelse ($bookCategories as $bookCategory)
-                                    <option value="{{ $bookCategory->id }}" {{$bookCategory->id == $book->book_category_id ? 'selected' : ''}}>{{ $bookCategory->book_category }}</option>
+                                    <option value="{{ $bookCategory->id }}" {{$bookCategory->id == $book->book_category_id ? 'selected' : ''}}>{{ $bookCategory->name }}</option>
                                 @empty
                                 @endforelse
                             </x-backend.form.select-input>

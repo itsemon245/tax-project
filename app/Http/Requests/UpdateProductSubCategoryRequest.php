@@ -23,7 +23,7 @@ class UpdateProductSubCategoryRequest extends FormRequest
     {
         return [
             'category' => 'required',
-            'name' => 'required',
+            'sub_category' => ['string', 'required', 'max:20', 'unique:product_sub_categories,name'],
         ];
     }
 }
