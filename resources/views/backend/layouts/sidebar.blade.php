@@ -182,7 +182,7 @@
                     </li>
                 @endcanany
                 {{-- Service page Section --}}
-                @canany(['manage service page', 'read service page'])
+                @canany(['manage service', 'read service'])
                     <li>
                         <a href="#services" data-bs-toggle="collapse">
                             <i class="mdi mdi-badge-account-horizontal-outline"></i>
