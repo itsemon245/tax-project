@@ -1,6 +1,7 @@
 @php
     $user_id = auth()->id();
     $user = App\Models\User::find($user_id);
+    $setting = \App\Models\Setting::first();
     $notifications = $user
         ->notifications()
         ->latest()
@@ -120,7 +121,7 @@
 
         <!-- LOGO -->
         <div class="logo-box">
-            <a href="index.html" class="logo logo-dark text-center">
+            {{-- <a href="index.html" class="logo logo-dark text-center">
                 <span class="logo-sm">
                     <img loading="lazy" src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="" height="22">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
@@ -129,14 +130,14 @@
                     <img loading="lazy" src="{{ asset('backend/assets/images/logo-dark.png') }}" alt="" height="20">
                     <!-- <span class="logo-lg-text-light">U</span> -->
                 </span>
-            </a>
+            </a> --}}
 
-            <a href="index.html" class="logo logo-light text-center">
+            <a href="{{route('home')}}" class="logo logo-light text-center">
                 <span class="logo-sm">
-                    <img loading="lazy" src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="" height="22">
+                    <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt="" style="width: 100px; max-height: 50px;object-fit:cover;">
                 </span>
                 <span class="logo-lg">
-                    <img loading="lazy" src="{{ asset('backend/assets/images/logo-light.png') }}" alt="" height="20">
+                    <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt="" style="width: 120px; max-height: 60px;object-fit:cover;">
                 </span>
             </a>
         </div>
