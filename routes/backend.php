@@ -354,11 +354,13 @@ Route::prefix('admin')
             ->controller(ProjectController::class)
             ->group(function () {
                 Route::get('', 'index')->name('index');
+                Route::get('clients/{id}', 'projectClients')->name('clients');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/store', 'store')->name('store');
                 Route::get('edit/{id}', 'edit')->name('edit');
                 Route::PUT('update/{id}', 'update')->name('update');
                 Route::delete('destroy/{id}', 'destroy')->name('destroy');
+                Route::delete('destroy/project/{project}/client/{client}', 'destroyProjectClient')->name('destroy.client');
             }); // middlewares are in the constructor
 
         Route::resource('case-study', CaseStudyController::class); // middlewares are in the constructor

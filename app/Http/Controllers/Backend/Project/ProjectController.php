@@ -38,8 +38,19 @@ class ProjectController extends Controller
     public function index()
     {
 
-        $clients = Client::latest()->simplePaginate(paginateCount());
-        return view('backend.project.viewAllProjectProgress', compact('clients'));
+        // $clients = Client::latest()->simplePaginate(paginateCount());
+        $projects = Project::with('tasks')->latest()->simplePaginate(paginateCount());
+        return view('backend.project.viewAllProjectProgress', compact('projects'));
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function projectClients($id)
+    {
+
+        // $clients = Client::latest()->simplePaginate(paginateCount());
+        $project = Project::with('tasks', 'tasks.clients', 'clients')->find($id);
+        return view('backend.project.projectClients', compact('project'));
     }
 
     /**
@@ -69,12 +80,17 @@ class ProjectController extends Controller
         $project->weekly_target = $request->daily_target * $data['weekdays'];
         $project->monthly_target = $request->daily_target * $data['weekdays'] * 4;
         $project->save();
+        $tasks = [];
+        foreach ($request->tasks as $task) {
+            $task = Task::create([
+                'name' => $task,
+                'project_id' => $project->id,
+            ]);
+            $tasks[] = $task;
+        }
+
         foreach ($request->clients as $clientId) {
-            foreach ($request->tasks as $task) {
-                $task = Task::create([
-                    'name' => $task,
-                    'project_id' => $project->id,
-                ]);
+            foreach ($tasks as $task) {
                 $task->clients()->attach($clientId);
             }
             $project->clients()->attach($clientId);
@@ -96,16 +112,16 @@ class ProjectController extends Controller
                             'user_id' => $userId
                         ]);
                     }
-                };
-            };
-        };
+                }
+            }
+        }
 
 
         $notification = [
-            'message' => 'Project Created With Assigned',
+            'message' => 'Project Created and Assigned',
             'alert-type' => 'success',
         ];
-        return back()
+        return redirect(route('project.index'))
             ->with($notification);
     }
 
@@ -114,7 +130,7 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        $project = Project::find($id);
+        $project = Project::with('tasks')->find($id);
         $clients = Client::with('users')->get();
         return view('backend.project.editProjectProgress', compact('project', 'clients'));
     }
@@ -123,8 +139,8 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:projects,name',
+        $data = $request->validate([
+            'name' => 'required|string|max:255|unique:projects,name,' . $id,
             'start_date' => 'date|required',
             'end_date' => 'date|required',
             'weekdays' => 'required|numeric',
@@ -132,13 +148,16 @@ class ProjectController extends Controller
             'total_clients' => 'required|numeric',
         ]);
         $project = Project::find($id);
-        $project->name = $request->name;
-        $project->start_date = $request->start_date;
-        $project->end_date = $request->end_date;
-        $project->weekdays = $request->weekdays;
-        $project->weekly_target = $request->daily_target * $request->weekdays;
-        $project->monthly_target = $request->daily_target * $request->weekdays * 4;
+        $project->update($data);
+        $project->weekly_target = $request->daily_target * $data['weekdays'];
+        $project->monthly_target = $request->daily_target * $data['weekdays'] * 4;
         $project->save();
+        // $project->tasks()->delete();
+        // foreach ($request->tasks as $task) {
+        //     Task::create([
+        //             'name' => $task, 'project_id' => $project->id
+        //         ]);
+        // }
         $notification = [
             'message' => 'Project Updated',
             'alert-type' => 'success',
@@ -159,13 +178,17 @@ class ProjectController extends Controller
         return back()
             ->with($notification);
     }
-    // /**
-    //  * Display the specified resource.
-    //  */
-    // public function show(Progress $progress)
-    // {
-    //     //
-    // }
-
-
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroyProjectClient($project, $client)
+    {
+        DB::table('client_project')->where(['client_id' => $client, 'project_id' => $project])->delete();
+        $notification = [
+            'message' => 'Project Client Deleted',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
+    }
 }
