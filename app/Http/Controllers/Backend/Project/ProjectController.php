@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Backend\Project;
 
+use App\Models\Task;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\Progress;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProgressRequest;
 use App\Http\Requests\UpdateProgressRequest;
-use App\Models\Task;
 
 class ProjectController extends Controller
 {
@@ -20,7 +21,7 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware('can:read progress', [
-            'only' => ['index', 'show']
+            'only' => ['index','projectClients', 'show']
         ]);
         $this->middleware('can:create progress',   [
             'only' => ['create', 'store']
@@ -30,6 +31,9 @@ class ProjectController extends Controller
         ]);
         $this->middleware('can:delete progress',  [
             'only' => ['destroy']
+        ]);
+        $this->middleware('can:update task progress',  [
+            'only' => ['projectClients', 'updateTask']
         ]);
     }
     /**
@@ -164,6 +168,25 @@ class ProjectController extends Controller
         ];
         return back()
             ->with($notification);
+    }
+
+    function updateTask(int $client, int $task): JsonResponse
+    {
+        try {
+            $task = Task::find($task);
+            $task->clients()->updateExistingPivot($client, [
+                'is_completed' => !$task->isCompleted($client)
+            ]);
+            $success = true;
+            $message = 'Task Updated!';
+        } catch (\Throwable $th) {
+            $success = false;
+            $message = $th->getMessage();
+        }
+        return response()->json([
+            'success' => $success,
+            'message' => $message
+        ]);
     }
     /**
      * Remove the specified resource from storage.
