@@ -11,12 +11,18 @@ class UserDocController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can: read document',   [
-            'only' => ['index']
-        ]);
-        $this->middleware('can:manage document',   [
-            'except' => ['index']
-        ]);
+        // $this->middleware('can: read document',   [
+        //     'only' => ['index', 'show', 'download']
+        // ]);
+        // $this->middleware('can:update document',   [
+        //     'only' => ['index', 'show', 'store', 'create']
+        // ]);
+        // $this->middleware('can:approve document',   [
+        //     'only' => ['index', 'show']
+        // ]);
+        // $this->middleware('can:delete document',   [
+        //     'only' => ['index', 'destroy']
+        // ]);
     }
     /**
      * Display a listing of the resource.

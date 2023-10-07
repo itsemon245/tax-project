@@ -15,14 +15,12 @@
         </style>
     @endpush
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Show All', 'Project']" />
-    <x-backend.ui.section-card name="Projects">
-        @can('create progress')
-            <div class="mb-2">
-                <x-backend.ui.button type="custom" href="{{ route('project.create') }}"
-                    class="btn-success btn-sm">Create</x-backend.ui.button>
-            </div>
-        @endcan
-        <div class="row border-bottom mb-1">
+    <x-backend.ui.section-card name="Showing all clients for project '{{ $project?->name }}'">
+        <div class="mb-2">
+            <x-backend.ui.button type="custom" href="{{ route('project.index') }}"
+                class="btn-success btn-sm">Back</x-backend.ui.button>
+        </div>
+        {{-- <div class="row border-bottom mb-1">
             <div class="col-md-12">
                 <div id="progressbarwizard">
                     <div class="d-flex justify-content-center">
@@ -162,62 +160,71 @@
                     </div> <!-- tab-content -->
                 </div>
             </div>
-        </div>
-        <x-backend.table.basic :items="$projects">
+        </div> --}}
+        <x-backend.table.basic :items="$project?->clients">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Project Name</th>
-                    <th>Task List</th>
-                    @canany(['read progress', 'update progress', 'update task', 'delete progress'])
+                    <th>Client Name</th>
+                    <th>Client Phone</th>
+                    <th>User</th>
+                    @can('update task progress')
+                        <th>Task List</th>
+                    @endcan
+                    @canany(['update progress', 'delete progress'])
                         <th>Action</th>
                     @endcanany
                 </tr>
             </thead>
             <tbody>
-                @forelse ($projects as $key=>$project)
-                    <tr>
-                        <td>{{ ++$key }}</td>
-                        <td>{{ $project->name }}</td>
-                        <td>
-                            <div class="d-flex flex-wrap gap-2">
-                                @foreach ($project->tasks as $i => $task)
-                                    <div class="form-check mb-2 form-check-success">
-                                        {{-- <input
-                                                data-url="{{ route('ajax.task.update', ['client' => $client->id, 'task' => $task->id]) }}"
-                                                class="form-check-input rounded-circle" type="checkbox" value=""
-                                                id="{{ "project-$key-task-$i" }}" @checked($task->isCompleted($client->id))> --}}
-                                        <label class="form-check-label"
-                                            for="{{ "project-$key-task-$i" }}">{{ $task->name }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </td>
-                        @canany(['read progress', 'update progress', 'update task', 'delete progress'])
+                @if ($project?->clients->count() > 0)
+                    @forelse ($project->clients as $key=>$client)
+                        <tr>
+                            <td>{{ ++$key }}</td>
+                            <td>{!! $client->name !!}</td>
+                            <td>{!! $client->phone !!}</td>
                             <td>
-                                @can('read progress')
-                                    <x-backend.ui.button type="custom" href="{{ route('project.clients', $project->id) }}"
-                                        class="btn-dark btn-sm">Show All</x-backend.ui.button>
-                                @endcan
-                                @can('update progress')
-                                    <x-backend.ui.button type="edit" href="{{ route('project.edit', $project->id) }}"
-                                        class="btn-sm" />
-                                @endcan
-                                @can('delete progress')
-                                    <x-backend.ui.button type="delete" action="{{ route('project.destroy', $project->id) }}"
-                                        class="btn-sm" />
-                                @endcan
-
+                                <div class="d-inline-flex flex-column flex-wrap gap-2">
+                                    @foreach ($client->users as $user)
+                                        <span class="text-blue bg-soft-blue p-1 rounded">{{ $user->name }}</span>
+                                    @endforeach
+                                </div>
                             </td>
-                        @endcanany
-                    </tr>
-                @empty
-                    {{-- <tr>
-                        <td colspan="4">
-                            <h5 class="d-flex justify-content-center text-muted">No record found</h5>
-                        </td>
-                    </tr> --}}
-                @endforelse
+                            @can('update task progress')
+                                <td>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        @foreach ($project->tasks as $i => $task)
+                                            <div class="form-check mb-2 form-check-success">
+                                                <input
+                                                    data-url="{{ route('project.task.update', ['client' => $client->id, 'task' => $task->id]) }}"
+                                                    class="form-check-input rounded-circle" type="checkbox" value=""
+                                                    id="{{ "project-$key-task-$i" }}" @checked($task->isCompleted($client->id))>
+                                                <label class="form-check-label"
+                                                    for="{{ "project-$key-task-$i" }}">{{ $task->name }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </td>
+                            @endcan
+                            @canany(['update progress', 'delete progress'])
+                                <td>
+                                    @can('delete progress')
+                                        <x-backend.ui.button type="delete"
+                                            action="{{ route('project.destroy.client', ['project' => $project->id, 'client' => $client->id]) }}"
+                                            class="btn-sm" />
+                                    @endcan
+
+                                </td>
+                            @endcanany
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4">
+                                <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                            </td>
+                        </tr>
+                    @endforelse
+                @endif
             </tbody>
         </x-backend.table.basic>
     </x-backend.ui.section-card>
@@ -225,30 +232,30 @@
     @push('customJs')
         <script>
             $(document).ready(function() {
-                // $('.form-check-input').on('change', e => {
-                //     $.ajax({
-                //         type: "post",
-                //         url: e.target.dataset.url,
-                //         headers: {
-                //             'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                //         },
-                //         success: function(response) {
-                //             if (response.success) {
-                //                 Toast.fire({
-                //                     'icon': 'success',
-                //                     'title': 'Success',
-                //                     'text': response.message
-                //                 })
-                //             } else {
-                //                 Toast.fire({
-                //                     'icon': 'error',
-                //                     'title': 'Error',
-                //                     'text': response.message
-                //                 })
-                //             }
-                //         }
-                //     });
-                // })
+                $('.form-check-input').on('change', e => {
+                    $.ajax({
+                        type: "post",
+                        url: e.target.dataset.url,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                Toast.fire({
+                                    'icon': 'success',
+                                    'title': 'Success',
+                                    'text': response.message
+                                })
+                            } else {
+                                Toast.fire({
+                                    'icon': 'error',
+                                    'title': 'Error',
+                                    'text': response.message
+                                })
+                            }
+                        }
+                    });
+                })
             });
         </script>
     @endpush

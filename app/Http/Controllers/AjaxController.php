@@ -127,24 +127,7 @@ class AjaxController extends Controller
         ]);
     }
 
-    function updateTask(int $client, int $task): JsonResponse
-    {
-        try {
-            $task = Task::find($task);
-            $task->clients()->updateExistingPivot($client, [
-                'is_completed' => !$task->isCompleted($client)
-            ]);
-            $success = true;
-            $message = 'Task Updated!';
-        } catch (\Throwable $th) {
-            $success = false;
-            $message = $th->getMessage();
-        }
-        return response()->json([
-            'success' => $success,
-            'message' => $message
-        ]);
-    }
+   
     function deleteSlot(Slot $slot): JsonResponse
     {
         try {

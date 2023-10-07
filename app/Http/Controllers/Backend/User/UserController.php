@@ -68,7 +68,7 @@ class UserController extends Controller
         $userData->name = $request->name;
         $userData->user_name = $request->user_name;
         $userData->email = $request->email;
-        $userData->email_veified_at = now();
+        $userData->email_verified_at = now();
         $userData->admin_ref = $request->admin_ref;
         $userData->phone = $request->phone;
         $userData->password = Hash::make($request->password);
