@@ -42,10 +42,10 @@
                                 <h3 class="text-center">{{ $card->title }}</h3>
                                 <p class="text-justify px-2">{{ $card->description }}</p>
                                 <div class="d-flex justify-content-center text-center">
-                                    <a href="{{ route('mcq.test') }}">
+                                    {{-- <a href="{{ route('course.backend.show') }}"> --}}
                                         <x-backend.ui.button class="mb-3 btn-dark  d-block">Start the assessment
                                         </x-backend.ui.button>
-                                    </a>
+                                    {{-- </a> --}}
                                 </div>
                             </div>
                         </div>
