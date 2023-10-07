@@ -40,7 +40,11 @@ class ProductSubCategoryController extends Controller
         $sub_category->product_category_id = $request->category;
         $sub_category->name = $request->sub_category;
         $sub_category->save();
-        return redirect()->back()->with('success', 'Sub-Category Added Successfully');
+        $notification = [
+            'message' => 'Sub-Category Added Successfully',
+            'alert-type' => 'success',
+        ];
+        return redirect()->back()->with($notification);
     }
 
     /**
@@ -67,7 +71,7 @@ class ProductSubCategoryController extends Controller
     {
         $productSubCategory->update([
             'product_category_id' => $request->category,
-            'name' => $request->name,
+            'name' => $request->sub_category,
         ]);
         $alert = [
             'alert-type' => 'success',
