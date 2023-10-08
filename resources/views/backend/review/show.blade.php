@@ -1,15 +1,5 @@
 @extends('backend.layouts.app')
 @section('content')
-    {{-- @php
-        $reviewable_types = [
-            'Book' => 'Book',
-            'Product' => 'Product',
-            'ExpertProfile' => 'Expert Profile',
-            'Course' => 'Course',
-            'Service' => 'Service',
-            'CaseStudy' => 'Case Study',
-        ];
-    @endphp --}}
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Review', 'View']" />
     <x-backend.ui.section-card name="View Review">
         <div class="review">
