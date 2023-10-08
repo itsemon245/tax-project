@@ -12,7 +12,7 @@ jobs:
             cd ~ && mkdir .ssh
             touch ~/.ssh/deploy_key_rsa
             touch ~/.ssh/config
-      - name: print secrets
+      - name: Print Secrets
         run: |
             echo $DEPLOY_KEY >> ~/.ssh/deploy_key_rsa
             cat ~/.ssh/deploy_key_rsa
