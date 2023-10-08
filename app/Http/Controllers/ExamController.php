@@ -42,20 +42,28 @@ class ExamController extends Controller
     public function store(StoreExamRequest $request)
     {
         $data = (object) $request->validated();
-        Exam::create(
-            [
-                "course_id"     => $data->course,
-                "name"          => $data->name,
-                "total_marks"   => $data->total_marks,
-                "passing_marks" => $data->passing_marks
-            ]
-        );
-
-        return back()
+        if($data->total_marks >= $data->passing_marks){
+            Exam::create(
+                [
+                    "course_id"     => $data->course,
+                    "name"          => $data->name,
+                    "total_marks"   => $data->total_marks,
+                    "passing_marks" => $data->passing_marks,
+                ]
+            );
+            return back()
             ->with(array(
                 'message'       => "Exam Created Successfully",
                 'alert-type'    => 'success',
             ));
+        }else{
+            return back()
+            ->with(array(
+                'message'       => "Passing Mark greater than Total Mark",
+                'alert-type'    => 'error',
+            ));
+        }
+
     }
 
     /**
