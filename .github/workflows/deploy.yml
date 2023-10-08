@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Create files and folders
         run: |
-            mkdir ~/.ssh
+            mkdir .ssh
             cd .ssh
             touch deploy_key_rsa
             touch config
