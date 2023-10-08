@@ -14,11 +14,11 @@ jobs:
           port: ${{ secrets.PORT }}
           command_timeout: 30m
           script: | 
-            cd client-projects/tax-project
+            cd ${{secrets.PROJECT_DIR}}
             git fetch && git pull
             npm i
             npm run build
-            composer install --optimize-autoloader --no-dev
+            composer install
             php artisan config:cache
             php artisan event:cache 
             php artisan route:cache
