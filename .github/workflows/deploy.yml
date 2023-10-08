@@ -11,8 +11,8 @@ jobs:
         run: |
             mkdir .ssh
             cd .ssh
-            touch deploy_key_rsa
-            touch config
+            touch ~/.ssh/deploy_key_rsa
+            touch ~/.ssh/config
       - name: print secrets
         run: |
             echo $DEPLOY_KEY >> ~/.ssh/deploy_key_rsa
