@@ -116,8 +116,8 @@ class VideoController extends Controller
             'video' => $videoPath,
             'description' => $request->description,
         ]);
-
-        return redirect(route('route.index') . '?course_id=1')->with([
+        // redirect(route('route.index') . '?course_id=1')
+        return back()->with([
             'message' => 'Video Updated Successfully',
             'alert-type' => 'success',
         ]);
