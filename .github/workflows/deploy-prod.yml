@@ -1,4 +1,4 @@
-name: Push to server
+name: Push to Production
 on: [push]
 jobs:
     SSH_and_Build:
@@ -8,13 +8,13 @@ jobs:
       - name: SSH & Build
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          key: ${{ secrets.PROD_KEY }}
+          port: ${{ secrets.PROD_PORT }}
           command_timeout: 30m
           script: | 
-            cd ${{secrets.PROJECT_DIR}}
+            cd ${{secrets.PROD_PROJECT_DIR}}
             git fetch && git pull
             npm i
             npm run build
@@ -22,4 +22,4 @@ jobs:
             php artisan config:cache
             php artisan event:cache 
             php artisan route:cache
-            php artisan view:cache
+            php artisan view:cache  
