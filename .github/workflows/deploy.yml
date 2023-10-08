@@ -36,6 +36,5 @@ jobs:
       
       - name: Set Permissions
         run: |
-            cd ~/.ssh
-            chmod 600 deploy_key_rsa
-            chmod 600 config
+            chmod 600 ~/.ssh/deploy_key_rsa
+            chmod 600 ~/.ssh/config
