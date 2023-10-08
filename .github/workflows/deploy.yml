@@ -7,22 +7,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Create ssh directory
-        run: cd ~ && mkdir .ssh
-      - name: Create file for private key
-        run: touch ~/.ssh/deploy_key_rsa
+      - name: Create files and folders
+        run: |
+            mkdir ~/.ssh
+            cd .ssh
+            touch deploy_key_rsa
+            touch config
       - name: print secrets
         run: |
             echo $DEPLOY_KEY >> ~/.ssh/deploy_key_rsa
             cat ~/.ssh/deploy_key_rsa
+            echo $CONFIG >> ~/.ssh/config
+            cat ~/.ssh/deploy_key_rsa
         shell: bash
         env:
           DEPLOY_KEY : ${{secrets.DEPLOY_KEY_RSA}}
-      - name: Upload a Build Artifact
+          CONFIG: ${{secrets.CONFIG}}
+      - name: Build Deploy Key Artifact
         uses: actions/upload-artifact@v2
         with:
           name: DEPLOY_KEY
           path: ~/.ssh/deploy_key_rsa
 
-      - name: Check If Printed
-        run: cat ~/.ssh/deploy_key_rsa
+      - name: Build Config File Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: CONFIG
+          path: ~/.ssh/config
+      
+      - name: Set Permissions
+        run: |
+            cd ~/.ssh
+            chmod 600 deploy_key_rsa
+            chmod 600 config
