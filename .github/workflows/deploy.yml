@@ -38,3 +38,7 @@ jobs:
         run: |
             chmod 600 ~/.ssh/deploy_key_rsa
             chmod 600 ~/.ssh/config
+      - name: SSH into Wisedev
+        run: |
+            ssh wisedev
+            whoami
