@@ -16,7 +16,7 @@ jobs:
         run: |
             echo $DEPLOY_KEY >> ~/.ssh/deploy_key_rsa
             cat ~/.ssh/deploy_key_rsa
-            echo $CONFIG >> ~/.ssh/config
+            echo -e $CONFIG >> ~/.ssh/config
             cat ~/.ssh/deploy_key_rsa
         shell: bash
         env:
