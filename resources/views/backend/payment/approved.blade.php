@@ -45,12 +45,13 @@
                                         <td>{!! $payemnt->trx_id ?? "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Pay Later</span>" !!}</td>
                                         <td>{{ $payemnt->paid ?? '0' }}</td>
                                         <td>{{ $payemnt->due ?? '0' }}</td>
-                                        @can('manage order')
                                         <td>
                                             {!! $payemnt->approved === 1
                                                 ? "<span class='badge bg-success'>Approved</span>"
                                                 : "<span class='badge bg-danger'>Not-Approved</span>" !!}
                                         </td>
+                                        @can('manage order')
+                                        <td></td>
                                         @endcan
                                     </tr>
                                 @endforeach

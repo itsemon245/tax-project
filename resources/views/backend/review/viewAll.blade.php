@@ -43,7 +43,7 @@
                             <td>
                                 <div class="btn-group">
                                     @can('read reviews')
-                                    <a href="#" class="btn btn-sm btn-success">View</a>
+                                    <a href="{{ route('backend.review.show', $review->id) }}" class="btn btn-sm btn-success">View</a>
                                     @endcan
                                     @can('manage reviews')
                                     <form action="{{ route('backend.review.destroy', $review) }}" method="post">

@@ -113,6 +113,8 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
+        $review = Review::find($review);
+        return view('backend.review.show', compact('review'));
     }
 
     /**

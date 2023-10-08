@@ -131,11 +131,13 @@
                                             </tr>
                                             <tr style="border-bottom: 0px solid transparent;">
                                                 <td colspan="3">
-                                                    <x-backend.ui.button type="button"
-                                                        data-page-title="Expense Voucher ({{ str($expense?->type)->headline() }})"
-                                                        class="print-btn d-print-none btn-sm btn-info float-end"
-                                                        data-target="#print-{{ $expense->id }}">Print</x-backend.ui.button>
-                                                </td>
+                                                @can('print expense')
+                                                <x-backend.ui.button type="button"
+                                                data-page-title="Expense Voucher ({{ str($expense?->type)->headline() }})"
+                                                class="print-btn d-print-none btn-sm btn-info float-end"
+                                                data-target="#print-{{ $expense->id }}">Print</x-backend.ui.button>
+                                                @endcan
+                                            </td>
                                             </tr>
                                         </tbody>
                                     </table>
