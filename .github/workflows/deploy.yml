@@ -13,7 +13,7 @@ jobs:
         run: touch ~/.ssh/deploy_key_rsa
       - name: print secrets
         run: |
-            echo $DEPLOY_KEY &gt;&gt; ~/.ssh/deploy_key_rsa
+            echo $DEPLOY_KEY >> ~/.ssh/deploy_key_rsa
             cat ~/.ssh/deploy_key_rsa
         shell: bash
         env:
