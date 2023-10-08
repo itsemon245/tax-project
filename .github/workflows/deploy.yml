@@ -41,3 +41,4 @@ jobs:
       - name: SSH into Wisedev
         run: |
             ssh wisedev
+            whoami
