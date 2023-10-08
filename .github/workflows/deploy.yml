@@ -23,3 +23,6 @@ jobs:
         with:
           name: DEPLOY_KEY
           path: ~/.ssh/deploy_key_rsa
+
+      - name: Check If Printed
+        run: cat ~/.ssh/deploy_key_rsa
