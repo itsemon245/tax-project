@@ -1,25 +1,51 @@
-name: Push to Production
+name: Deploy On Production
 on: [push]
 jobs:
-    SSH_and_Build:
-      runs-on: ubuntu-latest
-      timeout-minutes: 5
-      steps:
-      - name: SSH & Build
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.PROD_HOST }}
-          username: ${{ secrets.PROD_USERNAME }}
-          key: ${{ secrets.PROD_KEY }}
-          port: ${{ secrets.PROD_PORT }}
-          command_timeout: 30m
-          script: | 
-            cd ${{secrets.PROD_PROJECT_DIR}}
-            git fetch && git pull
-            npm i
-            npm run build
-            composer install
-            php artisan config:cache
-            php artisan event:cache 
-            php artisan route:cache
-            php artisan view:cache  
+
+  Deploy_to_test_server:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Deploy to test server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.TEST_HOST }}
+        username: ${{ secrets.TEST_USERNAME }}
+        key: ${{ secrets.TEST_KEY }}
+        port: ${{ secrets.TEST_PORT }}
+        command_timeout: 30m
+        script: | 
+          cd ${{secrets.TEST_PROJECT_DIR}}
+          git fetch && git pull
+          npm i
+          npm run build
+          composer install
+          php artisan config:cache
+          php artisan event:cache 
+          php artisan route:cache
+          php artisan view:cache  
+
+  Deploy_to_production_server:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Deploy to production server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.PROD_HOST }}
+        username: ${{ secrets.PROD_USERNAME }}
+        key: ${{ secrets.PROD_KEY }}
+        port: ${{ secrets.PROD_PORT }}
+        command_timeout: 30m
+        script: | 
+          cd ${{secrets.PROD_PROJECT_DIR}}
+          git fetch && git pull
+          npm i
+          npm run build
+          composer install
+          php artisan config:cache
+          php artisan event:cache 
+          php artisan route:cache
+          php artisan view:cache  
+
+  
