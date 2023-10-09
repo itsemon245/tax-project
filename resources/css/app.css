@@ -41,10 +41,12 @@ header {
 }
 
 .sticky{
-    position:sticky;
-    height: max-content;
+    position:sticky !important;
     top:0;
-  }
+}
+.fixed{
+    position: fixed;
+}
 .sidebar {
     z-index: 40;
 }

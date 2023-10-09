@@ -54,8 +54,8 @@
                             <a href="{{ $notification->data['url'] }}"
                                 class="dropdown-item notify-item {{ $notification->read_at ? 'read' : 'unread' }}">
                                 <div class="notify-icon">
-                                    <img loading="lazy" src="{{ useImage($user->image_url) }}" class="img-fluid rounded-circle"
-                                        alt="" />
+                                    <img loading="lazy" src="{{ useImage($user->image_url) }}"
+                                        class="img-fluid rounded-circle" alt="" />
                                 </div>
                                 <p class="notify-details">{{ $notification->data['title'] }}</p>
                                 <p class="mb-0 user-msg">
@@ -77,25 +77,27 @@
                 </div>
             </li>
 
-            <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light">
-                    <img loading="lazy" src="{{ useImage($user->image_url) }}" alt="user-image" class="rounded-circle">
-                    <span class="pro-user-name ms-1">
-                        {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
-                    </span>
+            <li class="dropdown">
+                <a class="d-flex align-items-center gap-2 text-light dropdown-toggle me-0 waves-effect waves-light" style="height: 70px;">
+                    <img loading="lazy" src="{{ useImage($user->image_url) }}" width="32px" alt="user-image"
+                        class="rounded-circle">
+                    <div>
+                        <span class="fw-bold">{{ $user->name }}</span>
+                        <small class="d-block text-capitalize fw-medium text-warning">{{ $user->roles->first()->name }}</small>
+                    </div>
+                    {{-- <span class="pro-user-name ms-1">
+                        {{ $user->name }} <i class="mdi mdi-chevron-down"></i>
+                    </span> --}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
-                    <!-- item-->
-                    <a href="{{ route('home') }}" style="background-color: rgba(0, 128, 0, 0.158);" class="text-dark dropdown-item notify-item">
-                     <i class="fs-5 mdi mdi-web"></i>
-                     <span>View Website</span></a>
-                    
+
+
                     <!-- item-->
                     <a href="{{ route('user-profile.index') }}" class="dropdown-item notify-item">
                         <i class="fe-user"></i>
                         <span>Profile</span>
                     </a>
-                    
+
                     <!-- item-->
                     <a href="{{ route('user-profile.edit', auth()->id()) }}" class="dropdown-item notify-item">
                         <i class="fe-lock"></i>
@@ -107,6 +109,10 @@
                     </a>
 
                     <div class="dropdown-divider"></div>
+                    <!-- item-->
+                    <a href="{{ route('home') }}" class="text-primary dropdown-item">
+                        <span class="fs-5 mdi mdi-web"></span>
+                        <span>View Website</span></a>
 
                     <!-- item-->
                     <form class="text-danger dropdown-item notify-item d-flex gap-2 align-items-center"
@@ -126,23 +132,14 @@
 
         <!-- LOGO -->
         <div class="logo-box">
-            {{-- <a href="index.html" class="logo logo-dark text-center">
+            <a href="{{ route('home') }}" class="logo logo-light text-center px-2">
                 <span class="logo-sm">
-                    <img loading="lazy" src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="" height="22">
-                    <!-- <span class="logo-lg-text-light">UBold</span> -->
+                    <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt=""
+                        style="width: 80px;object-fit:cover;">
                 </span>
                 <span class="logo-lg">
-                    <img loading="lazy" src="{{ asset('backend/assets/images/logo-dark.png') }}" alt="" height="20">
-                    <!-- <span class="logo-lg-text-light">U</span> -->
-                </span>
-            </a> --}}
-
-            <a href="{{route('home')}}" class="logo logo-light text-center">
-                <span class="logo-sm">
-                    <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt="" style="width: 100px; max-height: 50px;object-fit:cover;">
-                </span>
-                <span class="logo-lg">
-                    <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt="" style="width: 120px; max-height: 60px;object-fit:cover;">
+                    <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt=""
+                        style="width: 150px;object-fit:cover;">
                 </span>
             </a>
         </div>

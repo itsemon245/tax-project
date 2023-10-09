@@ -21,13 +21,6 @@
                     </a>
                 </div>
             </li>
-
-            @can('visit admin panel')
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('dashboard') }}">Control Panel</a>
-                </li>
-            @endcan
-
             @if (!$isPageV2)
 
                 <li class="sidebar-item">

@@ -6,18 +6,18 @@
     $basic = $settings->basic;
     $user = \App\Models\User::find(auth()->id());
 @endphp
-<header class="d-flex flex-column justify-items-center">
+<header id="header" class="d-flex flex-column justify-items-center fixed">
     <div class="d-flex align-items-center flex-grow-1 space-between">
         {{-- app logo and menu btn --}}
         <div class="d-flex align-items-center">
             <div>
-                <button id="sidebar-1" class="menu-btn waves-effect waves-light p-2 border-0 mx-2"
+                <button title="Navigation" id="sidebar-1" class="menu-btn waves-effect waves-light p-2 border-0 mx-2"
                     style="background: none;">
                     <i class="mdi mdi-menu text-light"></i>
                 </button>
             </div>
             <a href="{{ route('home') }}">
-                <img loading="lazy" class="app-logo" style="width:100px; height:40px;" src="{{ useImage($basic->logo) }}"
+                <img loading="lazy" class="app-logo" style="max-width:120px; object-fit:cover;" src="{{ useImage($basic->logo) }}"
                     alt="Text Act Logo">
             </a>
         </div>
@@ -131,8 +131,8 @@
                         </ul>
                     </li>
                     <li
-                        class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('page.training') ? 'active-link' : '' }}">
-                        <a class="nav-link text-light" href="{{ route('page.training') }}">Training/Education</a>
+                        class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('course.index') ? 'active-link' : '' }}">
+                        <a class="nav-link text-light" href="{{ route('course.index') }}">Training/Education</a>
                         <ul class="position-absolute dropdown ">
                             <li class="nav-item custom-nav-item dropdown-item"><a href=""
                                     class="nav-link text-light">Practical Income Tax Course</a></li>
@@ -233,7 +233,7 @@
             <div class="d-flex align-items-center gap-3 justify-content-end">
                 @auth
                     @can('visit admin panel')
-                        <a class="btn btn-secondary" href="{{ route('dashboard') }}">Control Panel</a>
+                        <a title="Go to Panel" class="btn btn-secondary d-flex gap-2 align-items-center" href="{{ route('dashboard') }}"><span class="mdi mdi-application-cog font-16"></span>Panel</a>
                     @else
                         @if (
                             !auth()->user()
@@ -245,7 +245,7 @@
                         @endif
                     @endcan
 
-                    <div class="auth-sidebar-toggle d-flex align-items-center menu-btn">
+                    <div class="auth-sidebar-toggle d-flex align-items-center menu-btn" title="User Menu" role="button">
                         <span class="mdi mdi-account-outline text-light" style="font-size: 32px"></span>
                         <span class="mdi mdi-chevron-down text-light" style="font-size: 16px;margin-left:-8px;"></span>
                     </div>
@@ -383,3 +383,15 @@
     @endif
 
 </header>
+<div id="header-filler">
+
+</div>
+
+@pushOnce('customJs')
+    <script>
+        $(document).ready(function () {
+            let headerHeight = $('#header').css('height')
+            $('#header-filler').css({'height': headerHeight})
+        });
+    </script>
+@endPushOnce

@@ -3,7 +3,7 @@
 
 <x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" />
 
-<body class="w-100">
+<body class="w-100 position-relative">
     {{-- Messenger Chat Plugin Code --}}
     <div id="fb-root"></div>
 
@@ -78,13 +78,13 @@
     <aside
         style="z-index: 50; top:50%; right:0;transform: translateY(-50%);border-radius: 0.5rem 0 0 0.5rem;max-width:max-content;"
         class="w-100 d-flex flex-column shadow bg-light border border-primary position-fixed">
-        <a href="mailto:{{ $basic->email }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+        <a title="Mail Us" href="mailto:{{ $basic->email }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
             <span class="mdi mdi-email"></span>
         </a>
-        <a href="tel:{{ $basic->phone }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
+        <a title="Call Us" href="tel:{{ $basic->phone }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
             <span class="mdi mdi-phone"></span>
         </a>
-        <a href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi Sam, Whatsup" class="d-inline-block px-2 pb-1"
+        <a title="Connect in Whatsapp" href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi Sam, Whatsup" class="d-inline-block px-2 pb-1"
             style="cursor: pointer;">
             <span class="mdi mdi-whatsapp"></span>
         </a>
@@ -92,28 +92,24 @@
 
 
     <div class="row">
-        <div id="auth-sidebar" class="d-none d-lg-block col-5  col-lg-3 col-xxl-2 sticky">
+        <div id="auth-sidebar" class="d-none d-lg-block col-6 col-sm-4  col-lg-3 col-xxl-2 p-0 position-relative">
             {{-- Sidebar 2 -> user dashboard navigation --}}
             @auth
-                <div class="sidebar sidebar-2 position-relative">
+                <div class="sidebar sidebar-2 col-6 col-sm-4  col-lg-3 col-xxl-2 p-0">
                     <ul class="list-unstyled">
                         <li class="p-1">
                             <div class="d-flex justify-content-between align-items-center">
-                                <button class="auth-sidebar-toggle menu-close-btn waves-effect waves-light p-2 me-2 border-0"
+                                <button
+                                    class="auth-sidebar-toggle menu-close-btn waves-effect waves-light p-2 me-2 border-0"
                                     style="background: none;">
                                     <span class="mdi mdi-close"></span>
                                 </button>
                                 <a href="{{ route('home') }}">
-                                    <img loading="lazy" style="max-width:120px;"
-                                        src="{{ asset('frontend/assets/images/logo/app.png') }}" alt="Text Act Logo">
+                                    <img loading="lazy" style="max-width:120px;object-fit:cover;"
+                                        src="{{ $basic->logo }}" alt="Text Act Logo">
                                 </a>
                             </div>
                         </li>
-                        @can('visit admin panel')
-                            <li class="sidebar-item">
-                                <a class="" href="{{ route('dashboard') }}">Control Panel</a>
-                            </li>
-                        @endcan
 
                         <li class="sidebar-item">
                             <a href="{{ route('user-profile.create') }}" class="">Profile</a>
@@ -177,8 +173,10 @@
             @endauth
         </div>
         <!-- Page Content -->
-        <main class="col-12 col-lg-9 col-xxl-10 flex-grow-1">
-            @yield('main')
+        <main class="col-12 col-lg-9 col-xxl-10 flex-grow-1 p-0" style="height:max-content;">
+            <div>
+                @yield('main')
+            </div>
         </main>
     </div>
 
@@ -186,13 +184,19 @@
     @include('frontend.layouts.footer')
     @include('frontend.layouts.scripts')
     <script>
-        $(document).ready(function () {
-            $('.auth-sidebar-toggle').click(e=>{
+        $(document).ready(function() {
+            $('.auth-sidebar-toggle').click(e => {
                 $('#auth-sidebar')
-                .toggleClass('d-none d-lg-block')
+                    .toggleClass('d-none d-lg-block')
+                    .toggleClass('d-lg-none')
+
                 $('main')
-                .toggleClass('col-12')
-                .toggleClass('col-7')
+                    .toggleClass('col-12')
+                    .toggleClass('col-6 col-sm-8')
+
+                $('.service-category').children()
+                    .toggleClass('col-md-4 col-lg-3 col-sm-6')
+                    .toggleClass('col-md-6 col-lg-4 col-sm-6')
             })
         });
     </script>

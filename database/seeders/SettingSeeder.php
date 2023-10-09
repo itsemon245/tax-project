@@ -16,7 +16,7 @@ class SettingSeeder extends Seeder
         $logo = picsum(fake()->name());
         Setting::create([
             'basic' => [
-                'logo' => picsum('logo'),
+                'logo' => asset('frontend/assets/images/logo/app.png'),
                 'email' => fake()->safeEmail(),
                 'phone' => fake()->phoneNumber(),
                 'whatsapp' => fake()->phoneNumber(),

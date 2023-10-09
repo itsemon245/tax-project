@@ -7,7 +7,7 @@
             <div class="row align-items-center">
                 @foreach ($courses as $course)
                     <div class="col-md-6 mb-4">
-                        <div class="border bg-light bg-gradient w-100 px-3 px-md-4 px-lg-5 py-3 rounded">
+                        <div class="border bg-light bg-gradient w-100 px-3 px-md-4 px-lg-5 py-3 rounded h-100">
                             <a class="text-dark" href="{{ route('course.show', $course->id) }}">
                                 <h5 class="text-success">{{ $course->name }}</h5>
                                 <p class="text-muted mb-1">
