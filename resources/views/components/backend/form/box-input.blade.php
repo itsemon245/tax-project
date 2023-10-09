@@ -8,7 +8,7 @@
     }
 @endphp
 @foreach ($range as $key)
-    <input type="text"
+    <input type="number"
         class="box-input border border-dark text-center d-inline {{ ($key - 1) % 4 == 0 ? 'me-2' : '' }} {{ $key === 1 ? 'me-3' : '' }} {{ $class }}"
         style="width:2rem!important;" value="{{ $value ? $value[$key - 1] : '' }}">
 @endforeach

@@ -1,6 +1,7 @@
 @extends('backend.layouts.app')
 
 @pushOnce('customCss')
+
     <style>
         input[type="date"] {
             letter-spacing: 2px;
@@ -124,7 +125,7 @@
                         <div class="col-sm-4 col-md-3">
                             <div class="pe-2 mb-2">
                                 <x-form.selectize class="mb-1" id="client" name="client"
-                                    placeholder="Select Client..." label="Bill To" :canCreate="false">
+                                    placeholder="Select Client..." label="Bill To" :canCreate="false" required>
                                     @foreach ($clients as $client)
                                         <option value="{{ $client->id }}">{{ $client->name }}</option>
                                     @endforeach
