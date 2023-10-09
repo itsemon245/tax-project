@@ -72,7 +72,7 @@
     <x-frontend.appointment-section :sections="$appointmentSections" />
 
     <section id="counter-section" class="px-lg-5 px-2 my-5">
-        <h4 class="text-center mb-5 fs-3">Our Achievments</h4>
+        <h4 class="text-center mb-5 fs-3 text-danger">Our Achievments</h4>
         <div class="row justify-content-center px-2">
             @foreach ($achievements as $item)
                 <div class="col-sm-6 col-md-4 col-xl-3 col-xxl-2 mb-2">
