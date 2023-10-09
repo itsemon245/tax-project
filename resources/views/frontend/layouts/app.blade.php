@@ -173,7 +173,7 @@
             @endauth
         </div>
         <!-- Page Content -->
-        <main class="col-12 col-lg-9 col-xxl-10 flex-grow-1 p-0" style="height:max-content;">
+        <main class="col-12 {{auth()->user() !== null ? 'col-lg-9 col-xxl-10': ''}} flex-grow-1 p-0" style="height:max-content;">
             <div>
                 @yield('main')
             </div>
