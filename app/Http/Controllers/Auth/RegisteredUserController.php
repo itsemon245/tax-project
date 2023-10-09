@@ -22,7 +22,8 @@ class RegisteredUserController extends Controller
      */
     public function create($user_name = null): View
     {
-        return view('backend.auth.register', compact('user_name'));
+        $settings = Setting::select('basic')->first();
+        return view('backend.auth.register', compact('user_name', 'settings'));
     }
 
     /**

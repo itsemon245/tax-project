@@ -55,11 +55,11 @@
                         @canany(['update event', 'delete event'])
                         <td>
                             @can('update event')
-                            <x-backend.ui.button type="delete" action="{{ route('calendar.destroy', $event->id) }}"
+                            <x-backend.ui.button type="edit" href="{{ route('calendar.edit', $event->id) }}"
                                 class="text-capitalize btn-sm" />
                             @endcan
                             @can('delete event')
-                            <x-backend.ui.button type="edit" href="{{ route('calendar.edit', $event->id) }}"
+                            <x-backend.ui.button type="delete" action="{{ route('calendar.destroy', $event->id) }}"
                                 class="text-capitalize btn-sm" />
                             @endcan
                         </td>

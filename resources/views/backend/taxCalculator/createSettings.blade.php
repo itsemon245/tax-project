@@ -163,7 +163,7 @@
                                         label="Range To" />
                                 </div>
                                 <div class="col-md-2">
-                                    <x-backend.form.text-input type="text" name="slot_percentage[]"
+                                    <x-backend.form.text-input type="number" name="slot_percentage[]"
                                         placeholder="Percentage" label="Percentage(%)" />
                                 </div>
                                 <div class="col-md-4">

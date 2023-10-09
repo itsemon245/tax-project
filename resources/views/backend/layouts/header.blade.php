@@ -86,6 +86,11 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
                     <!-- item-->
+                    <a href="{{ route('home') }}" style="background-color: rgba(0, 128, 0, 0.158);" class="text-dark dropdown-item notify-item">
+                     <i class="fs-5 mdi mdi-web"></i>
+                     <span>View Website</span></a>
+                    
+                    <!-- item-->
                     <a href="{{ route('user-profile.index') }}" class="dropdown-item notify-item">
                         <i class="fe-user"></i>
                         <span>Profile</span>

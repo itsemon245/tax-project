@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Setting;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -20,7 +21,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('backend.auth.login');
+        $settings = Setting::select('basic')->first();
+        return view('backend.auth.login', compact('settings'));
     }
 
     /**
