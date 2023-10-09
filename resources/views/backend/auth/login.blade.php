@@ -8,24 +8,15 @@
                     <div class="card bg-pattern">
 
                         <div class="card-body p-4">
-
                             <div class="text-center w-75 m-auto">
                                 <div class="auth-logo">
                                     <a href="{{ route('login') }}" class="logo logo-dark text-center">
                                         <span class="logo-lg">
-                                            <img loading="lazy" src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
-                                                height="22">
-                                        </span>
-                                    </a>
-
-                                    <a href="{{ route('login') }}" class="logo logo-light text-center">
-                                        <span class="logo-lg">
-                                            <img loading="lazy" src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
-                                                height="22">
+                                            <img src="{{useImage($settings->basic->logo)}}" alt="" height="60px" width="150px" />
                                         </span>
                                     </a>
                                 </div>
-                                <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel.
+                                <p class="text-muted mb-2 mt-3">Enter your email address and password to login {{ config('app.name') }}.
                                 </p>
                             </div>
 
