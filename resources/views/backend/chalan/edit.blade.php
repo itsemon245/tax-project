@@ -152,7 +152,7 @@
                         </tr>
                         <tr>
                             <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input name="code"
-                                    value="{{ $chalan->code }}" />
+                                    value="{{ $chalan->code }}" :range="range(1, 13)"/>
                             </td>
                         </tr>
                     </tbody>

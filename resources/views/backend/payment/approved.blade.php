@@ -31,7 +31,7 @@
                                     <th>Due</th>
                                     <th>Status</th>
                                     @can('manage order')
-                                    <th>Action</th> 
+                                        <th>Action</th>
                                     @endcan
                                 </tr>
                             </thead>
@@ -51,7 +51,17 @@
                                                 : "<span class='badge bg-danger'>Not-Approved</span>" !!}
                                         </td>
                                         @can('manage order')
-                                        <td></td>
+                                            <td>
+                                                <a href="{{ route('order.status', $payemnt->id) }}"
+                                                    class="btn btn-info btn-sm">Approve</a>
+                                                <form action="{{ route('order.destroy', $payemnt->id) }}" method="post"
+                                                    class="d-inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <x-backend.ui.button
+                                                        class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                                </form>
+                                            </td>
                                         @endcan
                                     </tr>
                                 @endforeach

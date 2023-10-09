@@ -397,7 +397,7 @@ Route::prefix('admin')
         Route::prefix('/review')->name('backend.review.')->controller(ReviewController::class)->group(function () {
             Route::get('/index', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
-            Route::get('/view', 'show')->name('show');
+            Route::get('/view/{review}', 'show')->name('show');
             Route::delete('{id}/destroy', 'destroy')->name('destroy');
         });
 

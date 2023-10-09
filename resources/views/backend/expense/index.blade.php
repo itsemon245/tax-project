@@ -21,8 +21,8 @@
 
     <x-backend.ui.section-card name="All Expenses">
         @can('create expense')
-        <x-backend.ui.button type="custom" :href="route('expense.create')"
-        class="btn-success btn-sm mb-1 d-print-none">Create</x-backend.ui.button>
+            <x-backend.ui.button type="custom" :href="route('expense.create')"
+                class="btn-success btn-sm mb-1 d-print-none">Create</x-backend.ui.button>
         @endcan
         <div class="container ">
             <x-backend.table.basic :items="$expenses">
@@ -43,7 +43,7 @@
                         <th>Dr</th>
                         <th>Balance</th>
                         @canany(['update expense', 'update expense', 'delete expense', 'print expense', 'read expense'])
-                        <th>Actions</th>
+                            <th>Actions</th>
                         @endcanany
                     </tr>
                 <tbody>
@@ -76,15 +76,22 @@
                                 @endif
                             </td>
                             @canany(['update expense', 'update expense', 'delete expense', 'print expense', 'read expense'])
-                            <td>
-                                @can('read expense')
-                                <x-backend.ui.button type="custom" class="btn-info btn-sm print-btn"
-                                :href="route('expense.show', $expense->id)">View</x-backend.ui.button>
-                                @endcan
-                                @can('delete expense')
-                                <x-backend.ui.button type="delete" :href="route('expense.destroy', $expense->id)" class="btn-sm" />
-                                @endcan
-                            </td>
+                                <td>
+                                    @can('read expense')
+                                        <x-backend.ui.button type="custom" class="btn-info btn-sm print-btn"
+                                            :href="route('expense.show', $expense->id)">View</x-backend.ui.button>
+                                    @endcan
+                                    @can('delete expense')
+                                        {{-- <x-backend.ui.button type="delete" :href="route('expense.destroy', $expense->id)" class="btn-sm" /> --}}
+                                        <form action="{{ route('expense.destroy', $expense->id) }}" method="post"
+                                            class="d-inline-block py-0">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-backend.ui.button
+                                                class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                        </form>
+                                    @endcan
+                                </td>
                             @endcanany
                         </tr>
                     @empty

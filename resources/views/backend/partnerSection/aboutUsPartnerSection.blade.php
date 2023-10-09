@@ -23,21 +23,20 @@
         <div class="row">
             @can('manage partner')
             <div class="col-md-6">
-                <div class="row">
-                        <form action="{{ route('partner-section.store') }}" class="d-none" method="post" enctype="multipart/form-data">
-                            @csrf
-                        <div class="col-md-6">
+                <form action="{{ route('partner-section.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12">
                             <x-backend.form.image-input class="mt-1 border rounded" name="image" />
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <x-backend.form.text-input label="Name" type="text" class="mb-2" name="name"
                                 required />
-                            <x-backend.form.text-input label="Email" class="mb-2" type="email" name="email" />
-                            <x-backend.form.text-input label="Designation" class="mb-2" type="text"
-                                name="designation" />
                         </div>
                         <div class="col-md-6">
-
+                            <x-backend.form.text-input label="Email" class="mb-2" type="email" name="email" />
                         </div>
                     </div>
                     <div class="row">
@@ -47,6 +46,12 @@
                         <div class="col-md-6">
                             <x-backend.form.text-input label="Facebook" class="mb-2" type="text" name="facebook"
                                 placeholder="https://" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <x-backend.form.text-input label="Designation" class="mb-2" type="text"
+                            name="designation" />
                         </div>
                     </div>
                     <div class="row">

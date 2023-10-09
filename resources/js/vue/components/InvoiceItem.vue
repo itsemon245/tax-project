@@ -10,7 +10,7 @@
         </td>
         <td>
             <span class="me-2">Tk</span>
-            <input aria-label="item-rate" class="d-inline-block" name="item_rates[]" type="text" placeholder="00"
+            <input aria-label="item-rate" class="d-inline-block" name="item_rates[]" type="number" placeholder="00"
                 v-model="props.item.rate" style="width: 6rem;" />
             <div class="tax-wrapper">
                 <a @click="toggleTaxPicker(props.item.id)" class="text-blue p-1 d-inline-block" tabindex="0" role="button">

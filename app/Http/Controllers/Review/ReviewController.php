@@ -113,7 +113,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        $review = Review::find($review);
+        $review = Review::with('user')->where('id',$review->id)->first();
         return view('backend.review.show', compact('review'));
     }
 

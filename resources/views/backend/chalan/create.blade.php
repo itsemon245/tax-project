@@ -135,7 +135,7 @@
                         <tr>
                             <td class="text-center">
                                 চালান নংঃ
-                                <input name="chalan_no" type="text" class="dotted-border text-center"
+                                <input name="chalan_no" type="number" class="dotted-border text-center"
                                     style="width: 4rem;"/>
                                 তারিখঃ <input name="date" type="date" class="dotted-border">
                             </td>
@@ -147,7 +147,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input name="code"
+                            <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input  name="code"
                                     :range="range(1, 13)" />
                             </td>
                         </tr>
@@ -198,7 +198,7 @@
                         <td style="max-width: 25ch;">
                             <div class="px-2">
                                 <x-form.selectize name="client_id" id="client_id" label="Select Client"
-                                    placeholder="Select Client" :can-create="false">
+                                    placeholder="Select Client" :can-create="false" required>
                                     @foreach ($clients as $client)
                                         <option value="{{ $client->id }}">{{ $client->name }}</option>
                                     @endforeach
@@ -280,7 +280,7 @@
                             </div>
                         </td>
                         <td style="vertical-align: middle!important;">
-                            <input type="text" name="amount" class="dotted-border mx-1" style="max-width: 6rem;" />
+                            <input type="number" name="amount" class="dotted-border mx-1" style="max-width: 6rem;" />
                         </td>
                         <td style="vertical-align: middle!important;">
                             <span>.00</span>

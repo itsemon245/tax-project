@@ -37,6 +37,11 @@
                 </div>
 
                 <div class="col-md-6">
+                    <x-backend.form.text-input label="Phone" required type="text" name="phone"
+                        value="  {{ $client->phone }}" />
+                </div>
+
+                <div class="col-md-6">
                     <x-backend.form.text-input label="Present Address" required type="text" name="present_address"
                         value="  {{ $client->present_address }}" />
                 </div>
@@ -62,7 +67,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <x-backend.ui.button type="submit" class="btn-primary mt-2">Update</x-backend.ui.button>
+                    <x-backend.ui.button class="btn-primary mt-2">Update</x-backend.ui.button>
                 </div>
 
             </div>

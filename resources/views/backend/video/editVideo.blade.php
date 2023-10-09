@@ -60,7 +60,7 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-12">
-                            <x-backend.form.text-input label="Video Title" required type="text" name="title">
+                            <x-backend.form.text-input label="Video Title" :value="$video->title" required type="text" name="title">
                             </x-backend.form.text-input>
                         </div>
                         <div class="col-6">
@@ -85,6 +85,7 @@
 
                 <div class="col-md-6">
                     <x-form.ck-editor id="ck-editor1" name="description" placeholder="Description" label="Description">
+                        {{ $video->description }}
                     </x-form.ck-editor>
                 </div>
                 <div class="col-12">

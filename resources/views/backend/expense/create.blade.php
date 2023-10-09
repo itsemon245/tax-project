@@ -34,7 +34,7 @@
                                     name="descriptions[]"></x-form.text-area>
                             </td>
                             <td>
-                                <x-backend.form.text-input class="mb-3" type="text" placehoder="Amount"
+                                <x-backend.form.text-input class="mb-3" type="number" placehoder="Amount"
                                     name="amounts[]" />
                             </td>
                         </tr>
@@ -308,7 +308,7 @@
                                                 name="descriptions[]"></x-form.text-area>
                                         </td>
                                         <td>
-                                            <x-backend.form.text-input class="mb-3 amounts" type="text"
+                                            <x-backend.form.text-input class="mb-3 amounts" type="number"
                                                 placehoder="Amount" name="amounts[]" />
                                         </td>
                                     </tr>
