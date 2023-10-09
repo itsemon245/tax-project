@@ -101,8 +101,9 @@ class VideoController extends Controller
     {
         $course = Course::find($request->course_id);
         $videoPath = $video->video;
+        $courseSlug= Str::slug($course->name);
         if ($request->video) {
-            $path = "uploads/course/videos/$course->name/$request->file_name";
+            $path = "uploads/course/videos/$courseSlug/$request->file_name";
             if (Storage::exists($request->video)) {
                 $moved = Storage::move($request->video, 'public/' . $path);
                 $deleted = $moved ? deleteFile($video->video) : false;
@@ -117,7 +118,7 @@ class VideoController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect(route('route.index') . '?course_id=1')->with([
+        return redirect(route('video.index') . '?course_id=1')->with([
             'message' => 'Video Updated Successfully',
             'alert-type' => 'success',
         ]);
