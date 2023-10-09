@@ -21,11 +21,7 @@
                                 <div class="row">
                                     <h5 class="mt-3">Client card section</h5>
                                     <div class="col-md-5">
-                                        @if ($clientStudio->image ==! null)
-                                        <img loading="lazy" src="{{ $clientStudio->image }}" alt="" srcset=""> 
-                                        @else
-                                        <x-backend.form.image-input class="mt-1" name="image" />  
-                                        @endif
+                                        <x-backend.form.image-input :image="$clientStudio->image" loading="lazy" class="mt-1" name="image" />  
                                     </div>
                                     <div class="col-md-7 mt-3">
                                         <x-backend.form.text-input label="Title" type="text" class="mb-3" :value="$clientStudio->title"  name="title" required /> 
