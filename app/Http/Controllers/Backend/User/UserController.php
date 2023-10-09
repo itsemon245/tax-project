@@ -56,12 +56,13 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'user_name' => 'required',
-            'email' => 'required',
+            'user_name' => 'required|unique:users,user_name',
+            'email' => 'required|unique:users,email',
             'phone' => 'required',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'admin_ref' => 'required',
+            'user_image' => 'required|image'
         ]);
 
         $userData = new User();
@@ -90,23 +91,21 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user = Auth::user();
-        $userRole = User::with('roles')->where('id', $user->id)->first();
-        //dd($userRole);
+        $user = User::with('roles')->where('id', $id)->first();
         $roles = Role::all();
-        return view('backend.users.edit-users', compact('user', 'roles', 'userRole'));
+        return view('backend.users.edit-users', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserProfileUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
         $request->validate([
             'name' => 'required',
-            'user_name' => 'required',
-            'email' => 'required',
+            'user_name' => "unique:users,user_name,$id",
+            'email' => "unique:users,email,$id",
             'phone' => 'required',
             'admin_ref' => 'required',
         ]);
@@ -117,7 +116,6 @@ class UserController extends Controller
         $userData->email = $request->email;
         $userData->admin_ref = $request->admin_ref;
         $userData->phone = $request->phone;
-        $userData->password = Hash::make($request->password);
         if ($request->hasFile('user_image')) {
             $old_path = $userData->image_url;
             $userData->image_url = updateFile($request->user_image,  $old_path, 'profile', 'user-image');

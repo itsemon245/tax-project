@@ -23,15 +23,15 @@
 
                     <x-backend.form.text-input label="Phone" type="phone" name="phone" required value="{{$user->phone}}"/>
 
-                    <x-backend.form.text-input label="Password" type="password" name="password" />
+                    {{-- <x-backend.form.text-input label="Password" type="password" name="password" />
 
-                    <x-backend.form.text-input label="Confirm Password" type="password" name="confirm_password"  />
+                    <x-backend.form.text-input label="Confirm Password" type="password" name="confirm_password"  /> --}}
 
                     <x-backend.form.text-input label="Admin Referance" type="text" name="admin_ref" required value="{{$user->name}}"/>
 
                     <x-backend.form.select-input label="Role" name="role_id" required placeholder="Select Role">
                         @foreach ($roles as $role)
-                            <option id="{{ $role->id }}"  {{$role->id == $userRole->roles[0]->id ? 'selected' : ''}}>{{$role->name}}</option>
+                            <option id="{{ $role->id }}"  {{$role->id == $user->roles->first()->id ? 'selected' : ''}}>{{$role->name}}</option>
                         @endforeach
                     </x-backend.form.select-input>
 
