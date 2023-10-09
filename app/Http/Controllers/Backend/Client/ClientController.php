@@ -31,6 +31,7 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
+        // dd($request->toArray());
         $client_store = new Client();
         $client_store->name = $request->client_name;
         $client_store->father_name = $request->father_name;
