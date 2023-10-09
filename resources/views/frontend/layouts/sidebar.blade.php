@@ -3,8 +3,7 @@
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
     $user = \App\Models\User::find(auth()->id());
-    $user = \App\Models\User::find(auth()->id());
-    $isRead = $user !== null ? count($user->unreadNotifications) === 0 : true;
+    $isRead = $user !== null ? count($user?->unreadNotifications) === 0 : true;
 @endphp
 <nav class="relative">
     {{-- Sidebar 1-> page navigation --}}
@@ -180,89 +179,6 @@
 
         </ul>
     </div>
-
-    {{-- Sidebar 2 -> user dashboard navigation --}}
-    @auth
-
-        <div class="sidebar sidebar-2">
-            <ul class="list-unstyled">
-                <li class="p-1">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <button id="sidebar-2" class="menu-close-btn waves-effect waves-light p-2 me-2 border-0"
-                            style="background: none;">
-                            <span class="mdi mdi-close"></span>
-                        </button>
-                        <a href="{{ route('home') }}">
-                            <img loading="lazy" style="max-width:120px;"
-                                src="{{ asset('frontend/assets/images/logo/app.png') }}" alt="Text Act Logo">
-                        </a>
-                    </div>
-                </li>
-                @can('visit admin panel')
-                    <li class="sidebar-item">
-                        <a class="" href="{{ route('dashboard') }}">Control Panel</a>
-                    </li>
-                @endcan
-
-                <li class="sidebar-item">
-                    <a href="{{ route('user-profile.create') }}" class="">Profile</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('user-doc.index') }}">My Documents</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('purchase.index') }}">My Purcahses</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('page.my.courses') }}">My Courses</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('referral.index') }}">Referrals</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('notification') }}">Notificaion
-                        @if (!$isRead)
-                            <span
-                                class="badge bg-danger px2 py-1 rounded-circle">{{ count($user->unreadNotifications) }}</span>
-                        @endif
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('page.promo.code') }}">Promo Code</a>
-
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('tax.calculator') }}">Tax Calculator</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('page.my.payments') }}">Payment History</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="btn btn-success waves-effect waves-light" href="{{ route('user-doc.create') }}">Upload
-                        Documents</a>
-                </li>
-
-
-
-                <li class="mt-auto mb-5">
-                    <hr class="my-3">
-                    @auth
-                        <div class="d-flex flex-column justify-items-center gap-2 justify-content-end mb-5">
-                            <form action="{{ route('logout') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="auth_id" class="d-none" value="{{ auth()->id() }}">
-                                <x-backend.ui.button class="btn-dark w-100">Log out</x-backend.ui.button>
-                            </form>
-                            @if (auth()->user()->hasRole('user'))
-                                <a class="btn btn-secondary {{ $user->division !== null ? 'd-none' : '' }}"
-                                    href="{{ route('page.become.partner') }}">Become a partner</a>
-                            @endif
-                        </div>
-                    @endauth
-                </li>
-            </ul>
-        </div>
-    @endauth
 </nav>
 
 
@@ -315,10 +231,8 @@
         function toggleSidebar(sidebar) {
             const transformValue = parseInt(sidebar.css('transform').split(' ')[4])
             if (transformValue === 0) {
-                console.log('sidebar hide');
                 sidebar.css('transform', `translateX(-${sidebar.css('width')})`)
             } else {
-                console.log('sidebar show');
                 sidebar.css('transform', `translateX(0px)`)
             }
         }

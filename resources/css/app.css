@@ -37,7 +37,14 @@ header {
     z-index: 30;
     top: 0;
     width: 100%;
+    height: max-content;
 }
+
+.sticky{
+    position:sticky;
+    height: max-content;
+    top:0;
+  }
 .sidebar {
     z-index: 40;
 }
@@ -151,9 +158,7 @@ main {
 .sidebar-show {
     left: 0;
 }
-.sidebar-2 {
-    transform: translateX(-300px);
-}
+
 .sidebar .sidebar-item {
     padding: 8px 16px;
     cursor: pointer;

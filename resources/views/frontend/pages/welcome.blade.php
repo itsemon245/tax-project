@@ -15,9 +15,9 @@
                     {{ $productCat->description }}</p>
             </div>
             <div class="container d-flex justify-content-center">
-                <ul class="nav nav-pills navtab-bg" role="tablist">
+                <ul class="nav nav-pills navtab-bg justify-content-center" role="tablist">
                     @foreach ($productCat->productSubCategories as $key => $subCat)
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item mb-2 md-mb-0" role="presentation">
                             <a href="#{{ str($subCat->name)->slug() . '-' . $subCat->id }}" data-bs-toggle="tab"
                                 aria-expanded="{{ $key === 0 ? 'true' : 'false' }}"
                                 aria-selected="{{ $key === 0 ? 'true' : 'false' }}" role="tab"

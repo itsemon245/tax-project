@@ -238,14 +238,14 @@
                         @if (
                             !auth()->user()
                                 ?->hasRole('partner'))
-                            <a class="btn btn-secondary rounded-1 partner-btn-hide {{ $user->division !== null ? 'd-none' : '' }}"
+                            <a class="btn btn-secondary rounded-1 partner-btn-hide"
                                 href="{{ route('page.become.partner') }}">Become a partner</a>
                                 @else
                                 <span class="fw-bold text-warning">You are a partner</span>
                         @endif
                     @endcan
 
-                    <div id="sidebar-2" class="d-flex align-items-center menu-btn">
+                    <div class="auth-sidebar-toggle d-flex align-items-center menu-btn">
                         <span class="mdi mdi-account-outline text-light" style="font-size: 32px"></span>
                         <span class="mdi mdi-chevron-down text-light" style="font-size: 16px;margin-left:-8px;"></span>
                     </div>
