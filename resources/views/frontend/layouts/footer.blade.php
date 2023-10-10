@@ -11,20 +11,22 @@
                     @foreach ($categories as $category)
                         <div
                             class=" {{ count($category->serviceSubCategories) < 2 ? 'col-xl-2 col-md-4' : 'col-xl-4 col-md-6' }}">
-                            <a class="fw-medium font-18 d-flex justify-content-md-center mb-2"
+                            <a style="text-decoration:underline!important;"
+                                class="fw-medium font-18 d-flex justify-content-md-center mb-2"
                                 href="{{ route('service.category', $category->id) }}" target="_blank"
                                 rel="noopener noreferrer">{{ $category->name }}</a>
                             <ul class="row mx-0  list-unstyled mb-2">
                                 @foreach ($category->serviceSubCategories as $sub)
                                     <li
                                         class="{{ count($category->serviceSubCategories) < 2 ? 'col-md-12' : 'col-sm-6' }} mb-2">
-                                        <a class="fw-medium mb-2"
+                                        <a style="text-decoration:underline!important;" class="fw-medium mb-2"
                                             href="{{ route('service.sub', $sub->id) }}">{{ $sub->name }}</a>
                                         <ul class="" style="list-style: disc; mx-0">
                                             @foreach ($sub->services as $service)
                                                 <li class="">
-                                                    <a
-                                                        href="{{ route('service.view', $service->id) }}">{{ $service->title }}</a>
+                                                    <a style="text-decoration:underline!important;" target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        href="{{ route('service.view', $service->id) }}">{{ str($service->title)->headline() }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -36,16 +38,18 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="row mb-2">
+                <div class="row justify-content-center mb-2">
                     <p class="mb-1 text-center" style="font-weight: 500;font-size:18px;">
-                        <a href="{{ route('page.about') }}">About Us</a>
+                        <a href="{{ route('page.about') }}" style="text-decoration:underline!important;">About Us</a>
                     </p>
-                    <div class="fw-bold">Address:</div>
-                    <div style="font-weight: 500; font-size: 16px;max-width:30ch;">
-                        {{ $fetch->address }}
+                    <div class="col-lg-6 mb-3">
+                        <div class="fw-bold">Address:</div>
+                        <div style="font-weight: 500; font-size: 16px;max-width:25ch;">
+                            {{ $fetch->address }}
+                        </div>
                     </div>
-                    <div>
-                        <div class="fw-bold mt-3">Contact Details:</div>
+                    <div class="col-lg-6 mb-3">
+                        <div class="fw-bold">Contact Details:</div>
                         <a href="mailto:{{ $basic->email }}" target="_blank" rel="noopener noreferrer"
                             style="font-weight: 500; font-size: 16px;display:block;">
                             Email: {{ $basic->email }}
@@ -54,16 +58,18 @@
                             style="font-weight: 500; font-size: 16px;display:block;">
                             Phone: {{ $basic->phone }}
                         </a>
-                        <a href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi TaxacBD, Whatsup" target="_blank" rel="noopener noreferrer"
-                            style="font-weight: 500; font-size: 16px;display:block;">
+                        <a href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi TaxacBD, Whatsup" target="_blank"
+                            rel="noopener noreferrer" style="font-weight: 500; font-size: 16px;display:block;">
                             Whatsapp: {{ $basic->whatsapp }}
                         </a>
                     </div>
 
-                    <div class="d-flex gap-2 flex-wrap mt-3">
-                        <a class="fw-medium" href="#" target="_blank" rel="noopener noreferrer" class="">Terms & Codition</a>
+                    <div class="d-flex gap-2 flex-wrap mb-3 justify-content-center">
+                        <a class="fw-bold" style="text-decoration:underline!important;" href="#" target="_blank"
+                            rel="noopener noreferrer" class="">Terms & Codition</a>
                         <span>|</span>
-                        <a class="fw-medium" href="#" target="_blank" rel="noopener noreferrer" class="">Help & Support</a>
+                        <a class="fw-bold" style="text-decoration:underline!important;" href="#" target="_blank"
+                            rel="noopener noreferrer" class="">Help & Support</a>
                     </div>
                 </div>
             </div>
@@ -87,8 +93,10 @@
             <p class="mb-0 text-center fw-medium">Copyright <span class="font-18 mx-2">&#169;</span>
                 {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by {{ env('APP_NAME') }}</p>
             <span class="mx-2 mx-md-4 d-none d-sm-inline ">|</span>
-            <hr class="my-2 d-sm-none bg-dark" style="height: 2px;width:80%;"></hr>
-            <a class="fw-medium text-white" style="text-decoration: underline!important;" href="#" target="_blank" rel="noopener noreferrer">Contact
+            <hr class="my-2 d-sm-none bg-dark" style="height: 2px;width:80%;">
+            </hr>
+            <a class="fw-medium text-white" style="text-decoration: underline!important;" href="#" target="_blank"
+                rel="noopener noreferrer">Contact
                 Developers</a>
         </div>
     </div>
