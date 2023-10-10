@@ -10,7 +10,7 @@
     <div class="scroll-wrapper">
         <span id="next" class="ti-arrow-circle-left custom-icon"></span>
         <div class="media-scroller snaps-inline">
-            @foreach ($reviews as $item)
+            @forelse ($reviews as $item)
                 <div class="media-elements">
                     <img loading="lazy" src="{{ useImage($item->avatar) }}" alt="img" width="48px" height="48px"
                         class=" rounded-circle shadow-4-strong d-block">
@@ -31,7 +31,11 @@
                         </p>
                     </div>
                 </div>
-            @endforeach
+                @empty
+                <div class="text-center text-light px-5">
+                    No Reviews available
+                </div>
+            @endforelse
 
 
             {{-- <div class="media-elements">

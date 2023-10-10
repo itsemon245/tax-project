@@ -35,62 +35,43 @@
                     @endforeach
                 </div>
             </div>
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-md-6">
                 <div class="row mb-2">
                     <p class="mb-1 text-center" style="font-weight: 500;font-size:18px;">
                         <a href="{{ route('page.about') }}">About Us</a>
                     </p>
+                    <div class="fw-bold">Address:</div>
+                    <div style="font-weight: 500; font-size: 16px;max-width:30ch;">
+                        {{ $fetch->address }}
+                    </div>
                     <div>
-                        <div class="d-flex justify-content-center gap-5" style="font-weight: 500; font-size: 16px;">
-                            <a href="#" target="_blank" rel="noopener noreferrer" class="">Terms &
-                                Codition</a>
-                            <a href="#" target="_blank" rel="noopener noreferrer" class="">Help &
-                                Support</a>
-                        </div>
-                        <div class="d-flex justify-content-center gap-5" style="font-weight: 500; font-size: 16px;">
-                            <a href="#" target="_blank" rel="noopener noreferrer" class="">Terms &
-                                Codition</a>
-                            <a href="#" target="_blank" rel="noopener noreferrer" class="">Help &
-                                Support</a>
-                        </div>
+                        <div class="fw-bold mt-3">Contact Details:</div>
+                        <a href="mailto:{{ $basic->email }}" target="_blank" rel="noopener noreferrer"
+                            style="font-weight: 500; font-size: 16px;display:block;">
+                            Email: {{ $basic->email }}
+                        </a>
+                        <a href="mailto:{{ $basic->phone }}" target="_blank" rel="noopener noreferrer"
+                            style="font-weight: 500; font-size: 16px;display:block;">
+                            Phone: {{ $basic->phone }}
+                        </a>
+                        <a href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi TaxacBD, Whatsup" target="_blank" rel="noopener noreferrer"
+                            style="font-weight: 500; font-size: 16px;display:block;">
+                            Whatsapp: {{ $basic->whatsapp }}
+                        </a>
                     </div>
-                    <div class="d-flex justify-content-center gap-5" style="font-weight: 500; font-size: 16px;">
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="">Terms & Codition</a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="">Help & Support</a>
+
+                    <div class="d-flex gap-2 flex-wrap mt-3">
+                        <a class="fw-medium" href="#" target="_blank" rel="noopener noreferrer" class="">Terms & Codition</a>
+                        <span>|</span>
+                        <a class="fw-medium" href="#" target="_blank" rel="noopener noreferrer" class="">Help & Support</a>
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-4 col-md-6">
-                <div class="row mb-2">
-                    <div class="col-md-12">
-                        <p class="mb-1 text-center" style="font-weight: 500;font-size:18px;">
-                            <a href="{{ route('page.about') }}">Contact us</a>
-                        </p>
-                    </div>
-                    <div class="col-md-12">
-                        <div style="font-weight: 500; font-size: 16px;">
-                            {{ $fetch->address }}
-                        </div>
-                    </div>
-                    <div class="col-md-12 mt-2">
-                        <a href="mailto:{{ $basic->email }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
-                            E-mail : {{ $basic->email }}
-                        </a>
-                        <a href="tel:{{ $basic->phone }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
-                            Phone : {{ $basic->phone }}
-                        </a>
-                        <a href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi Sam, Whatsup" class="d-inline-block px-2 pb-1"
-                            style="cursor: pointer;">
-                            WhatsApp : {{ $basic->whatsapp }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-4 col-md-6">
-                <div class="row text-light">
+            <div class="col-md-6">
+                <div class="row text-light justify-content-center">
                     <p class="mb-1 text-center" style="font-weight: 500;font-size:18px;">Stay Connected</p>
                     @foreach (getRecords('social_handles') as $social)
-                        <div class="col-lg-4 col-6">
+                        <div class="col-6 col-sm-4 col-md-6 col-xl-4">
                             <span class="{{ $social->icon }}"></span>
                             <a class="text-capitalize" href="{{ $social->link }}" target="_blank"
                                 rel="noopener noreferrer">{{ $social->name }}</a>
@@ -102,12 +83,13 @@
 
     </div>
     <div class="bottom-footer bg-primary text-light mt-3">
-        <h6 class="d-flex text-dark align-items-center justify-content-center mb-0">Copyright <span
-            class="mdi mdi-copyright mx-2"></span>
-        {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by {{ env('APP_NAME') }}
-        <span class="mx-4 text-dark" >
-            <span class="mx-4">|</span> Develop by: <a href="#">..... Soft.</a>
-        </span>
-    </h6>
+        <div class="d-flex text-dark align-items-center justify-content-center flex-wrap p-2">
+            <p class="mb-0 text-center fw-medium">Copyright <span class="font-18 mx-2">&#169;</span>
+                {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by {{ env('APP_NAME') }}</p>
+            <span class="mx-2 mx-md-4 d-none d-sm-inline ">|</span>
+            <hr class="my-2 d-sm-none bg-dark" style="height: 2px;width:80%;"></hr>
+            <a class="fw-medium text-white" style="text-decoration: underline!important;" href="#" target="_blank" rel="noopener noreferrer">Contact
+                Developers</a>
+        </div>
     </div>
 </footer>

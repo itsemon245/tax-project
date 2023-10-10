@@ -4,6 +4,38 @@
 <x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" />
 
 <body class="w-100 position-relative">
+    <style>
+        @media (min-width: 992px) {
+            #auth-sidebar {
+                flex: 0 0 auto;
+                width: 22%;
+            }
+            #auth-sidebar > .sidebar {
+                flex: 0 0 auto;
+                width: 22%;
+            }
+
+            .main {
+                flex: 0 0 auto;
+                width: 78%;
+            }
+        }
+        @media (min-width: 1300px) {
+            #auth-sidebar {
+                flex: 0 0 auto;
+                width: 18%;
+            }
+            #auth-sidebar > .sidebar {
+                flex: 0 0 auto;
+                width: 18%;
+            }
+
+            .main {
+                flex: 0 0 auto;
+                width: 82%;
+            }
+        }
+    </style>
     {{-- Messenger Chat Plugin Code --}}
     <div id="fb-root"></div>
 
@@ -84,18 +116,18 @@
         <a title="Call Us" href="tel:{{ $basic->phone }}" class="d-inline-block px-2 pb-1" style="cursor: pointer;">
             <span class="mdi mdi-phone"></span>
         </a>
-        <a title="Connect in Whatsapp" href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi Sam, Whatsup" class="d-inline-block px-2 pb-1"
-            style="cursor: pointer;">
+        <a title="Connect in Whatsapp" href="https://wa.me/{{ $basic->whatsapp }}/?text=Hi Sam, Whatsup"
+            class="d-inline-block px-2 pb-1" style="cursor: pointer;">
             <span class="mdi mdi-whatsapp"></span>
         </a>
     </aside>
 
 
     <div class="row">
-        <div id="auth-sidebar" class="d-none d-lg-block col-6 col-sm-4  col-lg-3 col-xxl-2 p-0 position-relative">
+        <div id="auth-sidebar" class="d-none d-lg-block col-6 col-sm-4  col-xl-2 p-0 position-relative">
             {{-- Sidebar 2 -> user dashboard navigation --}}
             @auth
-                <div class="sidebar sidebar-2 col-6 col-sm-4  col-lg-3 col-xxl-2 p-0">
+                <div class="sidebar sidebar-2 col-6 col-sm-4 col-xl-2 p-0">
                     <ul class="list-unstyled">
                         <li class="p-1">
                             <div class="d-flex justify-content-between align-items-center">
@@ -105,8 +137,8 @@
                                     <span class="mdi mdi-close"></span>
                                 </button>
                                 <a href="{{ route('home') }}">
-                                    <img loading="lazy" style="max-width:120px;object-fit:cover;"
-                                        src="{{ $basic->logo }}" alt="Text Act Logo">
+                                    <img loading="lazy" style="max-width:120px;object-fit:cover;" src="{{ $basic->logo }}"
+                                        alt="Text Act Logo">
                                 </a>
                             </div>
                         </li>
@@ -173,15 +205,16 @@
             @endauth
         </div>
         <!-- Page Content -->
-        <main class="col-12 {{auth()->user() !== null ? 'col-lg-9 col-xxl-10': ''}} flex-grow-1 p-0" style="height:max-content;">
+        <main class="col-12 {{ auth()->user() !== null ? 'main col-xl-10' : '' }} flex-grow-1 p-0"
+            style="height:max-content;">
             <div>
                 @yield('main')
+                @include('frontend.layouts.footer')
             </div>
         </main>
     </div>
 
 
-    @include('frontend.layouts.footer')
     @include('frontend.layouts.scripts')
     <script>
         $(document).ready(function() {
