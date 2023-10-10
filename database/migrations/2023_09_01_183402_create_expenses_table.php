@@ -16,7 +16,6 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->string('merchant')->nullable();
             $table->string('category')->nullable();
-            // $table->string('spend_on')->nullable();
             $table->json('items')->nullable()->comment('description, amount');
             $table->enum('type', ['credit', 'debit'])->default('debit');
             $table->unsignedDecimal('amount')->nullable();

@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceItemCollection;
+use App\Models\Expense;
 
 class InvoiceController extends Controller
 {
@@ -106,7 +107,7 @@ class InvoiceController extends Controller
             'issue_date' => $request->issue_date,
         ]);
         Calendar::create([
-            'title' => 'Invoice ' .$status,
+            'title' => 'Invoice ' . $status,
             'client_id' => $invoice->client_id,
             'service' => 'Invoice',
             'type' => 'Invoice ' . $status,
@@ -223,14 +224,14 @@ class InvoiceController extends Controller
             'payment_note' => $request->payment_note,
             'payment_method' => $request->payment_method,
         ]);
-       
+
         $demand = (int) $request->total;
         $paid = (int) $request->paid;
         $due = (int) $request->due;
         $status = $due === 0 ? 'due' : '';
         $status = $paid > 0 && $paid === $demand ? 'paid' : 'partial';
         Calendar::create([
-            'title' => 'Invoice ' .$status,
+            'title' => 'Invoice ' . $status,
             'client_id' => $invoice->client_id,
             'service' => 'Invoice',
             'type' => 'Invoice ' . $status,
@@ -333,8 +334,26 @@ class InvoiceController extends Controller
     public function markAs(Request $request, Invoice $invoice, string $status)
     {
         $fiscalYear = FiscalYear::where('year', $request->year)->first();
+        $paid = $invoice->fiscalYears()->find($fiscalYear->id)->pivot->demand;
+        $amountDetails = [];
+        if ($status === 'paid') {
+            $amountDetails = [
+                'paid' => $paid,
+                'due'=> 0
+            ];
+            $this->createExpense($paid);  
+        }
         $invoice->fiscalYears()->updateExistingPivot($fiscalYear->id, [
-            'status' => $status
+            'status' => $status,
+            ...$amountDetails
+        ]);
+        Calendar::create([
+            'title' => 'Invoice ' . $status,
+            'client_id' => $invoice->client_id,
+            'service' => 'Invoice',
+            'type' => 'Invoice ' . $status,
+            'start' => today('Asia/Dhaka'),
+            'description' => null
         ]);
         return back()->with([
             'alert-type' => 'success',
@@ -344,6 +363,10 @@ class InvoiceController extends Controller
 
     public function sendInvoiceMail(Request $request, $id)
     {
+        $request->validate([
+            'email_to'=> 'email',
+            'subject'=> 'string|max:255'
+        ]);
         $invoice = Invoice::find($id);
         $year = $request->year ? $request->year : currentFiscalYear();
         // dd($year);
@@ -353,6 +376,14 @@ class InvoiceController extends Controller
         $fiscalYear = FiscalYear::where('year', $request->year)->first();
         $invoice->fiscalYears()->updateExistingPivot($fiscalYear->id, [
             'status' => 'sent'
+        ]);
+        Calendar::create([
+            'title' => 'Invoice Sent',
+            'client_id' => $invoice->client_id,
+            'service' => 'Invoice',
+            'type' => 'Invoice Sent',
+            'start' => today('Asia/Dhaka'),
+            'description' => 'Email sent to '.$request->email_to
         ]);
         $alert = [
             'message' => "Invoice Mail Send Successfully",
@@ -393,5 +424,25 @@ class InvoiceController extends Controller
             })
             ->get();
         return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
+    }
+
+
+    public function createExpense(int $amount) {
+        $balance = $amount;
+        $lastBalance = Expense::latest()->first('balance')->balance;
+        $balance += $lastBalance;
+        Expense::create([
+            'date' => today(),
+            'category' => 'invoice',
+            'type' => 'credit',
+            'amount'=> $amount,
+            'balance'=> $balance,
+            'items'=> [
+                [
+                    'description'=> 'Invoice Items' ,
+                    'amount'=> $amount ,
+                ]
+            ]
+        ]);
     }
 }

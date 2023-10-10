@@ -296,11 +296,7 @@
         </div>
 
         <div class="row mb-2 justify-content-center">
-            @foreach ($chartData as $key => $item)
-                <div class="col-6">
-                    <div id="chart-{{ $key }}"></div>
-                </div>
-            @endforeach
+            <div id="chart"></div>
         </div>
 
 
@@ -528,40 +524,36 @@
 
     <script>
         let url = "{{ route('get.chart.data') }}"
+
         $.ajax({
             type: "get",
             url: url,
             success: function(response) {
-                console.log(response);
-                response.forEach((item, i) => {
-                    let options = {
-                        chart: {
-                            type: 'bar'
-                        },
-                        series: [{
-                            name: item.year,
-                            data: item.data
-                        }],
-                        tooltip: {
-                            y: {
-                                formatter: function(val) {
-                                    return val + " Invoices"
-                                }
-                            }
-                        },
-                        title: {
-                            text: 'Invoice Status Count for Year ' + item.year,
-                            floating: true,
-                            offsetY: 0,
-                            style: {
-                                color: '#444'
+                let series = response
+                let options = {
+                    chart: {
+                        type: 'bar'
+                    },
+                    series: series,
+                    tooltip: {
+                        y: {
+                            formatter: function(val) {
+                                return val + " Invoices"
                             }
                         }
+                    },
+                    title: {
+                        text: 'Invoice Status Count',
+                        floating: true,
+                        offsetY: 0,
+                        style: {
+                            color: '#444'
+                        }
                     }
+                }
 
-                    let chart = new ApexCharts(document.querySelector("#chart-" + i), options);
-                    chart.render();
-                });
+                let chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
             }
         });
     </script>

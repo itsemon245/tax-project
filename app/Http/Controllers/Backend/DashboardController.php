@@ -37,7 +37,7 @@ class DashboardController extends Controller
 
     public function getChartData()
     {
-        $fiscalYears = FiscalYear::orderBy('year', 'desc')->latest()->take(3)->get();
+        $fiscalYears = FiscalYear::orderBy('year', 'desc')->latest()->take(5)->get();
 
         $mappedItems = $fiscalYears->map(function ($fy) {
             $data = collect([
@@ -67,7 +67,7 @@ class DashboardController extends Controller
                 ],
             ]);
             return [
-                'year' => $fy->year,
+                'name' => $fy->year,
                 'data' => $data
             ];
         });

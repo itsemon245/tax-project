@@ -109,13 +109,15 @@
                                         </thead>
                                         <tbody>
 
-                                            @foreach ($expense->items as $index => $item)
-                                                <tr>
-                                                    <td>{{ ++$index }}</td>
-                                                    <td>{{ $item->description ?? '' }}</td>
-                                                    <td>৳ {{ $item->amount ?? '' }}</td>
-                                                </tr>
-                                            @endforeach
+                                            @if ($expense->items)
+                                                @foreach ($expense->items as $index => $item)
+                                                    <tr>
+                                                        <td>{{ ++$index }}</td>
+                                                        <td>{{ $item->description ?? '' }}</td>
+                                                        <td>৳ {{ $item->amount ?? '' }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                             <tr style="border-bottom: 0px solid transparent;">
                                                 <td colspan="2">
                                                     <div class="fs-4 float-end fw-bold">
@@ -125,19 +127,19 @@
                                                 <td>
                                                     <div class="fs-4 fw-bold">
                                                         ৳
-                                                        {{ $expense->balance < 0 ? $expense->balance * -1 : $expense->balance }}
+                                                        {{ $expense->amount}}
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr style="border-bottom: 0px solid transparent;">
                                                 <td colspan="3">
-                                                @can('print expense')
-                                                <x-backend.ui.button type="button"
-                                                data-page-title="Expense Voucher ({{ str($expense?->type)->headline() }})"
-                                                class="print-btn d-print-none btn-sm btn-info float-end"
-                                                data-target="#print-{{ $expense->id }}">Print</x-backend.ui.button>
-                                                @endcan
-                                            </td>
+                                                    @can('print expense')
+                                                        <x-backend.ui.button type="button"
+                                                            data-page-title="Expense Voucher ({{ str($expense?->type)->headline() }})"
+                                                            class="print-btn d-print-none btn-sm btn-info float-end"
+                                                            data-target="#print-{{ $expense->id }}">Print</x-backend.ui.button>
+                                                    @endcan
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

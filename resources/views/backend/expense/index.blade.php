@@ -6,6 +6,10 @@
             .paginate {
                 float: right;
             }
+            @page{
+                size: A4;
+                margin: 0 auto;
+            }
 
             div.dataTables_paginate {
                 margin: 0;
