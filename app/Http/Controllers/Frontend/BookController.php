@@ -41,7 +41,7 @@ class BookController extends Controller
             })
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
-            ->simplePaginate(30);
+            ->paginate(30);
         $reviews = Review::with('user')->latest()->limit(10)->get();
         $authors = Book::distinct()->get('author')->pluck('author');
         $minPrice = Book::min('price');

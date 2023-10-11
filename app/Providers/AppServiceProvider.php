@@ -5,14 +5,15 @@ namespace App\Providers;
 use App\Models\User;
 use App\Models\PromoCode;
 use App\Events\MonthEnded;
-use App\Listeners\LogoutAllUsers;
 use Illuminate\Routing\Route;
+use App\Listeners\LogoutAllUsers;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\ServiceProvider;
 use App\Notifications\PromoCodeNotification;
-use Illuminate\Auth\Events\Logout;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\Cookie;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,5 +45,6 @@ class AppServiceProvider extends ServiceProvider
             'Industry' => 'App\Models\Industry',
             'About' => 'App\Models\About',
         ]);
+        Paginator::useBootstrapFive();
     }
 }

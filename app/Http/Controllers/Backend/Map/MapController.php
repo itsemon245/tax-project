@@ -30,7 +30,7 @@ class MapController extends Controller
      */
     public function index()
     {
-        $maps = Map::simplePaginate(paginateCount());
+        $maps = Map::paginate(paginateCount());
         return view('backend.map.showMaps', compact('maps'));
     }
 

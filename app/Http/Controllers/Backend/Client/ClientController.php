@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Backend\Client;
 
+use App\Helper\CSV;
 use App\Models\Client;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use Carbon\Carbon;
 
 class ClientController extends Controller
 {
@@ -14,7 +19,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::latest()->simplePaginate(paginateCount());
+        $clients = Client::orderBy('id', 'desc')->paginate(paginateCount(30));
+        // dd($clients);
         return view('backend.client.view-client', compact('clients'));
     }
 
@@ -31,22 +37,9 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        // dd($request->toArray());
-        $client_store = new Client();
-        $client_store->name = $request->client_name;
-        $client_store->father_name = $request->father_name;
-        $client_store->mother_name = $request->mother_name;
-        $client_store->company_name = $request->company_name;
-        $client_store->spouse_name = $request->husband_wife_name;
-        $client_store->present_address = $request->present_address;
-        $client_store->permanent_address = $request->parmentat_address;
-        $client_store->phone = $request->phone;
-        $client_store->tin = $request->tin;
-        $client_store->circle = $request->circle;
-        $client_store->zone = $request->zone;
-
-        $client_store->save();
-
+        $validated = $request->except('_token', 'method');
+        // dd($validated);
+        $client = Client::create($validated);
         $notification = [
             'message' => 'Client Created',
             'alert-type' => 'success',
@@ -76,19 +69,7 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        $client->name = $request->client_name;
-        $client->father_name = $request->father_name;
-        $client->mother_name = $request->mother_name;
-        $client->company_name = $request->company_name;
-        $client->spouse_name = $request->husband_wife_name;
-        $client->present_address = $request->present_address;
-        $client->permanent_address = $request->parmentat_address;
-        $client->phone = $request->phone;
-        $client->tin = $request->tin;
-        $client->circle = $request->circle;
-        $client->zone = $request->zone;
-
-        $client->save();
+        $client->update($request->except('method', 'token'));
 
         $notification = [
             'message' => 'Client updated',
@@ -106,6 +87,49 @@ class ClientController extends Controller
         $client->delete();
         $notification = [
             'message' => 'Client Deleted',
+            'alert-type' => 'success',
+        ];
+        return back()
+            ->with($notification);
+    }
+
+    public function createFromCsv(Request $request)
+    {
+        $csv = new CSV();
+        $csv->path = $request->file('csv')->path();
+        $data = $csv->parse();
+        $headers = array_map(fn ($value) => Str::snake(strtolower($value)), $data['headers']);
+        foreach ($data['rows'] as $row) {
+
+            $mappedRow = array_map(function ($value) {
+                $pattern = '/([1-9]|0[1-9]|[12][0-9]|3[01])\/([1-9]|0[1-9]|1[1,2])\/(19|20)\d{2}/i';
+                $isDOB = preg_match($pattern, $value);
+                if ($isDOB) {
+                    $dateItems = explode('/', $value);
+                    $day = strlen($dateItems[0]) === 1 ? (int) ('0' . $dateItems[0]) : (int) $dateItems[0];
+                    $month = strlen($dateItems[1]) === 1 ? (int) ('0' . $dateItems[1]) : (int) $dateItems[1];
+                    $year = (int) $dateItems[2];
+                    $date = Carbon::createFromDate(
+                        $year,
+                        $month,
+                        $day,
+                        'Asia/Dhaka'
+                    );
+                    $DOB = $date->format('Y-m-d');
+                    return $DOB;
+                } elseif (strtolower($value) === 'n/a' || $value === '') {
+                    return null;
+                } else {
+                    return $value;
+                }
+            }, $row);
+
+            $item = array_combine($headers, $mappedRow);
+            Client::create($item);
+        }
+
+        $notification = [
+            'message' => 'CSV Imported',
             'alert-type' => 'success',
         ];
         return back()

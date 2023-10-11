@@ -26,7 +26,7 @@
     </style>
 @endPushOnce
 
-<table id="{{ $id }}" class="table table-striped dt-responsive nowrap w-100">
+<table id="{{ $id }}" class="table table-striped dt-responsive nowrap w-100" data-page-length='{{$items->perPage()}}' data-length-change='false' data-search="false">
     {{ $slot }}
 </table>
 @if (method_exists($items, 'links'))
@@ -49,12 +49,11 @@
         // replace the default paginatior with my paginator
 
         $(document).ready(function() {
-            let paginator = $('#basic-datatable_paginate').parent()
-            let recordLength = $('#basic-datatable_length').parent()
             let search = $('#basic-datatable_filter')
             search.parent().removeClass('col-md-6')
             search.addClass('float-end')
-            recordLength.remove()
+            let paginator = $('#basic-datatable_paginate').parent().parent()
+            paginator.children().remove()
             let myPaginator = $('#myPaginator')
             paginator.children().remove()
             paginator.append(myPaginator)

@@ -15,7 +15,7 @@ class ReportController extends Controller
 {
     function index(string $type)
     {
-        $invoices = Invoice::simplePaginate(paginateCount());
+        $invoices = Invoice::paginate(paginateCount());
         $fiscalYear = currentFiscalYear();
         $fiscalYears = FiscalYear::latest()->take(3)->get()->reverse();
         return view('backend.report.index', compact('invoices', 'fiscalYear', 'fiscalYears', 'type'));

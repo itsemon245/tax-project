@@ -42,8 +42,8 @@ class ProjectController extends Controller
     public function index()
     {
 
-        // $clients = Client::latest()->simplePaginate(paginateCount());
-        $projects = Project::with('tasks')->latest()->simplePaginate(paginateCount());
+        // $clients = Client::latest()->paginate(paginateCount());
+        $projects = Project::with('tasks')->latest()->paginate(paginateCount());
         return view('backend.project.viewAllProjectProgress', compact('projects'));
     }
     /**
@@ -52,7 +52,7 @@ class ProjectController extends Controller
     public function projectClients($id)
     {
 
-        // $clients = Client::latest()->simplePaginate(paginateCount());
+        // $clients = Client::latest()->paginate(paginateCount());
         $project = Project::with('tasks', 'tasks.clients', 'clients')->find($id);
         return view('backend.project.projectClients', compact('project'));
     }

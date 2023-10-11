@@ -18,7 +18,7 @@ class ProductSubCategoryController extends Controller
      */
     public function index()
     {
-        $subCategories = ProductSubCategory::with('productCategory')->latest()->simplePaginate(paginateCount());
+        $subCategories = ProductSubCategory::with('productCategory')->latest()->paginate(paginateCount());
         $categories = ProductCategory::latest()->get(['id', 'name']);
         return view('backend.product.subCategory', compact('subCategories', 'categories'));
     }

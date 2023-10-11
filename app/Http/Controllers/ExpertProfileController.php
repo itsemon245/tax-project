@@ -31,7 +31,7 @@ class ExpertProfileController extends Controller
      */
     public function index()
     {
-        $profiles = ExpertProfile::simplePaginate(paginateCount());
+        $profiles = ExpertProfile::paginate(paginateCount());
         return view("backend.expertProfile.viewExpertProfile", compact('profiles'));
     }
 

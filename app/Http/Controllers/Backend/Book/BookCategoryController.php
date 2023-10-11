@@ -14,7 +14,7 @@ class BookCategoryController extends Controller
      */
     public function index()
     {
-        $data = BookCategory::latest()->simplePaginate(paginateCount());
+        $data = BookCategory::latest()->paginate(paginateCount());
         return view('backend.book.book-category.index', compact('data'));
     }
 
@@ -54,7 +54,7 @@ class BookCategoryController extends Controller
      */
     public function edit(BookCategory $bookCategory)
     {
-        $data = BookCategory::latest()->simplePaginate(paginateCount());
+        $data = BookCategory::latest()->paginate(paginateCount());
         return view('backend.book.book-category.index', compact('bookCategory', 'data'));
     }
 

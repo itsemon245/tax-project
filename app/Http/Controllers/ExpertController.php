@@ -66,7 +66,7 @@ class ExpertController extends Controller
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
             ->with('expertCategories')
-            ->simplePaginate(20);
+            ->paginate(20);
         $posts = ExpertProfile::distinct()->get('post')->pluck('post');
         $districts = ExpertProfile::distinct()->get('district')->pluck('district');
         $thanas = ExpertProfile::distinct()->get('thana')->pluck('thana');

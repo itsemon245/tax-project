@@ -13,17 +13,25 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->text('father_name');
-            $table->text('mother_name');
-            $table->text('company_name');
-            $table->text('spouse_name');
+            $table->string('name');
+            $table->string('tin');
+            $table->string('nid');
+            $table->string('circle');
+            $table->string('zone');
+            $table->date('dob');
+            $table->string('phone')->nullable();
+            $table->string('taxpayer_status');
+            $table->longText('special_benefits')->nullable();
+            $table->string('father_name');
+            $table->string('mother_name');
+            $table->string('company_name');
+            $table->string('spouse_name')->nullable();
+            $table->string('spouse_tin')->nullable();
+            // $table->string('business_name');
             $table->longText('present_address');
             $table->longText('permanent_address');
-            $table->text('phone');
-            $table->text('tin');
-            $table->text('circle');
-            $table->text('zone');
+            $table->string('nature_of_business');
+            $table->string('ref_no');
             $table->timestamps();
         });
         Schema::create('client_user', function (Blueprint $table) {

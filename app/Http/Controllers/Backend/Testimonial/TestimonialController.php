@@ -15,7 +15,7 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        $testimonials = Testimonial::latest()->simplePaginate(paginateCount());
+        $testimonials = Testimonial::latest()->paginate(paginateCount());
         return view('backend.testimonial.view-testimonial', compact('testimonials'));
     }
 

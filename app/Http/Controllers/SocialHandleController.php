@@ -13,7 +13,7 @@ class SocialHandleController extends Controller
      */
     public function index()
     {
-        $socials = SocialHandle::simplePaginate(paginateCount());
+        $socials = SocialHandle::paginate(paginateCount());
         return view('backend.social.socialMedia', compact('socials'));
     }
 

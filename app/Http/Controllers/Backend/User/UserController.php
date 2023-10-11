@@ -35,7 +35,7 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = User::with('roles')->whereNot('id', auth()->id())->latest()->simplePaginate(paginateCount());
+        $data = User::with('roles')->whereNot('id', auth()->id())->latest()->paginate(paginateCount());
         return view('backend.users.view-users', compact('user', 'data'));
     }
 

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Testing\Fakes\Fake;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Client>
@@ -17,17 +18,24 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'father_name' => fake()->name(),
-            'mother_name' => fake()->name(),
-            'spouse_name' => fake()->name(),
-            'company_name' => fake()->word(),
-            'present_address' => fake()->address(),
-            'permanent_address' => fake()->address(),
-            'phone' => fake()->phoneNumber(),
-            'tin' => fake()->numberBetween(1000, 100000),
-            'circle' => 'circle',
-            'zone' => 'zone',
+            "name" => fake()->name(),
+            "nid" => random_int(100000000, 9999999999999),
+            "dob" => fake()->date(),
+            "phone" => fake()->phoneNumber(),
+            "taxpayer_status" => "ok",
+            "father_name" => fake()->name('male'),
+            "mother_name" => fake()->name('female'),
+            "company_name" => fake()->company(),
+            "nature_of_business" => "random",
+            "spouse_name" => fake()->name(),
+            "spouse_tin" => random_int(100000, 999999999),
+            "zone" => fake()->word(),
+            "ref_no" => fake()->word(),
+            "circle" => fake()->word(),
+            "tin" => random_int(100000, 999999999),
+            "special_benefits" => "random benefit",
+            "permanent_address" => fake()->address(),
+            "present_address" => fake()->address()
         ];
     }
 }

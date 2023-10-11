@@ -10,7 +10,7 @@ class UserAppointmentController extends Controller
 {
     function index()
     {
-        $appointments = UserAppointment::where('is_approved', false)->with('map', 'user')->latest()->simplePaginate(paginateCount());
+        $appointments = UserAppointment::where('is_approved', false)->with('map', 'user')->latest()->paginate(paginateCount());
         return view('backend.user.appointments', compact('appointments'));
     }
     function approvedList()

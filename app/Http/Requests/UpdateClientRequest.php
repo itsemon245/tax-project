@@ -21,19 +21,25 @@ class UpdateClientRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-           
-            'client_name' =>['required'],
-            'father_name' =>['required'],
-            'mother_name' =>['required'],
-            'company_name' =>['required'],
-            'husband_wife_name' =>['required'],
-            'present_address' =>['required'],
-            'phone' =>['required'],
-            'tin' =>['required'],
-            'circle' =>['required'],
-            'parmentat_address' =>['required'],
-            'zone' =>['required'],
+        return  [
+            'name' =>['required', 'string'],
+            'tin' =>['required', 'string'],
+            'nid' =>['required', 'string', 'max:13'],
+            'circle' =>['required', 'string'],
+            'zone' =>['required', 'string'],
+            'dob' =>['required', 'date'],
+            'phone' =>['nullable', 'string'],
+            'taxpayer_status' =>['required', 'string'],
+            'special_benefits' =>['nullable', 'string'],
+            'father_name' =>['required', 'string'],
+            'mother_name' =>['required', 'string'],
+            'company_name' =>['required', 'string'],
+            'spouse_name' =>['nullable', 'string'],
+            'spouse_tin' =>['nullable', 'string', 'max:13'],
+            'present_address' =>['required', 'string'],
+            'permanent_address' =>['required', 'string'],
+            'nature_of_business' =>['required', 'string'],
+            'ref_no' =>['required', 'string'],
         ];
     }
 }

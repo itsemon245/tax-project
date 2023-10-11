@@ -261,6 +261,7 @@ Route::prefix('admin')
         Route::resource('client-studio', ClientStudioController::class)
             ->except(['index'])
             ->middleware('can:manage client studio');
+        Route::post('import-clients', [ClientController::class, 'createFromCsv'])->name('client.createFromCsv');
 
         // Route and middlewares for expert
         Route::resource('expert-profile', ExpertProfileController::class)

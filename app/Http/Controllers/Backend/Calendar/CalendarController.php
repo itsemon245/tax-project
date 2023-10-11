@@ -15,7 +15,7 @@ class CalendarController extends Controller
 {
     public function index()
     {
-        $events = Calendar::with('client')->latest()->simplePaginate(paginateCount());
+        $events = Calendar::with('client')->latest()->paginate(paginateCount());
         return view('backend.calendar.viewEvents', compact('events'));
     }
 

@@ -36,7 +36,7 @@ class CaseStudyController extends Controller
                     $q->whereIn('case_study_category_id', $categories);
                 }
             })
-            ->simplePaginate(30);
+            ->paginate(30);
         $categories = CaseStudyCategory::latest()->get(['name', 'id']);
         $minPrice = CaseStudy::min('price');
         $maxPrice = CaseStudy::max('price');

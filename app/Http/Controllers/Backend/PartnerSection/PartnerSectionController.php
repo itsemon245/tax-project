@@ -15,7 +15,7 @@ class PartnerSectionController extends Controller
      */
     public function index()
     {
-        $partnerSection = PartnerSection::simplePaginate(paginateCount());
+        $partnerSection = PartnerSection::paginate(paginateCount());
         return view('backend.partnerSection.aboutUsPartnerSection', compact('partnerSection'));
     }
 

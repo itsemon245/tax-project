@@ -18,7 +18,7 @@ class ChalanController extends Controller
      */
     public function index()
     {
-        $data = Chalan::with('client')->latest()->simplePaginate(paginateCount());
+        $data = Chalan::with('client')->latest()->paginate(paginateCount());
         return view('backend.chalan.index', compact('data'));
     }
 
