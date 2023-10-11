@@ -358,7 +358,7 @@ Route::prefix('admin')
                 Route::get('clients/{id}', 'projectClients')->name('clients');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/store', 'store')->name('store');
-                Route::post('update/client/{client}/task/{task}', 'updateTask')->name('task.update');
+                Route::post('update/project/{project}/client/{client}/task/{task}', 'updateTask')->name('task.update');
                 Route::get('edit/{id}', 'edit')->name('edit');
                 Route::PUT('update/{id}', 'update')->name('update');
                 Route::delete('destroy/{id}', 'destroy')->name('destroy');

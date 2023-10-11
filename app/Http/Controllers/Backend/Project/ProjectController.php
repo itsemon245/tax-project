@@ -21,7 +21,7 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware('can:read progress', [
-            'only' => ['index','projectClients', 'show']
+            'only' => ['index', 'projectClients', 'show']
         ]);
         $this->middleware('can:create progress',   [
             'only' => ['create', 'store']
@@ -62,7 +62,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $clients = Client::with('users')->get();
+        $clients = Client::with('users:name,id')->get(['id', 'name', 'phone', 'circle', 'zone']);
         $users = User::inRandomOrder()->limit(6)->get();
         return view('backend.project.createProjectProgress', compact('clients', 'users'));
     }
@@ -170,22 +170,33 @@ class ProjectController extends Controller
             ->with($notification);
     }
 
-    function updateTask(int $client, int $task): JsonResponse
+    function updateTask(int $project, int $client, int $task): JsonResponse
     {
         try {
             $task = Task::find($task);
-            $task->clients()->updateExistingPivot($client, [
-                'is_completed' => !$task->isCompleted($client)
+            $client = Client::find($client);
+            $task->clients()->updateExistingPivot($client->id, [
+                'is_completed' => !$task->isCompleted($client->id)
             ]);
             $success = true;
             $message = 'Task Updated!';
+            $allCompleted = $client->tasks($project)->wherePivot('is_completed', true)->count() === $client->tasks($project)->count();
+            $project = Project::find($project);
+            if ($allCompleted) {
+                $project->daily_progress = $project->daily_progress + 1;
+                $project->save();
+                DB::table('client_project')->where(['project_id' => $project->id, 'client_id' => $client->id])->update(['is_completed' => true]);
+            } else {
+                DB::table('client_project')->where(['project_id' => $project->id, 'client_id' => $client->id])->update(['is_completed' => false]);
+            }
         } catch (\Throwable $th) {
             $success = false;
             $message = $th->getMessage();
         }
         return response()->json([
             'success' => $success,
-            'message' => $message
+            'message' => $message,
+            'completedAll' => $allCompleted
         ]);
     }
     /**

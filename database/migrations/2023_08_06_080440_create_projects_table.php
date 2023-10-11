@@ -22,9 +22,9 @@ return new class extends Migration
             $table->integer('weekly_target')->nullable();
             $table->integer('monthly_target')->nullable();
             $table->integer('total_progress')->default(0);
-            $table->integer('daily_progress')->nullable();
-            $table->integer('weekly_progress')->nullable();
-            $table->integer('monthly_progress')->nullable();
+            $table->integer('daily_progress')->default(0);
+            $table->integer('weekly_progress')->default(0);
+            $table->integer('monthly_progress')->default(0);
             $table->timestamps();
         });
         Schema::create('client_project', function (Blueprint $table) {

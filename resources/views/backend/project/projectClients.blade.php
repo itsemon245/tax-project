@@ -161,6 +161,7 @@
                 </div>
             </div>
         </div> --}}
+        
         <x-backend.table.basic :items="$project?->clients">
             <thead>
                 <tr>
@@ -196,7 +197,7 @@
                                         @foreach ($project->tasks as $i => $task)
                                             <div class="form-check mb-2 form-check-success">
                                                 <input
-                                                    data-url="{{ route('project.task.update', ['client' => $client->id, 'task' => $task->id]) }}"
+                                                    data-url="{{ route('project.task.update', ['client' => $client->id, 'task' => $task->id, 'project'=> $project->id]) }}"
                                                     class="form-check-input rounded-circle" type="checkbox" value=""
                                                     id="{{ "project-$key-task-$i" }}" @checked($task->isCompleted($client->id))>
                                                 <label class="form-check-label"
@@ -241,6 +242,7 @@
                         },
                         success: function(response) {
                             if (response.success) {
+                                console.log(response);
                                 Toast.fire({
                                     'icon': 'success',
                                     'title': 'Success',
