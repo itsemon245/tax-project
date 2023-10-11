@@ -80,10 +80,11 @@ class ProjectController extends Controller
             'daily_target' => 'numeric|required',
             'total_clients' => 'required|numeric',
         ]);
+        $weekly_target = $request->daily_target * $data['weekdays'];
+        $monthly_target = $request->daily_target * $data['weekdays'] * 4;
         $project = Project::create($data);
-        $project->weekly_target = $request->daily_target * $data['weekdays'];
-        $project->monthly_target = $request->daily_target * $data['weekdays'] * 4;
-        $project->save();
+
+        // Create tasks for each project
         $tasks = [];
         foreach ($request->tasks as $task) {
             $task = Task::create([
@@ -93,6 +94,7 @@ class ProjectController extends Controller
             $tasks[] = $task;
         }
 
+        // Attach Clients
         foreach ($request->clients as $clientId) {
             foreach ($tasks as $task) {
                 $task->clients()->attach($clientId);
@@ -119,6 +121,14 @@ class ProjectController extends Controller
                 }
             }
         }
+
+        // Assign Targets
+        $project->daily_target = $request->daily_target < $project->total_clients ? $request->daily_target : $project->total_clients;
+        $project->weekly_target = $weekly_target < $project->total_clients ? $weekly_target : $project->total_clients;
+        $project->monthly_target = $monthly_target < $project->total_clients ? $monthly_target : $project->total_clients;
+        $project->save();
+
+
 
 
         $notification = [
@@ -175,20 +185,33 @@ class ProjectController extends Controller
         try {
             $task = Task::find($task);
             $client = Client::find($client);
-            $task->clients()->updateExistingPivot($client->id, [
-                'is_completed' => !$task->isCompleted($client->id)
-            ]);
+            if ($task->isCompleted($client->id)) {
+                $allCompleted = $client->tasks($project)->wherePivot('is_completed', true)->count() === $client->tasks($project)->count();
+                $project = Project::find($project);
+                if ($allCompleted) {
+                    $project->daily_progress = $project->daily_progress > 0 ? $project->daily_progress - 1 : 0;
+                    $project->save();
+                }
+                $task->clients()->updateExistingPivot($client->id, [
+                    'is_completed' => false
+                ]);
+            } else {
+                $task->clients()->updateExistingPivot($client->id, [
+                    'is_completed' => true
+                ]);
+                $allCompleted = $client->tasks($project)->wherePivot('is_completed', true)->count() === $client->tasks($project)->count();
+                $project = Project::find($project);
+
+                if ($allCompleted) {
+                    $project->daily_progress = $project->daily_progress + 1;
+                    $project->save();
+                    DB::table('client_project')->where(['project_id' => $project->id, 'client_id' => $client->id])->update(['is_completed' => true]);
+                } else {
+                    DB::table('client_project')->where(['project_id' => $project->id, 'client_id' => $client->id])->update(['is_completed' => false]);
+                }
+            }
             $success = true;
             $message = 'Task Updated!';
-            $allCompleted = $client->tasks($project)->wherePivot('is_completed', true)->count() === $client->tasks($project)->count();
-            $project = Project::find($project);
-            if ($allCompleted) {
-                $project->daily_progress = $project->daily_progress + 1;
-                $project->save();
-                DB::table('client_project')->where(['project_id' => $project->id, 'client_id' => $client->id])->update(['is_completed' => true]);
-            } else {
-                DB::table('client_project')->where(['project_id' => $project->id, 'client_id' => $client->id])->update(['is_completed' => false]);
-            }
         } catch (\Throwable $th) {
             $success = false;
             $message = $th->getMessage();

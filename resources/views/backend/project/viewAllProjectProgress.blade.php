@@ -67,15 +67,15 @@
                                             $progress = round($progress);
                                             $color = match (true) {
                                                 $progress <= 30 => 'bg-danger',
-                                                $progress <= 60 => 'bg-warning',
+                                                $progress > 30 && $progress <= 60 => 'bg-warning',
                                                 default => 'bg-success',
                                             };
                                         @endphp
-                                        <span class="text-dark">{{ $project->name }}:</span>
-                                        <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
-                                            <div
-                                                class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}%;">
-                                                <span class="text-light">{{ $progress }}%</span>
+                                        <span class="text-dark font-16 fw-bold">{{ $project->name }}:</span>
+                                        <div id="bar" class="progress mb-2 w-100" style="height: max-content;">
+                                            <div class="bar progress-bar {{ $color }}"
+                                                style="width: {{ $progress }}%;">
+                                                <span class="text-light font-18 fw-bold">{{ $progress }}%</span>
                                             </div>
                                         </div>
                                     @empty
@@ -89,19 +89,20 @@
                                 <div class="col-md-12">
                                     @forelse ($projects as $project)
                                         @php
-                                            $progress = $project->weekly_target === 0 ? 100 : ($project->weekly_progress * 100) / $project->weekly_target;
+                                            $weekly_progress = $project->daily_progress / $project->weekly_target;
+                                            $progress = $project->weekly_target === 0 ? 100 : $weekly_progress * 100;
                                             $progress = round($progress);
                                             $color = match (true) {
                                                 $progress <= 30 => 'bg-danger',
-                                                $progress <= 60 => 'bg-warning',
+                                                $progress > 30 && $progress <= 60 => 'bg-warning',
                                                 default => 'bg-success',
                                             };
                                         @endphp
-                                        <span class="text-dark">{{ $project->name }}:</span>
-                                        <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
-                                            <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
+                                        <span class="text-dark font-16 fw-bold">{{ $project->name }}:</span>
+                                        <div id="bar" class="progress mb-2 w-100" style="height: max-content;">
+                                            <div class="bar progress-bar {{ $color }}"
                                                 style="width: {{ $progress }}%;"><span
-                                                    class="text-light">{{ $progress }}%</span></div>
+                                                    class="text-light font-18 fw-bold">{{ $progress }}%</span></div>
                                         </div>
                                     @empty
                                         <h5 class="d-flex justify-content-center text-muted">No record found</h5>
@@ -114,19 +115,19 @@
                                 <div class="col-md-12">
                                     @forelse ($projects as $project)
                                         @php
-                                            $progress = $project->monthly_target === 0 ? 100 : ($project->monthly_progress * 100) / $project->monthly_target;
+                                            $progress = ($project->daily_progress / $project->monthly_target) * 100;
                                             $progress = round($progress);
                                             $color = match (true) {
                                                 $progress <= 30 => 'bg-danger',
-                                                $progress <= 60 => 'bg-warning',
+                                                $progress > 30 && $progress <= 60 => 'bg-warning',
                                                 default => 'bg-success',
                                             };
                                         @endphp
-                                        <span class="text-dark">{{ $project->name }}:</span>
-                                        <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
-                                            <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
+                                        <span class="text-dark font-16 fw-bold">{{ $project->name }}:</span>
+                                        <div id="bar" class="progress mb-2 w-100" style="height: max-content;">
+                                            <div class="bar progress-bar {{ $color }}"
                                                 style="width: {{ $progress }}%;"><span
-                                                    class="text-light">{{ $progress }}%</span></div>
+                                                    class="text-light font-18 fw-bold">{{ $progress }}%</span></div>
                                         </div>
                                     @empty
                                         <h5 class="d-flex justify-content-center text-muted">No record found</h5>
@@ -139,19 +140,19 @@
                                 <div class="col-md-12">
                                     @forelse ($projects as $project)
                                         @php
-                                            $progress = $project->total_clients === 0 ? 100 : ($project->total_progress * 100) / $project->total_clients;
+                                            $progress = ($project->daily_progress / $project->total_clients) * 100;
                                             $progress = round($progress);
                                             $color = match (true) {
                                                 $progress <= 30 => 'bg-danger',
-                                                $progress <= 60 => 'bg-warning',
+                                                $progress > 30 && $progress <= 60 => 'bg-warning',
                                                 default => 'bg-success',
                                             };
                                         @endphp
-                                        <span class="text-dark">{{ $project->name }}:</span>
-                                        <div id="bar" class="progress mb-2 w-100" style="height: 15px;">
-                                            <div class="bar progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
+                                        <span class="text-dark font-16 fw-bold">{{ $project->name }}:</span>
+                                        <div id="bar" class="progress mb-2 w-100" style="height: max-content;">
+                                            <div class="bar progress-bar {{ $color }}"
                                                 style="width:{{ $progress }}%;"><span
-                                                    class="text-light">{{ $progress }}%</span></div>
+                                                    class="text-light font-18 fw-bold">{{ $progress }}%</span></div>
                                         </div>
                                     @empty
                                         <h5 class="d-flex justify-content-center text-muted">No record found</h5>
