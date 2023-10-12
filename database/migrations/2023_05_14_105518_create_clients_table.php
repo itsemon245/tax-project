@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('zone');
             $table->date('dob');
             $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->string('taxpayer_status');
             $table->longText('special_benefits')->nullable();
             $table->string('father_name');
@@ -27,7 +28,6 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('spouse_name')->nullable();
             $table->string('spouse_tin')->nullable();
-            // $table->string('business_name');
             $table->longText('present_address');
             $table->longText('permanent_address');
             $table->string('nature_of_business');
