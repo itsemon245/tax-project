@@ -16,9 +16,15 @@
                     <i class="mdi mdi-menu text-light"></i>
                 </button>
             </div>
+            <div>
+                <button title="Navigation" id="sidebar-2" class="user-menu-btn waves-effect waves-light p-2 border-0 mx-2"
+                    style="background: none;">
+                    <i class="mdi mdi-menu text-light"></i>
+                </button>
+            </div>
             <a href="{{ route('home') }}">
-                <img loading="lazy" class="app-logo" style="max-width:120px; object-fit:cover;" src="{{ useImage($basic->logo) }}"
-                    alt="Text Act Logo">
+                <img loading="lazy" class="app-logo" style="max-width:120px; object-fit:cover;"
+                    src="{{ useImage($basic->logo) }}" alt="Text Act Logo">
             </a>
         </div>
 
@@ -134,10 +140,11 @@
                         class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('course.index') ? 'active-link' : '' }}">
                         <a class="nav-link text-light" href="{{ route('course.index') }}">Training/Education</a>
                         <ul class="position-absolute dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item"><a href=""
-                                    class="nav-link text-light">Practical Income Tax Course</a></li>
-                            <li class="nav-item custom-nav-item dropdown-item"><a href=""
-                                    class="nav-link text-light">ITP Exam Preparation</a></li>
+                            @foreach ($courses as $course)
+                                <li class="nav-item custom-nav-item dropdown-item"><a
+                                        href="{{ route('course.show', $course->id) }}"
+                                        class="nav-link text-light">{{ $course->name }}</a></li>
+                            @endforeach
                         </ul>
                     </li>
 
@@ -233,15 +240,16 @@
             <div class="d-flex align-items-center gap-3 justify-content-end">
                 @auth
                     @can('visit admin panel')
-                        <a title="Go to Panel" class="btn btn-secondary d-flex gap-2 align-items-center" href="{{ route('dashboard') }}"><span class="mdi mdi-application-cog font-16"></span>Panel</a>
+                        <a title="Go to Panel" class="btn btn-secondary d-flex gap-2 align-items-center"
+                            href="{{ route('dashboard') }}"><span class="mdi mdi-application-cog font-16"></span>Panel</a>
                     @else
                         @if (
                             !auth()->user()
                                 ?->hasRole('partner'))
                             <a class="btn btn-secondary rounded-1 partner-btn-hide"
                                 href="{{ route('page.become.partner') }}">Become a partner</a>
-                                @else
-                                <span class="fw-bold text-warning">You are a partner</span>
+                        @else
+                            <span class="fw-bold text-warning">You are a partner</span>
                         @endif
                     @endcan
 
@@ -293,8 +301,11 @@
                 <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                     <a class="nav-link text-light" href="{{ route('course.index') }}">Training/Education</a>
                     <ul class="position-absolute dropdown ">
-                        <li class="nav-item custom-nav-item dropdown-item"><a href="{{ route('course.show', 1) }}"
-                                class="nav-link text-light">Practical Income Tax Course</a></li>
+                        @foreach ($courses as $course)
+                            <li class="nav-item custom-nav-item dropdown-item"><a
+                                    href="{{ route('course.show', $course->id) }}"
+                                    class="nav-link text-light">{{ $course->name }}</a></li>
+                        @endforeach
                     </ul>
                 </li>
 
@@ -313,9 +324,11 @@
                     class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('course.index') ? 'active-link' : '' }}">
                     <a class="nav-link text-light" href="{{ route('course.index') }}">Courses</a>
                     <ul class="position-absolute dropdown ">
-                        <li class="nav-item custom-nav-item dropdown-item"><a href="{{ route('course.show', 1) }}"
-                                class="nav-link text-light">Practical Income
-                                Tax Course</a></li>
+                        @foreach ($courses as $course)
+                            <li class="nav-item custom-nav-item dropdown-item"><a
+                                    href="{{ route('course.show', $course->id) }}"
+                                    class="nav-link text-light">{{ $course->name }}</a></li>
+                        @endforeach
                     </ul>
 
                 </li>
@@ -389,9 +402,11 @@
 
 @pushOnce('customJs')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             let headerHeight = $('#header').css('height')
-            $('#header-filler').css({'height': headerHeight})
+            $('#header-filler').css({
+                'height': headerHeight
+            })
         });
     </script>
 @endPushOnce
