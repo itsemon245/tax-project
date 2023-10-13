@@ -147,6 +147,13 @@
                                     </div>
                                 </div>
                             @endif
+                            @if ($client->email)
+                                <div class="mb-2">
+                                    <div class="fw-bold font-16">
+                                        Email: {{ $client->email }}
+                                    </div>
+                                </div>
+                            @endif
 
                         </td>
                         @can('manage client')

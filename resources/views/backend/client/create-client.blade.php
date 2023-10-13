@@ -33,6 +33,10 @@
                     </x-backend.form.text-input>
                 </div>
                 <div class="col-md-4 col-sm-6">
+                    <x-backend.form.text-input label="Email" type="text" name="email">
+                    </x-backend.form.text-input>
+                </div>
+                <div class="col-md-4 col-sm-6">
                     <x-backend.form.text-input label="Taxpayer Status" required type="text" name="taxpayer_status">
                     </x-backend.form.text-input>
                 </div>

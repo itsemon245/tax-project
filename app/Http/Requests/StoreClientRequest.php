@@ -29,6 +29,7 @@ class StoreClientRequest extends FormRequest
             'zone' =>['required', 'string'],
             'dob' =>['required', 'date'],
             'phone' =>['nullable', 'string'],
+            'email' =>['nullable', 'email'],
             'taxpayer_status' =>['required', 'string'],
             'special_benefits' =>['nullable', 'string'],
             'father_name' =>['required', 'string'],
