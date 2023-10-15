@@ -27,7 +27,7 @@
 @endPushOnce
 
 <table id="{{ $id }}" class="table table-striped dt-responsive nowrap w-100"
-    data-page-length='{{ gettype($items) != 'string' ? $items->count() : 0 }}' data-length-change='false'
+    data-page-length='{{ gettype($items) != 'string' ? count($items) : '' }}' data-length-change='false'
     data-search="false">
     {{ $slot }}
 </table>
