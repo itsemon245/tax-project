@@ -5,11 +5,9 @@
         <h2>Let’s Discuss your Project</h2>
         <h3>Which office do you prefer?</h3>
     </div>
-
     <div id="contact_details">
         <div class="container">
             <div class="row" style="flex-direction: row-reverse;">
-
                 <div class="col-lg-6 mb-3 mb-lg-0">
                     <embed style='object-fit:cover;' src="{{ $maps[0]->src }}" class="border w-100 rounded-3 shadow-sm h-100" />
                 </div>
@@ -130,6 +128,15 @@
                         </form>
                     </div>
                 </div>
+            </div>
+            <hr class="bg-light my-5 p-0">
+            <div>
+                <x-frontend.appointment-section :sections="$appointmentSections" />
+            </div>
+            <hr class="bg-light my-5 p-0">
+            <div>
+                <x-frontend.testimonial-section :testimonials="$reviews">
+                </x-frontend.testimonial-section>
             </div>
         </div>
     </div>

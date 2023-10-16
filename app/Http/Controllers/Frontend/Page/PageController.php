@@ -9,12 +9,14 @@ use App\Models\About;
 use App\Models\Course;
 use App\Models\Industry;
 use App\Models\Achievement;
+use App\Models\Appointment;
 use App\Models\Testimonial;
 use App\Models\ClientStudio;
 use Illuminate\Http\Request;
+use App\Models\ExpertProfile;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
-use App\Models\ExpertProfile;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -64,7 +66,9 @@ class PageController extends Controller
     function contactPage()
     {
         $maps = Map::get();
-        return view('frontend.pages.contact', compact('maps'));
+        $appointmentSections = Appointment::get();
+        $reviews = Review::with('user')->latest()->limit(10)->get();
+        return view('frontend.pages.contact', compact('maps', 'appointmentSections', 'reviews'));
     }
     public function becomePartnerPage()
     {
