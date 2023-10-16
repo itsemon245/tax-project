@@ -60,7 +60,8 @@
                                                     class="form-check-input rounded-circle" type="checkbox" value=""
                                                     id="{{ "project-$key-task-$i" }}" @checked($task->isCompleted($client->id))>
                                                 <label class="form-check-label"
-                                                    for="{{ "project-$key-task-$i" }}">{{ $task->name }}</label>
+                                                    for="{{ "project-$key-task-$i" }}">{{ $task->name }}
+                                                </label>
                                             </div>
                                         @endforeach
                                     </div>
