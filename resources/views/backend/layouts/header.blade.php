@@ -139,7 +139,7 @@
                 </span>
                 <span class="logo-lg">
                     <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt=""
-                        style="width: 150px;object-fit:cover;">
+                        style="width: 150px;object-fit:cover; height:80px;">
                 </span>
             </a>
         </div>

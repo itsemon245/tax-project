@@ -52,9 +52,9 @@ class ProjectController extends Controller
     public function projectClients($id)
     {
 
-        // $clients = Client::latest()->paginate(paginateCount());
-        $project = Project::with('tasks', 'tasks.clients', 'clients')->find($id);
-        return view('backend.project.projectClients', compact('project'));
+        $project = Project::with('tasks', 'tasks.clients')->find($id);
+        $clients = $project->clients()->paginate(paginateCount());
+        return view('backend.project.projectClients', compact('project', 'clients'));
     }
 
     /**
