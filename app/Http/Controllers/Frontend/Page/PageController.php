@@ -54,12 +54,15 @@ class PageController extends Controller
     public function aboutPage()
     {
         $about = About::first();
+        
         return view('frontend.pages.about', compact('about'));
     }
     function officePage()
     {
         $maps = Map::get();
-        return view('frontend.pages.office', compact('maps'));
+        $districts = Map::select('district')->distinct()->get()->pluck('district');
+        $thanas = Map::select('thana')->distinct()->get()->pluck('thana');
+        return view('frontend.pages.office', compact('maps', 'districts', 'thanas'));
     }
     function contactPage()
     {

@@ -22,40 +22,6 @@
                 </div>
             </li>
             @if (!$isPageV2)
-
-                <li class="sidebar-item">
-                    <a href="{{ route('user-profile.create') }}" class="">Profile</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('user-doc.index') }}">My Documents</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('purchase.index') }}">My Purcahses</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('page.my.courses') }}">My Courses</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('referral.index') }}">Referrals</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('notification') }}">Notificaion
-                        @if (!$isRead)
-                            <span
-                                class="badge bg-danger px2 py-1 rounded-circle">{{ count($user->unreadNotifications) }}</span>
-                        @endif
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('page.promo.code') }}">Promo Code</a>
-
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('tax.calculator') }}">Tax Calculator</a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="" href="{{ route('page.my.payments') }}">Payment History</a>
-                </li>
                 <li class="sidebar-item">
                     <div class="d-flex justify-content-between align-items-center">
                         <a class="" href="">Return Status</a>
@@ -64,10 +30,13 @@
                             style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
                     </div>
                     <ul class="dropdown-click" id="return-status">
-                        <li class="sidebar-item ps-3 dropdown-item"><a target="_blank" rel="noopener noreferrer"
-                                href="#" class="">Income Tax Return Verification</a></li>
-                        <li class="sidebar-item ps-3 dropdown-item"><a target="_blank" rel="noopener noreferrer"
-                                href="#" class="">Tax Verification</a></li>
+                        @php
+                            $returnLinks = \App\Models\Setting::first(['return_links'])->return_links;
+                        @endphp
+                        @foreach ($returnLinks as $link)
+                            <li class="sidebar-item ps-3 dropdown-item"><a target="_blank" rel="noopener noreferrer"
+                                    href="{{ $link->link }}" class="">{{ $link->title }}</a></li>
+                        @endforeach
                     </ul>
                 </li>
                 @foreach ($categories as $category)
@@ -101,18 +70,23 @@
                             style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
                     </div>
                     <ul class="dropdown-click" id="training-education">
-                        <li class="sidebar-item ps-3 dropdown-item"><a href="">Practical Income Tax Course</a>
-                        </li>
-                        <li class="sidebar-item ps-3 dropdown-item"><a href="">ITP Exam Preparation</a></li>
+                        @php
+                            $courses = \App\Models\Course::get(['id', 'name']);
+                        @endphp
+                        @foreach ($courses as $course)
+                            <li class="sidebar-item ps-3 dropdown-item"><a
+                                    href="{{ route('course.show', $course->id) }}">{{ $course->name }}</a>
+                            </li>
+                        @endforeach
                     </ul>
                 </li>
                 <li class="sidebar-item {{ request()->routeIs('books.view') ? 'active' : '' }}">
                     <a class="" href="{{ route('books.view') }}">Book Store</a>
                 </li>
-                <li class="sidebar-item">
+                {{-- <li class="sidebar-item">
                     <a class="btn btn-success waves-effect waves-light" href="{{ route('user-doc.create') }}">Upload
                         Documents</a>
-                </li>
+                </li> --}}
             @else
                 <li class="sidebar-item {{ request()->routeIs('page.industries') ? 'active' : '' }}">
                     <a class="" href="{{ route('page.industries') }}">Industries</a>

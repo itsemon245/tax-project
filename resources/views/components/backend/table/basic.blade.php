@@ -25,15 +25,14 @@
         }
     </style>
 @endPushOnce
-
 <table id="{{ $id }}" class="table table-striped dt-responsive nowrap w-100"
-    data-page-length='{{ gettype($items) != 'string' ? $items->count() : 0 }}' data-length-change='false'
+    data-page-length='{{gettype($items) != 'string' ? count($items) : 1 }}' data-length-change='false'
     data-search="false">
     {{ $slot }}
 </table>
 @if (method_exists($items, 'links'))
     <div id="myPaginator" class="paginate my-2">
-        {{ $items->links() }}
+        {{ $items->onEachSide(3)->links() }}
     </div>
 @endif
 

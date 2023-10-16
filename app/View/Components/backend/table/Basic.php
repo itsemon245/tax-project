@@ -3,9 +3,10 @@
 namespace App\View\Components\backend\table;
 
 use Closure;
+use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\Paginator;
-use Illuminate\View\Component;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Basic extends Component
 {
@@ -13,7 +14,7 @@ class Basic extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public Paginator|string $items
+        public Paginator|LengthAwarePaginator|string $items
     )
     {}
 

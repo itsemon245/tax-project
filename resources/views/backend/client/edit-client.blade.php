@@ -35,6 +35,10 @@
                     </x-backend.form.text-input>
                 </div>
                 <div class="col-md-4 col-sm-6">
+                    <x-backend.form.text-input label="Email" type="text" name="email" :value="$client->email">
+                    </x-backend.form.text-input>
+                </div>
+                <div class="col-md-4 col-sm-6">
                     <x-backend.form.text-input label="Taxpayer Status" required type="text" name="taxpayer_status"
                         :value="$client->taxpayer_status">
                     </x-backend.form.text-input>

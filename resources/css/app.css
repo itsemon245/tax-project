@@ -226,6 +226,14 @@ footer .social-handles {
         display: none !important;
     }
 }
+@media (min-width: 1230px){
+    .user-menu-btn{
+        display: block;
+    }
+}
+.user-menu-btn{
+    display: none;
+}
 /* up to midium devices like tablet */
 @media (max-width: 960px) {
     .divider-vr {
