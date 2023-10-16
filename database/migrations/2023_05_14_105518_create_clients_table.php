@@ -42,6 +42,9 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->foreignId('user_id')
                 ->constrained()
+                ->onUpdate('cascade');
+            $table->foreignId('project_id')
+                ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->timestamps();
