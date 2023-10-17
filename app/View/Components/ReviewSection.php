@@ -8,17 +8,15 @@ use Illuminate\View\Component;
 
 class ReviewSection extends Component
 {
-    public $reviews;
-    public $item;
-    public $slug;
     /**
      * Create a new component instance.
      */
-    public function __construct($reviews, $item, $slug)
-    {
-        $this->reviews = $reviews;
-        $this->item = $item;
-        $this->slug = $slug;
+    public function __construct(
+        public $reviews = [],
+        public $item,
+        public $slug,
+        public $canReview = false
+    ) {
     }
 
     /**

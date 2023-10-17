@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Models\ExpertProfile;
@@ -14,8 +15,10 @@ class ExpertController extends Controller
         $expert = ExpertProfile::withAvg('reviews', 'rating')
             ->withCount(reviewsAndStarCounts())
             ->find($id);
-        $reviews = Review::where(['reviewable_id' => $expert->id, 'reviewable_type' => 'ExpertProfile'])->latest()->get();
-        return view('frontend.pages.expert.profile', compact('reviews', 'expert'));
+        $reviews = $expert->reviews;
+        $user = User::find(auth()->id());
+        $canReview = $user ? $user->purchased('ExpertProfile')->find($expert->id) !== null : false;
+        return view('frontend.pages.expert.profile', compact('reviews', 'expert', 'canReview'));
     }
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\User;
+use App\Models\Review;
 use App\Models\CaseStudy;
 use Illuminate\Http\Request;
 use App\Models\CaseStudyPackage;
@@ -44,7 +46,10 @@ class CaseStudyController extends Controller
     }
     public function show(CaseStudy $caseStudy)
     {
-        return view('frontend.pages.course.case-study.show', compact('caseStudy'));
+        $reviews = $caseStudy->reviews;
+        $user = User::find(auth()->id());
+        $canReview = $user ? $user->purchased('CaseStudy')->find($caseStudy->id) !== null : false;
+        return view('frontend.pages.course.case-study.show', compact('caseStudy', 'reviews', 'canReview'));
     }
     public function download(CaseStudy $caseStudy)
     {

@@ -60,6 +60,8 @@ class BookController extends Controller
             ->withCount(reviewsAndStarCounts())
             ->find($book);
         $reviews = $book->reviews;
-        return view('frontend.pages.book.viewBook', compact('book', 'reviews'));
+        $user = User::find(auth()->id());
+        $canReview = $user ? $user->purchased('book')->find($book->id) !== null : false;
+        return view('frontend.pages.book.viewBook', compact('book', 'reviews', 'canReview'));
     }
 }

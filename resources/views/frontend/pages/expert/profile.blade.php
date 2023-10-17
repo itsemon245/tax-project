@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="reviews">
-                    <x-review-section :item="$expert" :reviews="$reviews" :slug="'expert_profile'" />
+                    <x-review-section :item="$expert" :reviews="$reviews" :slug="'expert_profile'" :can-review="$canReview" />
                 </div>
             </div>
 

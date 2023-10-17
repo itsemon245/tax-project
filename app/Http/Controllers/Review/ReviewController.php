@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Review;
 
+use App\Models\User;
 use App\Models\Review;
+use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ReviewResource;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
-use App\Http\Resources\ReviewResource;
-use App\Models\Product;
-use App\Models\Service;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -28,25 +29,20 @@ class ReviewController extends Controller
     function itemReview(string $slug, int $id)
     {
         $type = Str::lower($slug);
-        switch ($type) {
-            case 'product':
-                $item = Product::withAvg('reviews', 'rating')
-                    ->withCount(reviewsAndStarCounts())
-                    ->find($id);
-                break;
-            case 'service':
-                $item = Service::withAvg('reviews', 'rating')
-                    ->withCount(reviewsAndStarCounts())
-                    ->find($id);
-                break;
+        $model = "App\\Models\\" . Str::studly($slug);
+        $item = $model::withAvg('reviews', 'rating')
+            ->withCount(reviewsAndStarCounts())
+            ->find($id);
 
-            default:
-                # code...
-                break;
+        if (auth()->user() !== null) {
+            $user = User::find(auth()->id());
+            $canReview = $user->purchased($model)->find($id) !== null;
+        } else {
+            $canReview = false;
         }
         $reviews = $item->reviews()->latest()->get();
 
-        return view('frontend.pages.itemReview', compact('reviews', 'item', 'slug'));
+        return view('frontend.pages.itemReview', compact('reviews', 'item', 'slug', 'canReview'));
     }
 
     /**
@@ -113,7 +109,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        $review = Review::with('user')->where('id',$review->id)->first();
+        $review = Review::with('user')->where('id', $review->id)->first();
         return view('backend.review.show', compact('review'));
     }
 

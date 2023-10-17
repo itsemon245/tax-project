@@ -125,7 +125,7 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
 Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function () {
     Route::get('/{slug}/{id}', 'itemReview')->name('item');
     Route::post('/{slug}/index', 'index')->name('index');
-    Route::post('/{slug}/store', 'store')->name('store');
+    Route::post('/{slug}/store', 'store')->name('store')->middleware(['can_review']);
 });
 // Route for filepond upload
 Route::post('/upload', function (Request $request) {

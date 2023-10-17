@@ -60,9 +60,9 @@
                 </div>
             </div>
 
-            {{-- <div class="mt-3">
-                <x-review-section :item="$book" :reviews="$reviews" :slug="'book'"/>
-            </div> --}}
+            <div class="mt-3">
+                <x-review-section :item="$caseStudy" :reviews="$reviews" :slug="'CaseStudy'" :can-review="$canReview" />
+            </div>
 
 
         </div>

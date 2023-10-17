@@ -68,6 +68,8 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
-        'course.purchased' => \App\Http\Middleware\EnsureCourseIsPurchased::class
+        'course.purchased' => \App\Http\Middleware\EnsureCourseIsPurchased::class,
+        'caseStudy.purchased' => \App\Http\Middleware\EnsureCaseStudyIsPurchased::class,
+        'can_review' => \App\Http\Middleware\EnsureUserCanReview::class,
     ];
 }
