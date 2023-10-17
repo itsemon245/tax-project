@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Models\ExpertProfile;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
+use App\Models\PartnerSection;
 use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +30,8 @@ class PageController extends Controller
     {
         $subCategories = ServiceSubCategory::with('serviceCategory')->where('service_category_id', 3)->get();
         $achievements = Achievement::latest()->get();
-        return view('frontend.pages.industries.industries', compact('subCategories', 'achievements'));
+        $partners = PartnerSection::latest()->limit(10)->get();
+        return view('frontend.pages.industries.industries', compact('subCategories', 'achievements', 'partners'));
     }
     public function clientStudioPage()
     {
@@ -56,7 +58,6 @@ class PageController extends Controller
     public function aboutPage()
     {
         $about = About::first();
-        
         return view('frontend.pages.about', compact('about'));
     }
     function officePage()
@@ -70,8 +71,8 @@ class PageController extends Controller
     {
         $maps = Map::get();
         $appointmentSections = Appointment::get();
-        $reviews = Review::with('user')->latest()->limit(10)->get();
-        return view('frontend.pages.contact', compact('maps', 'appointmentSections', 'reviews'));
+        $partners = PartnerSection::latest()->limit(10)->get();
+        return view('frontend.pages.contact', compact('maps', 'appointmentSections', 'partners'));
     }
     public function becomePartnerPage()
     {

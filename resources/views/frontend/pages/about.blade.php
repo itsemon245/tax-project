@@ -20,9 +20,8 @@
 
 
         {{-- Sections --}}
-        <div class="row justify-content-center">
-
-            <div class="">
+        <div class=" justify-content-center">
+            <div>
                 {{-- Left side content --}}
                 <div class="row justify-content-center">
 

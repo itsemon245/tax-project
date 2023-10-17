@@ -134,10 +134,52 @@
                 <x-frontend.appointment-section :sections="$appointmentSections" />
             </div>
             <hr class="bg-light my-5 p-0">
-            <div>
-                <x-frontend.testimonial-section :testimonials="$reviews">
-                </x-frontend.testimonial-section>
-            </div>
         </div>
+        <section class="mt-5 py-5" style="background: #474646;">
+            <h3 class="text-light text-center">Our Valuable Partners</h3>
+            <div class="scroll-wrapper align-itmes-center" style="justify-content: center;">
+                <span id="next" class="mdi mdi-arrow-left-drop-circle-outline text-primary custom-icon"
+                    role="button"></span>
+                <div class="media-scroller snaps-inline">
+                    {{-- Patner section is starting --}}
+                    @foreach ($partners as $partner)
+                        <div class="media-elements">
+                            <div class="d-flex align-items-start gap-3 p-3" style="width: 100%;">
+                                <div>
+                                    <img loading="lazy" class="border image rounded-circle" src="{{ useImage($partner->image) }}"
+                                        width="80px" height="80px" style="object-fit: cover" alt="">
+    
+                                </div>
+                                <div>
+                                    <h4 class="mb-0">{{ $partner->name }}</h4>
+                                    <small class="mb-0 text-muted">{{ $partner->designation }}</small>
+                                    <div class="d-flex mb-0 mt-2 text-primary">
+                                        <a href="mailto:{{ $partner->email }}">
+                                            <span class="mdi mdi-email font-16 me-2"></span><span>{{ $partner->email }}</span>
+                                        </a>
+                                    </div>
+                                    <a href="tel:{{ $partner->phone }}">
+                                        <span class="mdi mdi-phone font-16 me-2"></span><span>{{ $partner->phone }}</span>
+                                    </a>
+                                    <div class="d-flex text-primary">
+                                        <a href="{{ $partner->facebook }}">
+                                            <i class="fe-facebook me-3"></i>
+                                        </a>
+                                        <a href="{{ $partner->twitter }}">
+                                            <i class="fe-twitter me-3"></i>
+                                        </a>
+                                        <a href="{{ $partner->linkedin }}">
+                                            <i class="fe-linkedin me-3"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <span id="prev" class="mdi mdi-arrow-right-drop-circle-outline text-primary custom-icon"
+                    role="button"></span>
+            </div>
+        </section>
     </div>
 @endsection
