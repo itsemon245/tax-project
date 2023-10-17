@@ -359,6 +359,7 @@ Route::prefix('admin')
                 Route::get('assign/clients/projects/{id}', 'assign')->name('assign');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/store', 'store')->name('store');
+                Route::post('/assign/projects//{client}/user/{user}/project/{project}', 'assigned')->name('assigned');
                 Route::post('update/project/{project}/client/{client}/task/{task}', 'updateTask')->name('task.update');
                 Route::get('edit/{id}', 'edit')->name('edit');
                 Route::PUT('update/{id}', 'update')->name('update');

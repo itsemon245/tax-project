@@ -252,9 +252,21 @@ class ProjectController extends Controller
     public function assign($id)
     {
 
-        $project = db::table('client_user')->get();
-        dd($project);
-        $clients = $project->clients()->paginate(paginateCount());
-        return view('backend.project.projectClients', compact('project', 'clients'));
+        $project = Project::find($id);
+        $clients = Client::with('users:name,id')->paginate(3);
+        $users = User::with('roles')->latest()->get();
+        $assign =  DB::table('client_user')->get();
+        return view('backend.project.assignClientsproject', compact('project', 'clients', 'users','assign'));
+    }
+
+    public function assigned(Request $request, $client, $user,  $project)
+    {
+        $clintUser = DB::table('client_user')->insert([
+            'client_id' => $client,
+            'user_id' => $user,
+            'project_id' => $project,
+        ]);
+
+        return response()->json(['success', $user]);
     }
 }

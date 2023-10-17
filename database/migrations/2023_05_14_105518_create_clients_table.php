@@ -34,22 +34,6 @@ return new class extends Migration
             $table->string('ref_no');
             $table->timestamps();
         });
-        Schema::create('client_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('client_id')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreignId('user_id')
-                ->constrained()
-                ->onUpdate('cascade');
-            $table->foreignId('project_id')
-                ->nullable()
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -58,6 +42,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('clients');
-        Schema::dropIfExists('client_user');
     }
 };
