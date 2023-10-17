@@ -111,7 +111,7 @@ Route::resource('partner-request', PartnerRequestController::class);
 Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
     Route::get('index', 'index')->name('index');
     Route::get('{course}/show', 'show')->name('show');
-    Route::get('course/{course}/videos/', 'videos')->name('videos');
+    Route::get('course/{course}/videos/', 'videos')->name('videos')->middleware(['auth', 'course.purchased']);
     Route::prefix('case-study')->name('caseStudy.')->controller(CaseStudyController::class)->group(function () {
         Route::get('/', 'caseStudy')->name('page');
         Route::get('index/{package_id}', 'index')->name('index');
@@ -144,7 +144,7 @@ Route::get('test', function () {
     return view('test');
 });
 
-Route::get('/test-mcq', [MCQController::class, 'index'])->name('mcq.index');
+Route::get('/test-mcq', [MCQController::class, 'index'])->name('mcq.index')->middleware(['auth', 'course.purchased']);
 Route::post('/test-submit/{exam}', [MCQController::class, 'store'])->name('mcq.submit');
 
 // Route for payment

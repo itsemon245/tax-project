@@ -5,6 +5,7 @@
     $settings = \App\Models\Setting::first();
     $basic = $settings->basic;
     $user = \App\Models\User::find(auth()->id());
+    $courses = \App\Models\Course::get(['id', 'name']);
 @endphp
 <header id="header" class="d-flex flex-column justify-items-center fixed">
     <div class="d-flex align-items-center flex-grow-1 space-between">
@@ -17,8 +18,8 @@
                 </button>
             </div>
             <div>
-                <button title="Navigation" id="sidebar-2" class="user-menu-btn waves-effect waves-light p-2 border-0 mx-2"
-                    style="background: none;">
+                <button title="Navigation" id="sidebar-2"
+                    class="user-menu-btn waves-effect waves-light p-2 border-0 mx-2" style="background: none;">
                     <i class="mdi mdi-menu text-light"></i>
                 </button>
             </div>
@@ -74,9 +75,6 @@
                     <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                         <a class="nav-link text-light" href="{{ route('course.index') }}">Training/Education</a>
                         <ul class="position-absolute dropdown ">
-                            @php
-                                $courses = \App\Models\Course::get(['id', 'name']);
-                            @endphp
                             @foreach ($courses as $course)
                                 <li class="nav-item custom-nav-item dropdown-item"><a
                                         href="{{ route('course.show', $course->id) }}"
@@ -163,9 +161,11 @@
                         class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('course.index') ? 'active-link' : '' }}">
                         <a class="nav-link text-light" href="{{ route('course.index') }}">Courses</a>
                         <ul class="position-absolute dropdown ">
-                            <li class="nav-item custom-nav-item dropdown-item"><a href="{{ route('course.show', 1) }}"
-                                    class="nav-link text-light">Practical Income
-                                    Tax Course</a></li>
+                            @foreach ($courses as $course)
+                                <li class="nav-item custom-nav-item dropdown-item"><a
+                                        href="{{ route('course.show', $course->id) }}"
+                                        class="nav-link text-light">{{ $course->name }}</a></li>
+                            @endforeach
                         </ul>
 
                     </li>

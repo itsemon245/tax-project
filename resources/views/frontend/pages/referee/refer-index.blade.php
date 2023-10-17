@@ -24,7 +24,7 @@
                     </div>
                     <div class="d-flex justify-content-between text-dark">
                         <p>Last Requested For</p>
-                        <p>{{ $lastWithdrawal->amount }} TK</p>
+                        <p>{{ $lastWithdrawal?->amount }} TK</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p>Total Amount Withdrawn</p>

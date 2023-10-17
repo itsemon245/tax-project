@@ -8,6 +8,7 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 
 class CourseController extends Controller
 {
@@ -21,10 +22,13 @@ class CourseController extends Controller
         return view('frontend.pages.course.view', compact('course'));
     }
 
-    public function videos(Course $course)
+    public function videos(int $course)
     {
-        $videos= Video::with('users')->where('course_id',$course)->get();
-        $users = User::where('id', auth()->id())->get();
-        return view('frontend.pages.course.showVideos',compact('videos',));
+        $course = Course::withAvg('reviews', 'rating')
+            ->withCount('reviews')->find($course);
+        $videos = Video::with('users')
+            ->where('course_id', $course->id)->get()->groupBy('section');
+        $reviews = $course->reviews;
+        return view('frontend.pages.course.showVideos', compact('videos', 'course', 'reviews'));
     }
 }
