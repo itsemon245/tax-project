@@ -44,6 +44,22 @@ return new class extends Migration
             // $table->integer('monthly_progress')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('client_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('client_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade');
+            $table->foreignId('project_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
