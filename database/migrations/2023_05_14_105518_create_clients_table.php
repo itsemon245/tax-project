@@ -44,6 +44,7 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade');
             $table->foreignId('project_id')
+                ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
@@ -57,5 +58,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('clients');
+        Schema::dropIfExists('client_user');
     }
 };

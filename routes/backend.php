@@ -356,6 +356,7 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('', 'index')->name('index');
                 Route::get('clients/{id}', 'projectClients')->name('clients');
+                Route::get('assign/clients/projects/{id}', 'assign')->name('assign');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/store', 'store')->name('store');
                 Route::post('update/project/{project}/client/{client}/task/{task}', 'updateTask')->name('task.update');
@@ -394,7 +395,7 @@ Route::prefix('admin')
         // custom Routes
 
         Route::get('get/client/{id}', [ChalanController::class, 'clientInfo'])->name('get.client.info');
-        //Review backend 
+        //Review backend
         Route::prefix('/review')->name('backend.review.')->controller(ReviewController::class)->group(function () {
             Route::get('/index', 'index')->name('index');
             Route::get('/create', 'create')->name('create');

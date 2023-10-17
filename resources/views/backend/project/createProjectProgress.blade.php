@@ -9,7 +9,7 @@
                 @csrf
                 <div class="px-md-0 px-2">
                     <div id="progressbarwizard">
-                        <div class="d-flex justify-content-center">
+                        {{-- <div class="d-flex justify-content-center">
                             <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <a href="#project-info" data-bs-toggle="tab" data-toggle="tab"
@@ -28,7 +28,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                         <div class="tab-content ">
                             {{-- <div id="bar" class="progress my-3" style="height: 7px;">
                                         <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 33.33%;"></div>
@@ -77,8 +77,12 @@
                                     </div>
                                 </div>
                                 {{-- Tasks --}}
+                                <div class="mt-1 col-lg-1"><button class="btn btn-primary w-100 btn-sm profile-button"
+                                        type="submit">Add
+                                        Project</button>
+                                </div>
                             </div>
-                            <div class="tab-pane my-3" id="finish" role="tabpanel">
+                            {{-- <div class="tab-pane my-3" id="finish" role="tabpanel">
                                 <div class="row">
                                     <div class="col-12 table-responsive">
                                         <table class="table table-striped mb-0">
@@ -138,9 +142,9 @@
                                         </table>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
-                            </div>
+                            </div> --}}
 
-                            <ul
+                            {{-- <ul
                                 class="list-unstyled d-flex justify-content-md-start justify-content-between gap-3 mb-0 wizard">
                                 <li class="previous" id="prev-btn">
                                     <a href="javascript: void(0);" class="btn btn-dark">Previous</a>
@@ -148,11 +152,14 @@
                                 <li class="next" id="next-btn">
                                     <a href="javascript: void(0);" class="btn btn-primary">Next</a>
                                 </li>
-                            </ul>
+                            </ul> --}}
 
                         </div> <!-- tab-content -->
+
                     </div>
-                </div>
+
+
+
             </form>
         </div>
     </x-backend.ui.section-card>
