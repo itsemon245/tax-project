@@ -58,7 +58,7 @@
                         </ul>
                     </div>
                     <div class="tab-content ">
-                        <div class="tab-pane my-3 active" id="daily" role="tabpanel">
+                        {{-- <div class="tab-pane my-3 active" id="daily" role="tabpanel">
                             <div class="row">
                                 <div class="col-md-12">
                                     @forelse ($projects as $project)
@@ -83,9 +83,9 @@
                                     @endforelse
                                 </div>
                             </div> <!-- end row -->
-                        </div>
+                        </div> --}}
                         <div class="tab-pane my-3" id="weekly" role="tabpanel">
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-12">
                                     @forelse ($projects as $project)
                                         @php
@@ -108,10 +108,10 @@
                                         <h5 class="d-flex justify-content-center text-muted">No record found</h5>
                                     @endforelse
                                 </div>
-                            </div> <!-- end row -->
+                            </div> <!-- end row --> --}}
                         </div>
                         <div class="tab-pane my-3" id="monthly" role="tabpanel">
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-12">
                                     @forelse ($projects as $project)
                                         @php
@@ -133,7 +133,7 @@
                                         <h5 class="d-flex justify-content-center text-muted">No record found</h5>
                                     @endforelse
                                 </div>
-                            </div> <!-- end row -->
+                            </div> <!-- end row --> --}}
                         </div>
                         <div class="tab-pane my-3" id="total" role="tabpanel">
                             <div class="row">
@@ -208,7 +208,10 @@
                                     <x-backend.ui.button type="delete" action="{{ route('project.destroy', $project->id) }}"
                                         class="btn-sm" />
                                 @endcan
-
+                                {{-- @can('read progress') --}}
+                                    <x-backend.ui.button type="custom" href="{{ route('project.assign', $project->id) }}"
+                                        class="btn-sm btn-primary"> Assign </x-backend.ui.button>
+                                {{-- @endcan --}}
                             </td>
                         @endcanany
                     </tr>

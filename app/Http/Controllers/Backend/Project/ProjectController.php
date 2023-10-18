@@ -94,39 +94,39 @@ class ProjectController extends Controller
             $tasks[] = $task;
         }
 
-        // Attach Clients
-        foreach ($request->clients as $clientId) {
-            foreach ($tasks as $task) {
-                $task->clients()->attach($clientId);
-            }
-            $project->clients()->attach($clientId);
-            $users = $request["client_" . $clientId . "_users"];
-            $admins = Role::where('name', 'admin')->first()->users;
-            if ($admins) {
-                foreach ($admins as $admin) {
-                    if ($admin->clients()->find($clientId) == null) {
-                        $admin->clients()->attach($clientId);
-                    }
-                }
-            }
-            if ($users) {
-                foreach ($users as $userId) {
-                    $isAttached = DB::table('client_user')->where(['client_id' => $clientId, 'user_id' => $userId,])->first();
-                    if (!$isAttached) {
-                        DB::table('client_user')->insert([
-                            'client_id' => $clientId,
-                            'user_id' => $userId
-                        ]);
-                    }
-                }
-            }
-        }
+        // // Attach Clients
+        // foreach ($request->clients as $clientId) {
+        //     foreach ($tasks as $task) {
+        //         $task->clients()->attach($clientId);
+        //     }
+        //     $project->clients()->attach($clientId);
+        //     $users = $request["client_" . $clientId . "_users"];
+        //     $admins = Role::where('name', 'admin')->first()->users;
+        //     if ($admins) {
+        //         foreach ($admins as $admin) {
+        //             if ($admin->clients()->find($clientId) == null) {
+        //                 $admin->clients()->attach($clientId);
+        //             }
+        //         }
+        //     }
+        //     if ($users) {
+        //         foreach ($users as $userId) {
+        //             $isAttached = DB::table('client_user')->where(['client_id' => $clientId, 'user_id' => $userId,])->first();
+        //             if (!$isAttached) {
+        //                 DB::table('client_user')->insert([
+        //                     'client_id' => $clientId,
+        //                     'user_id' => $userId
+        //                 ]);
+        //             }
+        //         }
+        //     }
+        // }
 
-        // Assign Targets
-        $project->daily_target = $request->daily_target < $project->total_clients ? $request->daily_target : $project->total_clients;
-        $project->weekly_target = $weekly_target < $project->total_clients ? $weekly_target : $project->total_clients;
-        $project->monthly_target = $monthly_target < $project->total_clients ? $monthly_target : $project->total_clients;
-        $project->save();
+        // // Assign Targets
+        // $project->daily_target = $request->daily_target < $project->total_clients ? $request->daily_target : $project->total_clients;
+        // $project->weekly_target = $weekly_target < $project->total_clients ? $weekly_target : $project->total_clients;
+        // $project->monthly_target = $monthly_target < $project->total_clients ? $monthly_target : $project->total_clients;
+        // $project->save();
 
 
 
@@ -247,5 +247,26 @@ class ProjectController extends Controller
         ];
         return back()
             ->with($notification);
+    }
+
+    public function assign($id)
+    {
+
+        $project = Project::find($id);
+        $clients = Client::with('users:name,id')->paginate(3);
+        $users = User::with('roles')->latest()->get();
+        $assign =  DB::table('client_user')->get();
+        return view('backend.project.assignClientsproject', compact('project', 'clients', 'users','assign'));
+    }
+
+    public function assigned(Request $request, $client, $user,  $project)
+    {
+        $clintUser = DB::table('client_user')->insert([
+            'client_id' => $client,
+            'user_id' => $user,
+            'project_id' => $project,
+        ]);
+
+        return response()->json(['success', $user]);
     }
 }
