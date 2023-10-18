@@ -7,6 +7,7 @@
                 margin-left: 1cm;
             }
 
+
             .dotted-border {
                 border: 2px dotted var(--ct-dark);
                 height: 1.25rem;
@@ -23,13 +24,15 @@
             .return-form * {
                 font-family: 'Times New Roman', Times, serif !important;
                 font-size: 1rem;
+                color: black;
             }
-            .br-page{
+
+            .br-page {
                 page-break-after: always;
             }
 
             .page-1 .upper-table td {
-                color: var(--ct-dark);
+                color: black;
                 padding: 2px;
             }
 
@@ -39,7 +42,6 @@
 
             .form label {
                 max-width: max-content;
-                color: var(--ct-dark);
                 font-weight: 400;
                 display: inline;
             }
@@ -53,10 +55,33 @@
                 padding: 2px;
             }
 
-            .hide-default-action[type=number]::-webkit-inner-spin-button,
-            .hide-default-action[type=number]::-webkit-outer-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
+            section {
+                counter-reset: serial;
+            }
+
+            .reset__serial {
+                counter-reset: serial;
+            }
+
+            .table th {
+                text-align: center;
+            }
+
+            .table th,
+            .table td {
+                padding: 2px;
+                vertical-align: top;
+            }
+
+            .page-4 .table th,
+            .page-4 .table td {
+                padding: 0;
+            }
+
+            .table .serial::before {
+                counter-increment: serial;
+                content: counter(serial)".";
+                font-weight: 600;
             }
         </style>
     @endpush
@@ -65,7 +90,7 @@
     <x-backend.ui.section-card style="box-shadow: none!important;">
         <h4 class="my-2 text-center d-print-none">Create Return</h4>
         <div class="return-form">
-            <div class="page-1">
+            <section class="page-1">
                 <div>
                     <div class="mx-auto">
                         <h6 class="text-center mb-1 fw-bold">National Board of Revenue</h6>
@@ -111,12 +136,8 @@
                         <li>2. <label for="nid">NID No. / Passport No (if no NID is available):</label> <input
                                 id="nid" type="number" class="w-50 dotted-border" name="nid"></li>
                         <li>3. <label for="tin">TIN:</label>
-                            @foreach (range(1, 13) as $i)
-                                <input id="tin" type="number"
-                                    class="box-input border border-dark text-center d-inline hide-default-action"
-                                    style="width:2rem!important;" value="" max="9">
-                            @endforeach
-                            <input name="tin" value="" hidden>
+
+                            <x-backend.form.box-input name="tin" :range="range(1, 13)" />
                         </li>
                         <li>
                             <ul class="p-0" style="list-style-type: none;">
@@ -135,32 +156,6 @@
                                 </li>
                             </ul>
                         </li>
-                        {{-- <div class="row">
-                            <li class="col-5">
-                                <div class="row">
-                                    <label for="assesment-year" class="col-8">Assesment Year:</label>
-                                    <input id="assesment-year" class="dotted-border col-4" name="assesment_year"
-                                        type="date">
-                                </div>
-                            </li>
-                            <li class="col-7">
-                                <div class="row">
-                                    <div class="col-4 p-0"></div>
-                                    <div class="col-8 p-0">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <input id="residential" name="residential" type="radio" value="true">
-                                                <label for="residential">Residential</label>
-                                            </div>
-                                            <div class="col-7">
-                                                <input id="residential" name="residential" type="radio" value="false">
-                                                <label for="residential">Non-Residential</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </div> --}}
                         <li class="mb-0">
                             <table class="inner-table">
                                 <tr>
@@ -302,11 +297,581 @@
                         </li>
                     </ol>
                 </div>
-            </div>
+            </section>
             <div class="br-page"></div>
-            <div>
-                Hello World
-            </div>
+
+            <section class="page-2-3">
+                <div class="page-2">
+                    <h2 class="fw-bold text-center">
+                        Statement of Income and Tax during Income Year ended <input type="date" style="width: 45%;"
+                            class="">
+                    </h2>
+                    <h2 class="fw-bold text-center">
+                        Name of the Taxpayer <input type="text" class="w-75 dotted-border">
+                    </h2>
+                    <div class="text-center">
+                        <label for="tin" class="fw-bold">TIN:</label>
+                        <x-backend.form.box-input name="tin" :range="range(1, 13)" />
+                    </div>
+                    <table class="table table-bordered border-dark mt-3">
+                        <thead>
+                            <th class="fw-bold" style="width: 30px;">
+                                Serial No.
+                            </th>
+                            <th class="fw-bold" colspan="2">Particulars of Total Income</th>
+                            <th class="fw-bold">Amount</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Income from Employment (annex Scedule 1)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Income from Rent (annex Scedule 2)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Income from Agriculture (annex Scedule 3)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Income from Business (annex Scedule 4)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Income from Capital Gains</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Income from financial Assets (<span class="font-13">Bank Interest /
+                                        Devidend, Securities, Profits etc</span> )</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Income from Other Sources (<span class="font-13">Royality, License Fee,
+                                        Honorarium, Govt. Incentive etc</span> )</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Income from Firm or AOP</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Income from minor or spouse (<span>if not Taxpayer</span> )</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Taxable from Abroad (<span>if not Taxpayer</span> )</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2" class="fw-bold">Total Income (<span class="fw-bold">Aggregate of 1 to
+                                        10</span> )</td>
+                                <td class="text-center">
+                                    <span id="total-income"></span>
+                                </td>
+                            </tr>
+
+                            {{-- Tax Computatios --}}
+                            <tr>
+                                <td colspan="4" style="height: 64px;vertical-align:bottom;" class="border-0 fw-bold">
+                                    Tax
+                                    Computation</td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center"></td>
+                                <td colspan="2">Gross Tax on Taxable Income</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center"></td>
+                                <td colspan="2">Tax Rebate (annex Schedule 5)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center"></td>
+                                <td colspan="2">Net Tax after Rebate (12-13)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center"></td>
+                                <td colspan="2">Minimum Tax</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" rowspan="2" style="vertical-align: middle;"></td>
+                                <td colspan="2">(a) Net wealth Surcharge (if applicable)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">(a) Enviormental Surcharge (if applicable)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center"></td>
+                                <td colspan="2">Delay Interest, penalty or any other amount under the Income Tax Act (if
+                                    any)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center"></td>
+                                <td colspan="2" class="fw-bold">Total Amount Payable (16 + 17 + 18)</td>
+                                <td class="text-center">
+                                    <input type="number" step="0.01" class="hide-default-action dotted-border px-0"
+                                        style="width: 100px;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="br-page"></div>
+
+
+                <div class="page-3">
+                    <table class="table table-bordered border-dark mt-3">
+                        <thead>
+                            <tr class="border-0">
+                                <th colspan="3" class="border-0">
+                                    <div class="fw-bold text-start">
+                                        Particulars of Tax Payment
+                                    </div>
+                                </th>
+                                <th colspan="3" class="border-0">
+                                    <div class="fw-bold">
+                                        Amount in Taka
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td>Tax Deducted Or Collected at Source (attach proof)</td>
+                                <td style="width:100px;"></td>
+                                <td class="text-center" rowspan="5" style="width:150px;vertical-align: middle;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td>Advance Tax Paid (attach proof)</td>
+                                <td style="width:100px;"></td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td>Advancements of tax refund [mention assesment year(s) of refund]</td>
+                                <td style="width:100px;"></td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td>Tax Paid with this Return</td>
+                                <td style="width:100px;"></td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td>Total Tax Paid and Adjusted (20 + 21 + 22 + 23)</td>
+                                <td style="width:100px;"></td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Excess Payment (24-19)</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="border-0" style="height: 30px;"></td>
+                            </tr>
+                            <tr>
+                                <td class="serial text-center" style="width: max-content;"></td>
+                                <td colspan="2">Tax Exempted / Tax Free Income(attach proof)</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    {{-- list of documents --}}
+                    <section>
+                        <div class="text-center fw-bold">List of Documents Furnished with this Return</div>
+                        <div class="border border-dark">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                </tr>
+                                <tr>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                </tr>
+                                <tr>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                </tr>
+                                <tr>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                </tr>
+                                <tr>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                    <td class="serial"> <input type="text" class="dotted-border w-75 p-1 mb-2"
+                                            style="height:1.5rem;"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </section>
+                    {{-- Verification --}}
+
+                    <table class="table table-borderless">
+                        <tr>
+                            <td colspan="2">
+                                <h2 class="fw-bold text-center mt-1" style="text-decoration: underline;">
+                                    Verifcation</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="mb-2">
+
+                                    <span class="fw-bold">I</span> <input type="text" class="dotted-border"
+                                        style="width: 25%">
+                                    Father/Husband <input type="text" class="dotted-border" style="width: 55%">
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div>
+                                    <label for="tin" class="fw-bold">TIN:</label>
+                                    <x-backend.form.box-input name="tin" :range="range(1, 13)" /> Solemnly declare
+                                    that to the best of
+                                    my knowledge and belief the information given in this return and statements and
+                                    documents annexed
+                                    herewith is correct and complete
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="height: 40px;"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <label for="place" class="fw-bold">Place:</label>
+                                    <input id="place" class="dotted-border">
+                                </div>
+                                <div>
+                                    <label for="date" class="fw-bold">Date:</label>
+                                    <input id="date" class="dotted-border">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-center fw-bold">
+                                    Signature
+                                </div>
+                                <div class="text-center fw-bold">
+                                    (<input class="text-center  dotted-border" style="border-width: 4px;">)
+
+                                </div>
+                                <div class="text-center">
+                                    (Name in block letters)
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="br-page"></div>
+            </section>
+
+            <section class="page-4">
+                <section>
+                    <h1 class="fs-3 fw-bold text-uppercase text-center mb-0">Schedule-1</h1>
+                    <h2 class="fs-4 fw-bold text-center mb-0">Particulars of Income from Employment</h2>
+                    <div class="fw-bold text-center mb-1"> a) This part is applicable for employees receiving
+                        salary under government pay scale </div>
+                    <div class="mb-1">
+                        <label for="name">Name of Taxpayer:</label> <input type="text" id="name"
+                            class="dotted-border w-25">
+                        <label for="tin">TIN:</label>
+                        <x-backend.form.box-input :range="range(1, 13)" />
+                    </div>
+                    <table class="table table-bordered border-dark mb-1">
+                        <thead>
+                            <th class="fw-bold text-center" style="vertical-align: middle;">Particulars</th>
+                            <th class="text-center fw-bold" style="width: 130px;">Amount of Income (Taka)</th>
+                            <th class="text-center fw-bold" style="width: 150px;">Expired Amount (Taka)</th>
+                            <th class="text-center fw-bold" style="width: 130px;">Net taxable Income (Tk.)</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Basic Pay</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 0.9rem;"> <span class="serial me-1"></span> Arrear Pay (<span class="font-13">if not included
+                                        in taxable income earlier</span>)</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Special allowance</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> House Rent allowance</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Medical allowance</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Conveyance allowance</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Festival allowance</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Support Staff allowance</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Leave allowance</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Honorarium / Reward</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Overtime allowance</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Bangla Noboborsho allowances</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Interest accrued on Provident Fund</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Lump Grant</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Gratuity</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Others, if any (provide detail)</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Total</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <div class="fw-bold"> b) This part is applicable for employees other than receiving salary under
+                        government pay scale </div>
+                    <table class="table table-bordered border-dark mb-0">
+                        <thead>
+                            <th class="fw-bold text-center" style="vertical-align: middle;">Particulars</th>
+                            <th class="text-center fw-bold" style="width: 130px;">Income(Taka)</th>
+                            <th class="text-center fw-bold" style="width: 130px;">Income(Taka)</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> <span class="serial me-1"></span> Basic Pay</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Allowances</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Advance / Arrear Salary</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Gratuity, Annuity, Pension or similar benefit</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Prequisites</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Receipt in lieu of or in addition to Salary or Wages
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Income from Employee's Share Scheme</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Accommodation Facility</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Transport Facility</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Any other Facility provided by Employer</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Employer's Contribution to Recognized Provident Fund
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Others, if any (provide detail)</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Total Salary Received (aggregate of 1 to 12)</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="serial me-1"></span>Exempted Amount (as per Part 1 of 6th Schedule)</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold"> <span class="serial me-1"></span>Total income from salary (13-14)
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+            {{-- <div class="br-page"></div> --}}
         </div>
 
     </x-backend.ui.section-card>

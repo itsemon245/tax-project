@@ -1,4 +1,4 @@
-@props(['value' => null, 'range' => null])
+@props(['value' => null, 'range' => null, 'hasSpace' => false])
 @php
     $class = $attributes->get('class');
     $name = $attributes->get('name');
@@ -6,11 +6,21 @@
         $length = str($value)->length();
         $range = range(1, $length);
     }
+    $space = $hasSpace ? 'me-3' : '';
 @endphp
+@pushOnce('customCss')
+    <style>
+        .hide-default-action[type=number]::-webkit-inner-spin-button,
+        .hide-default-action[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+@endPushOnce
 @foreach ($range as $key)
     <input type="number"
-        class="box-input border border-dark text-center d-inline {{ ($key - 1) % 4 == 0 ? 'me-2' : '' }} {{ $key === 1 ? 'me-3' : '' }} {{ $class }}"
-        style="width:2rem!important;" value="{{ $value ? $value[$key - 1] : '' }}">
+        class="hide-default-action box-input border border-dark text-center d-inline {{ ($key - 1) % 4 == 0 ? $space : '' }} {{ $key === 1 ? $space : '' }} {{ $class }}"
+        style="width:1.5rem!important;" value="{{ $value ? $value[$key - 1] : '' }}">
 @endforeach
 <input {{ $attributes->merge(['value' => $value]) }} hidden>
 
