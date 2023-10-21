@@ -12,6 +12,21 @@
                 text-align: right;
                 display: none !important;
             }
+
+            .form-check-label {
+                padding: 6px;
+                border-radius: 4px;
+            }
+
+            .unselected {
+                border: 1px solid var(--ct-dark);
+            }
+
+            .selected {
+                --ct-bg-opacity: 0.25;
+                background-color: rgba(var(--ct-success-rgb), var(--ct-bg-opacity)) !important;
+                border: 1px solid var(--ct-success);
+            }
         </style>
     @endpush
     <x-backend.ui.breadcrumbs :list="['Dashboard', 'Show All', 'Project']" />
@@ -27,7 +42,7 @@
                     <th>#</th>
                     <th>Client Name</th>
                     <th>Client Phone</th>
-                    <th>User</th>
+                    <th>Assign Employees</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,12 +53,17 @@
                             <td>{!! $client->name !!}</td>
                             <td>{!! $client->phone !!}</td>
                             <td>
-                                <div class="d-inline-flex flex-column flex-wrap gap-2">
-                                    @foreach ($users as $user)
-                                        <input
-                                            data-url="{{ route('project.assigned', ['client' => $client->id, 'user' => $user->id, 'project' => $project->id]) }}"
-                                            type="checkbox" id="users" class="form-check-input chacked rounded-circle users" />
-                                        <label for="users">{{ $user->name }}</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach ($employees as $employee)
+                                        <div>
+                                            <input
+                                                data-url="{{ route('project.assigned', ['client' => $client->id, 'user' => $employee->id, 'project' => $project->id]) }}"
+                                                type="checkbox" id="employee-{{ $employee->id . '-' . $client->id }}"
+                                                class="form-check-input rounded-circle" @checked($client->isEmployeeAssigned($project->id, $employee->id))
+                                                hidden />
+                                            <label for="employee-{{ $employee->id . '-' . $client->id }}"
+                                                class="form-check-label {{ $client->isEmployeeAssigned($project->id, $employee->id) ? 'selected' : 'unselected' }}">{{ $employee->name }}</label>
+                                        </div>
                                     @endforeach
                                 </div>
                             </td>
@@ -64,20 +84,25 @@
     @push('customJs')
         <script>
             $(document).ready(function() {
-                $('.users').on('change', e => {
+                $('.form-check-input').on('change', e => {
+                    let url = e.target.dataset.url
+                    let label = $(e.target).next()
                     $.ajax({
                         type: "post",
-                        url: e.target.dataset.url,
+                        url: url,
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            console.log(response);
                             Toast.fire({
                                 'icon': 'success',
                                 'title': 'Success',
                                 'text': response.message
                             })
+                            label
+                                .toggleClass('selected')
+                                .toggleClass('unselected')
+
                         },
                     });
                 })

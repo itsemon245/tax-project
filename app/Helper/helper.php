@@ -256,7 +256,7 @@ function currentFiscalYear(): string
  */
 function currentYear(): int
 {
-    $date = now();
+    $date = now('Asia/Dhaka');
     $year = (int) now()->year;
     $month = (int) $date->month;
     if ($month >= 6) {

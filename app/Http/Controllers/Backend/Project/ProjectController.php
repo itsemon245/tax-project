@@ -17,6 +17,7 @@ use App\Http\Requests\UpdateProgressRequest;
 
 class ProjectController extends Controller
 {
+    public $employees;
 
     public function __construct()
     {
@@ -35,6 +36,8 @@ class ProjectController extends Controller
         $this->middleware('can:update task progress',  [
             'only' => ['projectClients', 'updateTask']
         ]);
+
+        $this->employees = Role::where('name', 'partner')->first()->users;
     }
     /**
      * Display a listing of the resource.
@@ -83,6 +86,7 @@ class ProjectController extends Controller
         $weekly_target = $request->daily_target * $data['weekdays'];
         $monthly_target = $request->daily_target * $data['weekdays'] * 4;
         $project = Project::create($data);
+        $clients = Client::with('users')->get(['id']);
 
         // Create tasks for each project
         $tasks = [];
@@ -94,45 +98,39 @@ class ProjectController extends Controller
             $tasks[] = $task;
         }
 
-        // // Attach Clients
-        // foreach ($request->clients as $clientId) {
-        //     foreach ($tasks as $task) {
-        //         $task->clients()->attach($clientId);
-        //     }
-        //     $project->clients()->attach($clientId);
-        //     $users = $request["client_" . $clientId . "_users"];
-        //     $admins = Role::where('name', 'admin')->first()->users;
-        //     if ($admins) {
-        //         foreach ($admins as $admin) {
-        //             if ($admin->clients()->find($clientId) == null) {
-        //                 $admin->clients()->attach($clientId);
-        //             }
-        //         }
-        //     }
-        //     if ($users) {
-        //         foreach ($users as $userId) {
-        //             $isAttached = DB::table('client_user')->where(['client_id' => $clientId, 'user_id' => $userId,])->first();
-        //             if (!$isAttached) {
-        //                 DB::table('client_user')->insert([
-        //                     'client_id' => $clientId,
-        //                     'user_id' => $userId
-        //                 ]);
-        //             }
-        //         }
-        //     }
-        // }
+        foreach ($clients as $client) {
+            // Attaching Tasks to project
+            foreach ($tasks as $task) {
+                $task->clients()->attach($client->id);
+            }
 
-        // // Assign Targets
-        // $project->daily_target = $request->daily_target < $project->total_clients ? $request->daily_target : $project->total_clients;
-        // $project->weekly_target = $weekly_target < $project->total_clients ? $weekly_target : $project->total_clients;
-        // $project->monthly_target = $monthly_target < $project->total_clients ? $monthly_target : $project->total_clients;
-        // $project->save();
+            // Attaching Clients with project
+            $project->clients()->attach($client->id);
+
+            // Attaching admin with project
+            $admins = Role::where('name', 'admin')
+                ->orWhere('name', 'super admin')
+                ->first()->users;
+            if ($admins) {
+                foreach ($admins as $admin) {
+                    $client->users->attach($admin->id, [
+                        'project_id' => $project->id
+                    ]);
+                }
+            }
+        }
+
+        // Assign Targets
+        $project->daily_target = $request->daily_target < $project->total_clients ? $request->daily_target : $project->total_clients;
+        $project->weekly_target = $weekly_target < $project->total_clients ? $weekly_target : $project->total_clients;
+        $project->monthly_target = $monthly_target < $project->total_clients ? $monthly_target : $project->total_clients;
+        $project->save();
 
 
 
 
         $notification = [
-            'message' => 'Project Created and Assigned',
+            'message' => 'Project Created',
             'alert-type' => 'success',
         ];
         return redirect(route('project.index'))
@@ -252,25 +250,33 @@ class ProjectController extends Controller
     public function assign($id)
     {
         $project = Project::find($id);
-        $clients = Client::with('users:name,id')->paginate(3);
-        $users = User::with('roles')->latest()->get();
-        $assign =  DB::table('client_user')->get();
-        return view('backend.project.assignClientsproject', compact('project', 'clients', 'users','assign'));
+        $clients = $project->clients()->with('users:name,id')->paginate(100);
+        $employees = $this->employees;
+        return view('backend.project.assignClientsproject', compact('project', 'clients', 'employees'));
     }
 
-    public function assigned(Request $request, $client, $user,  $project)
+    public function assigned(Request $request, int $client, int $user, int  $project)
     {
-        // $array = ['client_id' => $client, 'user_id' => $user, 'project_id' => $project];
-        // $find = find($array);
-        // dd($find);
-        // $find = DB::table('client_user')->where('project_id', $project)->get();
-        // dd($find);
-        $clintUser = DB::table('client_user')->insert([
+        $options = [
             'client_id' => $client,
             'user_id' => $user,
             'project_id' => $project,
-        ]);
+        ];
+        $success = true;
+        $query = DB::table('client_user')
+            ->where($options);
+        $isAssigned = $query->first() !== null;
+        if ($isAssigned) {
+            $query->delete();
+            $message = 'Removed from project';
+        } else {
+            DB::table('client_user')->insert($options);
+            $message = 'Added to project';
+        }
 
-        return response()->json(['success', $user]);
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
     }
 }

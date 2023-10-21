@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -34,6 +35,20 @@ class Client extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    function isEmployeeAssigned($projectId, $userId): bool
+    {
+        $options = [
+            'client_id' => $this->id,
+            'user_id' => $userId,
+            'project_id' => $projectId,
+        ];
+        $item = DB::table('client_user')
+            ->where($options)->first();
+
+        return $item !== null;
+    }
+
     function toggleTask($projectId, $taskId)
     {
         $task = $this->tasks($projectId)->withPivot('status')->wherePivot('task_id', $taskId)->first();

@@ -32,7 +32,8 @@ class DashboardController extends Controller
         $clients = Client::get();
         $services = Calendar::get()->unique();
         $currentEvents = Calendar::where('start', 'like', "$today%")->where('is_completed', false)->latest()->get()->groupBy('type');
-        return view('backend.dashboard.dashboard', compact('clients', 'events', 'today', 'services', 'currentEvents', 'fiscalYear', 'chartData'));
+        $projects = Project::get();
+        return view('backend.dashboard.dashboard', compact('clients', 'events', 'today', 'services', 'currentEvents', 'fiscalYear', 'chartData', 'projects'));
     }
 
     public function getChartData()
