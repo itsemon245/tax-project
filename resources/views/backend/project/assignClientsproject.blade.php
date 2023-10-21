@@ -42,7 +42,7 @@
                                     @foreach ($users as $user)
                                         <input
                                             data-url="{{ route('project.assigned', ['client' => $client->id, 'user' => $user->id, 'project' => $project->id]) }}"
-                                            type="checkbox" id="users" class="form-check-input rounded-circle users" />
+                                            type="checkbox" id="users" class="form-check-input chacked rounded-circle users" />
                                         <label for="users">{{ $user->name }}</label>
                                     @endforeach
                                 </div>

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Backend\Book;
-
 use App\Models\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;

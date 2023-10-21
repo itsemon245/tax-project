@@ -251,7 +251,6 @@ class ProjectController extends Controller
 
     public function assign($id)
     {
-
         $project = Project::find($id);
         $clients = Client::with('users:name,id')->paginate(3);
         $users = User::with('roles')->latest()->get();
@@ -261,6 +260,11 @@ class ProjectController extends Controller
 
     public function assigned(Request $request, $client, $user,  $project)
     {
+        // $array = ['client_id' => $client, 'user_id' => $user, 'project_id' => $project];
+        // $find = find($array);
+        // dd($find);
+        // $find = DB::table('client_user')->where('project_id', $project)->get();
+        // dd($find);
         $clintUser = DB::table('client_user')->insert([
             'client_id' => $client,
             'user_id' => $user,
