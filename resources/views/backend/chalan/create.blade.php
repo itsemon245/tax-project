@@ -148,7 +148,7 @@
                         </tr>
                         <tr>
                             <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input  name="code"
-                                    :range="range(1, 13)" />
+                                    :range="range(1, 13)" :has-space="true" />
                             </td>
                         </tr>
                     </tbody>
