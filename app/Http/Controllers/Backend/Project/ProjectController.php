@@ -36,8 +36,6 @@ class ProjectController extends Controller
         $this->middleware('can:update task progress',  [
             'only' => ['projectClients', 'updateTask']
         ]);
-
-        $this->employees = Role::where('name', 'partner')->first()->users;
     }
     /**
      * Display a listing of the resource.
@@ -251,7 +249,7 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $clients = $project->clients()->with('users:name,id')->paginate(100);
-        $employees = $this->employees;
+        $employees = Role::where('name', 'employee')->first()->users;
         return view('backend.project.assignClientsproject', compact('project', 'clients', 'employees'));
     }
 
