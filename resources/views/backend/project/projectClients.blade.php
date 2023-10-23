@@ -38,7 +38,7 @@
             </thead>
             <tbody>
                 @if ($clients->count() > 0)
-                    @forelse ($project->clients as $key=>$client)
+                    @forelse ($clients as $key=>$client)
                         <tr>
                             <td>{{ ++$key }}</td>
                             <td>{!! $client->name !!}</td>
