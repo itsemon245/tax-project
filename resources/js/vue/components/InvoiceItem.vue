@@ -71,7 +71,7 @@
             </div>
         </td>
         <td>
-            <input aria-label="item-qty" name="item_qtys[]" type="text" v-model="props.item.qty" class="d-inline-block"
+            <input aria-label="item-qty" name="item_qtys[]" type="number" v-model="props.item.qty" class="d-inline-block"
                 style="width: 3rem;" />
         </td>
         <td>
@@ -113,12 +113,18 @@ const {
 
 
 watch([() => props.item.rate, () => props.item.qty], () => {
-    if(props.item.rate !== undefined){
+    if (props.item.rate !== undefined) {
         props.item.total = props.item.rate * props.item.qty
-    }else{
+    } else {
         props.item.total = 0 * props.item.qty;
     }
-    calcTaxes(props.item.id)
+    // calcTaxes(props.item.id)    
+})
+watch([() => props.item.total], () => {
+    if (props.item.total !== undefined && props.item.qty === 1) {
+        props.item.rate =  props.item.total
+    }
+    calcTaxes(props.item.id)    
 })
 
 

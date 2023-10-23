@@ -29,7 +29,7 @@
         <label class="col-4 form-label mb-0">Sub Total:</label>
         <div class="col-5 p-0">
           <input type="text" class="text-end p-1 d-inline-block fw-bold" style="width: calc(100% - 1rem);"
-            name="sub_total" placeholder="00.00" v-model="subTotal" />
+            name="sub_total" placeholder="00.00" v-model="subTotal" readonly />
           <span class="">Tk</span>
         </div>
       </div>
@@ -98,7 +98,7 @@
       </div>
       <div class="row mb-2 align-items-center justify-content-between border-top border-2">
         <label class="col-4 form-label mb-0">Total</label>
-        <input type="text" class="col-6 text-end p-1" name="total" placeholder="00.00" v-model="total" />
+        <input type="text" class="col-6 text-end p-1" name="total" placeholder="00.00" v-model="total" readonly />
       </div>
 
       <div>
@@ -161,7 +161,7 @@ const toggleDiscountType = () => {
   discount.value.isFixed = !discount.value.isFixed
 }
 const calcDiscount = () => {
-  discount.value.amount = discount.value.isFixed ? discount.value.percentage : subTotal.value * discount.value.percentage / 100;
+  discount.value.amount = discount.value.isFixed ? discount.value.percentage : subTotal?.value * discount.value.percentage / 100;
   discount.value.isActive = false
 }
 
@@ -169,7 +169,9 @@ onMounted(() => {
   watch(invoiceItems, (newItems) => {
     let sum = 0;
     newItems.forEach((item) => {
-      sum += item.total;
+      if (typeof item.total === 'number') {
+        sum += item.total;
+      }
     });
     subTotal.value = sum;
   }, { deep: true });
@@ -177,7 +179,11 @@ onMounted(() => {
   watch(invoiceItems, (newItems) => {
     let sum = 0;
     newItems.forEach((item) => {
-      sum += item.tax;
+      if (item.tax !== undefined) {
+        if (!Number.isNaN(item.tax)) {
+          sum +=  item.tax;
+        }
+      }
     });
     totalTax.value = parseInt(sum.toFixed(2));
 

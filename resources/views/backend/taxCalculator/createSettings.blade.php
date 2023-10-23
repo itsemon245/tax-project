@@ -131,7 +131,7 @@
                     </div>
 
 
-                    <div class="row only-individual">
+                    <div class="row only-individual only-tax">
                         <div class="col-md-6">
                             <x-backend.form.text-input type="number" name="tax_free_male" placeholder="Tax Free Male"
                                 label="Tax Free Male(৳)" />
@@ -141,7 +141,7 @@
                                 placeholder="Tax Free Female" label="Tax Free Female(৳)" />
                         </div>
                     </div>
-                    <div class="row not-individual d-none">
+                    <div class="row not-individual d-none only-tax">
                         <x-backend.form.text-input type="number" name="tax_free" placeholder="Tax Free"
                             label="Tax Free(৳)" />
                     </div>
@@ -198,19 +198,17 @@
                                                     <input type="text" id="is-discount" name="is_discounts_fixed[]"
                                                         value="false" hidden disabled>
                                                     <input type="text" id="discount-amount" name="discount_amounts[]"
-                                                        class="amount border-0 rounded-0 w-100 ps-2"
+                                                        class="form-control amount border-0 rounded-0 w-100 p-2"
                                                         style="outline:transparent;" placeholder="0" aria-label="Discont"
                                                         disabled>
 
 
                                                     <span id="slot-1-service-discount-icon-1"
-                                                        style="padding-top:.25rem;padding-bottom:0.25rem;"
-                                                        class="mdi mdi-percent-outline bg-light px-xxl-3 px-2 text-success font-18"></span>
+                                                        class="mdi mdi-percent-outline bg-light px-xxl-3 px-2 py-2 text-success font-18"></span>
 
 
                                                     <span onclick="service.discount.toggle(this)"
-                                                        style="padding-top:.25rem;padding-bottom:0.25rem;"
-                                                        class="mdi mdi-swap-horizontal bg-blue px-xxl-3 px-2  text-white font-18"
+                                                        class="mdi mdi-swap-horizontal bg-blue px-xxl-3 p-2  text-white font-18"
                                                         style="cursor: pointer;"></span>
 
                                                 </div>

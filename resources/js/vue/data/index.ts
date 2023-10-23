@@ -5,7 +5,7 @@ export interface InvoiceItem {
     description: undefined | null | string;
     rate: number | undefined;
     qty: number;
-    total: number;
+    total: number | undefined;
     taxes: Array<{
         id: number | undefined | null;
         rate: number | undefined | null;
@@ -13,7 +13,7 @@ export interface InvoiceItem {
         number: number | undefined | null;
     }>;
     isTaxActive: boolean;
-    tax: number
+    tax: number | undefined;
 }
 
 export const item: InvoiceItem = {
@@ -22,17 +22,17 @@ export const item: InvoiceItem = {
     description: undefined,
     rate: undefined,
     qty: 1,
-    total: 0,
+    total: undefined,
     taxes: [
         {
             id: 0,
-            rate: 0,
+            rate: undefined,
             name: undefined,
             number: undefined,
         },
     ],
     isTaxActive: false,
-    tax: 0
+    tax: undefined
 }
 const InvoiceItems : Array<InvoiceItem>  = [
     {

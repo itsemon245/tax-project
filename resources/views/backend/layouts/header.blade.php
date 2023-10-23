@@ -7,7 +7,7 @@
         ->latest()
         ->get(['id', 'data', 'type', 'read_at']);
     // dd($notifications);
-    $isRead = count($user->unreadNotifications) === 0;
+    $isRead = count($user?->unreadNotifications) === 0;
 @endphp
 <style>
     .read>* {
@@ -26,7 +26,7 @@
                     <i class="fe-bell noti-icon"></i>
                     @if (!$isRead)
                         <span
-                            class="badge bg-danger rounded-circle noti-icon-badge">{{ count($user->unreadNotifications) }}</span>
+                            class="badge bg-danger rounded-circle noti-icon-badge">{{ count($user?->unreadNotifications) }}</span>
                     @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-lg">
@@ -135,11 +135,11 @@
             <a href="{{ route('home') }}" class="logo logo-light text-center px-2">
                 <span class="logo-sm">
                     <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt=""
-                        style="width: 80px;object-fit:cover;">
+                        style="object-fit:cover;" width="80px;">
                 </span>
                 <span class="logo-lg">
                     <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt=""
-                        style="width: 150px;object-fit:cover; height:80px;">
+                        style="object-fit:cover;">
                 </span>
             </a>
         </div>
