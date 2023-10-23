@@ -137,7 +137,8 @@ class PermissionSeeder extends Seeder
                 ],
                 'client' => //operation
                 [
-                    'manage' //action
+                    'manage', //action
+                    'assign'
                 ],
             ],
             'user\'s data' => //group

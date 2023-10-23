@@ -539,7 +539,7 @@
                 @endcanany
                 <li class="menu-title mt-2">Control Panel</li>
                 @canany(['manage discussion', 'read discussion', 'create progress', 'update progress', 'delete
-                    progress', 'update task progress', 'read task progress'])
+                    progress', 'update task progress', 'read task progress', 'assign client'])
                     <li>
                         <a href="#project" data-bs-toggle="collapse">
                             <i class="mdi mdi-podium"></i>

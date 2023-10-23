@@ -170,7 +170,7 @@
                     <th>#</th>
                     <th>Project Name</th>
                     <th>Task List</th>
-                    @canany(['read progress', 'update progress', 'update task', 'delete progress'])
+                    @canany(['read progress', 'update progress', 'update task', 'delete progress', 'assign client'])
                         <th>Action</th>
                     @endcanany
                 </tr>
@@ -194,7 +194,7 @@
                                 @endforeach
                             </div>
                         </td>
-                        @canany(['read progress', 'update progress', 'update task', 'delete progress'])
+                        @canany(['read progress', 'update progress', 'update task', 'delete progress', 'assign client'])
                             <td>
                                 @can('read progress')
                                     <x-backend.ui.button type="custom" href="{{ route('project.clients', $project->id) }}"
@@ -208,10 +208,10 @@
                                     <x-backend.ui.button type="delete" action="{{ route('project.destroy', $project->id) }}"
                                         class="btn-sm" />
                                 @endcan
-                                {{-- @can('read progress') --}}
+                                @can('assign client')
                                     <x-backend.ui.button type="custom" href="{{ route('project.assign', $project->id) }}"
                                         class="btn-sm btn-primary"> Assign </x-backend.ui.button>
-                                {{-- @endcan --}}
+                                @endcan
                             </td>
                         @endcanany
                     </tr>

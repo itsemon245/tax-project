@@ -292,9 +292,8 @@ function starStyle($rating, $avg)
  * @param ?int count default 20
  * @return int default 20
  */
-function paginateCount(?int $count = null): int
+function paginateCount(?int $count = 20): int
 {
-    $defaultCount = 10;
-    $count = $count === null ? $defaultCount : $count;
+    // $count = $count === null ? $defaultCount : $count;
     return $count;
 }

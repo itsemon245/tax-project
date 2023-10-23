@@ -33,6 +33,9 @@ class ProjectController extends Controller
         $this->middleware('can:delete progress',  [
             'only' => ['destroy']
         ]);
+        $this->middleware('can:assign client',  [
+            'only' => ['assign', 'assigned']
+        ]);
         $this->middleware('can:update task progress',  [
             'only' => ['projectClients', 'updateTask']
         ]);
@@ -54,7 +57,7 @@ class ProjectController extends Controller
     {
 
         $project = Project::with('tasks', 'tasks.clients')->find($id);
-        $clients = User::find(auth()->id())->clients()->wherePivot('project_id', $project->id)->paginate(paginateCount());
+        $clients = User::find(auth()->id())->clients()->with('users:id,name')->paginate(paginateCount(100));
         return view('backend.project.projectClients', compact('project', 'clients'));
     }
 
@@ -81,10 +84,13 @@ class ProjectController extends Controller
             'daily_target' => 'numeric|required',
             'total_clients' => 'required|numeric',
         ]);
+        $super_admins = Role::Where('name', 'super admin')->first()->users;
+        $admins = Role::Where('name', 'admin')->first()->users;
         $weekly_target = $request->daily_target * $data['weekdays'];
         $monthly_target = $request->daily_target * $data['weekdays'] * 4;
         $project = Project::create($data);
-        $clients = Client::with('users')->get(['id']);
+        $clients = Client::with('users')->get();
+
 
         // Create tasks for each project
         $tasks = [];
@@ -101,17 +107,18 @@ class ProjectController extends Controller
             foreach ($tasks as $task) {
                 $task->clients()->attach($client->id);
             }
-
             // Attaching Clients with project
             $project->clients()->attach($client->id);
-
-            // Attaching admin with project
-            $admins = Role::where('name', 'admin')
-                ->orWhere('name', 'super admin')
-                ->first()->users;
-            if ($admins) {
+            if ($super_admins->count() > 0) {
+                foreach ($super_admins as $admin) {
+                    $client->users()->attach($admin->id, [
+                        'project_id' => $project->id
+                    ]);
+                }
+            }
+            if ($admins->count() > 0) {
                 foreach ($admins as $admin) {
-                    $client->users->attach($admin->id, [
+                    $client->users()->attach($admin->id, [
                         'project_id' => $project->id
                     ]);
                 }
@@ -162,12 +169,12 @@ class ProjectController extends Controller
         $project->weekly_target = $request->daily_target * $data['weekdays'];
         $project->monthly_target = $request->daily_target * $data['weekdays'] * 4;
         $project->save();
-        // $project->tasks()->delete();
-        // foreach ($request->tasks as $task) {
-        //     Task::create([
-        //             'name' => $task, 'project_id' => $project->id
-        //         ]);
-        // }
+        $project->tasks()->delete();
+        foreach ($request->tasks as $task) {
+            Task::create([
+                    'name' => $task, 'project_id' => $project->id
+                ]);
+        }
         $notification = [
             'message' => 'Project Updated',
             'alert-type' => 'success',
