@@ -56,7 +56,7 @@ class ProjectController extends Controller
     {
 
         $project = Project::with('tasks', 'tasks.clients')->find($id);
-        $clients = $project->clients()->paginate(paginateCount());
+        $clients = User::find(auth()->id())->clients()->wherePivot('project_id', $project->id)->paginate(paginateCount());
         return view('backend.project.projectClients', compact('project', 'clients'));
     }
 

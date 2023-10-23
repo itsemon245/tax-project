@@ -27,7 +27,7 @@
                     <th>#</th>
                     <th>Client Name</th>
                     <th>Client Phone</th>
-                    <th>User</th>
+                    <th>Employees</th>
                     @can('update task progress')
                         <th>Task List</th>
                     @endcan
