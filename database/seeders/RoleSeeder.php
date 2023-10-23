@@ -20,6 +20,7 @@ class RoleSeeder extends Seeder
             'admin',
             'partner',
             'user',
+            'employee',
         ];
         $sudoPermissions = Permission::get();
         $adminPermissions = Permission::where([
@@ -57,6 +58,10 @@ class RoleSeeder extends Seeder
         $partners = User::factory(5)->create();
         foreach ($partners as $user) {
             $user->assignRole('partner');
+        }
+        $employees = User::factory(5)->create();
+        foreach ($employees as $user) {
+            $user->assignRole('employee');
         }
 
         $admin = User::where('user_name', 'admin')->first();
