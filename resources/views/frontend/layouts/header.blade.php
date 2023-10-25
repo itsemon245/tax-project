@@ -12,17 +12,16 @@
         {{-- app logo and menu btn --}}
         <div class="d-flex align-items-center">
             <div>
-                <button title="Navigation" id="sidebar-1" class="menu-btn waves-effect waves-light p-2 border-0 mx-2"
+                <button title="Navigation" id="sidebar-1" class="menu-btn waves-effect waves-light p-2 border-0 mx-2 d-xl-none"
                     style="background: none;">
                     <i class="mdi mdi-menu text-light"></i>
                 </button>
             </div>
-            <div>
-                <button title="Navigation" id="sidebar-2"
-                    class="user-menu-btn waves-effect waves-light p-2 border-0 mx-2" style="background: none;">
-                    <i class="mdi mdi-menu text-light"></i>
-                </button>
-            </div>
+            @auth
+                <div class="d-none d-xl-flex auth-sidebar-toggle menu-btn mx-3" title="User Menu" role="button">
+                    <i class="mdi mdi-text-account text-light"></i>
+                </div>
+            @endauth
             <a href="{{ route('home') }}">
                 <img loading="lazy" class="app-logo" style="max-width:120px; object-fit:cover;"
                     src="{{ useImage($basic->logo) }}" alt="Text Act Logo">

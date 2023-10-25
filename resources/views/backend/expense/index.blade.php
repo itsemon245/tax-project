@@ -6,7 +6,8 @@
             .paginate {
                 float: right;
             }
-            @page{
+
+            @page {
                 size: A4;
                 margin: 0 auto;
             }
@@ -57,9 +58,45 @@
                             <td>{{ $expense->date->format('d M, Y') }}</td>
                             <td>{{ $expense->merchant }}</td>
                             <td style="max-width: 30ch;text-wrap:wrap;">
-                                <h6>{{ $expense->category }}</h6>
-                                <div class="text-muted">
-                                    {{ collect($expense->items)[0]->description ?? '' }}
+                                <h6 class="mb-0">Category: {{ $expense->category }}</h6>
+                                <div class="">
+                                    <ul class="list-unstyled">
+
+                                        @foreach ($expense->items as $item)
+                                            @if (gettype($item->description) === 'object')
+                                                <li>
+                                                    <div class="fw-medium">
+                                                        Invoice No: {{ $item->description->invoice_number }}
+                                                    </div>
+                                                    <div class="fw-medium">
+                                                        Invoice Date: {{ $item->description->invoice_issue_date }}
+                                                    </div>
+                                                    <div class="fw-medium text-black">
+                                                        Client Name: {{ $item->description->client_name }}
+                                                    </div>
+                                                    <div class="fw-medium">
+                                                        Company Name: {{ $item->description->company_name }}
+                                                    </div>
+                                                    <div class="fw-medium">
+                                                        Client Tin: {{ $item->description->tin }}
+                                                    </div>
+                                                    <div class="fw-medium">
+                                                        Reference No: {{ $item->description->ref_no }}
+                                                    </div>
+                                                </li>
+                                            @else
+                                                <li>
+                                                    <div class="fw-medium text-black">
+                                                        Amount: {{ $item->amount }}
+                                                    </div>
+                                                    <div>
+                                                        <span class="fw-medium">Description:</span>
+                                                        <div>{{ $item->description }}</div>
+                                                    </div>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </td>
                             <td class="fw-bold text-success">

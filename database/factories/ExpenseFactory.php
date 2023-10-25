@@ -28,8 +28,10 @@ class ExpenseFactory extends Factory
             'balance' => $balance,
             'amount' => $amount,
             'items' => [
-                'amount' => random_int(10, 1000),
-                'description' => fake()->realText(200)
+                [
+                    'amount' => random_int(10, 1000),
+                    'description' => fake()->realText(200)
+                ]
             ],
         ];
     }

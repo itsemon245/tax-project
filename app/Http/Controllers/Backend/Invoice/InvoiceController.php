@@ -20,6 +20,7 @@ use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceItemCollection;
 use App\Models\Expense;
+use Carbon\Carbon;
 
 class InvoiceController extends Controller
 {
@@ -341,7 +342,7 @@ class InvoiceController extends Controller
                 'paid' => $paid,
                 'due'=> 0
             ];
-            $this->createExpense($paid);  
+            $this->createExpense($invoice);  
         }
         $invoice->fiscalYears()->updateExistingPivot($fiscalYear->id, [
             'status' => $status,
@@ -427,19 +428,29 @@ class InvoiceController extends Controller
     }
 
 
-    public function createExpense(int $amount) {
+    public function createExpense(Invoice $invoice) {
+        $amount = $invoice->paid;
         $balance = $amount;
         $lastBalance = Expense::latest()->first('balance')->balance;
+        $invoicePivot = $invoice->fiscalYears()->latest()->first()->pivot;
         $balance += $lastBalance;
         Expense::create([
-            'date' => today(),
+            'date' => today('Asia/Dhaka'),
             'category' => 'invoice',
             'type' => 'credit',
             'amount'=> $amount,
             'balance'=> $balance,
             'items'=> [
                 [
-                    'description'=> 'Invoice Items' ,
+                    'description'=> [
+                        'client_name'=> $invoice->client->name,
+                        'company_name'=> $invoice->client->company_name,
+                        'tin'=> $invoice->client->tin,
+                        'ref_no'=> $invoice->client->ref_no,
+                        'invoice_number'=> $invoice->id,
+                        'invoice_issue_date'=> Carbon::parse($invoicePivot->issue_date)->format('d/m/Y'),
+                        'invoice_due_date'=> Carbon::parse($invoicePivot->due_date)->format('d/m/Y'),
+                    ],
                     'amount'=> $amount ,
                 ]
             ]
