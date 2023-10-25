@@ -9,6 +9,15 @@
     $name = $attributes->get('name');
 @endphp
 @pushOnce('customCss')
+    <style>
+        .custom-editor .ck-content.ck-editor__editable {
+            min-height: 100px !important;
+        }
+
+        .section-editor .ck-content.ck-editor__editable {
+            min-height: 160px !important;
+        }
+    </style>
     {{-- Classic build --}}
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script> --}}
 
