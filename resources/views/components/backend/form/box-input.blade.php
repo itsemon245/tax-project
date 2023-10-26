@@ -6,7 +6,7 @@
         $length = str($value)->length();
         $range = range(1, $length);
     }
-    $space = $hasSpace ? 'me-3' : '';
+    $space = $hasSpace === true ? 'me-3' : '';
 @endphp
 @pushOnce('customCss')
     <style>

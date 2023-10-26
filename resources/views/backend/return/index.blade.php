@@ -93,6 +93,10 @@
             .document-list .ck-content.ck-editor__editable {
                 min-height: 150px !important;
             }
+
+            .outer-list>li {
+                margin-bottom: 1rem;
+            }
         </style>
     @endpush
     <x-backend.ui.breadcrumbs :list="['Management', 'Return', 'Create']" />
@@ -1379,17 +1383,16 @@
                                             Total Asset of Business
                                         </li>
                                         <li style="list-style: none;">
-                                            Less: Business Liabilities <span class="font-12">(Institutional & Non-Institutional)</span>
+                                            Less: Business Liabilities <span class="font-12">(Institutional &
+                                                Non-Institutional)</span>
                                         </li>
                                     </ol>
                                 </td>
                                 <td>
                                     <ul class="list-unstyled mb-0">
                                         <li style="height: 1.5rem;"></li>
-                                        <li> Tk. <input type="text"
-                                                class="dotted-border w-75"></li>
-                                        <li> Tk. <input type="text"
-                                                class="dotted-border w-75"></li>
+                                        <li> Tk. <input type="text" class="dotted-border w-75"></li>
+                                        <li> Tk. <input type="text" class="dotted-border w-75"></li>
                                     </ul>
                                 </td>
                             </tr>
@@ -1475,7 +1478,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-9 text-end">
-                                                    Total Financial Assets= 
+                                                    Total Financial Assets=
                                                 </div>
                                                 <div class="col-3">
                                                     Tk.<input type="text" class="w-75 dotted-border">
@@ -1515,7 +1518,8 @@
                                         <li>
                                             <div class="row">
                                                 <div class="col-9">
-                                                    <h3 class="fs-5 fw-bold">Other Assets (Except Assets Mentioned in SI.K)</h3>
+                                                    <h3 class="fs-5 fw-bold">Other Assets (Except Assets Mentioned in
+                                                        SI.K)</h3>
                                                 </div>
                                                 <div class="col-3">Tk.<input type="text"
                                                         class="w-75 dotted-border"></div>
@@ -1535,15 +1539,18 @@
                                                         </div>
                                                         <div class="col-3">
                                                             <ul class="list-unstyled">
-                                                                <li>Tk.<input type="text" class="w-75 dotted-border"></li>
-                                                                <li>Tk.<input type="text" class="w-75 dotted-border"></li>
-                                                                <li>Tk.<input type="text" class="w-75 dotted-border"></li>
+                                                                <li>Tk.<input type="text" class="w-75 dotted-border">
+                                                                </li>
+                                                                <li>Tk.<input type="text" class="w-75 dotted-border">
+                                                                </li>
+                                                                <li>Tk.<input type="text" class="w-75 dotted-border">
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-9 text-end fw-bold">
-                                                    Total Cash in Hand and Fund Outside Business= 
+                                                    Total Cash in Hand and Fund Outside Business=
                                                 </div>
                                                 <div class="col-3">
                                                     Tk.<input type="text" class="w-75 dotted-border">
@@ -1560,36 +1567,205 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class=" serial">Total Assets in Bangladesh and Outside Bangladesh (8+9)</td>
+                                <td colspan="2" class=" serial">Total Assets in Bangladesh and Outside Bangladesh
+                                    (8+9)</td>
                                 <td>
                                     Tk. <input type="text" style="width:80%;display:inline;" class="dotted-border">
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <h2 class="text-center fw-bold mb-0" style="text-decoration: underline;">Verification</h2>
+                                    <h2 class="text-center fw-bold mb-0" style="text-decoration: underline;">
+                                        Verification</h2>
                                     <p>I Solemnly declare
                                         that to the best of
-                                        my knowledge and belief the information given in this IT-10B(2023) is correct and complete</p>
+                                        my knowledge and belief the information given in this IT-10B(2023) is correct and
+                                        complete</p>
                                     <div class="row">
                                         <div class="col-7">
-                                            
+
                                         </div>
                                         <div class="col-5">
                                             <h3 class="fs-5 fw-bold">Name & Signature of the Taxpayer</h3>
-                                            <div><label>Date: </label> <input type="text" class="dotted-border"></div>
+                                            <div><label>Date: </label> <input type="text" class="dotted-border">
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
-                                
+
                             </tr>
-        
+
                         </tbody>
                     </table>
                 </div>
             </section>
             <div class="br-page"></div>
 
+            <section class="page-10 my-auto">
+                <h3 class="fs-3 fw-bold text-center">Instruction to fill up the Return Form</h3>
+                <div class="border border-dark">
+                    <h6 class="fw-bold ps-2" style="text-decoration: underline;">Instructions</h6>
+                    <ol class="outer-list">
+                        <li>This Return of Income shall be Signed and Verified by the Taxpayer or his
+                            Authoized Representative as prescribed in the Income Tax Act, 2023</li>
+                        <li>
+                            <div style="text-decoration: underline;">Enclose where applicable:</div>
+                            <ol style="list-style: lower-alpha">
+                                <li>
+                                    Salary statement for salary; Bank statement for interest; Certificate for interest on
+                                    savings Instruments; Rent agreement, receipts of municipal tax & land revenue, statement
+                                    of house property loan interest, insurance premium for house property income; Statement
+                                    of Professional income as per IT Rule-8; Copy of assessment/Dividend Warrant for
+                                    dividend income; Statement of other income; Documents in support of investments in
+                                    savings certificates, LIP, DPS, Zakat, stock/share etc.
+                                </li>
+                                <li>
+                                    Depreciation Chart Claiming depreciation as per the Income Tax Act, 2023;
+                                </li>
+                                <li>
+                                    Computation of Income according to the Income Tax Act, 2023.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            <div style="text-decoration: underline;">Enclose Separate Statement for:</div>
+                            <ol style="list-style: lower-alpha">
+                                <li>
+                                    Any income of the spouse of Taxpayer (if she/he is not an Taxpayer), minor children and
+                                    dependent;
+                                </li>
+                                <li>
+                                    Tax exempted / Tax free Income.
+                                </li>
+                                <li>
+                                    Income Exempted from Tax declared under Part 1 of the 6th Scedule of Income Tax Act,
+                                    2023.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>Documents furnished to support the declaration should be signed by the Taxpayer or his/her
+                            authorized representative</li>
+                        <li>
+                            <div style="text-decoration: underline;">Furnish the following information:</div>
+                            <ol style="list-style: lower-alpha">
+                                <li>
+                                    Name, address & TIN of the partners if the Taxpayer is a firm.
+                                </li>
+                                <li>
+                                    Name of the firm, address & TIN if the Taxpayer is a partner.
+                                </li>
+                                <li>
+                                    Name of the company, address & TIN if the Taxpayer is a director.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            Assets and liabilities of self, spouse (if she/he is not a Taxpayer), minor children and
+                            dependent(s) to be shown in the IT-10B(2023).
+                        </li>
+                        <li>
+                            Signature is mandatory for all Taxpayer or his/her authorized representative.
+                        </li>
+                        <li>
+                            For Natural Person, signature is also mandatory in IT-10B(2023) & IT-10BB(2023).
+                        </li>
+                        <li>
+                            If needed, please use separate sheet.
+                        </li>
+                    </ol>
+                </div>
+            </section>
+            <div class="br-page"></div>
+
+            <section class="page-11">
+                <div class="text-center">
+                    <img src="{{ asset('images/govt-of-bangladesh-logo.png') }}" width="80px" alt="">
+                    <h1 class="fw-bold text-center fs-5 mt-0">The Peoples Republic of Bangladesh <br>
+                        National Board of Revenue <br>
+                        (Income Tax Office)
+                    </h1>
+                </div>
+                <div class="border border-dark px-1 py-2">
+                    <div class="text-uppercase fw-bold fs-6 text-center mb-2">
+                        Acknowledgement receipts/ Certificate of return of income
+                    </div>
+                    <div class="text-center mb-5">
+                        <label for="year" class="fs-4 fw-bold">Assesment Year:</label>
+                        <x-backend.form.box-input id="year" name="year" :range="range(1, 4)" />
+                        <span>-</span>
+                        <x-backend.form.box-input id="year-2" name="year-2" :range="range(1, 4)" />
+                    </div>
+                    <ol class="outer-list">
+                        <li>
+                            Name of the Taxpayer: <input type="text" class="dotted-border w-75">
+                        </li>
+                        <li>
+                            NID/Passport No.(if No NID): <input type="text" class="dotted-border"
+                                style="width: 68%">
+                        </li>
+                        <li class="my-1">
+                            TIN: <x-backend.form.box-input id="tin" name="tin" :range="range(1, 13)" />
+                        </li>
+                        <li>
+                            <ul class="p-0" style="list-style-type: none;">
+                                <li class="d-inline">
+                                    <label for="circle">(a) Circle:</label> <input id="circle"
+                                        style="width: 120px;" class="dotted-border" name="circle" type="text">
+                                </li>
+                                <li class="d-inline">
+                                    <label for="zone">(b) Taxes Zone:</label> <input id="zone"
+                                        style="width: 120px;" class="dotted-border" name="zone" type="text">
+                                </li>
+                                <li class="d-inline">
+                                    <label for="district">(c) District:</label> <input id="district"
+                                        style="width: 120px;" class="dotted-border" name="district" type="text">
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <label for="" class="me-3">Total Income Shown</label> TK. <input type="text" class="dotted-border w-50">
+                        </li>
+                        <li>
+                            <label for="" class="me-3">Total Tax Paid</label> TK. <input type="text" class="dotted-border w-50">
+                        </li>
+                    </ol>
+                    <div class="row px-3 mb-3">
+                        <div class="col-8">
+                            <table class="table table-bordered border-dark">
+                                <tr>
+                                    <td class="fw-bold" style="width: max-content;">
+                                        Serial Number of Return Register
+                                    </td>
+                                    <td style="width:150px;"></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold" style="width: max-content;">
+                                        Volume Number of Return Register
+                                    </td>
+                                    <td style="width:150px;"></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold" style="width: max-content;">
+                                        Date of Return Register
+                                    </td>
+                                    <td style="width:150px;"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+
+                    <div class="row px-3 mt-5">
+                        <div class="col-5 fw-bold font-14">
+                            Seal of Tax Office
+                        </div>
+                        <div class="col-7 fw-bold font-14">
+                            Signature and Seal of the Official Receiving the Return
+                        </div>
+                    </div>
+
+                </div>
+            </section>
 
         </div>
 
