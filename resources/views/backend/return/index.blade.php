@@ -88,7 +88,7 @@
     <x-backend.ui.breadcrumbs :list="['Management', 'Return', 'Create']" />
 
     <x-backend.ui.section-card style="box-shadow: none!important;">
-        <h4 class="my-2 text-center d-print-none">Create Return</h4>
+        <h4 class="my-2 text-center d-print-none"></h4>
         <div class="return-form">
             <section class="page-1">
                 <div>
@@ -487,8 +487,6 @@
                     </table>
                 </div>
                 <div class="br-page"></div>
-
-
                 <div class="page-3">
                     <table class="table table-bordered border-dark mt-3">
                         <thead>
@@ -788,6 +786,7 @@
                             <th class="text-center fw-bold" style="width: 130px;">Income(Taka)</th>
                             <th class="text-center fw-bold" style="width: 130px;">Income(Taka)</th>
                         </thead>
+        
                         <tbody>
                             <tr>
                                 <td> <span class="serial me-1"></span> Basic Pay</td>
@@ -871,7 +870,169 @@
                     </table>
                 </section>
             </section>
-            {{-- <div class="br-page"></div> --}}
+            <div class="br-page"></div>
+            <section class="page-5">
+                <div class="text-center">
+                    <h3>
+                        SCHEDULE-2
+                    </h3>
+                    <h4 class="mt-0">
+                        (Particulars of Income from Rent)
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-center text-center">
+                    <h2 class="fw-bold">
+                        Name of the Assessee: <input type="text" class="w-50 dotted-border">
+                    </h2>
+                    <h1>TIN:
+                        <x-backend.form.box-input name="tin" :range="range(1, 12)" />
+                    </h1>
+                </div>
+                    <table class="table table-bordered border-dark">
+                        <thead>
+                            <tr class="fw-bold">
+                                <th style="width:200px;">
+                                Property location,
+                                details and share of
+                                ownership
+                                </th>
+                                <th>
+                                      Calculation of total rent
+                                </th>
+                                <th>
+                                    Amount of Tk.
+                                </th>
+                                <th>
+                                    Amount of Tk.
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="15"></td>
+                                <td>
+                                    1) . Rent Received or Annual Value
+                                    (whichever is higher)
+                                </td>
+                                <td></td>
+                                <td rowspan="5"></td>
+                            </tr>
+                            <tr>
+                                <td>2) Advance Rent Received</td>
+                            </tr>
+                            <tr>
+                                <td>3) Value of any Benefit in addition to 1 & 2</td>
+                            </tr>
+                            <tr>
+                                <td>4) Adjusted Advance Rent</td>
+                            </tr>
+                            <tr>
+                                <td>5) Vacancy Allowance</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">6) Total Rental Value (1+2+3-4-5)</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>7) Allowable Deduction:</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>(a) Repair, Collection, etc</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>(b) Municipal or Local Tax</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>(c) Land Revenue</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>(d) Interest on Loan/Mortgage/Capital Charge</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>(e) Insurance Premium paid</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>(f) Other, if any</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">8) Total Admissible Deduction</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">9) Net Income ( 6-8)</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td colspan="2">10) Taxpayer’s Share, (if applicable)</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                    <h3>
+                        SCHEDULE-3
+                    </h3>
+                    <h4 class="mt-0">
+                        (Particulars of Income from Agriculture)
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-between text-center">
+                    <h2 class="fw-bold">
+                        Name of the Assessee: <input type="text" class="w-50 dotted-border">
+                    </h2>
+                    <h1>TIN:
+                        <x-backend.form.box-input name="tin" :range="range(1, 12)" />
+                    </h1>
+                </div>
+                     <h2 class="fw-bold ml-2 ps-0">
+                        Nature of Agriculture: <input type="text" class="w-25 dotted-border">
+                    </h2>
+                              <table class="table table-bordered border-dark">
+                        <thead>
+                            <tr class="fw-bold">
+                                <th style="width:50px;">
+                                Serial No
+                                </th>
+                                <th>
+                                Summary of income 
+                                </th>
+                                <th style="width:200px;">
+                                    Amount in taka
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1.</td>
+                                <td>Sales / Turnover/ Receipt</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2.</td>
+                                <td>Gross Profit</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3.</td>
+                                <td>General Expenses, Cost Of Goods Sold, Land Development Tax, Land Tax, Interest On Loan, Insurance Premium And Other Expenses</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4.</td>
+                                <td>Net Income (2-3)</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </section>
         </div>
 
     </x-backend.ui.section-card>
