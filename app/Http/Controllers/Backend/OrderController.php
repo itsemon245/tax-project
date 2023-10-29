@@ -33,7 +33,7 @@ class OrderController extends Controller
         $referee = Referee::with('user')->where('user_id', $user->id)->first();
 
         if ($payment->approved === 0) {
-            $payment->approved = 1;
+            $payment->approved = 1; 
             $parent = $referee?->parent;
             if ($parent) {
                 $commission = $payment->payable_amount * $referee->commission / 100;
@@ -42,12 +42,10 @@ class OrderController extends Controller
                 $parent->conversion = $parent->conversion + 1;
                 $parent->save();
             }
-        } else {
-            $payment->approved = 0;
         }
         if ($payment->purchasable_type === 'Course') {
             $course = Course::with('videos')->find($payment->purchasable_id);
-            $videos = $course->videos;
+            $videos = $course->videos()->with('users')->get();
             foreach ($videos as $video) {
                 $video->users()->attach($user->id);
             }

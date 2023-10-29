@@ -61,7 +61,7 @@
                                 This is Course Content tab
                             </div>
                             <div class="tab-pane" id="reviews" role="tabpanel">
-                                <x-review-section :item="$course" :reviews="$reviews" :slug="'course'" />
+                                <x-review-section :item="$course" :reviews="$reviews" :slug="'course'" :can-review="$canReview" />
                             </div>
                             <div class="tab-pane" id="discussion" role="tabpanel">
                                 <div class="row">

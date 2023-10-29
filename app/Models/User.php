@@ -93,7 +93,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $modelName = str($modelName)->singular();
         $modelName = str($modelName)->studly();
-        $items = $this->purchases()->where('purchasable_type', "App\\Models\\$modelName")->get()->map(function ($purchase) {
+        $items = $this->purchases()->where('purchasable_type', "Course")->where('approved', true)->get()->map(function ($purchase) {
             return $purchase->purchasable;
         });
         return $items;
