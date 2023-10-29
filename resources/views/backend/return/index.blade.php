@@ -4,9 +4,8 @@
         <style>
             @page {
                 size: A4;
-                margin-left: 1cm;
+                margin: 1cm;
             }
-
 
             .dotted-border {
                 border: 2px dotted var(--ct-dark);
@@ -15,6 +14,28 @@
                 border-right: 0;
                 border-left: 0;
                 min-width: 3rem;
+            }
+
+            @media print {
+                .page-number::before {
+                    content: counter(page);
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 999;
+                    font-size: 12pt;
+                    font-weight: 500;
+                }
+
+                .page-4 .page-number::before,
+                .page-5 .page-number::before,
+                .page-6 .page-number::before,
+                .page-9 .page-number::before
+                 {
+                    content: counter(page);
+                    bottom: -35px;
+                }
             }
 
             p {
@@ -30,6 +51,14 @@
             .br-page {
                 page-break-after: always;
             }
+
+            .page {
+                height: 10.5in;
+                position: relative;
+                counter-increment: page
+            }
+
+
 
             .page-1 .upper-table td {
                 color: black;
@@ -95,7 +124,16 @@
             }
 
             .outer-list>li {
-                margin-bottom: 1rem;
+                margin-bottom: 0.5rem;
+            }
+            @media screen {
+                .return-form{
+                    max-width: 210mm;
+                    margin: 0 auto;
+                }
+                .page{
+                    margin-bottom: 2rem;
+                }
             }
         </style>
     @endpush
@@ -104,7 +142,7 @@
     <x-backend.ui.section-card style="box-shadow: none!important;">
         <h4 class="my-2 text-center d-print-none"></h4>
         <div class="return-form">
-            <section class="page-1">
+            <section class="page page-1">
                 <div>
                     <div class="mx-auto">
                         <h6 class="text-center mb-1 ">National Board of Revenue</h6>
@@ -311,11 +349,12 @@
                         </li>
                     </ol>
                 </div>
+                <div class="page-number"></div>
             </section>
             <div class="br-page"></div>
 
             <section class="page-2-3">
-                <div class="page-2">
+                <div class="page page-2">
                     <h2 class="fw-bold text-center">
                         Statement of Income and Tax during Income Year ended <input type="date" style="width: 45%;"
                             class="">
@@ -499,9 +538,10 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="page-number"></div>
                 </div>
                 <div class="br-page"></div>
-                <div class="page-3">
+                <div class="page page-3">
                     <table class="table table-bordered border-dark mt-3">
                         <thead>
                             <tr class="border-0">
@@ -588,7 +628,7 @@
                     </section>
                     {{-- Verification --}}
 
-                    <table class="table table-borderless">
+                    <table class="table table-borderless mb-0">
                         <tr>
                             <td colspan="2">
                                 <h2 class="fw-bold text-center mt-1" style="text-decoration: underline;">
@@ -647,14 +687,15 @@
                         </tr>
 
                     </table>
+                    <div class="page-number"></div>
                 </div>
-                <div class="br-page"></div>
             </section>
+            <div class="br-page"></div>
 
-            <section class="page-4">
+            <section class="page page-4">
                 <section>
-                    <h1 class="fs-3 fw-bold text-uppercase text-center mb-0">Schedule-1</h1>
-                    <h2 class="fs-4 fw-bold text-center mb-0">Particulars of Income from Employment</h2>
+                    <h1 class="fs-3 fw-bold text-uppercase text-center my-0">Schedule-1</h1>
+                    <h2 class="fs-4 fw-bold text-center my-0">Particulars of Income from Employment</h2>
                     <div class="fw-bold text-center mb-1"> a) This part is applicable for employees receiving
                         salary under government pay scale </div>
                     <div class="mb-1">
@@ -788,7 +829,7 @@
                             <th class="text-center fw-bold" style="width: 130px;">Income(Taka)</th>
                             <th class="text-center fw-bold" style="width: 130px;">Income(Taka)</th>
                         </thead>
-        
+
                         <tbody>
                             <tr>
                                 <td> <span class="serial me-1"></span> Basic Pay</td>
@@ -871,169 +912,184 @@
                         </tbody>
                     </table>
                 </section>
+                <div class="page-number"></div>
             </section>
             <div class="br-page"></div>
-            <section class="page-5">
+            <section class="page page-5">
                 <div class="text-center">
-                    <h1 class="fs-3 fw-bold text-uppercase text-center mb-0">SCHEDULE-2</h1>
-                    <h2 class="fs-4 fw-bold text-center mt-0 mb-0">(Particulars of Income from Rent)</h2>
+                    <h1 class="fs-3 fw-bold text-uppercase text-center my-0">SCHEDULE-2</h1>
+                    <h2 class="fs-4 fw-bold text-center my-0">(Particulars of Income from Rent)</h2>
                 </div>
-                <div class="d-flex justify-content-center text-center">
-                    <h2 class="fw-bold">
+                <div class="d-flex justify-content-center text-center mb-1">
+                    <h2 class="fw-bold my-0">
                         Name of the Assessee: <input type="text" class="w-50 dotted-border">
                     </h2>
-                    <h1>TIN:
+                    <h1 class="my-0">TIN:
                         <x-backend.form.box-input name="tin" :range="range(1, 12)" />
                     </h1>
                 </div>
-                    <table class="table table-bordered border-dark">
-                        <thead>
-                            <tr class="fw-bold">
-                                <th style="width:200px;">
+                <table class="table table-bordered border-dark">
+                    <thead>
+                        <tr class="fw-bold">
+                            <th style="width:200px;" class="fw-bold">
                                 Property location,
                                 details and share of
                                 ownership
-                                </th>
-                                <th>
-                                      Calculation of total rent
-                                </th>
-                                <th>
-                                    Amount of Tk.
-                                </th>
-                                <th>
-                                    Amount of Tk.
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td rowspan="15"></td>
-                                <td>
-                                    1) . Rent Received or Annual Value
-                                    (whichever is higher)
-                                </td>
-                                <td></td>
-                                <td rowspan="5"></td>
-                            </tr>
-                            <tr>
-                                <td>2) Advance Rent Received</td>
-                            </tr>
-                            <tr>
-                                <td>3) Value of any Benefit in addition to 1 & 2</td>
-                            </tr>
-                            <tr>
-                                <td>4) Adjusted Advance Rent</td>
-                            </tr>
-                            <tr>
-                                <td>5) Vacancy Allowance</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">6) Total Rental Value (1+2+3-4-5)</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>7) Allowable Deduction:</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>(a) Repair, Collection, etc</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>(b) Municipal or Local Tax</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>(c) Land Revenue</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>(d) Interest on Loan/Mortgage/Capital Charge</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>(e) Insurance Premium paid</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>(f) Other, if any</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">8) Total Admissible Deduction</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">9) Net Income ( 6-8)</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td colspan="2">10) Taxpayer’s Share, (if applicable)</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                <div class="text-center mt-2 mb-3">
-                     <h1 class="fs-3 fw-bold text-uppercase text-center mb-0">SCHEDULE-3</h1>
-                    <h2 class="fs-4 fw-bold text-center mt-0 mb-0">(Particulars of Income from Agriculture)</h2>
+                            </th>
+                            <th class="fw-bold">
+                                Calculation of total rent
+                            </th>
+                            <th class="fw-bold">
+                                Amount of Tk.
+                            </th>
+                            <th class="fw-bold">
+                                Amount of Tk.
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="15"></td>
+                            <td>
+                                1) . Rent Received or Annual Value
+                                (whichever is higher)
+                            </td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                            <td rowspan="5" style="vertical-align: middle;text-align:center;"> <input type="text"
+                                    class="dotted-border w-75" /> </td>
+                        </tr>
+                        <tr>
+                            <td>2) Advance Rent Received</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>3) Value of any Benefit in addition to 1 & 2</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>4) Adjusted Advance Rent</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>5) Vacancy Allowance</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">6) Total Rental Value (1+2+3-4-5)</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>7) Allowable Deduction:</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>(a) Repair, Collection, etc</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>(b) Municipal or Local Tax</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>(c) Land Revenue</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>(d) Interest on Loan/Mortgage/Capital Charge</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>(e) Insurance Premium paid</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td>(f) Other, if any</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">8) Total Admissible Deduction</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">9) Net Income ( 6-8)</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                            <td colspan="2">10) Taxpayer’s Share, (if applicable)</td>
+                            <td class="text-center"><input type="text" class="dotted-border w-75" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <h1 class="fs-3 fw-bold text-uppercase text-center my-0">SCHEDULE-3</h1>
+                    <h2 class="fs-4 fw-bold text-center my-0">(Particulars of Income from Agriculture)</h2>
                 </div>
-                <div class="d-flex justify-content-between text-center">
-                    <h2 class="fw-bold">
+                <div class="d-flex justify-content-between text-center mb-1">
+                    <h2 class="fw-bold my-0">
                         Name of the Assessee: <input type="text" class="w-50 dotted-border">
                     </h2>
-                    <h1>TIN:
+                    <h1 class="my-0">TIN:
                         <x-backend.form.box-input name="tin" :range="range(1, 12)" />
                     </h1>
                 </div>
-                     <h2 class="fw-bold ml-2 ps-0">
-                        Nature of Agriculture: <input type="text" class="w-25 dotted-border">
-                    </h2>
-                        <table class="table table-bordered border-dark mb-2">
-                        <thead>
-                            <tr class="fw-bold">
-                                <th style="width:50px;">
+                <h2 class="fw-bold ml-2 ps-0">
+                    Nature of Agriculture: <input type="text" class="w-25 dotted-border">
+                </h2>
+                <table class="table table-bordered border-dark mb-2">
+                    <thead>
+                        <tr class="fw-bold">
+                            <th style="width:50px;">
                                 Serial No
-                                </th>
-                                <th>
-                                Summary of income 
-                                </th>
-                                <th style="width:200px;">
-                                    Amount in taka
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">1.</td>
-                                <td>Sales / Turnover/ Receipt</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">2.</td>
-                                <td>Gross Profit</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">3.</td>
-                                <td>General Expenses, Cost Of Goods Sold, Land Development Tax, Land Tax, Interest On Loan, Insurance Premium And Other Expenses</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">4.</td>
-                                <td>Net Income (2-3)</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            </th>
+                            <th>
+                                Summary of income
+                            </th>
+                            <th style="width:200px;">
+                                Amount in taka
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">1.</td>
+                            <td>Sales / Turnover/ Receipt</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">2.</td>
+                            <td>Gross Profit</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">3.</td>
+                            <td>General Expenses, Cost Of Goods Sold, Land Development Tax, Land Tax, Interest On Loan,
+                                Insurance Premium And Other Expenses</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">4.</td>
+                            <td>Net Income (2-3)</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="page-number"></div>
             </section>
-            <section class="page-6 font-14">
+            <div class="br-page"></div>
+            <section class="page page-6 font-14">
 
                 <section>
-                    <br/>
-                    <h1 class="fs-5 fw-bold text-uppercase text-center mt-2 my-0">Schedule-4</h1>
+                    <h1 class="fs-5 fw-bold text-uppercase text-center my-0">Schedule-4</h1>
                     <h2 class="fs-6 fw-bold text-center my-0">(Particulars of Income from Business)</h2>
-                    <div class="mb-1">
+                    <div class="">
                         <label for="name">Name of Taxpayer:</label> <input type="text" id="name"
                             class="dotted-border w-25">
                         <label for="tin">TIN:</label>
@@ -1158,10 +1214,10 @@
                         <label for="tin">TIN:</label>
                         <x-backend.form.box-input :range="range(1, 13)" />
                     </div>
-                    <div class="fw-bold">
+                    <div class="fw-bold font-13">
                         Particulars of Rebateable Investment
                     </div>
-                    <table class="table table-bordered border-dark mb-1">
+                    <table class="table table-bordered border-dark mb-0">
                         <thead>
                             <th class="text-center fw-bold font-16" colspan="2">Summary of Income</th>
                             <th class="text-center fw-bold font-16" style="width: 150px;">Amount in Taka</th>
@@ -1234,10 +1290,11 @@
                     </table>
                 </section>
 
+                <div class="page-number"></div>
             </section>
             <div class="br-page"></div>
 
-            <section class="page-7 mt-3">
+            <section class="page page-7 mt-3">
                 <div class="text-end fw-bold mb-2">IT-10BB(2023)</div>
                 <h1 class="fs-4 fw-bold text-center mb-0">Statement of Expenses Relating to Lifestyle</h1>
                 <h2 class="text-center mt-0 mb-1" style="text-decoration: underline;">(For Natural Person)</h2>
@@ -1341,7 +1398,8 @@
                         </tr>
                         <tr>
                             <td class="serial text-center"></td>
-                            <td class="">Interest Paid on Personal Loan Recieved from Institution & other Source</td>
+                            <td class="">Interest Paid on Personal Loan Recieved from Institution & other Source
+                            </td>
                             <td class="text-center">
                                 <input type="text" class="dotted-border w-75">
                             </td>
@@ -1374,11 +1432,12 @@
                         <label>Date:</label> <input type="text" class="dotted-border w-75">
                     </div>
                 </div>
+                <div class="page-number"></div>
             </section>
             <div class="br-page"></div>
 
             <section class="page-8-9">
-                <div class="page-8">
+                <div class="page page-8">
                     <div class="fw-bold text-end">IT-10B(2023)</div>
                     <h2 class="fs-4 fw-bold text-center">Statement of Assets, Liabilities and Expenses (as on <input
                             type="text" class="dotted-border">)</h2>
@@ -1522,239 +1581,241 @@
                                     Tk. <input type="text" style="width:80%;display:inline;" class="dotted-border">
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="3" class="br-page">
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <h2 class="fs-5 fw-bold my-0 serial">Particulars of Assets (if needed attach separate
-                                        sheet)</h2>
-                                    <ol style='list-style:lower-alpha;' class="mb-0">
-                                        <li value="1">
-                                            Total Asset of Business
-                                        </li>
-                                        <li style="list-style: none;">
-                                            Less: Business Liabilities <span class="font-12">(Institutional &
-                                                Non-Institutional)</span>
-                                        </li>
-                                    </ol>
-                                </td>
-                                <td>
-                                    <ul class="list-unstyled mb-0">
-                                        <li style="height: 1.5rem;"></li>
-                                        <li> Tk. <input type="text" class="dotted-border w-75"></li>
-                                        <li> Tk. <input type="text" class="dotted-border w-75"></li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="text-end">Business Capital of Partnership Firm=</td>
-                                <td>
-                                    Tk. <input type="text" style="width:80%;display:inline;" class="dotted-border">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <ol style="list-style: lower-alpha;" class="mb-0">
-                                        <li value="2">
-                                            <div class="row">
-                                                <h3 class="fs-5 fw-bold col-9">Director's Shaeholdings in Companies* </h3>
-                                                <div class="col-3">Tk.<input type="text"
-                                                        class="w-75 dotted-border"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <h3 class="fs-5 fw-bold col-9">Capital of Partnership business</h3>
-                                                <div class="col-3">Tk.<input type="text"
-                                                        class="w-75 dotted-border"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-9">
-                                                    <h3 class="fs-5 fw-bold ">Non-Agriculture Property/Land/House Property
-                                                    </h3>
-                                                    <div class="font-13">(Acquisition / Cost Value with Legal Expense /
-                                                        Acquired Price / Building Cost / Investment)</div>
-                                                    <div class="font-13">Location and Description of Non-Agricultural
-                                                        Property (use separate sheet if needed)</div>
-                                                </div>
-                                                <div class="col-3">Tk.<input type="text"
-                                                        class="w-75 dotted-border"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-9">
-                                                    <h3 class="fs-5 fw-bold ">Agriculture Property</h3>
-                                                    <div class="font-13">(Acquisition / Cost Value with Legal Expense)
-                                                        Location and Description of Non-Agricultural Property (use separate
-                                                        sheet if needed)</div>
-                                                </div>
-                                                <div class="col-3">Tk.<input type="text"
-                                                        class="w-75 dotted-border"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row align-items-end">
-                                                <div class="col-9">
-                                                    <h3 class="fs-5 fw-bold ">Financial assets value</h3>
-                                                    <div class="row">
-                                                        <div class="col-9">
-                                                            <ol style="list-style:lower-roman">
-                                                                <li class="font-14">Share/Deventure/Bond/Securities/Unit
-                                                                    Certificate etc</li>
-                                                                <li class="font-14">Sanchaypatra/Deposit Pension Schem
-                                                                </li>
-                                                                <li class="font-14">Loan Given (Mention Name & NID of Loan
-                                                                    Receiver)</li>
-                                                                <li class="font-14">Savings Deposit / Term Deposit</li>
-                                                                <li class="font-14">Provident fund or Other fund (if any)
-                                                                </li>
-                                                                <li class="font-14">Other investment</li>
-                                                            </ol>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <ul class="list-unstyled">
-                                                                <li>Tk. 4,17,000/-</li>
-                                                                <li>Tk. 17,60,000/-</li>
-                                                                <li>Tk. 16,30,000/-</li>
-                                                                <li>Tk. 17,60,000/-</li>
-                                                                <li>Tk. 16,30,000/-</li>
-                                                                <li style="text-decoration: underline;">Tk. 16,30,000/-
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-9 text-end">
-                                                    Total Financial Assets=
-                                                </div>
-                                                <div class="col-3">
-                                                    Tk.<input type="text" class="w-75 dotted-border">
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-9">
-                                                    <h3 class="fs-5 fw-bold">Motor Vehicles (at cost)</h3>
-                                                    <div class="font-13">(Cost Value including Registration Expense)</div>
-                                                    <div class="font-13">(Mention Type and Registration Number of Motor
-                                                        Vehicle)</div>
-                                                </div>
-                                                <div class="col-3">Tk.<input type="text"
-                                                        class="w-75 dotted-border"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-9">
-                                                    <h3 class="fs-5 fw-bold">Ornaments (Mention Quantity)</h3>
-                                                </div>
-                                                <div class="col-3">Tk.<input type="text"
-                                                        class="w-75 dotted-border"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-9">
-                                                    <h3 class="fs-5 fw-bold">Furniture, Electronic Items</h3>
-                                                </div>
-                                                <div class="col-3">Tk.<input type="text"
-                                                        class="w-75 dotted-border"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-9">
-                                                    <h3 class="fs-5 fw-bold">Other Assets (Except Assets Mentioned in
-                                                        SI.K)</h3>
-                                                </div>
-                                                <div class="col-3">Tk.<input type="text"
-                                                        class="w-75 dotted-border"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row align-items-end">
-                                                <div class="col-9">
-                                                    <h3 class="fs-5 fw-bold ">Cash in Hand and Fund Outside Business:</h3>
-                                                    <div class="row fw-bold">
-                                                        <div class="col-9">
-                                                            <ol style="list-style:lower-roman">
-                                                                <li class="font-14">Bank Balance</li>
-                                                                <li class="font-14">Cash in Hand</li>
-                                                                <li class="font-14">Others</li>
-                                                            </ol>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <ul class="list-unstyled">
-                                                                <li>Tk.<input type="text" class="w-75 dotted-border">
-                                                                </li>
-                                                                <li>Tk.<input type="text" class="w-75 dotted-border">
-                                                                </li>
-                                                                <li>Tk.<input type="text" class="w-75 dotted-border">
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-9 text-end fw-bold">
-                                                    Total Cash in Hand and Fund Outside Business=
-                                                </div>
-                                                <div class="col-3">
-                                                    Tk.<input type="text" class="w-75 dotted-border">
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ol>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class=" serial">Asset Outside Bangladesh</td>
-                                <td>
-                                    Tk. <input type="text" style="width:80%;display:inline;" class="dotted-border">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class=" serial">Total Assets in Bangladesh and Outside Bangladesh
-                                    (8+9)</td>
-                                <td>
-                                    Tk. <input type="text" style="width:80%;display:inline;" class="dotted-border">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <h2 class="text-center fw-bold mb-0" style="text-decoration: underline;">
-                                        Verification</h2>
-                                    <p>I Solemnly declare
-                                        that to the best of
-                                        my knowledge and belief the information given in this IT-10B(2023) is correct and
-                                        complete</p>
-                                    <div class="row">
-                                        <div class="col-7">
-
-                                        </div>
-                                        <div class="col-5">
-                                            <h3 class="fs-5 fw-bold">Name & Signature of the Taxpayer</h3>
-                                            <div><label>Date: </label> <input type="text" class="dotted-border">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-                            </tr>
-
                         </tbody>
                     </table>
+                    <div class="page-number"></div>
+                    <div class="br-page"></div>
+                </div>
+                <div class="page page-9">
+                    <table class="table table-borderless">
+
+                        <tr>
+                            <td colspan="2">
+                                <h2 class="fs-5 fw-bold my-0 serial">Particulars of Assets (if needed attach separate
+                                    sheet)</h2>
+                                <ol style='list-style:lower-alpha;' class="mb-0">
+                                    <li value="1">
+                                        Total Asset of Business
+                                    </li>
+                                    <li style="list-style: none;">
+                                        Less: Business Liabilities <span class="font-12">(Institutional &
+                                            Non-Institutional)</span>
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    <li style="height: 1.5rem;"></li>
+                                    <li> Tk. <input type="text" class="dotted-border w-75"></li>
+                                    <li> Tk. <input type="text" class="dotted-border w-75"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-end">Business Capital of Partnership Firm=</td>
+                            <td>
+                                Tk. <input type="text" style="width:80%;display:inline;" class="dotted-border">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <ol style="list-style: lower-alpha;" class="mb-0">
+                                    <li value="2">
+                                        <div class="row">
+                                            <h3 class="fs-5 fw-bold col-9">Director's Shaeholdings in Companies* </h3>
+                                            <div class="col-3">Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <h3 class="fs-5 fw-bold col-9">Capital of Partnership business</h3>
+                                            <div class="col-3">Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h3 class="fs-5 fw-bold ">Non-Agriculture Property/Land/House Property
+                                                </h3>
+                                                <div class="font-13">(Acquisition / Cost Value with Legal Expense /
+                                                    Acquired Price / Building Cost / Investment)</div>
+                                                <div class="font-13">Location and Description of Non-Agricultural
+                                                    Property (use separate sheet if needed)</div>
+                                            </div>
+                                            <div class="col-3">Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h3 class="fs-5 fw-bold ">Agriculture Property</h3>
+                                                <div class="font-13">(Acquisition / Cost Value with Legal Expense)
+                                                    Location and Description of Non-Agricultural Property (use separate
+                                                    sheet if needed)</div>
+                                            </div>
+                                            <div class="col-3">Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row align-items-end">
+                                            <div class="col-9">
+                                                <h3 class="fs-5 fw-bold my-0">Financial assets value</h3>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <ol style="list-style:lower-roman">
+                                                            <li class="font-14">Share/Deventure/Bond/Securities/Unit
+                                                                Certificate etc</li>
+                                                            <li class="font-14">Sanchaypatra/Deposit Pension Schem
+                                                            </li>
+                                                            <li class="font-14">Loan Given (Mention Name & NID of Loan
+                                                                Receiver)</li>
+                                                            <li class="font-14">Savings Deposit / Term Deposit</li>
+                                                            <li class="font-14">Provident fund or Other fund (if any)
+                                                            </li>
+                                                            <li class="font-14">Other investment</li>
+                                                        </ol>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <ul class="list-unstyled">
+                                                            <li>Tk. 4,17,000/-</li>
+                                                            <li>Tk. 17,60,000/-</li>
+                                                            <li>Tk. 16,30,000/-</li>
+                                                            <li>Tk. 17,60,000/-</li>
+                                                            <li>Tk. 16,30,000/-</li>
+                                                            <li style="text-decoration: underline;">Tk. 16,30,000/-
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-9 text-end">
+                                                Total Financial Assets=
+                                            </div>
+                                            <div class="col-3">
+                                                Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h3 class="fs-5 fw-bold my-0">Motor Vehicles (at cost)</h3>
+                                                <div class="font-13">(Cost Value including Registration Expense)</div>
+                                                <div class="font-13">(Mention Type and Registration Number of Motor
+                                                    Vehicle)</div>
+                                            </div>
+                                            <div class="col-3">Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h3 class="fs-5 fw-bold">Ornaments (Mention Quantity)</h3>
+                                            </div>
+                                            <div class="col-3">Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h3 class="fs-5 fw-bold">Furniture, Electronic Items</h3>
+                                            </div>
+                                            <div class="col-3">Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h3 class="fs-5 fw-bold">Other Assets (Except Assets Mentioned in
+                                                    SI.K)</h3>
+                                            </div>
+                                            <div class="col-3">Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row align-items-end">
+                                            <div class="col-9">
+                                                <h3 class="fs-5 fw-bold ">Cash in Hand and Fund Outside Business:</h3>
+                                                <div class="row fw-bold">
+                                                    <div class="col-9">
+                                                        <ol style="list-style:lower-roman">
+                                                            <li class="font-14">Bank Balance</li>
+                                                            <li class="font-14">Cash in Hand</li>
+                                                            <li class="font-14">Others</li>
+                                                        </ol>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <ul class="list-unstyled">
+                                                            <li>Tk.<input type="text" class="w-75 dotted-border">
+                                                            </li>
+                                                            <li>Tk.<input type="text" class="w-75 dotted-border">
+                                                            </li>
+                                                            <li>Tk.<input type="text" class="w-75 dotted-border">
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-9 text-end fw-bold">
+                                                Total Cash in Hand and Fund Outside Business=
+                                            </div>
+                                            <div class="col-3">
+                                                Tk.<input type="text" class="w-75 dotted-border">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class=" serial">Asset Outside Bangladesh</td>
+                            <td>
+                                Tk. <input type="text" style="width:80%;display:inline;" class="dotted-border">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class=" serial">Total Assets in Bangladesh and Outside Bangladesh
+                                (8+9)</td>
+                            <td>
+                                Tk. <input type="text" style="width:80%;display:inline;" class="dotted-border">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <h2 class="text-center fw-bold mb-0" style="text-decoration: underline;">
+                                    Verification</h2>
+                                <p>I Solemnly declare
+                                    that to the best of
+                                    my knowledge and belief the information given in this IT-10B(2023) is correct and
+                                    complete</p>
+                                <div class="row">
+                                    <div class="col-7">
+
+                                    </div>
+                                    <div class="col-5">
+                                        <h3 class="fs-5 fw-bold">Name & Signature of the Taxpayer</h3>
+                                        <div><label>Date: </label> <input type="text" class="dotted-border">
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+                    <div class="page-number"></div>
                 </div>
             </section>
             <div class="br-page"></div>
 
-            <section class="page-10 my-auto">
+            <section class="page page-10 my-auto">
                 <h3 class="fs-3 fw-bold text-center">Instruction to fill up the Return Form</h3>
                 <div class="border border-dark">
                     <h6 class="fw-bold ps-2" style="text-decoration: underline;">Instructions</h6>
@@ -1827,10 +1888,11 @@
                         </li>
                     </ol>
                 </div>
+                <div class="page-number"></div>
             </section>
             <div class="br-page"></div>
 
-            <section class="page-11">
+            <section class="page page-11">
                 <div class="text-center">
                     <img src="{{ asset('images/govt-of-bangladesh-logo.png') }}" width="80px" alt="">
                     <h1 class="fw-bold text-center fs-5 mt-0">The Peoples Republic of Bangladesh <br>
@@ -1876,10 +1938,12 @@
                             </ul>
                         </li>
                         <li>
-                            <label for="" class="me-3">Total Income Shown</label> TK. <input type="text" class="dotted-border w-50">
+                            <label for="" class="me-3">Total Income Shown</label> TK. <input type="text"
+                                class="dotted-border w-50">
                         </li>
                         <li>
-                            <label for="" class="me-3">Total Tax Paid</label> TK. <input type="text" class="dotted-border w-50">
+                            <label for="" class="me-3">Total Tax Paid</label> TK. <input type="text"
+                                class="dotted-border w-50">
                         </li>
                     </ol>
                     <div class="row px-3 mb-3">
@@ -1918,6 +1982,7 @@
                     </div>
 
                 </div>
+                <div class="page-number"></div>
             </section>
         </div>
 
