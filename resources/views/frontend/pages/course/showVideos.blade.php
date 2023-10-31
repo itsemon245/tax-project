@@ -58,7 +58,15 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane show" id="about" role="tabpanel">
-                                This is Course Content tab
+                                @forelse ($descriptions as $description)
+                                    <div>
+                                        {{ $description->description }}
+                                    </div>
+                                @empty
+                                    <div>
+                                        No Descrpition here...
+                                    </div>
+                                @endforelse
                             </div>
                             <div class="tab-pane" id="reviews" role="tabpanel">
                                 <x-review-section :item="$course" :reviews="$reviews" :slug="'course'" :can-review="$canReview" />

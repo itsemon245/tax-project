@@ -58,7 +58,8 @@ class PageController extends Controller
     public function aboutPage()
     {
         $about = About::first();
-        return view('frontend.pages.about', compact('about'));
+        $appointmentSections = Appointment::latest()->limit(5)->get();
+        return view('frontend.pages.about', compact('about', 'appointmentSections'));
     }
     function officePage()
     {
@@ -70,7 +71,7 @@ class PageController extends Controller
     function contactPage()
     {
         $maps = Map::get();
-        $appointmentSections = Appointment::get();
+        $appointmentSections = Appointment::latest()->limit(5)->get();
         $partners = PartnerSection::latest()->limit(10)->get();
         return view('frontend.pages.contact', compact('maps', 'appointmentSections', 'partners'));
     }
