@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('phone');
             $table->text('district');
             $table->text('thana');
-            $table->text('date');
+            $table->date('date');
             $table->text('time');
             $table->boolean('is_completed')->default(false);
             $table->boolean('is_physical')->default(false);

@@ -208,7 +208,7 @@
         </div>
     </x-backend.ui.section-card>
     @push('customJs')
-        <script src="{{ asset('backend/assets/libs/tippy.js/tippy.all.min.js') }}"></script>
+        {{-- <script src="{{ asset('backend/assets/libs/tippy.js/tippy.all.min.js') }}"></script> --}}
         {{-- full calender plugin  --}}
         <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.7/index.global.min.js'></script>
         <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.7/index.global.min.js'></script>

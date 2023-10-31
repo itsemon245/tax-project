@@ -350,6 +350,7 @@ class InvoiceController extends Controller
         ]);
         Calendar::create([
             'title' => 'Invoice ' . $status,
+            'invoice_id' => $invoice->id,
             'client_id' => $invoice->client_id,
             'service' => 'Invoice',
             'type' => 'Invoice ' . $status,
@@ -380,6 +381,7 @@ class InvoiceController extends Controller
         ]);
         Calendar::create([
             'title' => 'Invoice Sent',
+            'invoice_id' => $invoice->id,
             'client_id' => $invoice->client_id,
             'service' => 'Invoice',
             'type' => 'Invoice Sent',

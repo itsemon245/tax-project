@@ -27,10 +27,9 @@ class DashboardController extends Controller
         $fiscalYear = FiscalYear::where('year', currentFiscalYear())->first();
         $chartData = $this->getChartData();
         $events = Calendar::with('client')->latest()->get();
-        $tz = new CarbonTimeZone('Asia/Dhaka');
-        $today = today($tz)->format('Y-m-d');
+        $today = today('Asia/Dhaka')->format('Y-m-d');
         $clients = Client::get();
-        $services = Calendar::get()->unique();
+        $services = Calendar::select('service')->distinct()->get();
         $currentEvents = Calendar::where('start', 'like', "$today%")->where('is_completed', false)->latest()->get()->groupBy('type');
         $projects = Project::get();
         return view('backend.dashboard.dashboard', compact('clients', 'events', 'today', 'services', 'currentEvents', 'fiscalYear', 'chartData', 'projects'));

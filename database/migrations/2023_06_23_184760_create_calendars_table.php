@@ -14,10 +14,16 @@ return new class extends Migration
         Schema::create('calendars', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')
+                ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignId('invoice_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('user_appointment_id')
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
