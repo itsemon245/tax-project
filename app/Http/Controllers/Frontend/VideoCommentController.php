@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use App\Models\VideoComment;
-use App\Http\Requests\StoreVideoCommentRequest;
-use App\Http\Requests\UpdateVideoCommentRequest;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class VideoCommentController extends Controller
 {
@@ -27,9 +27,27 @@ class VideoCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreVideoCommentRequest $request)
+    public function store(Request $request)
     {
-        //
+        // dd($request->video_id);
+        $store = VideoComment::create([
+            'user_id' => auth()->user()->id,
+            'video_id' => $request->video_id,
+            'comment' => $request->comment,
+        ]);
+        if($store){
+            $notification = [
+                'message' => 'Discussion Submit',
+                'alert-type' => 'success',
+            ];
+            return back()->with($notification);
+        }else{
+            $notification = [
+                'message' => 'Something Wrong!',
+                'alert-type' => 'error',
+            ];
+            return back()->with($notification);
+        }
     }
 
     /**
@@ -51,7 +69,7 @@ class VideoCommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateVideoCommentRequest $request, VideoComment $videoComment)
+    public function update(Request $request, VideoComment $videoComment)
     {
         //
     }

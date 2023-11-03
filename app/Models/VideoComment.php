@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class VideoComment extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     public function video(): BelongsTo
     {
         return $this->belongsTo(Video::class);

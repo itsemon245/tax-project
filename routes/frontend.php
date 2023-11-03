@@ -27,7 +27,9 @@ use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\Frontend\VideoCommentController;
 use App\Http\Controllers\Frontend\WithdrawalController;
+use App\Models\VideoComment;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,6 +121,7 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
         Route::post('download/{caseStudy}', 'download')->name('download');
         Route::patch('like/{caseStudy}', 'like')->name('like');
     });
+    Route::resource('video-comment', VideoCommentController::class);
 });
 
 // Review Routes
