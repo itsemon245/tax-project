@@ -39,7 +39,7 @@
                                     <label for="password" class="form-label">Password</label>
                                     <div class="input-group input-group-merge">
                                         <input type="password" id="password"
-                                            class="form-control @error('email')
+                                            class="form-control @error('password')
                                         is-invalid
                                 @enderror"
                                             placeholder="Enter your password" name="password">

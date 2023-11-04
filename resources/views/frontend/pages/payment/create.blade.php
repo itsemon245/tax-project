@@ -88,18 +88,13 @@
                                 <div class="col-md-5">
                                     <div class="text-end">
                                         <div class="text-muted">Pay using any of these number</div>
-                                        <div>
-                                            <span class="fw-medium me-2" style="color: #e2136e;">Bkash:</span>
-                                            <span class="fw-medium">01548488888</span>
-                                        </div>
-                                        <div>
-                                            <span class="fw-medium me-2" style="color: #ec1c24;">Nagad:</span>
-                                            <span class="fw-medium">01548488888</span>
-                                        </div>
-                                        <div>
-                                            <span class="fw-medium me-2" style="color: #8c3494;">Rocket:</span>
-                                            <span class="fw-medium">01548488888</span>
-                                        </div>
+                                        @foreach ($paymentMethods as $payment)
+                                            <div>
+                                                <span class="fw-medium me-2 text-capitalize"
+                                                    style="color: #e2136e;">{{ $payment->method }}:</span>
+                                                <span class="fw-medium">{{ $payment->number }}</span>
+                                            </div>
+                                        @endforeach
                                     </div>
 
                                 </div>
@@ -157,6 +152,12 @@
                                         <input type="text" name="purchasable_type" value="{{ $model }}" hidden>
                                         <input type="text" name="purchasable_id" value="{{ $id }}" hidden>
                                         <div class="row">
+                                            <div class="col-12">
+                                                @if (auth()->user() === null)
+                                                    <h6 class="text-success text-center fw-bold fs-5">Please create an account to
+                                                        perform this action</h6>
+                                                @endif
+                                            </div>
                                             <div class="col-md-6">
                                                 <div class="font-18 fw-bold my-3 text-center">General Information</div>
                                                 <x-backend.form.text-input name="name" label="Full Name"
@@ -166,8 +167,8 @@
                                                     placeholder="Contact No." value="{{ auth()->user()?->phone }}"
                                                     required />
 
-                                                <x-backend.form.text-input name="email" label="Email" placeholder="Email"
-                                                    value="{{ auth()->user()?->email }}" required />
+                                                <x-backend.form.text-input type="email" name="email" label="Email"
+                                                    placeholder="Email" value="{{ auth()->user()?->email }}" required />
                                             </div>
                                             <div class="col-md-6" id="transaction-info">
                                                 <div class="font-18 fw-bold my-3 text-center">Transaction Information</div>
@@ -194,7 +195,7 @@
                                                         <div class="d-flex align-items-center gap-3">
                                                             <div class="flex-grow-1">
                                                                 <label for="promo-code">Promo Code</label>
-                                                                <input id="promo-code"
+                                                                <input id="promo-code" type="text"
                                                                     class="form-control border-focus-2 py-2 px-3"
                                                                     name="promo_code" placeholder="Promo Code" />
                                                                 <span id="promo-code-message"
@@ -206,6 +207,47 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @if (auth()->user() === null)
+                                                <div class="col-12">
+                                                    <div class="row px-0">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="password" class="form-label">Password</label>
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="password" id="password"
+                                                                    class="form-control @error('password')
+                                                                is-invalid
+                                                        @enderror"
+                                                                    placeholder="Enter your password" name="password">
+                                                                <div class="input-group-text" data-password="false">
+                                                                    <span class="password-eye"></span>
+                                                                </div>
+                                                            </div>
+                                                            @error('password')
+                                                                <div class="text-danger">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="confirm_password" class="form-label">Confirm
+                                                                Password</label>
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="confirm_password" id="confirm_password"
+                                                                    class="form-control @error('confirm_password')
+                                                                is-invalid
+                                                        @enderror"
+                                                                    placeholder="Confirm your password"
+                                                                    name="confirm_password">
+                                                                <div class="input-group-text" data-password="false">
+                                                                    <span class="password-eye"></span>
+                                                                </div>
+                                                            </div>
+                                                            @error('confirm_password')
+                                                                <div class="text-danger">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+
                                             <div class="col-12">
                                                 <div class="d-flex gap-3 justify-content-center align-items-center">
                                                     <x-backend.ui.button data-bs-toggle="modal"
@@ -218,8 +260,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
 
                                     </div>
                                 </div>
@@ -236,13 +276,16 @@
     <!-- Center modal for pay later -->
     <div class="modal fade" id="pay-later-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form action="{{route('payment.later')}}" method="post" class="modal-content">
+            <form action="{{ route('payment.later') }}" method="post" class="modal-content">
                 @csrf
                 <div class="modal-header">
                     <h4 class="modal-title" id="">Please fill out this form</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    @if (auth()->user() === null)
+                        <h6 class="text-success text-center fw-medium">Please create an account to perform this action</h6>
+                    @endif
                     <input type="text" name="purchasable_type" value="{{ $model }}" hidden>
                     <input type="text" name="purchasable_id" value="{{ $id }}" hidden>
                     <x-backend.form.text-input name="name" label="Full Name" placeholder="Full Name"
@@ -253,8 +296,48 @@
 
                     <x-backend.form.text-input name="email" label="Email" placeholder="Email"
                         value="{{ auth()->user()?->email }}" required />
+
+                    @if (auth()->user() === null)
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group input-group-merge">
+                                <input type="password" id="password"
+                                    class="form-control @error('password')
+                                        is-invalid
+                                    @enderror"
+                                    placeholder="Enter your password" name="password">
+                                <div class="input-group-text" data-password="false">
+                                    <span class="password-eye"></span>
+                                </div>
+                            </div>
+                            @error('password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label">Confirm
+                                Password</label>
+                            <div class="input-group input-group-merge">
+                                <input type="confirm_password" id="confirm_password"
+                                    class="form-control @error('confirm_password')
+                                        is-invalid
+                                    @enderror"
+                                    placeholder="Confirm your password" name="confirm_password">
+                                <div class="input-group-text" data-password="false">
+                                    <span class="password-eye"></span>
+                                </div>
+                            </div>
+                            @error('confirm_password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    @endif
+
+
+
                 </div>
                 <div class="modal-footer">
+
                     <x-backend.ui.button type="button" class="btn-light fw-medium py-2 px-3 mx-2 border"
                         data-bs-dismiss="modal" aria-label="Close">Close</x-backend.ui.button>
                     <x-backend.ui.button type="submit"
