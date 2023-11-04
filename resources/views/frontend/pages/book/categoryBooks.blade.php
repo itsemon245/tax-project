@@ -6,9 +6,9 @@
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
 
-    <section class="container-lg">
-        <div class="d-flex center_sm mt-4">
-            <h2 class="browse_header">All Books</h2>
+    <section class="container-lg px-2">
+        <div class="d-flex center_sm mt-4 px-3">
+            <h5 class="font-md-18 fw-bold">All Books</h5>
             <div class="line flex-grow-1">
                 <div class="circle_left"></div>
                 <div class="circle_right"></div>

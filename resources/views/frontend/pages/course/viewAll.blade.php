@@ -4,7 +4,7 @@
     <section class="container my-5">
         <div class="d-flex flex-column align-items-center h-100">
             <h4 class="mb-4">All Courses</h4>
-            <div class="row align-items-center">
+            <div class="row align-items-center px-3">
                 @foreach ($courses as $course)
                     <div class="col-md-6 mb-4">
                         <div class="border bg-light bg-gradient w-100 px-3 px-md-4 px-lg-5 py-3 rounded h-100">

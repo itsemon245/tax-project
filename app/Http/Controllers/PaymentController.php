@@ -39,7 +39,7 @@ class PaymentController extends Controller
             'purchasable_id' => 'required',
             'name' => 'required',
             'phone' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,'.auth()->id(),
             'paid_amount' => 'required',
             'payment_method' => 'required',
             'trx_id' => 'required',
@@ -49,110 +49,110 @@ class PaymentController extends Controller
         ]);
 
         try {
-        $table = str($request->purchasable_type)->snake();
-        $table = str($table)->plural();
-        $user = User::firstOrCreate([
-            'email' => $request->input('email')
-        ], [
-            'user_name' => explode("@", $request->input('email'))[0],
-            'email' => $request->input('email'),
-            'name' => $request->input('name'),
-            'phone' => $request->input('phone'),
-            'password' => Hash::make($request->input('password')),
-        ]);
-        if ($user->wasRecentlyCreated) {
-            event(new Registered($user));
-            Auth::login($user);
-        }
-        $record = DB::table($table)->find($request->purchasable_id);
-        $isExpired = null;
-        $data = [
-            'payable' => $record->price,
-            'discount' => 0,
-        ];
-        $expireDate = null;
-        $dueDate = today()->addDays(10);
-        $due = null;
-        $promoCode = null;
-        $status = 'due';
-        $metaData = null;
-        $billingType = $record->billing_type;
-
-        if ($request->income_source) {
-            $metaData = json_encode($request->income_source);
-        } else {
-            $metaData = json_encode($request->metaData);
-        }
-        switch ($billingType) {
-            case 'monthly':
-                $expireDate = today()->addMonth();
-                break;
-            case 'yearly':
-                $expireDate = today()->addYear();
-                break;
-            case 'onetime':
-                $expireDate = null;
-                break;
-
-            default:
-                break;
-        }
-        if ($request->input('promo_code') !== null) {
-            $promoCode = $user
-                ->promoCodes()
-                ->where('code', $request->promo_code)
-                ->first();
-            $data = $this->applyPromoCode($promoCode, $record->price);
-            //decrement the promo code limit if all checks passes
-            if ($data['discount'] > 0) {
-                $user->promoCodes()->updateExistingPivot($promoCode->id, [
-                    'limit' => $promoCode->limit - 1,
-                ]);
+            $table = str($request->purchasable_type)->snake();
+            $table = str($table)->plural();
+            $user = User::firstOrCreate([
+                'email' => $request->input('email')
+            ], [
+                'user_name' => explode("@", $request->input('email'))[0],
+                'email' => $request->input('email'),
+                'name' => $request->input('name'),
+                'phone' => $request->input('phone'),
+                'password' => Hash::make($request->input('password')),
+            ]);
+            if ($user->wasRecentlyCreated) {
+                event(new Registered($user));
+                Auth::login($user);
             }
-        } else {
+            $record = DB::table($table)->find($request->purchasable_id);
+            $isExpired = null;
             $data = [
                 'payable' => $record->price,
                 'discount' => 0,
             ];
-        }
-        $paid_amount = (int) $request->paid_amount;
-        $payable = $data['payable'];
-        $due = $payable - $paid_amount;
-        if ($due < 0) {
-            throw new Exception("You can not pay more than $payable ৳");
-        } elseif ($due === 0) {
-            $status = 'paid';
-            $isExpired = false;
-            $dueDate = null;
-        } elseif ($due > 0 && $due < $payable) {
-            $status = 'partial';
-        }
+            $expireDate = null;
+            $dueDate = today()->addDays(10);
+            $due = null;
+            $promoCode = null;
+            $status = 'due';
+            $metaData = null;
+            $billingType = $record->billing_type;
 
-        Purchase::create([
-            'user_id' => auth()->id(),
-            'name' => $request->name,
-            'promo_code_id' => $promoCode->id ?? null,
-            'payable_amount' => $data['payable'],
-            'discount' => $data['discount'],
-            'has_promo_code_applied' => $promoCode !== null ? true : false,
-            'paid' => $request->paid_amount,
-            'trx_id' => $request->trx_id,
-            'contact_number' => $request->phone,
-            'payment_number' => $request->payment_number,
-            'payment_method' => $request->payment_method,
-            'billing_type' => $billingType,
-            'due' => $due,
-            'status' => $status,
-            'metadata' => $metaData,
-            'is_expired' => $isExpired,
-            'payment_date' => today(),
-            'due_date' => $dueDate,
-            'expire_date' => $expireDate,
-            'purchasable_id' => $request->purchasable_id,
-            'purchasable_type' => $request->purchasable_type,
-        ]);
+            if ($request->income_source) {
+                $metaData = json_encode($request->income_source);
+            } else {
+                $metaData = json_encode($request->metaData);
+            }
+            switch ($billingType) {
+                case 'monthly':
+                    $expireDate = today()->addMonth();
+                    break;
+                case 'yearly':
+                    $expireDate = today()->addYear();
+                    break;
+                case 'onetime':
+                    $expireDate = null;
+                    break;
 
-        // dd($metaData);
+                default:
+                    break;
+            }
+            if ($request->input('promo_code') !== null) {
+                $promoCode = $user
+                    ->promoCodes()
+                    ->where('code', $request->promo_code)
+                    ->first();
+                $data = $this->applyPromoCode($promoCode, $record->price);
+                //decrement the promo code limit if all checks passes
+                if ($data['discount'] > 0) {
+                    $user->promoCodes()->updateExistingPivot($promoCode->id, [
+                        'limit' => $promoCode->limit - 1,
+                    ]);
+                }
+            } else {
+                $data = [
+                    'payable' => $record->price,
+                    'discount' => 0,
+                ];
+            }
+            $paid_amount = (int) $request->paid_amount;
+            $payable = $data['payable'];
+            $due = $payable - $paid_amount;
+            if ($due < 0) {
+                throw new Exception("You can not pay more than $payable ৳");
+            } elseif ($due === 0) {
+                $status = 'paid';
+                $isExpired = false;
+                $dueDate = null;
+            } elseif ($due > 0 && $due < $payable) {
+                $status = 'partial';
+            }
+
+            Purchase::create([
+                'user_id' => auth()->id(),
+                'name' => $request->name,
+                'promo_code_id' => $promoCode->id ?? null,
+                'payable_amount' => $data['payable'],
+                'discount' => $data['discount'],
+                'has_promo_code_applied' => $promoCode !== null ? true : false,
+                'paid' => $request->paid_amount,
+                'trx_id' => $request->trx_id,
+                'contact_number' => $request->phone,
+                'payment_number' => $request->payment_number,
+                'payment_method' => $request->payment_method,
+                'billing_type' => $billingType,
+                'due' => $due,
+                'status' => $status,
+                'metadata' => $metaData,
+                'is_expired' => $isExpired,
+                'payment_date' => today(),
+                'due_date' => $dueDate,
+                'expire_date' => $expireDate,
+                'purchasable_id' => $request->purchasable_id,
+                'purchasable_type' => $request->purchasable_type,
+            ]);
+
+            // dd($metaData);
 
         } catch (Exception $e) {
             $notification = [
@@ -170,6 +170,16 @@ class PaymentController extends Controller
     }
     public function later(Request $request)
     {
+         $request->validate([
+            'purchasable_type' => 'required',
+            'purchasable_id' => 'required',
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email|unique:users,email,'.auth()->id(),
+            'password' => 'nullable|same:confirm_password',
+            'confirm_password' => 'nullable|same:password',
+        ]);
+
         $table = str($request->purchasable_type)->snake();
         $table = str($table)->plural();
         $record = DB::table($table)->find($request->purchasable_id);
@@ -181,12 +191,25 @@ class PaymentController extends Controller
         $expireDate = null;
         $dueDate = today()->addDays(10);
         $due = null;
-        $status = 'due';
+        $status = $record->price;
         $metaData = null;
         $billingType = $record->billing_type;
+        $user = User::firstOrCreate([
+            'email' => $request->input('email')
+        ], [
+            'user_name' => explode("@", $request->input('email'))[0],
+            'email' => $request->input('email'),
+            'name' => $request->input('name'),
+            'phone' => $request->input('phone'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+        if ($user->wasRecentlyCreated) {
+            event(new Registered($user));
+            Auth::login($user);
+        }
 
         Purchase::create([
-            'user_id' => auth()->id(),
+            'user_id' => $user->id,
             'name' => $request->name,
             'payable_amount' => $data['payable'],
             'contact_number' => $request->phone,

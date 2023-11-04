@@ -3,7 +3,6 @@
     $infos2 = getRecords('infos', ['section_id', 2]);
     $banners = getRecords('banners');
     $appointments = getRecords('appointments');
-    $testimonials = getRecords('testimonials');
 @endphp
 @extends('frontend.layouts.app')
 @section('main')
@@ -33,28 +32,9 @@
     </section>
    
     <x-frontend.appointment-section :sections="$appointments" />
-    <section id="counter-section" class="px-lg-5 px-2 my-5">
-        <h4 class="text-center mb-5 fs-3">Our Achievments</h4>
-        <div class="row justify-content-center px-2">
-            @foreach ($achievements as $item)
-                <div class="col-sm-6 col-md-4 col-xl-3 col-xxl-2 mb-2">
-                    <div class="card rounded-2">
-                        <div class="card-body p-2">
-                            <div class="d-flex gap-3 align-items-center">
-                                <img loading="lazy" class="rounded rounded-2" style="width:80px;height:80px;"
-                                    src="{{ useImage($item->image) }}" alt="">
-                                <div class="d-flex flex-column justify-content-starr align-items-start">
-                                    <h2 class="counter-up m-0 text-primary" style="font-size: 32px; font-weight: 700;">
-                                        {{ $item->count }}</h2>
-                                    <p class="m-0 fw-medium mt-2">{{ $item->title }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </section>
+    
+    <x-frontend.achievements :achievements="$achievements" />
+
     <x-frontend.info-section :title="$infos1[0]->title" class="text-capitalize">
         @foreach ($infos1 as $info)
             <x-frontend.info-card :$info />

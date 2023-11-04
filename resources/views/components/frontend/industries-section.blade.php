@@ -12,14 +12,14 @@
                 </div>
                 @foreach ($industries as $industry)
                     <div class="col-md-4 col-sm-6 mb-3">
-                        <div class="border bg-light w-100 px-0 px-md-3 px-lg-5 py-3 rounded h-100">
+                        <div class="border bg-light w-100 p-2 p-md-3 rounded h-100">
                             <a class="text-dark" href="{{ route('industry.page.show', $industry->id) }}">
                                 <div class="d-flex">
-                                    <img loading="lazy" style="width:64px;" src="{{ useImage($industry->image) }}" class="rounded"
+                                    <img loading="lazy" style="width:72px;" src="{{ useImage($industry->image) }}" class="rounded"
                                         alt="{{ $industry->title }}" />
-                                    <h6 class="px-3">{{ $industry->title }}</h6>
+                                    <h6 class="px-2 fw-bold font-16">{{ $industry->title }}</h6>
                                 </div>
-                                <p class="tex-justify text-muted mt-2" style="max-width: 35ch;">{!! $industry->intro !!}</p>
+                                <p class="tex-justify text-muted mt-3" style="max-width: 35ch;">{!! $industry->intro !!}</p>
                             </a>
                         </div>
                     </div>

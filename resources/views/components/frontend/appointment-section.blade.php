@@ -11,9 +11,9 @@
             @foreach ($sections as $item)
                 <div class="carousel-item {{ $sections[0]->id === $item->id ? 'active' : '' }}">
                     <div class="row align-items-cetner justify-content-center mx-3">
-                        <div class="col-md-5 pe-3">
+                        <div class="col-md-5 pe-3 mb-2">
                             <div class="row justify-content-center">
-                                <img class="mb-2 rounded-3 p-0" loading="lazy" style="max-width:350px; object-fit:cover;"
+                                <img class="mb-2 rounded-3 p-0" loading="lazy" style="max-width:300px; object-fit:cover;"
                                     src="{{ useImage($item->image) }}" alt="">
                             </div>
                         </div>

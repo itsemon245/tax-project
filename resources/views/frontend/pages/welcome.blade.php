@@ -74,14 +74,14 @@
         <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">Services</h4>
         <div class="row mx-lg-5 mx-2 service-category justify-content-center">
             @foreach ($services as $sub)
-                <div class="col-md-4 col-lg-3 col-sm-6 mb-2">
-                    <div class="d-flex flex-column align-items-center border rounded shadow p-2 h-100">
+                <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
+                    <div class="d-flex flex-column align-items-center border rounded shadow-sm p-2 h-100">
                         <a href="{{ route('service.category', $sub['id']) }}">
                             <img loading="lazy" style="width:clamp(80px, 120px, 150px);aspect-ratio:1/1;"
                                 class="rounded rounded-circle mb-3" src="{{ useImage($sub['image']) }}" alt="">
                         </a>
                         <a class="text-dark text-capitalize" href="{{ route('service.category', $sub['id']) }}">
-                            <h6>{{ $sub['name']}}</h6>
+                            <h6>{{ $sub['name'] }}</h6>
                         </a>
                         <a href="{{ route('service.category', $sub['id']) }}"
                             class="text-center text-muted">{{ $sub['description'] }}</a>
@@ -94,28 +94,7 @@
 
     <x-frontend.appointment-section :sections="$appointmentSections" />
 
-    <section id="counter-section" class="px-lg-5 px-2 my-5">
-        <h4 class="text-center mb-5 fs-3">Our Achievments</h4>
-        <div class="row justify-content-center px-2">
-            @foreach ($achievements as $item)
-                <div class="col-6 col-md-4 col-xl-3 col-xxl-2 mb-2 align-items-center justify-content-center">
-                    <div class="card rounded- h-100">
-                        <div class="card-body p-2">
-                            <div class="d-flex gap-3 align-items-center justify-content-center">
-                                <img loading="lazy" class="rounded rounded-2" style="width:80px;height:80px;"
-                                    src="{{ useImage($item->image) }}" alt="">
-                                <div class="d-flex flex-column justify-content-starr align-items-start">
-                                    <h2 class="counter-up m-0 text-primary" style="font-size: 32px; font-weight: 700;">
-                                        {{ $item->count }}</h2>
-                                    <p class="m-0 fw-medium mt-2">{{ $item->title }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </section>
+    <x-frontend.achievements :achievements="$achievements" />
 
 
     <x-frontend.info-section :title="$infos1[0]->title" class="text-capitalize">
