@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Industry;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Models\PartnerSection;
 use App\Http\Controllers\Controller;
 
 class IndustryController extends Controller
@@ -15,8 +17,10 @@ class IndustryController extends Controller
      */
     public function index()
     {
+        $appointmentSections = Appointment::latest()->limit(5)->get();
+        $partners = PartnerSection::latest()->limit(10)->get();
         $industries = Industry::get(['id', 'title', 'image', 'intro']);
-        return view('frontend.pages.industries.showAllIndustry', compact('industries'));
+        return view('frontend.pages.industries.showAllIndustry', compact('industries', 'appointmentSections', 'partners'));
     }
 
     /**

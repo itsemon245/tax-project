@@ -4,15 +4,16 @@ namespace App\Models;
 
 use App\Models\PromoCode;
 use App\Models\Withdrawal;
+use App\Models\VideoComment;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -162,5 +163,9 @@ class User extends Authenticatable implements MustVerifyEmail
         $isLastRequestCompleted = $lastWithdrawal === null ? true : $lastWithdrawal->status;
 
         return ($hasAmount && $isLastRequestCompleted);
+    }
+    public function video_comments(): HasMany
+    {
+        return $this->hasMany(VideoComment::class);
     }
 }

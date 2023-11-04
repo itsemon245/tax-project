@@ -31,6 +31,7 @@ class CourseController extends Controller
         $reviews = $course->reviews;
         $user = request()->user();
         $canReview = $user ? $user->purchased('course')->find($course->id) !== null : false;
-        return view('frontend.pages.course.showVideos', compact('videos', 'course', 'reviews', 'canReview'));
+        $descriptions = Video::where('course_id', $course->id)->get();
+        return view('frontend.pages.course.showVideos', compact('videos', 'course', 'reviews', 'canReview', 'descriptions'));
     }
 }

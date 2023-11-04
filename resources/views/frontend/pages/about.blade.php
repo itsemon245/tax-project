@@ -46,7 +46,9 @@
                 </div>
             </div>
         </div>
-
+            <div>
+                <x-frontend.appointment-section :sections="$appointmentSections" />
+            </div>
     </div>
     <section class="mt-5 py-5" style="background: #474646;">
         <h3 class="text-light text-center">Our Valuable Partners</h3>

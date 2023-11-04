@@ -13,7 +13,7 @@
     </style>
     @php
         $currentVideo = \App\Models\Video::where('id', request()->query('videos_id'))->first();
-        // dd($currentVideo);
+        $currentVideoComments = \App\Models\VideoComment::where('video_id', $currentVideo)->latest()->get();
     @endphp
     <div class="container row mx-auto">
         <div class="col-md-12 mt-3">
@@ -58,21 +58,46 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane show" id="about" role="tabpanel">
-                                This is Course Content tab
+                                @forelse ($descriptions as $description)
+                                    <div>
+                                        {{ $description->description }}
+                                    </div>
+                                @empty
+                                    <div>
+                                        No Descrpition here...
+                                    </div>
+                                @endforelse
                             </div>
                             <div class="tab-pane" id="reviews" role="tabpanel">
                                 <x-review-section :item="$course" :reviews="$reviews" :slug="'course'" :can-review="$canReview" />
                             </div>
                             <div class="tab-pane" id="discussion" role="tabpanel">
                                 <div class="row">
-                                    <form action="#" method="post">
-                                        <div class="col-md-12">
-                                            <textarea name="" placeholder="Input your discussion content" cols="30" rows="10" class="form-control"></textarea>
-                                            <x-backend.ui.button
-                                                class="btn-primary btn-sm mt-2">Submit</x-backend.ui.button>
+                                    <form method="post" action="{{ route('course.video-comment.store')}}" >
+                                        @csrf
+                                        <div class="col-md-10 d-flex">
+                                            <textarea name="comment" required placeholder="Input your discussion content" cols="10" rows="3" class="form-control"></textarea>
+                                            <input type="text" name="video_id" value="{{ $currentVideo->id }}" class="d-none"/> 
+                                            <div>
+                                                <x-backend.ui.button
+                                                class="btn-primary btn-sm m-4 p-2">Submit</x-backend.ui.button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
+                                @foreach ($currentVideoComments as $comments)
+                                <div class="d-flex gap-3 align-items-start border p-3 rounded-3 mb-3 mt-3">
+                                    <img loading="lazy" src="https://api.dicebear.com/6.x/initials/svg?seed=RK&amp;backgroundType=gradientLinear&amp;backgroundRotation=0,360" alt="img" width="64px" height="64px" class=" rounded-circle shadow-4-strong d-block">
+                                    <div>
+                                        <div class="mb-2">
+                                            <h5 class="mb-0">Rosemarie Kautzer IV</h5>
+                                            <small>1 second ago</small>
+                                        </div>
+                                        <p class="text-muted mb-0">dv ds
+                                        </p>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                             <div class="tab-pane active" id="courseContent" role="tabpanel">
                                 <div class="col-md-12">
