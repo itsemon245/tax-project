@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Return;
+namespace App\Http\Controllers\Backend\ReturnForm;
 
 use App\Models\ReturnForm;
 use Illuminate\Http\Request;
