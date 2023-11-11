@@ -16,7 +16,7 @@ class AppointmentFactory extends Factory
      */
     public function definition(): array
     {
-        $seed = fake()->word(1);
+        $seed = fake()->word();
         return [
             'title' => fake()->realText(10),
             'sub_title' => fake()->realText(10),

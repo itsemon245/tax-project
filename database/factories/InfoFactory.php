@@ -16,7 +16,7 @@ class InfoFactory extends Factory
      */
     public function definition(): array
     {
-        $seed = fake()->word(1);
+        $seed = fake()->word();
         $sectionId = fake()->randomElement([1, 2]);
         $title = $sectionId === 1 ? 'we help you file quickly and confidently' : 'how income tax filling process works';
         return [

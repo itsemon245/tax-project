@@ -24,7 +24,7 @@ class InfoController extends Controller
      */
     public function create()
     {
-        $pageNames = Info::select('page_name')->whereNotNull('page_name')->distinct()->get('page_name')->pluck('page_name');
+        $pageNames = ['homepage', 'tax service page', 'vat service page', 'misc service']; 
         return view('backend.info.createInfo', compact('pageNames'));
     }
 
@@ -63,7 +63,7 @@ class InfoController extends Controller
      */
     public function edit(Info $info)
     {
-        $pageNames = Info::select('page_name')->whereNotNull('page_name')->distinct()->get('page_name')->pluck('page_name');
+        $pageNames = ['homepage', 'tax service page', 'vat service page', 'misc service']; 
         return view('backend.info.editInfo', compact('info', 'pageNames'));
     }
 
