@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Service\CustomServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ResultController;
@@ -406,6 +407,7 @@ Route::prefix('admin')
 
         //service related routes
         Route::resource('service-subcategory', ServiceSubCategoryController::class);
+        Route::resource('custom-service', CustomServiceController::class);
         // custom routes for service only for spacial purpose
         Route::prefix('service')->name('service.')->group(function () {
             Route::get('category/{categoryId}', [ServiceSubCategoryController::class, 'showAll'])->name('subs.view');

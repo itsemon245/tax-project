@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Services\BaseServiceInterface;
 use App\Models\User;
 use App\Models\PromoCode;
 use App\Events\MonthEnded;
+use App\Services\CustomService\CustomServiceService;
 use Illuminate\Routing\Route;
 use App\Listeners\LogoutAllUsers;
 use Illuminate\Auth\Events\Logout;
@@ -22,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
     }
 
     /**
