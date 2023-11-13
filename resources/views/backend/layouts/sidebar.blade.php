@@ -215,6 +215,24 @@
                                         </div>
                                     </li>
                                 @endcanany
+
+                                <li>
+                                    <a href="#custom-service" data-bs-toggle="collapse">
+                                        <i class="mdi mdi-book-open-variant"></i>
+                                        <span>Custom Services</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="custom-service">
+                                        <ul class="nav-second-level">
+                                            <li>
+                                                <a href="{{ route('custom-service.create') }}">Create</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('custom-service.index') }}">View </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -442,8 +460,19 @@
                         </div>
                     </li>
                 @endcanany
-                @canany(['manage partner', 'read partner', 'manage partner request', 'read partner request', 'manage
-                    client studio', 'read client studio', 'create expert', 'update expert', 'delete expert', 'read expert'])
+                @canany([
+                    'manage partner',
+                    'read partner',
+                    'manage partner request',
+                    'read partner request',
+                    'manage
+                    client studio',
+                    'read client studio',
+                    'create expert',
+                    'update expert',
+                    'delete expert',
+                    'read expert',
+                    ])
                     <li>
                         <a href="#peoples" data-bs-toggle="collapse">
                             <i class="mdi mdi-account-group-outline"></i>
@@ -452,8 +481,13 @@
                         </a>
                         <div class="collapse" id="peoples">
                             <ul class="nav-second-level">
-                                @canany(['manage partner', 'manage partner request', 'read partner', 'read partner
-                                    request'])
+                                @canany([
+                                    'manage partner',
+                                    'manage partner request',
+                                    'read partner',
+                                    'read partner
+                                    request',
+                                    ])
                                     <li>
                                         <a href="#partnersSections" data-bs-toggle="collapse">
                                             <i class="mdi mdi-vector-intersection"></i>
@@ -503,8 +537,17 @@
                                         </div>
                                     </li>
                                 @endcanany
-                                @canany(['create expert', 'update expert', 'delete expert', 'read expert', 'approved
-                                    consultation', 'update consultation', 'delete consultation', 'read consultation'])
+                                @canany([
+                                    'create expert',
+                                    'update expert',
+                                    'delete expert',
+                                    'read expert',
+                                    'approved
+                                    consultation',
+                                    'update consultation',
+                                    'delete consultation',
+                                    'read consultation',
+                                    ])
                                     <li>
                                         <a href="#expertProfile" data-bs-toggle="collapse">
                                             <i class="mdi mdi-account-tie"></i>
@@ -538,8 +581,17 @@
                     </li>
                 @endcanany
                 <li class="menu-title mt-2">Control Panel</li>
-                @canany(['manage discussion', 'read discussion', 'create progress', 'update progress', 'delete
-                    progress', 'update task progress', 'read task progress', 'assign client'])
+                @canany([
+                    'manage discussion',
+                    'read discussion',
+                    'create progress',
+                    'update progress',
+                    'delete
+                    progress',
+                    'update task progress',
+                    'read task progress',
+                    'assign client',
+                    ])
                     <li>
                         <a href="#project" data-bs-toggle="collapse">
                             <i class="mdi mdi-podium"></i>
@@ -556,8 +608,15 @@
                                         </a>
                                     </li>
                                 @endcanany
-                                @canany(['create progress', 'update progress', 'read progress', 'delete progress', 'update
-                                    task progress', 'read task progress'])
+                                @canany([
+                                    'create progress',
+                                    'update progress',
+                                    'read progress',
+                                    'delete progress',
+                                    'update
+                                    task progress',
+                                    'read task progress',
+                                    ])
                                     <li>
                                         <a href="{{ route('project.index') }}">
                                             <i class="mdi mdi-chart-line"></i>
@@ -592,9 +651,22 @@
                         </div>
                     </li>
                 @endcanany
-                @canany(['update document', 'approve document', 'delete document', 'read document', 'update
-                    appointment', 'arrpove appointment', 'delete appointment', 'read appointment', 'create user', 'update
-                    user', 'delete user', 'read user'])
+                @canany([
+                    'update document',
+                    'approve document',
+                    'delete document',
+                    'read document',
+                    'update
+                    appointment',
+                    'arrpove appointment',
+                    'delete appointment',
+                    'read appointment',
+                    'create user',
+                    'update
+                    user',
+                    'delete user',
+                    'read user',
+                    ])
                     <li>
                         <a href="#user" data-bs-toggle="collapse">
                             <i class="mdi mdi-database-search-outline"></i>
@@ -603,8 +675,13 @@
                         </a>
                         <div class="collapse" id="user">
                             <ul class="nav-second-level">
-                                @canany(['update appointment', 'delete appointment', 'approve appointment', 'read
-                                    appointment'])
+                                @canany([
+                                    'update appointment',
+                                    'delete appointment',
+                                    'approve appointment',
+                                    'read
+                                    appointment',
+                                    ])
                                     <li>
                                         <a href="#user-appointmentSection" data-bs-toggle="collapse">
                                             <i class="mdi mdi-face-agent"></i>
@@ -690,8 +767,14 @@
                         </a>
                         <div class="collapse" id="accounting">
                             <ul class="nav-second-level">
-                                @canany(['create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read
-                                    invoice'])
+                                @canany([
+                                    'create invoice',
+                                    'update invoice',
+                                    'delete invoice',
+                                    'send invoice',
+                                    'read
+                                    invoice',
+                                    ])
                                     <li>
                                         <a href="#invoiceSection" data-bs-toggle="collapse">
                                             <i class="mdi mdi-printer-settings"></i>
@@ -890,8 +973,14 @@
                                         </div>
                                     </li>
                                 @endcanany
-                                @canany(['update expense', 'update expense', 'delete expense', 'print expense', 'read
-                                    expense'])
+                                @canany([
+                                    'update expense',
+                                    'update expense',
+                                    'delete expense',
+                                    'print expense',
+                                    'read
+                                    expense',
+                                    ])
                                     <li>
                                         <a href="#expenses" data-bs-toggle="collapse">
                                             <i class="mdi mdi-currency-usd-off"></i>
@@ -1011,8 +1100,13 @@
                                         <a href="{{ route('tax-setting.create') }}">Create Tax Setting</a>
                                     </li>
                                 @endcan
-                                @canany(['create tax setting', 'update tax setting', 'delete tax setting', 'read tax
-                                    setting'])
+                                @canany([
+                                    'create tax setting',
+                                    'update tax setting',
+                                    'delete tax setting',
+                                    'read tax
+                                    setting',
+                                    ])
                                     <li>
                                         <a href="{{ route('tax-setting.index') }}">View Tax Settings</a>
                                     </li>

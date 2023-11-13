@@ -1,13 +1,13 @@
-<?php 
+<?php
 namespace App\Enums;
 
 
 
-enum PageName {
-    case Home = 'homepage';
+enum PageName: string
+{
+    case Home    = 'homepage';
     case Account = 'account';
 }
 
 
 ?>
-

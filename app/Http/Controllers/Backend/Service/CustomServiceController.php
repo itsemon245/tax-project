@@ -21,6 +21,8 @@ class CustomServiceController extends Controller
      */
     public function index()
     {
+        $services = CustomService::paginate(paginateCount());
+        return view('backend.service.custom.index', compact('services'));
     }
 
     /**
@@ -28,7 +30,8 @@ class CustomServiceController extends Controller
      */
     public function create()
     {
-        //
+        $pageNames = PageName::cases();
+        return view('backend.service.custom.create', compact('pageNames'));
     }
 
     /**
@@ -36,7 +39,11 @@ class CustomServiceController extends Controller
      */
     public function store(CustomServiceRequest $request)
     {
-     $this->service->store(CustomServiceDto::transformRequest($request));
+        $service = $this->service->store(CustomServiceDto::transformRequest($request));
+        return redirect(route('custom-service.index'), 201)->with([
+            'alert-type' => 'success',
+            'message'    => 'Custom Service Created!'
+        ]);
     }
 
     /**
@@ -58,17 +65,22 @@ class CustomServiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CustomServiceRequest $request,CustomService $customService)
+    public function update(CustomServiceRequest $request, CustomService $customService)
     {
-        $this->service->update(CustomServiceDto::transformRequest($request), $customService);
+        $service = $this->service->update(CustomServiceDto::transformRequest($request), $customService);
+        return view('backend.service.custom.edit', compact('service'));
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(CustomService $customService)
     {
-        //
+        $this->service->delete($customService);
+        return redirect(route('custom-service.index'))->with([
+            'alert-type' => 'success',
+            'message'    => 'Custom Service Deleted!'
+        ]);
     }
 }

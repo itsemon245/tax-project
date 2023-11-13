@@ -9,7 +9,7 @@ class CustomServiceDto
         public readonly string $title,
         public readonly string $description,
         public readonly string $link,
-        public readonly PageName $page_name,
+        public readonly string $page_name,
 
     ) {
     }
