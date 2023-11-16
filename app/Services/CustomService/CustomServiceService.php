@@ -10,12 +10,13 @@ class CustomServiceService
 
     public function store(CustomServiceDto $dto)
     {
-        return CustomService::create([
+        $service = CustomService::create([
             'page_name'   => $dto->page_name,
             'title'       => $dto->title,
             'description' => $dto->description,
             'link'        => $dto->link
         ]);
+        return $service;
     }
     public function update(CustomServiceDto $dto, $customService)
     {

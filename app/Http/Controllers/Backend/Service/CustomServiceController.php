@@ -40,6 +40,7 @@ class CustomServiceController extends Controller
     public function store(CustomServiceRequest $request)
     {
         $service = $this->service->store(CustomServiceDto::transformRequest($request));
+        $service->saveImage($request->file('image'));
         return redirect(route('custom-service.index'), 201)->with([
             'alert-type' => 'success',
             'message'    => 'Custom Service Created!'
@@ -60,7 +61,8 @@ class CustomServiceController extends Controller
     public function edit(CustomService $customService)
     {
         $service = $customService;
-        return view('backend.service.custom.edit', compact('service'));
+        $pageNames = ['homepage', 'account'];
+        return view('backend.service.custom.edit', compact('service', 'pageNames'));
     }
 
     /**

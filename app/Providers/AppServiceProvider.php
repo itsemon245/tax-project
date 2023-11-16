@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\Services\BaseServiceInterface;
+use App\Models\CustomService;
 use App\Models\User;
 use App\Models\PromoCode;
 use App\Events\MonthEnded;
@@ -22,29 +23,30 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
+    public function register() : void
     {
     }
 
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot() : void
     {
 
         // dd($cookie);
 
         Relation::enforceMorphMap([
-            'Product' => 'App\Models\Product',
-            'Service' => 'App\Models\Service',
-            'ExpertProfile' => 'App\Models\ExpertProfile',
-            'Book' => 'App\Models\Book',
-            'Course' => 'App\Models\Course',
-            'CaseStudy' => 'App\Models\CaseStudy',
-            'CaseStudyPackage' => 'App\Models\CaseStudyPackage',
-            'User' => 'App\Models\User',
-            'Industry' => 'App\Models\Industry',
-            'About' => 'App\Models\About',
+            'Product'            => 'App\Models\Product',
+            'Service'            => 'App\Models\Service',
+            'ExpertProfile'      => 'App\Models\ExpertProfile',
+            'Book'               => 'App\Models\Book',
+            'Course'             => 'App\Models\Course',
+            'CaseStudy'          => 'App\Models\CaseStudy',
+            'CaseStudyPackage'   => 'App\Models\CaseStudyPackage',
+            'User'               => 'App\Models\User',
+            'Industry'           => 'App\Models\Industry',
+            'About'              => 'App\Models\About',
+            CustomService::class => CustomService::class
         ]);
         Paginator::useBootstrapFive();
     }

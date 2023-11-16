@@ -11,8 +11,8 @@ class Image extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function imageable(): MorphTo
+    public function imageable() : MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo(__FUNCTION__, 'imageable_type', 'imageable_id');
     }
 }
