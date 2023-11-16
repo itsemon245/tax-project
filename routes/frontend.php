@@ -14,7 +14,6 @@ use App\Http\Controllers\Frontend\BookController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\PartnerRequestController;
-
 use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\CaseStudyPackageController;
 use App\Http\Controllers\Frontend\IndustryController;

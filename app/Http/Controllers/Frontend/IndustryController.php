@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Frontend;
-
 use App\Models\Industry;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
@@ -10,8 +8,6 @@ use App\Http\Controllers\Controller;
 
 class IndustryController extends Controller
 {
-
-
     /**
      * Display a listing of the resource.
      */
@@ -45,7 +41,8 @@ class IndustryController extends Controller
     public function show(string $id)
     {
         $industry = Industry::find($id);
-        return view('frontend.pages.industries.show', compact('industry'));
+        $appointmentSections = Appointment::get();
+        return view('frontend.pages.industries.show', compact('industry', 'appointmentSections'));
     }
 
     /**

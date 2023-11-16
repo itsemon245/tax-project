@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Frontend\Page;
 
 use App\Models\Map;
@@ -37,8 +38,8 @@ class PageController extends Controller
     {
         $data = ClientStudio::get();
         $description = $data[0]->description;
-
-        return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description'));
+        $appointmentSections = Appointment::latest()->limit(5)->get();
+        return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description', 'appointmentSections'));
     }
     public function appointmentPage(?ExpertProfile $expertProfile = null)
     {
