@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Frontend\Page;
 
+use App\Models\Info;
 use App\Models\Product;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use App\Models\ServiceCategory;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
-use App\Models\ServiceCategory;
 
 class ServicePageController extends Controller
 {
     public function subsUnderCategory($id)
     {
-        $infos1 = getRecords('infos', ['section_id', 1]);
-        $infos2 = getRecords('infos', ['section_id', 2]);
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => 'tax service page'])->take(5)->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => 'tax service page'])->take(5)->get();
         $appointments = getRecords('appointments');
         $testimonials = getRecords('testimonials');
         $banners = getRecords('banners');
