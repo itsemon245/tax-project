@@ -57,9 +57,10 @@ class CustomServiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(CustomService $customService)
     {
-        //
+        $service = $customService;
+        return view('backend.service.custom.edit', compact('service'));
     }
 
     /**
@@ -68,8 +69,10 @@ class CustomServiceController extends Controller
     public function update(CustomServiceRequest $request, CustomService $customService)
     {
         $service = $this->service->update(CustomServiceDto::transformRequest($request), $customService);
-        return view('backend.service.custom.edit', compact('service'));
-
+        return redirect(route('custom-service.index'))->with([
+            'alert-type' => 'success',
+            'message'    => 'Custom Service Updated'
+        ]);
     }
 
     /**

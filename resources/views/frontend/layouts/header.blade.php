@@ -1,5 +1,4 @@
 @php
-    $categories = \App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
     $settings = \App\Models\Setting::first();
