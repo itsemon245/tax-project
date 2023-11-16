@@ -6,6 +6,7 @@ use App\Models\Image;
 use Illuminate\Support\Str;
 use App\DTOs\Image\ImageDto;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait HasImage
@@ -36,10 +37,34 @@ trait HasImage
         return $image;
     }
 
-
-    public function deleteImage(string $path, ?string $dir = null, ?string $prefix = null, ?string $disk = null)
+    public function updateImage(UploadedFile $image, string $path, string $dir = null, ?string $prefix = null, ?string $disk = null)
     {
-    //TODO Delete operation for image
+        $dir = $dir ?? $this->getBaseDir();
+        $prefix = $prefix ?? $this->getPrefix();
+        $disk = $disk ?? $this->disk;
+        $this->deleteImageFromDisk($path, $disk);
+        $path = $this->storeOnDisk($image, $dir, $prefix, $disk);
+        $image = $this->image()->update([
+            'path'      => $path,
+            'url'       => asset('storage/' . $path),
+            'mime_type' => $image->extension()
+        ]);
+        return $image;
+    }
+
+
+    public function deleteImageFromDisk(string $path, ?string $disk = null)
+    {
+        $disk = $disk ?? $this->disk;
+        if (Storage::disk($disk)->exists($path)) {
+            Storage::disk($disk)->delete($path);
+        }
+    }
+
+    public function deleteImage(string $path, ?string $disk = null) : void
+    {
+        $this->deleteImageFromDisk($path, $disk);
+        $this->image()->delete();
     }
 
 

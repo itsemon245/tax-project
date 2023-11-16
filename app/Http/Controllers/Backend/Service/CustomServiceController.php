@@ -70,6 +70,10 @@ class CustomServiceController extends Controller
      */
     public function update(CustomServiceRequest $request, CustomService $customService)
     {
+        $image = $request->file('image');
+        if ($request->has('image')) {
+            $customService->updateImage($image, $customService->image->path);
+        }
         $service = $this->service->update(CustomServiceDto::transformRequest($request), $customService);
         return redirect(route('custom-service.index'))->with([
             'alert-type' => 'success',
@@ -82,6 +86,7 @@ class CustomServiceController extends Controller
      */
     public function destroy(CustomService $customService)
     {
+        $customService->deleteImage($customService->image->path);
         $this->service->delete($customService);
         return redirect(route('custom-service.index'))->with([
             'alert-type' => 'success',
