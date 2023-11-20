@@ -70,8 +70,8 @@ class CustomServiceController extends Controller
      */
     public function update(CustomServiceRequest $request, CustomService $customService)
     {
-        $image = $request->file('image');
         if ($request->has('image')) {
+            $image = $request->file('image');
             $customService->updateImage($image, $customService->image->path);
         }
         $service = $this->service->update(CustomServiceDto::transformRequest($request), $customService);

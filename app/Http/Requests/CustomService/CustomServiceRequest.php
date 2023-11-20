@@ -20,7 +20,8 @@ class CustomServiceRequest extends FormRequest
             'page_name'=> ['required',Rule::enum(PageName::class)],
             'title'=>['required','string','max:255'],
             'description'=> ['required', 'string'],
-            'link'=> ['required', 'starts_with:https://,http://']
+            'link'=> ['required', 'starts_with:https://,http://'],
+            'image'=> ['image', 'size:5124']
         ];
     }
 }

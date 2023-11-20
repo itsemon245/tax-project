@@ -7,7 +7,7 @@
 @endphp
 <nav class="relative">
     {{-- Sidebar 1-> page navigation --}}
-    <div class="sidebar sidebar-1">
+    <div class="sidebar sidebar-1 d-none">
         <ul class="list-unstyled">
             <li class="p-1">
                 <div class="d-flex justify-content-between align-items-center">
@@ -185,23 +185,15 @@
         $.each(menuBtn, (index, btn) => {
             btn.addEventListener('click', e => {
                 const sidebar = $('.' + btn.id)
-                toggleSidebar(sidebar)
+                sidebar.toggleClass('d-none');
             })
         });
         $.each(menuCloseBtn, (index, btn) => {
             btn.addEventListener('click', e => {
                 const sidebar = $('.' + btn.id)
-                toggleSidebar(sidebar)
+                sidebar.toggleClass('d-none');
             })
         });
-
-        function toggleSidebar(sidebar) {
-            const transformValue = parseInt(sidebar.css('transform').split(' ')[4])
-            if (transformValue === 0) {
-                sidebar.css('transform', `translateX(-${sidebar.css('width')})`)
-            } else {
-                sidebar.css('transform', `translateX(0px)`)
-            }
-        }
+    
     </script>
 @endpush
