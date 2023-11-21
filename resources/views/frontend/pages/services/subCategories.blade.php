@@ -83,12 +83,12 @@
         </div>
     </section>
     <x-frontend.appointment-section :sections="$appointments" />
-    <x-frontend.info-section :title="$infos1[0]->title" class="text-capitalize">
+    <x-frontend.info-section :title="count($infos1)>0 ? $infos1[0]->title: ''" class="text-capitalize">
         @foreach ($infos1 as $info)
             <x-frontend.info-card :$info />
         @endforeach
     </x-frontend.info-section>
-    <x-frontend.info-section :title="$infos2[0]->title" class="text-danger text-capitalize">
+    <x-frontend.info-section :title="count($infos2)>0 ? $infos2[0]->title: ''" class="text-danger text-capitalize">
         @foreach ($infos2 as $info)
             <x-frontend.info-card :$info />
         @endforeach
