@@ -51,48 +51,47 @@
                 @endphp
                 <div class="tab-pane fade {{ $index === 1 ? 'show active' : '' }}" id="{{ $for }}"
                     role="tabpanel" aria-labelledby="{{ $for . '-tab' }}">
-                    <form action="{{ route('tax.calculate') }}" method="POST">
+                    <form action="{{ route('tax.calculate', true) }}" method="POST">
                         @csrf
-                        <input type="hidden" name="tax_for" value="{{ $for }}">
                         <div class="container rounded bg-white py-3 px-4">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Name" :value="auth()->user() ? auth()->user()->name : ''" required
-                                                type="text" name="name" required>
+                                            <x-backend.form.text-input label="Name" :value="old('name') ? auth()->user()->name : ''" required
+                                                type="text" name="name" >
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Email Address" :value="auth()->user() ? auth()->user()->email : ''"
+                                            <x-backend.form.text-input label="Email Address" :value="old('email') ? auth()->user()->email : ''"
                                                 type="email" name="email" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Phone Number" :value="auth()->user() ? auth()->user()->phone : ''"
-                                                type="string" name="phone" required>
+                                            <x-backend.form.text-input label="Phone Number" :value="old('phone') ? auth()->user()->phone : ''"
+                                                type="number" name="phone" required>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Source of Income" type="text"
+                                            <x-backend.form.text-input label="Source of Income" :value="old('income_source')" type="text"
                                                 name="income_source">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Yearly Turnover" name="yearly_turnover">
+                                            <x-backend.form.text-input label="Yearly Turnover" :value="old('yearly_turnover')" name="yearly_turnover">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Total Assets" name="total_asset">
+                                            <x-backend.form.text-input label="Total Assets" type="number" :value="old('total_asset')" name="total_asset">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Yearly Income" name="yearly_income">
+                                            <x-backend.form.text-input label="Yearly Income" :value="old('yearly_income')" name="yearly_income">
                                             </x-backend.form.text-input>
                                         </div>
                                         @if ($for === 'individual')
                                             <div class="col-md-6">
-                                                <x-backend.form.text-input label="Investment of Rebate" name="rebate">
+                                                <x-backend.form.text-input label="Investment of Rebate" :value="old('rebate')" name="rebate">
                                                 </x-backend.form.text-input>
                                             </div>
                                             <div class="col-md-6">
@@ -108,7 +107,7 @@
                                             </div>
                                         @endif
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Tax Deduction" name="deduction">
+                                            <x-backend.form.text-input label="Tax Deduction" type="number" :value="old('deduction')" name="deduction">
                                             </x-backend.form.text-input>
                                         </div>
 
@@ -137,9 +136,11 @@
                                             <x-form.ck-editor id="ck-editor-{{ $for }}"
                                                 name="message"></x-form.ck-editor>
                                         </div><!-- end col -->
-                                        <div class="">
+                                        <div class="d-flex">
                                             <button type="submit"
-                                                class="btn btn-primary waves-effect waves-light profile-button">Submit</button>
+                                                class="btn btn-primary waves-effect waves-light profile-button m-2">Submit</button>                                         
+                                                <button type="submit"
+                                            class="btn btn-success waves-effect waves-light profile-button m-2">Submit & Apply for service</button>
                                         </div>
 
 
@@ -149,7 +150,6 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
                 </div>
                 @empty
                 <div class="row">
