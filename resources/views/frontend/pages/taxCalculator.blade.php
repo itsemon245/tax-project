@@ -51,7 +51,7 @@
                 @endphp
                 <div class="tab-pane fade {{ $index === 1 ? 'show active' : '' }}" id="{{ $for }}"
                     role="tabpanel" aria-labelledby="{{ $for . '-tab' }}">
-                    <form action="{{ route('tax.calculate', true) }}" method="POST">
+                    <form action="{{ route('tax.calculate') }}" id="form" method="POST">
                         @csrf
                         <div class="container rounded bg-white py-3 px-4">
                             <div class="row">
@@ -139,11 +139,9 @@
                                         <div class="d-flex">
                                             <button type="submit"
                                                 class="btn btn-primary waves-effect waves-light profile-button m-2">Submit</button>                                         
-                                                <button type="submit"
+                                                <button type="submit" id="apply"
                                             class="btn btn-success waves-effect waves-light profile-button m-2">Submit & Apply for service</button>
                                         </div>
-
-
                                     </div>
 
 
@@ -160,7 +158,6 @@
                     <div class="col-md-2"></div>
                 </div>
                 @endforelse
-           
             </div>
         </div>
     </section>
@@ -176,6 +173,17 @@
                     .toggleClass('check-active')
                     .toggleClass('bg-light');
             })
+        });
+    </script>
+    <script>
+        // var button = document.querySelector(".myclass");
+
+        $(document).ready(function(){
+            $("#apply").click(function(){
+                var url = "{{ route('tax.calculate', true) }}";
+                var form = $('#form').attr('action', url);
+                // console.log(url);
+            });
         });
     </script>
 @endpush
