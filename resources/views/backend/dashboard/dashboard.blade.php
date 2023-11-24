@@ -9,7 +9,7 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard']" />
 
     <x-backend.ui.section-card>
-
+        <x-backend.ui.recent-update-invoice :method="route('invoice.create')"/>
         <x-ui.calendar :currentEvents="$currentEvents" :events="$events" :services="$services" :clients="$clients" />
         {{-- Project Progress Starts --}}
         <h3 class="fw-bold text-center mb-3 mt-5">Project Progress</h3>

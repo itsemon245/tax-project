@@ -44,15 +44,13 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $recentInvoices = Invoice::with('client', 'currentFiscal')->latest()->limit(5)->get();
         $fiscalYear = currentFiscalYear();
-        // dd($recentInvoices[0]->currentFiscal[0]->pivot->status);
         $invoices = Invoice::with('client', 'currentFiscal')->latest()->paginate(paginateCount());
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
         $zones = Client::select('zone')->distinct()->get()->pluck('zone');
         $circles = Client::select('circle')->distinct()->get()->pluck('circle');
         $clients = Client::latest()->get();
-        return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
+        return view('backend.invoice.viewAll', compact( 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
     }
 
 

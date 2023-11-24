@@ -102,6 +102,10 @@ For productivity & efficiency this project is included with some components and 
     {{-- Your Content --}}
     </x-backend.ui.section-card />
      ```
+    - ###### Recent Active Invoice
+     ```blade
+    <x-backend.ui.recent-update-invoice :method="route('invoice.create')"/>
+     ```
   3. ##### Tables
      - ###### BasicTable
      ```blade

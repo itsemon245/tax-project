@@ -28,6 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('total_asset')->nullable();
             $table->unsignedBigInteger('rebate')->nullable();
             $table->unsignedBigInteger('deduction')->nullable();
+            $table->boolean('has_applied_for_service')->default(false);
             $table->string('gender')->nullable();
             $table->longText('message')->nullable();
             $table->double('tax')->nullable();

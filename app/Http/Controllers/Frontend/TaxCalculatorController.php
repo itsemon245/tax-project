@@ -15,9 +15,9 @@ class TaxCalculatorController extends Controller
         $settings = TaxSetting::get()->groupBy('for');
         return view('frontend.pages.taxCalculator', compact('settings'));
     }
-    public function calculate(Request $request)
+    public function calculate(Request $request, $apply = false)
     {
-        // $request->dd();
+        // dd($apply);
         $request->validate([
             "name" => "required|string",
             "email" => "required|email",
@@ -30,9 +30,9 @@ class TaxCalculatorController extends Controller
             "message" => "string|nullable",
         ]);
         $others = 0;
-
         $tax = 0;
         $taxSetting = TaxSetting::where(['for' => $request->tax_for, 'type' => 'tax'])->first();
+        dd($taxSetting);
         $minTax = $taxSetting->min_tax;
         $income = (int) $request->yearly_income;
         $turnover = (int) $request->yearly_turnover;
@@ -61,17 +61,19 @@ class TaxCalculatorController extends Controller
         foreach ($otherTaxes as $key => $values) {
             $max = collect($values)->max();
             $others = [...$others, $key => $max];
-    }
+        }
         $result = TaxCalculator::create([
             ...$request->except('services'),
             'tax' => $tax,
             'others' => $others,
             'user_id' => auth()?->id()
         ]);
-
-
-        return view('frontend.pages.taxCalculator.result', compact('result'));
+         return view('frontend.pages.taxCalculator.result', compact('result'));
     }
+
+    // protected function applyForService(TaxCalculator $result) {
+        
+    // }
     public function results()
     {
         $results = User::find(auth()->id())->taxCalulators;
