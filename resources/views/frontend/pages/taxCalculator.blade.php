@@ -10,6 +10,8 @@
             transition: all 150ms ease-in-out;
         }
     </style>
+<form action="{{ route('tax.calculate') }}" id="form" method="POST">
+    @csrf
     <section class="my-5">
         <div class="container d-flex justify-content-center">
             <ul class="nav nav-pills navtab-bg nav-justif" role="tablist"
@@ -51,12 +53,11 @@
                 @endphp
                 <div class="tab-pane fade {{ $index === 1 ? 'show active' : '' }}" id="{{ $for }}"
                     role="tabpanel" aria-labelledby="{{ $for . '-tab' }}">
-                    <form action="{{ route('tax.calculate') }}" id="form" method="POST">
-                        @csrf
                         <div class="container rounded bg-white py-3 px-4">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
+                                        <input hidden value="{{ $for }}" name="tax_for" class="d-none">
                                         <div class="col-md-6">
                                             <x-backend.form.text-input label="Name" :value="old('name') ? auth()->user()->name : ''" required
                                                 type="text" name="name" >
@@ -176,13 +177,10 @@
         });
     </script>
     <script>
-        // var button = document.querySelector(".myclass");
-
         $(document).ready(function(){
             $("#apply").click(function(){
                 var url = "{{ route('tax.calculate', true) }}";
                 var form = $('#form').attr('action', url);
-                // console.log(url);
             });
         });
     </script>

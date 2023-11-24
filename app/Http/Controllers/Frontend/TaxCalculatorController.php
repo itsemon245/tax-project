@@ -15,9 +15,11 @@ class TaxCalculatorController extends Controller
         $settings = TaxSetting::get()->groupBy('for');
         return view('frontend.pages.taxCalculator', compact('settings'));
     }
+    protected function applyForService(TaxCalculator $result) {
+        return $result;
+    }
     public function calculate(Request $request, $apply = false)
     {
-        // dd($apply);
         $request->validate([
             "name" => "required|string",
             "email" => "required|email",
@@ -32,12 +34,10 @@ class TaxCalculatorController extends Controller
         $others = 0;
         $tax = 0;
         $taxSetting = TaxSetting::where(['for' => $request->tax_for, 'type' => 'tax'])->first();
-        dd($taxSetting);
         $minTax = $taxSetting->min_tax;
         $income = (int) $request->yearly_income;
         $turnover = (int) $request->yearly_turnover;
         $asset = (int) $request->total_asset;
-        // get taxes
         $incomeTax = $this->calcTax($income, $request, 'income');
         $turnoverTax = $this->calcTax($turnover, $request, 'turnover');
         $assetTax = $this->calcTax($asset, $request, 'asset');
@@ -50,9 +50,6 @@ class TaxCalculatorController extends Controller
             $totalTax = $minTax > $afterRebate ? $minTax : $afterRebate;
         }
         $totalTax -= (float) $request->deduction;
-
-
-        // get others
         $incomeOther = $this->calcOthers($income, $request, 'income');
         $turnoverOther = $this->calcOthers($turnover, $request, 'turnover');
         $assetOther = $this->calcOthers($asset, $request, 'asset');
@@ -68,12 +65,13 @@ class TaxCalculatorController extends Controller
             'others' => $others,
             'user_id' => auth()?->id()
         ]);
-         return view('frontend.pages.taxCalculator.result', compact('result'));
-    }
+        if($apply == true){
+            $data = TaxCalculator::find($this->applyForService($result))->first();
+            $data->update(['has_applied_for_service' => true]);
 
-    // protected function applyForService(TaxCalculator $result) {
-        
-    // }
+        }
+         return view('frontend.pages.taxCalculator.result', compact('result','apply'));
+    }
     public function results()
     {
         $results = User::find(auth()->id())->taxCalulators;
