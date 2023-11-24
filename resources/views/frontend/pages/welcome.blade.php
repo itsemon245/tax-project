@@ -5,10 +5,7 @@
         $productCat = \App\Models\ProductCategory::where('name', 'Standard Package (tax)')
             ->with(['productSubCategories', 'productSubCategories.products'])
             ->first();
-        $reviews = \App\Models\Review::with('user')
-            ->latest()
-            ->limit(10)
-            ->get();
+        
     @endphp
     <section class="mb-5">
         <div class="card-body container-fluid px-5">
@@ -107,7 +104,7 @@
             <x-frontend.info-card :$info />
         @endforeach
     </x-frontend.info-section>
-    <x-frontend.testimonial-section :testimonials="$reviews">
+    <x-frontend.testimonial-section>
     </x-frontend.testimonial-section>
 @endsection
 

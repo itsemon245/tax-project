@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Review;
 use App\Models\ServiceCategory;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,15 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('frontend.layouts.header', function ($view) {
             $categories = ServiceCategory::with(['serviceSubCategories'])->get();
             $view->with('categories', $categories);
+        });
+
+        
+        View::composer('components.frontend.testimonial-section', function ($view) {
+            $reviews = Review::with('user')
+            ->latest()
+            ->limit(10)
+            ->get();
+            $view->with('testimonials', $reviews);
         });
     }
 }
