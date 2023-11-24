@@ -8,7 +8,7 @@
 </p>
 
 # About This Project
-This is a real-world application that handles tax related operation like managing clients, sending invoices, handling reports, tracking events & appointments etc.
+This is a real-world application that handles tax related operation like managing clients, sending invoices, handling reports, tracking events & appointments etc. We have developed an application that will play a crucial role in the digitalization of the IT sector in our country. The general public can quickly and reliably understand all the laws and regulations related to income tax through this application. It will eliminate the hassle of paperwork for ordinary people when submitting income tax. Anyone can access any book related to the law and can file any case pertaining to the law. The admin can monitor their employees' work through this application. Overall, this application will have a positive and convenient role in the advancement of Bangladesh's economy.
 
 ### Core Features:
 - Used Laravel, Bootstrap, jQuery & vanilla JavaScript
