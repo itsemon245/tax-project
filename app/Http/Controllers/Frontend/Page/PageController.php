@@ -8,17 +8,19 @@ use App\Models\Info;
 use App\Models\User;
 use App\Models\About;
 use App\Models\Course;
+use App\Models\Review;
+use App\Enums\PageName;
 use App\Models\Industry;
 use App\Models\Achievement;
 use App\Models\Appointment;
 use App\Models\Testimonial;
 use App\Models\ClientStudio;
 use Illuminate\Http\Request;
+use App\Models\CustomService;
 use App\Models\ExpertProfile;
+use App\Models\PartnerSection;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
-use App\Models\PartnerSection;
-use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -32,7 +34,8 @@ class PageController extends Controller
         $subCategories = ServiceSubCategory::with('serviceCategory')->where('service_category_id', 3)->get();
         $achievements = Achievement::latest()->get();
         $partners = PartnerSection::latest()->limit(10)->get();
-        return view('frontend.pages.industries.industries', compact('subCategories', 'achievements', 'partners'));
+        $customServices = CustomService::with('image')->where('page_name', PageName::Account)->get();
+        return view('frontend.pages.industries.industries', compact('subCategories', 'achievements', 'partners', 'customServices'));
     }
     public function clientStudioPage()
     {
@@ -47,14 +50,14 @@ class PageController extends Controller
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->get();
-        return view('frontend.pages.appointment.makeAppointment', compact('banners', 'expertProfile', 'infos1','testimonials', 'maps'));
+        return view('frontend.pages.appointment.makeAppointment', compact('banners', 'expertProfile', 'infos1', 'testimonials', 'maps'));
     }
     public function appointmentVirtual(?ExpertProfile $expertProfile = null)
     {
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->get();
-        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('banners', 'expertProfile','testimonials', 'infos1'));
+        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('banners', 'expertProfile', 'testimonials', 'infos1'));
     }
     public function aboutPage()
     {

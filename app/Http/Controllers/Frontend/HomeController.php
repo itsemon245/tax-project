@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Enums\PageName;
+use App\Models\CustomService;
 use App\Models\Info;
 use App\Models\Banner;
 use App\Models\Appointment;
@@ -26,6 +28,19 @@ class HomeController extends Controller
         $infos1 = Info::where(['section_id' => 1, 'page_name' => 'homepage'])->get();
         $infos2 = Info::where(['section_id' => 2, 'page_name' => 'homepage'])->get();
         $achievements = Achievement::latest()->get();
-        return view('frontend.pages.welcome', compact('banners', 'appointmentSections', 'infos1', 'infos2', 'products', 'subCategories', 'achievements'));
+        $customServices = CustomService::with('image')->where('page_name', PageName::Home)->get();
+        return view(
+            'frontend.pages.welcome',
+            compact([
+                'banners',
+                'appointmentSections',
+                'infos1',
+                'infos2',
+                'products',
+                'subCategories',
+                'achievements',
+                'customServices'
+            ])
+        );
     }
 }

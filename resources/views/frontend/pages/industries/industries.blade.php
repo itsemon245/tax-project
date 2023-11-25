@@ -13,26 +13,30 @@
 
     {{-- Misc Services --}}
     <section class="px-lg-5 px-2 my-5">
-        <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">{{$subCategories[0]->serviceCategory->name}}</h4>
+        <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">{{ $subCategories[0]->serviceCategory->name }}
+        </h4>
         <div class="row mx-lg-5 mx-2">
             @foreach ($subCategories as $sub)
-            <div class="col-md-4 col-lg-3 col-sm-6">
-                <div class="d-flex flex-column align-items-center border rounded shadow-sm p-2 mb-3">
-                    <a href="{{ route('service.sub', $sub->id) }}">
-                        <img loading="lazy" style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
-                            src="{{ useImage($sub->image) }}" alt="">
-                    </a>
-                    <a class="text-dark text-capitalize" href="{{route('service.sub', $sub->id)}}"><h6>{{$sub->name}}</h6></a>
-                    <a href="{{route('service.sub', $sub->id)}}" class="text-center text-muted">{{$sub->description}}</a>
+                <div class="col-md-4 col-lg-3 col-sm-6">
+                    <div class="d-flex flex-column align-items-center border rounded shadow-sm p-2 mb-3">
+                        <a href="{{ route('service.sub', $sub->id) }}">
+                            <img loading="lazy" style="width:150px;aspect-ratio:1/1;" class="rounded rounded-circle mb-3"
+                                src="{{ useImage($sub->image) }}" alt="">
+                        </a>
+                        <a class="text-dark text-capitalize" href="{{ route('service.sub', $sub->id) }}">
+                            <h6>{{ $sub->name }}</h6>
+                        </a>
+                        <a href="{{ route('service.sub', $sub->id) }}"
+                            class="text-center text-muted">{{ $sub->description }}</a>
+                    </div>
                 </div>
-            </div>
             @endforeach
-            
+
         </div>
     </section>
-   
+    <x-section.custom-service :customServices="$customServices" />
     <x-frontend.appointment-section :sections="$appointments" />
-    
+
     <x-frontend.achievements :achievements="$achievements" />
 
     <x-frontend.info-section :title="$infos1[0]->title" class="text-capitalize">
@@ -57,8 +61,9 @@
                     <div class="media-elements">
                         <div class="d-flex align-items-start gap-3 p-3" style="width: 100%;">
                             <div>
-                                <img loading="lazy" class="border image rounded-circle" src="{{ useImage($partner->image) }}"
-                                    width="80px" height="80px" style="object-fit: cover" alt="">
+                                <img loading="lazy" class="border image rounded-circle"
+                                    src="{{ useImage($partner->image) }}" width="80px" height="80px"
+                                    style="object-fit: cover" alt="">
 
                             </div>
                             <div>

@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
+    public function run() : void
     {
         $this->call([
             UserSeeder::class,
@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             AboutSeeder::class,
             ExpenseSeeder::class,
             AchievementSeeder::class,
+            CustomServiceSeeder::class
         ]);
     }
 }
