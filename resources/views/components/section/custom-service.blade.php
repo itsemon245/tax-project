@@ -9,7 +9,7 @@
                             class="rounded rounded-circle mb-3" src="{{ $sub->image->url }}" alt="">
                     </a>
                     <a class="text-dark text-capitalize" href="{{ $sub->link }}">
-                        <h6>{{ $sub->name }}</h6>
+                        <h6>{{ $sub->title }}</h6>
                     </a>
                     <a href="{{ $sub->link }}" class="text-center text-muted">{{ $sub->description }}</a>
                 </div>
