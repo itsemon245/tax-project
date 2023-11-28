@@ -1,10 +1,3 @@
-@php
-    $reviews = \App\Models\Review::with('user')
-        ->latest()
-        ->limit(10)
-        ->get();
-    
-@endphp
 <section class="mt-5 py-5" style="background: #474646;">
     <h3 class="text-center text-light">Testimonials</h3>
     <div class="scroll-wrapper">

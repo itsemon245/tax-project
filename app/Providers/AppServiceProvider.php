@@ -2,12 +2,11 @@
 
 namespace App\Providers;
 
-use App\Interfaces\Services\BaseServiceInterface;
-use App\Models\CustomService;
 use App\Models\User;
+use App\Models\Setting;
 use App\Models\PromoCode;
 use App\Events\MonthEnded;
-use App\Services\CustomService\CustomServiceService;
+use App\Models\CustomService;
 use Illuminate\Routing\Route;
 use App\Listeners\LogoutAllUsers;
 use Illuminate\Auth\Events\Logout;
@@ -16,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\ServiceProvider;
 use App\Notifications\PromoCodeNotification;
+use App\Interfaces\Services\SettingInterface;
+use Illuminate\Contracts\Foundation\Application;
+use App\Interfaces\Services\BaseServiceInterface;
+use App\Services\CustomService\CustomServiceService;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
@@ -53,5 +56,6 @@ class AppServiceProvider extends ServiceProvider
             CustomService::class => CustomService::class
         ]);
         Paginator::useBootstrapFive();
+
     }
 }

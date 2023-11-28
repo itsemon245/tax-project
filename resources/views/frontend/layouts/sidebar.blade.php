@@ -1,5 +1,4 @@
 @php
-    $categories = \App\Models\ServiceCategory::with(['serviceSubCategories'])->get();
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
     $user = \App\Models\User::find(auth()->id());
@@ -70,9 +69,6 @@
                             style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
                     </div>
                     <ul class="dropdown-click" id="training-education">
-                        @php
-                            $courses = \App\Models\Course::get(['id', 'name']);
-                        @endphp
                         @foreach ($courses as $course)
                             <li class="sidebar-item ps-3 dropdown-item"><a
                                     href="{{ route('course.show', $course->id) }}">{{ $course->name }}</a>

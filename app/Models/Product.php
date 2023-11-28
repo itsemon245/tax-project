@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Interfaces\Services\SettingInterface;
 use Illuminate\Support\Arr;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
@@ -28,13 +29,13 @@ class Product extends Model
     {
         return $this->belongsTo(User::class);
     }
-    function reviews(): MorphMany
+    function reviews() : MorphMany
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
 
 
-    public static function mappedProducts(array $queries): array
+    public static function mappedProducts(array $queries) : array
     {
         $silverProducts = [];
         $goldProducts = [];
@@ -79,10 +80,10 @@ class Product extends Model
 
 
 
-    public function price(): Attribute
+    public function price() : Attribute
     {
-        $commission = Setting::first(['reference'])->reference->partner_commission;
-        $user = User::find(auth()->id());
+        $commission = app('setting')->reference->partner_commission;
+        $user = auth()->user();
         return Attribute::make(
             get: fn ($value) => $user?->isPartner() ? $value - ($value * $commission / 100) : $value
         );

@@ -1,6 +1,4 @@
 @php
-    $categories = App\Models\ServiceCategory::get();
-    $fetch = App\Models\Setting::get()[0]->basic;
 @endphp
 <footer class="top-footer bg-dark">
     <div class="px-5 mx-3 text-white py-3">
@@ -45,7 +43,7 @@
                     <div class="col-lg-6 mb-3">
                         <div class="fw-bold">Address:</div>
                         <div style="font-weight: 500; font-size: 16px;max-width:25ch;">
-                            {{ $fetch->address }}
+                            {{ $basic->address }}
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">

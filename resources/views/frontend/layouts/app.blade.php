@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" />
+<x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" :favicon="$settings->basic->favicon" />
 
 <body class="w-100 position-relative">
     <style>
@@ -10,7 +10,8 @@
                 flex: 0 0 auto;
                 width: 22%;
             }
-            #auth-sidebar > .sidebar {
+
+            #auth-sidebar>.sidebar {
                 flex: 0 0 auto;
                 width: 22%;
             }
@@ -20,12 +21,14 @@
                 width: 78%;
             }
         }
+
         @media (min-width: 1300px) {
             #auth-sidebar {
                 flex: 0 0 auto;
                 width: 18%;
             }
-            #auth-sidebar > .sidebar {
+
+            #auth-sidebar>.sidebar {
                 flex: 0 0 auto;
                 width: 18%;
             }
@@ -96,13 +99,7 @@
 
 
     @php
-        $settings = getRecords('settings');
-        $basic = json_decode($settings[0]->basic);
-        $reference = json_decode($settings[0]->reference);
-        $payment = json_decode($settings[0]->payment);
-        $return_links_one = json_decode($settings[0]->return_links)[0];
-        $return_links_two = json_decode($settings[0]->return_links)[1];
-        $user = \App\Models\User::find(auth()->id());
+        $user = auth()->user();
         $isRead = $user !== null ? count($user?->unreadNotifications) === 0 : true;
         // dd($basic);
     @endphp
@@ -235,4 +232,5 @@
     </script>
 
 </body>
+
 </html>

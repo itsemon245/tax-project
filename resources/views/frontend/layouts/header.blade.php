@@ -1,18 +1,15 @@
 @php
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
-    $settings = \App\Models\Setting::first();
-    $basic = $settings->basic;
-    $user = \App\Models\User::find(auth()->id());
-    $courses = \App\Models\Course::get(['id', 'name']);
+    $user = auth()->user();
 @endphp
 <header id="header" class="d-flex flex-column justify-items-center fixed">
     <div class="d-flex align-items-center flex-grow-1 space-between">
         {{-- app logo and menu btn --}}
         <div class="d-flex align-items-center">
             <div>
-                <button title="Navigation" id="sidebar-1" class="menu-btn waves-effect waves-light p-2 border-0 mx-2 d-xl-none"
-                    style="background: none;">
+                <button title="Navigation" id="sidebar-1"
+                    class="menu-btn waves-effect waves-light p-2 border-0 mx-2 d-xl-none" style="background: none;">
                     <i class="mdi mdi-menu text-light"></i>
                 </button>
             </div>
@@ -37,9 +34,6 @@
                     <li class="nav-item custom-nav-item position-relative dropdown-trigger ">
                         <a class="nav-link text-light" href="#">Return Status</a>
                         <ul class="position-absolute dropdown">
-                            @php
-                                $returnLinks = \App\Models\Setting::first(['return_links'])->return_links;
-                            @endphp
                             @foreach ($returnLinks as $link)
                                 <li class="nav-item custom-nav-item dropdown-item"><a target="_blank"
                                         rel="noopener noreferrer" href="{{ $link->link }}"
@@ -96,9 +90,6 @@
                     <li class="nav-item custom-nav-item position-relative dropdown-trigger">
                         <a class="nav-link text-light" href="#">Return Status</a>
                         <ul class="position-absolute dropdown ">
-                            @php
-                                $returnLinks = \App\Models\Setting::first(['return_links'])->return_links;
-                            @endphp
                             @foreach ($returnLinks as $link)
                                 <li class="nav-item custom-nav-item dropdown-item"><a target="_blank"
                                         rel="noopener noreferrer" href="{{ $link->link }}"

@@ -45,28 +45,6 @@
         </div>
     </section>
 
-    @php
-        $services = [
-            [
-                'id' => 1,
-                'name' => 'Tax Services',
-                'description' => fake()->realText(),
-                'image' => picsum(fake()->word()),
-            ],
-            [
-                'id' => 2,
-                'name' => 'Vat Services',
-                'description' => fake()->realText(),
-                'image' => picsum(fake()->word()),
-            ],
-            [
-                'id' => 3,
-                'name' => 'Misc Services',
-                'description' => fake()->realText(),
-                'image' => picsum(fake()->word()),
-            ],
-        ];
-    @endphp
     <x-section.custom-service :customServices="$customServices" />
     <x-frontend.appointment-section :sections="$appointmentSections" />
 
@@ -88,25 +66,6 @@
 @endsection
 
 @pushOnce('customJs')
-    <script>
-        $(document).ready(function() {
-            const submit = () => {
-                $.ajax({
-                    type: "post",
-                    url: "{{ route('review.store', 'book') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                    success: function(response) {
-                        console.log(response);
-                    }
-                });
-            }
-
-            $('#submit-btn').click(submit)
-        });
-    </script>
-
     <script>
         $(document).ready(function() {
             var counter = 0
