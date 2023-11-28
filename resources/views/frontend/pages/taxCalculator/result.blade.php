@@ -31,34 +31,15 @@
                         @endforeach
                     </ul>
                     </p>
-                    <x-backend.ui.button type="custom" :href="route('tax.calculator')" class="btn-sm btn-info">Calculate
-                        again</x-backend.ui.button>
+                    <div class=" {{ $apply == true ? '' : 'd-flex justify-content-around' }}">
+                        <x-backend.ui.button type="custom" :href="route('tax.calculator')" class="btn-sm btn-info">Calculate
+                            again</x-backend.ui.button>
+                            <form action="{{ route('tax.calculate', true) }}" method="post">
+                            @csrf
+                            <x-backend.ui.button type="submit" class="btn-sm btn-success {{ $apply == true ? 'd-none' : '' }} ">Apply for service</x-backend.ui.button>
+                            </form>
+                    </div>
                 </div>
-
-                {{-- <div class="row justify-content-between" style="">
-                    <div class="col-sm-6">
-                        <div class="text-dark fw-medium">
-                            Total Marks : {{ $result->exam->total_marks }}
-                        </div>
-                        <div class="text-dark fw-medium">
-                            Passing Marks : {{ $result->exam->passing_marks }}
-                        </div>
-                        <div class="text-dark fw-bold">
-                            You Got : {{ $result->obtained_marks }}
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="text-dark fw-medium">
-                            Questions : {{ $result->exam->questions->count() }}
-                        </div>
-                        <div class="text-dark fw-medium">
-                            Right Answers : {{ $result->right }}
-                        </div>
-                        <div class="text-dark fw-medium">
-                            Wrong Answers : {{ $result->wrong }}
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </section>

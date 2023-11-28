@@ -12,6 +12,7 @@
                         <th>Details</th>
                         <th>Tax</th>
                         <th>Others</th>
+                        <th>Status</th>
                         @can('manage result')
                         <th>Action</th>
                         @endcan
@@ -41,10 +42,15 @@
                                     @endforeach
                                 </ul>
                             </td>
+                            <td>
+                                <span class="badge {{ $result->has_applied_for_service == true ? 'bg-success' : 'bg-dark' }}">{{ $result->has_applied_for_service == true ? 'Apply' : 'Not Apply' }}</span>
+                                {{-- {{dd($result)}} --}}
+                            </td>
                             @can('manage result')
                             <td>
                                 <x-backend.ui.button type="delete" :href="route('tax.result.destroy', $result)"
-                                    class="btn-sm"></x-backend.ui.button>
+                                    class="btn-sm">
+                                </x-backend.ui.button> 
                             </td>
                             @endcan
                         </tr>
@@ -58,3 +64,4 @@
         </section>
     </x-backend.ui.section-card>
 @endsection
+{{-- :checked="$rolePermissions->search($permission->id) !== false" --}}
