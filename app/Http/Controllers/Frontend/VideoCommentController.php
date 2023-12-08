@@ -31,7 +31,7 @@ class VideoCommentController extends Controller
     {
         // dd($request->video_id);
         $store = VideoComment::create([
-            'user_id' => auth()->user()->id,
+            'user_id' => auth()->user()?->id,
             'video_id' => $request->video_id,
             'comment' => $request->comment,
         ]);

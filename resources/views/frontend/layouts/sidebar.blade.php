@@ -1,7 +1,7 @@
 @php
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
-    $user = auth()->user()->load('unreadNotifications');
+    $user = auth()->user()?->load('unreadNotifications');
     $isRead = $user !== null ? count($user?->unreadNotifications) === 0 : true;
 @endphp
 <nav class="relative">

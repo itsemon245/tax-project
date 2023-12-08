@@ -74,8 +74,8 @@ class ReviewController extends Controller
         if (auth()->user()) {
             $user_id = auth()->id();
 
-            $avatar = $request->image ? $request->image : auth()->user()->image_url;
-            $name = $request->name ? $request->name : auth()->user()->name;
+            $avatar = $request->image ? $request->image : auth()->user()?->image_url;
+            $name = $request->name ? $request->name : auth()->user()?->name;
             $comment = $request->comment;
             $rating = $request->rating;
             $type = Str::studly($slug);
