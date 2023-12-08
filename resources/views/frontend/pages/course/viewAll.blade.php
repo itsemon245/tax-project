@@ -42,4 +42,10 @@
             </div>
         </div>
     </section>
+                {{-- Lets discuss --}}
+                <x-section.discuss-section/>
+                {{-- Appoinment Section --}}
+            <div>
+                <x-frontend.appointment-section />
+            </div>
 @endsection

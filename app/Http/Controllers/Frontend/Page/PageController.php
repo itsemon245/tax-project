@@ -65,8 +65,7 @@ class PageController extends Controller
     public function aboutPage()
     {
         $about = About::first();
-        $appointmentSections = Appointment::latest()->limit(5)->get();
-        return view('frontend.pages.about', compact('about', 'appointmentSections'));
+        return view('frontend.pages.about', compact('about'));
     }
     function officePage()
     {
