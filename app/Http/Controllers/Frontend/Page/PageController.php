@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Frontend\Page;
 
+use App\Models\Banner;
 use App\Models\Map;
 use App\Models\Info;
 use App\Models\User;
@@ -42,7 +43,9 @@ class PageController extends Controller
         $data = ClientStudio::get();
         $description = $data[0]->description;
         $appointmentSections = Appointment::latest()->limit(5)->get();
-        return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description', 'appointmentSections'));
+        $banners = Banner::latest()->limit(10)->get();
+        $partners = PartnerSection::latest()->limit(10)->get();
+        return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description', 'appointmentSections', 'banners', 'partners'));
     }
     public function appointmentPage(?ExpertProfile $expertProfile = null)
     {

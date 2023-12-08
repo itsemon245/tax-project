@@ -1,10 +1,9 @@
 @php
-    $partners = getRecords('partner_sections');
 
 @endphp
 @extends('frontend.layouts.app')
 @section('main')
-    <x-frontend.hero-section :banners="getRecords('banners')" />
+    <x-frontend.hero-section :banners="$banners" />
 
 
     <div class="mt-4 mb-4">
@@ -128,7 +127,6 @@
                 role="button"></span>
         </div>
     </section>
-
 @endsection
 
 @push('customCss')

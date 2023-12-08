@@ -1,5 +1,3 @@
-@php
-@endphp
 <footer class="top-footer bg-dark">
     <div class="px-5 mx-3 text-white py-3">
         <div class="row justify-content-center">

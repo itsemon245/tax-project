@@ -1,7 +1,7 @@
 @php
     $isPageV2 = str(url()->current())->contains('page');
     $isCoursePage = str(url()->current())->contains('course');
-    $user = \App\Models\User::find(auth()->id());
+    $user = auth()->user()->load('unreadNotifications');
     $isRead = $user !== null ? count($user?->unreadNotifications) === 0 : true;
 @endphp
 <nav class="relative">
@@ -29,9 +29,6 @@
                             style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>
                     </div>
                     <ul class="dropdown-click" id="return-status">
-                        @php
-                            $returnLinks = \App\Models\Setting::first(['return_links'])->return_links;
-                        @endphp
                         @foreach ($returnLinks as $link)
                             <li class="sidebar-item ps-3 dropdown-item"><a target="_blank" rel="noopener noreferrer"
                                     href="{{ $link->link }}" class="">{{ $link->title }}</a></li>
@@ -190,6 +187,5 @@
                 sidebar.toggleClass('d-none');
             })
         });
-    
     </script>
 @endpush
