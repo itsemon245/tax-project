@@ -24,7 +24,7 @@ jobs:
           php artisan event:cache 
           php artisan route:cache
           php artisan view:cache
-          php artisna migrate:fresh --seed
+          php artisan migrate:fresh --seed
 
   Deploy_to_production_server:
     runs-on: ubuntu-latest
