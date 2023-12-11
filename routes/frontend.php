@@ -43,6 +43,8 @@ use App\Models\VideoComment;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/contact-developers', [PageController::class, 'contactDevelopers'])->name('developers');
+
 Route::prefix('service')->name('service.')->controller(ServicePageController::class)->group(function () {
     Route::get('category/{id}', 'subsUnderCategory')->name('category');
     Route::get('sub/{id}', 'servicesUnderSub')->name('sub');

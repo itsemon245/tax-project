@@ -115,4 +115,8 @@ class PageController extends Controller
         $payments = User::find(auth()->id())->purchases;
         return view('frontend.pages.myPayments', compact('payments'));
     }
+    //Contact Developers page:
+    public function contactDevelopers(){
+        return view('frontend.pages.contact-developers');
+    }
 }
