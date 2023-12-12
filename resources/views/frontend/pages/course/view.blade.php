@@ -114,6 +114,12 @@
                 </div>
             </div>
         </div>
+            {{-- Lets discuss --}}
+            <x-section.discuss-section/>
+            {{-- Appoinment Section --}}
+        <div>
+            <x-frontend.appointment-section />
+        </div>
     </div>
 
     @push('customJs')

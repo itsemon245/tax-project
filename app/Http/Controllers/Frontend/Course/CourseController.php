@@ -5,16 +5,17 @@ namespace App\Http\Controllers\Frontend\Course;
 use App\Models\User;
 use App\Models\Video;
 use App\Models\Course;
+use App\Models\Review;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
-use App\Models\Review;
 
 class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::get();
+        $courses = Course::take(6)->get();
         return view('frontend.pages.course.viewAll', compact('courses'));
     }
     public function show(Course $course)

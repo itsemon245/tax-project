@@ -63,14 +63,6 @@
                                     @auth
                                         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                                     @endauth
-                                    {{-- <li class="nav-item" role="presentation">
-                                        <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab"
-                                            class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
-                                            aria-selected="false" role="tab">
-                                            <i class="mdi mdi-calendar-clock"></i>
-                                            <span class="d-none d-sm-inline">Date & Time</span>
-                                        </a>
-                                    </li> --}}
                                     <li class="nav-item" role="presentation">
                                         <a href="#tab-3" data-bs-toggle="tab" data-toggle="tab"
                                             class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
@@ -107,13 +99,13 @@
                                             </h4>
                                             <a href="{{ route('appointment.make') }}" for="appointment-input"
                                                 class="row mb-1 text-dark" style="cursor: pointer;">
-                                                <d id="appointment-type"
+                                                <div id="appointment-type"
                                                     class="border bg-light rounded p-3 appointment-type appointment">
                                                     <h4>Together in Office</h4>
                                                     <p class="text-muted mb-0">Work with a tax pro at a tax office near you.
                                                         We are committed to helping you file your taxes in a way that's easy
                                                         and safe for you.</p>
-                                                </d>
+                                                </div>
                                                 <input type="radio" class="location-input" name="is_physical"
                                                     data-effected="#appointment-type" data-cards=".appointment"
                                                     id="appointment-input" value="{{ true }}" hidden>
@@ -253,9 +245,13 @@
             </form>
         </div>
     </div>
-
-    <x-frontend.testimonial-section :$testimonials>
-    </x-frontend.testimonial-section>
+    {{-- Lets discuss --}}
+    <x-section.discuss-section/>
+    {{-- Appoinment Section --}}
+    <div>
+        <x-frontend.appointment-section />
+    </div>
+    <x-frontend.testimonial-section :$testimonials />
 
 
     @push('customJs')
@@ -348,40 +344,6 @@
                     })
                 })
 
-                //on location click
-                // $('.location-input[type="radio"]').each(function(i, input) {
-                //     input.addEventListener('input', function() {
-                //         if (this.id === 'appointment-input-2') {
-                //             $('.location-selector input').attr('disabled', true)
-                //             $('.location-selector').hide()
-                //             $('.selected-location').hide()
-                //             $('#office-body').hide()
-                //             $('.time-selector').removeClass('col-md-6')
-                //         } else {
-                //             $('.location-selector input').attr('disabled', false)
-                //             $('.location-selector').show()
-                //             $('.selected-location').show()
-                //             $('#office-body').show()
-                //             $('.time-selector').addClass('col-md-6')
-                //         }
-                //         const itemToEffect = $(input.dataset.effected)
-                //         const cards = $(input.dataset.cards)
-                //         cards.addClass('bg-light')
-                //         itemToEffect.removeClass('bg-light');
-                //         itemToEffect.addClass('selected');
-
-                //         if (this.name == 'location') {
-                //             const mapsData = JSON.parse($('#maps-data').val())
-                //             const mapId = parseInt(this.value)
-                //             office = mapsData.filter(item => item.id === mapId)[0]
-                //             $('.selected-location iframe').attr('src', office.src)
-                //             $('#address-body').html(`
-        //             <p class='fw-bold mb-1' id="">${office.location}</p>
-        //             <div class="text-muted" id="">${office.address}</div>
-        //             `)
-                //         }
-                //     })
-                // })
                 // on time click
                 $('.time-input').each((i, input) => {
                     if (i === 0) {

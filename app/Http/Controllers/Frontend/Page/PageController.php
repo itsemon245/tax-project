@@ -65,8 +65,7 @@ class PageController extends Controller
     public function aboutPage()
     {
         $about = About::first();
-        $appointmentSections = Appointment::latest()->limit(5)->get();
-        return view('frontend.pages.about', compact('about', 'appointmentSections'));
+        return view('frontend.pages.about', compact('about'));
     }
     function officePage()
     {
@@ -115,5 +114,9 @@ class PageController extends Controller
     {
         $payments = User::find(auth()->id())->purchases;
         return view('frontend.pages.myPayments', compact('payments'));
+    }
+    //Contact Developers page:
+    public function contactDevelopers(){
+        return view('frontend.pages.contact-developers');
     }
 }

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\ServiceProvider;
 use App\Notifications\PromoCodeNotification;
 use App\Interfaces\Services\SettingInterface;
+use Laravel\Telescope\TelescopeServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use App\Interfaces\Services\BaseServiceInterface;
 use App\Services\CustomService\CustomServiceService;
@@ -29,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function register() : void
     {
         if($this->app->environment('local')){
-            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
     }

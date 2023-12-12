@@ -14,10 +14,13 @@
                             <ul class="row mx-0  list-unstyled mb-2">
                                 @foreach ($category->serviceSubCategories as $sub)
                                     <li
-                                        class="{{ count($category->serviceSubCategories) < 2 ? 'col-md-12' : 'col-sm-6' }} mb-2">
+                                        class="{{ count($category->serviceSubCategories) < 2 ? 'col-md-12' : 'col-6' }} mb-2">
                                         <a style="text-decoration:underline!important;" class="fw-medium mb-2"
                                             href="{{ route('service.sub', $sub->id) }}">{{ $sub->name }}</a>
-                                        <ul class="" style="list-style: disc; mx-0">
+                                        {{-- <ul class="" style="list-style: disc; mx-0">
+                                            @php
+                                                dd($sub);
+                                            @endphp
                                             @foreach ($sub->services as $service)
                                                 <li class="">
                                                     <a style="text-decoration:underline!important;" target="_blank"
@@ -25,7 +28,7 @@
                                                         href="{{ route('service.view', $service->id) }}">{{ str($service->title)->headline() }}</a>
                                                 </li>
                                             @endforeach
-                                        </ul>
+                                        </ul> --}}
                                     </li>
                                 @endforeach
                             </ul>
@@ -91,9 +94,15 @@
             <span class="mx-2 mx-md-4 d-none d-sm-inline ">|</span>
             <hr class="my-2 d-sm-none bg-dark" style="height: 2px;width:80%;">
             </hr>
-            <a class="fw-medium text-white" style="text-decoration: underline!important;" href="#" target="_blank"
+            <a id="contact" class="fw-medium text-dark" style="text-decoration: underline!important;" href="{{ route('developers') }}"
                 rel="noopener noreferrer">Contact
                 Developers</a>
         </div>
     </div>
+
+
+
 </footer>
+
+
+

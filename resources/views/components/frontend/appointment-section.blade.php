@@ -1,3 +1,7 @@
+@php
+    use App\Models\Appointment;
+    $sections = Appointment::take(6)->get();
+@endphp
 <section class="" style="background: var(--bs-gray-100);">
     <div id="appointmentSection" class="carousel slide pointer-event" data-bs-ride="carousel">
         <ol class="carousel-indicators">
