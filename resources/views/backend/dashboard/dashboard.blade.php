@@ -9,7 +9,7 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard']" />
 
     <x-backend.ui.section-card>
-        <x-backend.ui.recent-update-invoice :method="route('invoice.create')"/>
+        <x-backend.ui.recent-update-invoice :method="route('invoice.create')" />
         <x-ui.calendar :currentEvents="$currentEvents" :events="$events" :services="$services" :clients="$clients" />
         {{-- Project Progress Starts --}}
         <h3 class="fw-bold text-center mb-3 mt-5">Project Progress</h3>
@@ -89,7 +89,8 @@
                                 <span class="text-dark font-16 fw-bold">{{ $project->name }}:</span>
                                 <div id="bar" class="progress mb-2 w-100" style="height: max-content;">
                                     <div class="bar progress-bar {{ $color }}" style="width: {{ $progress }}%;">
-                                        <span class="text-light font-18 fw-bold">{{ $progress }}%</span></div>
+                                        <span class="text-light font-18 fw-bold">{{ $progress }}%</span>
+                                    </div>
                                 </div>
                             @empty
                                 <h5 class="d-flex justify-content-center text-muted">No record found</h5>
@@ -156,7 +157,7 @@
                 ->invoices()
                 ->select(['client_id'])
                 ->whereHas('fiscalYears', function ($query) {
-                    $query->where('due', '>', 0);
+                    $query->where('status', 'due');
                 })
                 ->distinct()
                 ->count();
@@ -164,7 +165,15 @@
                 ->invoices()
                 ->select(['client_id'])
                 ->whereHas('fiscalYears', function ($query) {
-                    $query->where('paid', '>', 0);
+                    $query->where('status', 'paid');
+                })
+                ->distinct()
+                ->count();
+            $partialClients = $fiscalYear
+                ->invoices()
+                ->select(['client_id'])
+                ->whereHas('fiscalYears', function ($query) {
+                    $query->where('status', 'partial');
                 })
                 ->distinct()
                 ->count();
@@ -172,7 +181,7 @@
         <div class="row my-5">
             <div class="fs-4 fw-bold mb-2">Invoices</div>
             <div class="col-lg-4 col-md-6">
-                <div class="widget-rounded-circle card w-100 bg-light">
+                <div class="widget-rounded-circle card w-100 bg-light h-100">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
@@ -198,7 +207,7 @@
                 </div> <!-- end widget-rounded-circle-->
             </div>
             <div class="col-lg-4 col-md-6">
-                <div class="widget-rounded-circle card w-100 bg-light">
+                <div class="widget-rounded-circle card w-100 bg-light h-100">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
@@ -216,7 +225,15 @@
                             </div>
                             <div class="col-12">
                                 <div class="float-end fw-bold fs-5">Clients: <span
+                                        data-plugin="counterup">{{ $paidClients + $partialClients }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="float-start fw-bold">Full Paid: <span
                                         data-plugin="counterup">{{ $paidClients }}</span>
+                                </div>
+                                <div class="float-end fw-bold">Partial Paid: <span
+                                        data-plugin="counterup">{{ $partialClients }}</span>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -224,7 +241,7 @@
                 </div> <!-- end widget-rounded-circle-->
             </div>
             <div class="col-lg-4 col-md-6">
-                <div class="widget-rounded-circle card w-100 bg-light">
+                <div class="widget-rounded-circle card w-100 bg-light h-100">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
@@ -242,7 +259,15 @@
                             </div>
                             <div class="col-12">
                                 <div class="float-end fw-bold fs-5">Clients: <span
+                                        data-plugin="counterup">{{ $arearClients + $partialClients }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="float-start fw-bold">Full Due: <span
                                         data-plugin="counterup">{{ $arearClients }}</span>
+                                </div>
+                                <div class="float-end fw-bold">Partial Due: <span
+                                        data-plugin="counterup">{{ $partialClients }}</span>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -284,7 +309,7 @@
                         }
                     },
                     title: {
-                        text: 'Invoice Status Count',
+                        text: 'Invoice Amount Details',
                         floating: true,
                         offsetY: 0,
                         style: {
