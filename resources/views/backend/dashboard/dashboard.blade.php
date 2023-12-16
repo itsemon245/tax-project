@@ -304,7 +304,7 @@
                     tooltip: {
                         y: {
                             formatter: function(val) {
-                                return val + " Invoices"
+                                return `<div class="font-14 fw-bold">${val}<span class='fw-bold fs-5 ms-1'>&#2547;</span></div>`
                             }
                         }
                     },
