@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot() : void
     {
 
-        // dd($cookie);
+        // dd($this->app);
 
         Relation::enforceMorphMap([
             'Product'            => 'App\Models\Product',
