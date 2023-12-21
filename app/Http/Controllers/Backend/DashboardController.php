@@ -43,27 +43,23 @@ class DashboardController extends Controller
             $data = collect([
                 [
                     'x' => 'Overdue',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'overdue')->count()
-                ],
-                [
-                    'x' => 'Draft',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'draft')->count()
-                ],
-                [
-                    'x' => 'Sent',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'sent')->count()
+                    'y' =>  $fy->invoices()->wherePivot('status', 'overdue')->sum('due')
                 ],
                 [
                     'x' => 'Paid',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'paid')->count()
+                    'y' =>  $fy->invoices()->wherePivot('status', 'paid')->sum('paid')
                 ],
                 [
-                    'x' => 'Partial',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->count()
+                    'x' => 'Partial (Paid)',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->sum('paid')
+                ],
+                [
+                    'x' => 'Partial (Due)',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->sum('due')
                 ],
                 [
                     'x' => 'Due',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'due')->count()
+                    'y' =>  $fy->invoices()->wherePivot('status', 'due')->sum('due')
                 ],
             ]);
             return [
@@ -71,6 +67,7 @@ class DashboardController extends Controller
                 'data' => $data
             ];
         });
+        // dd($mappedItems);
 
         return $mappedItems;
     }

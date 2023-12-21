@@ -94,7 +94,7 @@
             <span class="mx-2 mx-md-4 d-none d-sm-inline ">|</span>
             <hr class="my-2 d-sm-none bg-dark" style="height: 2px;width:80%;">
             </hr>
-            <a id="contact" class="fw-medium text-dark" style="text-decoration: underline!important;" href="{{ route('developers') }}"
+            <a id="contact" class="fw-medium text-dark" style="text-decoration: underline!important;" href="#"
                 rel="noopener noreferrer">Contact
                 Developers</a>
         </div>
