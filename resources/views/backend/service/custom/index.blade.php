@@ -17,10 +17,10 @@
                 @foreach ($services as $key => $service)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>
+                        <td style="max-width: 200px;">
                             <h5>Title: {{ $service->title }}</h5>
                             <div>Description: </div>
-                            <div>{{ $service->description }}</div>
+                            <div class="text-wrap">{{ $service->description }}</div>
                         </td>
                         <td>
                             <span
