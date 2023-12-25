@@ -17,9 +17,11 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-// Route::get('/dashboard', function () {
+// Route::get('/dashboakrd', function () {
 //     return view('backend.dashboard.dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+
+// dd(app())
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -3,7 +3,7 @@
     <div class="scroll-wrapper">
         <span id="next" class="ti-arrow-circle-left custom-icon"></span>
         <div class="media-scroller snaps-inline">
-            @forelse ($reviews as $item)
+            @forelse ($reviews as $item) 
                 <div class="media-elements">
                     <img loading="lazy" src="{{ useImage($item->avatar) }}" alt="img" width="48px" height="48px"
                         class=" rounded-circle shadow-4-strong d-block">
