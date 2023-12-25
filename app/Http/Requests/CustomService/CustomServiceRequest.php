@@ -21,7 +21,7 @@ class CustomServiceRequest extends FormRequest
             'title'=>['required','string','max:255'],
             'description'=> ['required', 'string'],
             'link'=> ['required', 'starts_with:https://,http://'],
-            'image'=> ['image', 'size:5124']
+            'image'=> ['image', 'max:5124']
         ];
     }
 }
