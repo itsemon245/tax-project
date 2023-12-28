@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             $catId = 1;
             $subId = ($catId - 1) * 4;
-            $prods = Product::factory(4)->create([
+            $prods = Product::factory(1)->create([
                 ...$product,
                 'product_category_id' => $catId,
             ]);
@@ -48,7 +48,7 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             $catId = 2;
             $subId = ($catId - 1) * 4;
-            $prods = Product::factory(4)->create([
+            $prods = Product::factory(1)->create([
                 ...$product,
                 'product_category_id' => $catId,
             ]);
@@ -60,7 +60,7 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             $catId = 3;
             $subId = ($catId - 1) * 4;
-            $prods = Product::factory(4)->create([
+            $prods = Product::factory(1)->create([
                 ...$product,
                 'product_category_id' => $catId,
             ]);

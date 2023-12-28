@@ -4,7 +4,7 @@
     @php
         $productCat = \App\Models\ProductCategory::where('name', 'Standard Package (tax)')
             ->with(['productSubCategories', 'productSubCategories.products'])
-            ->first();
+            ->first(); 
 
     @endphp
     <section class="mb-5">
@@ -61,8 +61,7 @@
             <x-frontend.info-card :$info />
         @endforeach
     </x-frontend.info-section>
-    <x-frontend.testimonial-section>
-    </x-frontend.testimonial-section>
+    <x-frontend.testimonial-section :$reviews />
 @endsection
 
 @pushOnce('customJs')

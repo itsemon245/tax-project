@@ -45,15 +45,15 @@
                             class="text-muted fw-normal fs-6">Company:
                             {{ str($invoice->client->company_name)->title() }}</span></h5>
                     <p class='text-muted mb-0'>Issued:
-                        {{ Carbon\Carbon::parse($invoice->currentFiscal()->first()->pivot->issue_date)->format('d F, Y') }}
+                        {{ Carbon\Carbon::parse($invoice->currentFiscal[0]->pivot->issue_date)->format('d F, Y') }}
                     </p>
                     <p class='text-muted mb-0'>Due:
-                        {{ Carbon\Carbon::parse($invoice->currentFiscal()->first()->pivot->due_date)->format('d F, Y') }}
+                        {{ Carbon\Carbon::parse($invoice->currentFiscal[0]->pivot->due_date)->format('d F, Y') }}
                     </p>
                 </div>
                 <div
                     class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
-                    {{ str($invoice->currentFiscal()->first()->pivot->status)->title() }}
+                    {{ str($invoice->currentFiscal[0]->pivot->status)->title() }}
                 </div>
             </div>
         </div>
