@@ -65,7 +65,7 @@ class CourseController extends Controller
         ]);
         $alert = [
             'alert-type' => 'success',
-            'message' => 'Course Created Successfully'
+            'message' => 'Course Created Successfully',
         ];
 
         return back()->with($alert);

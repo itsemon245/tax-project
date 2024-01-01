@@ -43,6 +43,19 @@ use App\Models\VideoComment;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/setup', function () {
+    // Run an Artisan command
+    Artisan::call('migrate --force ');
+ 
+    return 'Setup Completed! Partial';
+});
+Route::get('/setup-all', function () {
+    // Run an Artisan command
+    Artisan::call('migrate:fresh --seed ');
+ 
+    return 'Setup Completed! All';
+}); 
+
 Route::get('/contact-developers', [PageController::class, 'contactDevelopers'])->name('developers');
 
 Route::prefix('service')->name('service.')->controller(ServicePageController::class)->group(function () {
