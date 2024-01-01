@@ -158,6 +158,7 @@
                 ->select(['client_id'])
                 ->whereHas('fiscalYears', function ($query) {
                     $query->where('status', 'due');
+                    $query->orWhere('status', 'overdue');
                 })
                 ->distinct()
                 ->get();
@@ -180,7 +181,7 @@
         @endphp
         <div class="row my-5">
             <div class="fs-4 fw-bold mb-2">Stats</div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-xxl-3 col-md-6 mb-xxl-0 mb-3">
                 <div class="widget-rounded-circle card w-100 bg-light h-100">
                     <div class="card-body">
                         <div class="row">
@@ -202,11 +203,12 @@
                                         data-plugin="counterup">{{ $fiscalYear->invoices()->select(['client_id'])->distinct()->count() }}</span>
                                 </div>
                             </div>
+                            
                         </div> <!-- end row-->
                     </div>
                 </div> <!-- end widget-rounded-circle-->
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-xxl-3 col-md-6 mb-xxl-0 mb-3">
                 <div class="widget-rounded-circle card w-100 bg-light h-100">
                     <div class="card-body">
                         <div class="row">
@@ -228,19 +230,31 @@
                                         data-plugin="counterup">{{ $paidClients->count() + $partialClients->count() }}</span>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="float-start fw-bold">Full Paid: <span
-                                        data-plugin="counterup">{{ $paidClients->count() }}</span>
+                            <div class="col-12 d-flex align-items-center justify-content-between">
+                                <div class="float-start fw-bold">
+                                    <div class="text-start">
+                                        Full Paid: <span data-plugin="counterup">{{ $paidClients->count() }}</span>
+                                    </div>
+                                    <div class="text-start">
+                                        Amount: <span class="mdi-currency-bdt"></span> <span
+                                            data-plugin="counterup">{{ $paidClients->sum('pivot.paid') }}</span>
+                                    </div>
                                 </div>
-                                <div class="float-end fw-bold">Partial Paid: <span
-                                        data-plugin="counterup">{{ $partialClients->count() }}</span>
+                                <div class="float-start fw-bold">
+                                    <div class="text-end">
+                                        Partial Paid: <span data-plugin="counterup">{{ $partialClients->count() }}</span>
+                                    </div>
+                                    <div class="text-end">
+                                        Amount: <span class="mdi-currency-bdt"></span> <span
+                                            data-plugin="counterup">{{ $partialClients->sum('pivot.paid') }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div> <!-- end row-->
                     </div>
                 </div> <!-- end widget-rounded-circle-->
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-xxl-3 col-md-6 mb-xxl-0 mb-3">
                 <div class="widget-rounded-circle card w-100 bg-light h-100">
                     <div class="card-body">
                         <div class="row">
@@ -262,24 +276,31 @@
                                         data-plugin="counterup">{{ $arearClients->count() + $partialClients->count() }}</span>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12 d-flex align-items-center justify-content-between">
                                 <div class="float-start fw-bold">
-                                    <div>
+                                    <div class="text-start">
                                         Full Due: <span data-plugin="counterup">{{ $arearClients->count() }}</span>
                                     </div>
-                                    <div>
-                                        Amount: <span data-plugin="counterup">{{ $arearClients->sum('due') }}</span>
+                                    <div class="text-start">
+                                        Amount: <span class="mdi-currency-bdt"></span> <span
+                                            data-plugin="counterup">{{ $arearClients->sum('pivot.due') }}</span>
                                     </div>
                                 </div>
-                                <div class="float-end fw-bold">Partial Due: <span
-                                        data-plugin="counterup">{{ $partialClients->count() }}</span>
+                                <div class="float-start fw-bold">
+                                    <div class="text-end">
+                                        Partial Due: <span data-plugin="counterup">{{ $partialClients->count() }}</span>
+                                    </div>
+                                    <div class="text-end">
+                                        Amount: <span class="mdi-currency-bdt"></span> <span
+                                            data-plugin="counterup">{{ $partialClients->sum('pivot.due') }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div> <!-- end row-->
                     </div>
                 </div> <!-- end widget-rounded-circle-->
             </div>
-            {{-- <div class="col-lg-3 col-md-6">
+            <div class="col-xxl-3 col-md-6 mb-xxl-0 mb-3">
                 <div class="widget-rounded-circle card w-100 bg-light h-100">
                     <div class="card-body">
                         <div class="row">
@@ -290,29 +311,21 @@
                             </div>
                             <div class="col-6">
                                 <div class="text-end">
-                                    <h3 class="text-dark mt-1"><span
-                                            data-plugin="counterup">{{ $number->format($fiscalYear->invoices()->select('due')->sum('due')) }}</span>&#2547
+                                    <h3 class="text-dark mt-1"> <span
+                                            data-plugin="counterup">{{ $expenses->today }}</span>&#2547
                                     </h3>
                                     <p class="text-dark fs-4 fw-bold mb-1 text-truncate">Expenses</p>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="float-end fw-bold fs-5">Clients: <span
-                                        data-plugin="counterup">{{ $arearClients + $partialClients }}</span>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="float-start fw-bold">Full Due: <span
-                                        data-plugin="counterup">{{ $arearClients }}</span>
-                                </div>
-                                <div class="float-end fw-bold">Partial Due: <span
-                                        data-plugin="counterup">{{ $partialClients }}</span>
+                                <div class="float-end fw-bold fs-5">Total: <span class="mdi-currency-bdt"></span> <span
+                                        data-plugin="counterup">{{ $expenses->total }}</span>
                                 </div>
                             </div>
                         </div> <!-- end row-->
                     </div>
                 </div> <!-- end widget-rounded-circle-->
-            </div> --}}
+            </div>
         </div>
 
         <div class="row mb-2 justify-content-center">
