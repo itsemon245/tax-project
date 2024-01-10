@@ -12,7 +12,7 @@ class AppointmentSection extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($sections)
+    public function __construct($sections = '')
     {
         $this->sections = $sections;
     }
