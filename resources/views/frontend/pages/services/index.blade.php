@@ -1,26 +1,4 @@
 @php
-    $url = mb_substr(url()->current(), -1);
-    $url_second = 'category/' . $url;
-    if($url == 1){
-        $page_name = 'tax service page';
-        $infos1 = App\Models\Info::where(['section_id' => 1, 'page_name' => $page_name])->take(5)->get();
-        $infos2 = App\Models\Info::where(['section_id' => 2, 'page_name' => $page_name])->take(5)->get();
-    }elseif ($url == 3) {
-        $page_name = 'vat service page';
-        $infos1 = App\Models\Info::where(['section_id' => 1, 'page_name' => $page_name])->take(5)->get();
-        $infos2 = App\Models\Info::where(['section_id' => 2, 'page_name' => $page_name])->take(5)->get();
-        
-    }elsefi($url_second == 'category/2'){
-        $page_name = 'vat service page';
-        $infos1 = App\Models\Info::where(['section_id' => 1, 'page_name' => $page_name])->take(5)->get();
-        $infos2 = App\Models\Info::where(['section_id' => 2, 'page_name' => $page_name])->take(5)->get();
-    }elsefi($url_second == 'category/3'){
-        $page_name = 'misc service';
-        $infos1 = App\Models\Info::where(['section_id' => 1, 'page_name' => $page_name])->take(5)->get();
-        $infos2 = App\Models\Info::where(['section_id' => 2, 'page_name' => $page_name])->take(5)->get();
-    }
-    // $infos1 = getRecords('infos', ['section_id', 1]);
-    // $infos2 = getRecords('infos', ['section_id', 2]);
     $appointments = getRecords('appointments');
     $testimonials = getRecords('testimonials');
     $banners = getRecords('banners');

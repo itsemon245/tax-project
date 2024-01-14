@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Frontend\Page;
 
 use App\Models\Info;
-use App\Models\Product;
 use App\Models\Service;
-use Illuminate\Http\Request;
-use App\Models\ProductCategory;
 use App\Models\ServiceCategory;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
@@ -27,8 +24,17 @@ class ServicePageController extends Controller
 
     public function servicesUnderSub($id)
     {
+        $cat = ServiceSubCategory::find($id)->serviceCategory;
+        $page_name = match ($cat->id) {
+            1 => 'tax service page',
+            2 => 'vat service page',   
+            3 => 'misc service',   
+            // default => 'homepage'  
+        };
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(5)->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(5)->get();
         $services = Service::where('service_sub_category_id', $id)->with('serviceSubCategory')->withAvg('reviews', 'rating')->withCount('reviews')->get();
-        return view('frontend.pages.services.index', compact('services'));
+        return view('frontend.pages.services.index', compact('services','infos1', 'infos2'));
     }
 
     public function service($id)
