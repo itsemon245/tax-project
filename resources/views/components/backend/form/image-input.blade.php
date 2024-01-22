@@ -4,11 +4,12 @@
     $image = $attributes->get('image');
     $class = $attributes->get('class');
     $style = $attributes->get('style');
-    
+    $label_class = $attributes->get('label_class') ? $attributes->get('label_class') : 'label';
+
     $note = $attributes->has('note') ? $attributes->get('note') : 'Accepted files : <span class="text-success" style="font-weight: 500;">jpg, png, svg, webp up to 5 MB</span> ';
 @endphp
 <div class="mb-2">
-    <label for="{{ $id }}">
+    <label for="{{ $id }}" class="{{ $label_class }}">
         @if ($attributes->has('label'))
             <div class="mb-1">
                 <span class="form-label text-capitalize">{{ $attributes->get('label') }}<span class="text-danger">
