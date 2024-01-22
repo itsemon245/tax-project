@@ -10,13 +10,29 @@ class UserAppointment extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function map() {
+    public function map()
+    {
         return $this->belongsTo(Map::class);
     }
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function expertProfile() {
+    public function expertProfile()
+    {
         return $this->belongsTo(ExpertProfile::class);
+    }
+    protected static function booted(): void
+    {
+        // static::created(function (UserAppointment $userAppointment) {
+        //     $event = new Calendar();
+        //     $event->title = "Appointment Created";
+        //     $event->client_id = $userAppointment->client;
+        //     $event->service = $userAppointment->name;
+        //     $event->type = 'others';
+        //     $event->start = $userAppointment->start_date;
+        //     $event->description = $userAppointment->event_description;
+        //     $event->save();
+        // });
     }
 }

@@ -3,9 +3,11 @@
 use App\Models\Task;
 use App\Models\Product;
 use App\Models\CaseStudy;
+use App\Models\VideoComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MCQController;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PurchaseController;
@@ -21,14 +23,14 @@ use App\Http\Controllers\ProjectDiscussionController;
 use App\Http\Controllers\Frontend\CaseStudyController;
 use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Backend\UserProfileController;
+use App\Http\Controllers\Frontend\WithdrawalController;
 use App\Http\Controllers\Frontend\User\UserDocController;
+use App\Http\Controllers\Frontend\VideoCommentController;
 use App\Http\Controllers\Frontend\Course\CourseController;
 use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\Referee\RefereeController;
 use App\Http\Controllers\Frontend\Page\ServicePageController;
-use App\Http\Controllers\Frontend\VideoCommentController;
-use App\Http\Controllers\Frontend\WithdrawalController;
-use App\Models\VideoComment;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,19 +44,20 @@ use App\Models\VideoComment;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::resource('user-profile', UserProfileController::class);
 
 Route::get('/setup', function () {
     // Run an Artisan command
     Artisan::call('migrate --force ');
- 
+
     return 'Setup Completed! Partial';
 });
 Route::get('/setup-all', function () {
     // Run an Artisan command
     Artisan::call('migrate:fresh --seed ');
- 
+
     return 'Setup Completed! All';
-}); 
+});
 
 Route::get('/contact-developers', [PageController::class, 'contactDevelopers'])->name('developers');
 
@@ -109,7 +112,7 @@ Route::controller(IndustryController::class)->prefix('industry')->name('industry
     Route::get('/{id}/show', 'show')->name('show');
 });
 
-// these route will only be visible to 2nd navigation 
+// these route will only be visible to 2nd navigation
 // ! Do not put any new routes in this group
 Route::prefix('page')->name('page.')->controller(PageController::class)->group(function () {
     Route::get('/industries', 'industriesPage')->name('industries');
@@ -122,7 +125,7 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
 
 //Become a partner request controller
 Route::resource('partner-request', PartnerRequestController::class);
-// these route will only be visible to Courses navigation 
+// these route will only be visible to Courses navigation
 // ! Do not put any new routes in this group
 Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
     Route::get('index', 'index')->name('index');

@@ -13,7 +13,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::latest()->paginate(paginateCount());
+        $expenses = Expense::with('images')->latest()->paginate(paginateCount());
         return view('backend.expense.index', compact('expenses'));
     }
 
@@ -61,6 +61,7 @@ class ExpenseController extends Controller
             'balance' => $balance,
             'items' => $items
         ]);
+        $expense->saveImage();
         $alert = [
             'alert-type' => 'success',
             'message' => 'Expense Created'

@@ -86,7 +86,7 @@ Route::prefix('admin')
         });
 
         //Routes for backend CRUD operation
-        Route::resource('user-profile', UserProfileController::class);
+
         Route::resource('users', UserController::class); // middlewares are in constructor
 
         Route::resource('product', ProductController::class)
