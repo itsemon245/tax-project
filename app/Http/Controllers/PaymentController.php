@@ -190,8 +190,8 @@ class PaymentController extends Controller
         ];
         $expireDate = null;
         $dueDate = today()->addDays(10);
-        $due = null;
-        $status = $record->price;
+        $due = $record->price;
+        $status = 'due';
         $metaData = null;
         $billingType = $record->billing_type;
         $user = User::firstOrCreate([

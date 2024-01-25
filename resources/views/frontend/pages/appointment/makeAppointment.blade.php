@@ -157,7 +157,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <x-form.selectize label="Select District" id="branch-district"
-                                                        name="branch-district" required placeholder="Select District...">
+                                                        name="branch-district" placeholder="Select District...">
                                                         <option selected disabled></option>
                                                         @foreach ($districts as $district)
                                                             <option value="{{ $district }}"
@@ -170,7 +170,7 @@
                                                     <div class="mb-2">
                                                         <label for="branch-thana">Thana <span
                                                                 class="text-danger">*</span></label>
-                                                        <select id="branch-thana" name="branch-thana" required
+                                                        <select id="branch-thana" name="branch-thana"
                                                             placeholder="Select Thana...">
                                                             @foreach ($thanas as $thana)
                                                             <option value="{{ $thana }}">

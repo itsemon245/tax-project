@@ -95,6 +95,8 @@
                         @endisset
                         @can('delete appointment')
                             <td>
+                                @if (!$appointment->is_completed)
+                                    
                                 <form action="{{ route('user-appointments.complete', $appointment->id) }}" method="post"
                                     class="d-inline-block">
                                     @csrf
@@ -104,14 +106,8 @@
                                         <span class="fs-6">Mark as completed</span>
                                     </button>
                                 </form>
-                                <form action="{{ route('user-appointments.destroy', $appointment->id) }}" method="post"
-                                    class="d-inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        Delete
-                                    </button>
-                                </form>
+                                @endif
+                                <x-backend.ui.button type="delete" class="btn-sm" :action="route('user-appointments.destroy', $appointment->id)" />
 
 
                             </td>

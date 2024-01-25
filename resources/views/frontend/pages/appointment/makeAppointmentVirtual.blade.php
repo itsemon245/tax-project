@@ -55,8 +55,8 @@
                                         <a href="#account-2" data-bs-toggle="tab" data-toggle="tab"
                                             class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 active"
                                             aria-selected="true" role="tab" tabindex="-1">
-                                            <i class="mdi mdi-map-marker"></i>
-                                            <span class="d-none d-sm-inline">Location</span>
+                                            <i class="mdi mdi-calendar-clock"></i>
+                                            <span class="d-none d-sm-inline">Date & Time</span>
                                         </a>
                                     </li>
 

@@ -133,7 +133,6 @@
                                 <div data-refer-link="{{ $user->refer_link }}"
                                     class="copy-btn bg-light text-center py-2 px-3 rounded shoadow-sm">
                                     <span class="mdi mdi-content-copy">
-
                                     </span>
                                 </div>
 

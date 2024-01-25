@@ -42,7 +42,6 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
         $user = User::create($data);
-        $user->refer_link = url("/register/r/" . $request->user_name);
         $user->password = Hash::make($data['password']);
         $arr = explode(' ', $request->name);
         if (count($arr) > 1) {

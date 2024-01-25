@@ -52,15 +52,11 @@
                                         </td>
                                         @can('manage order')
                                             <td>
-                                                <a href="{{ route('order.status', $payemnt->id) }}"
-                                                    class="btn btn-info btn-sm">Approve</a>
-                                                <form action="{{ route('order.destroy', $payemnt->id) }}" method="post"
-                                                    class="d-inline-block">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <x-backend.ui.button
-                                                        class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
-                                                </form>
+                                                @if (!$payemnt->approved)
+                                                    <a href="{{ route('order.status', $payemnt->id) }}"
+                                                        class="btn btn-info btn-sm">Approve</a>
+                                                        @endif
+                                                    <x-backend.ui.button type="delete" class="btn-sm" :action="route('order.destroy', $payemnt->id)" />
                                             </td>
                                         @endcan
                                     </tr>
