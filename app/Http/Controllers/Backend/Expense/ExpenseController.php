@@ -13,7 +13,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::latest()->paginate(paginateCount());
+        $expenses = Expense::with('images')->latest()->paginate(paginateCount());
         return view('backend.expense.index', compact('expenses'));
     }
 
@@ -32,9 +32,12 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
+        //    / dd($request->all());
         $validated = $request->validate([
             'date' => 'date',
             'category' => 'string',
+            'footer_image' => 'required',
+            'header_image' => 'required',
             'merchant' => 'string',
             'type' => 'string',
             'amounts' => 'array|required',
@@ -56,11 +59,13 @@ class ExpenseController extends Controller
         $lastBalance = Expense::latest()->first('balance')->balance;
         $balance += $lastBalance;
         $expense = Expense::create([
-            ...$request->except('amounts', 'descriptions'),
+            ...$request->except('amounts', 'descriptions', 'header_image', 'footer_image'),
             'amount' => $amount,
             'balance' => $balance,
             'items' => $items
         ]);
+        $expense->saveImage($request->header_image);
+        $expense->saveImage($request->footer_image);
         $alert = [
             'alert-type' => 'success',
             'message' => 'Expense Created'
@@ -98,7 +103,16 @@ class ExpenseController extends Controller
             'amount' => 'numeric|required',
             'description' => 'string|required',
         ]);
-        $expense->update($request->all());
+        // $expense->update($request->all());
+        $expense->update([
+            ...$request->except('_method', '_token', 'header_image', 'footer_image'),
+        ]);
+        if ($request->header_image) {
+            $expense->updateImage($request->header_image, $expense->path);
+        } else if ($request->footer_image) {
+            $expense->updateImage($request->footer_image, $expense->path);
+        }
+
         $alert = [
             'alert-type' => 'success',
             'message' => 'Expense Updated'
@@ -111,7 +125,9 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
+
         $expense->delete();
+
         $alert = [
             'alert-type' => 'success',
             'message' => 'Expense Deleted'

@@ -27,9 +27,9 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register() : void
+    public function register(): void
     {
-        if($this->app->environment('local')){
+        if ($this->app->environment('local')) {
             $this->app->register(TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot() : void
+    public function boot(): void
     {
 
         // dd($this->app);
@@ -54,9 +54,9 @@ class AppServiceProvider extends ServiceProvider
             'User'               => 'App\Models\User',
             'Industry'           => 'App\Models\Industry',
             'About'              => 'App\Models\About',
+            'Expense'              => 'App\Models\Expense',
             CustomService::class => CustomService::class
         ]);
         Paginator::useBootstrapFive();
-
     }
 }

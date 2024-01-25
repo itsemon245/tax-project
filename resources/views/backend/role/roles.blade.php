@@ -20,7 +20,7 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card name="List Roles">
-        <a href="{{ route('role.create') }}" class="btn waves-effect waves-light text-uppercase btn-success btn-sm mb-2">
+        <a href="{{ route('role.create') }}" class="mb-2 btn waves-effect waves-light text-uppercase btn-success btn-sm">
             New+
         </a>
         <x-backend.table.basic :items="$roles">
@@ -31,7 +31,7 @@
                     <th>Created At</th>
                     <th>Updated At</th>
                     @canany(['update role', 'delete role', 'read role'])
-                    <th>Action</th>
+                        <th>Action</th>
                     @endcanany
                 </tr>
             </thead>
@@ -44,15 +44,19 @@
                         <td>{{ Carbon\Carbon::parse($role->created_at)->format('d M Y') }}</td>
                         <td>{{ Carbon\Carbon::parse($role->updated_at)->diffForHumans() }}</td>
                         @canany(['update role', 'delete role'])
-                        <td>
-                            @can('update role')
-                            <x-backend.ui.button type="edit" href="{{ route('role.edit', $role->id) }}" class="btn-sm" />
-                            @endcan
-                            @can('delete role')
-                            <x-backend.ui.button type="delete" action="{{ route('role.destroy', $role->id) }}"
-                                class="btn-sm" />
-                            @endcan
-                        </td>
+                            <td>
+                                @if ($role->name == 'super admin')
+                                @else
+                                    @can('update role')
+                                        <x-backend.ui.button type="edit" href="{{ route('role.edit', $role->id) }}"
+                                            class="btn-sm" />
+                                    @endcan
+                                    @can('delete role')
+                                        <x-backend.ui.button type="delete" action="{{ route('role.destroy', $role->id) }}"
+                                            class="btn-sm" />
+                                    @endcan
+                                @endif
+                            </td>
                         @endcanany
                     </tr>
                 @endforeach

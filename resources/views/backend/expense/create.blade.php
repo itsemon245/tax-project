@@ -42,7 +42,7 @@
                 </table>
             </div>
             <x-backend.ui.button type="custom" :href="route('expense.index')"
-                class="btn-secondary btn-sm mb-1">Back</x-backend.ui.button>
+                class="mb-1 btn-secondary btn-sm">Back</x-backend.ui.button>
 
 
             @isset($expense)
@@ -61,8 +61,14 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td></td>
+                                <td colspan="7">
+                                    <x-backend.form.image-input name="header_image" id="header_image"
+                                        class="mx-auto d-flex justify-content-center w-100"
+                                        style="aspect-ratio:4/1;object-fit:contain;" label_class="w-100" />
+                                </td>
+                            </tr>
+                            <tr>
+
                                 <td colspan="2">
                                     <div class="mb-2 fs-5">
                                         Category:
@@ -84,20 +90,16 @@
                                 <td>
                                     @if ($expense->type === 'credit')
                                         <img loading="lazy" id="voucher-img" src="{{ asset('images/Credit-Voucher.png') }}"
-                                            class="w-75 rounded rounded-3 float-end"
+                                            class="rounded w-75 rounded-3 float-end"
                                             style="max-width: 300px;height:70%;margin-top:-2rem;" alt="">
                                     @else
                                         <img loading="lazy" id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
-                                            class="w-75 rounded rounded-3 float-end"
+                                            class="rounded w-75 rounded-3 float-end"
                                             style="max-width: 300px;height:70%;margin-top:-2rem;" alt="">
                                     @endif
                                 </td>
-                                <td></td>
-                                <td></td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
                                 <td colspan="3">
                                     <table class="table table-responsive">
                                         <thead>
@@ -127,8 +129,15 @@
                                                 <td>
                                                     <div class="fs-4 fw-bold">
                                                         ৳
-                                                        {{ $expense->amount}}
+                                                        {{ $expense->amount }}
                                                     </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="7">
+                                                    <x-backend.form.image-input name="footer_image" id="footer_image"
+                                                        class="mx-auto d-flex justify-content-center w-100"
+                                                        style="aspect-ratio:4/1;object-fit:contain;" label_class="w-100" />
                                                 </td>
                                             </tr>
                                             <tr style="border-bottom: 0px solid transparent;">
@@ -177,15 +186,15 @@
                         </x-form.selectize>
                         <div>
                             <label for="type" class="mb-1">Expense Type</label>
-                            <div class="d-flex gap-2">
-                                <div class="form-check mb-2 form-check-success p-0">
+                            <div class="gap-2 d-flex">
+                                <div class="p-0 mb-2 form-check form-check-success">
                                     <input class="form-check-input" type="radio" id="credit" name="type" value="credit"
                                         hidden @checked($expense->type === 'credit')>
                                     <label
                                         class="form-check-label px-2 py-1 border rounded {{ $expense->type === 'credit' ? 'selected success' : '' }}"
                                         for="credit">Credit</label>
                                 </div>
-                                <div class="form-check mb-2 form-check-danger p-0">
+                                <div class="p-0 mb-2 form-check form-check-danger">
                                     <input class="form-check-input" type="radio" id="debit" name="type" value="debit"
                                         checked hidden @checked($expense->type === 'debit')>
                                     <label
@@ -195,16 +204,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xl-4 mb-2">
+                    <div class="mb-2 col-md-6 col-xl-4">
                         @if ($expense->type === 'credit')
                             <img loading="lazy" id="voucher-img" src="{{ asset('images/Credit-Voucher.png') }}"
-                                class="w-75 rounded rounded-3 shadow" alt="">
+                                class="rounded shadow w-75 rounded-3" alt="">
                         @else
                             <img loading="lazy" id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
-                                class="w-75 rounded rounded-3 shadow" alt="">
+                                class="rounded shadow w-75 rounded-3" alt="">
                         @endif
                     </div>
-                    <div class="row justify-content-center mt-3 px-0">
+                    <div class="px-0 mt-3 row justify-content-center">
 
 
                         <div class="col-12 col-md-12 col-xl-8">
@@ -230,15 +239,15 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="d-flex gap-2">
+                            <div class="gap-2 d-flex">
                                 <div>
                                     <span data-container="#item-repeater" id="decrement-btn" role="button"
-                                        class="mdi mdi-delete bg-soft-danger p-1 me-1 text-danger rounded-circle"></span>
+                                        class="p-1 mdi mdi-delete bg-soft-danger me-1 text-danger rounded-circle"></span>
                                     <span data-template="#item-template" data-container="#item-repeater" id="increment-btn"
                                         role="button"
-                                        class="mdi mdi-plus bg-soft-success p-1 me-1 text-success rounded-circle"></span>
+                                        class="p-1 mdi mdi-plus bg-soft-success me-1 text-success rounded-circle"></span>
                                 </div>
-                                <div class="fw-bold fs-4 ms-auto mb-3">
+                                <div class="mb-3 fw-bold fs-4 ms-auto">
                                     Grand Total: ৳ <span class="total">0</span>
                                 </div>
                             </div>
@@ -249,8 +258,14 @@
                     </div>
                 </form> --}}
             @else
-                <form action="{{ route('expense.store') }}" method="POST" class="row justify-content-center">
+                <form action="{{ route('expense.store') }}" method="POST" enctype="multipart/form-data"
+                    class="row justify-content-center">
                     @csrf
+                    <div class="col-md-12 ">
+                        <x-backend.form.image-input name="header_image" id="header_image"
+                            class="mx-auto d-flex justify-content-center w-100" style="aspect-ratio:4/1;object-fit:contain;"
+                            label_class="w-100" />
+                    </div>
                     <div class="col-md-6 col-xl-4">
                         <x-form.selectize class="mb-3" id="category" name="category" placeholder="Choose Category..."
                             label="Add Category">
@@ -271,26 +286,26 @@
                         </x-form.selectize>
                         <div>
                             <label for="type" class="mb-1">Expense Type</label>
-                            <div class="d-flex gap-2">
-                                <div class="form-check mb-2 form-check-success p-0">
+                            <div class="gap-2 d-flex">
+                                <div class="p-0 mb-2 form-check form-check-success">
                                     <input class="form-check-input" type="radio" id="credit" name="type" value="credit"
                                         hidden>
-                                    <label class="form-check-label px-2 py-1 border rounded" for="credit">Credit</label>
+                                    <label class="px-2 py-1 border rounded form-check-label" for="credit">Credit</label>
                                 </div>
-                                <div class="form-check mb-2 form-check-danger p-0">
-                                    <input class="form-check-input" type="radio" id="debit" name="type" value="debit"
-                                        checked hidden>
-                                    <label class="form-check-label px-2 py-1 border rounded selected danger"
+                                <div class="p-0 mb-2 form-check form-check-danger">
+                                    <input class="form-check-input" type="radio" id="debit" name="type"
+                                        value="debit" checked hidden>
+                                    <label class="px-2 py-1 border rounded form-check-label selected danger"
                                         for="debit">Debit</label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xl-4 mb-2">
+                    <div class="mb-2 col-md-6 col-xl-4">
                         <img loading="lazy" id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
-                            class="w-100 h-100 w-xl-75 rounded rounded-3 float-end" style="max-width: 300px;" alt="">
+                            class="rounded w-100 h-100 w-xl-75 rounded-3 float-end" style="max-width: 300px;" alt="">
                     </div>
-                    <div class="row justify-content-center mt-3 px-0">
+                    <div class="px-0 mt-3 row justify-content-center">
 
 
                         <div class="col-12 col-md-12 col-xl-8">
@@ -316,23 +331,27 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="d-flex gap-2">
+                            <div class="gap-2 d-flex">
                                 <div>
                                     <span data-container="#item-repeater" id="decrement-btn" role="button"
-                                        class="mdi mdi-delete bg-soft-danger p-1 me-1 text-danger rounded-circle"></span>
+                                        class="p-1 mdi mdi-delete bg-soft-danger me-1 text-danger rounded-circle"></span>
                                     <span data-template="#item-template" data-container="#item-repeater" id="increment-btn"
                                         role="button"
-                                        class="mdi mdi-plus bg-soft-success p-1 me-1 text-success rounded-circle"></span>
+                                        class="p-1 mdi mdi-plus bg-soft-success me-1 text-success rounded-circle"></span>
                                 </div>
-                                <div class="fw-bold fs-4 ms-auto mb-3">
+                                <div class="mb-3 fw-bold fs-4 ms-auto">
                                     Grand Total: ৳ <span class="total">0</span>
                                 </div>
                             </div>
                         </div>
+                        <x-backend.form.image-input name="footer_image" id="footer_image"
+                            class="mx-auto d-flex justify-content-center w-100" style="aspect-ratio:4/1;object-fit:contain;"
+                            label_class="w-100" />
                         <div class="col-12 col-md-12 col-xl-8">
                             <x-backend.ui.button class="btn-primary float-end">Submit</x-backend.ui.button>
                         </div>
                     </div>
+
                 </form>
             @endisset
         </div>
