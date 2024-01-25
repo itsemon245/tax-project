@@ -1,30 +1,6 @@
 name: Deploy on Production
 on: [push]
 jobs:
-  # Deploy_to_test_server:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 5
-  #   steps:
-  #   - name: Deploy to test server
-  #     uses: appleboy/ssh-action@v0.1.10
-  #     with:
-  #       host: ${{ secrets.TEST_HOST }}
-  #       username: ${{ secrets.TEST_USERNAME }}
-  #       key: ${{ secrets.TEST_KEY }}
-  #       port: ${{ secrets.TEST_PORT }}
-  #       command_timeout: 30m
-  #       script: | 
-  #         cd ${{secrets.TEST_PROJECT_DIR}}
-  #         git fetch && git pull
-  #         npm i
-  #         npm run build
-  #         composer install
-  #         php artisan config:cache
-  #         php artisan event:cache 
-  #         php artisan route:cache
-  #         php artisan view:cache
-  #         php artisan migrate:fresh --seed
-
   Deploy_to_production_server:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -39,7 +15,11 @@ jobs:
         command_timeout: 30m
         script: | 
           cd ${{secrets.PROD_PROJECT_DIR}}
-          git fetch && git pull
+          export GIT_TRACE_PACKET=1
+          export GIT_TRACE=1
+          export GIT_CURL_VERBOSE=1
+          git config pull.rebase true
+          git pull origin main
           npm i
           npm run build
           composer update
