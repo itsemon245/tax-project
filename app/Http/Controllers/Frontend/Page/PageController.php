@@ -116,7 +116,8 @@ class PageController extends Controller
         return view('frontend.pages.myPayments', compact('payments'));
     }
     //Contact Developers page:
-    public function contactDevelopers(){
+    public function contactDevelopers()
+    {
         return view('frontend.pages.contact-developers');
     }
 }

@@ -21,7 +21,7 @@
                                 <td>
 
                                     <a href="{{ route('video.byCourse', $course->id) }}"
-                                        class="d-flex align-items-start gap-2 text-reset">
+                                        class="gap-2 d-flex align-items-start text-reset">
                                         <div>
                                             <span data-feather="folder" class="icon-dual"></span>
                                         </div>
@@ -35,7 +35,7 @@
                                     {{ $course->price }}
                                 </td>
                                 <td>
-                                    <div class="d-flex align-items-start gap-2">
+                                    <div class="gap-2 d-flex align-items-start">
                                         <div>
                                             <img loading="lazy" src="{{ asset('backend/assets/images/users/user-1.jpg') }}"
                                                 class="rounded rounded-circle" width="48px" height="48px" alt="">
@@ -64,7 +64,7 @@
                     </tbody>
                 </table>
             @else
-                <section class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 400px;">
+                <section class="rounded bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
                     <div class="">
                         <p>You havn't made any payments yet!</p>
                     </div>

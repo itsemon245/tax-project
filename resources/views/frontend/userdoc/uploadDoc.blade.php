@@ -5,10 +5,11 @@
         @csrf
         <div class="container">
             <div class="px-5 my-5">
-                <h4 class="card-title text-center mb-3">Upload Documents</h4>
-                <div class="row mb-2">
+                <h4 class="mb-3 text-center card-title">Upload Documents</h4>
+                <div class="mb-2 row">
                     <div class="col-8">
-                        <x-form.selectize id="doc-name" label="Document Name" name="name" placeholder="Document Name">
+                        <x-form.selectize id="doc-name" label="Document Name" name="name" placeholder="Document Name"
+                            required>
                             @foreach ($names as $name)
                                 <option value="{{ $name }}">{{ $name }}</option>
                             @endforeach
@@ -30,7 +31,4 @@
         </div>
     </form>
     {{-- form end --}}
-
-
-    
 @endsection
