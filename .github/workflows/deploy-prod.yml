@@ -23,10 +23,10 @@ jobs:
           npm i
           npm run build
           composer update
-          php artisan config:cache
           php artisan event:cache 
           php artisan route:cache
           php artisan view:cache
+          php artisan optimize:clear
           php artisan migrate
           php artisan storage:link
           
