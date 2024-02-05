@@ -158,7 +158,7 @@ Route::post('/upload', function (Request $request) {
     return response($pathString, 200, [
         'content_type' => 'text/plain'
     ]);
-});
+})->name('filepond.upload');
 
 Route::get('test', function () {
     return view('test');

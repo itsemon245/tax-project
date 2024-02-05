@@ -51,7 +51,7 @@
                 allowImageCrop: true,
                 allowReorder: true,
                 server: {
-                    url: '/upload',
+                    url: '{{route("filepond.upload")}}',
                     process: {
                         url: '/',
                         method: 'POST',
