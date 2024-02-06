@@ -31,7 +31,7 @@
                 {{ $history->trx_id }}
             </div>
             <div class="col-md-4 mb-3 p-2">
-                TRX ID: 
+                TRX Date: 
                 {{ $history->payment_date }}
             </div>
             <div class="col-md-12 p-2">
