@@ -3,15 +3,16 @@
 
 namespace App\Http\Controllers\Frontend\Page;
 
-use App\Models\Banner;
 use App\Models\Map;
 use App\Models\Info;
 use App\Models\User;
 use App\Models\About;
+use App\Models\Banner;
 use App\Models\Course;
 use App\Models\Review;
 use App\Enums\PageName;
 use App\Models\Industry;
+use App\Models\Purchase;
 use App\Models\Achievement;
 use App\Models\Appointment;
 use App\Models\Testimonial;

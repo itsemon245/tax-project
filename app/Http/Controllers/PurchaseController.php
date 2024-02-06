@@ -14,7 +14,7 @@ class PurchaseController extends Controller
     public function index()
     {
         $banners= Banner::latest()->get();
-        $purchaseItem= Purchase::where('approved',1)->latest()->get();
+        $purchaseItem= Purchase::where('user_id', auth()->id())->orderBy('id', 'desc')->take(10)->get();
         return view('frontend.pages.purchasesItems.purchases',compact('purchaseItem','banners'));
     }
 
