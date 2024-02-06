@@ -120,17 +120,17 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function hasCompletedVideo(int $id): bool
     {
-        $isCompleted = $this->videos()->find($id)->pivot->is_completed;
-        return $isCompleted;
+        $isCompleted = $this->videos()->find($id)?->pivot?->is_completed;
+        return $isCompleted == true;
     }
     public function toggleVideoStatus(int $id): bool
     {
-        $isCompleted = $this->videos()->find($id)->pivot->is_completed;
+        $isCompleted = $this->videos()->find($id)?->pivot?->is_completed;
         $toggle = !$isCompleted;
         $this->videos()->updateExistingPivot($id, [
             'is_completed' => $toggle,
         ]);
-        return $toggle;
+        return $toggle == true;
     }
     public function reviews()
     {
