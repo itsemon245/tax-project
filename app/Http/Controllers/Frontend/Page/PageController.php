@@ -113,12 +113,19 @@ class PageController extends Controller
     //show all my payments/payment history in frontend
     public function myPayments()
     {
-        $payments = User::find(auth()->id())->purchases();
+        $payments = User::find(auth()->id())->purchases()->get();
+        // dd($payments);
         return view('frontend.pages.myPayments', compact('payments'));
     }
     //Contact Developers page:
     public function contactDevelopers()
     {
         return view('frontend.pages.contact-developers');
+    }
+
+    //shwo payment history
+    public function myPaymentShow($id){
+        $history = Purchase::find($id)->where('user_id', auth()->id())->first();
+        return view('frontend.pages.myPaymentShow', compact('history'));
     }
 }

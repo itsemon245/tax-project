@@ -27,7 +27,7 @@
                                         </div>
                                         <div>
                                             <div class="fw-medium">{{ $course->name }}</div>
-                                            <div>{{ $course->videos()->count() }} Videos</div>
+                                            <div>{{ $course->purchasable_type }} </div>
                                         </div>
                                     </a>
                                 </td>
@@ -54,7 +54,7 @@
                                 <td>
                                     <div>
                                         <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark "
-                                            href="#">
+                                            href="{{ route('page.my.payment.show', $course->id) }}">
                                             Preview
                                         </x-backend.ui.button>
                                     </div>
