@@ -3,8 +3,8 @@
     $recentInvoices = App\Models\Invoice::with('client', 'currentFiscal')->latest()->limit(4)->get();
 @endphp
 <h4 class="p-2">Recently Updated Invoice</h4>
-<div id="latest-container" class="d-none d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
-    style="overflow-x: hidden; overflow-y:hidden;">
+<div id="latest-container" class="d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
+    style="overflow-x: hidden; overflow-y:hidden;height:min-content;">
     <a href="{{ $route }}" class="mb-2" style="width: clamp(160px, 190px, 220px);">
         <div class="card h-100 shadow" style="border: medium dashed var(--ct-gray-400);">
             <div class="card-body h-100">
