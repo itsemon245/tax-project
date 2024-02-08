@@ -21,7 +21,7 @@
                             <x-backend.form.select-input id="page_name" label="Page Name" name="page_name"
                                 placeholder="Choose page name...">
                                 @foreach ($pageNames as $name)
-                                    <option value="{{ $name }}" @selected(str($service->page_name)->trim() === str($name)) >
+                                    <option value="{{ $name }}" @selected(str($service->page_name)->trim() === str($name->value))>
                                         {{ $name }}
                                     </option>
                                 @endforeach
