@@ -27,7 +27,7 @@
                                 class="badge bg-soft-success text-success font-13 text-capitalize">{{ $service->page_name }}</span>
                         </td>
                         <td>
-                            <img width="150" height="150" style="object-fit: cover;" src="{{ $service->image->url }}"
+                            <img width="150" height="150" style="object-fit: cover;" src="{{ $service->image?->url }}"
                                 alt="{{ str($service->title)->slug }}">
                         </td>
                         <td>

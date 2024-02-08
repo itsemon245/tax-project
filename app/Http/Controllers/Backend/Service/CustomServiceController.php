@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Backend\Service;
 
-use App\Enums\PageName;
-use Illuminate\Http\Request;
-use App\Models\CustomService;
-use App\Http\Controllers\Controller;
 use App\DTOs\CustomService\CustomServiceDto;
-use App\Interfaces\Services\BaseServiceInterface;
-use App\Services\CustomService\CustomServiceService;
+use App\Enums\PageName;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomService\CustomServiceRequest;
+use App\Models\CustomService;
+use App\Services\CustomService\CustomServiceService;
 
 class CustomServiceController extends Controller
 {
@@ -43,8 +41,8 @@ class CustomServiceController extends Controller
         $service->saveImage($request->file('image'));
         return redirect(route('custom-service.index'), 201)->with([
             'alert-type' => 'success',
-            'message'    => 'Custom Service Created!'
-        ]);
+            'message'    => 'Custom Service Created!',
+         ]);
     }
 
     /**
@@ -60,8 +58,8 @@ class CustomServiceController extends Controller
      */
     public function edit(CustomService $customService)
     {
-        $service = $customService;
-        $pageNames = ['homepage', 'account'];
+        $service   = $customService;
+        $pageNames = [ 'homepage', 'account' ];
         return view('backend.service.custom.edit', compact('service', 'pageNames'));
     }
 
@@ -77,8 +75,8 @@ class CustomServiceController extends Controller
         $service = $this->service->update(CustomServiceDto::transformRequest($request), $customService);
         return redirect(route('custom-service.index'))->with([
             'alert-type' => 'success',
-            'message'    => 'Custom Service Updated'
-        ]);
+            'message'    => 'Custom Service Updated',
+         ]);
     }
 
     /**
@@ -86,11 +84,13 @@ class CustomServiceController extends Controller
      */
     public function destroy(CustomService $customService)
     {
-        $customService->deleteImage($customService->image->path);
+        if ($customService->image) {
+            $customService->deleteImage($customService->image->path);
+        }
         $this->service->delete($customService);
         return redirect(route('custom-service.index'))->with([
             'alert-type' => 'success',
-            'message'    => 'Custom Service Deleted!'
-        ]);
+            'message'    => 'Custom Service Deleted!',
+         ]);
     }
 }

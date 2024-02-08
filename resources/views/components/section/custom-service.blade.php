@@ -6,7 +6,7 @@
                 <div class="d-flex flex-column align-items-center border rounded shadow-sm p-2 h-100">
                     <a href="{{ $sub->link }}">
                         <img loading="lazy" style="width:clamp(80px, 120px, 150px);aspect-ratio:1/1;"
-                            class="rounded rounded-circle mb-3" src="{{ $sub->image->url }}" alt="">
+                            class="rounded rounded-circle mb-3" src="{{ $sub->image?->url }}" alt="">
                     </a>
                     <a class="text-dark text-capitalize" href="{{ $sub->link }}">
                         <h6>{{ $sub->title }}</h6>
