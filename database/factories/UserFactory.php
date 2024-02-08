@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'image_url' => "https://api.dicebear.com/6.x/initials/svg?seed=$seed&backgroundType=gradientLinear&backgroundRotation=0,360",
             'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            'email_verified_at' => null,
             'password' => Hash::make('12345678'), // password
             'remember_token' => Str::random(10),
             'refer_link' => route('refer.link', $userName),
