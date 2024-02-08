@@ -3,8 +3,8 @@
 namespace App\Http\Requests\CustomService;
 
 use App\Enums\PageName;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CustomServiceRequest extends FormRequest
 {
@@ -17,11 +17,11 @@ class CustomServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page_name'=> ['required',Rule::enum(PageName::class)],
-            'title'=>['required','string','max:255'],
-            'description'=> ['required', 'string'],
-            'link'=> ['required', 'starts_with:https://,http://'],
-            'image'=> ['nullable','image', 'max:5124']
-        ];
+            'page_name'   => [ 'required', Rule::enum(PageName::class) ],
+            'title'       => [ 'required', 'string', 'max:255' ],
+            'description' => [ 'required', 'string' ],
+            'link'        => [ 'required', 'starts_with:https://,http://' ],
+            'image'       => [ 'sometimes', 'required', 'image', 'max:5124' ],
+         ];
     }
 }
