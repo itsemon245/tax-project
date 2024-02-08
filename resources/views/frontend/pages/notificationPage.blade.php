@@ -28,13 +28,13 @@
                         <span class="font-14">Mark all as read</span>
                     </div>
                 </div>
-                @forelse (request()->user()->notifications as $notification)
-                <div class="overflow-scroll" style=" height:400px;">
-                        <div class="card show w-100 mb-3 {{ $isRead ? 'read' : 'unread' }}" role="alert" aria-live="assertive"
-                            aria-atomic="true">
+                <div class="overflow-scroll" style=" height:500px;">
+                    @forelse (request()->user()->notifications as $notification)
+                        <div class="card show w-100 mb-3 {{ $isRead ? 'read' : 'unread' }}" role="alert"
+                            aria-live="assertive" aria-atomic="true">
                             <div class="card-header bg-primary text-white">
-                                <img loading="lazy" src="{{ asset('backend/assets/images/users/user-6.jpg') }}" alt="" height="30"
-                                    class="me-1 rounded-circle shadow">
+                                <img loading="lazy" src="{{ asset('backend/assets/images/users/user-6.jpg') }}"
+                                    alt="" height="30" class="me-1 rounded-circle shadow">
                                 <strong class="me-auto">{{ $notification->data['title'] }}</span></strong>
                                 <small>{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</small>
                                 <button type="button" class="float-end btn-close ms-2" data-bs-dismiss="toast"
@@ -45,16 +45,18 @@
                                 <a href="{{ $notification->data['url'] }}">Explore more</a>
                             </div>
                         </div>
-                    </div>
                     @empty
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8" style="max-width:800px;">
-                            <img loading="lazy" src="{{ asset('frontend/assets/images/no_data.jpg') }}" style="height:100%;" class="img-fluid p-5" alt="Responsive image">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8" style="max-width:800px;">
+                                <img loading="lazy" src="{{ asset('frontend/assets/images/no_data.jpg') }}"
+                                    style="height:100%;" class="img-fluid p-5" alt="Responsive image">
+                            </div>
+                            <div class="col-md-2"></div>
                         </div>
-                        <div class="col-md-2"></div>
-                    </div>
                     @endforelse
+                </div>
+
             </div>
         </div>
     </div>
