@@ -124,7 +124,7 @@
                 </div>
             </div>
             <div>
-                <div class="d-block fs-3 fw-medium text-dark text-center">চালান ফরম</div>
+                <div class="text-center d-block fs-3 fw-medium text-dark">চালান ফরম</div>
                 <table class="mx-auto upper-table">
                     <tbody>
                         <tr>
@@ -133,21 +133,21 @@
                         <tr>
                             <td class="text-center">
                                 চালান নংঃ
-                                <input type="text" class="dotted-border text-center text-dark" style="width: 4rem;"
+                                <input type="text" class="text-center dotted-border text-dark" style="width: 4rem;"
                                     value="{{ $chalan->chalan_no }}" disabled />
-                                তারিখঃ {{ $chalan->date->format('d/m/Y') }}
+                                তারিখঃ {{ optional($chalan->date)->format('d/m/Y') }}
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center">বাংলাদেশ ব্যাংক/সোনালি ব্যাংকের চট্টগ্রাম জেলার
-                                <input type="text" class="dotted-border text-center text-dark"
+                                <input type="text" class="text-center dotted-border text-dark"
                                     value="{{ $chalan->bank_name }}" disabled>
                                 টাকা জমা দেওয়ার চালান
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input name="code"
-                                    :value="$chalan->code" :range="range(1, 13)"/>
+                            <td class="py-2 text-center"> কোড নংঃ <x-backend.form.box-input name="code" :value="$chalan->code"
+                                    :range="range(1, 13)" />
                             </td>
                         </tr>
                     </tbody>
@@ -228,7 +228,7 @@
                                 <span>Purpose:</span> <input type="text" name="purpose" class="dotted-border"
                                     style="max-width: 8rem;" value="{{ $chalan->purpose }}" />
                             </div>
-                            <div class="d-flex gap-1 align-items-center mb-2">
+                            <div class="gap-1 mb-2 d-flex align-items-center">
                                 <label for="year" class="d-inline">Year:</label>
                                 <span>{{ $chalan->year }}</span>
 
@@ -239,26 +239,26 @@
                             </div>
                         </td>
                         <td>
-                            <div class="d-flex gap-3 p-2">
+                            <div class="gap-3 p-2 d-flex">
                                 <span>Payment Type: </span>
                                 <span class="text-capitalize">{{ $chalan->payment_type }}</span>
                             </div>
                             @if ($chalan->payment_type === 'bank')
                                 <div id="payment-info" class="d-none">
                                     <div class="mb-2">
-                                        <span>Cheque No.:</span> <span>{{$chalan->cheque_no}}</span>
+                                        <span>Cheque No.:</span> <span>{{ $chalan->cheque_no }}</span>
                                     </div>
                                     <div class="mb-2">
-                                        <span class="d-block">Bank: </span> <span>{{$chalan->bank}}</span>
+                                        <span class="d-block">Bank: </span> <span>{{ $chalan->bank }}</span>
                                     </div>
                                     <div class="mb-2">
-                                        <span class="d-block">Branch: </span><span>{{$chalan->branch}}</span>
+                                        <span class="d-block">Branch: </span><span>{{ $chalan->branch }}</span>
                                     </div>
                                 </div>
                             @endif
                         </td>
                         <td style="vertical-align: middle!important;" class="text-end">
-                            <span>{{$chalan->amount}}</span>
+                            <span>{{ $chalan->amount }}</span>
                         </td>
                         <td style="vertical-align: middle!important;">
                             <span>.00</span>
@@ -273,13 +273,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="py-1">টাকা কথায়ঃ <span>{{$chalan->amount_in_words}}</span>
+                        <td colspan="4" class="py-1">টাকা কথায়ঃ <span>{{ $chalan->amount_in_words }}</span>
                             <span class="float-end">
-                                মোট টাকাঃ 
+                                মোট টাকাঃ
                             </span>
                         </td>
                         <td class="text-end">
-                            <span>{{$chalan->amount}}</span>
+                            <span>{{ $chalan->amount }}</span>
                         </td>
                         <td>.00</td>
                         <td colspan="2" rowspan="3" style="vertical-align: bottom;">
@@ -290,13 +290,14 @@
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            টাকা পাওয় গেলঃ <span>{{$chalan->amount}}</span>/- (<span>{{$chalan->amount_in_words}}</span>)
+                            টাকা পাওয় গেলঃ <span>{{ $chalan->amount }}</span>/-
+                            (<span>{{ $chalan->amount_in_words }}</span>)
                         </td>
 
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            তারিখঃ <span class="date">{{$chalan->date->format('d/m/Y')}}</span>
+                            তারিখঃ <span class="date">{{ optional($chalan->date)->format('d/m/Y') }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -323,7 +324,7 @@
                 </ul>
             </div>
         </div>
-        <button id="print-btn" class="btn btn-primary d-print-none my-2 rounded-2 fw-medium">
+        <button id="print-btn" class="my-2 btn btn-primary d-print-none rounded-2 fw-medium">
             <span class="mdi mdi-printer font-16"></span>
             Print
         </button>
@@ -333,8 +334,8 @@
 
 @push('customJs')
     <script>
-        $(document).ready(function () {
-            $('#print-btn').click(e=>{
+        $(document).ready(function() {
+            $('#print-btn').click(e => {
                 window.print()
             })
         });
