@@ -111,7 +111,7 @@
     <x-backend.ui.section-card style="box-shadow: none!important;">
 
         <x-backend.ui.button type="custom" href="{{ route('chalan.index') }}"
-            class="btn-dark btn-sm mb-2 d-print-none">Back</x-backend.ui.button>
+            class="mb-2 btn-dark btn-sm d-print-none">Back</x-backend.ui.button>
 
         <form action="{{ route('chalan.update', $chalan->id) }}" method="post" class="chalan">
             @csrf
@@ -128,7 +128,7 @@
                 </div>
             </div>
             <div>
-                <div class="d-block fs-3 fw-medium text-dark text-center">চালান ফরম</div>
+                <div class="text-center d-block fs-3 fw-medium text-dark">চালান ফরম</div>
                 <table class="mx-auto upper-table">
                     <tbody>
                         <tr>
@@ -138,21 +138,21 @@
                             <td class="text-center">
                                 চালান নংঃ
                                 <input name="chalan_no" type="text" value="{{ $chalan->chalan_no }}"
-                                    class="dotted-border text-center" style="width: 4rem;" />
-                                তারিখঃ <input name="date" value="{{ $chalan->date->format('Y-m-d') }}" type="date"
-                                    class="dotted-border">
+                                    class="text-center dotted-border" style="width: 4rem;" />
+                                তারিখঃ <input name="date" value="{{ optional($chalan->date)->format('Y-m-d') }}"
+                                    type="date" class="dotted-border">
                             </td>
                         </tr>
                         <tr>
                             <td class="text-center">বাংলাদেশ ব্যাংক/সোনালি ব্যাংকের চট্টগ্রাম জেলার
-                                <input type="text" class="dotted-border text-center" name="bank_name"
+                                <input type="text" class="text-center dotted-border" name="bank_name"
                                     value="{{ $chalan->bank_name }}">
                                 টাকা জমা দেওয়ার চালান
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-center py-2"> কোড নংঃ <x-backend.form.box-input name="code"
-                                    value="{{ $chalan->code }}" :range="range(1, 13)" :has-space="true"/>
+                            <td class="py-2 text-center"> কোড নংঃ <x-backend.form.box-input name="code"
+                                    value="{{ $chalan->code }}" :range="range(1, 13)" :has-space="true" />
                             </td>
                         </tr>
                     </tbody>
@@ -241,7 +241,7 @@
                                 <span>Purpose:</span> <input type="text" name="purpose" class="dotted-border"
                                     style="max-width: 8rem;" value="{{ $chalan->purpose }}" />
                             </div>
-                            <div class="d-flex gap-1 align-items-center mb-2">
+                            <div class="gap-1 mb-2 d-flex align-items-center">
                                 <label for="year" class="d-inline">Year:</label>
                                 <select id="year" class="form-select d-inline" placeholder="Select Year..."
                                     name="year">
@@ -260,7 +260,7 @@
                             </div>
                         </td>
                         <td>
-                            <div class="d-flex gap-3 p-2">
+                            <div class="gap-3 p-2 d-flex">
                                 <div class="form-check form-check-success">
                                     <input class="form-check-input rounded-circle" type="radio" name="payment_type"
                                         value="cash" id="cash" @checked($chalan->payment_type === 'cash')>
@@ -293,7 +293,7 @@
                                 $number = new \NumberFormatter('en_BD', \NumberFormatter::DEFAULT_STYLE);
                             @endphp
                             <input type="text" name="amount" value="{{ $number->parse($chalan->amount) }}"
-                                class="dotted-border mx-1" style="max-width: 6rem;" />
+                                class="mx-1 dotted-border" style="max-width: 6rem;" />
                         </td>
                         <td style="vertical-align: middle!important;">
                             <span>.00</span>
@@ -309,7 +309,7 @@
                     </tr>
                     <tr>
                         <td colspan="4" class="py-1">টাকা কথায়ঃ <input type="text" name="amount_in_words"
-                                value="{{ $chalan->amount_in_words }}" class="dotted-border mx-1 py-2 text-capitalize"
+                                value="{{ $chalan->amount_in_words }}" class="py-2 mx-1 dotted-border text-capitalize"
                                 style="width: 70%;" />
                             <span class="float-end">
                                 মোট টাকাঃ
@@ -334,7 +334,7 @@
                     </tr>
                     <tr>
                         <td colspan="6" style="vertical-align: middle;">
-                            তারিখঃ <span class="date">{{ $chalan->date->format('d/m/Y') }}</span>
+                            তারিখঃ <span class="date">{{ optional($chalan->date)->format('d/m/Y') }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -360,7 +360,7 @@
                     </li>
                 </ul>
             </div>
-            <x-backend.ui.button class="btn-primary btn btn-sm d-print-none text-white fw-bold"
+            <x-backend.ui.button class="text-white btn-primary btn btn-sm d-print-none fw-bold"
                 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif!important;">Clone</x-backend.ui.button>
         </form>
     </x-backend.ui.section-card>

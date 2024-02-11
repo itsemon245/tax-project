@@ -20,7 +20,7 @@
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Chalan', 'List']" />
     <x-backend.ui.section-card name="Chalan List">
         <x-backend.ui.button type="custom" href="{{ route('chalan.create') }}"
-            class="btn-success btn-sm mb-2 d-print-none">Create</x-backend.ui.button>
+            class="mb-2 btn-success btn-sm d-print-none">Create</x-backend.ui.button>
 
         <x-backend.table.basic :items="$data">
             <thead>
@@ -40,7 +40,7 @@
                 @foreach ($data as $key => $chalan)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $chalan->date->format('d/m/Y') }}</td>
+                        <td>{{ optional($chalan->date)->format('d/m/Y') }}</td>
                         <td>{{ $chalan->chalan_no }}</td>
                         <td>
                             <div class="fw-bold">
