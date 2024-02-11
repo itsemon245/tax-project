@@ -393,6 +393,7 @@
                                     $('.prev-price').addClass('line-through')
                                     $('input[name="discount"]').val(response.data.discount)
                                     $('input[name="payable"]').val(response.data.payable)
+                                    $('input[name="paid_amount"]').val(response.data.payable)
                                     $('input[name="is_promo_code_applied"]').val(true)
                                     code.hasApplied = true
                                 }

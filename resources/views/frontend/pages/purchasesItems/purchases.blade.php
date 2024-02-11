@@ -6,16 +6,35 @@
     {{-- Services --}}
 @section('main')
     <div class="container">
-        <h4 class="mt-5 mb-3" style="font-size:28px; font-weight:600;">Purchase Items
+        <h4 class="mt-5 mb-3 text-center" style="font-size:28px; font-weight:600;">Purchase Items
         </h4>
 
-        <div class="d-flex justify-content-start align-items-center gap-4 mb-3">
+        <div class="d-flex justify-content-center align-items-center gap-4 mb-3">
             @forelse ($purchaseItem  as $item)
-                <div class="" style="width: max-content;">
-                    <div class="w-100 h-100 rounded-2" style="overflow: hidden;">
+                <div class="h-100" style="width: max-content;">
+                    <div class="w-100 h-100 rounded-2 h-100" style="overflow: hidden;">
                         <div class="align-items-center border p-3">
-                            <span class="ms-auto fw-bold mb-2 {{ $item->approved == 1 ? 'text-success' : 'text-danger' }}">
-                                {{ $item->approved == 1 ? 'Approved.' : 'Waiting for Approval.' }}</span>
+                            <div class="row gap-4 align-items-center justify-content-center mb-3">
+                                <div style="width: max-content;">
+                                    <div
+                                        class="ms-auto fw-bold mb-2 text-center {{ $item->approved == 1 ? 'text-success' : 'text-danger' }}">
+                                        {{ $item->approved == 1 ? 'Approved.' : 'Waiting for Approval.' }}
+                                    </div>
+                                    @if ($item->due > 0)
+                                        <form action="{{ route('payment.pay.now', $item) }}" method="post"
+                                            class="d-flex gap-4 align-items-center">
+                                            @csrf
+                                            <input class="form-control px-3 py-2 border-focus-2" style="width: 150px;"
+                                                name="trx_id" label="Trx ID" placeholder="Trx ID" required />
+                                            @error('trx_id')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                            <button class="btn btn-primary text-white" style="font-weight: 500;">Pay
+                                                Now</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="text-muted text-start">
                                 Purchase Type: <b>{{ $item->purchasable_type }}</b>
                             </div>
@@ -61,9 +80,25 @@
     </div>
 @endsection
 
-{{-- <section class="px-lg-12 px-2 my-5">
 
-    </section> --}}
 @push('customJs')
+    {{-- <script>
+        $('.swal-modal-btn').click(e => {
+            e.preventDefault()
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(e.target).parent().submit()
+                }
+            })
+        })
+    </script> --}}
 @endpush
 @endsection

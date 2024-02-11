@@ -16,7 +16,7 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $payments = Purchase::where('approved', $request->status)->latest()->paginate(paginateCount());
+        $payments = Purchase::where('approved', $request->status)->latest('updated_at')->paginate(paginateCount());
         return view('backend.payment.approved', compact('payments'));
     }
 

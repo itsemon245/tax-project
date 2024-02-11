@@ -160,8 +160,7 @@
                                                             hx-swap="outerHTML" id="branch-thana" name="branch-thana"
                                                             required placeholder="Select Thana...">
                                                             @foreach ($thanas as $thana)
-                                                                <option value="{{ trim($thana) }}">{{ $thana }}
-                                                                </option>
+                                                                <option value="{{ trim($thana) }}">{{ $thana }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

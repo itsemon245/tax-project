@@ -178,6 +178,7 @@ Route::prefix('payment')
         Route::post('later/', 'later')->name('later');
         Route::get('success/{model}/{id}', 'success')->name('success');
         Route::get('cancel', 'cancel')->name('cancel');
+        Route::post('pay-now/{purchase}', 'payNow')->name('pay.now');
     });
 
 
