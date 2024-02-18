@@ -13,26 +13,20 @@
             @forelse ($purchaseItem  as $item)
                 <div class="h-100" style="width: max-content;">
                     <div class="w-100 h-100 rounded-2 h-100" style="overflow: hidden;">
-                        <div class="align-items-center border p-3">
+                        <div class="align-items-center border p-3 h-100">
                             <div class="row gap-4 align-items-center justify-content-center mb-3">
-                                <div style="width: max-content;">
+                                <div
+                                    class="d-flex {{ $item->due >= 1 ? 'justify-content-between gap-2' : 'justify-content-center' }}  align-items-center">
                                     <div
-                                        class="ms-auto fw-bold mb-2 text-center {{ $item->approved == 1 ? 'text-success' : 'text-danger' }}">
-                                        {{ $item->approved == 1 ? 'Approved.' : 'Waiting for Approval.' }}
+                                        class="py-2 fw-bold text-center {{ $item->approved == 1 ? 'text-success' : 'text-danger' }}">
+                                        {{ $item->approved == 1 ? 'Approved' : ($item->due >= 1 ? 'Waiting for Payment' : 'Waiting for Approval') }}
                                     </div>
-                                    @if ($item->due > 0)
-                                        <form action="{{ route('payment.pay.now', $item) }}" method="post"
-                                            class="d-flex gap-4 align-items-center">
-                                            @csrf
-                                            <input class="form-control px-3 py-2 border-focus-2" style="width: 150px;"
-                                                name="trx_id" label="Trx ID" placeholder="Trx ID" required />
-                                            @error('trx_id')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                            <button class="btn btn-primary text-white" style="font-weight: 500;">Pay
-                                                Now</button>
-                                        </form>
+                                    @if ($item->due >= 1)
+                                        <a href="{{ route('payment.create', ['model' => $item->purchasable_type, 'id' => $item->purchasable_id, 'purchase_id' => encrypt($item->id)]) }}"
+                                            class="btn btn-primary text-white" style="font-weight: 500;">Pay
+                                            Now</a>
                                     @endif
+
                                 </div>
                             </div>
                             <div class="text-muted text-start">

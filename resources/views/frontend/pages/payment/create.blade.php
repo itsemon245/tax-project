@@ -33,7 +33,7 @@
     </style>
 @endPushOnce
 @section('main')
-    <form action="{{ route('payment.store') }}" method="post" class="my-3">
+    <form action="{{ route('payment.store', ['purchase_id' => encrypt($purchase?->id)]) }}" method="post" class="my-3">
         @csrf
 
         @if ($model === Product::class)
@@ -143,7 +143,7 @@
                                         <div class="row my-2">
                                             <label for="amoutn-to-pay" class="d-block fs-3 fw-medium">Amount To Pay</label>
                                             <input id="amount-to-pay" name="paid_amount" type="text"
-                                                value="{{ $record->price }}"
+                                                value="{{ $purchase ? $purchase->due : $record->price }}"
                                                 class=" text-center border-success rounded-3 fs-2 fw-bold py-5">
                                         </div>
 
@@ -154,7 +154,8 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 @if (auth()->user() === null)
-                                                    <h6 class="text-success text-center fw-bold fs-5">Please create an account to
+                                                    <h6 class="text-success text-center fw-bold fs-5">Please create an
+                                                        account to
                                                         perform this action</h6>
                                                 @endif
                                             </div>

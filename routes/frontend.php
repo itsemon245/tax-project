@@ -173,12 +173,12 @@ Route::prefix('payment')
     ->name('payment.')
     ->controller(PaymentController::class)
     ->group(function () {
-        Route::get('create/{model}/{id}', 'create')->name('create');
-        Route::post('store/', 'store')->name('store');
+        Route::get('create/{model}/{id}/{purchase_id?}', 'create')->name('create');
+        Route::post('store/{purchase_id?}', 'store')->name('store');
         Route::post('later/', 'later')->name('later');
         Route::get('success/{model}/{id}', 'success')->name('success');
         Route::get('cancel', 'cancel')->name('cancel');
-        Route::post('pay-now/{purchase}', 'payNow')->name('pay.now');
+        // Route::post('pay-now/{purchase_id?}', 'payNow')->name('pay.now');
     });
 
 

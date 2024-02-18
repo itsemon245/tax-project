@@ -21,15 +21,16 @@ class PaymentController extends Controller
     {
         return view('frontend.payment.index');
     }
-    public function create(string $model, string $id): View
+    public function create(string $model, string $id, $purchase_id = null): View
     {
         $table          = str(str($model)->snake())->plural();
         $record         = DB::table($table)->find($id);
         $incomeSources  = IncomeSource::latest()->get();
         $paymentMethods = Setting::select('payment')->first()->pluck('payment')[ 0 ];
-        return view('frontend.pages.payment.create', compact('model', 'id', 'record', 'incomeSources', 'paymentMethods'));
+        $purchase = Purchase::find($purchase_id);
+        return view('frontend.pages.payment.create', compact('model', 'id', 'record', 'incomeSources', 'paymentMethods', 'purchase'));
     }
-    public function store(Request $request)
+    public function store(Request $request, $purchase_id = null)
     {
         $request->validate([
             'purchasable_type' => 'required',
@@ -125,7 +126,10 @@ class PaymentController extends Controller
                 $status = 'partial';
             }
 
-            Purchase::create([
+            Purchase::updateOrCreate([
+                'id' => $request->purchase_id
+            ],
+                [
                 'user_id'                => auth()->id(),
                 'name'                   => $request->name,
                 'promo_code_id'          => $promoCode->id ?? null,
