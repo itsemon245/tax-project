@@ -45,7 +45,11 @@ class InvoiceController extends Controller
     public function index()
     {
         $fiscalYear = currentFiscalYear();
-        $invoices = Invoice::with('client', 'currentFiscal', 'recentFiscalYears')->latest()->paginate(paginateCount());
+        $invoices = Invoice::with('client', 'currentFiscal', 'recentFiscalYears')->latest()
+        ->whereHas('fiscalYears', function($q){
+            $q->where('year', currentFiscalYear());
+        })
+        ->paginate(paginateCount());
         $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
         $zones = Client::select('zone')->distinct()->get()->pluck('zone');
         $circles = Client::select('circle')->distinct()->get()->pluck('circle');
