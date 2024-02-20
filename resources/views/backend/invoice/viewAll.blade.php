@@ -207,7 +207,7 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td class="fw-medium">
-                                    {{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->issue_date)->format('d M, Y') }}
+                                    {{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $fiscalYear)->first()?->pivot->issue_date)->format('d M, Y') }}
                                 </td>
                                 <td class="fw-medium">{{ $invoice->client->name }}</td>
                                 <td>{{ $invoice->client->tin }}</td>
@@ -217,15 +217,15 @@
                                 <td>{{ $invoice->client->zone }}</td>
                                 <td>
                                     <span
-                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->demand . ' Tk' }}</span>
+                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()?->pivot->demand . ' Tk' }}</span>
                                 </td>
                                 <td>
                                     <span
-                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->paid . ' Tk' }}</span>
+                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()?->pivot->paid . ' Tk' }}</span>
                                 </td>
                                 <td>
                                     <span
-                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()->pivot->due . ' Tk' }}</span>
+                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()?->pivot->due . ' Tk' }}</span>
                                 </td>
                                 @canany(['create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read invoice'])
                                 <td>
