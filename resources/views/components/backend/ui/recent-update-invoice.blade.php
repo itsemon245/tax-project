@@ -18,46 +18,47 @@
     @foreach ($recentInvoices as $invoice)
         @php
             $color = 'dark';
-           if (isset($invoice->currentFiscal[0])) {
-            switch ($invoice->currentFiscal[0]->pivot->status) {
-                case 'sent':
-                    $color = 'success';
-                    break;
-                case 'paid':
-                    $color = 'success';
-                    break;
-                case 'due':
-                    $color = 'warning';
-                    break;
-                case 'overdue':
-                    $color = 'danger';
-                    break;
+            if (isset($invoice->currentFiscal[0])) {
+                switch ($invoice->currentFiscal[0]->pivot->status) {
+                    case 'sent':
+                        $color = 'success';
+                        break;
+                    case 'paid':
+                        $color = 'success';
+                        break;
+                    case 'due':
+                        $color = 'warning';
+                        break;
+                    case 'overdue':
+                        $color = 'danger';
+                        break;
 
-                default:
-                    # code...
-                    break;
+                    default:
+                        # code...
+                        break;
+                }
             }
-           }
         @endphp
         <div class="latest-items mb-2" style="width: clamp(160px, 190px, 220px);">
             <div class="card h-100 shadow border-top">
-                <div class="card-body">
-                    <h5>ID:{{ $invoice->id }}</h5>
-                    <h5>{{ str($invoice->client->name)->title() }} <br> <span class="text-muted fw-normal fs-6">Company:
-                            {{ str($invoice->client->company_name)->title() }}</span></h5>
-                    @isset($invoice->currentFiscal[0])
+                @isset($invoice->currentFiscal[0])
+                    <div class="card-body">
+                        <h5>ID:{{ $invoice->id }}</h5>
+                        <h5>{{ str($invoice->client->name)->title() }} <br> <span class="text-muted fw-normal fs-6">Company:
+                                {{ str($invoice->client->company_name)->title() }}</span></h5>
                         <p class='text-muted mb-0'>Issued:
                             {{ Carbon\Carbon::parse($invoice->currentFiscal[0]->pivot->issue_date)->format('d F, Y') }}
                         </p>
                         <p class='text-muted mb-0'>Due:
                             {{ Carbon\Carbon::parse($invoice->currentFiscal[0]->pivot->due_date)->format('d F, Y') }}
                         </p>
-                    @endisset
-                </div>
-                <div
-                    class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
-                    {{ str($invoice->currentFiscal[0]->pivot->status)->title() }}
-                </div>
+                    </div>
+                    <div
+                        class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
+                        {{ str($invoice->currentFiscal[0]->pivot->status)->title() }}
+                    </div>
+                @endisset
+
             </div>
         </div>
     @endforeach
