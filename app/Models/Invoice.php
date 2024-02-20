@@ -35,6 +35,22 @@ class Invoice extends Model
                 'status'
             ]);
     }
+    function recentFiscalYears()
+    {
+        return $this->belongsToMany(FiscalYear::class)
+            ->withPivot([
+                'discount',
+                'sub_total',
+                'demand',
+                'paid',
+                'due',
+                'payment_date',
+                'issue_date',
+                'due_date',
+                'created_at',
+                'status'
+            ])->orderByPivot('created_at', 'desc');
+    }
     function currentFiscal()
     {
         return $this->belongsToMany(FiscalYear::class)

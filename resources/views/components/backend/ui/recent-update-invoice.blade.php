@@ -1,9 +1,6 @@
 @php
     $route = $attributes->get('method');
-    $recentInvoices = App\Models\Invoice::with('client', 'fiscalYears'=> function($q){
-        $q->orderBy('pivot_created_at', 'desc');
-        $q->limit(1);
-    })->latest()->limit(4)->get();
+    $recentInvoices = App\Models\Invoice::with('client', 'recentFiscalYears')->latest()->limit(4)->get();
 @endphp
 <h4 class="p-2">Recently Updated Invoice</h4>
 <div id="latest-container" class="d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
@@ -21,8 +18,8 @@
     @foreach ($recentInvoices as $invoice)
         @php
             $color = 'dark';
-            if (isset($invoice->fiscalYears[0])) {
-                switch ($invoice->fiscalYears[0]->pivot->status) {
+            if (isset($invoice->recentFiscalYears[0])) {
+                switch ($invoice->recentFiscalYears[0]->pivot->status) {
                     case 'sent':
                         $color = 'success';
                         break;
@@ -44,21 +41,21 @@
         @endphp
         <div class="latest-items mb-2" style="width: clamp(160px, 190px, 220px);">
             <div class="card h-100 shadow border-top">
-                @isset($invoice->fiscalYears[0])
+                @isset($invoice->recentFiscalYears[0])
                     <div class="card-body">
                         <h5>ID:{{ $invoice->id }}</h5>
                         <h5>{{ str($invoice->client->name)->title() }} <br> <span class="text-muted fw-normal fs-6">Company:
                                 {{ str($invoice->client->company_name)->title() }}</span></h5>
                         <p class='text-muted mb-0'>Issued:
-                            {{ Carbon\Carbon::parse($invoice->fiscalYears[0]->pivot->issue_date)->format('d F, Y') }}
+                            {{ Carbon\Carbon::parse($invoice->recentFiscalYears[0]->pivot->issue_date)->format('d F, Y') }}
                         </p>
                         <p class='text-muted mb-0'>Due:
-                            {{ Carbon\Carbon::parse($invoice->fiscalYears[0]->pivot->due_date)->format('d F, Y') }}
+                            {{ Carbon\Carbon::parse($invoice->recentFiscalYears[0]->pivot->due_date)->format('d F, Y') }}
                         </p>
                     </div>
                     <div
                         class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
-                        {{ str($invoice->fiscalYears[0]->pivot->status)->title() }}
+                        {{ str($invoice->recentFiscalYears[0]->pivot->status)->title() }}
                     </div>
                 @endisset
 
