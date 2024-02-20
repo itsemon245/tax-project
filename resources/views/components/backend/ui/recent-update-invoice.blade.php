@@ -18,6 +18,7 @@
     @foreach ($recentInvoices as $invoice)
         @php
             $color = 'dark';
+           if (isset($invoice->currentFiscal[0])) {
             switch ($invoice->currentFiscal[0]->pivot->status) {
                 case 'sent':
                     $color = 'success';
@@ -36,6 +37,7 @@
                     # code...
                     break;
             }
+           }
         @endphp
         <div class="latest-items mb-2" style="width: clamp(160px, 190px, 220px);">
             <div class="card h-100 shadow border-top">
