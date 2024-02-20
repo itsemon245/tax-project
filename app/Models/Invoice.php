@@ -31,6 +31,7 @@ class Invoice extends Model
                 'payment_date',
                 'issue_date',
                 'due_date',
+                'created_at',
                 'status'
             ]);
     }
