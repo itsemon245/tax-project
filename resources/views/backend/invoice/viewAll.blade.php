@@ -129,7 +129,7 @@
 
             </div>
         </div>
-        <x-backend.ui.recent-update-invoice :method="route('invoice.create')"/>
+        <x-backend.ui.recent-update-invoice :method="route('invoice.create')" />
         <div class="card">
             <h5 class="card-header bg-soft-light text-dark">All Invoices</h5>
             <div class="card-body">
@@ -149,13 +149,19 @@
                             <th>Paid</th>
                             <th>Arear</th>
                             @can('create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read invoice')
-                            <th>Actions</th>
+                                <th>Actions</th>
                             @endcan
                         </tr>
                     </thead>
 
                     <tbody>
                         @foreach ($invoices as $key => $invoice)
+                            @php
+                                $recentYear = $invoice->recentFiscalYears[0];
+                                $currentYear = $invoice->fiscalYears()->where('year', $fiscalYear)->first();
+                                $pivot = $currentYear?->pivot ?? $recentYear->pivot;
+                                $fiscalYear = $cuerrentYear->year ?? $recentYear->year;
+                            @endphp
                             <!-- Center modal content -->
                             <div class="modal fade" id="send-email-modal-{{ $invoice->id }}" tabindex="-1"
                                 role="dialog" aria-hidden="true">
@@ -204,10 +210,11 @@
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
+
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td class="fw-medium">
-                                    {{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $fiscalYear)->first()?->pivot->issue_date)->format('d M, Y') }}
+                                    {{ Carbon\Carbon::parse($pivot->issue_date)->format('d M, Y') }}
                                 </td>
                                 <td class="fw-medium">{{ $invoice->client->name }}</td>
                                 <td>{{ $invoice->client->tin }}</td>
@@ -216,81 +223,85 @@
                                 <td>{{ $invoice->client->circle }}</td>
                                 <td>{{ $invoice->client->zone }}</td>
                                 <td>
-                                    <span
-                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()?->pivot->demand . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $pivot->demand . ' Tk' }}</span>
                                 </td>
                                 <td>
-                                    <span
-                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()?->pivot->paid . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $pivot->paid . ' Tk' }}</span>
                                 </td>
                                 <td>
-                                    <span
-                                        class="fw-medium">{{ $invoice->fiscalYears()->where('year', $fiscalYear)->first()?->pivot->due . ' Tk' }}</span>
+                                    <span class="fw-medium">{{ $pivot->due . ' Tk' }}</span>
                                 </td>
-                                @canany(['create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read invoice'])
-                                <td>
-                                    <div class="btn-group dropdown position-relative">
-                                        <a href="javascript: void(0);"
-                                            class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-xs"
-                                            data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                class="mdi mdi-dots-horizontal"></i></a>
-                                        <div class="bg-white py-2 px-3 position-absolute d-none rounded shadow"
-                                            style="inset: 2rem 2rem auto auto!important; z-index:2;">
-                                           @can('read invoice')
-                                                <a class="dropdown-item d-flex align-items-center gap-2"
-                                                href="{{ route('invoice.show', $invoice->id) . '?year=' . $fiscalYear }}"><span
-                                                    class="mdi mdi-eye text-primary font-20"></span>View</a>
-                                           @endcan
-                                           @can('update invoice')
-                                                <a class="dropdown-item d-flex align-items-center gap-2"
-                                                href="{{ route('invoice.edit', $invoice->id) . '?year=' . $fiscalYear }}"><span
-                                                    class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
-                                           @endcan
-                                            @can('send invoice')
+                                @canany([
+                                    'create invoice',
+                                    'update invoice',
+                                    'delete invoice',
+                                    'send invoice',
+                                    'read
+                                    invoice',
+                                    ])
+                                    <td>
+                                        <div class="btn-group dropdown position-relative">
+                                            <a href="javascript: void(0);"
+                                                class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-xs"
+                                                data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                    class="mdi mdi-dots-horizontal"></i></a>
+                                            <div class="bg-white py-2 px-3 position-absolute d-none rounded shadow"
+                                                style="inset: 2rem 2rem auto auto!important; z-index:2;">
+                                                @can('read invoice')
+                                                    <a class="dropdown-item d-flex align-items-center gap-2"
+                                                        href="{{ route('invoice.show', $invoice->id) . '?year=' . $fiscalYear }}"><span
+                                                            class="mdi mdi-eye text-primary font-20"></span>View</a>
+                                                @endcan
+                                                @can('update invoice')
+                                                    <a class="dropdown-item d-flex align-items-center gap-2"
+                                                        href="{{ route('invoice.edit', $invoice->id) . '?year=' . $fiscalYear }}"><span
+                                                            class="mdi mdi-file-edit text-info font-20"></span>Edit</a>
+                                                @endcan
+                                                @can('send invoice')
                                                     <button type="submit" class="dropdown-item d-flex align-items-center gap-2"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#send-email-modal-{{ $invoice->id }}"><span
-                                                        class="mdi mdi-telegram text-warning font-20"></span>Send
-                                                    to...</button>
-                                                <form action="{{ route('invoice.markAs', [$invoice->id, 'sent']) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('patch')
-                                                    <input type="text" name="year" value="{{ currentFiscalYear() }}"
-                                                        hidden>
-                                                    <button type="submit"
-                                                        class="dropdown-item d-flex align-items-center gap-2"><span
-                                                            class="mdi mdi-check text-success font-20"></span>Mark as
-                                                        Sent</button>
-                                                </form>
-                                                <form action="{{ route('invoice.markAs', [$invoice->id, 'paid']) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('patch')
-                                                    <input type="text" name="year" value="{{ currentFiscalYear() }}"
-                                                        hidden>
-                                                    <button type="submit"
-                                                        class="dropdown-item d-flex align-items-center gap-2"><span
-                                                            class="mdi mdi-cash-check text-success font-20"></span>Mark as
-                                                        Paid</button>
-                                                </form>
-                                            @endcan
-                                 
-                                            @can('delete invoice')
-                                            <form action="" method="POST">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="dropdown-item d-flex align-items-center gap-2"><span
-                                                        class="mdi mdi-delete text-danger font-20"></span
-                                                        class="text-danger">Delete</button>
-                                            </form>
-                                            @endcan
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#send-email-modal-{{ $invoice->id }}"><span
+                                                            class="mdi mdi-telegram text-warning font-20"></span>Send
+                                                        to...</button>
+                                                    <form action="{{ route('invoice.markAs', [$invoice->id, 'sent']) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('patch')
+                                                        <input type="text" name="year" value="{{ $fiscalYear }}"
+                                                            hidden>
+                                                        <button type="submit"
+                                                            class="dropdown-item d-flex align-items-center gap-2"><span
+                                                                class="mdi mdi-check text-success font-20"></span>Mark as
+                                                            Sent</button>
+                                                    </form>
+                                                    <form action="{{ route('invoice.markAs', [$invoice->id, 'paid']) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('patch')
+                                                        <input type="text" name="year" value="{{ $fiscalYear }}"
+                                                            hidden>
+                                                        <button type="submit"
+                                                            class="dropdown-item d-flex align-items-center gap-2"><span
+                                                                class="mdi mdi-cash-check text-success font-20"></span>Mark as
+                                                            Paid</button>
+                                                    </form>
+                                                @endcan
 
+                                                @can('delete invoice')
+                                                    <form action="" method="POST">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="dropdown-item d-flex align-items-center gap-2"><span
+                                                                class="mdi mdi-delete text-danger font-20"></span
+                                                                class="text-danger">Delete</button>
+                                                    </form>
+                                                @endcan
+
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
                                 @endcanany
-                         
+
                             </tr>
                         @endforeach
                     </tbody>
