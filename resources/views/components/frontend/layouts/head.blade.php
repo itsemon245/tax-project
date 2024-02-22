@@ -12,6 +12,8 @@
 
     <title>{{ config('app.name') . ' - ' . $title }}</title>
 
+    @vite(['resources/css/tailwind.css'])
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

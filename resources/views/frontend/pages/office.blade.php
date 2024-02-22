@@ -11,7 +11,7 @@
         <h4 class="my-5 text-center fs-3">Which Office Do You Prefer?</h4>
         <div id="contact_details">
             <div class="container">
-                <div class="row" style="flex-direction: row-reverse;">
+                <div class="row" style="flex-direction: row-reverse;" id="hx-filter-target">
 
                     <div class="col-12">
                         <div class="row">
@@ -22,31 +22,32 @@
                             </div>
                             <div class="col-md-6">
                                 <div>
+                                    <label for="branch-thana">District: </label>
                                     <select class="tail-select" hx-get="{{ route('office') }}" hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" label="Select District"
-                                        id="branch-district" name="branch-district" required
+                                        id="branch-district" name="district"
                                         placeholder="Select District...">
                                         @foreach ($districts as $district)
-                                            <option value="{{ $district }}" @selected(trim($district) === 'Chattogram')>{{ trim($district) }}</option>
+                                            <option value="{{ $district }}" @selected(trim($district) === 'Chattogram' || trim($district) === request()->query('district') )>{{ trim($district) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-2">
-                                    <label for="branch-thana">Thana <span class="text-danger">*</span></label>
+                                    <label for="branch-thana">Thana: </label>
                                     <select class="tail-select" hx-get={{ route('office') }} hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" id="branch-thana"
-                                        name="branch-thana" required placeholder="Select Thana...">
+                                        name="thana" placeholder="Select Thana...">
                                         @foreach ($thanas as $thana)
-                                            <option value="{{ trim($thana) }}">{{ $thana }}</option>
+                                            <option value="{{ trim($thana) }}" @selected(trim($thana) === request()->query('thana'))>{{ $thana }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="hx-filter-target" class="row" style="flex-direction: row-reverse;" hx-tranisition>
+                    <div class="row" style="flex-direction: row-reverse;" hx-tranisition>
                         @if ($maps->count() > 0)
                             <div class="col-12 my-2">
                                 Available Branches

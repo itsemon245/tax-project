@@ -44,7 +44,7 @@ class PageController extends Controller
         $partners            = PartnerSection::latest()->limit(10)->get();
         return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description', 'appointmentSections', 'banners', 'partners'));
     }
-    public function appointmentPage(Request $request , ?ExpertProfile $expertProfile = null)
+    public function appointmentPage(Request $request, ?ExpertProfile $expertProfile = null)
     {
         $maps = Map::where(function (Builder $q) use ($request) {
             if ($request->query('branch-thana')) {
@@ -74,15 +74,19 @@ class PageController extends Controller
     public function officePage(Request $request)
     {
         $maps = Map::where(function (Builder $q) use ($request) {
-            if ($request->query('branch-thana')) {
-                $q->where('thana', $request->query('branch-thana'));
+            if ($request->query('thana')) {
+                $q->where('thana', $request->query('thana'));
             }
-            if ($request->query('branch-district')) {
-                $q->where('district', $request->query('branch-district'));
+            if ($request->query('district')) {
+                $q->where('district', $request->query('district'));
             }
         })->get();
-        $districts = Map::select('district')->distinct()->get()->pluck('district');
-        $thanas    = Map::select('thana')->distinct()->get()->pluck('thana');
+        $districts = Map::select(['district', 'thana'])->distinct()->get()->pluck('district');
+        $thanas    = Map::select(['district', 'thana'])->distinct()->where(function (Builder $q) use ($request) {
+            if (!empty($request->query('district'))) {
+                $q->where('district', $request->query('district'));
+            }
+        })->get()->pluck('thana');
         return view('frontend.pages.office', compact('maps', 'districts', 'thanas'));
     }
     public function contactPage()
