@@ -120,7 +120,7 @@
                                                     data-cards=".appointment" id="appointment-input-2" hidden>
                                             </a>
                                         </div>
-                                        <div class="col-md-5 location-selector">
+                                        <div class="col-md-5 location-selector" id="hx-filter-target">
                                             <h4 class="text-center mb-2">
                                                 Which Office Do You Prefer?
                                             </h4>
@@ -138,14 +138,14 @@
                                                     <div class="mb-2">
                                                         <label for="branch-thana">District <span
                                                             class="text-danger">*</span></label>
-                                                        <select class="tail-select" hx-get="{{ route('appointment.make') }}"
+                                                        <select class="tail-select !w-full" hx-get="{{ route('appointment.make') }}"
                                                             hx-select="#hx-filter-target" hx-target="#hx-filter-target"
                                                             hx-swap="outerHTML" label="Select District"
                                                             id="branch-district" name="branch-district" required
                                                             placeholder="Select District...">
-                                                            @foreach ($districts as $district)
+                                                            @foreach ($branchDistricts as $district)
                                                                 <option value="{{ $district }}"
-                                                                    @selected(trim($district) == 'Chattogram')>{{ trim($district) }}
+                                                                    @selected(trim($district) == 'Chattogram') @selected(trim($district) == request()->query('branch-district'))>{{ trim($district) }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -155,12 +155,12 @@
                                                     <div class="mb-2">
                                                         <label for="branch-thana">Thana <span
                                                                 class="text-danger">*</span></label>
-                                                        <select class="tail-select" hx-get={{ route('appointment.make') }}
+                                                        <select class="tail-select !w-full" hx-get={{ route('appointment.make') }}
                                                             hx-select="#hx-filter-target" hx-target="#hx-filter-target"
                                                             hx-swap="outerHTML" id="branch-thana" name="branch-thana"
                                                             required placeholder="Select Thana...">
-                                                            @foreach ($thanas as $thana)
-                                                                <option value="{{ trim($thana) }}">{{ $thana }}</option>
+                                                            @foreach ($branchThanas as $thana)
+                                                                <option value="{{ trim($thana) }}" @selected(trim($thana) == request()->query('branch-thana'))>{{ $thana }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -170,14 +170,14 @@
                                             <div class="row" id="branch-wrapper">
                                                 <div class="text-muted mb-2">Select Branches</div>
 
-                                                <div id="hx-filter-target">
+                                                <div >
                                                     @foreach ($maps as $map)
                                                         <label for="location-input-{{ $map->id }}"
                                                             class="col-md-12 col-6 mb-md-1" style="cursor: pointer;">
                                                             <div id="location-{{ $map->id }}"
                                                                 class="border rounded p-3 map location {{ $maps[0]->id === $map->id ? 'selected' : 'bg-light' }}">
                                                                 <h5>{{ $map->location }}</h5>
-                                                                <p class="text-muted mb-0 text-wrap">{{ $map->address }}
+                                                                <p class="text-muted mb-0 text-wrap">{!! $map->address !!}
                                                                 </p>
                                                             </div>
                                                             <input type="radio" name="location" class="location-input"

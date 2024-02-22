@@ -54,10 +54,16 @@ class PageController extends Controller
                 $q->where('district', $request->query('branch-district'));
             }
         })->get();
+        $branchDistricts = Map::select(['district', 'thana'])->distinct()->get()->pluck('district');
+        $branchThanas    = Map::select(['district', 'thana'])->distinct()->where(function (Builder $q) use ($request) {
+            if (!empty($request->query('branch-district'))) {
+                $q->where('district', $request->query('branch-district'));
+            }
+        })->get()->pluck('thana');
         $banners      = getRecords('banners');
         $infos1       = Info::where('section_id', 1)->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->get();
-        return view('frontend.pages.appointment.makeAppointment', compact('banners', 'expertProfile', 'infos1', 'testimonials', 'maps'));
+        return view('frontend.pages.appointment.makeAppointment', compact('banners', 'expertProfile', 'infos1', 'testimonials', 'maps', 'branchDistricts', 'branchThanas'));
     }
     public function appointmentVirtual(?ExpertProfile $expertProfile = null)
     {
