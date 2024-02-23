@@ -66,11 +66,11 @@
                                             <div class="d-flex gap-5">
 
                                                 <div>
-                                                    <a href="{{ route('appointment.make') }}" class="text-dark fw-bold"
+                                                    <a href="{{ route('appointment.make')."?office_id=".$map->id }}" class="text-dark fw-bold"
                                                         style="text-decoration: underline!important;">Make
                                                         Appointment</a>
                                                 </div>
-                                            </div>
+                                            </div>  
                                         </div>
                                         @if ($key + 1 !== count($maps))
                                             <hr class="bg-light">
