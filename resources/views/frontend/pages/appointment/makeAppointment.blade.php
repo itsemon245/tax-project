@@ -40,22 +40,26 @@
                                         <a href="#account-2" data-bs-toggle="tab" data-toggle="tab"
                                             class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 active"
                                             aria-selected="true" role="tab" tabindex="-1">
-                                            <i class="mdi mdi-map-marker"></i>
-                                            <span class="d-none d-sm-inline">Location</span>
+                                            <i
+                                                class="mdi {{ $office == null ? 'mdi-map-marker' : 'mdi-calendar-clock' }}"></i>
+                                            <span
+                                                class="d-none d-sm-inline">{{ $office == null ? 'Location' : 'Date & Time' }}</span>
                                         </a>
                                     </li>
 
                                     @auth
                                         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                                     @endauth
-                                    <li class="nav-item" role="presentation">
-                                        <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab"
-                                            class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
-                                            aria-selected="false" role="tab">
-                                            <i class="mdi mdi-calendar-clock"></i>
-                                            <span class="d-none d-sm-inline">Date & Time</span>
-                                        </a>
-                                    </li>
+                                    @if ($office == null)
+                                        <li class="nav-item" role="presentation">
+                                            <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab"
+                                                class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
+                                                aria-selected="false" role="tab">
+                                                <i class="mdi mdi-calendar-clock"></i>
+                                                <span class="d-none d-sm-inline">Date & Time</span>
+                                            </a>
+                                        </li>
+                                    @endif
                                     <li class="nav-item" role="presentation">
                                         <a href="#tab-3" data-bs-toggle="tab" data-toggle="tab"
                                             class="nav-link d-flex flex-column flex-md-row align-items-center justify-content-center gap-md-2 rounded-0 pt-2 pb-2 "
@@ -119,6 +123,23 @@
                                                     value="{{ false }}" data-effected="#appointment-type-2"
                                                     data-cards=".appointment" id="appointment-input-2" hidden>
                                             </a>
+                                            @if ($office)
+                                                <div class="mt-5 selected-location row">
+                                                    <input type="radio" class="d-none" name="location"
+                                                        value="{{ $office->id }}" checked>
+                                                    <h6>Selected Branch</h6>
+                                                    {{-- <iframe src="{{ $maps[0]->src }}"
+                                                    class="w-100 border shadow rounded mb-2" height="300"
+                                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
+                                                    <div class="border rounded p-3 map bg-light">
+                                                        <h5>{{ $maps[0]->location }}<span
+                                                                class="text-muted fs-6">(selected)</span></h5>
+                                                        <div id="address-body" class="text-muted mb-0">
+                                                            {{ $maps[0]->address }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                         @if ($office == null)
                                             <div class="col-md-5 location-selector" id="hx-filter-target">
@@ -204,13 +225,49 @@
                                                 </div>
                                             </div>
                                         @else
-                                            <input type="radio" class="d-none" name="location"
-                                                value="{{ $office->id }}" checked>
+                                            <div class="col-md-6 time-selector">
+                                                <h4>What time works best for you?</h4>
+                                                <div class="border rounded p-3" style="overflow-y: scroll; height:400px;">
+                                                    @php
+                                                        $i = 0;
+                                                    @endphp
+                                                    @foreach ($dates as $date => $times)
+                                                        @php
+                                                            $i++;
+                                                        @endphp
+                                                        <div class="mb-3">
+                                                            <div class="fw-bold">{{ $date }}
+                                                            </div>
+
+                                                            <div class="d-flex flex-wrap gap-2 ps-2">
+                                                                @foreach ($times as $key => $time)
+                                                                    <label
+                                                                        class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
+                                                                        {{ $time }}
+                                                                        <input class="time-input " hidden type="radio"
+                                                                            name="time"
+                                                                            data-date="{{ $date }}"
+                                                                            value="{{ $time }}"
+                                                                            @if ($key === 0 && $i === 1) checked @endif>
+                                                                    </label>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                    </div>
+                                </div>
+                                @if ($office == null)
+                                    <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
+                                        <div class="row">
                                             <div class="col-md-6 selected-location">
-                                                <h4>Choosen Location</h4>
-                                                {{-- <iframe src="{{ $maps[0]->src }}"
+                                                <h4>Location</h4>
+                                                <iframe src="{{ $maps[0]->src }}"
                                                     class="w-100 border shadow rounded mb-2" height="300"
-                                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
+                                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                                 <div class="border rounded p-3 map bg-light">
                                                     <h5>{{ $maps[0]->location }}<span
                                                             class="text-muted fs-6">(selected)</span></h5>
@@ -219,56 +276,40 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endif
+                                            <div class="col-md-6 time-selector">
+                                                <h4>What time works best for you?</h4>
+                                                <div class="border rounded p-3" style="overflow-y: scroll; height:400px;">
+                                                    @php
+                                                        $i = 0;
+                                                    @endphp
+                                                    @foreach ($dates as $date => $times)
+                                                        @php
+                                                            $i++;
+                                                        @endphp
+                                                        <div class="mb-3">
+                                                            <div class="fw-bold">{{ $date }}
+                                                            </div>
 
-                                    </div>
-                                </div>
-                                <div class="tab-pane my-3 " id="profile-tab-2" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col-md-6 selected-location">
-                                            <h4>Location</h4>
-                                            <iframe src="{{ $maps[0]->src }}" class="w-100 border shadow rounded mb-2"
-                                                height="300" loading="lazy"
-                                                referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                            <div class="border rounded p-3 map bg-light">
-                                                <h5>{{ $maps[0]->location }}<span
-                                                        class="text-muted fs-6">(selected)</span></h5>
-                                                <div id="address-body" class="text-muted mb-0">{{ $maps[0]->address }}
+                                                            <div class="d-flex flex-wrap gap-2 ps-2">
+                                                                @foreach ($times as $key => $time)
+                                                                    <label
+                                                                        class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
+                                                                        {{ $time }}
+                                                                        <input class="time-input " hidden type="radio"
+                                                                            name="time"
+                                                                            data-date="{{ $date }}"
+                                                                            value="{{ $time }}"
+                                                                            @if ($key === 0 && $i === 1) checked @endif>
+                                                                    </label>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 time-selector">
-                                            <h4>What time works best for you?</h4>
-                                            <div class="border rounded p-3" style="overflow-y: scroll; height:400px;">
-                                                @php
-                                                    $i = 0;
-                                                @endphp
-                                                @foreach ($dates as $date => $times)
-                                                    @php
-                                                        $i++;
-                                                    @endphp
-                                                    <div class="mb-3">
-                                                        <div class="fw-bold">{{ $date }}
-                                                        </div>
-
-                                                        <div class="d-flex flex-wrap gap-2 ps-2">
-                                                            @foreach ($times as $key => $time)
-                                                                <label
-                                                                    class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
-                                                                    {{ $time }}
-                                                                    <input class="time-input " hidden type="radio"
-                                                                        name="time" data-date="{{ $date }}"
-                                                                        value="{{ $time }}"
-                                                                        @if ($key === 0 && $i === 1) checked @endif>
-                                                                </label>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
                                     </div>
-                                </div>
+                                @endif
                                 <div class="tab-pane my-3" id="tab-3" role="tabpanel">
                                     <div class="row">
                                         <x-backend.form.text-input type='text' class="mb-2 user-info" label="Name"
@@ -596,7 +637,7 @@
                 //                         `<div class="text-center">
         //                             <div class="d-flex flex-column justify-content-center" style="height:300px;">
         //                                 No branches available
-        //                             </div>    
+        //                             </div>
         //                         </div>`
                 //                     )
                 //                     $('#address').text('')
