@@ -96,22 +96,22 @@
                                             </h4>
                                             <a @if ($expertProfile) href="{{ route('consultation.make', $expertProfile->id) }}"
                                              @else
-                                            href="{{ route('appointment.make') }}" @endif
+                                            href="{{ route('appointment.make').($office ? "?office_id=" . $office?->id : '') }}" @endif
                                                 for="appointment-input" class="row mb-1" style="cursor: pointer;">
-                                                <d id="appointment-type"
+                                                <div id="appointment-type"
                                                     class="border rounded p-3 appointment-type selected appointment">
                                                     <h4>Together in Office</h4>
                                                     <p class="text-muted mb-0">Work with a tax pro at a tax office near you.
                                                         We are committed to helping you file your taxes in a way that's easy
                                                         and safe for you.</p>
-                                                </d>
+                                                </div>
                                                 <input type="radio" class="location-input" name="is_physical"
                                                     data-effected="#appointment-type" data-cards=".appointment"
                                                     id="appointment-input" value="{{ true }}" hidden checked>
                                             </a>
                                             <a @if ($expertProfile) href="{{ route('consultation.virtual', $expertProfile->id) }}"
                                                 @else
-                                               href="{{ route('appointment.virtual') }}" @endif
+                                               href="{{ route('appointment.virtual').($office ? "?office_id=" . $office?->id : '') }}" @endif
                                                 for="appointment-input-2" class="row mb-1" style="cursor: pointer;">
                                                 <div id="appointment-type-2"
                                                     class="border bg-light rounded p-3 appointment-type selected appointment">

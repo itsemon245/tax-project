@@ -97,7 +97,7 @@
                                             <h4 class="col-12">
                                                 What time works best for you?
                                             </h4>
-                                            <a href="{{ route('appointment.make') }}" for="appointment-input"
+                                            <a href="{{ route('appointment.make').($office ? "?office_id=" . $office?->id : '') }}" for="appointment-input"
                                                 class="row mb-1 text-dark" style="cursor: pointer;">
                                                 <div id="appointment-type"
                                                     class="border bg-light rounded p-3 appointment-type appointment">

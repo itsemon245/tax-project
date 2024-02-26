@@ -70,12 +70,13 @@ class PageController extends Controller
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->get();
         return view('frontend.pages.appointment.makeAppointment', compact('banners', 'expertProfile', 'infos1', 'testimonials', 'maps', 'branchDistricts', 'branchThanas', 'office'));
     }
-    public function appointmentVirtual(?ExpertProfile $expertProfile = null)
+    public function appointmentVirtual(Request $request, ?ExpertProfile $expertProfile = null)
     {
+        $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
         $banners      = getRecords('banners');
         $infos1       = Info::where('section_id', 1)->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->get();
-        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('banners', 'expertProfile', 'testimonials', 'infos1'));
+        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('banners', 'expertProfile', 'testimonials', 'infos1', 'office'));
     }
     public function aboutPage()
     {
