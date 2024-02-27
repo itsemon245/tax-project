@@ -297,6 +297,14 @@
                                 </ul>
                             </li>
                         @endforeach
+                        @foreach ($customServices as $service)
+                            <li
+                                class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
+                                <a href="{{$service->link }}"
+                                    class="nav-link text-light">{{ $service->title }}</a>
+                            </li>
+                        @endforeach
+                        
 
                     </ul>
                 </li>
@@ -378,7 +386,7 @@
                                 </ul>
                             </li>
                         @endforeach
-                        @foreach ($customServices as $service)
+                        @foreach ($customServicesAccount as $service)
                         <li
                             class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
                             <a href="{{$service->link }}"
