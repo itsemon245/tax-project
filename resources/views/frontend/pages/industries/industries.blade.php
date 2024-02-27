@@ -11,6 +11,8 @@
     {{-- industries section  --}}
     <x-frontend.industries-section />
 
+    <x-section.custom-service :customServices="$customServices" />
+
     {{-- Misc Services --}}
     <section class="px-lg-5 px-2 my-5">
         <h4 class="text-center my-5" style="font-size:28px; font-weight:600;">{{ $subCategories[0]->serviceCategory->name }}
@@ -34,7 +36,6 @@
 
         </div>
     </section>
-    <x-section.custom-service :customServices="$customServices" />
     <x-frontend.appointment-section :sections="$appointments" />
 
     <x-frontend.achievements :achievements="$achievements" />
