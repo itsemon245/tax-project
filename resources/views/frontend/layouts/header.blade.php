@@ -121,6 +121,14 @@
                                 </li>
                             @endforeach
 
+                            @foreach ($customServices as $service)
+                                <li
+                                    class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
+                                    <a href="{{$service->link }}"
+                                        class="nav-link text-light">{{ $service->title }}</a>
+                                </li>
+                            @endforeach
+
                         </ul>
                     </li>
                     <li
@@ -203,6 +211,13 @@
                                     </ul>
                                 </li>
                             @endforeach
+                            @foreach ($customServicesAccount as $service)
+                            <li
+                                class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
+                                <a href="{{$service->link }}"
+                                    class="nav-link text-light">{{ $service->title }}</a>
+                            </li>
+                        @endforeach
 
                         </ul>
                     </li>
@@ -232,9 +247,7 @@
                         <a title="Go to Panel" class="btn btn-secondary d-flex gap-2 align-items-center"
                             href="{{ route('dashboard') }}"><span class="mdi mdi-application-cog font-16"></span>Panel</a>
                     @else
-                        @if (
-                            !auth()->user()
-                                ?->hasRole('partner'))
+                        @if (!auth()->user()?->hasRole('partner'))
                             <a class="btn btn-secondary rounded-1 partner-btn-hide"
                                 href="{{ route('page.become.partner') }}">Become a partner</a>
                         @else
@@ -365,6 +378,13 @@
                                 </ul>
                             </li>
                         @endforeach
+                        @foreach ($customServices as $service)
+                        <li
+                            class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
+                            <a href="{{$service->link }}"
+                                class="nav-link text-light">{{ $service->title }}</a>
+                        </li>
+                    @endforeach
 
                     </ul>
                 </li>
