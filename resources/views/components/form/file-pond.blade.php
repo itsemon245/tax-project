@@ -51,24 +51,12 @@
                 allowImageCrop: true,
                 allowReorder: true,
                 server: {
-                    url: '{{route("filepond.upload")}}',
-                    process: {
-                        url: '/',
-                        method: 'POST',
-                        headers:{
-                            'X-CSRF-TOKEN': '{{csrf_token()}}',
-                        },
-                    },
-                    revert: {
-                        url: '/',
-                        method: 'DELETE',
-                    },
-                    restore: {
-                        url: '/',
-                        method: 'POST',
-                    },
-                    fetch: null,
-                },
+                    url: '/upload',
+                    method: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                }
             });
         })
     </script>
