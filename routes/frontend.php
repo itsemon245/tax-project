@@ -156,9 +156,7 @@ Route::post('/upload', function (Request $request) {
         $paths[] = saveImage($file, "filepond", null, 'temp');
     }
     $pathString = implode(",", $paths);
-    return response($pathString, 200, [
-        'content_type' => 'text/plain'
-    ]);
+    return response($pathString, 200);
 })->name('filepond.upload');
 
 Route::get('test', function () {

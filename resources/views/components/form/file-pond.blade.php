@@ -45,7 +45,7 @@
         // create() to turn it into a pond
         $('.filepond').each((i, input) => {
             const pond = FilePond.create(input, {
-                allowMultiple: false,
+                allowMultiple: true,
                 allowImagePreview: true,
                 allowImageExifOrientation: true,
                 allowImageCrop: true,
