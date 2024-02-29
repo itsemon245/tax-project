@@ -68,9 +68,14 @@ trait HasImage
         }
     }
 
-    public function deleteImage(string $path, ?string $disk = null): void
+    public function deleteImage(?string $path = null, ?string $disk = null): void
     {
-        $this->deleteImageFromDisk($path, $disk);
+        if ($path == null) {
+            $path = $this->image->path;
+        }
+        if ($path) {
+            $this->deleteImageFromDisk($path, $disk);
+        }
         $this->image()->delete();
     }
 
