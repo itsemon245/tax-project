@@ -1,7 +1,6 @@
 @extends('backend.layouts.app')
 
 @pushOnce('customCss')
-
     <style>
         input[type="date"] {
             letter-spacing: 2px;
@@ -105,6 +104,18 @@
             left: -1rem;
             position: absolute;
         }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 @endPushOnce
 @section('content')
@@ -124,13 +135,13 @@
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
                             <div class="pe-2 mb-2">
-                                <x-form.selectize class="mb-1" id="client" name="client"
-                                    placeholder="Select Client..." label="Bill To" :canCreate="false" required>
+                                <select class="mb-2 tail-select" id="client" name="client"
+                                    placeholder="Select Client..." label="Bill To" required>
                                     @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        <option data-description="{{"<div class='fw-normal'>Company: $client->company_name,</br>Phone: $client->phone,</br> TIN: $client->tin, Ref: $client->ref_no, </br> Circle: $client->circle </div>"}}" value="{{ $client->id }}">{{ $client->name }}</option>
                                     @endforeach
-                                </x-form.selectize>
-                                <a href="{{ route('client.create') }}" class="text-blue" style="font-weight: 500;">Create
+                                </select>
+                                <a href="{{ route('client.create') }}" class="text-blue mt-2" style="font-weight: 500;">Create
                                     New
                                     Client</a>
                             </div>
@@ -166,8 +177,8 @@
                                 <span class="text-black">{{ countRecords('invoices') + 1 }}</span>
                             </div>
                             <div>
-                                <label class="mb-0" for="reference">Reference</label>
-                                <input type="text" id="reference" name="reference" value="000">
+                                <label x-ref="reference" class="mb-0" for="reference">Reference</label>
+                                <input type="text" id="reference" name="reference" placeholder="000">
                             </div>
 
                         </div>

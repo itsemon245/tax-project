@@ -8,6 +8,14 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="{{ asset('libs/tail.select.js-1.0.2/css/tail.select.css') }}">
+    <style>
+        .tail-select {
+            width: 100% !important;
+            padding: 0.75rem!important;
+        }
+    </style>
+    {{-- @vite(['resources/css/tailwind.css']) --}}
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
 
@@ -25,7 +33,6 @@
         .mdi {
             font-size: 24px;
         }
-
     </style>
     @stack('customCss')
     <!-- Head js -->

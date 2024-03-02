@@ -10,7 +10,7 @@ export function useAccounts(){
           isFixed: false
         },
         total: 0,
-        paid: 0,
+        paid: null as number | null,
         due: 0,
         notes:''
       })

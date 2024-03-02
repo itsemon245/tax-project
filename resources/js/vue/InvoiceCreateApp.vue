@@ -28,9 +28,9 @@
       <div class="row align-items-center justify-content-between">
         <label class="col-4 form-label mb-0">Sub Total:</label>
         <div class="col-5 p-0">
-          <input type="text" class="text-end p-1 d-inline-block fw-bold" style="width: calc(100% - 1rem);"
-            name="sub_total" placeholder="00.00" v-model="subTotal" readonly />
-          <span class="">Tk</span>
+          <input type="text" class="text-end p-1 d-inline-block fw-bold" style="width: calc(100% - 3rem);"
+            name="sub_total" placeholder="00" v-model="subTotal" readonly />
+          <span class="">.00 Tk</span>
         </div>
       </div>
 
@@ -98,7 +98,7 @@
       </div>
       <div class="row mb-2 align-items-center justify-content-between border-top border-2">
         <label class="col-4 form-label mb-0">Total</label>
-        <input type="text" class="col-6 text-end p-1" name="total" placeholder="00.00" v-model="total" readonly />
+        <input type="text" class="col-6 text-end p-1" name="total" placeholder="00" v-model="total" readonly />
       </div>
 
       <div>
