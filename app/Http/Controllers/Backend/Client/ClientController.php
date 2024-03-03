@@ -135,4 +135,11 @@ class ClientController extends Controller
         return back()
             ->with($notification);
     }
+
+
+    function getClient(Client $client) {
+        return response()->json([
+            'client' => $client
+        ]);
+    }
 }

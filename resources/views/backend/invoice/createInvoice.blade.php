@@ -177,7 +177,7 @@
                                 <span class="text-black">{{ countRecords('invoices') + 1 }}</span>
                             </div>
                             <div>
-                                <label x-ref="reference" class="mb-0" for="reference">Reference</label>
+                                <label class="mb-0" for="reference">Reference</label>
                                 <input type="text" id="reference" name="reference" placeholder="000">
                             </div>
 
@@ -204,3 +204,21 @@
 
     </x-backend.ui.section-card>
 @endsection
+
+@push('customJs')
+    <script>
+        $(document).ready(function () {
+            $('#client').on('change', function(e){
+                let url = "{{route('api.get.client', ':CLIENT')}}"
+                url = url.replace(':CLIENT', e.target.value)
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    success: function (response) {
+                        $('input[name="reference"]').val(response.client.ref_no)
+                    }
+                });
+            })
+        });
+    </script>
+@endpush

@@ -142,7 +142,9 @@
                                 <select class="mb-2 tail-select" id="client" name="client"
                                     placeholder="Select Client..." label="Bill To" required>
                                     @foreach ($clients as $client)
-                                        <option @selected($client->id == $invoice->client_id) data-description="{{"<div class='fw-normal'>Company: $client->company_name,</br>Phone: $client->phone,</br> TIN: $client->tin, Ref: $client->ref_no, </br> Circle: $client->circle </div>"}}" value="{{ $client->id }}">{{ $client->name }}</option>
+                                        <option @selected($client->id == $invoice->client_id)
+                                            data-description="{{ "<div class='fw-normal'>Company: $client->company_name,</br>Phone: $client->phone,</br> TIN: $client->tin, Ref: $client->ref_no, </br> Circle: $client->circle </div>" }}"
+                                            value="{{ $client->id }}">{{ $client->name }}</option>
                                     @endforeach
                                 </select>
                                 <a href="{{ route('client.create') }}" class="text-blue" style="font-weight: 500;">Create
@@ -208,3 +210,21 @@
 
     </x-backend.ui.section-card>
 @endsection
+
+@push('customJs')
+    <script>
+        $(document).ready(function() {
+            $('#client').on('change', function(e) {
+                let url = "{{ route('api.get.client', ':CLIENT') }}"
+                url = url.replace(':CLIENT', e.target.value)
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    success: function(response) {
+                        $('input[name="reference"]').val(response.client.ref_no)
+                    }
+                });
+            })
+        });
+    </script>
+@endpush
