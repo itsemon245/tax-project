@@ -149,6 +149,9 @@ class InvoiceController extends Controller
             'message' => "Invoice Created Successfully",
             'alert-type' => 'success',
         ];
+        if ($request->has('print')) {
+            return redirect(route('invoice.show', $invoice))->with('print', true);
+        }
 
         return back()->with($alert);
     }

@@ -303,6 +303,7 @@ Route::prefix('admin')
                 Route::get('/', 'index')->name('index');
                 Route::post('/', 'store')->name('store');
                 Route::post('/reference', 'reference')->name('reference');
+                Route::post('/images', 'images')->name('images');
                 Route::post('/payment', 'payment')->name('payment');
                 Route::post('/return-link', 'returnLink')->name('returnLink');
             });

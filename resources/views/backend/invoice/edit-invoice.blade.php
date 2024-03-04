@@ -131,10 +131,10 @@
                 @csrf
                 @method('PATCH')
                 <div>
-                    <img loading="lazy" src="" alt="">
-                    <div class="d-flex border mb-5 justify-content-center">
-                        <x-backend.form.image-input name="header_image" :image="$invoice->header_image"
-                            class="d-flex justify-content-center" style="aspect-ratio:4/1;object-fit:contain;" />
+                    <div class="row">
+                        <div class="d-flex border my-5 justify-content-center">
+                            <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->header_image)}}" alt="">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
@@ -199,6 +199,11 @@
 
                 <div id="invoice-edit-app">
 
+                </div>
+                <div class="row">
+                    <div class="d-flex border my-5 justify-content-center">
+                        <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->footer_image)}}" alt="">
+                    </div>
                 </div>
 
                 <button id="submit-btn" type="submit"

@@ -130,8 +130,10 @@
             <button class="btn btn-primary waves-effect waves-light m-2 d-print-none d-block" id="cmd">Print</button>
         </div>
         <div>
-            <div class="d-flex border mb-5 justify-content-center">
-                <img loading="lazy" class="w-100" src="{{ useImage($invoice->header_image) }}" style="aspect-ratio:4/1;object-fit:cover;">
+            <div class="row">
+                <div class="d-flex border my-2 justify-content-center">
+                    <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->header_image)}}" alt="">
+                </div>
             </div>
             <div class="row table-col">
                 <div class="col-sm-4 col-md-3 table-cell">
@@ -410,11 +412,25 @@
 
             </div>
         </div>
+        <div class="row">
+            <div class="d-flex border my-2 justify-content-center">
+                <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->footer_image)}}" alt="">
+            </div>
+        </div>
 
 
     </x-backend.ui.section-card>
 
 
+    @if (session()->has('print'))
+        @push('customJs')
+            <script>
+                $(document).ready(function () {
+                    window.print()
+                });      
+            </script>
+        @endpush
+    @endif
     @push('customJs')
         <script>
             $('#cmd').on('click', function() {

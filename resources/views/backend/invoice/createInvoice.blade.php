@@ -128,9 +128,10 @@
             <form action="{{ route('invoice.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div>
-                    <div class="d-flex border mb-5 justify-content-center">
-                        <x-backend.form.image-input name="header_image" :image="$invoiceImage"
-                            class="d-flex justify-content-center" style="aspect-ratio:4/1;object-fit:contain;" />
+                    <div class="row">
+                        <div class="d-flex border my-5 justify-content-center">
+                            <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->header_image)}}" alt="">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
@@ -196,7 +197,14 @@
 
                 </div>
 
-                <button type="submit" class="btn btn-primary waves-effect waves-light mt-2">Submit</button>
+                <div class="row">
+                    <div class="d-flex border my-5 justify-content-center">
+                        <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->footer_image)}}" alt="">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary waves-effect waves-light mt-2 me-2 fw-bold">Submit</button>
+                <input type="submit" class="btn btn-success waves-effect waves-light mt-2 fw-bold" name="print" value="Submit & Print"/>
 
             </form>
 
