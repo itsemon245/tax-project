@@ -39,7 +39,7 @@ class UserDocController extends Controller
     public function download(UserDoc $userDoc, $fileIndex)
     {
         if (!auth()->user()->hasRole('admin')) {
-            if ($userDoc->user_id !== auth()->id()) {
+            if ($userDoc->user_id != auth()->id()) {
                 abort(404, 'File not found');
             }
         }
