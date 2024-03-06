@@ -43,8 +43,8 @@ class UserDocController extends Controller
                 abort(404, 'File not found');
             }
         }
-        $name = str($userDoc->name)->slug() . '-' . $userDoc->user->user_name . '.' . $userDoc->files[ $fileIndex ]->mimeType;
-        $path = 'public/' . $userDoc->files[ $fileIndex ]->file;
+        $name = str($userDoc->name)->slug() . '-' . $userDoc->user->user_name . '.' . $userDoc->files->{$fileIndex}->mimeType;
+        $path = 'public/' . $userDoc->files->{$fileIndex}->file;
         if (Storage::exists($path)) {
             return Storage::download($path, $name);
         }
@@ -83,7 +83,7 @@ class UserDocController extends Controller
             $ext      = array_pop($arr);
             if (Storage::exists($tempFile)) {
                 Storage::move($tempFile, $mainFile);
-                $files[  ] = [
+                $files[uniqid('file-')] = [
                     'file'     => $file,
                     'mimeType' => $ext,
                  ];

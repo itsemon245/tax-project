@@ -73,7 +73,7 @@
                                     <div class="col-lg-12 d-flex justify-content-between align-items-center">
                                         <div class="myDoc_info">
                                             <p>Submitted on: {{ $doc->created_at->format('d M, Y') }}</p>
-                                            <span class="mdi mdi-file-outline font-16"></span><span>{{ count($doc->files) }}
+                                            <span class="mdi mdi-file-outline font-16"></span><span>{{ count(json_decode(json_encode($doc->files), true)) }}
                                                 Files</span>
                                         </div>
                                     </div>
