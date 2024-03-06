@@ -14,6 +14,15 @@
             background: var(--ct-success) !important;
             color: var(--ct-white) !important;
         }
+
+        @media print {
+            .container {
+                width: 100% !important;
+            }
+        }
+        @page{
+            margin: 1rem;
+        }
     </style>
 @endPushOnce
 
@@ -23,7 +32,7 @@
     <!-- end page title -->
 
     <x-backend.ui.section-card name="Create Expense">
-        <div class="container mt-3 mb-3">
+        <div class="container mt-3 mb-3 m-print-0">
             <div class="d-none">
                 <table>
                     <tbody>
@@ -42,11 +51,11 @@
                 </table>
             </div>
             <x-backend.ui.button type="custom" :href="route('expense.index')"
-                class="mb-1 btn-secondary btn-sm">Back</x-backend.ui.button>
+                class="mb-1 btn-secondary btn-sm d-print-none">Back</x-backend.ui.button>
 
 
             @isset($expense)
-                <div class="container d-print-block" id="print-{{ $expense->id }}">
+                <div class="d-print-block" id="print-{{ $expense->id }}">
                     <table class="table table-responsive table-borderless">
                         <thead>
                             <tr>
@@ -62,9 +71,10 @@
                         <tbody>
                             <tr>
                                 <td colspan="7">
-                                    <x-backend.form.image-input name="header_image" id="header_image"
-                                        class="mx-auto d-flex justify-content-center w-100"
-                                        style="aspect-ratio:4/1;object-fit:contain;" label_class="w-100" />
+                                    @if (app('setting')->basic->header_image)
+                                        <img style="object-fit: cover; max-width:100%;height:200px;"
+                                            src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -87,20 +97,20 @@
                                         <div>{{ $expense->merchant }}</div>
                                     </div>
                                 </td>
-                                <td>
+                                <td colspan="5">
                                     @if ($expense->type === 'credit')
                                         <img loading="lazy" id="voucher-img" src="{{ asset('images/Credit-Voucher.png') }}"
                                             class="rounded w-75 rounded-3 float-end"
-                                            style="max-width: 300px;height:70%;margin-top:-2rem;" alt="">
+                                            style="max-width: 250px;height:70%;margin-top:-2rem;" alt="">
                                     @else
                                         <img loading="lazy" id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
                                             class="rounded w-75 rounded-3 float-end"
-                                            style="max-width: 300px;height:70%;margin-top:-2rem;" alt="">
+                                            style="max-width: 250px;height:70%;margin-top:-2rem;" alt="">
                                     @endif
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="3">
+                                <td colspan="7">
                                     <table class="table table-responsive">
                                         <thead>
                                             <tr>
@@ -135,9 +145,11 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="7">
-                                                    <x-backend.form.image-input name="footer_image" id="footer_image"
-                                                        class="mx-auto d-flex justify-content-center w-100"
-                                                        style="aspect-ratio:4/1;object-fit:contain;" label_class="w-100" />
+                                                    @if (app('setting')->basic->footer_image)
+                                                        <img style="object-fit: cover; max-width:100%;height:200px;"
+                                                            src="{{ asset('storage/' . app('setting')->basic->footer_image) }}"
+                                                            alt="">
+                                                    @endif
                                                 </td>
                                             </tr>
                                             <tr style="border-bottom: 0px solid transparent;">
@@ -153,8 +165,6 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                <td></td>
-                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -162,109 +172,15 @@
 
 
                 </div>
-                {{-- <form action="{{ route('expense.update', $expense->id) }}" method="POST"
-                    class="row justify-content-center d-print-none">
-                    @csrf
-                    @method('patch')
-                    <div class="col-md-6 col-xl-4">
-                        <x-form.selectize class="mb-3" id="category" name="category" placeholder="Choose Category..."
-                            label="Add Category">
-                            @foreach ($categories as $category)
-                                <option value="{{ $category }}" @selected($expense->category === $category)>
-                                    {{ $category }}</option>
-                            @endforeach
-                        </x-form.selectize>
-                        <x-backend.form.text-input class="mb-3" type="date" label="Date" placehoder="Date"
-                            :value="today()->format('Y-m-d')" name="date" :value="$expense->date->format('Y-m-d')" />
-
-                        <x-form.selectize class="mb-3" id="merchant" name="merchant" placeholder="Choose Merchant..."
-                            label="Add Merchant">
-                            @foreach ($merchants as $merchant)
-                                <option value="{{ $merchant }}" @selected($expense->merchant === $merchant)>
-                                    {{ $merchant }}</option>
-                            @endforeach
-                        </x-form.selectize>
-                        <div>
-                            <label for="type" class="mb-1">Expense Type</label>
-                            <div class="gap-2 d-flex">
-                                <div class="p-0 mb-2 form-check form-check-success">
-                                    <input class="form-check-input" type="radio" id="credit" name="type" value="credit"
-                                        hidden @checked($expense->type === 'credit')>
-                                    <label
-                                        class="form-check-label px-2 py-1 border rounded {{ $expense->type === 'credit' ? 'selected success' : '' }}"
-                                        for="credit">Credit</label>
-                                </div>
-                                <div class="p-0 mb-2 form-check form-check-danger">
-                                    <input class="form-check-input" type="radio" id="debit" name="type" value="debit"
-                                        checked hidden @checked($expense->type === 'debit')>
-                                    <label
-                                        class="form-check-label px-2 py-1 border rounded {{ $expense->type === 'debit' ? 'selected danger' : '' }}"
-                                        for="debit">Debit</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 col-md-6 col-xl-4">
-                        @if ($expense->type === 'credit')
-                            <img loading="lazy" id="voucher-img" src="{{ asset('images/Credit-Voucher.png') }}"
-                                class="rounded shadow w-75 rounded-3" alt="">
-                        @else
-                            <img loading="lazy" id="voucher-img" src="{{ asset('images/Debit-Voucher.png') }}"
-                                class="rounded shadow w-75 rounded-3" alt="">
-                        @endif
-                    </div>
-                    <div class="px-0 mt-3 row justify-content-center">
-
-
-                        <div class="col-12 col-md-12 col-xl-8">
-                            <table class="table table-responsive table-striped">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Description</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="item-repeater" data-count="1">
-                                    <tr>
-                                        <td>1</td>
-                                        <td>
-                                            <x-form.text-area class="" placehoder="Description"
-                                                name="descriptions[]"></x-form.text-area>
-                                        </td>
-                                        <td>
-                                            <x-backend.form.text-input class="mb-3 amounts" type="text" placehoder="Amount"
-                                                name="amounts[]" />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="gap-2 d-flex">
-                                <div>
-                                    <span data-container="#item-repeater" id="decrement-btn" role="button"
-                                        class="p-1 mdi mdi-delete bg-soft-danger me-1 text-danger rounded-circle"></span>
-                                    <span data-template="#item-template" data-container="#item-repeater" id="increment-btn"
-                                        role="button"
-                                        class="p-1 mdi mdi-plus bg-soft-success me-1 text-success rounded-circle"></span>
-                                </div>
-                                <div class="mb-3 fw-bold fs-4 ms-auto">
-                                    Grand Total: ৳ <span class="total">0</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-xl-8">
-                            <x-backend.ui.button class="btn-primary float-end">Submit</x-backend.ui.button>
-                        </div>
-                    </div>
-                </form> --}}
             @else
                 <form action="{{ route('expense.store') }}" method="POST" enctype="multipart/form-data"
                     class="row justify-content-center">
                     @csrf
                     <div class="col-md-12 ">
-                        <x-backend.form.image-input name="header_image" id="header_image"
-                            class="mx-auto d-flex justify-content-center w-100" style="aspect-ratio:4/1;object-fit:contain;"
-                            label_class="w-100" />
+                        @if (app('setting')->basic->header_image)
+                            <img style="object-fit: cover; max-width:100%;height:200px;"
+                                src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
+                        @endif
                     </div>
                     <div class="col-md-6 col-xl-4">
                         <x-form.selectize class="mb-3" id="category" name="category" placeholder="Choose Category..."
@@ -344,9 +260,10 @@
                                 </div>
                             </div>
                         </div>
-                        <x-backend.form.image-input name="footer_image" id="footer_image"
-                            class="mx-auto d-flex justify-content-center w-100" style="aspect-ratio:4/1;object-fit:contain;"
-                            label_class="w-100" />
+                        @if (app('setting')->basic->footer_image)
+                            <img style="object-fit: cover; max-width:100%;height:200px;"
+                                src="{{ asset('storage/' . app('setting')->basic->footer_image) }}" alt="">
+                        @endif
                         <div class="col-12 col-md-12 col-xl-8">
                             <x-backend.ui.button class="btn-primary float-end">Submit</x-backend.ui.button>
                         </div>

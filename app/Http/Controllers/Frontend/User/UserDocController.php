@@ -54,7 +54,7 @@ class UserDocController extends Controller
         $fiscalYear = FiscalYear::firstOrCreate([
             'year' => $request->year,
          ]);
-        if ($userDoc->user_id !== auth()->id()) {
+        if ($userDoc->user_id != auth()->id()) {
             abort(404, 'File not found');
         } else {
             $userDoc->fiscal_year_id = $fiscalYear->id;
