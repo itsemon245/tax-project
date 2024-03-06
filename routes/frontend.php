@@ -80,7 +80,7 @@ Route::prefix('/books')->name('books.')->group(function () {
 });
 // routes for user docs
 Route::resource('user-doc', UserDocController::class);
-Route::get('user-doc/{userDoc}/download/{fileIndex}', [UserDocController::class, 'download'])->name('user-doc.download');
+Route::get('download-user-doc/{userDoc}/download/{fileIndex}', [UserDocController::class, 'download'])->name('user-doc.download');
 Route::get('user-doc/{userDoc}/move-to', [UserDocController::class, 'moveTo'])->name('user-doc.move-to');
 
 
