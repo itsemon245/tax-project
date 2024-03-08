@@ -126,7 +126,7 @@
                                                     <tr>
                                                         <td>{{ ++$index }}</td>
                                                         <td>{{ $item->description ?? '' }}</td>
-                                                        <td>৳ {{ $item->amount ?? '' }}</td>
+                                                        <td style="max-width: 150px;">৳ {{ $item->amount ?? '' }}</td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -136,10 +136,9 @@
                                                         Grand Total
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td style="width:150px;">
                                                     <div class="fs-4 fw-bold">
-                                                        ৳
-                                                        {{ $expense->amount }}
+                                                        ৳ {{ $expense->amount }}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -238,9 +237,9 @@
                                         <td>1</td>
                                         <td>
                                             <x-form.text-area class="" placehoder="Description"
-                                                name="descriptions[]"></x-form.text-area>
+                                                name="descriptions[]" rows="2"></x-form.text-area>
                                         </td>
-                                        <td>
+                                        <td style="max-width: 100px;">
                                             <x-backend.form.text-input class="mb-3 amounts" type="number"
                                                 placehoder="Amount" name="amounts[]" />
                                         </td>
@@ -255,7 +254,7 @@
                                         role="button"
                                         class="p-1 mdi mdi-plus bg-soft-success me-1 text-success rounded-circle"></span>
                                 </div>
-                                <div class="mb-3 fw-bold fs-4 ms-auto">
+                                <div class="mb-3 fw-bold fs-4 ms-auto" style="max-width: 100px;">
                                     Grand Total: ৳ <span class="total">0</span>
                                 </div>
                             </div>
@@ -264,8 +263,9 @@
                             <img style="object-fit: cover; max-width:100%;height:200px;"
                                 src="{{ asset('storage/' . app('setting')->basic->footer_image) }}" alt="">
                         @endif
-                        <div class="col-12 col-md-12 col-xl-8">
-                            <x-backend.ui.button class="btn-primary float-end">Submit</x-backend.ui.button>
+                        <div class="col-12 col-md-12 col-xl-8 mt-3">
+                            <x-backend.ui.button class="btn-primary float-end fw-bold">Submit</x-backend.ui.button>
+                            <input type="submit" value="Submit & Print" name="print" class="fw-bold float-end me-2 btn btn-blue rounded rounded-2 waves-effect waves-light" />
                         </div>
                     </div>
 
@@ -363,5 +363,15 @@
                 })
             });
         </script>
+        
     @endpush
+    @if (session()->has('print'))
+        @push('customJs')
+            <script>
+                $(document).ready(function () {
+                    window.print()
+                });      
+            </script>
+        @endpush
+    @endif
 @endsection
