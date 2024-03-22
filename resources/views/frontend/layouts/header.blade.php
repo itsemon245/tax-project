@@ -302,17 +302,30 @@
                                 @endisset">
                                 <a class="nav-link text-light"
                                     href="{{ $category->link }}">{{ $category->title }}</a>
-                                @isset($categories[$i])
-                                    <ul class="position-absolute nested-dropdown ">
-                                        @foreach ($categories[$i]->serviceSubCategories as $sub)
+                                @if ($category->title != 'Audit & Accounts')
+                                    @isset($categories[$i])
+                                        <ul class="position-absolute nested-dropdown ">
+                                            @foreach ($categories[$i]->serviceSubCategories as $sub)
+                                                <li
+                                                    class="nav-item custom-nav-item dropdown-item {{ url()->current() == url("/service/sub/$sub->id") ? 'active-link' : '' }}">
+                                                    <a href="{{ route('service.sub', $sub->id) }}"
+                                                        class="nav-link text-light">{{ $sub->name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endisset
+                                @else
+                                    {{-- Account Services --}}
+                                    <ul class="position-absolute nested-dropdown">
+                                        @foreach ($customServicesAccount as $service)
                                             <li
-                                                class="nav-item custom-nav-item dropdown-item {{ url()->current() == url("/service/sub/$sub->id") ? 'active-link' : '' }}">
-                                                <a href="{{ route('service.sub', $sub->id) }}"
-                                                    class="nav-link text-light">{{ $sub->name }}</a>
+                                                class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
+                                                <a href="{{ $service->link }}"
+                                                    class="nav-link text-light">{{ $service->title }}</a>
                                             </li>
                                         @endforeach
                                     </ul>
-                                @endisset
+                                @endif
                             </li>
                         @endforeach
 
