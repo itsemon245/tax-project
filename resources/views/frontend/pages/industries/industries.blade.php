@@ -38,16 +38,20 @@
 
     <x-frontend.achievements :achievements="$achievements" />
 
+    @if($infos1->count()>0)
     <x-frontend.info-section :title="$infos1[0]->title" class="text-capitalize">
         @foreach ($infos1 as $info)
             <x-frontend.info-card :$info />
         @endforeach
     </x-frontend.info-section>
-    <x-frontend.info-section :title="$infos2[0]->title" class="text-danger text-capitalize">
+    @endif
+    @if($infos2->count()>0)
+        <x-frontend.info-section :title="$infos2[0]->title" class="text-danger text-capitalize">
         @foreach ($infos2 as $info)
             <x-frontend.info-card :$info />
         @endforeach
     </x-frontend.info-section>
+    @endinfo
     <section class="mt-5 py-5" style="background: #474646;">
         <h3 class="text-light text-center">Our Valuable Partners</h3>
         <div class="scroll-wrapper">

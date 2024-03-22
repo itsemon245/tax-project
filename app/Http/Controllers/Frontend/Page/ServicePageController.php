@@ -13,9 +13,9 @@ class ServicePageController extends Controller
     public function subsUnderCategory($id)
     {
         $page_name = match ($id) {
-            1 => 'tax service page',
-            2 => 'vat service page',   
-            3 => 'misc service',   
+            "1" => 'tax service page',
+            "2" => 'vat service page',   
+            "3" => 'misc service',   
             // default => 'homepage'  
         };
         $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(4)->get();
@@ -32,9 +32,9 @@ class ServicePageController extends Controller
     {
         $cat = ServiceSubCategory::find($id)->serviceCategory;
         $page_name = match ($cat->id) {
-            1 => 'tax service page',
-            2 => 'vat service page',   
-            3 => 'misc service',   
+            "1" => 'tax service page',
+            "2" => 'vat service page',   
+            "3" => 'misc service',    
             // default => 'homepage'  
         };
         $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(4)->get();
