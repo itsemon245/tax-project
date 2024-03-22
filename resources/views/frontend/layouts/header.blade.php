@@ -293,22 +293,26 @@
                     class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('service.*') ? 'active-link' : '' }}">
                     <a class="nav-link text-light" href="#">Services</a>
                     <ul class="position-absolute dropdown">
-                        @foreach ($categories as $category)
+                        @foreach ($customServices as $i => $category)
                             <li
-                                class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger {{ url()->current() == url("/service/category/$category->id") ? 'active-link' : '' }}
-                        @foreach ($category->serviceSubCategories as $sub)
-                            {{ url()->current() == url("/service/sub/$sub->id") ? 'active-link' : '' }} @endforeach ">
+                                class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger {{ url()->current() == url("/service/category/$category->id") ? 'active-link' : '' }} 
+                                @isset($categories[$i])
+                                @foreach ($categories[$i]->serviceSubCategories as $sub)
+                                {{ url()->current() == url("/service/sub/$sub->id") ? 'active-link' : '' }} @endforeach
+                                @endisset">
                                 <a class="nav-link text-light"
-                                    href="{{ route('service.category', $category->id) }}">{{ $category->name }}</a>
-                                <ul class="position-absolute nested-dropdown ">
-                                    @foreach ($category->serviceSubCategories as $sub)
-                                        <li
-                                            class="nav-item custom-nav-item dropdown-item {{ url()->current() == url("/service/sub/$sub->id") ? 'active-link' : '' }}">
-                                            <a href="{{ route('service.sub', $sub->id) }}"
-                                                class="nav-link text-light">{{ $sub->name }}</a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                    href="{{ $category->link }}">{{ $category->title }}</a>
+                                @isset($categories[$i])
+                                    <ul class="position-absolute nested-dropdown ">
+                                        @foreach ($categories[$i]->serviceSubCategories as $sub)
+                                            <li
+                                                class="nav-item custom-nav-item dropdown-item {{ url()->current() == url("/service/sub/$sub->id") ? 'active-link' : '' }}">
+                                                <a href="{{ route('service.sub', $sub->id) }}"
+                                                    class="nav-link text-light">{{ $sub->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endisset
                             </li>
                         @endforeach
 
@@ -391,8 +395,7 @@
                 <li class="nav-item custom-nav-item {{ request()->routeIs('home') ? 'active-link' : '' }}">
                     <a class=" nav-link text-light" href="{{ route('home') }}">Home</a>
                 </li>
-                <li
-                    class="nav-item custom-nav-item {{ request()->routeIs('page.industries') ? 'active-link' : '' }}">
+                <li class="nav-item custom-nav-item {{ request()->routeIs('page.industries') ? 'active-link' : '' }}">
                     <a class=" nav-link text-light" href="{{ route('page.industries') }}">Industries</a>
                 </li>
                 {{-- Services Caegories --}}
@@ -401,12 +404,11 @@
                     <a class="nav-link text-light" href="#">Services</a>
                     <ul class="position-absolute dropdown">
                         @foreach ($customServicesAccount as $service)
-                        <li
-                            class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
-                            <a href="{{ $service->link }}"
-                                class="nav-link text-light">{{ $service->title }}</a>
-                        </li>
-                    @endforeach
+                            <li
+                                class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
+                                <a href="{{ $service->link }}" class="nav-link text-light">{{ $service->title }}</a>
+                            </li>
+                        @endforeach
                         {{-- @foreach ($categories as $category)
                             <li
                                 class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger {{ url()->current() == url("/service/category/$category->id") ? 'active-link' : '' }}
