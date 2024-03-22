@@ -12,8 +12,14 @@ class ServicePageController extends Controller
 {
     public function subsUnderCategory($id)
     {
-        $infos1 = Info::where(['section_id' => 1, 'page_name' => 'tax service page'])->take(5)->get();
-        $infos2 = Info::where(['section_id' => 2, 'page_name' => 'tax service page'])->take(5)->get();
+        $page_name = match ($id) {
+            1 => 'tax service page',
+            2 => 'vat service page',   
+            3 => 'misc service',   
+            // default => 'homepage'  
+        };
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(5)->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(5)->get();
         $appointments = getRecords('appointments');
         $testimonials = getRecords('testimonials');
         $banners = getRecords('banners');
