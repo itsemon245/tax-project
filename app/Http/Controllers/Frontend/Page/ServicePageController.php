@@ -31,11 +31,11 @@ class ServicePageController extends Controller
     public function servicesUnderSub($id)
     {
         $cat = ServiceSubCategory::find($id)->serviceCategory;
-        $page_name = match ($cat->id) {
+        $page_name = match ((string) $cat->id) {
             "1" => 'tax service page',
             "2" => 'vat service page',   
             "3" => 'misc service',    
-            // default => 'homepage'  
+            default => 'homepage'  
         };
         $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(4)->get();
         $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(4)->get();
