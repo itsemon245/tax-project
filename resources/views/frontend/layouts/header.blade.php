@@ -111,7 +111,7 @@
                             @endforeach
 
                             {{-- Account Services --}}
-                            <li
+                            {{-- <li
                                 class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger {{ url()->current() == route('page.industries') ? 'active-link' : '' }}">
                                 <a class="nav-link text-light " href="{{ route('page.industries') }}">Account &
                                     Audit</a>
@@ -125,7 +125,7 @@
                                     @endforeach
                                 </ul>
 
-                            </li>
+                            </li> --}}
 
                         </ul>
                     </li>
@@ -209,7 +209,7 @@
                                     </ul>
                                 </li>
                             @endforeach --}}
-                            @foreach ($customServices as $service)
+                            @foreach ($customServicesAccount as $service)
                                 <li
                                     class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
                                     <a href="{{ $service->link }}"
@@ -217,7 +217,7 @@
                                 </li>
                             @endforeach
                             {{-- Account Services --}}
-                            <li
+                            {{-- <li
                                 class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger {{ url()->current() == route('page.industries') ? 'active-link' : '' }}">
                                 <a class="nav-link text-light " href="{{ route('page.industries') }}">Account &
                                     Audit</a>
@@ -231,7 +231,7 @@
                                     @endforeach
                                 </ul>
 
-                            </li>
+                            </li> --}}
 
                         </ul>
                     </li>
@@ -320,7 +320,7 @@
                         </li>
                     @endforeach
                         {{-- Account Services --}}
-                        <li
+                        {{-- <li
                             class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger {{ url()->current() == route('page.industries') ? 'active-link' : '' }}">
                             <a class="nav-link text-light " href="{{ route('page.industries') }}">Account &
                                 Audit</a>
@@ -334,7 +334,7 @@
                                 @endforeach
                             </ul>
 
-                        </li>
+                        </li> --}}
 
 
                     </ul>
@@ -400,7 +400,7 @@
                     class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('service.*') ? 'active-link' : '' }}">
                     <a class="nav-link text-light" href="#">Services</a>
                     <ul class="position-absolute dropdown">
-                        @foreach ($customServices as $service)
+                        @foreach ($customServicesAccount as $service)
                         <li
                             class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
                             <a href="{{ $service->link }}"
@@ -426,7 +426,7 @@
                             </li>
                         @endforeach --}}
                         {{-- Account Services --}}
-                        <li
+                        {{-- <li
                             class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger {{ url()->current() == route('page.industries') ? 'active-link' : '' }}">
                             <a class="nav-link text-light " href="{{ route('page.industries') }}">Account &
                                 Audit</a>
@@ -440,7 +440,7 @@
                                 @endforeach
                             </ul>
 
-                        </li>
+                        </li> --}}
 
                     </ul>
                 </li>
