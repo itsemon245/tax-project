@@ -1,6 +1,4 @@
 @php
-    $infos1 = getRecords('infos', ['section_id', 1]);
-    $infos2 = getRecords('infos', ['section_id', 2]);
     $banners = getRecords('banners');
     $appointments = getRecords('appointments');
 @endphp

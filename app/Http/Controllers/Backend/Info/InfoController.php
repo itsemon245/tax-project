@@ -24,7 +24,7 @@ class InfoController extends Controller
      */
     public function create()
     {
-        $pageNames = ['homepage', 'tax service page', 'vat service page', 'misc service']; 
+        $pageNames = ['homepage', 'tax service page', 'vat service page', 'misc service', 'account']; 
         return view('backend.info.createInfo', compact('pageNames'));
     }
 
@@ -63,7 +63,7 @@ class InfoController extends Controller
      */
     public function edit(Info $info)
     {
-        $pageNames = ['homepage', 'tax service page', 'vat service page', 'misc service']; 
+        $pageNames = ['homepage', 'tax service page', 'vat service page', 'misc service', 'account']; 
         return view('backend.info.editInfo', compact('info', 'pageNames'));
     }
 

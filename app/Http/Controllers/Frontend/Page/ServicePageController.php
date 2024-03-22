@@ -18,8 +18,8 @@ class ServicePageController extends Controller
             3 => 'misc service',   
             // default => 'homepage'  
         };
-        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(5)->get();
-        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(5)->get();
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(4)->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(4)->get();
         $appointments = getRecords('appointments');
         $testimonials = getRecords('testimonials');
         $banners = getRecords('banners');
@@ -37,8 +37,8 @@ class ServicePageController extends Controller
             3 => 'misc service',   
             // default => 'homepage'  
         };
-        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(5)->get();
-        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(5)->get();
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(4)->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(4)->get();
         $services = Service::where('service_sub_category_id', $id)->with('serviceSubCategory')->withAvg('reviews', 'rating')->withCount('reviews')->get();
         return view('frontend.pages.services.index', compact('services','infos1', 'infos2'));
     }
