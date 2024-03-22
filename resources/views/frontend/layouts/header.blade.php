@@ -293,7 +293,7 @@
                     class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('service.*') ? 'active-link' : '' }}">
                     <a class="nav-link text-light" href="#">Services</a>
                     <ul class="position-absolute dropdown">
-                        {{-- @foreach ($categories as $category)
+                        @foreach ($categories as $category)
                             <li
                                 class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger {{ url()->current() == url("/service/category/$category->id") ? 'active-link' : '' }}
                         @foreach ($category->serviceSubCategories as $sub)
@@ -310,15 +310,15 @@
                                     @endforeach
                                 </ul>
                             </li>
-                        @endforeach --}}
+                        @endforeach
 
-                        @foreach ($customServices as $service)
+                        {{-- @foreach ($customServices as $service)
                         <li
                             class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
                             <a href="{{ $service->link }}"
                                 class="nav-link text-light">{{ $service->title }}</a>
                         </li>
-                    @endforeach
+                    @endforeach --}}
                         {{-- Account Services --}}
                         {{-- <li
                             class="nav-item custom-nav-item position-relative dropdown-item nested-dropdown-trigger {{ url()->current() == route('page.industries') ? 'active-link' : '' }}">
