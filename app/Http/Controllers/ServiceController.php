@@ -109,6 +109,7 @@ class ServiceController extends Controller
 
     public function setSections($request, $model, string $modelName)
     {
+        // dd($request->section_ids);
         if ($request->section_titles) {
             $dir = str($modelName)->slug();
             $dir = str($dir)->plural();

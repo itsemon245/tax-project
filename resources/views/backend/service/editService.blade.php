@@ -78,7 +78,7 @@
                             </div>
                             <div class="mt-3">
                                 <button type="submit"
-                                    class="btn btn-primary waves-effect waves-light profile-button">Create
+                                    class="btn btn-primary waves-effect waves-light profile-button">Update  
                                     Service</button>
                             </div>
 

@@ -32,7 +32,7 @@ class OrderController extends Controller
         $user = $payment->user;
         $referee = Referee::with('user')->where('user_id', $user->id)->first();
 
-        if ($payment->approved === 0) {
+        if ($payment->approved == 0) {
             $payment->approved = 1; 
             $parent = $referee?->parent;
             if ($parent) {
