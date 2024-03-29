@@ -34,13 +34,13 @@
                                 <a href="{{ route('books.show', $book->id) }}" class="h-100">
                                     <div>
                                         <div
-                                            class="d-grid grid-cols-1 mw-md mx-auto pb-10 px-10 bg-primary border border-3 border-gray-800 rounded overflow-hidden">
+                                            class="d-grid grid-cols-1 mw-md mx-auto  bg-primary border border-3 border-gray-800 rounded overflow-hidden">
                                             <img loading="lazy" src="{{ useImage($book->thumbnail) }}" alt="{{ $book->title }}"
                                                 style="object-fit: cover; width: 100%" />
 
                                             <div class="mt-auto px-3 pt-3 pb-1 w-100 bg-white">
                                                 <h4 class="fs-5 mb-1 text-center text-dark text-uppercase">
-                                                    <b>{{ $book->title }}</b>
+                                                    <b>{!! str($book->title)->limit(10, '<span class="text-danger font-20 fw-bold">...</span>') !!}</b>
                                                 </h4>
                                                 <p class="text-center text-dark mt-3"
                                                     style="font-size: 13px; line-height: 16px;">
