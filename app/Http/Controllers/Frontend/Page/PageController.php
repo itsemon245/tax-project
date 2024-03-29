@@ -120,7 +120,7 @@ class PageController extends Controller
     public function PromoCodePage()
     {
         $user_id    = Auth::user()->id;
-        $promoCodes = User::find($user_id)->promoCodes()->where('status', 1)->get();
+        $promoCodes = User::find($user_id)->promoCodes()->where('status', 1)->latest()->get();
         return view('frontend.pages.promoCodesPage', compact('promoCodes'));
     }
 
