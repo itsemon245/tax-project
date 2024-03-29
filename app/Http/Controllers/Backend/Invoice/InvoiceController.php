@@ -67,6 +67,7 @@ class InvoiceController extends Controller
         $invoiceImage = null;
         if (countRecords('invoices') > 0) {
             $invoiceImage = Invoice::first()->header_image;
+            // dd($invoiceImage);
         }
         return view('backend.invoice.createInvoice', compact('clients', 'invoiceImage'));
     }

@@ -129,8 +129,9 @@
                 @csrf
                 <div>
                     <div class="row">
+                        {{-- {{ dd($basic->header_image) }} --}}
                         <div class="d-flex border my-5 justify-content-center">
-                            <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->header_image)}}" alt="">
+                            <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{ asset('storage/'. app('setting')->basic->header_image) }}" alt="">
                         </div>
                     </div>
                     <div class="row">
