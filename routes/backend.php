@@ -445,6 +445,7 @@ Route::prefix('admin')
         Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
         Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become'); //User profile to become a partner update
         Route::resource('client', ClientController::class);
+        Route::get('client-execl-demo-download', [ClientController::class , 'downloadDemoExcel'])->name('client.execl.demo');
         Route::resource('book', BookController::class);
         Route::POST('upload-large-video', [VideoController::class, 'videoUpload'])->name('video.upload'); //Uploading Video file
     });

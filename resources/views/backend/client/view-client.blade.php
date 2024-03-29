@@ -21,9 +21,11 @@
     <x-backend.ui.section-card name="Client Section">
         <div class="mb-2">
             <x-backend.ui.button type="custom" href="{{ route('client.create') }}"
-                class="btn-sm btn-success fw-bold">Create</x-backend.ui.button>
+                class="btn-sm btn-primary fw-bold">Create</x-backend.ui.button>
             <x-backend.ui.button class="btn-sm fw-bold btn-info ms-1" data-bs-toggle="modal" data-bs-target="#modal-for-csv">Import
                 CSV</x-backend.ui.button>
+                <x-backend.ui.button type="custom" href="{{ route('client.execl.demo') }}"
+                class="btn-sm fw-bold btn-success ms-1">Demo Excel</x-backend.ui.button>
         </div>
         <div class="modal fade" id="modal-for-csv" tabindex="-1" aria-labelledby="modal-for-csv" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

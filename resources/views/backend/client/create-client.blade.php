@@ -7,7 +7,8 @@
     <x-backend.ui.section-card name="Create Client">
         <x-backend.ui.button type="custom" href="{{ route('client.index') }}"
             class="btn-sm btn-info fw-bold mb-2">Back</x-backend.ui.button>
-
+            <x-backend.ui.button type="custom" href="{{ route('client.execl.demo') }}"
+            class="btn-sm btn-success fw-bold mb-2">Demo Excel</x-backend.ui.button>
         <form action="{{ route('client.store') }}" method="post">
             @csrf
             <div class="row">
