@@ -63,7 +63,8 @@
                         </div>
 
                         <div class="col-md-6">
-                            <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email" required/>
+                            <x-backend.form.text-input type='email' name="email" label="Email" :value="$user->email"
+                                required />
                         </div>
                         <div class="mt-3">
                             <button class="btn btn-primary profile-button" type="submit">Update
@@ -77,17 +78,17 @@
     </x-backend.ui.section-card>
 @endsection
 @push('customJs')
-   {{-- Photo Preview for uploads --}}
-   <script>
-    $(document).ready(function () {
-        
-        const input = $("#imagefile")
-        input.on('change', e =>{
-            const image = document.querySelector('#liveImage')
-            const url = URL.createObjectURL(e.target.files[0])
-            image.src = url
-        })
-    });
+    {{-- Photo Preview for uploads --}}
+    <script>
+        $(document).ready(function() {
+
+            const input = $("#imagefile")
+            input.on('change', e => {
+                const image = document.querySelector('#liveImage')
+                const url = URL.createObjectURL(e.target.files[0])
+                image.src = url
+            })
+        });
     </script>
     {{-- Photo Preview for uploads --}}
 @endpush
