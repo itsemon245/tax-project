@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Mail\Appoinment;
+use Carbon\Carbon;
 use App\Models\Calendar;
 use Illuminate\Http\Request;
 use App\Models\UserAppointment;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class UserAppointmentController extends Controller
 {
@@ -39,6 +41,7 @@ class UserAppointmentController extends Controller
             'start' => Carbon::parse($appointment->date.", " .$appointment->time, 'Asia/Dhaka')->format('Y-m-d H:m:s'),
             'description' => null
         ]);
+        Mail::to($appointment->email)->send(new Appoinment());
         $alert = [
             'message' => 'Appointment Approved',
             'alert-type' => 'success'
