@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\backend\UserProfileUpdateRequest;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
@@ -17,7 +18,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('can:read user', [
-            'only' => ['index', 'show']
+            'only' => ['index', 'show', 'internalUsers']
         ]);
         $this->middleware('can:create user',   [
             'only' => ['create', 'store']
@@ -35,7 +36,26 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = User::with('roles')->whereNot('id', auth()->id())->latest()->paginate(paginateCount());
+        $data = User::with('roles')
+        ->whereHas('roles', function(Builder $q){
+            $q->where('name', 'partner');
+            $q->where('name', 'user');
+        })
+        ->whereNot('id', auth()->id())->latest()->paginate(paginateCount());
+        return view('backend.users.view-users', compact('user', 'data'));
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function internalUsers()
+    {
+        $user = Auth::user();
+        $data = User::with('roles')
+        ->whereHas('roles', function(Builder $q){
+            $q->whereNot('name', 'partner');
+            $q->whereNot('name', 'user');
+        })
+        ->whereNot('id', auth()->id())->latest()->paginate(paginateCount());
         return view('backend.users.view-users', compact('user', 'data'));
     }
 

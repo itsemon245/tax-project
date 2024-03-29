@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
-use Carbon\Carbon;
-use App\Models\UserDoc;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreUserDocRequest;
-use App\Http\Requests\UpdateUserDocRequest;
 use App\Models\FiscalYear;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use App\Models\UserDoc;
 use Illuminate\Http\Request;
-use Spatie\FlareClient\Http\Exceptions\NotFound;
+use Illuminate\Support\Facades\Storage;
 
 class UserDocController extends Controller
 {
@@ -20,9 +16,9 @@ class UserDocController extends Controller
      */
     public function index(Request $request)
     {
-        $reqYear = $request->year ? $request->year : currentFiscalYear();
+        $reqYear    = $request->year ? $request->year : currentFiscalYear();
         $fiscalYear = FiscalYear::where('year', $reqYear)->first();
-        $userDocs = [];
+        $userDocs   = [  ];
         if ($fiscalYear) {
             $userDocs = $fiscalYear->userDocs()->where('user_id', auth()->id())->get();
         }
@@ -36,17 +32,19 @@ class UserDocController extends Controller
     public function create(Request $request)
     {
         $reqYear = $request->year ? $request->year : currentFiscalYear();
-        $names = UserDoc::distinct()->get()->pluck('name');
+        $names   = UserDoc::distinct()->get()->pluck('name');
         return view('frontend.userdoc.uploadDoc', compact('names', 'reqYear'));
     }
 
     public function download(UserDoc $userDoc, $fileIndex)
     {
-        if ($userDoc->user_id !== auth()->id()) {
-            abort(404, 'File not found');
+        if (!auth()->user()->hasRole('admin')) {
+            if ($userDoc->user_id != auth()->id()) {
+                abort(404, 'File not found');
+            }
         }
-        $name = str($userDoc->name)->slug() . '-' . $userDoc->user->user_name . '.' . $userDoc->files[$fileIndex]->mimeType;
-        $path = 'public/' . $userDoc->files[$fileIndex]->file;
+        $name = str($userDoc->name)->slug() . '-' . $userDoc->user->user_name . '.' . $userDoc->files->{$fileIndex}->mimeType;
+        $path = 'public/' . $userDoc->files->{$fileIndex}->file;
         if (Storage::exists($path)) {
             return Storage::download($path, $name);
         }
@@ -54,17 +52,17 @@ class UserDocController extends Controller
     public function moveTo(Request $request, UserDoc $userDoc)
     {
         $fiscalYear = FiscalYear::firstOrCreate([
-            'year' => $request->year
-        ]);
-        if ($userDoc->user_id !== auth()->id()) {
+            'year' => $request->year,
+         ]);
+        if ($userDoc->user_id != auth()->id()) {
             abort(404, 'File not found');
         } else {
             $userDoc->fiscal_year_id = $fiscalYear->id;
             $userDoc->update();
             $alert = [
                 'alert-type' => 'success',
-                'message' => 'Document moved to year ' . $request->year
-            ];
+                'message'    => 'Document moved to year ' . $request->year,
+             ];
             return back()->with($alert);
         }
     }
@@ -75,33 +73,33 @@ class UserDocController extends Controller
     public function store(StoreUserDocRequest $request)
     {
 
-        $files = [];
+        $files  = [  ];
         $images = $request->fileponds;
-        // dd($request->fiscal_year);   
+        // dd($request->fiscal_year);
         foreach ($images as $file) {
             $tempFile = 'temp/' . $file;
             $mainFile = 'public/' . $file;
-            $arr = explode(".", $file);
-            $ext = array_pop($arr);
+            $arr      = explode(".", $file);
+            $ext      = array_pop($arr);
             if (Storage::exists($tempFile)) {
                 Storage::move($tempFile, $mainFile);
-                $files[] = [
-                    'file' => $file,
-                    'mimeType' => $ext
-                ];
+                $files[uniqid('file-')] = [
+                    'file'     => $file,
+                    'mimeType' => $ext,
+                 ];
             }
         }
         $year = FiscalYear::firstOrCreate([
-            'year' => $request->fiscal_year
-        ]);
-        $upload_document = new UserDoc();
-        $upload_document->user_id = auth()->id();
+            'year' => $request->fiscal_year,
+         ]);
+        $upload_document                 = new UserDoc();
+        $upload_document->user_id        = auth()->id();
         $upload_document->fiscal_year_id = $year->id;
-        $upload_document->name = $request->name;
-        $upload_document->files = $files;
+        $upload_document->name           = $request->name;
+        $upload_document->files          = $files;
         $upload_document->save();
         $notification = array(
-            'message' => "Submitted Successfully",
+            'message'    => "Submitted Successfully",
             'alert-type' => 'success',
         );
         return back()->with($notification);
@@ -122,8 +120,8 @@ class UserDocController extends Controller
         $userDoc->delete();
         $alert = [
             'alert-type' => 'success',
-            'message' => 'Document Deleted'
-        ];
+            'message'    => 'Document Deleted',
+         ];
         return back()->with($alert);
     }
 }

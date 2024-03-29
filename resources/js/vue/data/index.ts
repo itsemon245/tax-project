@@ -18,7 +18,7 @@ export interface InvoiceItem {
 
 export const item: InvoiceItem = {
     id: 0,
-    name: "Item Name",
+    name: null,
     description: undefined,
     rate: undefined,
     qty: 1,

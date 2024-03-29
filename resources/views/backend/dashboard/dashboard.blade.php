@@ -233,20 +233,20 @@
                             <div class="col-12 d-flex align-items-center justify-content-between">
                                 <div class="float-start fw-bold">
                                     <div class="text-start">
-                                        Full Paid: <span data-plugin="counterup">{{ $paidClients->count() }}</span>
-                                    </div>
-                                    <div class="text-start">
                                         Amount: <span class="mdi-currency-bdt"></span> <span
                                             data-plugin="counterup">{{ $paidClients->sum('pivot.paid') }}</span>
+                                    </div>
+                                    <div class="text-start">
+                                        Full Paid: <span data-plugin="counterup">{{ $paidClients->count() }}</span>
                                     </div>
                                 </div>
                                 <div class="float-start fw-bold">
                                     <div class="text-end">
-                                        Partial Paid: <span data-plugin="counterup">{{ $partialClients->count() }}</span>
-                                    </div>
-                                    <div class="text-end">
                                         Amount: <span class="mdi-currency-bdt"></span> <span
                                             data-plugin="counterup">{{ $partialClients->sum('pivot.paid') }}</span>
+                                    </div>
+                                    <div class="text-end">
+                                        Partial Paid: <span data-plugin="counterup">{{ $partialClients->count() }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -279,20 +279,20 @@
                             <div class="col-12 d-flex align-items-center justify-content-between">
                                 <div class="float-start fw-bold">
                                     <div class="text-start">
-                                        Full Due: <span data-plugin="counterup">{{ $arearClients->count() }}</span>
-                                    </div>
-                                    <div class="text-start">
                                         Amount: <span class="mdi-currency-bdt"></span> <span
                                             data-plugin="counterup">{{ $arearClients->sum('pivot.due') }}</span>
+                                    </div>
+                                    <div class="text-start">
+                                        Full Due: <span data-plugin="counterup">{{ $arearClients->count() }}</span>
                                     </div>
                                 </div>
                                 <div class="float-start fw-bold">
                                     <div class="text-end">
-                                        Partial Due: <span data-plugin="counterup">{{ $partialClients->count() }}</span>
-                                    </div>
-                                    <div class="text-end">
                                         Amount: <span class="mdi-currency-bdt"></span> <span
                                             data-plugin="counterup">{{ $partialClients->sum('pivot.due') }}</span>
+                                    </div>
+                                    <div class="text-end">
+                                        Partial Due: <span data-plugin="counterup">{{ $partialClients->count() }}</span>
                                     </div>
                                 </div>
                             </div>

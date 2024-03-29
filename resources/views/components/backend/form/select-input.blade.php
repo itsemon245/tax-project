@@ -15,7 +15,6 @@
         </label>
     @endif
     <select {{ $attributes->merge(['class' => 'form-select text-capitalize px-3 py-2'])->merge() }}>
-        <option selected disabled>{{ $placeholder }}</option>
         {{ $slot }}
     </select>
     @error($name)

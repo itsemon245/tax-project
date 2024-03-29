@@ -3,15 +3,17 @@
         <th scope="row">{{ props.item.id + 1 }}</th>
         <td>
             <div>
-                <input aria-label="item-name" name="item_names[]" type="text" v-model="props.item.name" />
+                <input aria-label="item-name" placeholder="Item name" name="item_names[]" type="text" v-model="props.item.name" />
                 <input aria-label="item-descriptions" v-model="props.item.description" name="item_descriptions[]"
                     type="text" placeholder="Item Description (optional)" />
             </div>
         </td>
         <td>
             <span class="me-2">Tk</span>
-            <input aria-label="item-rate" class="d-inline-block" name="item_rates[]" type="number" placeholder="00"
-                v-model="props.item.rate" style="width: 6rem;" />
+            <input aria-label="item-rate" class="d-inline-block text-end " name="item_rates[]" type="number" placeholder="00"
+            v-model="props.item.rate" style="width: 6rem;" />
+            <span class="me-2">.00</span>
+            
             <div class="tax-wrapper">
                 <a @click="toggleTaxPicker(props.item.id)" class="text-blue p-1 d-inline-block" tabindex="0" role="button">
                     <div class="d-flex justify-content-between align-items-center">
@@ -78,7 +80,8 @@
             <div class="d-flex align-items-start">
                 <span class="me-2">Tk</span>
                 <input aria-label="item-total" id="item-total-0" data-index="0" name="item_totals[]" type="text"
-                    v-model="props.item.total" placeholder="00" class="d-inline-block" style="width: 7rem;" />
+                    v-model="props.item.total" placeholder="00" class="d-inline-block text-end" style="width: 7rem;" />
+                <span class="me-2">.00</span>
                 <span @click="deleteInvoiceItem(props.item.id, isEditMode)" data-index="0"
                     class="mdi mdi-trash-can-outline text-danger item-delete-btn" style="cursor:pointer;"></span>
             </div>

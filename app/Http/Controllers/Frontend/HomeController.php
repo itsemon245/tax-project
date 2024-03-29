@@ -30,7 +30,7 @@ class HomeController extends Controller
         $infos1 = Info::where(['section_id' => 1, 'page_name' => 'homepage'])->latest()->take(4)->get();
         $infos2 = Info::where(['section_id' => 2, 'page_name' => 'homepage'])->latest()->take(4)->get();
         $achievements = Achievement::latest()->take(12)->get();
-        $customServices = CustomService::with('image')->where('page_name', PageName::Home)->latest()->take(6)->get();
+        $customServices = CustomService::with('image')->where('page_name', PageName::Home)->get();
         return view(
             'frontend.pages.welcome',
             compact([

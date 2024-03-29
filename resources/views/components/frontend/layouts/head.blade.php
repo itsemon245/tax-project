@@ -8,9 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="{{ $description }}">
-    <link rel="shortcut icon" href="{{$favicon}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ $favicon }}" type="image/x-icon">
 
     <title>{{ config('app.name') . ' - ' . $title }}</title>
+
+    <link rel="stylesheet" href="{{ asset('libs/tail.select.js-1.0.2/css/tail.select.css') }}">
+    @vite(['resources/css/tailwind.css'])
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,5 +33,9 @@
     <script src="{{ asset('frontend/extractColor.js') }}"></script>
     <!-- Scripts -->
     <script src="{{ asset('frontend/assets/jquery/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('libs/htmx/index.min.js') }}" defer></script> --}}
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+        integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous">
+    </script>
     @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
 </head>

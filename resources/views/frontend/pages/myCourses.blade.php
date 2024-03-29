@@ -30,16 +30,20 @@
                                     </a>
                                 </td>
                                 @php
-                                    $video= $course->videos->first();
+                                    $video = $course->videos->first();
                                 @endphp
                                 <td>
                                     @if ($video)
-                                    <div>
-                                        <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark"
-                                            href="{{route('course.videos',$course->id).'?videos_id='.$video->id}}">
-                                         Lessons
-                                        </x-backend.ui.button>
-                                    </div>
+                                        @if ($course->isPurchased)
+                                                <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark"
+                                                    href="{{ route('course.videos', $course->id) . '?videos_id=' . $video->id }}">
+                                                    Lessons
+                                                </x-backend.ui.button>
+                                        @else
+                                            <h5 class="w-full text-warning font-bold text-center">
+                                                Pending
+                                            </h5>
+                                        @endif
                                     @else
                                         No Video's Found
                                     @endif

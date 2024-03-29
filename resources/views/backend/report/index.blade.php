@@ -189,7 +189,7 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td class="fw-medium">
-                                    {{ Carbon\Carbon::parse($invoice->fiscalYears[0]->pivot->issue_date)->format('d M, Y') }}
+                                    {{ Carbon\Carbon::parse($invoice->recentFiscalYears[0]->pivot->issue_date)->format('d M, Y') }}
                                 </td>
                                 <td class="fw-medium">{{ $invoice->client->name }}</td>
                                 <td>{{ $invoice->client->tin }}</td>

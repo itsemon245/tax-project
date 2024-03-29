@@ -1,0 +1,28 @@
+{
+    "name": "tail.select.js",
+    "description": "Create beautiful, functional and extensive (multi) select fields, written in Vanilla JavaScript without any dependencies!",
+    "keywords": [
+        "select",
+        "select2",
+        "select3",
+        "selection",
+        "selectable",
+        "dropdown",
+        "choose",
+        "vanilla",
+        "tail"
+    ],
+    "authors": [
+        "wolffe <getbutterfly@gmail.com> (https://getbutterfly.com/)"
+    ],
+    "license": "MIT",
+    "homepage": "https://getbutterfly.com/tail-select/",
+    "main": [
+        "js/tail.select.js",
+        "css/default/tail.select-light.css"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/wolffe/tail.select.js.git"
+    }
+}

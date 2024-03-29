@@ -75,6 +75,31 @@
                         </div> <!-- end card-body -->
                     </div>
                 </form>
+
+                <form action="{{ route('setting.images') }}" method="post" enctype="multipart/form-data" class="row">
+                    @csrf
+                    <div class="mb-3" >
+                        <div class="card h-100">
+                            <h4 class="p-2">Invoice Images</h4>
+                            <div class="card-body row">
+                                <div class="col-lg-6">
+                                <x-backend.form.image-input id="header_image" :image="$data->basic->header_image ?? null" required
+                                    style="aspect-ratio:1.8/.7;" label="Company Header Image" name="header_image" />
+                                </div>
+                                <div class="col-lg-6">
+                                    <x-backend.form.image-input id="footer_image" :image="$data->basic->footer_image ?? null" required
+                                        style="aspect-ratio:1.8/.7;" label="Company Footer Image" name="footer_image" />
+                                </div>
+                                <div class="col-12">
+                                    <div class="mt-2">
+                                        <x-backend.ui.button class="btn-primary btn-sm float-end">Save
+                                            Changes</x-backend.ui.button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             @endcanany
             <div class="row">
                 {{-- Referance  --}}

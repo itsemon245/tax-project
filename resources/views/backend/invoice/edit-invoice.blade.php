@@ -104,6 +104,18 @@
             left: -1rem;
             position: absolute;
         }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 @endPushOnce
 @section('content')
@@ -119,21 +131,22 @@
                 @csrf
                 @method('PATCH')
                 <div>
-                    <img loading="lazy" src="" alt="">
-                    <div class="d-flex border mb-5 justify-content-center">
-                        <x-backend.form.image-input name="header_image" :image="$invoice->header_image"
-                            class="d-flex justify-content-center" style="aspect-ratio:4/1;object-fit:contain;" />
+                    <div class="row">
+                        <div class="d-flex border my-5 justify-content-center">
+                            <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->header_image)}}" alt="">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
                             <div class="pe-2 mb-2">
-                                <x-form.selectize class="mb-1" id="client" name="client"
-                                    placeholder="Select Client..." label="Bill To" :canCreate="false">
+                                <select class="mb-2 tail-select" id="client" name="client"
+                                    placeholder="Select Client..." label="Bill To" required>
                                     @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}"
-                                            @if ($client->id === $invoice->client_id) selected @endif>{{ $client->name }}</option>
+                                        <option @selected($client->id == $invoice->client_id)
+                                            data-description="{{ "<div class='fw-normal'>Company: $client->company_name,</br>Phone: $client->phone,</br> TIN: $client->tin, Ref: $client->ref_no, </br> Circle: $client->circle </div>" }}"
+                                            value="{{ $client->id }}">{{ $client->name }}</option>
                                     @endforeach
-                                </x-form.selectize>
+                                </select>
                                 <a href="{{ route('client.create') }}" class="text-blue" style="font-weight: 500;">Create
                                     New Client</a>
                             </div>
@@ -187,6 +200,11 @@
                 <div id="invoice-edit-app">
 
                 </div>
+                <div class="row">
+                    <div class="d-flex border my-5 justify-content-center">
+                        <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->footer_image)}}" alt="">
+                    </div>
+                </div>
 
                 <button id="submit-btn" type="submit"
                     class="btn btn-primary waves-effect waves-light mt-2 rounded-3 shadow">Update</button>
@@ -197,3 +215,21 @@
 
     </x-backend.ui.section-card>
 @endsection
+
+@push('customJs')
+    <script>
+        $(document).ready(function() {
+            $('#client').on('change', function(e) {
+                let url = "{{ route('api.get.client', ':CLIENT') }}"
+                url = url.replace(':CLIENT', e.target.value)
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    success: function(response) {
+                        $('input[name="reference"]').val(response.client.ref_no)
+                    }
+                });
+            })
+        });
+    </script>
+@endpush

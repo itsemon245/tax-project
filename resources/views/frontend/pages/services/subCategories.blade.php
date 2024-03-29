@@ -75,7 +75,7 @@
                             <h6>{{ $sub->name }}</h6>
                         </a>
                         <a href="{{ route('service.sub', $sub->id) }}"
-                            class="text-center text-muted">{{ $sub->description }}</a>
+                            class="text-center text-muted">{!! $sub->description !!}</a>
                     </div>
                 </div>
             @endforeach

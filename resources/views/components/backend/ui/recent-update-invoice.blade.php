@@ -1,10 +1,10 @@
 @php
     $route = $attributes->get('method');
-    $recentInvoices = App\Models\Invoice::with('client', 'currentFiscal')->latest()->limit(4)->get();
+    $recentInvoices = App\Models\Invoice::with('client', 'recentFiscalYears')->latest()->limit(4)->get();
 @endphp
 <h4 class="p-2">Recently Updated Invoice</h4>
-<div id="latest-container" class="d-none d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
-    style="overflow-x: hidden; overflow-y:hidden;">
+<div id="latest-container" class="d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
+    style="overflow-x: hidden; overflow-y:hidden;height:min-content;">
     <a href="{{ $route }}" class="mb-2" style="width: clamp(160px, 190px, 220px);">
         <div class="card h-100 shadow" style="border: medium dashed var(--ct-gray-400);">
             <div class="card-body h-100">
@@ -18,43 +18,47 @@
     @foreach ($recentInvoices as $invoice)
         @php
             $color = 'dark';
-            switch ($invoice->currentFiscal[0]->pivot->status) {
-                case 'sent':
-                    $color = 'success';
-                    break;
-                case 'paid':
-                    $color = 'success';
-                    break;
-                case 'due':
-                    $color = 'warning';
-                    break;
-                case 'overdue':
-                    $color = 'danger';
-                    break;
-            
-                default:
-                    # code...
-                    break;
+            if (isset($invoice->recentFiscalYears[0])) {
+                switch ($invoice->recentFiscalYears[0]->pivot->status) {
+                    case 'sent':
+                        $color = 'success';
+                        break;
+                    case 'paid':
+                        $color = 'success';
+                        break;
+                    case 'due':
+                        $color = 'warning';
+                        break;
+                    case 'overdue':
+                        $color = 'danger';
+                        break;
+
+                    default:
+                        # code...
+                        break;
+                }
             }
         @endphp
         <div class="latest-items mb-2" style="width: clamp(160px, 190px, 220px);">
             <div class="card h-100 shadow border-top">
-                <div class="card-body">
-                    <h5>ID:{{ $invoice->id }}</h5>
-                    <h5>{{ str($invoice->client->name)->title() }} <br> <span
-                            class="text-muted fw-normal fs-6">Company:
-                            {{ str($invoice->client->company_name)->title() }}</span></h5>
-                    <p class='text-muted mb-0'>Issued:
-                        {{ Carbon\Carbon::parse($invoice->currentFiscal[0]->pivot->issue_date)->format('d F, Y') }}
-                    </p>
-                    <p class='text-muted mb-0'>Due:
-                        {{ Carbon\Carbon::parse($invoice->currentFiscal[0]->pivot->due_date)->format('d F, Y') }}
-                    </p>
-                </div>
-                <div
-                    class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
-                    {{ str($invoice->currentFiscal[0]->pivot->status)->title() }}
-                </div>
+                @isset($invoice->recentFiscalYears[0])
+                    <div class="card-body">
+                        <h5>ID:{{ $invoice->id }}</h5>
+                        <h5>{{ str($invoice->client->name)->title() }} <br> <span class="text-muted fw-normal fs-6">Company:
+                                {{ str($invoice->client->company_name)->title() }}</span></h5>
+                        <p class='text-muted mb-0'>Issued:
+                            {{ Carbon\Carbon::parse($invoice->recentFiscalYears[0]->pivot->issue_date)->format('d F, Y') }}
+                        </p>
+                        <p class='text-muted mb-0'>Due:
+                            {{ Carbon\Carbon::parse($invoice->recentFiscalYears[0]->pivot->due_date)->format('d F, Y') }}
+                        </p>
+                    </div>
+                    <div
+                        class="bg-soft-{{ $color }} text-{{ $color }} w-100 p-1 text-center fw-bold rounded-bottom">
+                        {{ str($invoice->recentFiscalYears[0]->pivot->status)->title() }}
+                    </div>
+                @endisset
+
             </div>
         </div>
     @endforeach

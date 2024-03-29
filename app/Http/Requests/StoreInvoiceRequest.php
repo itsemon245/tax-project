@@ -22,7 +22,8 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'client' => 'required|exists:clients,id',
+            'payment_method' => 'required',
         ];
     }
 }

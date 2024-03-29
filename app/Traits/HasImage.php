@@ -2,18 +2,18 @@
 
 namespace App\Traits;
 
-use Carbon\Carbon;
-use App\Models\Image;
-use Illuminate\Support\Str;
 use App\DTOs\Image\ImageDto;
+use App\Models\Image;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Str;
 
 trait HasImage
 {
-    protected string $disk = 'public';
+    protected string $disk          = 'public';
     protected string $imageableType = __CLASS__;
 
     public function image(): MorphOne
@@ -26,14 +26,12 @@ trait HasImage
         return $this->morphMany(Image::class, 'imageable');
     }
 
-
-
     public function saveImage(UploadedFile $image, string $dir = null, ?string $prefix = null, ?string $disk = null)
     {
-        $dir = $dir ?? $this->getBaseDir();
-        $prefix = $prefix ?? $this->getPrefix();
-        $disk = $disk ?? $this->disk;
-        $path = $this->storeOnDisk($image, $dir, $prefix, $disk);
+        $dir      = $dir ?? $this->getBaseDir();
+        $prefix   = $prefix ?? $this->getPrefix();
+        $disk     = $disk ?? $this->disk;
+        $path     = $this->storeOnDisk($image, $dir, $prefix, $disk);
         $imageDto = new ImageDto(
             imageable_id: $this->id,
             imageable_type: $this->imageableType,
@@ -45,21 +43,22 @@ trait HasImage
         return $image;
     }
 
-    public function updateImage(UploadedFile $image, string $path, string $dir = null, ?string $prefix = null, ?string $disk = null)
+    public function updateImage(UploadedFile $image, string|null $path, string $dir = null, ?string $prefix = null, ?string $disk = null)
     {
-        $dir = $dir ?? $this->getBaseDir();
+        $dir    = $dir ?? $this->getBaseDir();
         $prefix = $prefix ?? $this->getPrefix();
-        $disk = $disk ?? $this->disk;
-        $this->deleteImageFromDisk($path, $disk);
-        $path = $this->storeOnDisk($image, $dir, $prefix, $disk);
-        $image = $this->image()->update([
-            'path'      => $path,
-            'url'       => asset('storage/' . $path),
-            'mime_type' => $image->extension()
-        ]);
-        return $image;
+        $disk   = $disk ?? $this->disk;
+        if ($this->image) {
+            $this->deleteImageFromDisk($path, $disk);
+            $path  = $this->storeOnDisk($image, $dir, $prefix, $disk);
+            $image = $this->image()->update([
+                'path'      => $path,
+                'url'       => asset('storage/' . $path),
+                'mime_type' => $image->extension(),
+             ]);
+        }
+        return true;
     }
-
 
     public function deleteImageFromDisk(string $path, ?string $disk = null)
     {
@@ -69,12 +68,16 @@ trait HasImage
         }
     }
 
-    public function deleteImage(string $path, ?string $disk = null): void
+    public function deleteImage(?string $path = null, ?string $disk = null): void
     {
-        $this->deleteImageFromDisk($path, $disk);
+        if ($path == null) {
+            $path = $this->image->path;
+        }
+        if ($path) {
+            $this->deleteImageFromDisk($path, $disk);
+        }
         $this->image()->delete();
     }
-
 
     protected function getTimestamp(): string
     {
@@ -88,7 +91,7 @@ trait HasImage
 
     protected function getName(UploadedFile $file): string
     {
-        $ext = "." . $file->extension();
+        $ext  = "." . $file->extension();
         $name = $this->getPrefix() . "-" . $this->getTimestamp() . $ext;
         return $name;
     }
@@ -101,7 +104,7 @@ trait HasImage
             'path'           => $dto->path,
             'url'            => $dto->url,
             'mime_type'      => $dto->mime_type,
-        ]);
+         ]);
     }
 
     /**

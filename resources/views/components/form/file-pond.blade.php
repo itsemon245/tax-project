@@ -45,30 +45,18 @@
         // create() to turn it into a pond
         $('.filepond').each((i, input) => {
             const pond = FilePond.create(input, {
-                allowMultiple: false,
+                allowMultiple: true,
                 allowImagePreview: true,
                 allowImageExifOrientation: true,
                 allowImageCrop: true,
                 allowReorder: true,
                 server: {
-                    url: '{{route("filepond.upload")}}',
-                    process: {
-                        url: '/',
-                        method: 'POST',
-                        headers:{
-                            'X-CSRF-TOKEN': '{{csrf_token()}}',
-                        },
-                    },
-                    revert: {
-                        url: '/',
-                        method: 'DELETE',
-                    },
-                    restore: {
-                        url: '/',
-                        method: 'POST',
-                    },
-                    fetch: null,
-                },
+                    url: '/upload',
+                    method: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                }
             });
         })
     </script>

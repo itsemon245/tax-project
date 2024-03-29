@@ -88,6 +88,7 @@ Route::prefix('admin')
         //Routes for backend CRUD operation
 
         Route::resource('users', UserController::class); // middlewares are in constructor
+        Route::get('internal-users', [UserController::class, 'internalUsers'])->name('users.internal');
 
         Route::resource('product', ProductController::class)
             ->except('index')
@@ -302,6 +303,7 @@ Route::prefix('admin')
                 Route::get('/', 'index')->name('index');
                 Route::post('/', 'store')->name('store');
                 Route::post('/reference', 'reference')->name('reference');
+                Route::post('/images', 'images')->name('images');
                 Route::post('/payment', 'payment')->name('payment');
                 Route::post('/return-link', 'returnLink')->name('returnLink');
             });
@@ -382,7 +384,7 @@ Route::prefix('admin')
 
         Route::resource('industry', IndustryController::class);
         Route::resource('chalan', ChalanController::class);
-        Route::post('chalan/{chalan}/clone', [ChalanController::class, 'clone'])->name('chalan.clone');
+        Route::get('chalan/{chalan}/clone', [ChalanController::class, 'clone'])->name('chalan.clone');
         Route::resource('achievements', AchievementController::class);
         Route::resource('return-form', ReturnFormController::class);
         Route::resource('tax-setting', TaxSettingController::class);

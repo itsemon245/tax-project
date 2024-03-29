@@ -460,56 +460,19 @@
                         </div>
                     </li>
                 @endcanany
-                @canany([
-                    'manage partner',
-                    'read partner',
-                    'manage partner request',
-                    'read partner request',
-                    'manage
-                    client studio',
-                    'read client studio',
-                    'create expert',
-                    'update expert',
-                    'delete expert',
-                    'read expert',
-                    ])
+                <li class="menu-title mt-2">Control Panel</li>
+
+                @canany(['manage client studio', 'read client studio', 'read client', 'manage client', 'read chalan',
+                    'read return'])
                     <li>
                         <a href="#peoples" data-bs-toggle="collapse">
                             <i class="mdi mdi-account-group-outline"></i>
-                            <span>Peoples</span>
+                            <span>Clients</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="peoples">
                             <ul class="nav-second-level">
-                                @canany([
-                                    'manage partner',
-                                    'manage partner request',
-                                    'read partner',
-                                    'read partner
-                                    request',
-                                    ])
-                                    <li>
-                                        <a href="#partnersSections" data-bs-toggle="collapse">
-                                            <i class="mdi mdi-vector-intersection"></i>
-                                            <span>Partners</span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="partnersSections">
-                                            <ul class="nav-second-level">
-                                                @canany(['manage partner', 'read partner'])
-                                                    <li>
-                                                        <a href="{{ route('partner-section.index') }}">Partners Section</a>
-                                                    </li>
-                                                @endcanany
-                                                @canany(['manage partner request', 'read partner request'])
-                                                    <li>
-                                                        <a href="{{ route('partner-section.create') }}">Partner Request</a>
-                                                    </li>
-                                                @endcanany
-                                            </ul>
-                                        </div>
-                                    </li>
-                                @endcanany
+
                                 @canany(['manage client studio', 'read client studio'])
                                     <li>
                                         <a href="#clientStudio" data-bs-toggle="collapse">
@@ -537,41 +500,73 @@
                                         </div>
                                     </li>
                                 @endcanany
-                                @canany([
-                                    'create expert',
-                                    'update expert',
-                                    'delete expert',
-                                    'read expert',
-                                    'approved
-                                    consultation',
-                                    'update consultation',
-                                    'delete consultation',
-                                    'read consultation',
-                                    ])
+
+                                @canany(['manage client', 'read client'])
                                     <li>
-                                        <a href="#expertProfile" data-bs-toggle="collapse">
-                                            <i class="mdi mdi-account-tie"></i>
-                                            <span>Expert</span>
+                                        <a href="#clientSection" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-account-heart-outline"></i>
+                                            <span>Client List</span>
                                             <span class="menu-arrow"></span>
                                         </a>
-                                        <div class="collapse" id="expertProfile">
+                                        <div class="collapse" id="clientSection">
                                             <ul class="nav-second-level">
-                                                @can('create expert')
+                                                @can('manage client')
                                                     <li>
-                                                        <a href="{{ route('expert-profile.create') }}">Create</a>
+                                                        <a href="{{ route('client.create') }}">Create</a>
                                                     </li>
                                                 @endcan
-                                                @canany(['read expert', 'update expert', 'delete expert'])
+                                                @can('read client')
                                                     <li>
-                                                        <a href="{{ route('expert-profile.index') }}">View</a>
+                                                        <a href="{{ route('client.index') }}">View</a>
+                                                    </li>
+                                                @endcan
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
+
+                                @canany(['manage chalan', 'read chalan'])
+                                    <li>
+                                        <a href="#chalanSection" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-bank-check"></i>
+                                            <span>Chalan</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="chalanSection">
+                                            <ul class="nav-second-level">
+                                                @can('manage chalan')
+                                                    <li>
+                                                        <a href="{{ route('chalan.create') }}">Create</a>
+                                                    </li>
+                                                @endcan
+                                                @canany(['manage chalan', 'read chalan'])
+                                                    <li>
+                                                        <a href="{{ route('chalan.index') }}">View</a>
                                                     </li>
                                                 @endcanany
-                                                @canany(['approved consultation', 'update consultation', 'delete consultation',
-                                                    'read consultation'])
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
+                                @canany(['manage return', 'read return'])
+                                    <li>
+                                        <a href="#return-formSection" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-file-sync-outline"></i>
+                                            <span>Return</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="return-formSection">
+                                            <ul class="nav-second-level">
+                                                @can('manage return')
                                                     <li>
-                                                        <a href="{{ route('consultancy.order.index') }}">Appoinment List</a>
+                                                        <a href="{{ route('return-form.create') }}">Create</a>
                                                     </li>
-                                                @endcanany
+                                                @endcan
+                                                @can('manage return', 'read return')
+                                                    <li>
+                                                        <a href="{{ route('return-form.index') }}">View</a>
+                                                    </li>
+                                                @endcan
                                             </ul>
                                         </div>
                                     </li>
@@ -580,7 +575,6 @@
                         </div>
                     </li>
                 @endcanany
-                <li class="menu-title mt-2">Control Panel</li>
                 @canany([
                     'manage discussion',
                     'read discussion',
@@ -624,29 +618,7 @@
                                         </a>
                                     </li>
                                 @endcanany
-                                @canany(['manage client', 'read client'])
-                                    <li>
-                                        <a href="#clientSection" data-bs-toggle="collapse">
-                                            <i class="mdi mdi-account-heart-outline"></i>
-                                            <span>Clients</span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="clientSection">
-                                            <ul class="nav-second-level">
-                                                @can('manage client')
-                                                    <li>
-                                                        <a href="{{ route('client.create') }}">Create</a>
-                                                    </li>
-                                                @endcan
-                                                @can('read client')
-                                                    <li>
-                                                        <a href="{{ route('client.index') }}">View</a>
-                                                    </li>
-                                                @endcan
-                                            </ul>
-                                        </div>
-                                    </li>
-                                @endcanany
+
                             </ul>
                         </div>
                     </li>
@@ -734,11 +706,11 @@
                                         </a>
                                         <div class="collapse" id="users">
                                             <ul class="nav-second-level">
-                                                @can('create user')
+                                                {{-- @can('create user')
                                                     <li>
                                                         <a href="{{ route('users.create') }}">Create</a>
                                                     </li>
-                                                @endcan
+                                                @endcan --}}
                                                 @canany(['update user', 'delete user', 'read user'])
                                                     <li>
                                                         <a href="{{ route('users.index') }}">Show</a>
@@ -757,8 +729,9 @@
                         ->get(['name'])
                         ->pluck('name');
                 @endphp
-                @canany([$accountingPermissions, 'create invoice', 'update invoice', 'delete invoice', 'send invoice',
-                    'read invoice', 'read report', 'read chalan', 'read return', 'read withdraw request'])
+                @canany([$accountingPermissions, 'create expense', 'update expense', 'delete expense', 'print expense',
+                    'read expense', 'create invoice', 'update invoice', 'delete invoice', 'send invoice', 'read invoice',
+                    'read report', 'read withdraw request'])
                     <li>
                         <a href="#accounting" data-bs-toggle="collapse">
                             <i class="mdi mdi-alarm-panel"></i>
@@ -837,48 +810,34 @@
                                         </div>
                                     </li>
                                 @endcanany
-                                @canany(['manage chalan', 'read chalan'])
+
+                                @canany([
+                                    'update expense',
+                                    'update expense',
+                                    'delete expense',
+                                    'print expense',
+                                    'read
+                                    expense',
+                                    ])
                                     <li>
-                                        <a href="#chalanSection" data-bs-toggle="collapse">
-                                            <i class="mdi mdi-bank-check"></i>
-                                            <span>Chalan</span>
+                                        <a href="#expenses" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-currency-usd-off"></i>
+                                            <span>Expenses</span>
                                             <span class="menu-arrow"></span>
                                         </a>
-                                        <div class="collapse" id="chalanSection">
+                                        <div class="collapse" id="expenses">
                                             <ul class="nav-second-level">
-                                                @can('manage chalan')
+                                                @can('create expense')
                                                     <li>
-                                                        <a href="{{ route('chalan.create') }}">Create</a>
+                                                        <a href="{{ route('expense.create') }}">Create</a>
                                                     </li>
                                                 @endcan
-                                                @canany(['manage chalan', 'read chalan'])
+                                                @canany(['update expense', 'update expense', 'delete expense', 'print expense',
+                                                    'read expense'])
                                                     <li>
-                                                        <a href="{{ route('chalan.index') }}">View</a>
+                                                        <a href="{{ route('expense.index') }}">View</a>
                                                     </li>
                                                 @endcanany
-                                            </ul>
-                                        </div>
-                                    </li>
-                                @endcanany
-                                @canany(['manage return', 'read return'])
-                                    <li>
-                                        <a href="#return-formSection" data-bs-toggle="collapse">
-                                            <i class="mdi mdi-file-sync-outline"></i>
-                                            <span>Return</span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="return-formSection">
-                                            <ul class="nav-second-level">
-                                                @can('manage return')
-                                                    <li>
-                                                        <a href="{{ route('return-form.create') }}">Create</a>
-                                                    </li>
-                                                @endcan
-                                                @can('manage return', 'read return')
-                                                    <li>
-                                                        <a href="{{ route('return-form.index') }}">View</a>
-                                                    </li>
-                                                @endcan
                                             </ul>
                                         </div>
                                     </li>
@@ -917,8 +876,19 @@
                         ->get(['name'])
                         ->pluck('name');
                 @endphp
-                @canany($managementPermissions, 'create expense', 'update expense', 'delete expense', 'print expense',
-                    'read expense', 'read role', 'read promo code', 'read reviews', 'read order')
+                @canany($managementPermissions,
+                    'create expert',
+                    'update expert',
+                    'delete
+                    expert',
+                    'read expert',
+                    'manage partner',
+                    'read partner',
+                    'manage partner request',
+                    'read partner request',
+                    'read role',
+                    'read promo code',
+                    'read reviews')
                     <li class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
                         <a href="#management" data-bs-toggle="collapse">
                             <i class="mdi mdi-manjaro"></i>
@@ -927,6 +897,97 @@
                         </a>
                         <div class="collapse" id="management">
                             <ul class="nav-second-level">
+                                @canany([
+                                    'manage partner',
+                                    'manage partner request',
+                                    'read partner',
+                                    'read partner
+                                    request',
+                                    ])
+                                    <li>
+                                        <a href="#partnersSections" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-vector-intersection"></i>
+                                            <span>Partners</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="partnersSections">
+                                            <ul class="nav-second-level">
+                                                @canany(['manage partner', 'read partner'])
+                                                    <li>
+                                                        <a href="{{ route('partner-section.index') }}">Partners Section</a>
+                                                    </li>
+                                                @endcanany
+                                                @canany(['manage partner request', 'read partner request'])
+                                                    <li>
+                                                        <a href="{{ route('partner-section.create') }}">Partner Request</a>
+                                                    </li>
+                                                @endcanany
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
+                                @canany([
+                                    'create expert',
+                                    'update expert',
+                                    'delete expert',
+                                    'read expert',
+                                    'approved
+                                    consultation',
+                                    'update consultation',
+                                    'delete consultation',
+                                    'read consultation',
+                                    ])
+                                    <li>
+                                        <a href="#expertProfile" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-account-tie"></i>
+                                            <span>Expert</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="expertProfile">
+                                            <ul class="nav-second-level">
+                                                @can('create expert')
+                                                    <li>
+                                                        <a href="{{ route('expert-profile.create') }}">Create</a>
+                                                    </li>
+                                                @endcan
+                                                @canany(['read expert', 'update expert', 'delete expert'])
+                                                    <li>
+                                                        <a href="{{ route('expert-profile.index') }}">View</a>
+                                                    </li>
+                                                @endcanany
+                                                @canany(['approved consultation', 'update consultation', 'delete consultation',
+                                                    'read consultation'])
+                                                    <li>
+                                                        <a href="{{ route('consultancy.order.index') }}">Appoinment List</a>
+                                                    </li>
+                                                @endcanany
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
+                                @canany(['create user', 'update user', 'delete user', 'read user'])
+                                <li>
+                                    <a href="#users-internal" data-bs-toggle="collapse">
+                                        <i class="mdi mdi-account-switch-outline"></i>
+                                        <span>Internal Users</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="users-internal">
+                                        <ul class="nav-second-level">
+                                            @can('create user')
+                                                <li>
+                                                    <a href="{{ route('users.create') }}">Create</a>
+                                                </li>
+                                            @endcan
+                                            @canany(['update user', 'delete user', 'read user'])
+                                                <li>
+                                                    <a href="{{ route('users.internal') }}">View </a>
+                                                </li>
+                                            @endcanany
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcanany
                                 @canany(['create role', 'update role', 'delete role', 'read role'])
                                     <li>
                                         <a href="#roleSection" data-bs-toggle="collapse">
@@ -973,37 +1034,7 @@
                                         </div>
                                     </li>
                                 @endcanany
-                                @canany([
-                                    'update expense',
-                                    'update expense',
-                                    'delete expense',
-                                    'print expense',
-                                    'read
-                                    expense',
-                                    ])
-                                    <li>
-                                        <a href="#expenses" data-bs-toggle="collapse">
-                                            <i class="mdi mdi-currency-usd-off"></i>
-                                            <span>Expenses</span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="expenses">
-                                            <ul class="nav-second-level">
-                                                @can('create expense')
-                                                    <li>
-                                                        <a href="{{ route('expense.create') }}">Create</a>
-                                                    </li>
-                                                @endcan
-                                                @canany(['update expense', 'update expense', 'delete expense', 'print expense',
-                                                    'read expense'])
-                                                    <li>
-                                                        <a href="{{ route('expense.index') }}">View</a>
-                                                    </li>
-                                                @endcanany
-                                            </ul>
-                                        </div>
-                                    </li>
-                                @endcanany
+
                                 @canany(['manage reviews', 'read reviews'])
                                     <li>
                                         <a href="#reviews" data-bs-toggle="collapse">
@@ -1027,28 +1058,27 @@
                                         </div>
                                     </li>
                                 @endcanany
-                                @canany(['manage order', 'read order'])
-                                    <li class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
-                                        <a href="#payments" data-bs-toggle="collapse">
-                                            <i class="mdi mdi-order-bool-descending-variant"></i>
-                                            <span>Order</span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="payments">
-                                            <ul class="nav-second-level">
-                                                <li
-                                                    class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
-                                                    @canany(['manage order', 'read order'])
-                                                        <a href="{{ route('order.index') . '?status=' . 0 }}">Pending Orders</a>
-                                                    @endcanany
-                                                    @canany(['manage order', 'read order'])
-                                                        <a href="{{ route('order.index') . '?status=' . 1 }}">Approved Orders</a>
-                                                    @endcanany
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                @endcanany
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
+                @canany(['manage order', 'read order'])
+                    <li class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
+                        <a href="#payments" data-bs-toggle="collapse">
+                            <i class="mdi mdi-order-bool-descending-variant"></i>
+                            <span>Order</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="payments">
+                            <ul class="nav-second-level">
+                                <li class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
+                                    @canany(['manage order', 'read order'])
+                                        <a href="{{ route('order.index') . '?status=' . 0 }}">Pending Orders</a>
+                                    @endcanany
+                                    @canany(['manage order', 'read order'])
+                                        <a href="{{ route('order.index') . '?status=' . 1 }}">Approved Orders</a>
+                                    @endcanany
+                                </li>
                             </ul>
                         </div>
                     </li>

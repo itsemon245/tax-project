@@ -116,6 +116,27 @@ class SettingController extends Controller
     /**
      * Store a newly created resource in reference.
      */
+    public function images(Request $request)
+    {
+
+        $request->validate([
+            'header_image' => 'image|max:5124',
+            'footer_image' => 'image|max:5124',
+        ]);
+        $headerImage = saveImage($request->header_image, 'settings', 'header_image');
+        $footerImage = saveImage($request->footer_image, 'settings', 'footer_image');
+        if ($this->setting) {
+            $this->setting->update(['basic->header_image' => $headerImage, 'basic->footer_image' => $footerImage]);
+        } else {
+            Setting::create(['basic->header_image' => $headerImage, 'basic->footer_image' => $footerImage]);
+        }
+
+        return back()
+            ->with($this->alert);
+    }
+    /**
+     * Store a newly created resource in reference.
+     */
     public function payment(Request $request)
     {
 

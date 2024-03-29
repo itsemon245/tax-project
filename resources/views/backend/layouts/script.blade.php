@@ -18,6 +18,19 @@
 
  @stack('selectizeCDN')
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset('libs/tail.select.js-1.0.2/js/tail.select.min.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        let select = tail.select('.tail-select')
+        document.addEventListener('htmx:load', function(){
+            select.reload()
+        })
+        
+        // htmx.onLoad(function(elt) {
+        //     console.log(elt);
+        // })
+    });
+</script>
  @stack('customJs')
  {{-- sweet alert2 --}}
  @include('backend.layouts.alert')

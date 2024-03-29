@@ -4,11 +4,12 @@
 
     <x-backend.ui.section-card name="Edit Custom Service">
 
-        <form action="{{ route('custom-service.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('custom-service.update', $service) }}" method="post" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="row">
                 <div class="col-md-6 mt-3">
-                    <x-backend.form.image-input :image="$service->image->url" name="image" />
+                    <x-backend.form.image-input :image="$service?->image?->url" name="image" />
                 </div>
 
                 <div class="col-md-6">
@@ -21,7 +22,7 @@
                             <x-backend.form.select-input id="page_name" label="Page Name" name="page_name"
                                 placeholder="Choose page name...">
                                 @foreach ($pageNames as $name)
-                                    <option value="{{ $name }}" @selected(str($service->page_name)->trim() === str($name)) >
+                                    <option value="{{ $name }}" @selected($service->page_name == $name)>
                                         {{ $name }}
                                     </option>
                                 @endforeach

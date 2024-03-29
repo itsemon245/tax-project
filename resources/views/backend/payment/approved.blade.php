@@ -41,7 +41,7 @@
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $payemnt->name }}</td>
                                         <td>{!! $payemnt->payment_number ??
-                                            "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Pay Later</span>" !!}</td>
+                                            "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Nothing provided</span>" !!}</td>
                                         <td>{!! $payemnt->trx_id ?? "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Pay Later</span>" !!}</td>
                                         <td>{{ $payemnt->paid ?? '0' }}</td>
                                         <td>{{ $payemnt->due ?? '0' }}</td>

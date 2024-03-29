@@ -7,7 +7,7 @@
 
 {{-- Calendar --}}
 @can('read event')
-    <div class="mb-3">
+    <div class="card p-3">
         <div class="row">
             <input type="hidden" id="events" value="{{ json_encode($events) }}">
 

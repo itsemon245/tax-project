@@ -1,6 +1,4 @@
 @php
-    $infos1 = getRecords('infos', ['section_id', 1]);
-    $infos2 = getRecords('infos', ['section_id', 2]);
     $banners = getRecords('banners');
     $appointments = getRecords('appointments');
 @endphp
@@ -10,6 +8,8 @@
 
     {{-- industries section  --}}
     <x-frontend.industries-section />
+
+    <x-section.custom-service :customServices="$customServices" />
 
     {{-- Misc Services --}}
     <section class="px-lg-5 px-2 my-5">
@@ -34,21 +34,24 @@
 
         </div>
     </section>
-    <x-section.custom-service :customServices="$customServices" />
     <x-frontend.appointment-section :sections="$appointments" />
 
     <x-frontend.achievements :achievements="$achievements" />
 
+    @if($infos1->count()>0)
     <x-frontend.info-section :title="$infos1[0]->title" class="text-capitalize">
         @foreach ($infos1 as $info)
             <x-frontend.info-card :$info />
         @endforeach
     </x-frontend.info-section>
-    <x-frontend.info-section :title="$infos2[0]->title" class="text-danger text-capitalize">
+    @endif
+    @if($infos2->count()>0)
+        <x-frontend.info-section :title="$infos2[0]->title" class="text-danger text-capitalize">
         @foreach ($infos2 as $info)
             <x-frontend.info-card :$info />
         @endforeach
     </x-frontend.info-section>
+    @endif
     <section class="mt-5 py-5" style="background: #474646;">
         <h3 class="text-light text-center">Our Valuable Partners</h3>
         <div class="scroll-wrapper">

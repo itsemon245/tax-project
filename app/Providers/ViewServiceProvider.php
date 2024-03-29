@@ -41,12 +41,16 @@ class ViewServiceProvider extends ServiceProvider
             $categories = app('categories');
             $settings = app('setting');
             $courses = app('courses');
+            $customServices = app('customServices');
+            $customServicesAccount = app('customServicesAccount');
             $view->with([
                 'settings'    => $settings,
                 'basic'       => $settings->basic,
                 'returnLinks' => $settings->return_links,
                 'categories'  => $categories,
-                'courses'     => $courses
+                'courses'     => $courses,
+                'customServices'     => $customServices,
+                'customServicesAccount'     => $customServicesAccount,
             ]);
         });
 

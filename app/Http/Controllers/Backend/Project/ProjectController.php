@@ -67,6 +67,13 @@ class ProjectController extends Controller
     public function create()
     {
         $clients = Client::with('users:name,id')->get(['id', 'name', 'phone', 'circle', 'zone']);
+        if ($clients->count() == 0) {
+            return back()->with([
+                'alert-type' => 'warning',
+                'message'=> 'You need at least 1 client to make a project!'
+            ]);
+        }
+        //!TODO: change random user to a specific role
         $users = User::inRandomOrder()->limit(6)->get();
         return view('backend.project.createProjectProgress', compact('clients', 'users'));
     }
@@ -81,7 +88,7 @@ class ProjectController extends Controller
             'start_date' => 'date|required',
             'end_date' => 'date|required',
             'weekdays' => 'required|numeric',
-            'daily_target' => 'numeric|required',
+            'daily_target' => 'numeric|required|min:1',
             'total_clients' => 'required|numeric',
         ]);
         $super_admins = Role::Where('name', 'super admin')->first()->users;

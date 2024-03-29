@@ -36,8 +36,6 @@ class ExpenseController extends Controller
         $validated = $request->validate([
             'date' => 'date',
             'category' => 'string',
-            'footer_image' => 'required',
-            'header_image' => 'required',
             'merchant' => 'string',
             'type' => 'string',
             'amounts' => 'array|required',
@@ -59,17 +57,18 @@ class ExpenseController extends Controller
         $lastBalance = Expense::latest()->first('balance')->balance;
         $balance += $lastBalance;
         $expense = Expense::create([
-            ...$request->except('amounts', 'descriptions', 'header_image', 'footer_image'),
+            ...$request->except('amounts', 'descriptions', 'print'),
             'amount' => $amount,
             'balance' => $balance,
             'items' => $items
         ]);
-        $expense->saveImage($request->header_image);
-        $expense->saveImage($request->footer_image);
         $alert = [
             'alert-type' => 'success',
             'message' => 'Expense Created'
         ];
+        if ($request->has('print')) {
+            return redirect(route('expense.show', $expense))->with('print', true);
+        }
         return redirect(route('expense.show', $expense->id))->with($alert);
     }
 
@@ -105,14 +104,8 @@ class ExpenseController extends Controller
         ]);
         // $expense->update($request->all());
         $expense->update([
-            ...$request->except('_method', '_token', 'header_image', 'footer_image'),
+            ...$request->except('_method', '_token','print'),
         ]);
-        if ($request->header_image) {
-            $expense->updateImage($request->header_image, $expense->path);
-        } else if ($request->footer_image) {
-            $expense->updateImage($request->footer_image, $expense->path);
-        }
-
         $alert = [
             'alert-type' => 'success',
             'message' => 'Expense Updated'
