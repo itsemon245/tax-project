@@ -38,8 +38,7 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        $validated = $request->except('_token', 'method');
-        // dd($validated);
+        $validated = $request->except('_token', 'method',);
         $client = Client::create($validated);
         $notification = [
             'message' => 'Client Created',
