@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-md-6">
                                 <x-backend.form.text-input label="Delivery Date" type="date" name="delivery_date"
-                                    value="{{ $service->delivery_date }}">
+                                    value="{{ \Carbon\Carbon::parse($service->delivery_date)->format('Y-m-d')}}">
                                 </x-backend.form.text-input>
                             </div>
                             <div class="col-md-6">
@@ -78,7 +78,7 @@
                             </div>
                             <div class="mt-3">
                                 <button type="submit"
-                                    class="btn btn-primary waves-effect waves-light profile-button">Update  
+                                    class="btn btn-primary waves-effect waves-light profile-button">Update
                                     Service</button>
                             </div>
 
@@ -114,11 +114,11 @@
                         <div class="mt-1">
                             <label for="section-editor-${itemCount}" class="form-label">Section Description ${itemCount}</label>
                             <textarea id="section-editor-${itemCount}" name="sections_descriptions[]" placeholder="Section Description">
-                                
+
                             </textarea>
                         </div>
                     </div>
-                    <div class="col-md-6">  
+                    <div class="col-md-6">
                         <label for="section-image-${itemCount}">
                                 <p>Section Image ${itemCount}</p>
                                 <input id="section-image-${itemCount}" class="custom-input" data-index="${itemCount}" type="file" name="sections_images[]" hidden>
@@ -126,7 +126,7 @@
                                     src="{{ asset('images/Placeholder_view_vector.svg.png') }}">
                         </label>
                         <p class="mt-2" id="note-${itemCount}">
-                            <span class="text-danger" style="font-weight: 500;">*</span>Accepted files : <span class="text-success" style="font-weight: 500;">jpg, png, svg, webp up to 5 MB</span> 
+                            <span class="text-danger" style="font-weight: 500;">*</span>Accepted files : <span class="text-success" style="font-weight: 500;">jpg, png, svg, webp up to 5 MB</span>
                         </p>
                     </div>
                 </div>

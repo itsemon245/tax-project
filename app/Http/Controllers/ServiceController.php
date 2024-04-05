@@ -78,11 +78,20 @@ class ServiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateServiceRequest $request, Service $service)
+    public function update(UpdateServiceRequest $request, Service $id)
     {
-        $service->update([
-            'image' => updateFile($request->image, $service->image, 'sections/service'),
-        ]);
+        $service = $id;
+        $service->title = $request->title;
+        $service->intro = $request->intro;
+        $service->description = $request->description;
+        $service->price = $request->price;
+        $service->price_description = $request->price_description;
+        $service->discount = $request->discount;
+        $service->is_discount_fixed = $request->discount_type;
+        $service->delivery_date = $request->delivery_date;
+        $service->rating = $request->ratting;
+        $service->reviews = $request->reviews;
+        $service->update();
         $this->setSections($request, $service, 'Service');
         $notification = [
             'message' => 'Service Updated',

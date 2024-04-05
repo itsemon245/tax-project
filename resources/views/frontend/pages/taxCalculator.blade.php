@@ -192,7 +192,7 @@
                 $(".apply").each(function(i, btn) {
                     $(btn).click((e)=>{
                         e.preventDefault()
-                        let url = "{{ route('tax.calculate', true) }}";
+                        let url = "{{ route('tax.calculate').'?apply=true' }}";
                         let form = $("#" + $(btn).data('form'));
                         form.attr('action', url)
                         form.submit()
