@@ -24,7 +24,7 @@ class StoreServiceRequest extends FormRequest
         return [
             "title" => 'required|max:100',
             "intro" => 'required|max:100',
-            "ratting" => 'required|max:1',
+            "ratting" => 'required',
             "reviews" => 'required|max:100'
         ];
     }
