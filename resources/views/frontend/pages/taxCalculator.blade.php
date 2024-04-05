@@ -193,8 +193,8 @@
                     $(btn).click((e)=>{
                         e.preventDefault()
                         let url = "{{ route('tax.calculate', true) }}";
-                        let form = $("#"+$(btn).data('form'));
-                        form.props('action', url)
+                        let form = $("#" + $(btn).data('form'));
+                        form.attr('action', url)
                         form.submit()
                     })
                 });

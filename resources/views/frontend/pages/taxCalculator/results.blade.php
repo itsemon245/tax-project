@@ -17,6 +17,7 @@
                     <th class="bg-dark text-white">No.</th>
                     <th class="bg-dark text-white">Date</th>
                     <th class="bg-dark text-white">Details</th>
+                    <th class="bg-dark text-white">Applied</th>
                     <th class="bg-dark text-white">Tax</th>
                     <th class="bg-dark text-white">Others</th>
                     <th class="bg-dark text-white">Action</th>
@@ -34,6 +35,7 @@
                                 <div class="fw-medium">Total Asset: {{ $result->total_asset }} ৳</div>
                             </div>
                         </td>
+                        <td class="fw-medium {{ $result->has_applied_for_service ? 'text-success' : 'text-danger' }}">{{ $result->has_applied_for_service ? 'Yes' : 'No' }}</td>
                         <td class="fw-medium">{{ $result->tax }} ৳</td>
                         <td>
                             <ul class="list-unstyled">

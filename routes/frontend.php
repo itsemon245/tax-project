@@ -200,6 +200,6 @@ Route::prefix('withdraw')
     });
 
 Route::get('tax/calculator', [TaxCalculatorController::class, 'calculator'])->name('tax.calculator');
-Route::post('tax/calculate/{apply?}', [TaxCalculatorController::class, 'calculate'])->name('tax.calculate');
+Route::any('tax/calculate/', [TaxCalculatorController::class, 'calculate'])->name('tax.calculate');
 Route::get('tax/calculator/{id}/result', [TaxCalculatorController::class, 'result'])->name('tax.calculation.result');
 Route::get('tax/calculator/results', [TaxCalculatorController::class, 'results'])->name('tax.calculation.results');

@@ -34,7 +34,7 @@
                     <div class=" {{ $apply == true ? '' : 'd-flex justify-content-around' }}">
                         <x-backend.ui.button type="custom" :href="route('tax.calculator')" class="btn-sm btn-info">Calculate
                             again</x-backend.ui.button>
-                            <form action="{{ route('tax.calculate', true) }}" method="post">
+                            <form action="{{ route('tax.calculate').'?apply=true&result_id='.$result->id}}" method="post">
                             @csrf
                             <x-backend.ui.button type="submit" class="btn-sm btn-success {{ $apply == true ? 'd-none' : '' }} ">Apply for service</x-backend.ui.button>
                             </form>
