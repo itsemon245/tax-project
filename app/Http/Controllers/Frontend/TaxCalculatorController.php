@@ -22,6 +22,7 @@ class TaxCalculatorController extends Controller
     {
         $request->validate([
             "name" => "required|string",
+            "tax_for"=> "required|string",
             "email" => "required|email",
             "phone" => "required|string",
             "income_source" => "string|nullable",
@@ -31,45 +32,50 @@ class TaxCalculatorController extends Controller
             "services" => 'array|nullable',
             "message" => "string|nullable",
         ]);
-        $others = 0;
-        $tax = 0;
-        $taxSetting = TaxSetting::where(['for' => $request->tax_for, 'type' => 'tax'])->first();
-        $minTax = $taxSetting->min_tax;
-        $income = (int) $request->yearly_income;
-        $turnover = (int) $request->yearly_turnover;
-        $asset = (int) $request->total_asset;
-        $incomeTax = $this->calcTax($income, $request, 'income');
-        $turnoverTax = $this->calcTax($turnover, $request, 'turnover');
-        $assetTax = $this->calcTax($asset, $request, 'asset');
-
-        $tax = ($incomeTax > $turnoverTax) ? $incomeTax + $assetTax : $turnoverTax + $assetTax;
-        $totalTax = $tax;
-        if ($request->has('rebate')) {
-            $rebate = (float) $request->rebate;
-            $afterRebate = $tax - $rebate;
-            $totalTax = $minTax > $afterRebate ? $minTax : $afterRebate;
+        try {
+            $others = 0;
+            $tax = 0;
+            $taxSetting = TaxSetting::where(['for' => $request->tax_for, 'type' => 'tax'])->first();
+            $minTax = $taxSetting->min_tax;
+            $income = (int) $request->yearly_income;
+            $turnover = (int) $request->yearly_turnover;
+            $asset = (int) $request->total_asset;
+            $incomeTax = $this->calcTax($income, $request, 'income');
+            $turnoverTax = $this->calcTax($turnover, $request, 'turnover');
+            $assetTax = $this->calcTax($asset, $request, 'asset');
+    
+            $tax = ($incomeTax > $turnoverTax) ? $incomeTax + $assetTax : $turnoverTax + $assetTax;
+            $totalTax = $tax;
+            if ($request->has('rebate')) {
+                $rebate = (float) $request->rebate;
+                $afterRebate = $tax - $rebate;
+                $totalTax = $minTax > $afterRebate ? $minTax : $afterRebate;
+            }
+            $totalTax -= (float) $request->deduction;
+            $incomeOther = $this->calcOthers($income, $request, 'income');
+            $turnoverOther = $this->calcOthers($turnover, $request, 'turnover');
+            $assetOther = $this->calcOthers($asset, $request, 'asset');
+            $otherTaxes = collect($incomeOther)->mergeRecursive($turnoverOther)->mergeRecursive($assetOther);
+            $others = [];
+            foreach ($otherTaxes as $key => $values) {
+                $max = collect($values)->max();
+                $others = [...$others, $key => $max];
+            }
+            $result = TaxCalculator::create([
+                ...$request->except('services', '_token', '_method'),
+                'tax' => $tax,
+                'others' => $others,
+                'user_id' => auth()?->id(),
+                'has_applied_for_service' => $apply
+            ]);
+        } catch (\Throwable $th) {
+            $alert = [
+                'alert-type' => 'error',
+                'message'=> $th->getMessage()
+            ];
+            return back()->with($alert);
         }
-        $totalTax -= (float) $request->deduction;
-        $incomeOther = $this->calcOthers($income, $request, 'income');
-        $turnoverOther = $this->calcOthers($turnover, $request, 'turnover');
-        $assetOther = $this->calcOthers($asset, $request, 'asset');
-        $otherTaxes = collect($incomeOther)->mergeRecursive($turnoverOther)->mergeRecursive($assetOther);
-        $others = [];
-        foreach ($otherTaxes as $key => $values) {
-            $max = collect($values)->max();
-            $others = [...$others, $key => $max];
-        }
-        $result = TaxCalculator::create([
-            ...$request->except('services'),
-            'tax' => $tax,
-            'others' => $others,
-            'user_id' => auth()?->id()
-        ]);
-        if($apply == true){
-            $data = TaxCalculator::find($this->applyForService($result))->first();
-            $data->update(['has_applied_for_service' => true]);
-
-        }
+       
          return view('frontend.pages.taxCalculator.result', compact('result','apply'));
     }
     public function results()
