@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Backend\Service\CustomServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ResultController;
@@ -45,12 +44,14 @@ use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\ReturnForm\ReturnFormController;
+use App\Http\Controllers\Backend\Service\CustomServiceController;
 use App\Http\Controllers\Backend\Withdrawal\WithdrawalController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\TaxCalculator\TaxSettingController;
 use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
+use App\Http\Controllers\Backend\Notification\NotificationController;
 use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
@@ -173,6 +174,12 @@ Route::prefix('admin')
             ->only('index')
             ->middleware('can:read promo code');
         Route::resource('promo-code', PromoCodeController::class)
+            ->except('index')
+            ->middleware('can:manage promo code');
+            Route::resource('notification', NotificationController::class)
+            ->only('index')
+            ->middleware('can:read promo code');
+        Route::resource('notification', NotificationController::class)
             ->except('index')
             ->middleware('can:manage promo code');
 

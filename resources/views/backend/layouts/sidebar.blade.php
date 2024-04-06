@@ -1034,6 +1034,29 @@
                                         </div>
                                     </li>
                                 @endcanany
+                                @canany(['manage promo code', 'read promo code'])
+                                <li>
+                                    <a href="#notificationSection" data-bs-toggle="collapse">
+                                        <i class="mdi mdi-bell"></i>
+                                        <span>Notification System</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="notificationSection">
+                                        <ul class="nav-second-level">
+                                            @can('manage promo code')
+                                                <li>
+                                                    <a href="{{ route('notification.create') }}">Create</a>
+                                                </li>
+                                            @endcan
+                                            @canany(['manage promo code', 'read promo code'])
+                                                <li>
+                                                    <a href="{{ route('notification.index') }}">View Notifications</a>
+                                                </li>
+                                            @endcanany
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endcanany
 
                                 @canany(['manage reviews', 'read reviews'])
                                     <li>
