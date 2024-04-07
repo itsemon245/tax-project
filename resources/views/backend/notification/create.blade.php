@@ -1,6 +1,4 @@
 @extends('backend.layouts.app')
-
-
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Create Notification']" />
 

@@ -417,5 +417,5 @@
                 ui.toggle.onlyIndividual(e)
             });
         });
-    </script>
+    </script> 
 @endpush
