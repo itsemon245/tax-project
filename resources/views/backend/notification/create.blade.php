@@ -3,15 +3,15 @@
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Create Notification']" />
 
     <x-backend.ui.section-card name="Create Notification">
-        <form action="{{ route('promo-code.store') }}" method="POST">
+        <form action="{{ route('notification.store') }}" method="POST">
             @csrf
-            <div class="container rounded bg-white py-2">
-
+            <div class="container py-2 bg-white rounded">
                 <div class="row justify-content-center">
                     <div class="col-md-12">
-                        <textarea name="comment" required placeholder="Input your discussion content" cols="10" rows="3" class="form-control"></textarea>
+                        <textarea name="comment" required placeholder="Input your discussion content" cols="10" rows="3"
+                            class="form-control"></textarea>
                     </div>
-                    <div class="col-md-12 row mt-3">
+                    <div class="mt-3 col-md-12 row">
                         <div class="col-md-6">
                             <x-backend.form.select-input id="user_type" label="User Type" name="user_type">
                                 <option selected value="all">All</option>
@@ -21,8 +21,8 @@
                             </x-backend.form.select-input>
                         </div>
                         <div class="col-md-6">
-                            <div id="user-select-wrapper" class="d-none mb-2">
-                                <label for="user-select" class="form-label mb-0">Select User</label>
+                            <div id="user-select-wrapper" class="mb-2 d-none">
+                                <label for="user-select" class="mb-0 form-label">Select User</label>
                                 <select id="user-select" name="user_id" placeholde="Choose User...">
                                 </select>
                             </div>
@@ -35,7 +35,7 @@
                     </div>
 
 
-{{--                     
+                    {{--
                     <div class="col-10 d-flex">
                         <textarea name="comment" required placeholder="Input your discussion content" cols="10" rows="3" class="form-control"></textarea>
                     </div>
@@ -49,8 +49,8 @@
                         </x-backend.form.select-input>
                     </div>
                     <div class="col-md-5 col-6">
-                        <div id="user-select-wrapper" class="d-none mb-2">
-                            <label for="user-select" class="form-label mb-0">Select User</label>
+                        <div id="user-select-wrapper" class="mb-2 d-none">
+                            <label for="user-select" class="mb-0 form-label">Select User</label>
                             <select id="user-select" name="user_id" placeholde="Choose User...">
                             </select>
                         </div>
