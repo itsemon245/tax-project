@@ -34,9 +34,9 @@
             </thead>
 
             <tbody>
-                @forelse ($appointments as $appointment)
+                @forelse ($appointments as $key => $appointment)
                     <tr>
-                        <td>1</td>
+                        <td>{{++$key}}</td>
                         <td>
                             <p class="mb-1">
                                 <strong>Name:</strong> <span>{{ $appointment->name }}</span>

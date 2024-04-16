@@ -42,10 +42,10 @@
                             <div class="text-muted text-start">
                                 Transaction Id: <b>{{ $item->trx_id }}</b>
                             </div>
-                            <div class="text-muted text-start">
+                            {{-- <div class="text-muted text-start">
                                 Expire Date:
                                 <b>{{ $item->expire_date ? \Carbon\Carbon::parse($item->expire_date)->format('d F, Y') : 'After Approval' }}</b>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="bg-primary p-3 w-full">
                             <div class="w-full mb-1 text-black d-flex justify-contents-between">

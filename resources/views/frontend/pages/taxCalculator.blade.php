@@ -179,11 +179,14 @@
     @push('customJs')
         <script>
             $(document).ready(function() {
-                $('.form-check-input').on('change', e => {
-                    $(e.target)
+                $('.form-check-input').each((i, input)=>{
+                console.log(input)
+                    $(input).on('change', e => {
+                        $(input)
                         .parent()
                         .toggleClass('check-active')
                         .toggleClass('bg-light');
+                    })
                 })
             });
         </script>

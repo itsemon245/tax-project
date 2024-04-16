@@ -11,6 +11,7 @@ use App\Models\Course;
 use App\Models\Referee;
 use App\Models\UserAppointment;
 use App\Models\Video;
+use App\Notifications\OrderApprovedNotification;
 
 class OrderController extends Controller
 {
@@ -55,6 +56,7 @@ class OrderController extends Controller
             'message' => 'Order Approved Successfully',
             'alert-type' => 'success',
         ];
+        $user->notify(new OrderApprovedNotification($user));
 
         return redirect()
             ->back()
@@ -71,7 +73,7 @@ class OrderController extends Controller
         }
         $payments->save();
         $notification = [
-            'message' => 'Order Approved Successfully',
+            'message' => 'Appointment Approved Successfully',
             'alert-type' => 'success',
         ];
 

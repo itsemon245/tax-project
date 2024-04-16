@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Mail\Appoinment;
 use Carbon\Carbon;
+use App\Mail\Appoinment;
 use App\Models\Calendar;
 use Illuminate\Http\Request;
 use App\Models\UserAppointment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AppointmentApprovedNotification;
 
 class UserAppointmentController extends Controller
 {
     function index()
     {
         $appointments = UserAppointment::where('is_approved', false)->with('map', 'user')->latest()->paginate(paginateCount());
+        $apt = $appointments->first();
         return view('backend.user.appointments', compact('appointments'));
     }
     function approvedList()
@@ -41,7 +44,7 @@ class UserAppointmentController extends Controller
             'start' => Carbon::parse($appointment->date.", " .$appointment->time, 'Asia/Dhaka')->format('Y-m-d H:m:s'),
             'description' => null
         ]);
-        Mail::to($appointment->email)->send(new Appoinment());
+        Notification::route('mail', $appointment->email)->notify(new AppointmentApprovedNotification($appointment));
         $alert = [
             'message' => 'Appointment Approved',
             'alert-type' => 'success'

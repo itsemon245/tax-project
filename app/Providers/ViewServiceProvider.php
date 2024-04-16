@@ -14,7 +14,7 @@ class ViewServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
-    public function register() : void
+    public function register(): void
     {
         //
     }
@@ -22,7 +22,7 @@ class ViewServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot() : void
+    public function boot(): void
     {
         //
 
@@ -46,6 +46,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with([
                 'settings'    => $settings,
                 'basic'       => $settings->basic,
+                'logo' => $settings->basic->logo,
                 'returnLinks' => $settings->return_links,
                 'categories'  => $categories,
                 'courses'     => $courses,

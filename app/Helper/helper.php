@@ -297,3 +297,45 @@ function paginateCount(?int $count = 20): int
     // $count = $count === null ? $defaultCount : $count;
     return $count;
 }
+/**
+ * Extract Coordinates from google map's embeeded url
+ *
+ * @param string $url
+ * @return mixed
+ */
+function extractCoordinates(string $url)
+{
+    $pattern = '/@(-?\d+\.\d+),(-?\d+\.\d+)/';
+    preg_match($pattern, $url, $matches);
+
+    if (count($matches) == 3) {
+        $latitude = $matches[1];
+        $longitude = $matches[2];
+        return array($latitude, $longitude);
+    } else {
+        return false;
+    }
+}
+/**
+ * Construct Google maps shared url from coordinates
+ *
+ * @param string $latitude
+ * @param string $longitude
+ * @return string
+ */
+function constructShareURL($latitude, $longitude)
+{
+    $baseUrl = "https://www.google.com/maps/place/";
+    return $baseUrl . $latitude . "," . $longitude;
+}
+
+function convertEmbedUrl(string $embeddedUrl): string|null
+{
+    $coordinates = extractCoordinates($embeddedUrl);
+
+    if ($coordinates !== false) {
+        // Construct share URL
+        return constructShareURL($coordinates[0], $coordinates[1]);
+    }
+    return null;
+}
