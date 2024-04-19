@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Page;
 
 use App\Models\Info;
 use App\Models\Service;
+use App\Models\PartnerSection;
 use App\Models\ServiceCategory;
 use App\Models\ServiceSubCategory;
 use App\Http\Controllers\Controller;
@@ -46,6 +47,7 @@ class ServicePageController extends Controller
     public function service($id)
     {
         $service = Service::find($id);
-        return view('frontend.pages.services.singleService', compact('service'));
+        $partners       = PartnerSection::latest()->limit(10)->get();
+        return view('frontend.pages.services.singleService', compact('service', 'partners'));
     }
 }
