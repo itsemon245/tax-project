@@ -24,7 +24,9 @@
                     <tr>
                         <th>#</th>
                         <th>User Info</th>
+                        @if ($appointments->first()?->expertProfile)
                         <th>Appointment With</th>
+                        @endif
                         <th>Date & Time</th>
                         <th>Status</th>
                         <th>Location</th>

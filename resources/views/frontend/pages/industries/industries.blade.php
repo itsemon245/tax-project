@@ -3,6 +3,99 @@
     $appointments = getRecords('appointments');
 @endphp
 @extends('frontend.layouts.app')
+@push('customCss')
+<style>
+    .scroll-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+    }
+
+
+    @media (min-width: 970px) {
+        .scroll-wrapper {
+            padding: 1rem 5rem
+        }
+    }
+
+    @media (min-width: 640px) {
+        .scroll-wrapper {
+            gap: 1rem;
+            padding: 2rem;
+        }
+    }
+
+    .media-scroller {
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        overscroll-behavior-inline: contain;
+        scroll-behavior: smooth;
+    }
+
+    .media-elements {
+        display: flex;
+        align-items: start;
+        background: white;
+        border-radius: 10px;
+        gap: 1rem;
+        padding: 1rem;
+        max-width: max-content;
+    }
+    
+
+    .media-elements .comment {
+        width: 100px;
+        display: inline;
+        margin: 0;
+        text-align: justify;
+    }
+
+    .media-elements .image {
+        max-width: 70px;
+    }
+
+    @media (min-width:600px) {
+        .media-elements .image {
+            max-width: 120px;
+        }
+
+        .media-elements .comment {
+            width: 200px
+        }
+    }
+
+    #next,
+    #prev {
+        background: none;
+        border: none;
+        padding: 0;
+    }
+
+    .custom-icon {
+        color: var(--bs-primary);
+        font-size: 28px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+    .media-scroller::-webkit-scrollbar {
+        appearance: none;
+        display: none;
+    }
+
+    .snaps-inline {
+        scroll-snap-type: inline mandatory;
+        scroll-padding-inline: 5rem;
+    }
+
+    .snaps-inline>* {
+        scroll-snap-align: start;
+    }
+</style>
+@endpush
 @section('main')
     <x-frontend.hero-section :banners="$banners" />
 
@@ -62,7 +155,7 @@
                 {{-- Patner section is starting --}}
                 @foreach ($partners as $partner)
                     <div class="media-elements">
-                        <div class="d-flex align-items-start gap-3 p-3" style="width: 100%;">
+                        <div class="d-flex align-items-start gap-3 p-3">
                             <div>
                                 <img loading="lazy" class="border image rounded-circle"
                                     src="{{ useImage($partner->image) }}" width="80px" height="80px"
