@@ -21,7 +21,7 @@
 
     <x-backend.ui.section-card name="Promo Code List">
         @can('manage promo code')
-        <x-backend.ui.button type="custom" :href="route('promo-code.create')" class="btn-success rounded-3 btn-sm mb-2">Create New
+        <x-backend.ui.button type="custom" :href="route('notification.create')" class="btn-success rounded-3 btn-sm mb-2">Create New
         </x-backend.ui.button>
         @endcan
         <x-backend.table.basic :items="$notifications">
