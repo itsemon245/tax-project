@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Backend\Notification;
 use App\Models\User;
 use App\Models\Notifcation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AnnouncementNotification;
 
 class NotificationController extends Controller
 {
@@ -14,7 +17,13 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        return view('backend.notification.view');
+        $notifications = DB::table('notifications')
+        ->join('users', 'notifications.notifiable_id', '=', 'users.id')
+        ->where('data->type', 'announcement')
+        ->select('notifications.*', 'users.name as user_name', 'users.email as user_email')
+        ->get();
+        // dd($notifications);
+        return view('backend.notification.view', compact('notifications'));
     }
 
     /**
@@ -32,7 +41,7 @@ class NotificationController extends Controller
     {
         $request->validate([
             'user_type' => 'required',
-            'comment' => 'required'
+            'message' => 'required'
         ]);
 
         $users = [];
@@ -52,16 +61,19 @@ class NotificationController extends Controller
                 break;
 
             default:
+                return back()->with([
+                    'alert-type' => 'error',
+                    'message' => 'Invalid User Type'
+                ]);
+
                 break;
         }
 
-        foreach ($users as $item) {
-            $notifications = new Notifcation();
-            $notifications->user_id = $item->id;
-            $notifications->message = $request->comment;
-            $notifications->save();
-        }
-        return view('backend.notification.create');
+        Notification::send($users, new AnnouncementNotification($request->message));
+        return redirect(route('notification.index'))->with([
+            'alert-type' => 'success',
+            'message' => 'Announcement Sent Successfully!'
+        ]);
     }
 
     /**

@@ -24,49 +24,29 @@
         <x-backend.ui.button type="custom" :href="route('promo-code.create')" class="btn-success rounded-3 btn-sm mb-2">Create New
         </x-backend.ui.button>
         @endcan
-        <x-backend.table.basic :items="$promos">
+        <x-backend.table.basic :items="$notifications">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Promo Code</th>
-                    <th>Discount</th>
-                    <th>Expired</th>
-                    @can('manage promo code')
-                    <th>Status</th>
-                    <th>Action</th>
-                    @endcan
+                    <th>User</th>
+                    <th>Message</th>
+                    <th>Created at</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($promos as $key => $promo)
+                @foreach ($notifications as $key => $notification)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $promo->code }}</td>
-                        <td>{{ $promo->amount }}
-                            @if ($promo->is_discount)
-                                %
-                            @else
-                                <span class="mdi mdi-currency-bdt font-16"></span>
-                            @endif
+                        <td>
+                            <div>Name: {{$notification->user_name}}</div>
+                            <div>Email: {{$notification->user_email}}</div>
                         </td>
-                        <td>{{ Carbon\Carbon::parse($promo->expired_at)->diffForHumans() }}</td>
-                        @can('manage promo code')
-                            <td>
-                                <div class="form-check form-switch ">
-                                    <input data-id="{{ $promo->id }}" type="checkbox" class="form-check-input toggle-status"
-                                        id="toggle-status" @checked($promo->status)>
-                                </div>
-                            </td>
-                            <td>
-                                <button id="{{ $promo->id }}"
-                                    class="delete-promo btn btn-danger btn-sm waves-effect waves-light">Delete</button>
-                                <form action="{{ route('promo-code.destroy', $promo->id) }}"
-                                    id="delete-form-{{ $promo->id }}" method="post" class="d-none">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                            </td>
-                        @endcan
+                        <td style="max-width: 55ch">
+                            <div>{!!json_decode($notification->data)->message!!}</div>
+                        </td>
+                        <td style="max-width: 55ch">
+                            <div>{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

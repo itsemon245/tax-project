@@ -2,9 +2,11 @@
     'hasImage' => false,
 ])
 @php
-    $id = $attributes->get('id');
+    $id = $attributes->get('id') ?? uniqid('editor-');
     $label = $attributes->has('label') ? $attributes->get('label') : $attributes->get('name');
-    $placeholder = $attributes->has('placeholder') ? $attributes->get('placeholder') : str($attributes->get('label'))->title();
+    $placeholder = $attributes->has('placeholder')
+        ? $attributes->get('placeholder')
+        : str($attributes->get('label'))->title();
     $required = $attributes->get('required');
     $name = $attributes->get('name');
 @endphp
@@ -29,7 +31,7 @@
             <span class="text-danger">*</span>
         @endif
     </label>
-    <textarea {{ $attributes->merge(['value' => $slot]) }}>
+    <textarea {{ $attributes->merge(['value' => $slot, 'id' => $id]) }}>
     {{ $slot }}
     </textarea>
     @error($name)

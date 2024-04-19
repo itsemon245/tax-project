@@ -7,7 +7,7 @@
 </x-slot:header>
 
 {{-- Body --}}
-{{ $slot }}
+{!! $slot !!}
 
 {{-- Subcopy --}}
 @isset($subcopy)

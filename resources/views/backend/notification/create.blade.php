@@ -7,40 +7,7 @@
             @csrf
             <div class="container py-2 bg-white rounded">
                 <div class="row justify-content-center">
-                    <div class="col-md-12">
-                        <textarea name="comment" required placeholder="Input your discussion content" cols="10" rows="3"
-                            class="form-control"></textarea>
-                    </div>
-                    <div class="mt-3 col-md-12 row">
-                        <div class="col-md-6">
-                            <x-backend.form.select-input id="user_type" label="User Type" name="user_type">
-                                <option selected value="all">All</option>
-                                <option value="partner">Partner</option>
-                                <option value="user">User</option>
-                                <option value="individual">Individual</option>
-                            </x-backend.form.select-input>
-                        </div>
-                        <div class="col-md-6">
-                            <div id="user-select-wrapper" class="mb-2 d-none">
-                                <label for="user-select" class="mb-0 form-label">Select User</label>
-                                <select id="user-select" name="user_id" placeholde="Choose User...">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-primary rounded-3 waves-effect waves-light profile-button">
-                            Create
-                        </button>
-                    </div>
-
-
-                    {{--
-                    <div class="col-10 d-flex">
-                        <textarea name="comment" required placeholder="Input your discussion content" cols="10" rows="3" class="form-control"></textarea>
-                    </div>
-                    <div class="col-12"></div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-6">
                         <x-backend.form.select-input id="user_type" label="User Type" name="user_type">
                             <option selected value="all">All</option>
                             <option value="partner">Partner</option>
@@ -48,19 +15,21 @@
                             <option value="individual">Individual</option>
                         </x-backend.form.select-input>
                     </div>
-                    <div class="col-md-5 col-6">
-                        <div id="user-select-wrapper" class="mb-2 d-none">
-                            <label for="user-select" class="mb-0 form-label">Select User</label>
+                    <div class="col-md-6">
+                        <div id="user-select-wrapper" class="d-none">
+                            <label for="user-select" class="mb-1 form-label">Select User</label>
                             <select id="user-select" name="user_id" placeholde="Choose User...">
                             </select>
                         </div>
                     </div>
-                    <div class="col-12"></div>
-                    <div class="col-md-3">
+                    <div class="col-md-12">
+                        <x-form.ck-editor name="message"></x-form.ck-editor>
+                    </div>
+                    <div class="col-md-12">
                         <button type="submit" class="btn btn-primary rounded-3 waves-effect waves-light profile-button">
                             Create
                         </button>
-                    </div> --}}
+                    </div>
                 </div>
 
 
