@@ -35,7 +35,7 @@
                                 {{ Carbon\Carbon::parse($service->delivery_date)->addDays(1)->diffInDays() }} Days</p>
                         </div>
                         <div class="px-4">
-                            <a href="#"
+                            <a href="{{ route('payment.create', ['model' => Service::class, 'id' => $service->id]) }}"
                                 class="w-100 d-flex justify-content-center mt-4 align-items-center btn btn-dark btn-sm">Continue<i
                                     class="mx-2 mdi mdi-arrow-collapse-right "></i></a>
                         </div>
