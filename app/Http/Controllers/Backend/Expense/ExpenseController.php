@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Backend\Expense;
 
 use App\Models\Expense;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
 
 class ExpenseController extends Controller
 {
@@ -13,8 +15,27 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::with('images')->latest()->paginate(paginateCount());
-        return view('backend.expense.index', compact('expenses'));
+        $query = Expense::with('images')->latest();
+        if(count(request()->all()) > 0) {
+            foreach ($this->allowedQueries() as $key => $q) {
+                if (request()->query($key)) {
+                    if (Str::contains($key, ['credit'])) {
+                        $query = $query->where(function (Builder $nq) use ($q) {
+                            $nq->where($q[0]);
+                            $nq->orWhere($q[1]);
+                        });
+                    } else {
+                        $query = $query->where($q);
+                    }
+                }
+            }
+        }
+        $expenses = $query->paginate(paginateCount());
+        $merchants = Expense::select('merchant')->distinct()->get()->pluck('merchant');
+        $categories = Expense::select('category')->distinct()->get()->pluck('category');
+        $max = Expense::select('amount')->max('amount');
+        $min = Expense::select('amount')->min('amount');
+        return view('backend.expense.index', compact('expenses', 'categories', 'merchants', 'max', 'min'));
     }
 
     /**
@@ -104,7 +125,7 @@ class ExpenseController extends Controller
         ]);
         // $expense->update($request->all());
         $expense->update([
-            ...$request->except('_method', '_token','print'),
+            ...$request->except('_method', '_token', 'print'),
         ]);
         $alert = [
             'alert-type' => 'success',
@@ -126,5 +147,30 @@ class ExpenseController extends Controller
             'message' => 'Expense Deleted'
         ];
         return back()->with($alert);
+    }
+
+    protected function allowedQueries()
+    {
+        return [
+            "date_from" => [['date', ">=", request()->query('date_from')]],
+            "date_to" => [['date', "<=", request()->query('date_to')]],
+            "merchant" => [['merchant', '=', request()->query('merchant')]],
+            "category" => [['category', '=', request()->query('category')]],
+            "credit_from" => [
+                    [
+                        ['type', "=", "credit"],
+                        ['amount', ">=", request()->query('credit_from')],
+                        ['type', "=", "credit"],
+                        ['amount', "<=", request()->query('credit_to')],
+                    ],
+                    [
+                        ['type', "=", "debit"],
+                        ['amount', ">=", request()->query('debit_from')],
+                        ['type', "=", "debit"],
+                        ['amount', "<=", request()->query('debit_to')]
+                    ]
+            ]
+
+        ];
     }
 }

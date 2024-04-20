@@ -24,6 +24,73 @@
     <x-backend.ui.breadcrumbs :list="['Management', 'Expense', 'List']" />
     <!-- end page title -->
 
+    <div id="advance-search" class="d-inline-block d-none"
+        style="border-radius:50px; border: 2px solid var(--ct-gray-500);padding:3.5px 8px;" role="button">
+        <span class="mdi mdi-filter-variant fs-5"></span> Advanced Search <span id="chevron-icon"
+            class="mdi mdi-chevron-down fs-5"></span>
+    </div>
+    {{-- TODO: change advance search options here --}}
+    <div id="advance-search-options" class="card rounded-3 d-none mt-2" style="border: 2px solid var(--ct-gray-500);">
+        <div class="card-body">
+            <form action="{{ url()->current() }}" class="row">
+                <div class="col-12">
+                    <div class="row align-items-center">
+                        <div class="col-sm-3">
+                            <x-backend.form.text-input class="advance-filter-options mb-2" name="date_from"
+                                label="Start Date" type="date" :value="request()->query('date_from')" />
+                        </div>
+                        <div class="col-sm-3">
+                            <x-backend.form.text-input class="advance-filter-options mb-2" name="date_to" label="End Date"
+                                type="date" :value="request()->query('date_to')" />
+                        </div>
+                        <div class="col-sm-3">
+                            <x-form.selectize class="advance-filter-options mb-2" id="merchant" name="merchant"
+                                label="Merchant" placeholder="Select Merchant" :canCreate="false">
+                                @foreach ($merchants as $merchant)
+                                    <option value="{{ $merchant }}" @selected(request()->query('merchant') == $merchant)>
+                                        {{ str($merchant)->title() }}</option>
+                                @endforeach
+                            </x-form.selectize>
+                        </div>
+                        <div class="col-sm-3">
+                            <x-form.selectize class="advance-filter-options mb-2" id="category" name="category"
+                                label="Category" placeholder="Select Category" :canCreate="false">
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category }}" @selected(request()->query('category') == $category)>
+                                        {{ str($category)->title() }}</option>
+                                @endforeach
+                            </x-form.selectize>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <x-range-slider class="advance-filter-options" name="credit" id="credit"
+                        from="{{ request()->query('credit_from') ?? $min }}"
+                        to="{{ request()->query('credit_to') ?? $max }}" step='50'
+                        icon="mdi mdi-currency-bdt"></x-range-slider>
+                </div>
+                <div class="col-lg-6">
+                    <x-range-slider class="advance-filter-options" name="debit" id="debit"
+                        from="{{ request()->query('debit') ?? $min }}" to="{{ request()->query('debit_to') ?? $max }}"
+                        step='50' icon="mdi mdi-currency-bdt"></x-range-slider>
+                </div>
+                <div class="col-12 mt-2">
+                    <div class="float-end">
+                        <x-backend.ui.button type="custom" href="{{ route('expense.index') }}"
+                            class="btn-sm btn-outline-danger">Reset
+                        </x-backend.ui.button>
+                        <x-backend.ui.button type="button" id="advance-search-close" class="btn-sm btn-outline-dark">
+                            Close
+                        </x-backend.ui.button>
+                        <x-backend.ui.button id="apply-btn" type="submit"
+                            class="btn-sm btn-primary">Apply</x-backend.ui.button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
     <x-backend.ui.section-card name="All Expenses">
         @can('create expense')
             <x-backend.ui.button type="custom" :href="route('expense.create')"
@@ -46,13 +113,13 @@
                         </th>
                         <th>Cr</th>
                         <th>Dr</th>
-                        <th>Balance</th>
+                        <th>Credit</th>
                         @canany(['update expense', 'update expense', 'delete expense', 'print expense', 'read expense'])
                             <th>Actions</th>
                         @endcanany
                     </tr>
                 <tbody>
-                    @forelse ($expenses as $key=> $expense)
+                    @foreach ($expenses as $key => $expense)
                         <tr>
                             <td>{{ ++$key }}</td>
                             <td>{{ $expense->date->format('d M, Y') }}</td>
@@ -135,11 +202,7 @@
                                 </td>
                             @endcanany
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="text-center">No expenses yet</td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
                 </thead>
             </x-backend.table.basic>
@@ -154,6 +217,56 @@
             $(document).ready(function() {
                 $('.print-btn').on('click', function(e) {
                     $(e.target.dataset.target).printThis()
+                })
+
+
+                const filterWrapper = $('#basic-datatable_filter')
+                // removes serach text from label
+                $('#basic-datatable_filter label').contents().filter(function() {
+                    return this.nodeType === 3;
+                }).remove();
+                const search = $('#basic-datatable_filter input[type="search"]')
+                const searchLabel = search.parent()
+                const advanceSearch = $('#advance-search')
+                const advanceSearchOptions = $('#advance-search-options')
+                advanceSearchOptions.removeClass('d-none')
+                advanceSearchOptions.hide()
+
+
+                search
+                    .removeClass('form-control form-control-sm')
+                    .css({
+                        'border': 'none',
+                        'outline': 'transparent',
+                        'padding': 0,
+                        'margin-left': 8
+                    })
+                    .attr('placeholder', 'Search')
+                searchLabel
+                    .prepend('<span class="fas fa-search"></span>')
+                    .css({
+                        'border': '2px solid var(--ct-gray-500)',
+                        'border-radius': '50px',
+                        'padding': '4px 1rem',
+                        'display': 'inline-flex',
+                        'align-items': 'baseline',
+                    })
+
+
+                // console.log(searchLabel);
+                filterWrapper.append(advanceSearch.removeClass('d-none'))
+                $('#basic-datatable_wrapper').children().first().after(advanceSearchOptions);
+                advanceSearch.click(e => {
+                    e.preventDefault()
+                    advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-down')
+                    advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-up')
+                    $('#advance-search-options').slideToggle()
+                })
+                $('#advance-search-close').click(e => {
+                    e.preventDefault()
+                    advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-down')
+                    advanceSearch.find('#chevron-icon').toggleClass('mdi-chevron-up')
+                    $('#advance-search-options').slideToggle()
                 })
             });
         </script>
