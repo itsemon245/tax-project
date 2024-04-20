@@ -92,9 +92,9 @@
                                             <h5>Tax & Computation Information</h5>
                                             <x-backend.form.text-input label="Yearly Turnover" :value="old('yearly_turnover')"
                                                 name="yearly_turnover">
-                                                <x-backend.form.text-input label="Yearly Income" :value="old('yearly_income')"
-                                                    name="yearly_income">
-                                                </x-backend.form.text-input>
+                                            </x-backend.form.text-input>
+                                            <x-backend.form.text-input label="Yearly Income" :value="old('yearly_income')"
+                                                name="yearly_income">
                                             </x-backend.form.text-input>
                                             <x-backend.form.text-input label="Total Assets" type="number" :value="old('total_asset')"
                                                 name="total_asset">
