@@ -74,37 +74,40 @@
                                                 type="text" name="income_source">
                                             </x-backend.form.text-input>
 
-                                            <div>
-                                                <label for="gender" class="d-block form-label">Gender</label>
-                                                <label for="male" class=" mx-2">
-                                                    <input id="male" type="radio" name="gender" value="male">
-                                                    Male
-                                                </label>
-                                                <label for="female" class=" mx-2">
-                                                    <input id="female" type="radio" name="gender" value="female">
-                                                    Female
-                                                </label>
-                                            </div>
+                                            @if ($for === 'individual')
+                                                <div>
+                                                    <label for="gender" class="d-block form-label">Gender</label>
+                                                    <label for="male" class=" mx-2">
+                                                        <input id="male" type="radio" name="gender" value="male">
+                                                        Male
+                                                    </label>
+                                                    <label for="female" class=" mx-2">
+                                                        <input id="female" type="radio" name="gender" value="female">
+                                                        Female
+                                                    </label>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="col-md-6">
                                             <h5>Tax & Computation Information</h5>
                                             <x-backend.form.text-input label="Yearly Turnover" :value="old('yearly_turnover')"
                                                 name="yearly_turnover">
+                                                <x-backend.form.text-input label="Yearly Income" :value="old('yearly_income')"
+                                                    name="yearly_income">
+                                                </x-backend.form.text-input>
                                             </x-backend.form.text-input>
                                             <x-backend.form.text-input label="Total Assets" type="number" :value="old('total_asset')"
                                                 name="total_asset">
-                                            </x-backend.form.text-input>
-                                            <x-backend.form.text-input label="Yearly Income" :value="old('yearly_income')"
-                                                name="yearly_income">
-                                            </x-backend.form.text-input>
-                                            <x-backend.form.text-input label="Tax Deduction" type="number"
-                                                :value="old('deduction')" name="deduction">
                                             </x-backend.form.text-input>
                                             @if ($for === 'individual')
                                                 <x-backend.form.text-input label="Investment of Rebate" :value="old('rebate')"
                                                     name="rebate">
                                                 </x-backend.form.text-input>
                                             @endif
+
+                                            <x-backend.form.text-input label="Tax Deduction" type="number"
+                                                :value="old('deduction')" name="deduction">
+                                            </x-backend.form.text-input>
 
                                         </div>
 
