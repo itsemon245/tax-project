@@ -11,6 +11,148 @@
     <x-backend.ui.section-card>
         <x-backend.ui.recent-update-invoice :method="route('invoice.create')" />
         <x-ui.calendar :currentEvents="$currentEvents" :events="$events" :services="$services" :clients="$clients" />
+       
+        {{-- Project Progress Starts --}}
+        <h3 class="fw-bold text-center mb-3 mt-5">Stat Report</h3>
+        <div id="progressbarwizard">
+            <div class="d-flex justify-content-center">
+                <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a href="#daily-stat" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 active"
+                            aria-selected="true" role="tab" tabindex="-1">
+                            <i class="mdi mdi-clock-time-two-outline"></i>
+                            <span class="d-none d-sm-inline">Daily</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="#weekly-stat" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0"
+                            aria-selected="false" role="tab" tabindex="-1">
+                            <i class="mdi mdi-table-clock"></i>
+                            <span class="d-none d-sm-inline">Weekly</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="#monthly-stat" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0"
+                            aria-selected="false" role="tab" tabindex="-1">
+                            <i class="mdi mdi-table-clock"></i>
+                            <span class="d-none d-sm-inline">Monthly</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="#total-stat" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0"
+                            aria-selected="false" role="tab" tabindex="-1">
+                            <i class="mdi mdi-table-clock"></i>
+                            <span class="d-none d-sm-inline">All</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content ">
+                <div class="tab-pane my-3 active" id="daily-stat" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @forelse ($projects as $project)
+                                @php
+                                    $progress = $project->daily_target === 0 ? 100 : ($project->daily_progress * 100) / $project->daily_target;
+                                    $progress = round($progress);
+                                    $color = match (true) {
+                                        $progress <= 30 => 'bg-danger',
+                                        $progress > 30 && $progress <= 60 => 'bg-warning',
+                                        default => 'bg-success',
+                                    };
+                                @endphp
+                                <span class="text-dark font-16 fw-bold">{{ $project->name }}:</span>
+                                <div id="bar" class="progress mb-2 w-100" style="height: max-content;">
+                                    <div class="bar progress-bar {{ $color }}" style="width: {{ $progress }}%;">
+                                        <span class="text-light font-18 fw-bold">{{ $progress }}%</span>
+                                    </div>
+                                </div>
+                            @empty
+                                <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                            @endforelse
+                        </div>
+                    </div> <!-- end row -->
+                </div>
+                <div class="tab-pane my-3" id="weekly-stat" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @forelse ($projects as $project)
+                                @php
+                                    $weekly_progress = $project->daily_progress / $project->weekly_target;
+                                    $progress = $project->weekly_target === 0 ? 100 : $weekly_progress * 100;
+                                    $progress = round($progress);
+                                    $color = match (true) {
+                                        $progress <= 30 => 'bg-danger',
+                                        $progress > 30 && $progress <= 60 => 'bg-warning',
+                                        default => 'bg-success',
+                                    };
+                                @endphp
+                                <span class="text-dark font-16 fw-bold">{{ $project->name }}:</span>
+                                <div id="bar" class="progress mb-2 w-100" style="height: max-content;">
+                                    <div class="bar progress-bar {{ $color }}" style="width: {{ $progress }}%;">
+                                        <span class="text-light font-18 fw-bold">{{ $progress }}%</span>
+                                    </div>
+                                </div>
+                            @empty
+                                <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                            @endforelse
+                        </div>
+                    </div> <!-- end row -->
+                </div>
+                <div class="tab-pane my-3" id="monthly-stat" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @forelse ($projects as $project)
+                                @php
+                                    $progress = ($project->daily_progress / $project->monthly_target) * 100;
+                                    $progress = round($progress);
+                                    $color = match (true) {
+                                        $progress <= 30 => 'bg-danger',
+                                        $progress > 30 && $progress <= 60 => 'bg-warning',
+                                        default => 'bg-success',
+                                    };
+                                @endphp
+                                <span class="text-dark font-16 fw-bold">{{ $project->name }}:</span>
+                                <div id="bar" class="progress mb-2 w-100" style="height: max-content;">
+                                    <div class="bar progress-bar {{ $color }}"
+                                        style="width: {{ $progress }}%;"><span
+                                            class="text-light font-18 fw-bold">{{ $progress }}%</span></div>
+                                </div>
+                            @empty
+                                <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                            @endforelse
+                        </div>
+                    </div> <!-- end row -->
+                </div>
+                <div class="tab-pane my-3" id="total-stat" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @forelse ($projects as $project)
+                                @php
+                                    $progress = ($project->daily_progress / $project->total_clients) * 100;
+                                    $progress = round($progress);
+                                    $color = match (true) {
+                                        $progress <= 30 => 'bg-danger',
+                                        $progress > 30 && $progress <= 60 => 'bg-warning',
+                                        default => 'bg-success',
+                                    };
+                                @endphp
+                                <span class="text-dark font-16 fw-bold">{{ $project->name }}:</span>
+                                <div id="bar" class="progress mb-2 w-100" style="height: max-content;">
+                                    <div class="bar progress-bar {{ $color }}"
+                                        style="width:{{ $progress }}%;"><span
+                                            class="text-light font-18 fw-bold">{{ $progress }}%</span></div>
+                                </div>
+                            @empty
+                                <h5 class="d-flex justify-content-center text-muted">No record found</h5>
+                            @endforelse
+                        </div>
+                    </div> <!-- end row -->
+                </div>
+            </div> <!-- tab-content -->
+        </div>
+        {{-- Project Progress Ends --}}
+
         {{-- Project Progress Starts --}}
         <h3 class="fw-bold text-center mb-3 mt-5">Project Progress</h3>
         <div id="progressbarwizard">
