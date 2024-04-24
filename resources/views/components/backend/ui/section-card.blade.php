@@ -9,6 +9,7 @@
                 padding: 0 !important;
                 margin: 0 !important;
             }
+
             .card-body {
                 padding: 0 !important;
                 margin: 0 !important;
@@ -16,7 +17,7 @@
         }
     </style>
 @endPushOnce
-<div {{ $attributes->merge(['class' => 'card m-2']) }}>
+<div {{ $attributes->merge(['class' => 'card m-0 p-2']) }}>
     @if ($name)
         <h4 class="my-2 text-center d-print-none card-header bg-white">{{ $name }}</h4>
     @endif

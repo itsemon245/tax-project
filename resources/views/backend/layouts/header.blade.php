@@ -78,12 +78,14 @@
             </li>
 
             <li class="dropdown">
-                <a class="d-flex align-items-center gap-2 text-light dropdown-toggle me-0 waves-effect waves-light" style="height: 70px;">
+                <a class="d-flex align-items-center gap-2 text-light dropdown-toggle me-0 waves-effect waves-light"
+                    style="height: 70px;">
                     <img loading="lazy" src="{{ useImage($user->image_url) }}" width="32px" alt="user-image"
                         class="rounded-circle">
-                    <div>
+                    <div class="d-none d-sm-block">
                         <span class="fw-bold">{{ $user->name }}</span>
-                        <small class="d-block text-capitalize fw-medium text-warning">{{ $user->roles->first()->name }}</small>
+                        <small
+                            class="d-block text-capitalize fw-medium text-warning">{{ $user->roles->first()->name }}</small>
                     </div>
                     {{-- <span class="pro-user-name ms-1">
                         {{ $user->name }} <i class="mdi mdi-chevron-down"></i>
@@ -130,28 +132,17 @@
 
         </ul>
 
-        <!-- LOGO -->
-        <div class="logo-box">
-            <a href="{{ route('home') }}" class="logo logo-light text-center px-2">
-                <span class="logo-sm">
-                    <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt=""
-                        style="object-fit:cover;" width="80px;">
-                </span>
-                <span class="logo-lg">
-                    <img loading="lazy" src="{{ useImage($setting->basic->logo) }}" alt=""
-                        style="object-fit:cover;">
-                </span>
-            </a>
-        </div>
-
-        <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+        <ul class="d-inline-flex align-items-center list-unstyled topnav-menu topnav-menu-left m-0 px-2">
+            <li class="d-none d-sm-block">
+                <x-application-logo />
+            </li>
             <li>
                 <button class="button-menu-mobile waves-effect waves-light">
                     <i class="fe-menu"></i>
                 </button>
             </li>
 
-            <li>
+            {{-- <li>
                 <!-- Mobile menu toggle (Horizontal Layout)-->
                 <a class="navbar-toggle nav-link" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
                     <div class="lines">
@@ -161,8 +152,10 @@
                     </div>
                 </a>
                 <!-- End mobile menu toggle-->
+            </li> --}}
+            <li class="d-sm-none">
+                <x-application-logo />
             </li>
-
         </ul>
         <div class="clearfix"></div>
 

@@ -17,7 +17,7 @@
     </style>
     {{-- @vite(['resources/css/tailwind.css']) --}}
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ useImage(app('setting')->basic->favicon) }}">
     <link rel="stylesheet" href="{{ asset('assets/css/preloader.css') }}">
 
 

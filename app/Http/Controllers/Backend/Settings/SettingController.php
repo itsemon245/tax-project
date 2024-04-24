@@ -12,19 +12,19 @@ class SettingController extends Controller
     public $alert;
     public function __construct()
     {
-        $this->middleware('permission:read basic setting|read referral setting|read payment setting|read return link setting',   [
+        $this->middleware('permission:read basic setting|read referral setting|read payment setting|read return link setting', [
             'only' => ['index']
         ]);
-        $this->middleware('can:manage basic setting',   [
+        $this->middleware('can:manage basic setting', [
             'only' => ['store']
         ]);
-        $this->middleware('can:manage referral setting',   [
+        $this->middleware('can:manage referral setting', [
             'only' => ['reference']
         ]);
-        $this->middleware('can:manage payment setting',  [
+        $this->middleware('can:manage payment setting', [
             'only' => ['payment']
         ]);
-        $this->middleware('can:manage return link setting',  [
+        $this->middleware('can:manage return link setting', [
             'only' => ['returnLink']
         ]);
         $this->setting = Setting::first();
@@ -56,15 +56,15 @@ class SettingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'image|max:5126',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
-            'whatsapp' => 'required|numeric',
-            'favicon' => 'required|image|mimes:jpeg,png,jpg|max:1024',
+            'phone' => 'required|string',
+            'whatsapp' => 'required|string',
+            'favicon' => 'image|max:1024',
             'address' => 'required|string',
         ]);
-        $logo = saveImage($request->logo, 'settings', 'logo');
-        $favicon = saveImage($request->favicon, 'settings', 'favicon');
+        $logo = $request->has('logo') ? saveImage($request->logo, 'settings', 'logo') : $this->setting->basic->logo;
+        $favicon = $request->has('favicon') ? saveImage($request->favicon, 'settings', 'favicon') : $this->setting->basic->favicon;
         $array = [
             'logo' => $logo,
             'favicon' => $favicon,

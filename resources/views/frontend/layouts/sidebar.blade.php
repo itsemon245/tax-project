@@ -14,10 +14,7 @@
                         style="background: none;">
                         <span class="mdi mdi-close"></span>
                     </button>
-                    <a href="/">
-                        <img loading="lazy" style="max-width:120px;"
-                            src="{{ asset('frontend/assets/images/logo/app.png') }}" alt="Text Act Logo">
-                    </a>
+                    <x-application-logo />
                 </div>
             </li>
             @if (!$isPageV2)

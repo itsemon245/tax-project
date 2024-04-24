@@ -2,12 +2,35 @@
 @pushOnce('customCss')
     <link rel="stylesheet" href="{{ asset('libs/apexcharts/dist/apexcharts.css') }}">
     <style>
+        .stat-report table {
+            width: 100%;
+        }
+
         .tab-content th {
             padding: 0;
         }
 
         .tab-content td {
             padding: 0.5rem;
+        }
+
+        .stat-report {
+            padding: 4px;
+        }
+
+        @media not all and (min-width: 640px) {
+            .stat-report h3 {
+                font-size: 16px;
+                padding: 4px;
+            }
+
+            .stat-report td {
+                padding: 4px;
+            }
+            .stat-report td > h3 {
+                padding: 0;
+            }
+
         }
     </style>
 @endPushOnce
@@ -38,11 +61,11 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="tab-content">
+            <div class="tab-content stat-report">
                 @foreach ($statReports as $time => $reports)
                     <div class="tab-pane my-3 {{ $time == 'daily' ? 'active' : '' }}" id="{{ $time }}-stat"
                         role="tabpanel">
-                        <div class="row px-md-4">
+                        <div class="row">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr class="bg-light">

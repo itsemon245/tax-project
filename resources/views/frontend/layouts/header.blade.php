@@ -18,10 +18,7 @@
                     <i class="mdi mdi-text-account text-light"></i>
                 </div>
             @endauth
-            <a href="{{ route('home') }}">
-                <img loading="lazy" class="app-logo" style="max-width:120px; object-fit:cover;"
-                    src="{{ useImage($basic->logo) }}" alt="Text Act Logo">
-            </a>
+            <x-application-logo />
         </div>
 
         @if (!$isPageV2 && !$isCoursePage)
@@ -137,10 +134,10 @@
                                     @endif
                                 </li>
                             @endforeach
-    
-                            
-    
-    
+
+
+
+
                         </ul>
                     </li>
                     <li
@@ -240,10 +237,10 @@
                                     @endif
                                 </li>
                             @endforeach
-    
-                            
-    
-    
+
+
+
+
                         </ul>
                     </li>
                     <li class="nav-item custom-nav-item {{ request()->routeIs('page.about') ? 'active-link' : '' }}">
@@ -340,7 +337,7 @@
                             </li>
                         @endforeach
 
-                        
+
 
 
                     </ul>
@@ -441,7 +438,7 @@
                             </li>
                         @endforeach
 
-                        
+
 
 
                     </ul>
