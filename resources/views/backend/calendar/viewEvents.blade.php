@@ -20,8 +20,8 @@
 
     <x-backend.ui.section-card name="All Events">
         @can('create event')
-        <x-backend.ui.button type="custom" href="{{ route('calendar.create') }}"
-        class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+            <x-backend.ui.button type="custom" href="{{ route('calendar.create') }}"
+                class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
         @endcan
         <x-backend.table.basic :items="$events">
             <thead>
@@ -30,7 +30,7 @@
                     <th>Event Info</th>
                     <th>Event Description</th>
                     @canany(['update event', 'delete event'])
-                    <th>Action</th>
+                        <th>Action</th>
                     @endcanany
                 </tr>
             </thead>
@@ -41,28 +41,31 @@
                         <td>{{ ++$key }}</td>
                         <td>
                             <p class="mb-0">Title: <span class="h6">{{ $event->title }}</span></p>
-                            <p class="mb-0">Client: <span class="badge bg-success">{{ $event->client->name }}</span></p>
+                            @if ($event->client)
+                                <p class="mb-0">Client: <span class="badge bg-success">{{ $event->client?->name }}</span>
+                                </p>
+                            @endif
                             <p class="mb-0">Service: <span class="badge bg-blue">{{ $event->service }}</span></p>
                         </td>
                         <td>
                             <div>
                                 <p class="mb-0">Note:</p>
                                 <div class="text-muted">
-                                    Event Note
+                                    {!! $event->description !!}
                                 </div>
                             </div>
                         </td>
                         @canany(['update event', 'delete event'])
-                        <td>
-                            @can('update event')
-                            <x-backend.ui.button type="edit" href="{{ route('calendar.edit', $event->id) }}"
-                                class="text-capitalize btn-sm" />
-                            @endcan
-                            @can('delete event')
-                            <x-backend.ui.button type="delete" action="{{ route('calendar.destroy', $event->id) }}"
-                                class="text-capitalize btn-sm" />
-                            @endcan
-                        </td>
+                            <td>
+                                @can('update event')
+                                    <x-backend.ui.button type="edit" href="{{ route('calendar.edit', $event->id) }}"
+                                        class="text-capitalize btn-sm" />
+                                @endcan
+                                @can('delete event')
+                                    <x-backend.ui.button type="delete" action="{{ route('calendar.destroy', $event->id) }}"
+                                        class="text-capitalize btn-sm" />
+                                @endcan
+                            </td>
                         @endcanany
                     </tr>
                 @empty

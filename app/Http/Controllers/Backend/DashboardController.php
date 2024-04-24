@@ -81,6 +81,17 @@ class DashboardController extends Controller
                 $dateTo = $dateTo->format('Y-m-d');
             }
             $statReports[$filter] = [
+                'client accounts' => [
+                    'total' => Client::where(function ($q) use ($dateFrom, $dateTo) {
+                        if ($dateFrom && $dateTo) {
+                            $q->whereDate('created_at', '>=', $dateFrom);
+                            $q->whereDate('created_at', '<=', $dateTo);
+                        }
+                    })
+                    ->count(),
+                    'completed' => '-',
+                    'pending' => '-',
+                ],
                 'service' => [
                     'total' => Purchase::wherePurchasableType('Service')
                     ->where(function ($q) use ($dateFrom, $dateTo) {
