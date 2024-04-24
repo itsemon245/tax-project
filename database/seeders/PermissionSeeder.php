@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class PermissionSeeder extends Seeder
 {
@@ -278,7 +277,7 @@ class PermissionSeeder extends Seeder
                 [
                     'visit', //action
                 ],
-                'withdrawal request'=> //operation
+                'withdrawal request' => //operation
                 [
                     'manage'
                 ]
@@ -302,5 +301,7 @@ class PermissionSeeder extends Seeder
                 }
             }
         }
+
+
     }
 }

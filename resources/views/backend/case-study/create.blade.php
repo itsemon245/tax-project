@@ -40,6 +40,11 @@
                             <div class="col-md-12">
                                 <x-backend.form.select-input id="categories" label="Category" name="case_study_category_id"
                                     placeholder="Choose Package First...">
+                                    @forelse ($caseStudyCategories as $category)
+                                        <option value="{{ $category->id }}">{{ $package->name }}</option>
+                                    @empty
+                                        <option>No Category Found</option>
+                                    @endforelse
 
                                 </x-backend.form.select-input>
                             </div>

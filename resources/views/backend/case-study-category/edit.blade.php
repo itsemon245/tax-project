@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-md-12 mb-2">
                             <x-backend.form.text-input label="Case Study Category Name" placeholder="Case Study Category Name" type="text"
-                                name="case_study_category" value="{{ $caseStudyCategory->case_study_category }}" />
+                                name="case_study_category" value="{{ $caseStudyCategory->name }}" />
                         </div>
                     </div>
                 </div>

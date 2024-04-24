@@ -238,7 +238,10 @@
                     </li>
                 @endcanany
                 @php
-                    $pagesAndSectionPermissions = \Spatie\Permission\Models\Permission::where('group', 'pages & sections')
+                    $pagesAndSectionPermissions = \Spatie\Permission\Models\Permission::where(
+                        'group',
+                        'pages & sections',
+                    )
                         ->get(['name'])
                         ->pluck('name');
                 @endphp
@@ -434,23 +437,42 @@
                                 @endcanany
                                 @canany(['manage case study', 'read case study'])
                                     <li>
-                                        <a href="#caseStudySection" data-bs-toggle="collapse">
-                                            <i class="mdi mdi-file-chart-outline"></i>
-                                            <span> Case Studies </span>
+                                        <a href="#sidebarSerivces" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-badge-account-horizontal-outline"></i>
+                                            <span>Case Study </span>
                                             <span class="menu-arrow"></span>
                                         </a>
-                                        <div class="collapse" id="caseStudySection">
+                                        <div class="collapse" id="sidebarSerivces">
                                             <ul class="nav-second-level">
                                                 <li>
-                                                    @can('manage case study')
-                                                        <a href="{{ route('case.study.package.backend.index') }}">Create Package
-                                                        </a>
-                                                    @endcan
-                                                    @canany(['read case study', 'manage case study'])
-                                                        <a href="{{ route('case.study.package.backend.show.all') }}">
-                                                            View Package
-                                                        </a>
-                                                    @endcanany
+                                                    <a href="{{ route('case-study-category.create') }}">
+                                                        <span>Create Category</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('case-study-category.index') }}">
+                                                        <span>View Categories</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('case.study.package.backend.index') }}">
+                                                        <span>Create Package</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('case.study.package.backend.show.all') }}">
+                                                        <span>View Packages</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('case-study.create') }}">
+                                                        <span>Create Case Study</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('case-study.index') }}">
+                                                        <span>View Case Studies</span>
+                                                    </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -966,28 +988,28 @@
                                     </li>
                                 @endcanany
                                 @canany(['create user', 'update user', 'delete user', 'read user'])
-                                <li>
-                                    <a href="#users-internal" data-bs-toggle="collapse">
-                                        <i class="mdi mdi-account-switch-outline"></i>
-                                        <span>Internal Users</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="users-internal">
-                                        <ul class="nav-second-level">
-                                            @can('create user')
-                                                <li>
-                                                    <a href="{{ route('users.create') }}">Create</a>
-                                                </li>
-                                            @endcan
-                                            @canany(['update user', 'delete user', 'read user'])
-                                                <li>
-                                                    <a href="{{ route('users.internal') }}">View </a>
-                                                </li>
-                                            @endcanany
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcanany
+                                    <li>
+                                        <a href="#users-internal" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-account-switch-outline"></i>
+                                            <span>Internal Users</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="users-internal">
+                                            <ul class="nav-second-level">
+                                                @can('create user')
+                                                    <li>
+                                                        <a href="{{ route('users.create') }}">Create</a>
+                                                    </li>
+                                                @endcan
+                                                @canany(['update user', 'delete user', 'read user'])
+                                                    <li>
+                                                        <a href="{{ route('users.internal') }}">View </a>
+                                                    </li>
+                                                @endcanany
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
                                 @canany(['create role', 'update role', 'delete role', 'read role'])
                                     <li>
                                         <a href="#roleSection" data-bs-toggle="collapse">
@@ -1035,28 +1057,28 @@
                                     </li>
                                 @endcanany
                                 @canany(['manage promo code', 'read promo code'])
-                                <li>
-                                    <a href="#notificationSection" data-bs-toggle="collapse">
-                                        <i class="mdi mdi-bell"></i>
-                                        <span>Notification System</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="notificationSection">
-                                        <ul class="nav-second-level">
-                                            @can('manage promo code')
-                                                <li>
-                                                    <a href="{{ route('notification.create') }}">Create</a>
-                                                </li>
-                                            @endcan
-                                            @canany(['manage promo code', 'read promo code'])
-                                                <li>
-                                                    <a href="{{ route('notification.index') }}">View Notifications</a>
-                                                </li>
-                                            @endcanany
-                                        </ul>
-                                    </div>
-                                </li>
-                            @endcanany
+                                    <li>
+                                        <a href="#notificationSection" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-bell"></i>
+                                            <span>Notification System</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="notificationSection">
+                                            <ul class="nav-second-level">
+                                                @can('manage promo code')
+                                                    <li>
+                                                        <a href="{{ route('notification.create') }}">Create</a>
+                                                    </li>
+                                                @endcan
+                                                @canany(['manage promo code', 'read promo code'])
+                                                    <li>
+                                                        <a href="{{ route('notification.index') }}">View Notifications</a>
+                                                    </li>
+                                                @endcanany
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
 
                                 @canany(['manage reviews', 'read reviews'])
                                     <li>

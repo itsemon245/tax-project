@@ -7,16 +7,15 @@ use App\Models\CaseStudy;
 use App\Models\CaseStudyCategory;
 use App\Models\CaseStudyPackage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class CaseStudyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can: read case study',   [
+        $this->middleware('can:read case study', [
             'only' => ['index']
         ]);
-        $this->middleware('can:manage case study',   [
+        $this->middleware('can:manage case study', [
             'except' => ['index']
         ]);
     }
@@ -35,7 +34,8 @@ class CaseStudyController extends Controller
     public function create()
     {
         $caseStudyPackage = CaseStudyPackage::latest()->get();
-        return view('backend.case-study.create', compact('caseStudyPackage'));
+        $caseStudyCategories = CaseStudyCategory::latest()->get();
+        return view('backend.case-study.create', compact('caseStudyPackage', 'caseStudyCategories'));
     }
 
     /**
@@ -114,12 +114,14 @@ class CaseStudyController extends Controller
         $caseStudy->case_study_package_id = $request->case_study_package_id;
         $caseStudy->name = $request->name;
         $caseStudy->intro = $request->intro;
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image')) {
             $caseStudy->image = updateFile($request->image, $caseStudy->image, 'case-study/banners');
+        }
         $caseStudy->description = $request->description;
         $caseStudy->price = $request->price;
-        if ($request->hasFile('download_link'))
+        if ($request->hasFile('download_link')) {
             $caseStudy->download_link =  updateFile($request->download_link, $caseStudy->download_link, 'case-study/files');
+        }
         $caseStudy->save();
 
         $notification = [

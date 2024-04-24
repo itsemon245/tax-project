@@ -32,7 +32,7 @@
                 @forelse ($data as $key=>$CaseStudyCategory)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $CaseStudyCategory->case_study_category }}</td>
+                        <td>{{ $CaseStudyCategory->name }}</td>
                         <td>
                             <div class="btn-group">
                                 <a href="{{ route('case-study-category.edit', $CaseStudyCategory) }}"
@@ -47,11 +47,11 @@
                         </td>
                     </tr>
                 @empty
-                    <tr>
+                    {{-- <tr>
                         <td colspan="4">
                             <h5 class="d-flex justify-content-center text-muted">No record found</h5>
                         </td>
-                    </tr>
+                    </tr> --}}
                 @endforelse
             </tbody>
         </x-backend.table.basic>
