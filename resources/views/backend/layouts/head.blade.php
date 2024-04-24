@@ -12,12 +12,14 @@
     <style>
         .tail-select {
             width: 100% !important;
-            padding: 0.75rem!important;
+            padding: 0.75rem !important;
         }
     </style>
     {{-- @vite(['resources/css/tailwind.css']) --}}
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/preloader.css') }}">
+
 
     <!-- Bootstrap css -->
     <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />

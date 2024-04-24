@@ -14,6 +14,8 @@
 
     <link rel="stylesheet" href="{{ asset('libs/tail.select.js-1.0.2/css/tail.select.css') }}">
     @vite(['resources/css/tailwind.css'])
+    <link rel="stylesheet" href="{{ asset('assets/css/preloader.css') }}">
+
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +28,6 @@
     <link href="{{ asset('frontend/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
     {{-- icons css  --}}
     <link href="{{ asset('frontend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" id="app-style">
-    @stack('customCss')
     {{-- Head JS  --}}
     <script src="{{ asset('frontend/assets/js/head.js') }}"></script>
     {{-- Color extractor for matching image color --}}

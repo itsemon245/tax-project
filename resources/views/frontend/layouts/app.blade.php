@@ -3,7 +3,7 @@
 
 <x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" :favicon="$settings->basic->favicon" />
 
-<body class="w-100 position-relative">
+<body class="w-100 position-relative" style="overflow: hidden!important;height: 100vh;">
     <style>
         @media (min-width: 992px) {
             #auth-sidebar {
@@ -39,6 +39,7 @@
             }
         }
     </style>
+    <x-preloader />
     {{-- Messenger Chat Plugin Code --}}
     <div id="fb-root"></div>
 

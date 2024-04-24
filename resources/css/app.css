@@ -39,11 +39,11 @@ header {
     height: max-content;
 }
 
-.sticky{
-    position:sticky !important;
-    top:0;
+.sticky {
+    position: sticky !important;
+    top: 0;
 }
-.fixed{
+.fixed {
     position: fixed;
 }
 .sidebar {
@@ -222,12 +222,12 @@ footer .social-handles {
         display: none !important;
     }
 }
-@media (min-width: 1230px){
-    .user-menu-btn{
+@media (min-width: 1230px) {
+    .user-menu-btn {
         display: block;
     }
 }
-.user-menu-btn{
+.user-menu-btn {
     display: none;
 }
 /* up to midium devices like tablet */

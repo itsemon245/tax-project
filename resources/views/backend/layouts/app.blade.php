@@ -6,7 +6,9 @@
 <!-- body start -->
 
 <body data-layout-mode="default" data-theme="light" data-topbar-color="dark" data-menu-position="fixed"
-    data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='false'>
+    data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='false' style="overflow: hidden!important;height: 100vh;">
+    <x-preloader />
+
     <style>
         @media print {
             .container-fluid {
