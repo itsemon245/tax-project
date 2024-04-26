@@ -20,7 +20,8 @@
                 width: 100% !important;
             }
         }
-        @page{
+
+        @page {
             margin: 1rem;
         }
     </style>
@@ -71,10 +72,10 @@
                         <tbody>
                             <tr>
                                 <td colspan="7">
-                                    @if (app('setting')->basic->header_image)
+                                    @isset(app('setting')->basic->header_image)
                                         <img style="object-fit: cover; max-width:100%;height:200px;"
                                             src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
-                                    @endif
+                                    @endisset
                                 </td>
                             </tr>
                             <tr>
@@ -144,11 +145,11 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="7">
-                                                    @if (app('setting')->basic->footer_image)
+                                                    @isset(app('setting')->basic->footer_image)
                                                         <img style="object-fit: cover; max-width:100%;height:200px;"
                                                             src="{{ asset('storage/' . app('setting')->basic->footer_image) }}"
                                                             alt="">
-                                                    @endif
+                                                    @endisset
                                                 </td>
                                             </tr>
                                             <tr style="border-bottom: 0px solid transparent;">
@@ -176,10 +177,10 @@
                     class="row justify-content-center">
                     @csrf
                     <div class="col-md-12 ">
-                        @if (app('setting')->basic->header_image)
+                        @isset(app('setting')->basic->footer_image)
                             <img style="object-fit: cover; max-width:100%;height:200px;"
                                 src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
-                        @endif
+                        @endisset
                     </div>
                     <div class="col-md-6 col-xl-4">
                         <x-form.selectize class="mb-3" id="category" name="category" placeholder="Choose Category..."
@@ -236,8 +237,8 @@
                                     <tr>
                                         <td>1</td>
                                         <td>
-                                            <x-form.text-area class="" placehoder="Description"
-                                                name="descriptions[]" rows="2"></x-form.text-area>
+                                            <x-form.text-area class="" placehoder="Description" name="descriptions[]"
+                                                rows="2"></x-form.text-area>
                                         </td>
                                         <td style="max-width: 100px;">
                                             <x-backend.form.text-input class="mb-3 amounts" type="number"
@@ -259,13 +260,14 @@
                                 </div>
                             </div>
                         </div>
-                        @if (app('setting')->basic->footer_image)
+                        @isset(app('setting')->basic->footer_image)
                             <img style="object-fit: cover; max-width:100%;height:200px;"
                                 src="{{ asset('storage/' . app('setting')->basic->footer_image) }}" alt="">
-                        @endif
+                        @endisset
                         <div class="col-12 col-md-12 col-xl-8 mt-3">
                             <x-backend.ui.button class="btn-primary float-end fw-bold">Submit</x-backend.ui.button>
-                            <input type="submit" value="Submit & Print" name="print" class="fw-bold float-end me-2 btn btn-blue rounded rounded-2 waves-effect waves-light" />
+                            <input type="submit" value="Submit & Print" name="print"
+                                class="fw-bold float-end me-2 btn btn-blue rounded rounded-2 waves-effect waves-light" />
                         </div>
                     </div>
 
@@ -363,14 +365,13 @@
                 })
             });
         </script>
-        
     @endpush
     @if (session()->has('print'))
         @push('customJs')
             <script>
-                $(document).ready(function () {
+                $(document).ready(function() {
                     window.print()
-                });      
+                });
             </script>
         @endpush
     @endif

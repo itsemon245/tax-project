@@ -130,9 +130,16 @@
                 <div>
                     <div class="row">
                         {{-- {{ dd($basic->header_image) }} --}}
-                        <div class="d-flex border my-5 justify-content-center">
-                            <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{ asset('storage/'. app('setting')->basic->header_image) }}" alt="">
-                        </div>
+                        @isset($basic->header_image)
+                            <div class="d-flex border my-5 justify-content-center">
+                                <img style="object-fit: cover; max-width:1240px;height:250px;"
+                                    src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
+                            </div>
+                        @else
+                            <div class="p-5 text-center">
+                                No Header Image found
+                            </div>
+                        @endisset
                     </div>
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
@@ -140,10 +147,13 @@
                                 <select class="mb-2 tail-select" id="client" name="client"
                                     placeholder="Select Client..." label="Bill To" required>
                                     @foreach ($clients as $client)
-                                        <option data-description="{{"<div class='fw-normal'>Company: $client->company_name,</br>Phone: $client->phone,</br> TIN: $client->tin, Ref: $client->ref_no, </br> Circle: $client->circle </div>"}}" value="{{ $client->id }}">{{ $client->name }}</option>
+                                        <option
+                                            data-description="{{ "<div class='fw-normal'>Company: $client->company_name,</br>Phone: $client->phone,</br> TIN: $client->tin, Ref: $client->ref_no, </br> Circle: $client->circle </div>" }}"
+                                            value="{{ $client->id }}">{{ $client->name }}</option>
                                     @endforeach
                                 </select>
-                                <a href="{{ route('client.create') }}" class="text-blue mt-2" style="font-weight: 500;">Create
+                                <a href="{{ route('client.create') }}" class="text-blue mt-2"
+                                    style="font-weight: 500;">Create
                                     New
                                     Client</a>
                             </div>
@@ -199,13 +209,21 @@
                 </div>
 
                 <div class="row">
-                    <div class="d-flex border my-5 justify-content-center">
-                        <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->footer_image)}}" alt="">
-                    </div>
+                    @isset($basic->footer_image)
+                        <div class="d-flex border my-5 justify-content-center">
+                            <img style="object-fit: cover; max-width:1240px;height:250px;"
+                                src="{{ asset('storage/' . app('setting')->basic->footer_image) }}" alt="">
+                        </div>
+                    @else
+                        <div class="p-5 text-center">
+                            No Footer Image found
+                        </div>
+                    @endisset
                 </div>
 
                 <button type="submit" class="btn btn-primary waves-effect waves-light mt-2 me-2 fw-bold">Submit</button>
-                <input type="submit" class="btn btn-success waves-effect waves-light mt-2 fw-bold" name="print" value="Submit & Print"/>
+                <input type="submit" class="btn btn-success waves-effect waves-light mt-2 fw-bold" name="print"
+                    value="Submit & Print" />
 
             </form>
 
@@ -216,14 +234,14 @@
 
 @push('customJs')
     <script>
-        $(document).ready(function () {
-            $('#client').on('change', function(e){
-                let url = "{{route('api.get.client', ':CLIENT')}}"
+        $(document).ready(function() {
+            $('#client').on('change', function(e) {
+                let url = "{{ route('api.get.client', ':CLIENT') }}"
                 url = url.replace(':CLIENT', e.target.value)
                 $.ajax({
                     type: "get",
                     url: url,
-                    success: function (response) {
+                    success: function(response) {
                         $('input[name="reference"]').val(response.client.ref_no)
                     }
                 });

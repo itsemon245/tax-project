@@ -80,14 +80,13 @@ class InvoiceController extends Controller
         $fiscalYear = FiscalYear::where('year', $request->year)->first();
         $fiscalYear = $fiscalYear === null ? FiscalYear::create(['year' => $request->year]) : $fiscalYear;
         // dd($fiscalYear);
-        if ($request->hasFile('header_image')) {
-            $header_image = saveImage($request->image, 'invoices', 'invoice');
-        } else {
-            $header_image = Invoice::first()->header_image;
-        }
+        // if ($request->hasFile('header_image')) {
+        //     $header_image = saveImage($request->image, 'invoices', 'invoice');
+        // } else {
+        //     $header_image = Invoice::first()->header_image;
+        // }
         $invoice = Invoice::create([
             'client_id' => $request->client,
-            'header_image' => $header_image,
             'reference_no' => $request->reference,
             'note' => $request->note,
             'payment_note' => $request->payment_note,
@@ -218,14 +217,13 @@ class InvoiceController extends Controller
         $fiscalYear = $fiscalYear === null ? FiscalYear::create(['year' => $request->year]) : $fiscalYear;
 
         // dd($fiscalYear);
-        if ($request->hasFile('header_image')) {
-            $header_image = saveImage($request->image, 'invoices', 'invoice');
-        } else {
-            $header_image = Invoice::first()->header_image;
-        }
+        // if ($request->hasFile('header_image')) {
+        //     $header_image = saveImage($request->image, 'invoices', 'invoice');
+        // } else {
+        //     $header_image = Invoice::first()->header_image;
+        // }
         $invoice->update([
             'client_id' => $request->client,
-            'header_image' => $header_image,
             'reference_no' => $request->reference,
             'note' => $request->note,
             'payment_note' => $request->payment_note,
