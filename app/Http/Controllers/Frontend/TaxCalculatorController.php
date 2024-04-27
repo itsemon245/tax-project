@@ -135,13 +135,15 @@ class TaxCalculatorController extends Controller
                 ->where('from', '<=', $value)
                 ->last();
 
-        $value -= $taxFree;
-        if ($for === 'company') {
-            $totalTax = $value * $taxSetting[$type.'_percentage'] / 100;
+        $value = $value - $taxFree;
+        if ($for == 'company') {
+            $totalTax = $value > $minTax ? $value * $taxSetting[$type.'_percentage'] / 100 : $minTax;
         } elseif ($valueSlots->count() > 0) {
+
             foreach ($valueSlots as $key => $slot) {
                 $tax = (float) 0;
                 if ($slot->difference < $value) {
+
                     if ($taxFree > 0 && $key === 0) {
                         $tax = ($slot->difference - $taxFree) * $slot->tax_percentage / 100;
 

@@ -57,8 +57,19 @@
                         </li>
                     @endforeach
                     <li
-                        class="nav-item custom-nav-item {{ request()->routeIs('page.industries') ? 'active-link' : '' }}">
+                        class="nav-item custom-nav-item dropdown-trigger {{ request()->routeIs('page.industries') ? 'active-link' : '' }}">
                         <a class=" nav-link text-light" href="{{ route('page.industries') }}">Account & Audit</a>
+
+                        {{-- Account Services --}}
+                        <ul class="position-absolute dropdown">
+                            @foreach ($customServicesAccount as $service)
+                                <li
+                                    class="nav-item custom-nav-item dropdown-item {{ url()->current() == $service->link ? 'active-link' : '' }}">
+                                    <a href="{{ $service->link }}"
+                                        class="nav-link text-light">{{ $service->title }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
                     </li>
 
                     <li class="nav-item custom-nav-item position-relative dropdown-trigger">
@@ -394,7 +405,8 @@
                 <li class="nav-item custom-nav-item {{ request()->routeIs('home') ? 'active-link' : '' }}">
                     <a class=" nav-link text-light" href="{{ route('home') }}">Home</a>
                 </li>
-                <li class="nav-item custom-nav-item {{ request()->routeIs('page.industries') ? 'active-link' : '' }}">
+                <li
+                    class="nav-item custom-nav-item {{ request()->routeIs('page.industries') ? 'active-link' : '' }}">
                     <a class=" nav-link text-light" href="{{ route('page.industries') }}">Industries</a>
                 </li>
                 {{-- Services Caegories --}}
