@@ -148,11 +148,8 @@ class TaxCalculatorController extends Controller
                  * If it's first calculation then free tax will be deducted
                  * Else the slot difference will be the amount to calculate tax;
                  */
-                if ($slot->difference < $value) {
-                    $amountForTax = $key == 0 ? ($slot->difference - $taxFree) : $slot->difference;
-                } else {
-                    $amountForTax = $key == 0 ? ($value - $taxFree) : $value;
-                }
+                
+                $amountForTax = $slot->difference < $value ? $slot->difference : $value;
                 $tax = $amountForTax * ($slot->tax_percentage / 100);
                 $tax = $minTax > $tax ? $minTax : $tax;
                 $value -= $amountForTax;
