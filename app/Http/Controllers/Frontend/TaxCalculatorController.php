@@ -124,7 +124,7 @@ class TaxCalculatorController extends Controller
         $taxFree = match ($gender) {
             'male' => (int) $taxSetting->tax_free->male,
             'female' => (int) $taxSetting->tax_free->female,
-            null => (int) $taxSetting->tax_free->amount,
+            null => (int) $taxSetting->tax_free->amount ?? 0,
         };
         $afterFree = $value - $taxFree;
         $minTax = $taxSetting->min_tax ?? 0;
