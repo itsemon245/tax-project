@@ -87,6 +87,7 @@ class TaxCalculatorController extends Controller
 
             }
         } catch (\Throwable $th) {
+            dd($th);
             $alert = [
                 'alert-type' => 'error',
                 'message' => $th->getMessage(),
@@ -125,51 +126,79 @@ class TaxCalculatorController extends Controller
             'female' => (int) $taxSetting->tax_free->female,
             null => (int) $taxSetting->tax_free->amount,
         };
-        $valueSlots = $taxSetting->slots()->where('type', $type)->get();
+        $afterFree = $value - $taxFree;
         $minTax = $taxSetting->min_tax ?? 0;
-        $lastValueSlot = $valueSlots
-            ->where('to', '>=', $value)
-            ->where('from', '<=', $value)
+        $lastValueSlot = $taxSetting->slots()->where('type', $type)
+            ->where('from', '<=', $afterFree)
+            ->where('to', '>=', $afterFree)
             ->first() ??
-            $valueSlots
-                ->where('from', '<=', $value)
-                ->last();
-
-        $value = $value - $taxFree;
+            $taxSetting->slots()->where('type', $type)
+                ->where('from', '<=', $afterFree)
+                ->latest()->first();
+        $slotLimit = $lastValueSlot?->to ?? 0;
+        $slots = $taxSetting->slots()->where('type', $type)->where('to', '<=', $slotLimit)->get();
+        $value = $afterFree;
         if ($for == 'company') {
             $totalTax = $value > $minTax ? $value * $taxSetting[$type.'_percentage'] / 100 : $minTax;
-        } elseif ($valueSlots->count() > 0) {
-
-            foreach ($valueSlots as $key => $slot) {
+        } elseif ($slots->count() > 0) {
+            foreach ($slots as $key => $slot) {
                 $tax = (float) 0;
+                /**
+                 * Determine the Amount on which tax will be calculated
+                 * If it's first calculation then free tax will be deducted
+                 * Else the slot difference will be the amount to calculate tax;
+                 */
                 if ($slot->difference < $value) {
-
-                    if ($taxFree > 0 && $key === 0) {
-                        $tax = ($slot->difference - $taxFree) * $slot->tax_percentage / 100;
-
-                        $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
-                        $value -= ($slot->difference - $taxFree);
-                    } else {
-                        $tax = $slot->difference * $slot->tax_percentage / 100;
-                        $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
-                        $value -= $slot->difference;
-                    }
-                } elseif ($value > 0) {
-                    if ($taxFree > 0 && $key === 0) {
-                        $tax = ($value - $taxFree) * $slot->tax_percentage / 100;
-                    } else {
-                        $tax = $value * $slot->tax_percentage / 100;
-                    }
-                    $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
-                    $value = 0;
+                    $amountForTax = $key == 0 ? ($slot->difference - $taxFree) : $slot->difference;
+                } else {
+                    $amountForTax = $key == 0 ? ($value - $taxFree) : $value;
                 }
+                $tax = $amountForTax * ($slot->tax_percentage / 100);
+                $tax = $minTax > $tax ? $minTax : $tax;
+                $value -= $amountForTax;
+
+                /**
+                 * @deprecated logic
+                 */
+                // if ($slot->difference < $value) {
+
+                //     if ($taxFree > 0 && $key === 0) {
+                //         $tax = ($slot->difference - $taxFree) * $slot->tax_percentage / 100;
+
+                //         $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
+                //         $value -= ($slot->difference - $taxFree);
+                //     } else {
+                //         $tax = $slot->difference * $slot->tax_percentage / 100;
+                //         $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
+                //         dump([
+                //             'from' => $slot->from,
+                //             'to' => $slot->to,
+                //             'tax' => $tax
+                //         ]);
+
+                //         $value -= $slot->difference;
+                //     }
+                // } elseif ($value > 0) {
+                //     if ($taxFree > 0 && $key === 0) {
+                //         $tax = ($value - $taxFree) * $slot->tax_percentage / 100;
+                //     } else {
+                //         $tax = $value * $slot->tax_percentage / 100;
+                //     }
+                //     $tax = ($tax < $minTax && $key === 0) ? $minTax : $tax;
+                //     dump($slot->from, $slot->to, $tax);
+                //     dump([
+                //         'from' => $slot->from,
+                //         'to' => $slot->to,
+                //         'tax' => $tax
+                //     ]);
+                //     $value = 0;
+                // }
                 $totalTax += $tax;
-                if ($slot->id === $lastValueSlot->id || $value <= 0) {
+                if ($value <= 0) {
                     break;
                 }
             }
         }
-
         return $totalTax;
     }
 
