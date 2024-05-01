@@ -144,8 +144,8 @@ class ClientController extends Controller
     }
     public function downloadDemoExcel()
     {
-        $filePath = public_path('Demo.xlsx');
+        $filePath = public_path('client_list.csv');
         
-        return Response::download($filePath, 'Demo.xlsx');
+        return Response::download($filePath, 'client-list-demo.csv');
     }
 }
