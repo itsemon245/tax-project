@@ -46,8 +46,11 @@ class TaxCalculatorController extends Controller
                 $income = (int) $request->yearly_income;
                 $turnover = (int) $request->yearly_turnover;
                 $asset = (int) $request->total_asset;
-                $incomeTax = $this->calcTax($income, $request, 'income');
-                $turnoverTax = $this->calcTax($turnover, $request, 'turnover');
+                $incomeTaxAll = $this->calcTax($income, $request, 'income');
+                $turnoverTaxAll = $this->calcTax($turnover, $request, 'turnover');
+                $incomeTax = $incomeTaxAll['tax'];
+                $turnoverTax = $turnoverTaxAll['tax'];
+                $minTaxApplied = $incomeTax > $turnoverTax ? $incomeTaxAll['min-tax-applied'] : $turnoverTaxAll['min-tax-applied'];
                 $assetPercentage = $this->calcTax($asset, $request, 'asset');
 
                 $assetTax = ($incomeTax > $turnoverTax) ? $incomeTax * ($assetPercentage / 100) : $turnoverTax * ($assetPercentage / 100);
@@ -61,7 +64,7 @@ class TaxCalculatorController extends Controller
                     'taxes' => [
                         'a) Tax On Turnover' =>  currencyFormat($turnoverTax),
                         'b) Tax On Income' =>  currencyFormat($incomeTax),
-                        '*Tax Paid a or b which is higher' => currencyFormat($tax),
+                        '*Tax Paid a or b which is higher'.($minTaxApplied && '<br>Min. Tax Applied') => currencyFormat($tax),
                     ],
                     'add' => [
                         'WealthTax' =>  currencyFormat($assetTax),
@@ -140,7 +143,7 @@ class TaxCalculatorController extends Controller
      * @param integer $value
      * @param \Illuminate\Http\Request $request
      * @param string $type
-     * @return integer
+     * @return mixed
      */
     public function calcTax(int $value, $request, string $type): int
     {
@@ -177,6 +180,7 @@ class TaxCalculatorController extends Controller
         $slotLimit = $lastValueSlot?->to ?? 0;
         $slots = $taxSetting->slots()->where('type', $type)->where('to', '<=', $slotLimit)->get();
         $value = $afterFree;
+        $minTaxApplied = false;
         if ($for == 'company') {
             $totalTax = $value > $minTax ? $value * $taxSetting[$type.'_percentage'] / 100 : $minTax;
         } elseif ($slots->count() > 0) {
@@ -191,6 +195,7 @@ class TaxCalculatorController extends Controller
                 $amountForTax = $slot->difference < $value ? $slot->difference : $value;
                 $tax = $amountForTax * ($slot->tax_percentage / 100);
                 $tax = $minTax > $tax ? $minTax : $tax;
+                $minTaxApplied = $minTax > $tax;
                 $value -= $amountForTax;
                 $totalTax += $tax;
                 if ($value <= 0) {
@@ -198,7 +203,10 @@ class TaxCalculatorController extends Controller
                 }
             }
         }
-        return $totalTax;
+        return [
+            'tax' => $totalTax,
+            'min-tax-applied' => $minTaxApplied
+        ];
     }
 
     public function calcOthers(int $value, $request, string $type)
