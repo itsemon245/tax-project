@@ -40,7 +40,7 @@
                                                     <tr>
                                                         <td
                                                             class="border-2 !border-green-500 px-4 py-2 {{ str($text)->contains('*') ? 'font-bold' : '' }}">
-                                                            {{ $text }}</td>
+                                                            {!! $text !!}</td>
                                                         <td
                                                             class="border-2 !border-green-500 px-4 py-2 {{ str($text)->contains('*') ? 'font-bold' : '' }}">
                                                             {!! $amount !!}</td>

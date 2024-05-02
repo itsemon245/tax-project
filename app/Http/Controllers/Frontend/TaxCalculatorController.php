@@ -57,14 +57,15 @@ class TaxCalculatorController extends Controller
                 $tax = $turnoverTax > $incomeTax ? $turnoverTax : $incomeTax;
 
                 $totalTax = $tax + $assetTax;
-                $totalDeduction = ($request->has('rebate') ? (float)$request->rebate : 0) + (float)$request->deduction;
-                $actualTax = $totalTax > $minTax ? $totalTax : $minTax;
-                $afterDeduction = $actualTax - $totalDeduction;
+                $afterRebate = $totalTax - ((float)$request->rebate ?? 0);
+                $actualTax = $afterRebate > $minTax ? $totalTax : $minTax;
+                $afterDeduction = $actualTax - (float)$request->deduction;
+                $formatMinTax = currencyFormat($minTax);
                 $data = [
                     'taxes' => [
                         'a) Tax On Turnover' =>  currencyFormat($turnoverTax),
                         'b) Tax On Income' =>  currencyFormat($incomeTax),
-                        '*Tax Paid a or b which is higher'.($minTaxApplied && '<br>Min. Tax Applied') => currencyFormat($tax),
+                        '*Tax Paid a or b which is higher'.($minTaxApplied ? "<br> <small>Min. Tax Applied({$formatMinTax})</small>" : '') => currencyFormat($tax),
                     ],
                     'add' => [
                         'WealthTax' =>  currencyFormat($assetTax),
@@ -72,9 +73,10 @@ class TaxCalculatorController extends Controller
                     ],
                     'less' => [
                         'Rebate' => currencyFormat($request->rebate ?? 0),
-                        'Min-Tax' => $totalTax < $minTax ? currencyFormat($minTax) : 'Not Applied',
-                        'Others Paid' =>  currencyFormat($request->deduction),
-                        '*Total Deduction' => "-".currencyFormat($totalDeduction)
+                        'After Rebate' => currencyFormat($afterRebate),
+                        'Apply Min-Tax' => $afterRebate < $minTax ? currencyFormat($minTax) : 'Not Applied',
+                        'Others Paid' => currencyFormat($request->deduction),
+                        '*Total Deduction' => "-".currencyFormat($totalTax - $afterDeduction)
                     ],
                     '*Total Balance Payable' => currencyFormat($afterDeduction)
                 ];
@@ -145,7 +147,7 @@ class TaxCalculatorController extends Controller
      * @param string $type
      * @return mixed
      */
-    public function calcTax(int $value, $request, string $type): int
+    public function calcTax(int $value, $request, string $type)
     {
         $for = $request->tax_for;
         $gender = $request->gender;
@@ -194,8 +196,8 @@ class TaxCalculatorController extends Controller
 
                 $amountForTax = $slot->difference < $value ? $slot->difference : $value;
                 $tax = $amountForTax * ($slot->tax_percentage / 100);
-                $tax = $minTax > $tax ? $minTax : $tax;
                 $minTaxApplied = $minTax > $tax;
+                $tax = $minTaxApplied ? $minTax : $tax;
                 $value -= $amountForTax;
                 $totalTax += $tax;
                 if ($value <= 0) {
