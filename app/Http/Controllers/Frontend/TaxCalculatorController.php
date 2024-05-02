@@ -64,6 +64,7 @@ class TaxCalculatorController extends Controller
                         '*Total Deduction' => "-".currencyFormat($totalDeduction)
                     ];
                 } else {
+                    $actualTax = $totalTax;
                     $less = [
                         'Rebate' => currencyFormat($request->rebate ?? 0),
                         'Others Paid' =>  currencyFormat($request->deduction),
