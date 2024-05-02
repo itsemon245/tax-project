@@ -30,7 +30,7 @@
                                             <div class="capitalize px-4 font-bold text-start">{{ $key }}</div>
                                             @if (!is_object($items))
                                                 <div class="border-l-2 !border-green-500 px-4 font-bold">
-                                                    {{ $items }}
+                                                    {!! $items !!}
                                                 </div>
                                             @endif
                                         </div>
@@ -43,7 +43,7 @@
                                                             {{ $text }}</td>
                                                         <td
                                                             class="border-2 !border-green-500 px-4 py-2 {{ str($text)->contains('*') ? 'font-bold' : '' }}">
-                                                            {{ $amount }}</td>
+                                                            {!! $amount !!}</td>
                                                     </tr>
                                                 @endforeach
                                             </table>
