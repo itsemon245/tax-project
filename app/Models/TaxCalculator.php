@@ -13,6 +13,7 @@ class TaxCalculator extends Model
     protected $guarded = [];
     protected $casts = [
         'others' => Json::class,
+        'data' => Json::class,
         'tax' => Currency::class,
     ];
 }

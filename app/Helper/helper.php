@@ -339,3 +339,9 @@ function convertEmbedUrl(string $embeddedUrl): string|null
     }
     return null;
 }
+
+function numFormat(mixed $value) : string {
+    $value = (float)$value;
+    $formatter = new \NumberFormatter('en_BD', \NumberFormatter::DEFAULT_STYLE);
+    return $formatter->format($value);
+}
