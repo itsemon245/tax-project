@@ -55,22 +55,7 @@ class TaxCalculatorController extends Controller
 
                 $totalTax = $tax + $assetTax;
                 $totalDeduction = ($request->has('rebate') ? (float)$request->rebate : 0) + (float)$request->deduction;
-                if ($totalTax < $minTax) {
-                    $actualTax = $minTax;
-                    $less = [
-                        'Rebate' => currencyFormat($request->rebate ?? 0),
-                        'Min. Tax' => currencyFormat($minTax),
-                        'Others Paid' =>  currencyFormat($request->deduction),
-                        '*Total Deduction' => "-".currencyFormat($totalDeduction)
-                    ];
-                } else {
-                    $actualTax = $totalTax;
-                    $less = [
-                        'Rebate' => currencyFormat($request->rebate ?? 0),
-                        'Others Paid' =>  currencyFormat($request->deduction),
-                        '*Total Deduction' => "-".currencyFormat($totalDeduction)
-                    ];
-                }
+                $actualTax = $totalTax > $minTax ? $totalTax : $minTax;
                 $afterDeduction = $actualTax - $totalDeduction;
                 $data = [
                     'taxes' => [
@@ -82,7 +67,12 @@ class TaxCalculatorController extends Controller
                         'WealthTax' =>  currencyFormat($assetTax),
                         '*Total Payable Tax' =>  currencyFormat($totalTax),
                     ],
-                    'less' => $less,
+                    'less' => [
+                        'Rebate' => currencyFormat($request->rebate ?? 0),
+                        'Min-Tax' => $totalTax < $minTax ? currencyFormat($minTax) : 'Not Applied',
+                        'Others Paid' =>  currencyFormat($request->deduction),
+                        '*Total Deduction' => "-".currencyFormat($totalDeduction)
+                    ],
                     '*Total Balance Payable' => currencyFormat($afterDeduction)
                 ];
                 $incomeOther = $this->calcOthers($income, $request, 'income');
