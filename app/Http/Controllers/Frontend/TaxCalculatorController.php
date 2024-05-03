@@ -200,7 +200,9 @@ class TaxCalculatorController extends Controller
                     $minTaxApplied = $minTax > $tax;
                     $tax = $minTaxApplied ? $minTax : $tax;
                 }
-                $value -= $amountForTax;
+                if (!($type == 'turnover' && $key == 0)) {
+                    $value -= $amountForTax;
+                }
                 $totalTax += $tax;
                 if ($value <= 0) {
                     break;
