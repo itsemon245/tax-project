@@ -196,8 +196,10 @@ class TaxCalculatorController extends Controller
 
                 $amountForTax = $slot->difference < $value ? $slot->difference : $value;
                 $tax = $amountForTax * ($slot->tax_percentage / 100);
-                $minTaxApplied = $minTax > $tax;
-                $tax = $minTaxApplied ? $minTax : $tax;
+                if ($type == 'income') {
+                    $minTaxApplied = $minTax > $tax;
+                    $tax = $minTaxApplied ? $minTax : $tax;
+                }
                 $value -= $amountForTax;
                 $totalTax += $tax;
                 if ($value <= 0) {
