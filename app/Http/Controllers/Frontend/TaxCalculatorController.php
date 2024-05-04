@@ -216,7 +216,7 @@ class TaxCalculatorController extends Controller
         }
         return [
             'tax' => $totalTax,
-            'original' => $originalTax,
+            'original-tax' => $originalTax,
             'min-tax-applied' => $minTaxApplied
         ];
     }
