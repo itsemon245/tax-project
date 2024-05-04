@@ -23,6 +23,9 @@
                     {{-- <p class="text-center fow-bld fs-4">Tax : {{ $result->tax }}৳</p> --}}
                     <table class="table table-auto bg-transparent text-green-500">
                         <tbody>
+                            @php
+                                $actualTax = 0;
+                            @endphp
                             @foreach ($result->data as $key => $items)
                                 <tr class="">
                                     <td class="border-2 !border-green-500">
@@ -37,13 +40,18 @@
                                         @if (is_object($items))
                                             <table class="table table-auto border">
                                                 @foreach ($items as $text => $amount)
+                                                    @php
+                                                        if (str($text)->contains('Actual Tax')) {
+                                                            $actualTax = $amount;
+                                                        }
+                                                    @endphp
                                                     <tr>
                                                         <td
                                                             class="border-2 !border-green-500 px-4 py-2 {{ str($text)->contains('*') ? 'font-bold' : '' }}">
                                                             {!! $text !!}</td>
                                                         <td
                                                             class="border-2 !border-green-500 px-4 py-2 {{ str($text)->contains('*') ? 'font-bold' : '' }}">
-                                                            {!! $amount !!}</td>
+                                                            {!! str($text)->contains('Actual Tax') ? currencyFormat($amount) : $amount !!}</td>
                                                     </tr>
                                                 @endforeach
                                             </table>

@@ -51,6 +51,7 @@ class TaxCalculatorController extends Controller
                 $incomeTax = $incomeTaxAll['tax'];
                 $turnoverTax = $turnoverTaxAll['tax'];
                 $minTaxApplied = $incomeTax > $turnoverTax ? $incomeTaxAll['min-tax-applied'] : $turnoverTaxAll['min-tax-applied'];
+                $originalTax = $incomeTax > $turnoverTax ? $incomeTaxAll['original-tax'] : $turnoverTaxAll['original-tax'];
                 $assetPercentage = $this->calcTax($asset, $request, 'asset');
 
                 $assetTax = ($incomeTax > $turnoverTax) ? $incomeTax * ($assetPercentage / 100) : $turnoverTax * ($assetPercentage / 100);
@@ -61,10 +62,13 @@ class TaxCalculatorController extends Controller
                 $actualTax = $afterRebate > $minTax ? $totalTax : $minTax;
                 $afterDeduction = $actualTax - (float)$request->deduction;
                 $formatMinTax = currencyFormat($minTax);
+                $formattedOriginalTax = currencyFormat($originalTax);
+                $afterRebateFormatted = currencyFormat($afterRebate);
                 $data = [
                     'taxes' => [
                         'a) Tax On Turnover' =>  currencyFormat($turnoverTax),
                         'b) Tax On Income' =>  currencyFormat($incomeTax),
+                        'Actual Tax' => $actualTax,
                         '*Tax Paid a or b which is higher'.($minTaxApplied ? "<br> <small>Min. Tax Applied({$formatMinTax})</small>" : '') => currencyFormat($tax),
                     ],
                     'add' => [
@@ -73,12 +77,12 @@ class TaxCalculatorController extends Controller
                     ],
                     'less' => [
                         'Rebate' => currencyFormat($request->rebate ?? 0),
-                        'After Rebate' => currencyFormat($afterRebate),
-                        'Apply Min-Tax' => $afterRebate < $minTax ? currencyFormat($minTax) : 'Not Applied',
+                        'After Rebate' => $originalTax == 0 ? "<div class='text-center border-b-2 border-green-500'>{$afterRebateFormatted}</div>" : $afterRebateFormatted,
+                        'Apply Min-Tax' => $afterRebate < $minTax && $originalTax > 0 ? currencyFormat($minTax) : 'Not Applied',
                         'Others Paid' => currencyFormat($request->deduction),
-                        '*Total Deduction' => "-".currencyFormat($totalTax - $afterDeduction)
+                        '*Total Deduction' => currencyFormat($totalTax - $afterDeduction)
                     ],
-                    '*Total Balance Payable' => currencyFormat($afterDeduction)
+                    '*Total Balance Payable' => $originalTax == 0 ? "<div class='text-center border-b-2 border-green-500'>{$afterDeduction}</div>" : $afterDeduction
                 ];
                 $incomeOther = $this->calcOthers($income, $request, 'income');
                 $turnoverOther = $this->calcOthers($turnover, $request, 'turnover');
@@ -196,8 +200,9 @@ class TaxCalculatorController extends Controller
 
                 $amountForTax = $slot->difference < $value ? $slot->difference : $value;
                 $tax = $amountForTax * ($slot->tax_percentage / 100);
+                $originalTax = $tax;
                 if ($type == 'income') {
-                    $minTaxApplied = $minTax > $tax;
+                    $minTaxApplied = $key == 0 && $minTax > $tax;
                     $tax = $minTaxApplied ? $minTax : $tax;
                 }
                 if (!($type == 'turnover' && $key == 0)) {
@@ -211,6 +216,7 @@ class TaxCalculatorController extends Controller
         }
         return [
             'tax' => $totalTax,
+            'original' => $originalTax,
             'min-tax-applied' => $minTaxApplied
         ];
     }
