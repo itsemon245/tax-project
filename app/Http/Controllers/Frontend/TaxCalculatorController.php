@@ -64,11 +64,12 @@ class TaxCalculatorController extends Controller
                 $formatMinTax = currencyFormat($minTax);
                 $formattedOriginalTax = currencyFormat($originalTax);
                 $afterRebateFormatted = currencyFormat($afterRebate);
+                $formattedDeduction = currencyFormat($request->deduction);
                 $data = [
                     'taxes' => [
                         'a) Tax On Turnover' =>  currencyFormat($turnoverTax),
-                        'b) Tax On Income' =>  currencyFormat($incomeTax),
-                        'Actual Tax' => $actualTax,
+                        "b) Tax On Income<br>".($originalTax != 0 ? "<small>Actual Tax ({$formattedOriginalTax})</small>" : '') =>  currencyFormat($incomeTax),
+                        'actual-tax' => $originalTax,
                         '*Tax Paid a or b which is higher'.($minTaxApplied ? "<br> <small>Min. Tax Applied({$formatMinTax})</small>" : '') => currencyFormat($tax),
                     ],
                     'add' => [
@@ -77,12 +78,13 @@ class TaxCalculatorController extends Controller
                     ],
                     'less' => [
                         'Rebate' => currencyFormat($request->rebate ?? 0),
-                        'After Rebate' => $originalTax == 0 ? "<div class='text-center border-b-2 border-green-500'>{$afterRebateFormatted}</div>" : $afterRebateFormatted,
+                        'After Rebate' => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Rebate applicable</div>" : $afterRebateFormatted,
                         'Apply Min-Tax' => $afterRebate < $minTax && $originalTax > 0 ? currencyFormat($minTax) : 'Not Applied',
-                        'Others Paid' => currencyFormat($request->deduction),
-                        '*Total Deduction' => currencyFormat($totalTax - $afterDeduction)
+                        "Others Paid" => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Deduction applicable</div>" : $formattedDeduction
+                        // 'Others Paid' => "-".$formattedDeduction,
+                        // '*Total Deduction' =>  currencyFormat($totalTax - $afterDeduction)
                     ],
-                    '*Total Balance Payable' => $originalTax == 0 ? "<div class='text-center border-b-2 border-green-500'>{$afterDeduction}</div>" : $afterDeduction
+                    '*Total Balance Payable' => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No tax applicable</div>" : currencyFormat($afterDeduction)
                 ];
                 $incomeOther = $this->calcOthers($income, $request, 'income');
                 $turnoverOther = $this->calcOthers($turnover, $request, 'turnover');
@@ -187,6 +189,7 @@ class TaxCalculatorController extends Controller
         $slots = $taxSetting->slots()->where('type', $type)->where('to', '<=', $slotLimit)->get();
         $value = $afterFree;
         $minTaxApplied = false;
+        $originalTax = 0;
         if ($for == 'company') {
             $totalTax = $value > $minTax ? $value * $taxSetting[$type.'_percentage'] / 100 : $minTax;
         } elseif ($slots->count() > 0) {

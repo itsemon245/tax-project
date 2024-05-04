@@ -41,18 +41,20 @@
                                             <table class="table table-auto border">
                                                 @foreach ($items as $text => $amount)
                                                     @php
-                                                        if (str($text)->contains('Actual Tax')) {
+                                                        if ($text == 'actual-tax') {
                                                             $actualTax = $amount;
                                                         }
                                                     @endphp
-                                                    <tr>
-                                                        <td
-                                                            class="border-2 !border-green-500 px-4 py-2 {{ str($text)->contains('*') ? 'font-bold' : '' }}">
-                                                            {!! $text !!}</td>
-                                                        <td
-                                                            class="border-2 !border-green-500 px-4 py-2 {{ str($text)->contains('*') ? 'font-bold' : '' }}">
-                                                            {!! str($text)->contains('Actual Tax') ? currencyFormat($amount) : $amount !!}</td>
-                                                    </tr>
+                                                    @if ($text != 'actual-tax')
+                                                        <tr>
+                                                            <td
+                                                                class="border-2 !border-green-500 px-4 py-2 {{ str($text)->contains('*') ? 'font-bold' : '' }}">
+                                                                {!! $text !!}</td>
+                                                            <td
+                                                                class="border-2 !border-green-500 px-4 py-2 {{ str($text)->contains('*') ? 'font-bold' : '' }}">
+                                                                {!! $text == 'actual-tax' ? currencyFormat($amount) : $amount !!}</td>
+                                                        </tr>
+                                                    @endif
                                                 @endforeach
                                             </table>
                                         @endif
