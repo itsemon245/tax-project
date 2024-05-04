@@ -46,13 +46,13 @@ class TaxCalculatorController extends Controller
                 $income = (int) ($request->yearly_income ?? 0);
                 $turnover = (int) ($request->yearly_turnover ?? 0);
                 $asset = (int) ($request->total_asset ?? 0);
+                $assetPercentage = $this->calcTax($asset, $request, 'asset');
                 $incomeTaxAll = $this->calcTax($income, $request, 'income');
                 $turnoverTaxAll = $this->calcTax($turnover, $request, 'turnover');
                 $incomeTax = $incomeTaxAll['tax'];
                 $turnoverTax = $turnoverTaxAll['tax'];
                 $minTaxApplied = $incomeTax > $turnoverTax ? $incomeTaxAll['min-tax-applied'] : $turnoverTaxAll['min-tax-applied'];
                 $originalTax = $incomeTax > $turnoverTax ? $incomeTaxAll['original-tax'] : $turnoverTaxAll['original-tax'];
-                $assetPercentage = $this->calcTax($asset, $request, 'asset');
 
                 $assetTax = ($incomeTax > $turnoverTax) ? $incomeTax * ($assetPercentage / 100) : $turnoverTax * ($assetPercentage / 100);
                 $tax = $turnoverTax > $incomeTax ? $turnoverTax : $incomeTax;
@@ -73,14 +73,14 @@ class TaxCalculatorController extends Controller
                         '*Tax Paid a or b which is higher'.($minTaxApplied ? "<br> <small>Min. Tax Applied({$formatMinTax})</small>" : '') => currencyFormat($tax),
                     ],
                     'add' => [
-                        'WealthTax' =>  currencyFormat($assetTax),
+                        'WealthTax' => "+ ".currencyFormat($assetTax),
                         '*Total Payable Tax' =>  currencyFormat($totalTax),
                     ],
                     'less' => [
-                        'Rebate' => "-".currencyFormat($request->rebate ?? 0),
+                        'Rebate' => "- ".currencyFormat($request->rebate ?? 0),
                         'After Rebate' => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>{$afterRebateFormatted}</div>" : $afterRebateFormatted,
                         'Apply Min-Tax' => $afterRebate < $minTax && $originalTax > 0 ? currencyFormat($minTax) : 'Not Applied',
-                        "Others Paid" => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Deduction applicable</div>" : "-".$formattedDeduction
+                        "Others Paid" => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Deduction applicable</div>" : "- ".$formattedDeduction
                         // 'Others Paid' => "-".$formattedDeduction,
                         // '*Total Deduction' =>  currencyFormat($totalTax - $afterDeduction)
                     ],
@@ -166,10 +166,11 @@ class TaxCalculatorController extends Controller
                 'female' => (int) $taxSetting->tax_free->female,
                 null => (int) $taxSetting->tax_free->amount ?? 0,
             };
+            $afterFree = $value - $taxFree;
         } else {
             $taxFree = 0;
+            $afterFree = $value - $taxFree;
         }
-        $afterFree = $value - $taxFree;
         $minTax = $taxSetting->min_tax ?? 0;
         $lastValueSlot = $taxSetting->slots()->where('type', $type)
             ->where('from', '<=', $afterFree)
@@ -183,7 +184,7 @@ class TaxCalculatorController extends Controller
          * For Asset Type just return the last value slot percentage
          */
         if ($type == 'asset') {
-            return $lastValueSlot->percentage ?? 0;
+            return $lastValueSlot->tax_percentage ?? 0 ;
         }
         $slotLimit = $lastValueSlot?->to ?? 0;
         $slots = $taxSetting->slots()->where('type', $type)->where('to', '<=', $slotLimit)->get();
