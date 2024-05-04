@@ -43,9 +43,9 @@ class TaxCalculatorController extends Controller
                 $tax = 0;
                 $taxSetting = TaxSetting::where(['for' => $request->tax_for, 'type' => 'tax'])->first();
                 $minTax = $taxSetting->min_tax;
-                $income = (int) $request->yearly_income;
-                $turnover = (int) $request->yearly_turnover;
-                $asset = (int) $request->total_asset;
+                $income = (int) ($request->yearly_income ?? 0);
+                $turnover = (int) ($request->yearly_turnover ?? 0);
+                $asset = (int) ($request->total_asset ?? 0);
                 $incomeTaxAll = $this->calcTax($income, $request, 'income');
                 $turnoverTaxAll = $this->calcTax($turnover, $request, 'turnover');
                 $incomeTax = $incomeTaxAll['tax'];
@@ -64,11 +64,11 @@ class TaxCalculatorController extends Controller
                 $formatMinTax = currencyFormat($minTax);
                 $formattedOriginalTax = currencyFormat($originalTax);
                 $afterRebateFormatted = currencyFormat($afterRebate);
-                $formattedDeduction = currencyFormat($request->deduction);
+                $formattedDeduction = currencyFormat($afterDeduction);
                 $data = [
                     'taxes' => [
                         'a) Tax On Turnover' =>  currencyFormat($turnoverTax),
-                        "b) Tax On Income<br>".($originalTax != 0 ? "<small>Actual Tax ({$formattedOriginalTax})</small>" : '') =>  currencyFormat($incomeTax),
+                        "b) Tax On Income<br>".($originalTax > 0 && $minTax > $originalTax ? "<small>Actual Tax ({$formattedOriginalTax})</small>" : '') =>  currencyFormat($incomeTax),
                         'actual-tax' => $originalTax,
                         '*Tax Paid a or b which is higher'.($minTaxApplied ? "<br> <small>Min. Tax Applied({$formatMinTax})</small>" : '') => currencyFormat($tax),
                     ],
@@ -77,10 +77,10 @@ class TaxCalculatorController extends Controller
                         '*Total Payable Tax' =>  currencyFormat($totalTax),
                     ],
                     'less' => [
-                        'Rebate' => currencyFormat($request->rebate ?? 0),
-                        'After Rebate' => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Rebate applicable</div>" : $afterRebateFormatted,
+                        'Rebate' => "-".currencyFormat($request->rebate ?? 0),
+                        'After Rebate' => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>{$afterRebateFormatted}</div>" : $afterRebateFormatted,
                         'Apply Min-Tax' => $afterRebate < $minTax && $originalTax > 0 ? currencyFormat($minTax) : 'Not Applied',
-                        "Others Paid" => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Deduction applicable</div>" : $formattedDeduction
+                        "Others Paid" => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Deduction applicable</div>" : "-".$formattedDeduction
                         // 'Others Paid' => "-".$formattedDeduction,
                         // '*Total Deduction' =>  currencyFormat($totalTax - $afterDeduction)
                     ],
