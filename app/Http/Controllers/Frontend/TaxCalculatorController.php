@@ -32,9 +32,9 @@ class TaxCalculatorController extends Controller
                     'email' => 'required|email',
                     'phone' => 'required|string',
                     'income_source' => 'string|nullable',
-                    'yearly_turnover' => 'required|numeric',
-                    'total_asset' => 'required|numeric',
-                    'yearly_income' => 'required|numeric',
+                    'yearly_turnover' => 'nullable|numeric',
+                    'total_asset' => 'nullable|numeric',
+                    'yearly_income' => 'nullable|numeric',
                     'services' => 'array|nullable',
                     'message' => 'string|nullable',
                 ]);
