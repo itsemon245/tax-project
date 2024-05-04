@@ -59,12 +59,12 @@ class TaxCalculatorController extends Controller
 
                 $totalTax = $tax + $assetTax;
                 $afterRebate = $totalTax - ((float)$request->rebate ?? 0);
-                $actualTax = $afterRebate > $minTax ? $totalTax : $minTax;
+                $actualTax = $afterRebate > $minTax ? $afterRebate : $minTax;
                 $afterDeduction = $actualTax - (float)$request->deduction;
                 $formatMinTax = currencyFormat($minTax);
                 $formattedOriginalTax = currencyFormat($originalTax);
                 $afterRebateFormatted = currencyFormat($afterRebate);
-                $formattedDeduction = currencyFormat($afterDeduction);
+                $formattedDeduction = currencyFormat((float)$request->deduction);
                 $data = [
                     'taxes' => [
                         'a) Tax On Turnover' =>  currencyFormat($turnoverTax),
