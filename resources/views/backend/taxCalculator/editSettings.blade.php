@@ -18,7 +18,7 @@
                             label="Range To" />
                     </div>
                     <div class="col-md-2">
-                        <x-backend.form.text-input type="text" name="slot_percentage[]" placeholder="Percentage"
+                        <x-backend.form.text-input type="number" step="any" name="slot_percentage[]" placeholder="Percentage"
                             label="Percentage(%)" />
                     </div>
                     <div class="col-md-4">
@@ -156,12 +156,12 @@
                 <div class="col-12 mb-2 slots-container">
                     <h4 class="text-center fw-bold">Slots</h4>
                     <div id="slot-wrapper" class="mb-2">
-                        @foreach ($taxSetting->slots as $slot)
+                        @foreach ($taxSetting->slots as $key => $slot)
                             <div class="row border  rounded p-1 mb-2"
                                 data-url="{{ route('ajax.slot.destroy', $slot->id) }}">
                                 <input type="hidden" name="slot_ids[]" value="{{ $slot->id }}">
-                                <div class="d-none slot-count">1</div>
-                                <h5 class="fw-medium mb-1">Slot 1</h5>
+                                <div class="d-none slot-count">{{++$key}}</div>
+                                <h5 class="fw-medium mb-1">Slot {{++$key}}</h5>
                                 <div class="row only-tax">
                                     <div class="col-md-3">
                                         <x-backend.form.text-input type="number" name="tax_slot_from[]"
@@ -172,7 +172,7 @@
                                             placeholder="Range To" label="Range To" :value="$slot->to" />
                                     </div>
                                     <div class="col-md-2">
-                                        <x-backend.form.text-input type="text" name="slot_percentage[]"
+                                        <x-backend.form.text-input type="number" step="any" name="slot_percentage[]"
                                             placeholder="Percentage" label="Percentage(%)" :value="$slot->tax_percentage" />
                                     </div>
                                     <div class="col-md-4">

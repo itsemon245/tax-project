@@ -46,7 +46,7 @@ class AuthenticatedSessionController extends Controller
                 $request->authenticate();
                 $request->session()->regenerate();
 
-                if ($user->purchased('course')->count() > 0) {
+                if ($user->purchased('course')->count() > 0 && !$user->hasAnyRole(['admin', 'super admin'])) {
                     $store = new Authentication();
                     $store->user_id = auth()->id();
                     $store->login_status = 1;
