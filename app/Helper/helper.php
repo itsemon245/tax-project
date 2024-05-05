@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Crypt;
 
 /**
  * Set Image given a img from database
@@ -19,7 +18,7 @@ function useImage($image)
 
 /**
  * Returns current timestamp in format = 'Y-m-d-H-m-s-u'
- * @return string 
+ * @return string
  */
 function timestamp()
 {
@@ -58,7 +57,7 @@ function saveImage($image, string $dir, ?string $prefix = '', string $disk = 'pu
  * @param string $disk default = public
  * @return string $new_path
  */
-function updateFile($file, $old_path, $dir,  $prefix = "", $disk = "public")
+function updateFile($file, $old_path, $dir, $prefix = "", $disk = "public")
 {
     if ($file === null) {
         return $old_path;
@@ -156,7 +155,7 @@ function socialItems(): array
  * @param string $table
  * @param array $queries
  * @param int limit
- * 
+ *
  */
 function getRecords($table = 'users', $queries = [], $limit = 10)
 {
@@ -340,8 +339,9 @@ function convertEmbedUrl(string $embeddedUrl): string|null
     return null;
 }
 
-function currencyFormat(mixed $value) : string {
+function currencyFormat(mixed $value): string
+{
     $value = (float)$value;
     $formatter = new \NumberFormatter('en_BD', \NumberFormatter::DEFAULT_STYLE);
-    return "&#2547; ".$formatter->format($value).".00";
+    return "&#2547; ".$formatter->format($value);
 }

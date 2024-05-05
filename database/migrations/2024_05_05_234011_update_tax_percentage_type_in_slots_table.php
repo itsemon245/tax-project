@@ -12,7 +12,6 @@ return new class () extends Migration {
     {
         Schema::table('slots', function (Blueprint $table) {
             $table->double(column:'tax_percentage', places:6)->default(0)->change();
-
         });
     }
 
