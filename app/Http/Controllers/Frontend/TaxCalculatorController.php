@@ -179,12 +179,12 @@ class TaxCalculatorController extends Controller
         }
         $minTax = $taxSetting->min_tax ?? 0;
         $lastValueSlot = $taxSetting->slots()->where('type', $type)
-            ->where('from', '<=', $afterFree)
-            ->where('to', '>=', $afterFree)
-            ->first() ??
-            $taxSetting->slots()->where('type', $type)
-                ->where('from', '<=', $afterFree)
-                ->latest()->first();
+        ->where('from', '<=', $afterFree)
+        ->where('to', '>=', $afterFree)
+        ->first() ??
+        $taxSetting->slots()->where('type', $type)
+        ->where('from', '<=', $afterFree)
+        ->latest()->first();
 
         /**
          * For Asset Type just return the last value slot percentage
@@ -197,9 +197,7 @@ class TaxCalculatorController extends Controller
         $value = $afterFree;
         $minTaxApplied = false;
         $originalTax = 0;
-        if ($for == 'company') {
-            $totalTax = $value > $minTax ? $value * $taxSetting[$type.'_percentage'] / 100 : $minTax;
-        } elseif ($slots->count() > 0) {
+        if ($slots->count() > 0) {
             foreach ($slots as $key => $slot) {
                 $tax = (float) 0;
                 /**
