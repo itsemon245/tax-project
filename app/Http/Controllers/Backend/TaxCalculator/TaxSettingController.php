@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Backend\TaxCalculator;
 
 use App\Models\Slot;
-use App\Models\TaxService;
 use App\Models\TaxSetting;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 class TaxSettingController extends Controller
@@ -139,11 +137,12 @@ class TaxSettingController extends Controller
     {
         if ($request->tax_slot_from) {
             foreach ($request->tax_slot_from as $key => $from) {
+                $from = (string) $from;
                 $id = $request->slot_ids[$key] ?? null;
                 $percentage = $request->slot_percentage[$key];
                 $type = $request->slot_types[$key];
-                $to = $request->tax_slot_to[$key];
-                $difference = $to - $from;
+                $to = (string)$request->tax_slot_to[$key];
+                $difference = bcsub($to, $from);
                 $slot = Slot::updateOrCreate(['id' => $id], [
                     'tax_setting_id' => $taxSetting->id,
                     'from' => $from,
@@ -159,13 +158,14 @@ class TaxSettingController extends Controller
     {
         if ($request->others_slot_from) {
             foreach ($request->others_slot_from as $key => $from) {
+                $from = (string) $from;
                 $id = $request->slot_ids[$key] ?? null;
                 $min_tax = $request->min_taxes[$key];
                 $isDiscountFixed = $request->is_discounts_fixed[$key] !== 'false';
                 $type = $request->others_slot_types[$key];
                 $amount = $request->discount_amounts[$key];
-                $to = $request->others_slot_to[$key];
-                $difference = $to - $from;
+                $to = (string)$request->others_slot_to[$key];
+                $difference = bcsub($to, $from);
                 $slot = Slot::updateOrCreate(['id' => $id], [
                     'tax_setting_id' => $taxSetting->id,
                     'min_tax' => $min_tax,

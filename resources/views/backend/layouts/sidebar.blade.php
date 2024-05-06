@@ -437,12 +437,12 @@
                                 @endcanany
                                 @canany(['manage case study', 'read case study'])
                                     <li>
-                                        <a href="#sidebarSerivces" data-bs-toggle="collapse">
+                                        <a href="#caseStudies1" data-bs-toggle="collapse">
                                             <i class="mdi mdi-badge-account-horizontal-outline"></i>
                                             <span>Case Study </span>
                                             <span class="menu-arrow"></span>
                                         </a>
-                                        <div class="collapse" id="sidebarSerivces">
+                                        <div class="collapse" id="caseStudies1">
                                             <ul class="nav-second-level">
                                                 <li>
                                                     <a href="{{ route('case-study-category.create') }}">
