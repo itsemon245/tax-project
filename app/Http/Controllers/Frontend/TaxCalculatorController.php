@@ -122,7 +122,6 @@ class TaxCalculatorController extends Controller
 
             }
         } catch (\Throwable $th) {
-            dd($th);
             $alert = [
                 'alert-type' => 'error',
                 'message' => $th->getMessage(),
@@ -237,31 +236,18 @@ class TaxCalculatorController extends Controller
                 $otherTax = 0;
                 $othersSetting = TaxSetting::find($service);
                 // dd($othersSetting);
-                $valueSlots = $othersSetting->slots()->where('type', $type)->get();
-                $lastValueSlot = $valueSlots
-                    ->where('to', '>=', $value)
-                    ->first() ??
-                    $valueSlots
-                        ->where('from', '<=', $value)
-                        ->last();
-                foreach ($valueSlots as $key => $slot) {
-                    $minTax = (int) $slot->min_tax ?? 0;
-                    $tax = (float) 0;
-                    if ($slot->difference < $value) {
-                        $tax = $slot->is_discount_fixed ? $slot->amount : $slot->difference * $slot->amount / 100;
-                        $tax = $tax < $minTax ? $minTax : $tax;
-                        $value -= $slot->difference;
-                    } elseif ($value > 0) {
-                        $tax = $slot->is_discount_fixed ? $slot->amount : $slot->difference * $slot->amount / 100;
-                        $tax = $tax < $minTax ? $minTax : $tax;
-                        $value = 0;
-                    }
-                    $otherTax += $tax;
-                    // if ($slot->id === $lastValueSlot->id || $value <= 0) {
-                    //     break;
-                    // }
-                }
-                $otherTaxes = [...$otherTaxes, $othersSetting->service => $otherTax];
+                $lastValueSlot = $othersSetting->slots()->where('type', $type)
+                ->where('from', '<=', $value)
+                ->where('to', '>=', $value)
+                ->first() ??
+                $othersSetting->slots()->where('type', $type)
+                ->where('from', '<=', $value)
+                ->latest()->first();
+                $diff = ($value - $lastValueSlot->from);
+                $plus = $lastValueSlot->is_discount_fixed ? $lastValueSlot->amount : $diff * ($lastValueSlot->amount / 100);
+                $tax = $diff + $plus;
+                $tax = $lastValueSlot->min_tax > $tax ? (float) $lastValueSlot->min_tax : $tax;
+                $otherTaxes[$othersSetting->service][$type] = $tax;
             }
         }
 

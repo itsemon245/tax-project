@@ -64,20 +64,35 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <p class="text-center fw-bold fs-3 my-0">Others : @if (!$result->others)
+                    <div class="text-center fw-bold fs-3 my-0">Others :
+                        @if (!$result->others)
                             <span class="fw-medium">
                                 No others taxes
                             </span>
+                        @else
+                            <table class="table table-auto border fs-5">
+                                @php
+                                    $total = 0;
+                                @endphp
+                                @foreach ($result->others as $text => $amount)
+                                    @php
+                                        $total += $amount;
+                                    @endphp
+                                    <tr>
+                                        <td class="border-2 !border-green-500 px-4 py-2 font-medium">
+                                            {!! $text !!}</td>
+                                        <td class="border-2 !border-green-500 px-4 py-2 font-medium">
+                                            {!! currencyFormat($amount) !!}</td>
+                                    </tr>
+                                @endforeach
+                                <tr>
+                                    <td class="border-2 !border-green-500 px-4 py-2 font-bold">Total</td>
+                                    <td class="border-2 !border-green-500 px-4 py-2 font-bold">
+                                        {!! currencyFormat($total) !!}</td>
+                                </tr>
+                            </table>
                         @endif
-                    <ul class="list-unstyled mb-0">
-                        @foreach ($result->others as $key => $value)
-                            <li>
-                                <span class="fw-medium">{{ $key }} : </span>
-                                <span class="fw-medium">{{ $value }} ৳</span>
-                            </li>
-                        @endforeach
-                    </ul>
-                    </p>
+                    </div>
                     <div class=" {{ $apply == true ? '' : 'd-flex justify-content-around' }}">
                         <x-backend.ui.button type="custom" :href="route('tax.calculator')" class="btn-sm btn-info">Calculate
                             again</x-backend.ui.button>
