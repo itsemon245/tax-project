@@ -246,7 +246,7 @@ class TaxCalculatorController extends Controller
                 $diff = ($value - $lastValueSlot->from);
                 $plus = $lastValueSlot->is_discount_fixed ? $lastValueSlot->amount : $diff * ($lastValueSlot->amount / 100);
                 $tax = $diff + $plus;
-                $tax = $lastValueSlot->min_tax > $tax ? (float) $lastValueSlot->min_tax : $tax;
+                $tax = (float) $lastValueSlot->min_tax + $tax;
                 $otherTaxes[$othersSetting->service][$type] = $tax;
             }
         }
