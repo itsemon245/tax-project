@@ -29,6 +29,7 @@
                     <th>Date & Time</th>
                     <th>Status</th>
                     <th>Location</th>
+                    <th>Created At</th>
                     @can('delete appointment')
                         <th>Action</th>
                     @endcan
@@ -67,7 +68,8 @@
                             </td>
                             <td>
                                 @if ($appointment->is_completed)
-                                    <span class="badge bg-soft-success text-success p-1 fs-6">Completed</span>
+                                    <span class="badge bg-soft-success text-success p-1 fs-5">Completed At:
+                                        {{ $appointment->completed_at?->format('d F, Y') }}</span>
                                 @else
                                     <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
                                 @endif
@@ -87,6 +89,11 @@
                                     </span>
                                 </td>
                             @endisset
+                            <td>
+                                <span class="fw-bold">
+                                    {{ $appointment->created_at->format('d F, Y') }}
+                                </span>
+                            </td>
                             @can('delete appointment')
                                 <td>
                                     <form action="{{ route('user-appointments.destroy', $appointment->id) }}" method="post"
@@ -102,7 +109,6 @@
 
                         </tr>
                     @empty
-                       
                     @endforelse
                 @endif
             </tbody>

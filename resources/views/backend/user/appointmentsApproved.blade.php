@@ -24,10 +24,14 @@
                     <tr>
                         <th>#</th>
                         <th>User Info</th>
-                        <th>Appointment With</th>
+                        @if ($appointments->first()?->expertProfile)
+                            <th>Appointment With</th>
+                        @endif
                         <th>Date & Time</th>
                         <th>Status</th>
                         <th>Location</th>
+                        <th>Created at</th>
+
                         @can('delete appointment')
                             <th>Action</th>
                         @endcan
@@ -78,7 +82,8 @@
                                 @if ($appointment->is_completed)
                                     <span class="badge bg-soft-success text-success p-1 fs-6">Completed</span>
                                 @else
-                                    <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
+                                    <span class="badge bg-soft-success text-success p-1 fs-5">Approved At:
+                                        {{ $appointment->approved_at?->format('d F, Y') }}</span>
                                 @endif
                             </td>
                             @isset($appointment->map_id)
@@ -96,6 +101,11 @@
                                     </span>
                                 </td>
                             @endisset
+                            <td>
+                                <span class="fw-bold">
+                                    {{ $appointment->created_at->format('d F, Y') }}
+                                </span>
+                            </td>
                             @can('delete appointment')
                                 <td>
                                     <form action="{{ route('user-appointments.complete', $appointment->id) }}" method="post"

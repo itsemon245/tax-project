@@ -8,20 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 class UserAppointment extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
+    protected $casts = [
+        'completed_at' => 'date',
+    ];
 
     public function map()
     {
         return $this->belongsTo(Map::class);
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
     public function expertProfile()
     {
         return $this->belongsTo(ExpertProfile::class);
     }
+
     protected static function booted(): void
     {
         // static::created(function (UserAppointment $userAppointment) {

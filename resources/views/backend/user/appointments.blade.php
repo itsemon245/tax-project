@@ -25,11 +25,12 @@
                         <th>#</th>
                         <th>User Info</th>
                         @if ($appointments->first()?->expertProfile)
-                        <th>Appointment With</th>
+                            <th>Appointment With</th>
                         @endif
                         <th>Date & Time</th>
                         <th>Status</th>
                         <th>Location</th>
+                        <th>Created at</th>
                         @canany(['update appointment', 'approve appointment'])
                             <th>Action</th>
                         @endcanany
@@ -98,6 +99,11 @@
                                     </span>
                                 </td>
                             @endisset
+                            <td>
+                                <span class="fw-bold">
+                                    {{ $appointment->created_at->format('d F, Y') }}
+                                </span>
+                            </td>
                             @canany(['update appointment', 'approve appointment'])
                                 <td>
                                     <form action="{{ route('user-appointments.approve', $appointment->id) }}" method="post">

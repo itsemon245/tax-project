@@ -690,6 +690,11 @@
                                                             Pending For Approval
                                                         </a>
                                                     </li>
+                                                    <li>
+                                                        <a href="{{ route('user-appointments.approved') }}">
+                                                            Approved
+                                                        </a>
+                                                    </li>
                                                 @endcanany
                                                 @canany(['delete appointment', 'read appointment'])
                                                     <li>
