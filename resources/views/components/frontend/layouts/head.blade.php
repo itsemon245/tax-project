@@ -39,4 +39,5 @@
         integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous">
     </script>
     @vite(['resources/css/app.css', 'resources/scss/app.scss', 'resources/js/app.js'])
+    @stack('customCss')
 </head>

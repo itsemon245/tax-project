@@ -229,6 +229,23 @@
                     .toggleClass('col-md-4 col-lg-3 col-sm-6')
                     .toggleClass('col-md-6 col-lg-4 col-sm-6')
             })
+
+            const container = document.querySelector('.media-scroller');
+            const next = document.getElementById('next')
+            const prev = document.getElementById('prev')
+            const scrollElementWidth = parseInt($('.media-elements').css('width').split('px')[0])
+            const scrollUnit = scrollElementWidth + 20;
+            container.addEventListener('wheel', e => {
+                e.preventDefault();
+                container.scrollLeft += e.deltaY;
+            })
+
+            next.addEventListener('click', () => {
+                container.scrollLeft -= scrollUnit;
+            })
+            prev.addEventListener('click', () => {
+                container.scrollLeft += scrollUnit;
+            })
         });
     </script>
 
