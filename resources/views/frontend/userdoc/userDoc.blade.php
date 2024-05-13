@@ -32,10 +32,10 @@
                 <div class="my_header text-center">
                     <h1 class="myDocsHead">Upload Your Document</h1>
                     <h2 class="myDocsHead">Protecting your personal information is important to us</h2>
-                    <p class="myDocsHeadPara">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque quasi
+                    {{-- <p class="myDocsHeadPara">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque quasi
                         officiis
                         aut voluptate, id quis
-                        iusto facilis pariatur dicta corrupti?</p>
+                        iusto facilis pariatur dicta corrupti?</p> --}}
                 </div>
                 <div class="d-flex gap-4 align-items-end">
                     <a id="upload-btn" href="{{ route('user-doc.create') }}" class="btn btn-success mb-2">Upload New

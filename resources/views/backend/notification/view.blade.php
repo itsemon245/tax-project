@@ -21,8 +21,8 @@
 
     <x-backend.ui.section-card name="Promo Code List">
         @can('manage promo code')
-        <x-backend.ui.button type="custom" :href="route('notification.create')" class="btn-success rounded-3 btn-sm mb-2">Create New
-        </x-backend.ui.button>
+            <x-backend.ui.button type="custom" :href="route('notification.create')" class="btn-success rounded-3 btn-sm mb-2">Create New
+            </x-backend.ui.button>
         @endcan
         <x-backend.table.basic :items="$notifications">
             <thead>
@@ -30,7 +30,7 @@
                     <th>#</th>
                     <th>User</th>
                     <th>Message</th>
-                    <th>Created at</th>
+                    <th>Sent Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,14 +38,17 @@
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>
-                            <div>Name: {{$notification->user_name}}</div>
-                            <div>Email: {{$notification->user_email}}</div>
+                            <div style="max-width: 60ch;">
+                                <div><b>Name:</b> {{ $notification->user_name }}</div>
+                                <div><b>Email:</b> {{ $notification->user_email }}</div>
+                                <div><b>Role:</b> {{ $notification->role_name }}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="min-width: 60ch;max-width:200ch;">{!! json_decode($notification->data)->message !!}</div>
                         </td>
                         <td style="max-width: 55ch">
-                            <div>{!!json_decode($notification->data)->message!!}</div>
-                        </td>
-                        <td style="max-width: 55ch">
-                            <div>{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</div>
+                            <div>{{ \Carbon\Carbon::parse($notification->created_at)->format('d F, Y') }}</div>
                         </td>
                     </tr>
                 @endforeach

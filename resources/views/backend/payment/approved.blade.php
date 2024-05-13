@@ -30,6 +30,8 @@
                                     <th>Paid</th>
                                     <th>Due</th>
                                     <th>Status</th>
+                                    <th>Approved Date</th>
+                                    <th>Created At</th>
                                     @can('manage order')
                                         <th>Action</th>
                                     @endcan
@@ -38,19 +40,20 @@
                             <tbody>
                                 @foreach ($payments as $key => $payemnt)
                                     <tr>
-                        
+
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $payemnt->name }} 
-                                            <br/> 
+                                        <td>{{ $payemnt->name }}
+                                            <br />
                                             <span>Phone: {{ $payemnt->user->phone }}</span>
-                                            <br/> 
+                                            <br />
                                             <span>Email: {{ $payemnt->user->phone }}</span>
-                                      </td>
+                                        </td>
                                         <td>{!! $payemnt->payment_number ??
                                             "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Nothing provided</span>" !!}</td>
                                         <td>{!! $payemnt->trx_id ?? "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Pay Later</span>" !!}
-                                        <br/>
-                                        <span>Payment Mathod: {!! $payemnt->payment_method ?? "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Pay Later</span>" !!}</span>
+                                            <br />
+                                            <span>Payment Mathod: {!! $payemnt->payment_method ??
+                                                "<span class='badge bg-soft-danger font-12 text-danger font-12 p-1'>Pay Later</span>" !!}</span>
                                         </td>
                                         <td>{{ $payemnt->paid ?? '0' }}</td>
                                         <td>{{ $payemnt->due ?? '0' }}</td>
@@ -59,13 +62,15 @@
                                                 ? "<span class='badge bg-success'>Approved</span>"
                                                 : "<span class='badge bg-danger'>Not-Approved</span>" !!}
                                         </td>
+                                        <td>{{ $payemnt->approved_at?->format('d F, Y') ?? 'No Approved Date' }}</d>
+                                        <td>{{ $payemnt->created_at->format('d F, Y') }}</td>
                                         @can('manage order')
                                             <td>
                                                 @if (!$payemnt->approved)
                                                     <a href="{{ route('order.status', $payemnt->id) }}"
                                                         class="btn btn-info btn-sm">Approve</a>
-                                                        @endif
-                                                    <x-backend.ui.button type="delete" class="btn-sm" :action="route('order.destroy', $payemnt->id)" />
+                                                @endif
+                                                <x-backend.ui.button type="delete" class="btn-sm" :action="route('order.destroy', $payemnt->id)" />
                                             </td>
                                         @endcan
                                     </tr>

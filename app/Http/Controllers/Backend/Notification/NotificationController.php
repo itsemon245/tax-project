@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Backend\Notification;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Notifcation;
+use App\Notifications\AnnouncementNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\AnnouncementNotification;
 
 class NotificationController extends Controller
 {
@@ -18,11 +17,16 @@ class NotificationController extends Controller
     public function index()
     {
         $notifications = DB::table('notifications')
-        ->join('users', 'notifications.notifiable_id', '=', 'users.id')
-        ->where('data->type', 'announcement')
-        ->select('notifications.*', 'users.name as user_name', 'users.email as user_email')
-        ->get();
+            ->join('users', 'notifications.notifiable_id', '=', 'users.id')
+            ->where('data->type', 'announcement')
+            ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->select('model_has_roles.*')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->select('notifications.*', 'roles.name as role_name', 'users.id as user_id', 'users.name as user_name', 'users.email as user_email')
+            ->latest()
+            ->get();
         // dd($notifications);
+
         return view('backend.notification.view', compact('notifications'));
     }
 
@@ -41,7 +45,7 @@ class NotificationController extends Controller
     {
         $request->validate([
             'user_type' => 'required',
-            'message' => 'required'
+            'message' => 'required',
         ]);
 
         $users = [];
@@ -63,16 +67,17 @@ class NotificationController extends Controller
             default:
                 return back()->with([
                     'alert-type' => 'error',
-                    'message' => 'Invalid User Type'
+                    'message' => 'Invalid User Type',
                 ]);
 
                 break;
         }
 
         Notification::send($users, new AnnouncementNotification($request->message));
+
         return redirect(route('notification.index'))->with([
             'alert-type' => 'success',
-            'message' => 'Announcement Sent Successfully!'
+            'message' => 'Announcement Sent Successfully!',
         ]);
     }
 

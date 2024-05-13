@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PromoCode extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
+    protected $casts = [
+        'expired_at' => 'date',
+    ];
 
     public function user()
     {

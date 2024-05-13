@@ -21,8 +21,8 @@
 
     <x-backend.ui.section-card name="Promo Code List">
         @can('manage promo code')
-        <x-backend.ui.button type="custom" :href="route('promo-code.create')" class="btn-success rounded-3 btn-sm mb-2">Create New
-        </x-backend.ui.button>
+            <x-backend.ui.button type="custom" :href="route('promo-code.create')" class="btn-success rounded-3 btn-sm mb-2">Create New
+            </x-backend.ui.button>
         @endcan
         <x-backend.table.basic :items="$promos">
             <thead>
@@ -30,10 +30,11 @@
                     <th>#</th>
                     <th>Promo Code</th>
                     <th>Discount</th>
-                    <th>Expired</th>
+                    <th>Expire Date</th>
+                    <th>Created At</th>
                     @can('manage promo code')
-                    <th>Status</th>
-                    <th>Action</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     @endcan
                 </tr>
             </thead>
@@ -41,7 +42,9 @@
                 @foreach ($promos as $key => $promo)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $promo->code }}</td>
+                        <td>
+                            <b>{{ $promo->code }}</b>
+                        </td>
                         <td>{{ $promo->amount }}
                             @if ($promo->is_discount)
                                 %
@@ -49,7 +52,16 @@
                                 <span class="mdi mdi-currency-bdt font-16"></span>
                             @endif
                         </td>
-                        <td>{{ Carbon\Carbon::parse($promo->expired_at)->diffForHumans() }}</td>
+                        <td>
+                            {{-- @if (now()->lessThan($promo->expired_at)) --}}
+                            {{ $promo->expired_at->format('d F, Y') }}
+                            {{-- @else
+                                <div>{{ Carbon\Carbon::parse($promo->expired_at)->diffForHumans() }}</div>
+                            @endif --}}
+                        </td>
+                        <td>
+                            {{ $promo->created_at->format('d F, Y') }}
+                        </td>
                         @can('manage promo code')
                             <td>
                                 <div class="form-check form-switch ">

@@ -916,7 +916,7 @@
                     'read role',
                     'read promo code',
                     'read reviews')
-                    <li class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
+                    <li class="">
                         <a href="#management" data-bs-toggle="collapse">
                             <i class="mdi mdi-manjaro"></i>
                             <span>Management</span>
@@ -1119,12 +1119,17 @@
                             <span>Order</span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="payments">
+                        <div class="{{ str(url()->current())->contains('admin/order') ? 'show' : 'collapse' }}"
+                            id="payments">
                             <ul class="nav-second-level">
-                                <li class="{{ str(url()->current())->contains('admin/order') ? 'menuitem-active' : '' }}">
+                                <li
+                                    class="{{ str(url()->current())->contains('admin/order?status=0') ? 'menuitem-active' : '' }}">
                                     @canany(['manage order', 'read order'])
                                         <a href="{{ route('order.index') . '?status=' . 0 }}">Pending Orders</a>
                                     @endcanany
+                                </li>
+                                <li
+                                    class="{{ str(url()->current())->contains('admin/order?status=1') ? 'menuitem-active' : '' }}">
                                     @canany(['manage order', 'read order'])
                                         <a href="{{ route('order.index') . '?status=' . 1 }}">Approved Orders</a>
                                     @endcanany
