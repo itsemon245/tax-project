@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('productCategory:id,name')
+        $products = Product::with('productCategory:id,name', 'productSubCategory:id,name')
             ->latest()
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')

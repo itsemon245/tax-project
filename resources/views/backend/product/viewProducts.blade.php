@@ -44,35 +44,14 @@
                                     <span>Title:</span>
                                     {{ $product->title }}
                                 </p>
-                                <div>
-                                    @switch($product->type)
-                                        @case('Silver')
-                                            <span class="badge fw-bold bg-secondary bg-gradient p-1 fs-6">{{ $product->type }}</span>
-                                        @break
-
-                                        @case('Gold')
-                                            <span class="badge fw-bold bg-warning bg-gradient p-1 fs-6">{{ $product->type }}</span>
-                                        @break
-
-                                        @case('Platinum')
-                                            <span
-                                                class="badge fw-bold bg-soft-success text-success bg-gradient p-1 fs-6">{{ $product->type }}</span>
-                                        @break
-
-                                        @case('Exclusive')
-                                            <span class="badge fw-bold bg-success bg-gradient p-1 fs-6">{{ $product->type }}</span>
-                                        @break
-
-                                        @default
-                                    @endswitch
-                                    @if ($product->is_most_popular)
-                                        <span class="badge bg-primary p-1 fs-6 ms-1">Most Popular</span>
-                                    @endif
-                                </div>
                             </div>
                             <p class="fs-5 fw-bold mb-0">
-                                <span>Category:</span> 
+                                <span>Category:</span>
                                 {{ $product->productCategory?->name }}
+                            </p>
+                            <p class="fs-5 fw-bold mb-0">
+                                <span>SubCategory:</span>
+                                {{ $product->productSubCategory?->name }}
                             </p>
                             <p class="mb-1" style="font-weight: 500;">
                                 <span>Sub Title:</span>
