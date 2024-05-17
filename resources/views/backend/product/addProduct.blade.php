@@ -26,6 +26,7 @@
                                 <x-backend.form.select-input onchange="getProductSubCategories(event)"
                                     data-target="#sub-category" id="category" label="Category" name="category"
                                     placeholder="Choose Category..." required>
+                                    
                                     @forelse ($categories as $category)
                                         <option value="{{ $category->id }}">
                                             {{ $category->name }}

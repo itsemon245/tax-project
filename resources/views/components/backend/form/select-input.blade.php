@@ -3,7 +3,7 @@
     $id = $attributes->get('id');
     $label = $attributes->get('label');
     $required = $attributes->get('required');
-    $placeholder = $attributes->get('placeholder');
+    $placeholder = $attributes->get('placeholder') ?? 'Select an option';
 @endphp
 
 <div class="mb-3">
@@ -15,6 +15,7 @@
         </label>
     @endif
     <select {{ $attributes->merge(['class' => 'form-select text-capitalize px-3 py-2'])->merge() }}>
+        <option disabled selected>{{ $placeholder }}</option>
         {{ $slot }}
     </select>
     @error($name)
