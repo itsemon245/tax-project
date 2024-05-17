@@ -13,7 +13,7 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        $data = Achievement::latest()->paginate(paginateCount());
+        $data = Achievement::latest()->latest()->paginate(paginateCount());
         return view('backend.achievment.index', compact('data'));
     }
 

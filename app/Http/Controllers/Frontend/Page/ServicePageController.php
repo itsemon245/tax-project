@@ -19,8 +19,8 @@ class ServicePageController extends Controller
             "3" => 'misc service',   
             // default => 'homepage'  
         };
-        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(4)->get();
-        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(4)->get();
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(4)->latest()->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(4)->latest()->get();
         $appointments = getRecords('appointments');
         $testimonials = getRecords('testimonials');
         $banners = getRecords('banners');
@@ -38,16 +38,16 @@ class ServicePageController extends Controller
             "3" => 'misc service',    
             default => 'homepage'  
         };
-        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(4)->get();
-        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(4)->get();
-        $services = Service::where('service_sub_category_id', $id)->with('serviceSubCategory')->withAvg('reviews', 'rating')->withCount('reviews')->get();
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => $page_name])->take(4)->latest()->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => $page_name])->take(4)->latest()->get();
+        $services = Service::where('service_sub_category_id', $id)->with('serviceSubCategory')->withAvg('reviews', 'rating')->withCount('reviews')->latest()->get();
         return view('frontend.pages.services.index', compact('services','infos1', 'infos2'));
     }
 
     public function service($id)
     {
         $service = Service::find($id);
-        $partners       = PartnerSection::latest()->limit(10)->get();
+        $partners       = PartnerSection::latest()->limit(10)->latest()->get();
         return view('frontend.pages.services.singleService', compact('service', 'partners'));
     }
 }

@@ -15,7 +15,7 @@ class InfoController extends Controller
      */
     public function index()
     {
-        $infos = Info::latest()->paginate(paginateCount());
+        $infos = Info::latest()->latest()->paginate(paginateCount());
         return view('backend.info.viewInfo', compact('infos'));
     }
 

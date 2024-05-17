@@ -29,7 +29,7 @@ class UserDocController extends Controller
      */
     public function index()
     {
-        $userDocs = UserDoc::latest()->where('files', '!=', null)->paginate(paginateCount());
+        $userDocs = UserDoc::latest()->where('files', '!=', null)->latest()->paginate(paginateCount());
         return view('backend.userdoc.viewAllDoc', compact('userDocs'));
     }
 
@@ -38,7 +38,7 @@ class UserDocController extends Controller
      */
     public function create()
     {
-        $userDocs = UserDoc::with('user')->distinct()->latest()->get();
+        $userDocs = UserDoc::with('user')->distinct()->latest()->latest()->get();
         return view('backend.userdoc.createDocName', compact('userDocs'));
     }
 

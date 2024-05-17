@@ -24,7 +24,7 @@ class PartnerSectionController extends Controller
      */
     public function create()
     {
-        $partnersRequest = PartnerRequest::where('status', 0)->latest()->get();
+        $partnersRequest = PartnerRequest::where('status', 0)->latest()->latest()->get();
         return view('backend.partnerSection.partnerRequest' ,compact('partnersRequest'));
     }
 

@@ -15,7 +15,7 @@ class CalendarController extends Controller
 {
     public function index()
     {
-        $events = Calendar::with('client')->latest()->paginate(paginateCount());
+        $events = Calendar::with('client')->latest()->latest()->paginate(paginateCount());
         return view('backend.calendar.viewEvents', compact('events'));
     }
 
@@ -24,12 +24,12 @@ class CalendarController extends Controller
      */
     public function create()
     {
-        $events = Calendar::with('client')->latest()->get();
+        $events = Calendar::with('client')->latest()->latest()->get();
         $tz = new CarbonTimeZone('Asia/Dhaka');
         $today = today($tz)->format('Y-m-d');
         $clients = Client::get();
         $services = Calendar::get()->unique();
-        $currentEvents = Calendar::where('start', 'like', "$today%")->where('is_completed', false)->latest()->get()->groupBy('type');
+        $currentEvents = Calendar::where('start', 'like', "$today%")->where('is_completed', false)->latest()->latest()->get()->groupBy('type');
         return view('backend.calendar.create-calendar', compact('events', 'currentEvents', 'clients', 'services'));
     }
 

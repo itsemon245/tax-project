@@ -13,7 +13,7 @@ class UserAppointmentController extends Controller
 {
     public function index()
     {
-        $appointments = UserAppointment::where('is_approved', false)->with('map', 'user')->latest()->paginate(paginateCount());
+        $appointments = UserAppointment::where('is_approved', false)->with('map', 'user')->latest()->latest()->paginate(paginateCount());
         $apt = $appointments->first();
 
         return view('backend.user.appointments', compact('appointments'));
@@ -21,14 +21,14 @@ class UserAppointmentController extends Controller
 
     public function approvedList()
     {
-        $appointments = UserAppointment::where(['is_approved' => true, 'is_completed' => false])->with('map', 'user')->latest('updated_at')->get();
+        $appointments = UserAppointment::where(['is_approved' => true, 'is_completed' => false])->with('map', 'user')->latest('updated_at')->latest()->get();
 
         return view('backend.user.appointmentsApproved', compact('appointments'));
     }
 
     public function completedList()
     {
-        $appointments = UserAppointment::where(['is_completed' => true])->with('map', 'user')->latest('completed_at')->get();
+        $appointments = UserAppointment::where(['is_completed' => true])->with('map', 'user')->latest('completed_at')->latest()->get();
 
         return view('backend.user.appointmentsCompleted', compact('appointments'));
     }

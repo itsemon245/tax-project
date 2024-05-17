@@ -25,7 +25,7 @@ class PaymentController extends Controller
     {
         $table          = str(str($model)->snake())->plural();
         $record         = DB::table($table)->find($id);
-        $incomeSources  = IncomeSource::latest()->get();
+        $incomeSources  = IncomeSource::latest()->latest()->get();
         $paymentMethods = Setting::select('payment')->first()->pluck('payment')[ 0 ];
         $purchase = Purchase::find($purchase_id);
         return view('frontend.pages.payment.create', compact('model', 'id', 'record', 'incomeSources', 'paymentMethods', 'purchase'));

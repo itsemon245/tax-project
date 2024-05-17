@@ -20,9 +20,9 @@ class UserDocController extends Controller
         $fiscalYear = FiscalYear::where('year', $reqYear)->first();
         $userDocs   = [  ];
         if ($fiscalYear) {
-            $userDocs = $fiscalYear->userDocs()->where('user_id', auth()->id())->get();
+            $userDocs = $fiscalYear->userDocs()->where('user_id', auth()->id())->latest()->get();
         }
-        // $upload_documents = UserDoc::with('user')->get();
+        // $upload_documents = UserDoc::with('user')->latest()->get();
         return view('frontend.userdoc.userDoc', compact('userDocs', 'reqYear'));
     }
 
@@ -32,7 +32,7 @@ class UserDocController extends Controller
     public function create(Request $request)
     {
         $reqYear = $request->year ? $request->year : currentFiscalYear();
-        $names   = UserDoc::distinct()->get()->pluck('name');
+        $names   = UserDoc::distinct()->latest()->get()->pluck('name');
         return view('frontend.userdoc.uploadDoc', compact('names', 'reqYear'));
     }
 

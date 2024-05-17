@@ -14,7 +14,7 @@ class ClientStudioController extends Controller
      */
     public function index()
     {
-        $data = ClientStudio::latest()->paginate(paginateCount());
+        $data = ClientStudio::latest()->latest()->paginate(paginateCount());
         return view('backend.clientStudio.client-studio-index', compact('data'));
     }
     /**
@@ -22,7 +22,7 @@ class ClientStudioController extends Controller
      */
     public function create()
     {
-        $data = ClientStudio::latest()->get();
+        $data = ClientStudio::latest()->latest()->get();
         return view('backend.clientStudio.client-studio-show', compact('data'));
     }
 

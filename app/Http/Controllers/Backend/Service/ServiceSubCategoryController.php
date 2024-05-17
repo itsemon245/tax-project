@@ -14,7 +14,7 @@ class ServiceSubCategoryController extends Controller
      */
     public function showAll($categoryId)
     {
-        $subCategories = ServiceSubCategory::with('services')->where('service_category_id', $categoryId)->get();
+        $subCategories = ServiceSubCategory::with('services')->where('service_category_id', $categoryId)->latest()->get();
         return view('backend.service.subCategories' , compact('subCategories','categoryId'));
     }
     /**

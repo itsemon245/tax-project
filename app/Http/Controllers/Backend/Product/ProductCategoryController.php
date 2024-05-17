@@ -14,7 +14,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ProductCategory::with('productSubCategories')->paginate(paginateCount());
+        $categories = ProductCategory::with('productSubCategories')->latest()->paginate(paginateCount());
         return view('backend.product.category', compact('categories'));
     }
 

@@ -19,17 +19,17 @@ class ReportController extends Controller
         ->whereHas('fiscalYears', function($q){
             $q->where('year', currentFiscalYear());
         })
-        ->paginate(paginateCount());
+        ->latest()->paginate(paginateCount());
         $fiscalYear = currentFiscalYear();
-        $fiscalYears = FiscalYear::latest()->take(3)->get()->reverse();
+        $fiscalYears = FiscalYear::latest()->take(3)->latest()->get()->reverse();
         return view('backend.report.index', compact('invoices', 'fiscalYear', 'fiscalYears', 'type'));
     }
     function ledger(Request $request)
     {
-        $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
-        $zones = Client::select('zone')->distinct()->get()->pluck('zone');
-        $circles = Client::select('circle')->distinct()->get()->pluck('circle');
-        $clients = Client::latest()->get();
+        $references = Invoice::select('reference_no')->distinct()->latest()->get()->pluck('reference_no');
+        $zones = Client::select('zone')->distinct()->latest()->get()->pluck('zone');
+        $circles = Client::select('circle')->distinct()->latest()->get()->pluck('circle');
+        $clients = Client::latest()->latest()->get();
         $filter = new InvoiceFilter();
         $queries = $filter->transform($request);
         // dd($queries);
@@ -52,7 +52,7 @@ class ReportController extends Controller
                 $query->where($fiscalQueries)
                     ->where($pivotQueries);
             })
-            ->get();
+            ->latest()->get();
         return view('backend.report.ledger', compact('invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
     }
 }

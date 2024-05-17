@@ -13,8 +13,8 @@ class IndustryController extends Controller
      */
     public function index()
     {
-        $appointmentSections = Appointment::latest()->limit(5)->get();
-        $partners = PartnerSection::latest()->limit(10)->get();
+        $appointmentSections = Appointment::latest()->limit(5)->latest()->get();
+        $partners = PartnerSection::latest()->limit(10)->latest()->get();
         $industries = Industry::get(['id', 'title', 'image', 'intro']);
         return view('frontend.pages.industries.showAllIndustry', compact('industries', 'appointmentSections', 'partners'));
     }

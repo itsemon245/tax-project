@@ -41,7 +41,7 @@ class UserController extends Controller
             $q->where('name', 'partner');
             $q->where('name', 'user');
         })
-        ->whereNot('id', auth()->id())->latest()->paginate(paginateCount());
+        ->whereNot('id', auth()->id())->latest()->latest()->paginate(paginateCount());
         return view('backend.users.view-users', compact('user', 'data'));
     }
     /**
@@ -55,7 +55,7 @@ class UserController extends Controller
             $q->whereNot('name', 'partner');
             $q->whereNot('name', 'user');
         })
-        ->whereNot('id', auth()->id())->latest()->paginate(paginateCount());
+        ->whereNot('id', auth()->id())->latest()->latest()->paginate(paginateCount());
         return view('backend.users.view-users', compact('user', 'data'));
     }
 

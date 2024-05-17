@@ -24,7 +24,7 @@ class CaseStudyController extends Controller
      */
     public function index()
     {
-        $data = CaseStudy::with('caseStudyCategory', 'caseStudyPackage')->latest()->paginate(paginateCount());
+        $data = CaseStudy::with('caseStudyCategory', 'caseStudyPackage')->latest()->latest()->paginate(paginateCount());
         return view('backend.case-study.index', compact('data'));
     }
 
@@ -33,8 +33,8 @@ class CaseStudyController extends Controller
      */
     public function create()
     {
-        $caseStudyPackage = CaseStudyPackage::latest()->get();
-        $caseStudyCategories = CaseStudyCategory::latest()->get();
+        $caseStudyPackage = CaseStudyPackage::latest()->latest()->get();
+        $caseStudyCategories = CaseStudyCategory::latest()->latest()->get();
         return view('backend.case-study.create', compact('caseStudyPackage', 'caseStudyCategories'));
     }
 
@@ -90,7 +90,7 @@ class CaseStudyController extends Controller
     public function edit(string $id)
     {
         $caseStudy = CaseStudy::find($id);
-        $caseStudyPackage = CaseStudyPackage::latest()->get();
+        $caseStudyPackage = CaseStudyPackage::latest()->latest()->get();
         $caseStudyCategory = CaseStudyPackage::find($caseStudy->case_study_package_id)->caseStudyCategories;
         return view('backend.case-study.edit', compact('caseStudyCategory', 'caseStudyPackage', 'caseStudy'));
     }

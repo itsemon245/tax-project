@@ -16,7 +16,7 @@ class WithdrawalController extends Controller
      */
     public function index(Request $request)
     {
-        $withdrawals = Withdrawal::with('user')->where('status', $request->status)->paginate(paginateCount());
+        $withdrawals = Withdrawal::with('user')->where('status', $request->status)->latest()->paginate(paginateCount());
         return view('backend.withdrawal.viewAllWthdrawal', compact('withdrawals'));
     }
 

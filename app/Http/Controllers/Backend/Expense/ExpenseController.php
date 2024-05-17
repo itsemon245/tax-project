@@ -30,9 +30,9 @@ class ExpenseController extends Controller
                 }
             }
         }
-        $expenses = $query->paginate(paginateCount());
-        $merchants = Expense::select('merchant')->distinct()->get()->pluck('merchant');
-        $categories = Expense::select('category')->distinct()->get()->pluck('category');
+        $expenses = $query->latest()->paginate(paginateCount());
+        $merchants = Expense::select('merchant')->distinct()->latest()->get()->pluck('merchant');
+        $categories = Expense::select('category')->distinct()->latest()->get()->pluck('category');
         $max = Expense::select('amount')->max('amount');
         $min = Expense::select('amount')->min('amount');
         return view('backend.expense.index', compact('expenses', 'categories', 'merchants', 'max', 'min'));
@@ -43,8 +43,8 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $merchants = Expense::select('merchant')->distinct()->get()->pluck('merchant');
-        $categories = Expense::select('category')->distinct()->get()->pluck('category');
+        $merchants = Expense::select('merchant')->distinct()->latest()->get()->pluck('merchant');
+        $categories = Expense::select('category')->distinct()->latest()->get()->pluck('category');
         return view('backend.expense.create', compact('merchants', 'categories'));
     }
 
@@ -98,8 +98,8 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
-        $merchants = Expense::select('merchant')->distinct()->get()->pluck('merchant');
-        $categories = Expense::select('category')->distinct()->get()->pluck('category');
+        $merchants = Expense::select('merchant')->distinct()->latest()->get()->pluck('merchant');
+        $categories = Expense::select('category')->distinct()->latest()->get()->pluck('category');
         return view('backend.expense.create', compact('expense', 'merchants', 'categories'));
     }
 

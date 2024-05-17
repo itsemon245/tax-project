@@ -14,7 +14,7 @@ class CaseStudyCategoryController extends Controller
      */
     public function index()
     {
-        $data = CaseStudyCategory::latest()->paginate(paginateCount());
+        $data = CaseStudyCategory::latest()->latest()->paginate(paginateCount());
         return view('backend.case-study-category.index', compact('data'));
     }
 

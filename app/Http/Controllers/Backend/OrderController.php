@@ -17,13 +17,13 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $payments = Purchase::where('approved', $request->status)->with('user')->latest('updated_at')->paginate(paginateCount());
+        $payments = Purchase::where('approved', $request->status)->with('user')->latest('updated_at')->latest()->paginate(paginateCount());
         return view('backend.payment.approved', compact('payments'));
     }
 
     public function consultancyIndex()
     {
-        $appointments = UserAppointment::with('expertProfile')->whereNot('expert_profile_id', null)->latest()->get();
+        $appointments = UserAppointment::with('expertProfile')->whereNot('expert_profile_id', null)->latest()->latest()->get();
         return view('backend.payment.consultancyApproved', compact('appointments'));
     }
 
@@ -46,7 +46,7 @@ class OrderController extends Controller
         }
         if ($payment->purchasable_type === 'Course') {
             $course = Course::with('videos')->find($payment->purchasable_id);
-            $videos = $course->videos()->with('users')->get();
+            $videos = $course->videos()->with('users')->latest()->get();
             foreach ($videos as $video) {
                 $video->users()->attach($user->id);
             }

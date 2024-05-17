@@ -192,7 +192,7 @@ class TaxCalculatorController extends Controller
             return $lastValueSlot->tax_percentage ?? 0 ;
         }
         $slotLimit = $lastValueSlot?->to ?? 0;
-        $slots = $taxSetting->slots()->where('type', $type)->where('to', '<=', $slotLimit)->get();
+        $slots = $taxSetting->slots()->where('type', $type)->where('to', '<=', $slotLimit)->latest()->get();
         $value = $afterFree;
         $minTaxApplied = false;
         $originalTax = 0;

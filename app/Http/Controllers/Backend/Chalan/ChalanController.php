@@ -18,7 +18,7 @@ class ChalanController extends Controller
      */
     public function index()
     {
-        $data = Chalan::with('client')->latest()->paginate(paginateCount());
+        $data = Chalan::with('client')->latest()->latest()->paginate(paginateCount());
         return view('backend.chalan.index', compact('data'));
     }
 
@@ -27,7 +27,7 @@ class ChalanController extends Controller
      */
     public function create()
     {
-        $clients = Client::latest()->get();
+        $clients = Client::latest()->latest()->get();
         return view('backend.chalan.create', compact('clients'));
         //
     }
@@ -84,7 +84,7 @@ class ChalanController extends Controller
     public function edit(Chalan $chalan)
     {
      
-        $clients = Client::latest()->get();
+        $clients = Client::latest()->latest()->get();
         return view('backend.chalan.edit', compact('chalan', 'clients'));
     }
     /**
@@ -93,7 +93,7 @@ class ChalanController extends Controller
     public function clone(Chalan $chalan)
     {
      
-        $clients = Client::latest()->get();
+        $clients = Client::latest()->latest()->get();
         return view('backend.chalan.clone', compact('chalan', 'clients'));
     }
 

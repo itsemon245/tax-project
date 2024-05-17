@@ -41,9 +41,9 @@ class BookController extends Controller
             })
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
-            ->paginate(30);
-        $reviews = Review::with('user')->latest()->limit(10)->get();
-        $authors = Book::distinct()->get('author')->pluck('author');
+            ->latest()->paginate(30);
+        $reviews = Review::with('user')->latest()->limit(10)->latest()->get();
+        $authors = Book::distinct()->latest()->get('author')->pluck('author');
         $minPrice = Book::min('price');
         $maxPrice = Book::max('price');
         return view('frontend.pages.book.books', compact('bookCategory', 'reviews', 'books', 'authors', 'minPrice', 'maxPrice', 'categories'));
@@ -51,7 +51,7 @@ class BookController extends Controller
     public function getCategoryBooks(Request $request)
     {
         $bookCategories = BookCategory::get(['name', 'id']);
-        $reviews = Review::with('user')->latest()->limit(10)->get();
+        $reviews = Review::with('user')->latest()->limit(10)->latest()->get();
         return view('frontend.pages.book.categoryBooks', compact('bookCategories', 'reviews'));
     }
     public function show(int $book)

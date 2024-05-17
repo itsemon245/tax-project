@@ -25,7 +25,7 @@ class VideoController extends Controller
         $videos = $course
             ->videos()
             ->latest()
-            ->get();
+            ->latest()->get();
         return view('backend.video.viewVideo', compact('videos', 'course'));
     }
     /**
@@ -33,7 +33,7 @@ class VideoController extends Controller
      */
     public function index(Request $request)
     {
-        $videos = Video::latest()->get();
+        $videos = Video::latest()->latest()->get();
         $course = Course::where('id', $request->course_id)->first(['id', 'name']);
         return view('backend.video.viewVideo', compact('videos', 'course'));
     }
@@ -44,7 +44,7 @@ class VideoController extends Controller
     public function create(Request $request)
     {
         $courseId = (int) $request->course_id;
-        $courses = Course::latest()->get(['id', 'name']);
+        $courses = Course::latest()->latest()->get(['id', 'name']);
         $section = Video::latest()
             ->pluck('section')
             ->first();
@@ -90,7 +90,7 @@ class VideoController extends Controller
     public function edit(Request $request, string $id)
     {
         $video = Video::find($id);
-        $courses = Course::latest()->get(['id', 'name']);
+        $courses = Course::latest()->latest()->get(['id', 'name']);
         return view('backend.video.editVideo', compact('video', 'courses'));
     }
 

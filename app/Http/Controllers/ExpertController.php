@@ -69,16 +69,16 @@ class ExpertController extends Controller
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
             ->with('expertCategories')
-            ->paginate(20);
-        $posts = ExpertProfile::distinct()->get('post')->pluck('post');
-        $districts = ExpertProfile::distinct()->get('district')->pluck('district');
-        $thanas = ExpertProfile::distinct()->get('thana')->pluck('thana');
+            ->latest()->paginate(20);
+        $posts = ExpertProfile::distinct()->latest()->get('post')->pluck('post');
+        $districts = ExpertProfile::distinct()->latest()->get('district')->pluck('district');
+        $thanas = ExpertProfile::distinct()->latest()->get('thana')->pluck('thana');
         $minExp = ExpertProfile::min('experience');
         $maxExp = ExpertProfile::max('experience');
         $reviews = Review::with('user')
             ->latest()
             ->limit(10)
-            ->get();
+            ->latest()->get();
         return view('frontend.pages.expert.browse', compact('experts', 'minExp', 'maxExp',  'posts', 'districts', 'thanas', 'reviews'));
     }
 }

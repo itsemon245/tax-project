@@ -21,7 +21,7 @@ class ProductController extends Controller
             ->latest()
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
-            ->paginate(paginateCount());
+            ->latest()->paginate(paginateCount());
 
         return view('backend.product.viewProducts', compact('products'));
     }
@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = ProductCategory::latest()->get(['id', 'name']);
+        $categories = ProductCategory::latest()->latest()->get(['id', 'name']);
 
         return view('backend.product.addProduct', compact('categories'));
     }
@@ -81,8 +81,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $product = Product::find($product->id);
-        $subs = ProductSubCategory::where('id', $product->product_sub_category_id)->get(['id', 'name']);
-        $categories = ProductCategory::latest()->get(['id', 'name']);
+        $subs = ProductSubCategory::where('id', $product->product_sub_category_id)->latest()->get(['id', 'name']);
+        $categories = ProductCategory::latest()->latest()->get(['id', 'name']);
 
         return view('backend.product.editProduct', compact('categories', 'product', 'subs'));
     }

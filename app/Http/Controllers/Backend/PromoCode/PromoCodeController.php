@@ -22,7 +22,7 @@ class PromoCodeController extends Controller
      */
     public function index()
     {
-        $promos = PromoCode::with('user:id,name')->paginate(paginateCount());
+        $promos = PromoCode::with('user:id,name')->latest()->paginate(paginateCount());
         return view('backend.promoCode.viewPormoCode', compact('promos'));
     }
 
@@ -52,16 +52,16 @@ class PromoCodeController extends Controller
         $users = []; // Replace with the user you want to notify
         switch ($request->user_type) {
             case 'all':
-                $users = User::whereNotNull('email_verified_at')->get();
+                $users = User::whereNotNull('email_verified_at')->latest()->get();
                 break;
             case 'partner':
-                $users = User::role('partner')->whereNotNull('email_verified_at')->get();
+                $users = User::role('partner')->whereNotNull('email_verified_at')->latest()->get();
                 break;
             case 'user':
-                $users = User::role('user')->whereNotNull('email_verified_at')->get();
+                $users = User::role('user')->whereNotNull('email_verified_at')->latest()->get();
                 break;
             case 'individual':
-                $users = User::where('id', $request->user_id)->whereNotNull('email_verified_at')->get();
+                $users = User::where('id', $request->user_id)->whereNotNull('email_verified_at')->latest()->get();
                 break;
 
             default:
@@ -116,13 +116,13 @@ class PromoCodeController extends Controller
     //             $users = User::get();
     //             break;
     //         case 'partner':
-    //             $users = User::role('partner')->get();
+    //             $users = User::role('partner')->latest()->get();
     //             break;
     //         case 'user':
-    //             $users = User::role('user')->get();
+    //             $users = User::role('user')->latest()->get();
     //             break;
     //         case 'individual':
-    //             $users = User::where('id', $request->user_id)->get();
+    //             $users = User::where('id', $request->user_id)->latest()->get();
     //             break;
 
     //         default:

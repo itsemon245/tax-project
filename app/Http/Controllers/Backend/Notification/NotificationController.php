@@ -24,7 +24,7 @@ class NotificationController extends Controller
             ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
             ->select('notifications.*', 'roles.name as role_name', 'users.id as user_id', 'users.name as user_name', 'users.email as user_email')
             ->latest()
-            ->get();
+            ->latest()->get();
         // dd($notifications);
 
         return view('backend.notification.view', compact('notifications'));
@@ -52,16 +52,16 @@ class NotificationController extends Controller
         // Replace with the user you want to notify
         switch ($request->user_type) {
             case 'all':
-                $users = User::whereNotNull('email_verified_at')->get();
+                $users = User::whereNotNull('email_verified_at')->latest()->get();
                 break;
             case 'partner':
-                $users = User::role('partner')->whereNotNull('email_verified_at')->get();
+                $users = User::role('partner')->whereNotNull('email_verified_at')->latest()->get();
                 break;
             case 'user':
-                $users = User::role('user')->whereNotNull('email_verified_at')->get();
+                $users = User::role('user')->whereNotNull('email_verified_at')->latest()->get();
                 break;
             case 'individual':
-                $users = User::where('id', $request->user_id)->whereNotNull('email_verified_at')->get();
+                $users = User::where('id', $request->user_id)->whereNotNull('email_verified_at')->latest()->get();
                 break;
 
             default:

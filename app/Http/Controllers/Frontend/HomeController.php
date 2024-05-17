@@ -22,15 +22,15 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $appointmentSections = Appointment::latest()->take(6)->get();
-        $subCategories = ServiceSubCategory::where('service_category_id', 1)->with('serviceCategory')->latest()->take(6)->get();
+        $appointmentSections = Appointment::latest()->take(6)->latest()->get();
+        $subCategories = ServiceSubCategory::where('service_category_id', 1)->with('serviceCategory')->latest()->take(6)->latest()->get();
         // $products = Product::mappedProducts(['product_category_id' => 1]);
-        $banners = Banner::latest()->take(6)->get();
-        $reviews = Review::latest()->take(6)->get();
-        $infos1 = Info::where(['section_id' => 1, 'page_name' => 'homepage'])->latest()->take(4)->get();
-        $infos2 = Info::where(['section_id' => 2, 'page_name' => 'homepage'])->latest()->take(4)->get();
-        $achievements = Achievement::latest()->take(12)->get();
-        $customServices = CustomService::with('image')->where('page_name', PageName::Home)->get();
+        $banners = Banner::latest()->take(6)->latest()->get();
+        $reviews = Review::latest()->take(6)->latest()->get();
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => 'homepage'])->latest()->take(4)->latest()->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => 'homepage'])->latest()->take(4)->latest()->get();
+        $achievements = Achievement::latest()->take(12)->latest()->get();
+        $customServices = CustomService::with('image')->where('page_name', PageName::Home)->latest()->get();
         return view(
             'frontend.pages.welcome',
             compact([

@@ -112,7 +112,7 @@ class AjaxController extends Controller
     {
         $table = str($slug)->snake();
         $table = str($table)->plural();
-        $items = DB::table($table)->get();
+        $items = DB::table($table)->latest()->get();
 
         return response($items);
     }
@@ -147,7 +147,7 @@ class AjaxController extends Controller
 
     function getProductSubCategories(ProductCategory $productCategory): JsonResponse
     {
-        $subs = $productCategory->productSubCategories()->get(['id', 'name']);
+        $subs = $productCategory->productSubCategories()->latest()->get(['id', 'name']);
         $success = true;
         return response()->json([
             'data' => $subs,
@@ -173,7 +173,7 @@ class AjaxController extends Controller
 
     public function getBranches(string $thana)
     {
-        $branches = Map::where('thana', $thana)->get();
+        $branches = Map::where('thana', $thana)->latest()->get();
 
         return response($branches);
     }

@@ -29,21 +29,21 @@ class PageController extends Controller
     }
     public function industriesPage()
     {
-        $subCategories  = ServiceSubCategory::with('serviceCategory')->where('service_category_id', 3)->get();
-        $achievements   = Achievement::latest()->get();
-        $partners       = PartnerSection::latest()->limit(10)->get();
-        $customServices = CustomService::with('image')->where('page_name', PageName::Account)->get();
-        $infos1 = Info::where(['section_id' => 1, 'page_name' => 'account'])->latest()->take(4)->get();
-        $infos2 = Info::where(['section_id' => 2, 'page_name' => 'account'])->latest()->take(4)->get();
+        $subCategories  = ServiceSubCategory::with('serviceCategory')->where('service_category_id', 3)->latest()->get();
+        $achievements   = Achievement::latest()->latest()->get();
+        $partners       = PartnerSection::latest()->limit(10)->latest()->get();
+        $customServices = CustomService::with('image')->where('page_name', PageName::Account)->latest()->get();
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => 'account'])->latest()->take(4)->latest()->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => 'account'])->latest()->take(4)->latest()->get();
         return view('frontend.pages.industries.industries', compact('subCategories', 'achievements', 'partners', 'customServices', 'infos1', 'infos2'));
     }
     public function clientStudioPage()
     {
         $data                = ClientStudio::get();
         $description         = $data[ 0 ]->description;
-        $appointmentSections = Appointment::latest()->limit(5)->get();
-        $banners             = Banner::latest()->limit(10)->get();
-        $partners            = PartnerSection::latest()->limit(10)->get();
+        $appointmentSections = Appointment::latest()->limit(5)->latest()->get();
+        $banners             = Banner::latest()->limit(10)->latest()->get();
+        $partners            = PartnerSection::latest()->limit(10)->latest()->get();
         return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description', 'appointmentSections', 'banners', 'partners'));
     }
     public function appointmentPage(Request $request, ?ExpertProfile $expertProfile = null)
@@ -57,27 +57,27 @@ class PageController extends Controller
                 if ($request->query('branch-district')) {
                     $q->where('district', $request->query('branch-district'));
                 }
-            })->get();
+            })->latest()->get();
         } else {
             $maps = [ $office ];
         }
-        $branchDistricts = Map::select([ 'district', 'thana' ])->distinct()->get()->pluck('district');
+        $branchDistricts = Map::select([ 'district', 'thana' ])->distinct()->latest()->get()->pluck('district');
         $branchThanas    = Map::select([ 'district', 'thana' ])->distinct()->where(function (Builder $q) use ($request) {
             if (!empty($request->query('branch-district'))) {
                 $q->where('district', $request->query('branch-district'));
             }
-        })->get()->pluck('thana');
+        })->latest()->get()->pluck('thana');
         $banners      = getRecords('banners');
-        $infos1       = Info::where('section_id', 1)->get();
-        $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->get();
+        $infos1       = Info::where('section_id', 1)->latest()->get();
+        $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->latest()->get();
         return view('frontend.pages.appointment.makeAppointment', compact('banners', 'expertProfile', 'infos1', 'testimonials', 'maps', 'branchDistricts', 'branchThanas', 'office'));
     }
     public function appointmentVirtual(Request $request, ?ExpertProfile $expertProfile = null)
     {
         $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
         $banners      = getRecords('banners');
-        $infos1       = Info::where('section_id', 1)->get();
-        $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->get();
+        $infos1       = Info::where('section_id', 1)->latest()->get();
+        $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->latest()->get();
         return view('frontend.pages.appointment.makeAppointmentVirtual', compact('banners', 'expertProfile', 'testimonials', 'infos1', 'office'));
     }
     public function aboutPage()
@@ -94,20 +94,20 @@ class PageController extends Controller
             if ($request->query('district')) {
                 $q->where('district', $request->query('district'));
             }
-        })->get();
-        $districts = Map::select([ 'district', 'thana' ])->distinct()->get()->pluck('district');
+        })->latest()->get();
+        $districts = Map::select([ 'district', 'thana' ])->distinct()->latest()->get()->pluck('district');
         $thanas    = Map::select([ 'district', 'thana' ])->distinct()->where(function (Builder $q) use ($request) {
             if (!empty($request->query('district'))) {
                 $q->where('district', $request->query('district'));
             }
-        })->get()->pluck('thana');
+        })->latest()->get()->pluck('thana');
         return view('frontend.pages.office', compact('maps', 'districts', 'thanas'));
     }
     public function contactPage()
     {
         $maps                = Map::get();
-        $appointmentSections = Appointment::latest()->limit(5)->get();
-        $partners            = PartnerSection::latest()->limit(10)->get();
+        $appointmentSections = Appointment::latest()->limit(5)->latest()->get();
+        $partners            = PartnerSection::latest()->limit(10)->latest()->get();
         return view('frontend.pages.contact', compact('maps', 'appointmentSections', 'partners'));
     }
     public function becomePartnerPage()
@@ -120,7 +120,7 @@ class PageController extends Controller
     public function PromoCodePage()
     {
         $user_id    = Auth::user()->id;
-        $promoCodes = User::find($user_id)->promoCodes()->where('status', 1)->latest()->get();
+        $promoCodes = User::find($user_id)->promoCodes()->where('status', 1)->latest()->latest()->get();
         return view('frontend.pages.promoCodesPage', compact('promoCodes'));
     }
 
@@ -140,7 +140,7 @@ class PageController extends Controller
     //show all my payments/payment history in frontend
     public function myPayments()
     {
-        $payments = User::find(auth()->id())->purchases()->get();
+        $payments = User::find(auth()->id())->purchases()->latest()->get();
         // dd($payments);
         return view('frontend.pages.myPayments', compact('payments'));
     }

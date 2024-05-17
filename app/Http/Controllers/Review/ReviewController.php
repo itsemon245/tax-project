@@ -22,7 +22,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::orderBy('id', 'DESC')->get();
+        $reviews = Review::orderBy('id', 'DESC')->latest()->get();
         return view('backend.review.viewAll', compact('reviews'));
     }
 
@@ -40,7 +40,7 @@ class ReviewController extends Controller
         } else {
             $canReview = false;
         }
-        $reviews = $item->reviews()->latest()->get();
+        $reviews = $item->reviews()->latest()->latest()->get();
 
         return view('frontend.pages.itemReview', compact('reviews', 'item', 'slug', 'canReview'));
     }

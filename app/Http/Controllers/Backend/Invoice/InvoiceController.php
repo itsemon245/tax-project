@@ -49,11 +49,11 @@ class InvoiceController extends Controller
         ->whereHas('fiscalYears', function($q){
             $q->where('year', currentFiscalYear());
         })
-        ->paginate(paginateCount());
-        $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
-        $zones = Client::select('zone')->distinct()->get()->pluck('zone');
-        $circles = Client::select('circle')->distinct()->get()->pluck('circle');
-        $clients = Client::latest()->get();
+        ->latest()->paginate(paginateCount());
+        $references = Invoice::select('reference_no')->distinct()->latest()->get()->pluck('reference_no');
+        $zones = Client::select('zone')->distinct()->latest()->get()->pluck('zone');
+        $circles = Client::select('circle')->distinct()->latest()->get()->pluck('circle');
+        $clients = Client::latest()->latest()->get();
         return view('backend.invoice.viewAll', compact( 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
     }
 
@@ -173,7 +173,7 @@ class InvoiceController extends Controller
         $fiscalYear = FiscalYear::where('year', $year)->first();
         $invoice = $fiscalYear->invoices()->find($id);
         $invoice = new InvoiceResource($invoice);
-        $invoiceItems = new InvoiceItemCollection(InvoiceItem::where('invoice_id', $id)->get());
+        $invoiceItems = new InvoiceItemCollection(InvoiceItem::where('invoice_id', $id)->latest()->get());
         return response()->json([
             'invoice' => $invoice,
             'invoiceItems' => $invoiceItems,
@@ -301,7 +301,7 @@ class InvoiceController extends Controller
             $items[] = $item;
         }
         // fetch existing items to update
-        $invoiceItems = InvoiceItem::where('invoice_id', $invoice->id)->get();
+        $invoiceItems = InvoiceItem::where('invoice_id', $invoice->id)->latest()->get();
         // update existing items
         foreach ($invoiceItems as $key => $invoiceItem) {
             $item = array_shift($items);
@@ -402,11 +402,11 @@ class InvoiceController extends Controller
 
     public function filterInvoices(Request $request)
     {
-        $recentInvoices = Invoice::with('client', 'currentFiscal')->latest()->limit(5)->get();
-        $references = Invoice::select('reference_no')->distinct()->get()->pluck('reference_no');
-        $zones = Client::select('zone')->distinct()->get()->pluck('zone');
-        $circles = Client::select('circle')->distinct()->get()->pluck('circle');
-        $clients = Client::latest()->get();
+        $recentInvoices = Invoice::with('client', 'currentFiscal')->latest()->limit(5)->latest()->get();
+        $references = Invoice::select('reference_no')->distinct()->latest()->get()->pluck('reference_no');
+        $zones = Client::select('zone')->distinct()->latest()->get()->pluck('zone');
+        $circles = Client::select('circle')->distinct()->latest()->get()->pluck('circle');
+        $clients = Client::latest()->latest()->get();
         $filter = new InvoiceFilter();
         $queries = $filter->transform($request);
         // dd($queries);
@@ -429,7 +429,7 @@ class InvoiceController extends Controller
                 $query->where($fiscalQueries)
                     ->where($pivotQueries);
             })
-            ->get();
+            ->latest()->get();
         return view('backend.invoice.viewAll', compact('recentInvoices', 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
     }
 

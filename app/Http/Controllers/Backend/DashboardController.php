@@ -29,11 +29,11 @@ class DashboardController extends Controller
         $statReports = $this->getStatReports();
         $fiscalYear = FiscalYear::where('year', currentFiscalYear())->first();
         $chartData = $this->getChartData();
-        $events = Calendar::with('client')->latest()->get();
+        $events = Calendar::with('client')->latest()->latest()->get();
         $today = today('Asia/Dhaka')->format('Y-m-d');
         $clients = Client::get();
-        $services = Calendar::select('service')->distinct()->get();
-        $currentEvents = Calendar::where('start', 'like', "$today%")->where('is_completed', false)->latest()->get()->groupBy('type');
+        $services = Calendar::select('service')->distinct()->latest()->get();
+        $currentEvents = Calendar::where('start', 'like', "$today%")->where('is_completed', false)->latest()->latest()->get()->groupBy('type');
         $projects = Project::get();
         $totalExpense = Expense::where('type', 'debit')->sum('amount');
         $todaysExpense = Expense::where([
@@ -288,7 +288,7 @@ class DashboardController extends Controller
 
     public function getChartData()
     {
-        $fiscalYears = FiscalYear::orderBy('year', 'desc')->latest()->take(5)->get();
+        $fiscalYears = FiscalYear::orderBy('year', 'desc')->latest()->take(5)->latest()->get();
 
         $mappedItems = $fiscalYears->map(function ($fy) {
             $data = collect([

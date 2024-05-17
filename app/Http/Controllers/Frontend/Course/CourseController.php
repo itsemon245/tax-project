@@ -15,7 +15,7 @@ class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::take(6)->get();
+        $courses = Course::take(6)->latest()->get();
         return view('frontend.pages.course.viewAll', compact('courses'));
     }
     public function show(Course $course)
@@ -28,11 +28,11 @@ class CourseController extends Controller
         $course = Course::withAvg('reviews', 'rating')
             ->withCount('reviews')->find($course);
         $videos = Video::with('users')
-            ->where('course_id', $course->id)->get()->groupBy('section');
+            ->where('course_id', $course->id)->latest()->get()->groupBy('section');
         $reviews = $course->reviews;
         $user = request()->user();
         $canReview = $user ? $user->purchased('course')->find($course->id) !== null : false;
-        $descriptions = Video::where('course_id', $course->id)->get();
+        $descriptions = Video::where('course_id', $course->id)->latest()->get();
         return view('frontend.pages.course.showVideos', compact('videos', 'course', 'reviews', 'canReview', 'descriptions'));
     }
 }

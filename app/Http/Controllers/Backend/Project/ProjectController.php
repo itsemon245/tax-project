@@ -46,8 +46,8 @@ class ProjectController extends Controller
     public function index()
     {
 
-        // $clients = Client::latest()->paginate(paginateCount());
-        $projects = Project::with('tasks')->latest()->paginate(paginateCount());
+        // $clients = Client::latest()->latest()->paginate(paginateCount());
+        $projects = Project::with('tasks')->latest()->latest()->paginate(paginateCount());
         return view('backend.project.viewAllProjectProgress', compact('projects'));
     }
     /**
@@ -57,7 +57,7 @@ class ProjectController extends Controller
     {
 
         $project = Project::with('tasks', 'tasks.clients')->find($id);
-        $clients = User::find(auth()->id())->clients()->with('users:id,name')->paginate(paginateCount(100));
+        $clients = User::find(auth()->id())->clients()->with('users:id,name')->latest()->paginate(paginateCount(100));
         return view('backend.project.projectClients', compact('project', 'clients'));
     }
 
@@ -66,7 +66,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $clients = Client::with('users:name,id')->get(['id', 'name', 'phone', 'circle', 'zone']);
+        $clients = Client::with('users:name,id')->latest()->get(['id', 'name', 'phone', 'circle', 'zone']);
         if ($clients->count() == 0) {
             return back()->with([
                 'alert-type' => 'warning',
@@ -74,7 +74,7 @@ class ProjectController extends Controller
             ]);
         }
         //!TODO: change random user to a specific role
-        $users = User::inRandomOrder()->limit(6)->get();
+        $users = User::inRandomOrder()->limit(6)->latest()->get();
         return view('backend.project.createProjectProgress', compact('clients', 'users'));
     }
 
@@ -96,7 +96,7 @@ class ProjectController extends Controller
         $weekly_target = $request->daily_target * $data['weekdays'];
         $monthly_target = $request->daily_target * $data['weekdays'] * 4;
         $project = Project::create($data);
-        $clients = Client::with('users')->get();
+        $clients = Client::with('users')->latest()->get();
 
 
         // Create tasks for each project
@@ -155,7 +155,7 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::with('tasks')->find($id);
-        $clients = Client::with('users')->get();
+        $clients = Client::with('users')->latest()->get();
         return view('backend.project.editProjectProgress', compact('project', 'clients'));
     }
     /**
@@ -262,7 +262,7 @@ class ProjectController extends Controller
     public function assign($id)
     {
         $project = Project::find($id);
-        $clients = $project->clients()->with('users:name,id')->paginate(100);
+        $clients = $project->clients()->with('users:name,id')->latest()->paginate(100);
         $employees = Role::where('name', 'employee')->first()->users;
         return view('backend.project.assignClientsproject', compact('project', 'clients', 'employees'));
     }
