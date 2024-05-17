@@ -44,10 +44,6 @@
                                     <span>Title:</span>
                                     {{ $product->title }}
                                 </p>
-                                <p class="fs-5 fw-bold mb-0">
-                                    <span>Category:</span>
-                                    {{ $product->productCategory?->name }}
-                                </p>
                                 <div>
                                     @switch($product->type)
                                         @case('Silver')
@@ -74,6 +70,10 @@
                                     @endif
                                 </div>
                             </div>
+                            <p class="fs-5 fw-bold mb-0">
+                                <span>Category:</span> 
+                                {{ $product->productCategory?->name }}
+                            </p>
                             <p class="mb-1" style="font-weight: 500;">
                                 <span>Sub Title:</span>
                                 {{ $product->sub_title }}
