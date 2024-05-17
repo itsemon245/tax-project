@@ -19,8 +19,8 @@
     <!-- end page title -->
     <x-backend.ui.section-card name="Products">
         @can('manage product')
-        <x-backend.ui.button class="btn-sm btn-success mb-3" href="{{ route('product.create') }}"
-        type="custom">Create</x-backend.ui.button> 
+            <x-backend.ui.button class="btn-sm btn-success mb-3" href="{{ route('product.create') }}"
+                type="custom">Create</x-backend.ui.button>
         @endcan
         <x-backend.table.basic :items="$products">
             <thead>
@@ -30,7 +30,7 @@
                     <th>Product Pricing</th>
                     <th>Product Features</th>
                     @can('manage product')
-                    <th>Action</th>
+                        <th>Action</th>
                     @endcan
                 </tr>
             </thead>
@@ -43,6 +43,10 @@
                                 <p class="fs-5 fw-bold mb-0">
                                     <span>Title:</span>
                                     {{ $product->title }}
+                                </p>
+                                <p class="fs-5 fw-bold mb-0">
+                                    <span>Category:</span>
+                                    {{ $product->productCategory?->name }}
                                 </p>
                                 <div>
                                     @switch($product->type)
@@ -96,10 +100,10 @@
                             </ul>
                         </td>
                         @can('manage product')
-                        <td>
-                            <x-backend.ui.button type="edit" class="btn-sm" :href="route('product.edit', $product->id)" />
-                            <x-backend.ui.button type="delete" class="btn-sm" :action="route('product.destroy', $product->id)" />
-                        </td>
+                            <td>
+                                <x-backend.ui.button type="edit" class="btn-sm" :href="route('product.edit', $product->id)" />
+                                <x-backend.ui.button type="delete" class="btn-sm" :action="route('product.destroy', $product->id)" />
+                            </td>
                         @endcan
                     </tr>
                 @endforeach
