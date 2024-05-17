@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Backend\Product;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -18,6 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('productCategory:id,name')
+            ->latest()
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
             ->paginate(paginateCount());
@@ -31,6 +32,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = ProductCategory::latest()->get(['id', 'name']);
+
         return view('backend.product.addProduct', compact('categories'));
     }
 
@@ -58,11 +60,11 @@ class ProductController extends Controller
         );
 
         return redirect()
-            ->route("product.index")
-            ->with(array(
-                'message' => "Product Created Successfully",
+            ->route('product.index')
+            ->with([
+                'message' => 'Product Created Successfully',
                 'alert-type' => 'success',
-            ));
+            ]);
     }
 
     /**
@@ -81,6 +83,7 @@ class ProductController extends Controller
         $product = Product::find($product->id);
         $subs = ProductSubCategory::where('id', $product->product_sub_category_id)->get(['id', 'name']);
         $categories = ProductCategory::latest()->get(['id', 'name']);
+
         return view('backend.product.editProduct', compact('categories', 'product', 'subs'));
     }
 
@@ -92,25 +95,25 @@ class ProductController extends Controller
         $packageFeature = $this->createJsonPackage($request->package_feature, $request->color);
 
         $product->update([
-                    'product_category_id' => $request->category,
-                    'product_sub_category_id' => $request->sub_category,
-                    'user_id' => Auth::user()->id,
-                    'title' => $request->title,
-                    'sub_title' => $request->sub_title,
-                    'price' => $request->price,
-                    'package_features' => json_encode($packageFeature),
-                    'description' => $request->description,
-                    'discount' => $request->discount_amount,
-                    'is_discount_fixed' => $request->is_discount_fixed === 'true' ? true : false,
-                    'is_most_popular' => $request->most_popular,
-                ]);
+            'product_category_id' => $request->category,
+            'product_sub_category_id' => $request->sub_category,
+            'user_id' => Auth::user()->id,
+            'title' => $request->title,
+            'sub_title' => $request->sub_title,
+            'price' => $request->price,
+            'package_features' => json_encode($packageFeature),
+            'description' => $request->description,
+            'discount' => $request->discount_amount,
+            'is_discount_fixed' => $request->is_discount_fixed === 'true' ? true : false,
+            'is_most_popular' => $request->most_popular,
+        ]);
 
         return redirect()
-            ->route("product.index")
-            ->with(array(
-                'message' => "Product Updated Successfully",
+            ->route('product.index')
+            ->with([
+                'message' => 'Product Updated Successfully',
                 'alert-type' => 'success',
-            ));
+            ]);
     }
 
     /**
@@ -119,17 +122,18 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         Product::find($product->id)->delete();
+
         return redirect()
             ->back()
-            ->with(array(
-                'message' => "Product Deleted Successfully",
+            ->with([
+                'message' => 'Product Deleted Successfully',
                 'alert-type' => 'success',
-            ));
+            ]);
     }
 
     /**
      * Create Package Json FIle
-     * 
+     *
      * @return array
      */
     public function createJsonPackage($package_features, $colors)

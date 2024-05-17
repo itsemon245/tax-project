@@ -7,8 +7,9 @@
         <x-backend.ui.button class="btn-sm btn-info mb-3" href="{{ route('product.index') }}"
             type="custom">Back</x-backend.ui.button>
         <!-- Add product Form -->
-        <form action="{{ route('product.store') }}" method="POST">
+        <form action="{{ route('product.update', $product) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="container rounded bg-white py-3 px-4">
                 <div class="row">
                     <div class="col-md-12">

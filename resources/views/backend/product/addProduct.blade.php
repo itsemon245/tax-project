@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <x-backend.ui.button class="btn-sm btn-primary mt-3 float-end">Update</x-backend.ui.button>
+                                <x-backend.ui.button class="btn-sm btn-primary mt-3 float-end">Create</x-backend.ui.button>
                             </div>
                         </div>
                     </div>
