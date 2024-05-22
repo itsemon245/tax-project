@@ -35,13 +35,13 @@
                             <div class="card-header bg-primary text-white">
                                 <img loading="lazy" src="{{ asset('backend/assets/images/users/user-6.jpg') }}"
                                     alt="" height="30" class="me-1 rounded-circle shadow">
-                                <strong class="me-auto">{{ $notification->data['title'] }}</span></strong>
+                                <strong class="me-auto">{{ $notification->data['title'] ?? 'Notification' }}</span></strong>
                                 <small>{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</small>
                                 <button type="button" class="float-end btn-close ms-2" data-bs-dismiss="toast"
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body">
-                                {{ $notification->data['body'] }}
+                                {{ $notification->data['body'] ?? $notification->data['message'] }}
                                 <a href="{{ $notification->data['url'] ?? '#' }}">Explore more</a>
                             </div>
                         </div>

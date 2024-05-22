@@ -57,9 +57,9 @@
                                     <img loading="lazy" src="{{ useImage($user->image_url) }}"
                                         class="img-fluid rounded-circle" alt="" />
                                 </div>
-                                <p class="notify-details">{{ $notification->data['title'] }}</p>
+                                <p class="notify-details">{{ $notification->data['title'] ?? 'Notification' }}</p>
                                 <p class="mb-0 user-msg">
-                                    <small>{{ $notification->data['body'] }}</small>
+                                    <small>{{ $notification->data['body'] ?? $notification->data['message'] }}</small>
                                 </p>
                             </a>
                         @empty
