@@ -34,6 +34,7 @@
                                     <th>Role</th>
                                     <th>Phone</th>
                                     <th>Admin Reference</th>
+                                    <th>Created At</th>
                                     @canany(['create user', 'update user', 'delete user'])
                                     <th>Action</th>    
                                     @endcanany
@@ -53,7 +54,8 @@
                                                 class="px-2 py-1 bg-soft-success text-success rounded rounded-3 fw-medium">{{ $user->getRoleNames()->first() }}</span>
                                         </td>
                                         <td>{{ $user->phone }}</td>
-                                        <td>{!! Str::limit($user->admin_ref, 15, '...') !!}</td>
+                                        <td>{!! $user->admin_ref !!}</td>
+                                        <td>{{$user->created_at->format("F d, Y")}}</td>
                                         @canany(['update user', 'delete user'])
                                         <td>
                                             @can('update user')
