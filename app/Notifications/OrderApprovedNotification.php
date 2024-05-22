@@ -27,7 +27,7 @@ class OrderApprovedNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return $notifiable->email_verified_at ? ['mail', 'database'] : ['database'];
     }
 
     /**

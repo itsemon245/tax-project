@@ -52,16 +52,16 @@ class NotificationController extends Controller
         // Replace with the user you want to notify
         switch ($request->user_type) {
             case 'all':
-                $users = User::whereNot('id', auth()->id())->whereNotNull('email_verified_at')->latest()->get();
+                $users = User::whereNot('id', auth()->id())->latest()->get();
                 break;
             case 'partner':
-                $users = User::role('partner')->whereNotNull('email_verified_at')->latest()->get();
+                $users = User::role('partner')->latest()->get();
                 break;
             case 'user':
-                $users = User::role('user')->whereNotNull('email_verified_at')->latest()->get();
+                $users = User::role('user')->latest()->get();
                 break;
             case 'individual':
-                $users = User::where('id', $request->user_id)->whereNotNull('email_verified_at')->latest()->get();
+                $users = User::where('id', $request->user_id)->latest()->get();
                 break;
 
             default:
