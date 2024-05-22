@@ -12,7 +12,9 @@
 <script src="{{asset('libs/tail.select.js-1.0.2/js/tail.select.min.js')}}"></script>
 <script>
     $(document).ready(function() {
-        tail.select('.tail-select')
+        let tailSelect = tail.select('.tail-select', {
+            stayOpen: false,
+        })
         document.addEventListener('htmx:load', function(){
             console.log('Hello HTMX!')
         })

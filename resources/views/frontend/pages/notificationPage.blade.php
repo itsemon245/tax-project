@@ -42,7 +42,7 @@
                             </div>
                             <div class="card-body">
                                 {{ $notification->data['body'] }}
-                                <a href="{{ $notification->data['url'] }}">Explore more</a>
+                                <a href="{{ $notification->data['url'] ?? '#' }}">Explore more</a>
                             </div>
                         </div>
                     @empty

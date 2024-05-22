@@ -51,7 +51,7 @@
 
                         @forelse ($notifications as $key => $notification)
                             <!-- item-->
-                            <a href="{{ $notification->data['url'] }}"
+                            <a href="{{ $notification->data['url'] ?? '#'}}"
                                 class="dropdown-item notify-item {{ $notification->read_at ? 'read' : 'unread' }}">
                                 <div class="notify-icon">
                                     <img loading="lazy" src="{{ useImage($user->image_url) }}"

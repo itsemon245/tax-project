@@ -21,7 +21,12 @@
 <script src="{{asset('libs/tail.select.js-1.0.2/js/tail.select.min.js')}}"></script>
 <script>
     $(document).ready(function() {
-        let select = tail.select('.tail-select')
+        let tailSelect = tail.select('.tail-select', {
+            stayOpen: false,
+        })
+        tailSelect.on('change', function(item, state){
+            console.log('hello');
+        })
         document.addEventListener('htmx:load', function(){
             select.reload()
         })
