@@ -59,7 +59,7 @@
                                 </div>
                                 <p class="notify-details">{{ $notification->data['title'] ?? 'Notification' }}</p>
                                 <p class="mb-0 user-msg">
-                                    <small>{{ $notification->data['body'] ?? $notification->data['message'] }}</small>
+                                    <small>{!! $notification->data['body'] ?? $notification->data['message'] !!}</small>
                                 </p>
                             </a>
                         @empty

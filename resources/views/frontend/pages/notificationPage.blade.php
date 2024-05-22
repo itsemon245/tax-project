@@ -41,8 +41,10 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="card-body">
-                                {{ $notification->data['body'] ?? $notification->data['message'] }}
-                                <a href="{{ $notification->data['url'] ?? '#' }}">Explore more</a>
+                                {!! $notification->data['body'] ?? $notification->data['message'] !!}
+                                @isset($notification->data['url'])
+                                <a href="{{ $notification->data['url'] }}">Explore more</a>
+                                @endisset
                             </div>
                         </div>
                     @empty
