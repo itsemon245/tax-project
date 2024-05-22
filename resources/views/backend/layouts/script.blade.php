@@ -24,7 +24,7 @@
         let tailSelect = tail.select('.tail-select', {
             stayOpen: false,
         })
-        tailSelect.on('change', function(item, state){
+        document.addEventListener('tail:change', function(item, state){
             console.log('hello');
         })
         document.addEventListener('htmx:load', function(){
