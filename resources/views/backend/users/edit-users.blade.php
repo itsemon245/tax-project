@@ -27,7 +27,7 @@
 
                     <x-backend.form.text-input label="Confirm Password" type="password" name="confirm_password"  /> --}}
 
-                    <x-backend.form.text-input label="Admin Referance" type="text" name="admin_ref" required value="{{$user->name}}"/>
+                    <x-backend.form.text-input label="Admin Referance" type="text" name="admin_ref" required value="{{$user->admin_ref}}"/>
 
                     <x-backend.form.select-input label="Role" name="role_id" required placeholder="Select Role">
                         @foreach ($roles as $role)
