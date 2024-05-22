@@ -87,7 +87,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255|unique:projects,name',
             'start_date' => 'date|required',
             'end_date' => 'date|required',
-            'weekdays' => 'required|numeric',
+            'weekdays' => 'required|numeric|min:1',
             'daily_target' => 'numeric|required|min:1',
             'total_clients' => 'required|numeric',
         ]);

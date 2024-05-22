@@ -39,8 +39,8 @@
                                         <x-backend.form.text-input label="Project Name" name='name' required />
                                     </div>
                                     <div class="col-md-6 mb-2">
-                                        <x-backend.form.text-input label="Weekdays" type="number" name='weekdays'
-                                            required />
+                                        <x-backend.form.text-input label="Weekdays" value="5" min="1"
+                                            type="number" name='weekdays' required />
                                     </div>
                                     <div class="col-md-6 mb-2">
                                         <x-backend.form.text-input label="Start Date" type="date" required
@@ -51,8 +51,8 @@
                                             name='end_date' />
                                     </div>
                                     <div class="col-md-6 mb-2">
-                                        <x-backend.form.text-input label="Daily Target" type="number" required
-                                            name="daily_target" />
+                                        <x-backend.form.text-input label="Daily Target" value="1" min="1"
+                                            type="number" required name="daily_target" />
                                     </div>
                                     <div class="col-md-6 mb-2">
                                         <x-backend.form.text-input label="Total Clients" name=""
