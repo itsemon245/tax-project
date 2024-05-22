@@ -38,10 +38,12 @@ class UserController extends Controller
         $user = Auth::user();
         $data = User::with('roles')
         ->whereHas('roles', function(Builder $q){
-            $q->where('name', 'partner');
+            $q->where('name', '=', 'partner', 'or');
             $q->where('name', 'user');
         })
-        ->whereNot('id', auth()->id())->latest()->latest()->paginate(paginateCount());
+        ->whereNot('id', auth()->id())
+        ->latest()->paginate(paginateCount());
+        dd($data);
         return view('backend.users.view-users', compact('user', 'data'));
     }
     /**
@@ -52,7 +54,7 @@ class UserController extends Controller
         $user = Auth::user();
         $data = User::with('roles')
         ->whereHas('roles', function(Builder $q){
-            $q->whereNot('name', 'partner');
+            $q->where('name', '=', 'partner', 'or');
             $q->whereNot('name', 'user');
         })
         ->whereNot('id', auth()->id())->latest()->latest()->paginate(paginateCount());
