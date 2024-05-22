@@ -43,7 +43,6 @@ class UserController extends Controller
         })
         ->whereNot('id', auth()->id())
         ->latest()->paginate(paginateCount());
-        dd($data);
         return view('backend.users.view-users', compact('user', 'data'));
     }
     /**
