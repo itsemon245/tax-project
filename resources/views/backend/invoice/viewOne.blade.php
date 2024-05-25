@@ -118,6 +118,10 @@
         }
     </style>
 @endPushOnce
+@php
+    $years = $invoice->fiscalYears;
+    $fiscal = $years->where('year', $year)->first() ?? $years->latest()->first();
+@endphp
 
 @section('content')
     <!-- start page title -->
@@ -130,18 +134,18 @@
             <button class="btn btn-primary waves-effect waves-light m-2 d-print-none d-block" id="cmd">Print</button>
         </div>
         <div>
-           <div class="row">
-            @isset($basic->header_image)
-            <div class="d-flex border my-5 justify-content-center">
-                <img style="object-fit: cover; max-width:1240px;height:250px;"
-                    src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
+            <div class="row">
+                @isset($basic->header_image)
+                    <div class="d-flex border my-5 justify-content-center">
+                        <img style="object-fit: cover; max-width:1240px;height:250px;"
+                            src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
+                    </div>
+                @else
+                    <div class="p-5 text-center">
+                        No Header Image found
+                    </div>
+                @endisset
             </div>
-            @else
-                <div class="p-5 text-center">
-                    No Header Image found
-                </div>
-            @endisset
-           </div>
             <div class="row table-col">
                 <div class="col-sm-4 col-md-3 table-cell">
                     <div class="pe-2 mb-2">
@@ -163,13 +167,13 @@
                     <div class="mb-3">
                         <label for="issue-date" class="mb-0 d-block">Date of Issue</label>
                         <div class="d-flex align-items-center">
-                            {{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $year)->first()->pivot->issue_date)->format('F d, Y') }}
+                            {{ Carbon\Carbon::parse($fiscal->pivot->issue_date)->format('F d, Y') }}
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="issue-date" class="mb-0 d-block">Due Date</label>
                         <div class="d-flex align-items-center">
-                            {{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $year)->first()->pivot->due_date)->format('F d, Y') }}
+                            {{ Carbon\Carbon::parse($fiscal->pivot->due_date)->format('F d, Y') }}
                         </div>
                     </div>
                 </div>
@@ -188,7 +192,7 @@
                     <div class="d-flex justify-content-end mb-2">
                         <p class="mb-0">Amount Due (USD) <br>
                             <span class="fs-1 fw-bold text-black"
-                                id="amount-due-vue">{{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->due ?? '' }}Tk</span>
+                                id="amount-due-vue">{{ $fiscal->pivot->due ?? '' }}Tk</span>
                         </p>
                     </div>
                     <div class="fw-bold d-flex justify-content-end">
@@ -196,7 +200,7 @@
                     </div>
                     @php
                         $color = 'dark';
-                        switch ($invoice->fiscalYears()->where('year', $year)->first()->pivot->status) {
+                        switch ($fiscal->pivot->status) {
                             case 'sent':
                                 $color = '#1abc9c';
                                 break;
@@ -218,7 +222,7 @@
                     <div style="font-weight: 600;margin-bottom:.5rem; text-align:end;">
                         <span style="margin-right:1rem; ">Status:</span>
                         <span
-                            style="background: {{ $color }};padding:0.3rem 0.6rem; border-radius:0.3rem;color:white;">{{ str($invoice->fiscalYears()->where('year', $year)->first()->pivot->status)->title() }}</span>
+                            style="background: {{ $color }};padding:0.3rem 0.6rem; border-radius:0.3rem;color:white;">{{ str($fiscal->pivot->status)->title() }}</span>
                         </d>
                     </div>
                 </div>
@@ -276,7 +280,7 @@
                                 <div style="font-weight: 600;display:table-row">
                                     <div style="margin-right: 1rem;display:table-cell">Sub Total:</div>
                                     <div style="display:table-cell;text-align:end;">
-                                        {{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->sub_total }}
+                                        {{ $fiscal->pivot->sub_total }}
                                         Tk</div>
                                     </h3>
                                 </div>
@@ -287,7 +291,7 @@
                                     <div style="margin-right: 1rem;display:table-cell">Discount:</div>
                                     <div style="display:table-cell;text-align:end;color:#1abc9c;">
                                         -
-                                        {{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->discount }}
+                                        {{ $fiscal->pivot->discount }}
                                         Tk</div>
                                     </h3>
                                 </div>
@@ -330,7 +334,7 @@
                                 <div style="font-weight: 600;display:table-row">
                                     <div style="margin-right: 1rem;display:table-cell">Total:</div>
                                     <div style="display:table-cell;text-align:end;">
-                                        {{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->demand }}
+                                        {{ $fiscal->pivot->demand }}
                                         Tk</div>
                                     </h3>
                                 </div>
@@ -369,7 +373,7 @@
                                         <div style="display:table-cell;width:50%;">Demand</div>
                                         <div style="display:table-cell;text-align:end;">:</div>
                                         <div style="display:table-cell;text-align:end;">
-                                            {{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->demand }}
+                                            {{ $fiscal->pivot->demand }}
                                             Tk</div>
                                         </h3>
                                     </div>
@@ -379,7 +383,7 @@
                                         <div style="display:table-cell;width:50%;">Paid</div>
                                         <div style="display:table-cell;text-align:end;">:</div>
                                         <div style="display:table-cell;text-align:end;color:#1abc9c;">
-                                            - {{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->paid }}
+                                            - {{ $fiscal->pivot->paid }}
                                             Tk</div>
                                         </h3>
                                     </div>
@@ -389,7 +393,7 @@
                                         <div style="display:table-cell;width:50%;">Due</div>
                                         <div style="display:table-cell;text-align:end;">:</div>
                                         <div style="display:table-cell;text-align:end;">
-                                            {{ $invoice->fiscalYears()->where('year', $year)->first()->pivot->due }}
+                                            {{ $fiscal->pivot->due }}
                                             Tk</div>
                                         </h3>
                                     </div>
@@ -414,15 +418,14 @@
         </div>
         <div class="row">
             @isset(app('setting')->basic->footer_image)
-            <div class="d-flex border my-2 justify-content-center">
-                <img style="object-fit: cover; max-width:1240px;height:250px;"
-                    src="{{ asset('storage/' . app('setting')->basic->footer_image) }}" alt="">
-            </div>
-                
+                <div class="d-flex border my-2 justify-content-center">
+                    <img style="object-fit: cover; max-width:1240px;height:250px;"
+                        src="{{ asset('storage/' . app('setting')->basic->footer_image) }}" alt="">
+                </div>
             @else
-            <div class="p-5 text-center">
-                No Footer Image found
-            </div>
+                <div class="p-5 text-center">
+                    No Footer Image found
+                </div>
             @endisset
         </div>
 
