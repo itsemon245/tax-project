@@ -288,8 +288,9 @@
                                                 @endcan
 
                                                 @can('delete invoice')
-                                                    <form action="" method="POST">
+                                                    <form action="{{route('invoice.destroy', $invoice)}}" method="POST">
                                                         @csrf
+                                                        @method('delete')
                                                         <button type="submit"
                                                             class="dropdown-item d-flex align-items-center gap-2"><span
                                                                 class="mdi mdi-delete text-danger font-20"></span
