@@ -438,7 +438,7 @@
                 $(document).ready(function() {
                     setTimeout(() => {
                         window.print()
-                    }, 3000);
+                    }, 2000);
                 });
             </script>
         @endpush
@@ -446,9 +446,7 @@
     @push('customJs')
         <script>
             $('#cmd').on('click', function() {
-                setTimeout(() => {
-                    window.print()
-                }, 3000);
+                window.print()
             })
         </script>
     @endpush
