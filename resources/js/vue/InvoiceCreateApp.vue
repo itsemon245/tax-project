@@ -24,37 +24,6 @@
 
   <div class="row justify-content-between">
     <div class="col-md-5">
-      <h4 class="">Payment Details:</h4>
-      <div class="d-flex my-1 gap-2 align-items-center mb-2">
-        <select name="payment_method" class="form-select text-capitalize w-50">
-          <option selected disabled>Select Payment Method</option>
-          <option value="cash">Cash</option>
-          <option value="bkash">Bkash</option>
-          <option value="nagad">Nagad</option>
-          <option value="rocket">Rocket</option>
-          <option value="card">Card</option>
-        </select>
-      </div>
-      <div class="mb-2">
-        <label class="mb-0" for="note">Payment Note</label>
-        <textarea class="border border-2 w-100" name="payment_note"
-          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'" rows="4"></textarea>
-      </div>
-
-      <div class="row mb-2 align-items-center">
-        <label class="col-4 form-label mb-0">Total</label>
-        <input type="text" class="col-6 p-1" name="total" placeholder="00.00" v-model="total" />
-      </div>
-      <div class="row mb-2 align-items-center">
-        <label class="col-4 form-label mb-0">Amount Paid</label>
-        <input type="text" class="col-6 p-1" name="paid" placeholder="00.00" v-model="paid" />
-      </div>
-      <div class="row mb-2 align-items-center">
-        <label class="col-4 form-label mb-0">Amount Due </label>
-        <input type="text" class="col-6 p-1" name="due" placeholder="00.00" v-model="due" />
-      </div>
-    </div>
-    <div class="col-md-5">
       <h4 class="">Amount Details:</h4>
       <div class="row align-items-center justify-content-between">
         <label class="col-4 form-label mb-0">Sub Total:</label>
@@ -131,6 +100,39 @@
         <label class="col-4 form-label mb-0">Total</label>
         <input type="text" class="col-6 text-end p-1" name="total" placeholder="00" v-model="total" readonly />
       </div>
+
+      <div class="row mb-2 align-items-center">
+        <label class="col-4 form-label mb-0">Total</label>
+        <input type="text" class="col-6 p-1" name="total" placeholder="00.00" v-model="total" />
+      </div>
+      <div class="row mb-2 align-items-center">
+        <label class="col-4 form-label mb-0">Amount Paid</label>
+        <input type="text" class="col-6 p-1" name="paid" placeholder="00.00" v-model="paid" />
+      </div>
+      <div class="row mb-2 align-items-center">
+        <label class="col-4 form-label mb-0">Amount Due </label>
+        <input type="text" class="col-6 p-1" name="due" placeholder="00.00" v-model="due" />
+      </div>
+    </div>
+    <div class="col-md-5">
+      <h4 class="">Payment Details:</h4>
+      <div class="d-flex my-1 gap-2 align-items-center mb-2">
+        <select name="payment_method" class="form-select text-capitalize w-50">
+          <option selected disabled>Select Payment Method</option>
+          <option value="cash">Cash</option>
+          <option value="bkash">Bkash</option>
+          <option value="nagad">Nagad</option>
+          <option value="rocket">Rocket</option>
+          <option value="card">Card</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <label class="mb-0" for="note">Payment Note</label>
+        <textarea class="border border-2 w-100" name="payment_note"
+          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'" rows="4"></textarea>
+      </div>
+
+      
 
       <div>
         <label class="mb-0" for="note">Notes</label>
