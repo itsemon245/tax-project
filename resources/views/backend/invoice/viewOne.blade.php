@@ -119,7 +119,7 @@
     </style>
 @endPushOnce
 @php
-    $years = $invoice->fiscalYears;
+    $years = $invoice->fiscalYears();
     $fiscal = $years->where('year', $year)->first() ?? $years->latest()->first();
 @endphp
 
