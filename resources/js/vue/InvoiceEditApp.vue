@@ -24,6 +24,27 @@
 
 
   <div class="row justify-content-between">
+    <div class="col-md-5">
+      <h4 class="">Payment Details:</h4>
+      <div class="d-flex my-1 gap-2 align-items-center mb-2">
+        <select name="payment_method" class="form-select text-capitalize w-50" v-model="paymentMethod">
+          <option selected disabled>Select Payment Method</option>
+          <option v-for="option of options" :value="option" class="text-capitalize">{{ option }}</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <label class="mb-0" for="note">Payment Note</label>
+        <textarea class="border border-2 w-100" name="payment_note"
+          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'"
+          rows="4">{{ paymentNote }}</textarea>
+      </div>
+
+      <div>
+        <label class="mb-0" for="note">Notes</label>
+        <textarea class="w-100" name="note" placeholder="Write a note here(Optional)" rows="3"
+          v-model="notes"></textarea>
+      </div>
+    </div>
 
     <div class="col-md-5">
       <h4 class="">Amount Details:</h4>
@@ -115,27 +136,6 @@
       <div class="row mb-2 align-items-center">
         <label class="col-4 form-label mb-0">Amount Due </label>
         <input type="text" class="col-6 p-1" name="due" placeholder="00.00" v-model="due" />
-      </div>
-    </div>
-    <div class="col-md-5">
-      <h4 class="">Payment Details:</h4>
-      <div class="d-flex my-1 gap-2 align-items-center mb-2">
-        <select name="payment_method" class="form-select text-capitalize w-50" v-model="paymentMethod">
-          <option selected disabled>Select Payment Method</option>
-          <option v-for="option of options" :value="option" class="text-capitalize">{{ option }}</option>
-        </select>
-      </div>
-      <div class="mb-2">
-        <label class="mb-0" for="note">Payment Note</label>
-        <textarea class="border border-2 w-100" name="payment_note"
-          :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'"
-          rows="4">{{ paymentNote }}</textarea>
-      </div>
-
-      <div>
-        <label class="mb-0" for="note">Notes</label>
-        <textarea class="w-100" name="note" placeholder="Write a note here(Optional)" rows="3"
-          v-model="notes"></textarea>
       </div>
     </div>
   </div>
