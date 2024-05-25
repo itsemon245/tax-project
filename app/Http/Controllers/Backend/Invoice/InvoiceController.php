@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Backend\Invoice;
 
-use Throwable;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Calendar;
@@ -11,13 +10,11 @@ use App\Models\FiscalYear;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use App\Filter\InvoiceFilter;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\InvoiceResource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreInvoiceRequest;
-use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceItemCollection;
 use App\Models\Expense;
 use Carbon\Carbon;
@@ -29,13 +26,13 @@ class InvoiceController extends Controller
         $this->middleware('can:read invoice', [
             'only' => ['index', 'show']
         ]);
-        $this->middleware('can:create invoice',   [
+        $this->middleware('can:create invoice', [
             'only' => ['create', 'store']
         ]);
-        $this->middleware('can:update invoice',   [
+        $this->middleware('can:update invoice', [
             'only' => ['update', 'edit']
         ]);
-        $this->middleware('can:delete invoice',  [
+        $this->middleware('can:delete invoice', [
             'only' => ['destroy']
         ]);
     }
@@ -46,7 +43,7 @@ class InvoiceController extends Controller
     {
         $fiscalYear = currentFiscalYear();
         $invoices = Invoice::with('client', 'currentFiscal', 'recentFiscalYears')->latest()
-        ->whereHas('fiscalYears', function($q){
+        ->whereHas('fiscalYears', function ($q) {
             $q->where('year', currentFiscalYear());
         })
         ->latest()->paginate(paginateCount());
@@ -54,7 +51,7 @@ class InvoiceController extends Controller
         $zones = Client::select('zone')->distinct()->latest()->get()->pluck('zone');
         $circles = Client::select('circle')->distinct()->latest()->get()->pluck('circle');
         $clients = Client::latest()->latest()->get();
-        return view('backend.invoice.viewAll', compact( 'invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
+        return view('backend.invoice.viewAll', compact('invoices', 'clients', 'references', 'zones', 'circles', 'fiscalYear'));
     }
 
 
@@ -161,13 +158,15 @@ class InvoiceController extends Controller
      */
     public function show(Request $request, Invoice $invoice)
     {
-        $year = $request->year ? $request->year : currentFiscalYear();
-        $fiscalYear = FiscalYear::where('year', $year)->first();
-        $invoice = $fiscalYear->invoices()->find($invoice->id);
+        if ($request->has('year')) {
+            $year = $request->year ? $request->year : currentFiscalYear();
+            $fiscalYear = FiscalYear::where('year', $year)->first();
+            $invoice = $fiscalYear->invoices()->find($invoice->id);
+        }
         return view('backend.invoice.viewOne', compact('invoice', 'year'));
     }
 
-    function getInvoiceData(Request $request, $id)
+    public function getInvoiceData(Request $request, $id)
     {
         $year = $request->year ? $request->year : currentFiscalYear();
         $fiscalYear = FiscalYear::where('year', $year)->first();
@@ -179,7 +178,7 @@ class InvoiceController extends Controller
             'invoiceItems' => $invoiceItems,
         ]);
     }
-    function deleteInvoiceItem(int $id)
+    public function deleteInvoiceItem(int $id)
     {
         $deleted = InvoiceItem::findOrFail($id)->delete();
         $data = [
@@ -338,9 +337,9 @@ class InvoiceController extends Controller
         if ($status == 'paid') {
             $amountDetails = [
                 'paid' => $paid,
-                'due'=> 0
+                'due' => 0
             ];
-            $this->createExpense($invoice);  
+            $this->createExpense($invoice);
         }
         $invoice->fiscalYears()->updateExistingPivot($fiscalYear->id, [
             'status' => $status,
@@ -364,8 +363,8 @@ class InvoiceController extends Controller
     public function sendInvoiceMail(Request $request, $id)
     {
         $request->validate([
-            'email_to'=> 'email',
-            'subject'=> 'string|max:255'
+            'email_to' => 'email',
+            'subject' => 'string|max:255'
         ]);
         $invoice = Invoice::find($id);
         $year = $request->year ? $request->year : currentFiscalYear();
@@ -428,7 +427,8 @@ class InvoiceController extends Controller
     }
 
 
-    public function createExpense(Invoice $invoice) {
+    public function createExpense(Invoice $invoice)
+    {
         $amount = $invoice->paid;
         $balance = $amount;
         $lastBalance = Expense::latest()->first('balance')->balance;
@@ -438,20 +438,20 @@ class InvoiceController extends Controller
             'date' => today('Asia/Dhaka'),
             'category' => 'invoice',
             'type' => 'credit',
-            'amount'=> $amount,
-            'balance'=> $balance,
-            'items'=> [
+            'amount' => $amount,
+            'balance' => $balance,
+            'items' => [
                 [
-                    'description'=> [
-                        'client_name'=> $invoice->client->name,
-                        'company_name'=> $invoice->client->company_name,
-                        'tin'=> $invoice->client->tin,
-                        'ref_no'=> $invoice->client->ref_no,
-                        'invoice_number'=> $invoice->id,
-                        'invoice_issue_date'=> Carbon::parse($invoicePivot->issue_date)->format('d/m/Y'),
-                        'invoice_due_date'=> Carbon::parse($invoicePivot->due_date)->format('d/m/Y'),
+                    'description' => [
+                        'client_name' => $invoice->client->name,
+                        'company_name' => $invoice->client->company_name,
+                        'tin' => $invoice->client->tin,
+                        'ref_no' => $invoice->client->ref_no,
+                        'invoice_number' => $invoice->id,
+                        'invoice_issue_date' => Carbon::parse($invoicePivot->issue_date)->format('d/m/Y'),
+                        'invoice_due_date' => Carbon::parse($invoicePivot->due_date)->format('d/m/Y'),
                     ],
-                    'amount'=> $amount ,
+                    'amount' => $amount ,
                 ]
             ]
         ]);
