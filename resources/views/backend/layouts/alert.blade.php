@@ -14,6 +14,7 @@
                 .resumeTimer)
         }
     })
+    
 
     $(document).ready(function() {
         if ("{{ request()->session()->has('message') }}") {

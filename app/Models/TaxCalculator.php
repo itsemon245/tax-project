@@ -16,4 +16,8 @@ class TaxCalculator extends Model
         'data' => Json::class,
         'tax' => Currency::class,
     ];
+
+    function user() {
+        return $this->belongsTo(User::class);
+    }
 }

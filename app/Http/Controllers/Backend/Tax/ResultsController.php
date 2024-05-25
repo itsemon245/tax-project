@@ -10,7 +10,10 @@ class ResultsController extends Controller
 {
     function index()
     {
-        $results = TaxCalculator::latest()->latest()->paginate(paginateCount());
+        $results = TaxCalculator::with([
+            'user',
+            'user.roles:name'
+        ])->latest()->latest()->paginate(paginateCount());
         return view('backend.taxCalculator.results', compact('results'));
     }
     function destroy(int $id)

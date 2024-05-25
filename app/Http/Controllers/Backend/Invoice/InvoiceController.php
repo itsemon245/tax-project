@@ -78,7 +78,7 @@ class InvoiceController extends Controller
     public function store(StoreInvoiceRequest $request)
     {
         $fiscalYear = FiscalYear::where('year', $request->year)->first();
-        $fiscalYear = $fiscalYear === null ? FiscalYear::create(['year' => $request->year]) : $fiscalYear;
+        $fiscalYear = $fiscalYear == null ? FiscalYear::create(['year' => $request->year]) : $fiscalYear;
         // dd($fiscalYear);
         // if ($request->hasFile('header_image')) {
         //     $header_image = saveImage($request->image, 'invoices', 'invoice');
@@ -95,8 +95,8 @@ class InvoiceController extends Controller
         $demand = (int) $request->total;
         $paid = (int) $request->paid;
         $due = (int) $request->due;
-        $status = $due === 0 ? 'due' : '';
-        $status = $paid > 0 && $paid === $demand ? 'paid' : 'partial';
+        $status = $due == 0 ? 'due' : '';
+        $status = $paid > 0 && $paid == $demand ? 'paid' : 'partial';
 
         $invoice->fiscalYears()->attach($fiscalYear->id, [
             'discount' => $request->discount,
@@ -123,12 +123,12 @@ class InvoiceController extends Controller
         foreach ($request->item_names as $key => $name) {
             // taxes
             $taxes = [];
-            if ($request["tax-$key-rates"] !== null) {
-                foreach ($request["tax-$key-rates"] as $id => $name) {
+            if ($request["tax_rates"][$key] !== null) {
+                foreach ($request["tax_rates"][$key] as $id => $name) {
                     $array = [
-                        'name' => $request["tax-$key-names"][$id],
-                        'rate' => $request["tax-$key-rates"][$id],
-                        'number' => $request["tax-$key-numbers"][$id],
+                        'name' => $request["tax_names"][$key][$id],
+                        'rate' => $request["tax_rates"][$key][$id],
+                        'number' => $request["tax_numbers"][$key][$id],
                     ];
                     array_push($taxes, $array);
                 }
@@ -211,17 +211,11 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInvoiceRequest $request, Invoice $invoice)
+    public function update(StoreInvoiceRequest $request, Invoice $invoice)
     {
         $fiscalYear = FiscalYear::where('year', $request->year)->first();
-        $fiscalYear = $fiscalYear === null ? FiscalYear::create(['year' => $request->year]) : $fiscalYear;
+        $fiscalYear = $fiscalYear == null ? FiscalYear::create(['year' => $request->year]) : $fiscalYear;
 
-        // dd($fiscalYear);
-        // if ($request->hasFile('header_image')) {
-        //     $header_image = saveImage($request->image, 'invoices', 'invoice');
-        // } else {
-        //     $header_image = Invoice::first()->header_image;
-        // }
         $invoice->update([
             'client_id' => $request->client,
             'reference_no' => $request->reference,
@@ -233,8 +227,8 @@ class InvoiceController extends Controller
         $demand = (int) $request->total;
         $paid = (int) $request->paid;
         $due = (int) $request->due;
-        $status = $due === 0 ? 'due' : '';
-        $status = $paid > 0 && $paid === $demand ? 'paid' : 'partial';
+        $status = $due == 0 ? 'due' : '';
+        $status = $paid > 0 && $paid == $demand ? 'paid' : 'partial';
         Calendar::create([
             'title' => 'Invoice ' . $status,
             'client_id' => $invoice->client_id,
@@ -279,12 +273,12 @@ class InvoiceController extends Controller
         foreach ($request->item_names as $key => $name) {
             // taxes
             $taxes = [];
-            if ($request["tax-$key-rates"]) {
-                foreach ($request["tax-$key-rates"] as $index => $name) {
+            if ($request["tax_rates"][$key] != null) {
+                foreach ($request["tax_rates"][$key] as $id => $name) {
                     $array = [
-                        'name' => $request["tax-$key-names"][$index],
-                        'rate' => $request["tax-$key-rates"][$index],
-                        'number' => $request["tax-$key-numbers"][$index],
+                        'name' => $request["tax_names"][$key][$id],
+                        'rate' => $request["tax_rates"][$key][$id],
+                        'number' => $request["tax_numbers"][$key][$id],
                     ];
                     array_push($taxes, $array);
                 }
@@ -341,7 +335,7 @@ class InvoiceController extends Controller
         $fiscalYear = FiscalYear::where('year', $request->year)->first();
         $paid = $invoice->fiscalYears()->find($fiscalYear->id)->pivot->demand;
         $amountDetails = [];
-        if ($status === 'paid') {
+        if ($status == 'paid') {
             $amountDetails = [
                 'paid' => $paid,
                 'due'=> 0
@@ -410,9 +404,9 @@ class InvoiceController extends Controller
         $filter = new InvoiceFilter();
         $queries = $filter->transform($request);
         // dd($queries);
-        $invoiceQueries = array_filter($queries, fn ($query) => $query[0] === 'client_id' || $query[0] === 'reference_no');
-        $clientQueries = array_filter($queries, fn ($query) => $query[0] === 'zone' || $query[0] === 'circle');
-        $fiscalQueries = array_filter($queries, fn ($query) => $query[0] === 'year');
+        $invoiceQueries = array_filter($queries, fn ($query) => $query[0] == 'client_id' || $query[0] == 'reference_no');
+        $clientQueries = array_filter($queries, fn ($query) => $query[0] == 'zone' || $query[0] == 'circle');
+        $fiscalQueries = array_filter($queries, fn ($query) => $query[0] == 'year');
         $pivotQueries = array_filter($queries, fn ($query) => str_contains($query[0], 'fiscal_year_invoice'));
         // dd($fiscalYear);
         $invoiceQueries =  array_values($invoiceQueries);

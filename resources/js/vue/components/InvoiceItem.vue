@@ -33,7 +33,7 @@
                             <div class="w-50">
                                 <label class="form-label mb-0">Rate</label>
                                 <div class="d-flex">
-                                    <input type="text" :name="'tax-' + props.item.id + '-rates[]'"
+                                    <input type="text" :name="`tax_rates[${props.item.id}][]`"
                                         class="w-100 border border-1 text-center rounded-0 rounded-start" placeholder="0"
                                         v-model="tax.rate" aria-label="Rate" aria-describedby="tax-addon1">
                                     <span
@@ -43,13 +43,13 @@
                             </div>
                             <div class="">
                                 <label class="form-label mb-0">Name</label>
-                                <input type="text" :name="'tax-' + props.item.id + '-names[]'"
+                                <input type="text" :name="`tax_names[${props.item.id}][]`"
                                     class="w-100 border border-1 text-center p-1" placeholder="Tax Name" v-model="tax.name"
                                     aria-label="Tax Name">
                             </div>
                             <div class="w-50">
                                 <label class="form-label mb-0">Number</label>
-                                <input type="text" :name="'tax-' + props.item.id + '-numbers[]'"
+                                <input type="text" :name="`tax_numbers[${props.item.id}][]`"
                                     class="w-100 border border-1 text-center p-1" placeholder="Number" v-model="tax.number"
                                     aria-label="Tax Number">
                             </div>

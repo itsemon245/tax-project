@@ -133,7 +133,8 @@
                 <div>
                     <div class="row">
                         <div class="d-flex border my-5 justify-content-center">
-                            <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->header_image)}}" alt="">
+                            <img style="object-fit: cover; max-width:1240px;height:250px;"
+                                src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
                         </div>
                     </div>
                     <div class="row">
@@ -202,7 +203,8 @@
                 </div>
                 <div class="row">
                     <div class="d-flex border my-5 justify-content-center">
-                        <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->footer_image)}}" alt="">
+                        <img style="object-fit: cover; max-width:1240px;height:250px;"
+                            src="{{ asset('storage/' . app('setting')->basic->footer_image) }}" alt="">
                     </div>
                 </div>
 
@@ -233,3 +235,29 @@
         });
     </script>
 @endpush
+@if (count($errors->getMessages()) > 1)
+    @push('customJs')
+        <script>
+            $(document).ready(function() {
+                Swal.fire({
+                    title: 'You submission has the following errors:',
+                    html: `<ul>
+                    @foreach ($errors->getMessages() as $field => $errs)
+                        @foreach ($errs as $message)
+                            <li class="text-danger fw-medium">{!! $message !!}</li>
+                        @endforeach
+                    @endforeach
+                    
+                    </ul>`,
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok, Close'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // $(e.target).parent().submit()
+                    }
+                })
+            });
+        </script>
+    @endpush
+@endif

@@ -9,6 +9,7 @@
                     <tr>
                         <th>No.</th>
                         <th>Date</th>
+                        <th>User Details</th>
                         <th>Details</th>
                         <th>Tax</th>
                         <th>Others</th>
@@ -24,6 +25,15 @@
                         <tr>
                             <td scope="col">{{ $key + 1 }}.</td>
                             <td>{{ $result->created_at->format('d M, Y') }}</td>
+                            <td>
+                                <div style="max-width: max-content;">
+                                    <div class="fw-medium">Name: {{ $result->user->name }}</div>
+                                    <div class="fw-medium">Username: {{ $result->user->user_name }}</div>
+                                    <div class="fw-medium">Role: <span class="text-capitalize badge bg-success p-1">{{ $result->user->roles->first()?->name }}</span></div>
+                                    <div class="fw-medium">Email: {{ $result->user->email }}</div>
+                                    <div class="fw-medium">Phone: {{ $result->user->phone }}</div>
+                                </div>
+                            </td>
                             <td>
                                 <div style="max-width: max-content;">
                                     <div class="fw-medium">Yearly Turnover: {{ $result->yearly_turnover }} ৳</div>
