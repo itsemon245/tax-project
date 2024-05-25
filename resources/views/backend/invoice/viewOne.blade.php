@@ -130,11 +130,18 @@
             <button class="btn btn-primary waves-effect waves-light m-2 d-print-none d-block" id="cmd">Print</button>
         </div>
         <div>
-            <div class="row">
-                <div class="d-flex border my-2 justify-content-center">
-                    <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->header_image)}}" alt="">
-                </div>
+           <div class="row">
+            @isset($basic->header_image)
+            <div class="d-flex border my-5 justify-content-center">
+                <img style="object-fit: cover; max-width:1240px;height:250px;"
+                    src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
             </div>
+            @else
+                <div class="p-5 text-center">
+                    No Header Image found
+                </div>
+            @endisset
+           </div>
             <div class="row table-col">
                 <div class="col-sm-4 col-md-3 table-cell">
                     <div class="pe-2 mb-2">
@@ -191,12 +198,7 @@
                     </div>
                     @php
                         $color = 'dark';
-                        switch (
-                            $invoice
-                                ->fiscalYears()
-                                ->where('year', $year)
-                                ->first()->pivot->status
-                        ) {
+                        switch ($invoice->fiscalYears()->where('year', $year)->first()->pivot->status) {
                             case 'sent':
                                 $color = '#1abc9c';
                                 break;
@@ -209,7 +211,7 @@
                             case 'overdue':
                                 $color = '#f1556c';
                                 break;
-                        
+
                             default:
                                 # code...
                                 break;
@@ -413,9 +415,17 @@
             </div>
         </div>
         <div class="row">
+            @isset(app('setting')->basic->footer_image)
             <div class="d-flex border my-2 justify-content-center">
-                <img style="object-fit: cover; max-width:1240px;height:250px;" src="{{asset('storage/'.app('setting')->basic->footer_image)}}" alt="">
+                <img style="object-fit: cover; max-width:1240px;height:250px;"
+                    src="{{ asset('storage/' . app('setting')->basic->footer_image) }}" alt="">
             </div>
+                
+            @else
+            <div class="p-5 text-center">
+                No Footer Image found
+            </div>
+            @endisset
         </div>
 
 
@@ -425,16 +435,20 @@
     @if (session()->has('print'))
         @push('customJs')
             <script>
-                $(document).ready(function () {
-                    window.print()
-                });      
+                $(document).ready(function() {
+                    setTimeout(() => {
+                        window.print()
+                    }, 3000);
+                });
             </script>
         @endpush
     @endif
     @push('customJs')
         <script>
             $('#cmd').on('click', function() {
-                window.print()
+                setTimeout(() => {
+                    window.print()
+                }, 3000);
             })
         </script>
     @endpush

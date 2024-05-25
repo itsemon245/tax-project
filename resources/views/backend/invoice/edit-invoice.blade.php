@@ -132,10 +132,16 @@
                 @method('PATCH')
                 <div>
                     <div class="row">
+                        @isset($basic->header_image)
                         <div class="d-flex border my-5 justify-content-center">
                             <img style="object-fit: cover; max-width:1240px;height:250px;"
                                 src="{{ asset('storage/' . app('setting')->basic->header_image) }}" alt="">
                         </div>
+                    @else
+                        <div class="p-5 text-center">
+                            No Header Image found
+                        </div>
+                    @endisset
                     </div>
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
@@ -202,10 +208,17 @@
 
                 </div>
                 <div class="row">
-                    <div class="d-flex border my-5 justify-content-center">
+                    @isset(app('setting')->basic->footer_image)
+                    <div class="d-flex border my-2 justify-content-center">
                         <img style="object-fit: cover; max-width:1240px;height:250px;"
                             src="{{ asset('storage/' . app('setting')->basic->footer_image) }}" alt="">
                     </div>
+                        
+                    @else
+                    <div class="p-5 text-center">
+                        No Footer Image found
+                    </div>
+                    @endisset
                 </div>
 
                 <button id="submit-btn" type="submit"
