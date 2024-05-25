@@ -158,6 +158,7 @@ class InvoiceController extends Controller
      */
     public function show(Request $request, Invoice $invoice)
     {
+        $year = $request->year ?? currentFiscalYear();
         return view('backend.invoice.viewOne', compact('invoice', 'year'));
     }
 

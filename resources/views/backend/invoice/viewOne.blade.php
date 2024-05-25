@@ -163,15 +163,13 @@
                     <div class="mb-3">
                         <label for="issue-date" class="mb-0 d-block">Date of Issue</label>
                         <div class="d-flex align-items-center">
-                            <input type="date" name="issue_date" id="issue-date"
-                                value="{{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $year)->first()->pivot->issue_date)->format('Y-m-d') }}">
+                            {{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $year)->first()->pivot->issue_date)->format('F d, Y') }}
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="issue-date" class="mb-0 d-block">Due Date</label>
                         <div class="d-flex align-items-center">
-                            <input type="date" name="due_date" id="due-date"
-                                value="{{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $year)->first()->pivot->due_date)->format('Y-m-d') }}">
+                            {{ Carbon\Carbon::parse($invoice->fiscalYears()->where('year', $year)->first()->pivot->due_date)->format('F d, Y') }}
                         </div>
                     </div>
                 </div>
