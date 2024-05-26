@@ -45,6 +45,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function commissionHistories()
+    {
+        return $this->hasMany(CommissionHistory::class, 'parent_id');
+    }
     public function referees()
     {
         return $this->hasMany(Referee::class, 'parent_id', 'id');

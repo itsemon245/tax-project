@@ -893,6 +893,13 @@
                                             </ul>
                                         </div>
                                     </li>
+                                    @canany(['read withdraw request'])
+                                        <li>
+                                            <a href="{{ route('referees') }}">
+                                                Referee List
+                                            </a>
+                                        </li>
+                                    @endcanany
                                 @endcanany
                             </ul>
                         </div>

@@ -56,6 +56,7 @@ use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
 use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
 use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\Backend\Withdrawal\CommissionHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -315,12 +316,14 @@ Route::prefix('admin')
                 Route::post('/return-link', 'returnLink')->name('returnLink');
             });
 
-        Route::resource('withdrawal', WithdrawalController::class) //TODO: move the store method to frontend
+        Route::resource('withdrawal', WithdrawalController::class)
             ->only(['index'])
             ->middleware('can:read withdrawal request');
-        Route::resource('withdrawal', WithdrawalController::class) //TODO: move the store method to frontend
+        Route::resource('withdrawal', WithdrawalController::class)
             ->except(['index'])
             ->middleware('can:manage withdrawal request');
+        Route::get('referees', [WithdrawalController::class, 'referees'])->name('referees')->middleware('can:read withdrawal request');
+        Route::get('commission-history/{user}', [CommissionHistoryController::class, 'index'])->name('commission.history')->middleware('can:read withdrawal request');
 
 
         Route::resource('course', CourseController::class)

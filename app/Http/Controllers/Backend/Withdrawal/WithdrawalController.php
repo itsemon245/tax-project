@@ -19,6 +19,14 @@ class WithdrawalController extends Controller
         $withdrawals = Withdrawal::with('user')->where('status', $request->status)->latest()->paginate(paginateCount());
         return view('backend.withdrawal.viewAllWthdrawal', compact('withdrawals'));
     }
+    /**
+     * Display a listing of the resource.
+     */
+    public function referees()
+    {
+        $referees = User::has('referees')->paginate(paginateCount());
+        return view('backend.withdrawal.view-referees', compact('referees'));
+    }
 
     /**
      * Display the specified resource.
