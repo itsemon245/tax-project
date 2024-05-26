@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\User;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
-use App\Models\ExpertProfile;
 use App\Http\Controllers\Controller;
+use App\Models\CommissionHistory;
 use App\Models\Course;
 use App\Models\Referee;
 use App\Models\UserAppointment;
-use App\Models\Video;
 use App\Notifications\OrderApprovedNotification;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -29,34 +28,61 @@ class OrderController extends Controller
 
     public function status($id)
     {
+
         $payment = Purchase::find($id);
         $user = $payment->user;
         $referee = Referee::with('user')->where('user_id', $user->id)->first();
+        try {
+            DB::beginTransaction();
+            if ($payment->approved == 0) {
+                $payment->approved = 1;
+                $payment->approved_at = now();
+                $parent = $referee?->parent;
+                if ($parent) {
+                    $commission = $payment->payable_amount * $referee->commission / 100;
+                    $parent->total_commission = $parent->total_commission + $commission;
+                    $parent->remaining_commission = $parent->remaining_commission + $commission;
+                    $parent->conversion = $parent->conversion + 1;
+                    $parent->save();
 
-        if ($payment->approved == 0) {
-            $payment->approved = 1; 
-            $parent = $referee?->parent;
-            if ($parent) {
-                $commission = $payment->payable_amount * $referee->commission / 100;
-                $parent->total_commission = $parent->total_commission + $commission;
-                $parent->remaining_commission = $parent->remaining_commission + $commission;
-                $parent->conversion = $parent->conversion + 1;
-                $parent->save();
+                    CommissionHistory::create([
+                        'parent_id' => $parent->id,
+                        'referee_id' => $user->id,
+                        'item_name' => $payment->purchasable->name ?? $payment->purchasable->title,
+                        'item_price' => $payment->payable_amount,
+                        'item_type' => $payment->purchasable_type,
+                        'item_id' => $payment->purchasable_id,
+                        'trx_id' => $payment->trx_id,
+                        'percentage' => (float) $referee->commission,
+                        'earning' => $commission
+                    ]);
+                }
             }
-        }
-        if ($payment->purchasable_type === 'Course') {
-            $course = Course::with('videos')->find($payment->purchasable_id);
-            $videos = $course->videos()->with('users')->latest()->get();
-            foreach ($videos as $video) {
-                $video->users()->attach($user->id);
+            if ($payment->purchasable_type === 'Course') {
+                $course = Course::with('videos')->find($payment->purchasable_id);
+                $videos = $course->videos()->with('users')->latest()->get();
+                foreach ($videos as $video) {
+                    $video->users()->attach($user->id);
+                }
             }
+            $payment->save();
+            DB::commit();
+            $notification = [
+                'message' => 'Order Approved Successfully',
+                'alert-type' => 'success',
+            ];
+            $user->notify(new OrderApprovedNotification($user));
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            if (config('app.env') == 'local') {
+                dd($th);
+            }
+            $notification = [
+                'message' => $th->getMessage(),
+                'alert-type' => 'success',
+            ];
+            //throw $th;
         }
-        $payment->save();
-        $notification = [
-            'message' => 'Order Approved Successfully',
-            'alert-type' => 'success',
-        ];
-        $user->notify(new OrderApprovedNotification($user));
 
         return redirect()
             ->back()
@@ -89,6 +115,7 @@ class OrderController extends Controller
             'message' => 'Successfully Deleted',
             'alert-type' => 'success',
         ];
-        return back()->with($notification);;
+        return back()->with($notification);
+        ;
     }
 }

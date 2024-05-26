@@ -14,7 +14,7 @@ class Purchase extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'approved_at' => 'timestamp',
+        'approved_at' => 'date',
     ];
 
     public function purchasable(): MorphTo
