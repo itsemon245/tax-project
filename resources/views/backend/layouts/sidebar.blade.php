@@ -1165,8 +1165,14 @@
                                     </li>
                                 @endcanany
                                 @canany(['update event', 'read event', 'delete event', 'create event'])
-                                    <li>
-                                        <a href="{{ route('calendar.index') }}">View Events</a>
+                                    <li class="{{ url()->current() == route('calendar.index') ? 'menuitem-active' : ''}}">
+                                        <a href="{{ route('calendar.index') }}">View All</a>
+                                    </li>
+                                    <li class="{{ url()->current() == route('calendar.index', ['status' => 'completed']) ? 'menuitem-active' : ''}}">
+                                        <a href="{{ route('calendar.index', ['status' => 'completed']) }}">View Completed</a>
+                                    </li>
+                                    <li class="{{ url()->current() == route('calendar.index', ['status' => 'rejected']) ? 'menuitem-active' : ''}}">
+                                        <a href="{{ route('calendar.index', ['status' => 'rejected']) }}">View Rejected</a>
                                     </li>
                                 @endcanany
                             </ul>

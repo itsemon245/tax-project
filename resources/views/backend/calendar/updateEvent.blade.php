@@ -32,7 +32,7 @@
                     <x-backend.form.select-input id="client" label="Client" name="client"
                         placeholder="Select Client">
                         @foreach ($clients as $client)
-                            <option value="{{ $client->id }}"  @if ($client->id ===$calendar->client_id)
+                            <option value="{{ $client->id }}"  @if ($client->id == $calendar->client_id)
                                 selected
                             @endif
                             >{{ $client->name }}</option>

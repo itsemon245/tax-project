@@ -24,7 +24,7 @@ class WithdrawalController extends Controller
      */
     public function referees()
     {
-        $referees = User::has('referees')->paginate(paginateCount());
+        $referees = User::has('referees')->with('referees')->paginate(paginateCount());
         return view('backend.withdrawal.view-referees', compact('referees'));
     }
 

@@ -22,6 +22,7 @@
                     <th>#</th>
                     <th>User Details</th>
                     <th>Refer Link</th>
+                    <th>Total Referrals</th>
                     <th>Balance</th>
                     <th>Actions</th>
 
@@ -39,6 +40,9 @@
                         </td>
                         <td>
                             <a href="{{ $referee->refer_link }}">{{ $referee->refer_link }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ $referee->referees->count() }}">{{ $referee->referees->count() }}</a>
                         </td>
                         <td>
                             <div class="row fs-5 fw-bold">

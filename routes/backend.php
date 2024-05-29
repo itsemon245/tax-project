@@ -451,6 +451,7 @@ Route::prefix('admin')
         Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panel
         Route::resource('calendar', CalendarController::class);
         Route::patch('mark-event-completed', [CalendarController::class, 'markCompleted'])->name('mark.event.completed');
+        Route::patch('mark-event-rejected', [CalendarController::class, 'markRejected'])->name('mark.event.rejected');
         Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
         Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
         Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become'); //User profile to become a partner update

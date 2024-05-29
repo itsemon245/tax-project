@@ -10,6 +10,10 @@ class Calendar extends Model
     use HasFactory;
 
     protected $guarded= [];
+    protected $casts = [
+        'rejected_at'=> 'date',
+        'completed_at'=> 'date'
+    ];
 
     public function client()
     {

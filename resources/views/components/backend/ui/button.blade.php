@@ -3,7 +3,7 @@
     'action' => '',
 ])
 @php
-    // $action = $attributes->has('action') ? $attributes->get('action') : null;
+    $isDisabled = $attributes->has('disabled');
 @endphp
 @switch(str($type)->lower())
     @case('submit')
