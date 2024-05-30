@@ -33,7 +33,7 @@
                             <div class="w-50">
                                 <label class="form-label mb-0">Rate</label>
                                 <div class="d-flex">
-                                    <input type="text" :name="`tax_rates[${props.item.id}][]`"
+                                    <input type="number" step="0.001" :name="`tax_rates[${props.item.id}][]`"
                                         class="w-100 border border-1 text-center rounded-0 rounded-start" placeholder="0"
                                         v-model="tax.rate" aria-label="Rate" aria-describedby="tax-addon1">
                                     <span

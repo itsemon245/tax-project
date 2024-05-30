@@ -13,7 +13,7 @@
                     <p class="mt-3">
                         {!! $expert->bio !!}
                     </p>
-                    <a class="btn btn-primary " href="#">Consult Now</a>
+                    <a class="btn btn-primary " href="{{route('consultation.make', ['expertProfile'=> $expert])}}">Consult Now</a>
                 </div>
 
             </div>
