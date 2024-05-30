@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Http\Requests\Backend\ClientRequest;
 
 class ClientController extends Controller
 {
@@ -36,9 +37,9 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreClientRequest $request)
+    public function store(ClientRequest $request)
     {
-        $validated = $request->except('_token', 'method',);
+        $validated = $request->validated();
         $client = Client::create($validated);
         $notification = [
             'message' => 'Client Created',
@@ -67,9 +68,9 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateClientRequest $request, Client $client)
+    public function update(ClientRequest $request, Client $client)
     {
-        $client->update($request->except('method', 'token'));
+        $client->update($request->validated());
 
         $notification = [
             'message' => 'Client updated',
