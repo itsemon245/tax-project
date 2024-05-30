@@ -41,14 +41,15 @@
           :placeholder="'Write a payment note...\ne.g: Card Details, Bank Details etc'" rows="4"></textarea>
       </div>
 
-      
+
 
       <div>
         <label class="mb-0" for="note">Notes</label>
-        <textarea class="w-100" name="note" placeholder="Write a note here(Optional)" rows="3" v-model="notes"></textarea>
+        <textarea class="w-100" name="note" placeholder="Write a note here(Optional)" rows="3"
+          v-model="notes"></textarea>
       </div>
     </div>
-    
+
     <div class="col-md-5">
       <h4 class="">Amount Details:</h4>
       <div class="row align-items-center justify-content-between">
@@ -56,7 +57,7 @@
         <div class="col-5 p-0">
           <input type="text" class="text-end p-1 d-inline-block fw-bold" style="width: calc(100% - 3rem);"
             name="sub_total" placeholder="00" v-model="subTotal" readonly />
-          <span class="">.00 Tk</span>
+          <span class=""> Tk</span>
         </div>
       </div>
 
@@ -88,7 +89,8 @@
                     :class="[discount.isFixed ? 'mdi-currency-bdt' : 'mdi-percent-outline']"
                     style="font-size: 18px;"></span>
                 </div>
-                <div class="col-4 bg-blue p-0 py-1 ps-2 align-self-center border rounded-end" @click="toggleDiscountType">
+                <div class="col-4 bg-blue p-0 py-1 ps-2 align-self-center border rounded-end"
+                  @click="toggleDiscountType">
                   <span class="mdi mdi-swap-horizontal p-0 text-white " style="font-size: 18px;cursor: pointer;"></span>
                 </div>
                 <div class="col-12">
@@ -124,24 +126,31 @@
       </div>
       <div class="row mb-2 align-items-center justify-content-between border-top border-2">
         <label class="col-4 form-label mb-0">Total</label>
-        <input type="text" class="col-6 text-end p-1" name="total" placeholder="00" v-model="total" readonly />
+        <div class="d-flex col-8 align-items-center flex-grow-1">
+          <input type="text" class="p-1 text-end flex-grow-1" name="total"
+            placeholder="00.00" v-model="total" />
+          <span class=""> Tk</span>
+        </div>
       </div>
-
-      <div class="row mb-2 align-items-center">
-        <label class="col-4 form-label mb-0">Total</label>
-        <input type="text" class="col-6 p-1" name="total" placeholder="00.00" v-model="total" />
-      </div>
-      <div class="row mb-2 align-items-center">
+      <div class="row mb-2 align-items-center justify-content-between">
         <label class="col-4 form-label mb-0">Amount Paid</label>
-        <input type="text" class="col-6 p-1" name="paid" placeholder="00.00" v-model="paid" />
+        <div class="d-flex col-8 align-items-center flex-grow-1">
+          <input type="text" class="p-1 text-end flex-grow-1" name="paid"
+            placeholder="00.00" v-model="paid" />
+          <span class=""> Tk</span>
+        </div>
       </div>
-      <div class="row mb-2 align-items-center">
-        <label class="col-4 form-label mb-0">Amount Due </label>
-        <input type="text" class="col-6 p-1" name="due" placeholder="00.00" v-model="due" />
+      <div class="row mb-2 align-items-center justify-content-between">
+        <label class="col-4 form-label mb-0">Amount Due</label>
+        <div class="d-flex col-8 align-items-center flex-grow-1">
+          <input type="text" class="p-1 text-end flex-grow-1" name="due"
+            placeholder="00.00" v-model="due" />
+          <span class=""> Tk</span>
+        </div>
       </div>
     </div>
-    
-    
+
+
   </div>
 </template>
 
@@ -186,7 +195,7 @@ onMounted(() => {
     newItems.forEach((item) => {
       if (item.tax !== undefined) {
         if (!Number.isNaN(item.tax)) {
-          sum +=  item.tax;
+          sum += item.tax;
         }
       }
     });
