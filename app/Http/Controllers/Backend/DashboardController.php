@@ -33,7 +33,10 @@ class DashboardController extends Controller
         $today = today('Asia/Dhaka')->format('Y-m-d');
         $clients = Client::get();
         $services = Calendar::select('service')->distinct()->latest()->get();
-        $currentEvents = Calendar::where('start', 'like', "$today%")->where('is_completed', false)->latest()->latest()->get()->groupBy('type');
+        $currentEvents = Calendar::where('start', 'like', "$today%")
+        ->whereNotNull('rejected_at')        
+        ->whereNotNull('completed_at')        
+        ->latest()->get()->groupBy('type');
         $projects = Project::get();
         $totalExpense = Expense::where('type', 'debit')->sum('amount');
         $todaysExpense = Expense::where([
