@@ -98,6 +98,7 @@ Route::get('/notification', [PageController::class, 'notificationPage'])->name('
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
 Route::get('/promo-codes', [PageController::class, 'PromoCodePage'])->name('page.promo.code');
 Route::get('/my-courses', [PageController::class, 'myCourses'])->name('page.my.courses');
+Route::get('/my-case-studies', [PageController::class, 'myCaseStudies'])->name('page.my.case.studies');
 Route::get('/my-payments', [PageController::class, 'myPayments'])->name('page.my.payments');
 Route::get('/my-payments/show/{id}', [PageController::class, 'myPaymentShow'])->name('page.my.payment.show');
 // user generated refer link

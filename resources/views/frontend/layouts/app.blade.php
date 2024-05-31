@@ -154,6 +154,9 @@
                             <a class="" href="{{ route('page.my.courses') }}">My Courses</a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="" href="{{ route('page.my.case.studies') }}">My Case Studies</a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="" href="{{ route('referral.index') }}">Referrals</a>
                         </li>
                         <li class="sidebar-item">

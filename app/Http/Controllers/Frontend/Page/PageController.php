@@ -137,6 +137,14 @@ class PageController extends Controller
         $courses = $user->purchased('course');
         return view('frontend.pages.myCourses', compact('courses'));
     }
+    //show all my case studies in frontend
+    public function myCaseStudies()
+    {
+        $user    = User::where('id', auth()->id())->first();
+        $packages = $user->purchased('caseStudyPackage');
+        $studies = $user->purchased('caseStudy');
+        return view('frontend.pages.myCaseStudies', compact('packages', 'studies'));
+    }
     //show all my payments/payment history in frontend
     public function myPayments()
     {

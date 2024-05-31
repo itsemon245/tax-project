@@ -18,14 +18,17 @@
                                 <td>{{ ++$key }}</td>
                                 <td>
 
-                                    <a href="{{ route('video.byCourse', $course->id) }}"
+                                    <a href="#"
                                         class="d-flex align-items-start gap-2 text-reset">
                                         <div>
                                             <span data-feather="folder" class="icon-dual"></span>
                                         </div>
                                         <div>
                                             <div class="fw-medium">{{ $course->name }}</div>
-                                            {{-- <div>{{ $course->videos()->count() }} Videos</div> --}}
+                                            <div class="d-flex mt-2 gap-2 align-items-center">
+                                                <span data-feather="tv" class="icon-dual w-4 h-4"></span>
+                                                {{ $course->videos?->count() }} Case Studies
+                                            </div>
                                         </div>
                                     </a>
                                 </td>

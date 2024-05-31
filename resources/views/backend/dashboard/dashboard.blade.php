@@ -27,7 +27,8 @@
             .stat-report td {
                 padding: 4px;
             }
-            .stat-report td > h3 {
+
+            .stat-report td>h3 {
                 padding: 0;
             }
 
@@ -249,6 +250,7 @@
             </div> <!-- tab-content -->
         </div>
         {{-- Project Progress Ends --}}
+
         @php
             $number = new \NumberFormatter('en_IN', \NumberFormatter::DEFAULT_STYLE);
             $arearClients = $fiscalYear
@@ -416,8 +418,8 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="float-end fw-bold fs-5">Total: <span class="mdi-currency-bdt"></span> <span
-                                        data-plugin="counterup">{{ $expenses->total }}</span>
+                                <div class="float-end fw-bold fs-5">Total: <span class="mdi-currency-bdt"></span>
+                                    <span data-plugin="counterup">{{ $expenses->total }}</span>
                                 </div>
                             </div>
                         </div> <!-- end row-->

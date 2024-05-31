@@ -19,6 +19,7 @@ use App\Interfaces\Services\SettingInterface;
 use Laravel\Telescope\TelescopeServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use App\Interfaces\Services\BaseServiceInterface;
+use App\Models\FiscalYear;
 use App\Services\CustomService\CustomServiceService;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -55,5 +56,7 @@ class AppServiceProvider extends ServiceProvider
             CustomService::class => CustomService::class
         ]);
         Paginator::useBootstrapFive();
+
+        FiscalYear::updateOrCreate(['year'=> currentFiscalYear()],['year'=> currentFiscalYear()]);
     }
 }
