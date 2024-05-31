@@ -6,7 +6,7 @@
                     <h6 class="text-center font-20">Our Services</h6>
                     @foreach ($categories as $category)
                         <div
-                            class=" {{ count($category->serviceSubCategories) < 2 ? 'col-xl-2 col-md-4' : 'col-xl-4 col-md-6' }}">
+                            class=" {{ count($category->serviceSubCategories) < 2 ? 'col-xl-6 col-md-6' : 'col-xl-6 col-md-6' }}">
                             <a style="text-decoration:underline!important;"
                                 class="fw-medium font-18 d-flex justify-content-md-center mb-2"
                                 href="{{ route('service.category', $category->id) }}" target="_blank"
@@ -36,6 +36,12 @@
                     @endforeach
                 </div>
             </div>
+        </div>
+
+
+    </div>
+    <div class="bg-green-600">
+        <div class="top-footer px-5 mx-3 text-white py-3 row ">
             <div class="col-md-6">
                 <div class="row justify-content-center mb-2">
                     <p class="mb-1 text-center" style="font-weight: 500;font-size:18px;">
@@ -63,13 +69,13 @@
                         </a>
                     </div>
 
-                    <div class="d-flex gap-2 flex-wrap mb-3 justify-content-center">
+                    {{-- <div class="d-flex gap-2 flex-wrap mb-3 justify-content-center">
                         <a class="fw-bold" style="text-decoration:underline!important;" href="#" target="_blank"
                             rel="noopener noreferrer" class="">Terms & Codition</a>
                         <span>|</span>
                         <a class="fw-bold" style="text-decoration:underline!important;" href="#" target="_blank"
                             rel="noopener noreferrer" class="">Help & Support</a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-md-6">
@@ -85,9 +91,9 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="bottom-footer bg-primary text-light mt-3">
+
+    <div class="bottom-footer bg-primary text-light">
         <div class="d-flex text-dark align-items-center justify-content-center flex-wrap p-2">
             <p class="mb-0 text-center fw-medium">Copyright <span class="font-18 mx-2">&#169;</span>
                 {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by {{ env('APP_NAME') }}</p>
@@ -99,10 +105,4 @@
                 Developers</a>
         </div>
     </div>
-
-
-
 </footer>
-
-
-
