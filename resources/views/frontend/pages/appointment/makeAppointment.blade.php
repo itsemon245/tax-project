@@ -1,12 +1,12 @@
 @php
     $dates = [
-        now()->addDays(1)->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
-        now()->addDays(2)->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
-        now()->addDays(3)->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
-        now()->addDays(4)->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
-        now()->addDays(5)->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
-        now()->addDays(6)->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
-        now()->addDays(7)->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+        now()->addDays(1)->format('d M, Y') => $times,
+        now()->addDays(2)->format('d M, Y') => $times,
+        now()->addDays(3)->format('d M, Y') => $times,
+        now()->addDays(4)->format('d M, Y') => $times,
+        now()->addDays(5)->format('d M, Y') => $times,
+        now()->addDays(6)->format('d M, Y') => $times,
+        now()->addDays(7)->format('d M, Y') => $times,
     ];
 @endphp
 
@@ -96,7 +96,7 @@
                                             </h4>
                                             <a @if ($expertProfile) href="{{ route('consultation.make', $expertProfile->id) }}"
                                              @else
-                                            href="{{ route('appointment.make').($office ? "?office_id=" . $office?->id : '') }}" @endif
+                                            href="{{ route('appointment.make') . ($office ? '?office_id=' . $office?->id : '') }}" @endif
                                                 for="appointment-input" class="row mb-1" style="cursor: pointer;">
                                                 <div id="appointment-type"
                                                     class="border rounded p-3 appointment-type selected appointment">
@@ -111,7 +111,7 @@
                                             </a>
                                             <a @if ($expertProfile) href="{{ route('consultation.virtual', $expertProfile->id) }}"
                                                 @else
-                                               href="{{ route('appointment.virtual').($office ? "?office_id=" . $office?->id : '') }}" @endif
+                                               href="{{ route('appointment.virtual') . ($office ? '?office_id=' . $office?->id : '') }}" @endif
                                                 for="appointment-input-2" class="row mb-1" style="cursor: pointer;">
                                                 <div id="appointment-type-2"
                                                     class="border bg-light rounded p-3 appointment-type selected appointment">
@@ -150,8 +150,14 @@
                                                 </h4>
                                                 <div class="row align-items-center">
                                                     @php
-                                                        $districts = App\Models\Map::select('district')->distinct()->get()->pluck('district');
-                                                        $thanas = App\Models\Map::select('thana')->distinct()->get()->pluck('thana');
+                                                        $districts = App\Models\Map::select('district')
+                                                            ->distinct()
+                                                            ->get()
+                                                            ->pluck('district');
+                                                        $thanas = App\Models\Map::select('thana')
+                                                            ->distinct()
+                                                            ->get()
+                                                            ->pluck('thana');
                                                     @endphp
                                                     <div class="col-12">
                                                         <div class="text-center bg-light p-2 rounded">
@@ -243,7 +249,7 @@
                                                                 @foreach ($times as $key => $time)
                                                                     <label
                                                                         class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
-                                                                        {{ $time }}
+                                                                        {{ \Carbon\Carbon::parse($time)->timezone('Asia/Dhaka')->format('h:i A') }}
                                                                         <input class="time-input " hidden type="radio"
                                                                             name="time"
                                                                             data-date="{{ $date }}"
@@ -294,7 +300,7 @@
                                                                 @foreach ($times as $key => $time)
                                                                     <label
                                                                         class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
-                                                                        {{ $time }}
+                                                                        {{ \Carbon\Carbon::parse($time)->timezone('Asia/Dhaka')->format('h:i A') }}
                                                                         <input class="time-input " hidden type="radio"
                                                                             name="time"
                                                                             data-date="{{ $date }}"

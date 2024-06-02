@@ -441,6 +441,9 @@ Route::prefix('admin')
                 Route::patch('approve/{id}', 'approve')->name('approve');
                 Route::patch('complete/{id}', 'complete')->name('complete');
                 Route::delete('destroy/{id}', 'destroy')->name('destroy');
+                Route::get('time', 'times')->name('times');
+                Route::post('time', 'timesUpdate')->name('times.update');
+                Route::delete('delete-time/{time}', 'timeDelete')->name('time.delete');
             });
 
         //custom routes

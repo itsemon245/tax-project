@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Appoinment;
+use App\Models\AppointmentTime;
 use App\Models\Calendar;
 use App\Models\UserAppointment;
 use App\Notifications\AppointmentApprovedNotification;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
 class UserAppointmentController extends Controller
@@ -17,6 +20,36 @@ class UserAppointmentController extends Controller
         $apt = $appointments->first();
 
         return view('backend.user.appointments', compact('appointments'));
+    }
+    public function times()
+    {
+        $times = AppointmentTime::get();
+
+        return view('backend.user.appointment-times', compact('times'));
+    }
+    public function timesUpdate(Request $request)
+    {
+        AppointmentTime::where('user_id', auth()->id())->delete();
+        foreach ($request->times as $time) {
+            AppointmentTime::create([
+                'user_id' => auth()->id(),
+                'time' => $time
+            ]);
+        }
+        $alert = [
+            'alert-type' => 'success',
+            'message' => 'Updated Successfully!'
+        ];
+        return back()->with($alert);
+    }
+    public function timeDelete(AppointmentTime $time)
+    {
+        $time->delete();
+        $alert = [
+            'alert-type' => 'success',
+            'message' => 'Deleted Successfully!'
+        ];
+        return back()->with($alert);
     }
 
     public function approvedList()

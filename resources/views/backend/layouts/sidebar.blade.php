@@ -703,6 +703,14 @@
                                                         </a>
                                                     </li>
                                                 @endcanany
+                                                @canany(['update appointment'])
+                                                    <li>
+                                                        <a href="{{ route('user-appointments.times') }}">
+                                                            Appointment Times
+                                                        </a>
+                                                    </li>
+                                                @endcanany
+
 
                                             </ul>
                                         </div>

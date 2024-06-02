@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\About;
 use App\Models\Achievement;
 use App\Models\Appointment;
+use App\Models\AppointmentTime;
 use App\Models\Banner;
 use App\Models\ClientStudio;
 use App\Models\CustomService;
@@ -61,6 +62,7 @@ class PageController extends Controller
         } else {
             $maps = [ $office ];
         }
+        $times = AppointmentTime::whereIn('user_id', User::role('super admin')->get()->pluck('id'))->pluck('time');
         $branchDistricts = Map::select([ 'district', 'thana' ])->distinct()->latest()->get()->pluck('district');
         $branchThanas    = Map::select([ 'district', 'thana' ])->distinct()->where(function (Builder $q) use ($request) {
             if (!empty($request->query('branch-district'))) {
@@ -70,7 +72,7 @@ class PageController extends Controller
         $banners      = getRecords('banners');
         $infos1       = Info::where('section_id', 1)->latest()->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->latest()->get();
-        return view('frontend.pages.appointment.makeAppointment', compact('banners', 'expertProfile', 'infos1', 'testimonials', 'maps', 'branchDistricts', 'branchThanas', 'office'));
+        return view('frontend.pages.appointment.makeAppointment', compact('times', 'banners', 'expertProfile', 'infos1', 'testimonials', 'maps', 'branchDistricts', 'branchThanas', 'office'));
     }
     public function appointmentVirtual(Request $request, ?ExpertProfile $expertProfile = null)
     {
