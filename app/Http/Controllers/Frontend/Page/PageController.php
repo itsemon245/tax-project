@@ -78,9 +78,11 @@ class PageController extends Controller
     {
         $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
         $banners      = getRecords('banners');
+        $times = AppointmentTime::whereIn('user_id', User::role('super admin')->get()->pluck('id'))->pluck('time');
+
         $infos1       = Info::where('section_id', 1)->latest()->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->latest()->get();
-        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('banners', 'expertProfile', 'testimonials', 'infos1', 'office'));
+        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('times','banners', 'expertProfile', 'testimonials', 'infos1', 'office'));
     }
     public function aboutPage()
     {

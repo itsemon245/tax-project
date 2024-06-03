@@ -36,7 +36,7 @@
                                     <th>Admin Reference</th>
                                     <th>Created At</th>
                                     @canany(['create user', 'update user', 'delete user'])
-                                    <th>Action</th>    
+                                        <th>Action</th>
                                     @endcanany
                                 </tr>
                             </thead>
@@ -45,8 +45,8 @@
                                 @foreach ($data as $key => $user)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td><img loading="lazy" src="{{ useImage($user->image_url) }}" alt="{{ $user->user_name }}"
-                                                width="80px" loading="lazy"></td>
+                                        <td><img loading="lazy" src="{{ useImage($user->image_url) }}"
+                                                alt="{{ $user->user_name }}" width="80px" loading="lazy"></td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td class="text-capitalize">
@@ -55,25 +55,29 @@
                                         </td>
                                         <td>{{ $user->phone }}</td>
                                         <td>{!! $user->admin_ref !!}</td>
-                                        <td>{{$user->created_at->format("F d, Y")}}</td>
+                                        <td>{{ $user->created_at->format('F d, Y') }}</td>
                                         @canany(['update user', 'delete user'])
-                                        <td>
-                                            @can('update user')
-                                            <a href="{{ route('users.edit', $user->id) }}"
-                                                class="btn btn-info btn-sm">Edit</a>
-                                            @endcan
-                                            @can('delete user')
-                                            <form action="{{ route('users.destroy', $user->id) }}" method="post"
-                                                class="d-inline-block py-0">
-                                                @csrf
-                                                @method('DELETE')
-                                                <x-backend.ui.button
-                                                    class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
-                                            </form>
-                                            @endcan
-                                        </td> 
+                                            <td>
+                                                @can('update user')
+                                                    @if ($user->expertProfile)
+                                                        <a href="{{ route('expert-profile.edit', ['expert_profile' => $user->expertProfile->id]) . "?user_id=$user->id" }}"
+                                                            class="btn btn-primary btn-sm">Expert Profile</a>
+                                                    @endif
+                                                    <a href="{{ route('users.edit', $user->id) }}"
+                                                        class="btn btn-info btn-sm">Edit</a>
+                                                @endcan
+                                                @can('delete user')
+                                                    <form action="{{ route('users.destroy', $user->id) }}" method="post"
+                                                        class="d-inline-block py-0">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <x-backend.ui.button
+                                                            class="btn-danger btn-sm text-capitalize">Delete</x-backend.ui.button>
+                                                    </form>
+                                                @endcan
+                                            </td>
                                         @endcanany
-                                    
+
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -53,7 +53,7 @@ class UserController extends Controller
         $user = Auth::user();
         $data = User::with('roles')
         ->whereHas('roles', function(Builder $q){
-            $q->where('name', '=', 'partner', 'or');
+            $q->whereNot('name', 'partner', 'or');
             $q->whereNot('name', 'user');
         })
         ->whereNot('id', auth()->id())->latest()->latest()->paginate(paginateCount());
@@ -99,11 +99,16 @@ class UserController extends Controller
         }
         $userData->save();
         $userData->assignRole($request->role_id);
+        $userData->refresh();
 
         $notification = [
             'message' => 'User Profile Created',
             'alert-type' => 'success',
         ];
+        if ($userData->role_name == 'expert') {
+            return redirect(route('expert-profile.create')."?user_id=$userData->id")->with($notification);
+        }
+
         return back()->with($notification);
     }
 

@@ -28,6 +28,15 @@
                     <x-backend.form.image-input class="" label="Expert Avatar" name="image" :image="$expertProfile->image" />
                 </div>
                 <div class="col-sm-6 mt-3">
+                    <div class="{{ request()->query('user_id') ? 'd-none' : '' }}">
+                        <x-backend.form.select-input id="expert-select" name="user_id" label="Select Expert"
+                            placeholder="Select Expert">
+                            @foreach ($users as $id => $name)
+                                <option value="{{ $id }}" @selected(request()->query('user_id') == $id)>{{ $name }}
+                                </option>
+                            @endforeach
+                        </x-backend.form.select-input>
+                    </div>
                     <x-backend.form.text-input label="Name" required type="text" name="name" :value="$expertProfile->name">
                     </x-backend.form.text-input>
 
@@ -61,7 +70,7 @@
                     </x-form.ck-editor>
                 </div>
                 <div class="col-md-6">
-                    <x-form.ck-editor id="ck-editor2" name="description" placeholder="description" label="Description">
+                    <x-form.ck-editor id="ck-editor2" name="description" required placeholder="description" label="Description">
                         {!! $expertProfile->description !!}
                     </x-form.ck-editor>
                 </div>

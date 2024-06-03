@@ -2,25 +2,25 @@
     $dates = [
         now()
             ->addDays(1)
-            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+            ->format('d M, Y') => $times,
         now()
             ->addDays(2)
-            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+            ->format('d M, Y') => $times,
         now()
             ->addDays(3)
-            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+            ->format('d M, Y') => $times,
         now()
             ->addDays(4)
-            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+            ->format('d M, Y') => $times,
         now()
             ->addDays(5)
-            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+            ->format('d M, Y') => $times,
         now()
             ->addDays(6)
-            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+            ->format('d M, Y') => $times,
         now()
             ->addDays(7)
-            ->format('d M, Y') => ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM', '06:00 PM', '08:00 PM'],
+            ->format('d M, Y') => $times,
     ];
 @endphp
 
@@ -130,27 +130,28 @@
                                                     $i = 0;
                                                 @endphp
                                                 @foreach ($dates as $date => $times)
-                                                    @php
-                                                        $i++;
-                                                    @endphp
-                                                    <div class="mb-3">
-                                                        <div class="fw-bold">{{ $date }}
-                                                        </div>
-
-                                                        <div class="d-flex flex-wrap gap-2 ps-2">
-                                                            @foreach ($times as $key => $time)
-                                                                <label
-                                                                    class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
-                                                                    {{ $time }}
-                                                                    <input class="time-input " hidden type="radio" name="time"
-                                                                        data-date="{{ $date }}"
-                                                                        value="{{ $time }}"
-                                                                        @if ($key === 0 && $i === 1) checked @endif>
-                                                                </label>
-                                                            @endforeach
-                                                        </div>
+                                                @php
+                                                    $i++;
+                                                @endphp
+                                                <div class="mb-3">
+                                                    <div class="fw-bold">{{ $date }}
                                                     </div>
-                                                @endforeach
+
+                                                    <div class="d-flex flex-wrap gap-2 ps-2">
+                                                        @foreach ($times as $key => $time)
+                                                            <label
+                                                                class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
+                                                                {{ \Carbon\Carbon::parse($time)->timezone('Asia/Dhaka')->format('h:i A') }}
+                                                                <input class="time-input " hidden type="radio"
+                                                                    name="time"
+                                                                    data-date="{{ $date }}"
+                                                                    value="{{ $time }}"
+                                                                    @if ($key === 0 && $i === 1) checked @endif>
+                                                            </label>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                             </div>
                                         </div>
 

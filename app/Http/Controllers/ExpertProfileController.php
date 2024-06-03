@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Map;
 use App\Models\ExpertProfile;
 use App\Models\ExpertCategory;
 use App\Http\Requests\StoreExpertProfileRequest;
 use App\Http\Requests\UpdateExpertProfileRequest;
+use App\Models\User;
 
 class ExpertProfileController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('can:read expert', [
             'only' => ['index', 'show']
         ]);
-        $this->middleware('can:create expert',   [
+        $this->middleware('can:create expert', [
             'only' => ['create', 'store']
         ]);
-        $this->middleware('can:update expert',   [
+        $this->middleware('can:update expert', [
             'only' => ['update', 'edit']
         ]);
-        $this->middleware('can:delete expert',  [
+        $this->middleware('can:delete expert', [
             'only' => ['destroy']
         ]);
     }
@@ -41,7 +40,9 @@ class ExpertProfileController extends Controller
     public function create()
     {
         $expertCategories = ExpertCategory::get();
-        return view("backend.expertProfile.createExpertProfile", compact('expertCategories'));
+        $user = User::find(request()->query('user_id'));
+        $users = User::role('expert')->get()->pluck('name', 'id');
+        return view("backend.expertProfile.createExpertProfile", compact('expertCategories', 'user', 'users'));
     }
 
     /**
@@ -51,6 +52,7 @@ class ExpertProfileController extends Controller
     {
         $expert = new ExpertProfile();
         $expert->name = $request->name;
+        $expert->user_id = $request->user_id;
         $expert->post = $request->post;
         $expert->bio = $request->bio;
         $expert->description = $request->description;
@@ -96,7 +98,9 @@ class ExpertProfileController extends Controller
     public function edit(ExpertProfile $expertProfile)
     {
         $expertCategories = ExpertCategory::get();
-        return view("backend.expertProfile.editExpertProfile", compact('expertProfile', 'expertCategories'));
+        $user = User::find(request()->query('user_id'));
+        $users = User::role('expert')->get()->pluck('name', 'id');
+        return view("backend.expertProfile.editExpertProfile", compact('expertProfile', 'expertCategories', 'user', 'users'));
     }
 
     /**
