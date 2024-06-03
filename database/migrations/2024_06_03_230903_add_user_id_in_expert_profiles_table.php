@@ -18,6 +18,13 @@ return new class extends Migration
             ->cascadeOnDelete();
 
         });
+        Schema::table('maps', function (Blueprint $table) {
+            $table->foreignId('user_id')
+            ->nullable()
+            ->constrained()
+            ->cascadeOnDelete();
+
+        });
     }
 
     /**
@@ -29,6 +36,12 @@ return new class extends Migration
             $table->dropForeign(['user_id']);
         });
         Schema::table('expert_profiles', function (Blueprint $table) {
+            $table->dropColumn(['user_id']);
+        });
+        Schema::table('maps', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+        Schema::table('maps', function (Blueprint $table) {
             $table->dropColumn(['user_id']);
         });
     }

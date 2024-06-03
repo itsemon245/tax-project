@@ -110,6 +110,7 @@ class ExpertProfileController extends Controller
     {
         $expertProfile->name = $request->name;
         $expertProfile->post = $request->post;
+        $expertProfile->user_id = $request->user_id;
         $expertProfile->bio = $request->bio;
         $expertProfile->district = $request->district;
         $expertProfile->thana = $request->thana;

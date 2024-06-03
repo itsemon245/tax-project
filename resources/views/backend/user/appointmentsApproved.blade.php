@@ -15,9 +15,9 @@
             }
         </style>
     @endpush
-    <x-backend.ui.breadcrumbs :list="['User', 'Appointments']" />
+    <x-backend.ui.breadcrumbs :list="['User', (request('type')=='consultation' ? 'Consultations' : 'Appointments')]" />
 
-    <x-backend.ui.section-card name="User Appointments">
+    <x-backend.ui.section-card name="User {{request('type')=='consultation' ? 'Consultations' : 'Appointments'}}">
         @if ($appointments->count() > 0)
             <x-backend.table.basic :items="$appointments">
                 <thead>

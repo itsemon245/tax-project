@@ -15,16 +15,16 @@
             }
         </style>
     @endpush
-    <x-backend.ui.breadcrumbs :list="['User', 'Appointments']" />
+    <x-backend.ui.breadcrumbs :list="['User', (request('type')=='consultation' ? 'Consultations' : 'Appointments')]" />
 
-    <x-backend.ui.section-card name="User Appointments">
+    <x-backend.ui.section-card name="User {{request('type')=='consultation' ? 'Consultations' : 'Appointments'}}">
         @if ($appointments->count() > 0)
             <x-backend.table.basic :items="$appointments">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>User Info</th>
-                        @if ($appointments->first()?->expertProfile)
+                        @if (request('type')=='consultation' && auth()->user()->hasRole('admin'))
                             <th>Appointment With</th>
                         @endif
                         <th>Date & Time</th>
@@ -60,7 +60,7 @@
                                     </p>
                                 </div>
                             </td>
-                            @if ($appointment->expertProfile)
+                            @if (request('type')=='consultation' && auth()->user()->hasRole('admin'))
                                 <td>
                                     <p class="mb-1">
                                         <strong>Expert Name:</strong> <span>{{ $appointment->expertProfile?->name }}</span>

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Mail\Appoinment;
 use App\Models\AppointmentTime;
 use App\Models\Calendar;
 use App\Models\UserAppointment;
 use App\Notifications\AppointmentApprovedNotification;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
@@ -16,14 +16,24 @@ class UserAppointmentController extends Controller
 {
     public function index()
     {
-        $appointments = UserAppointment::where('is_approved', false)->with('map', 'user')->latest()->latest()->paginate(paginateCount());
+        $expert = auth()->user()->expertProfile;
+        $appointments = UserAppointment::where('is_approved', false)
+        ->where(function (Builder $q) use ($expert) {
+            if (request('type') == 'consultation') {
+                $q->whereNotNull('expert_profile_id');
+                if ($expert != null) {
+                    $q->where('expert_profile_id', $expert->id);
+                }
+            }
+        })
+        ->with('map', 'user')->latest()->paginate(paginateCount());
         $apt = $appointments->first();
 
         return view('backend.user.appointments', compact('appointments'));
     }
     public function times()
     {
-        $times = AppointmentTime::get();
+        $times = AppointmentTime::where('user_id', auth()->id())->get();
 
         return view('backend.user.appointment-times', compact('times'));
     }
@@ -54,14 +64,34 @@ class UserAppointmentController extends Controller
 
     public function approvedList()
     {
-        $appointments = UserAppointment::where(['is_approved' => true, 'is_completed' => false])->with('map', 'user')->latest('updated_at')->latest()->get();
+        $expert = auth()->user()->expertProfile;
+        $appointments = UserAppointment::where(['is_approved' => true, 'is_completed' => false])
+        ->where(function (Builder $q) use ($expert) {
+            if (request('type') == 'consultation') {
+                $q->whereNotNull('expert_profile_id');
+                if ($expert != null) {
+                    $q->where('expert_profile_id', $expert->id);
+                }
+            }
+        })
+        ->with('map', 'user')->latest('approved_at')->get();
 
         return view('backend.user.appointmentsApproved', compact('appointments'));
     }
 
     public function completedList()
     {
-        $appointments = UserAppointment::where(['is_completed' => true])->with('map', 'user')->latest('completed_at')->latest()->get();
+        $expert = auth()->user()->expertProfile;
+        $appointments = UserAppointment::where(['is_completed' => true])
+        ->where(function (Builder $q) use ($expert) {
+            if (request('type') == 'consultation') {
+                $q->whereNotNull('expert_profile_id');
+                if ($expert != null) {
+                    $q->where('expert_profile_id', $expert->id);
+                }
+            }
+        })
+        ->with('map', 'user')->latest('completed_at')->get();
 
         return view('backend.user.appointmentsCompleted', compact('appointments'));
     }
@@ -69,6 +99,15 @@ class UserAppointmentController extends Controller
     public function approve(int $id)
     {
         $appointment = UserAppointment::find($id);
+        if ($appointment->expert_profile_id != null) {
+            $expert = auth()->user()->expertProfile;
+            if ($expert != null && $appointment->expert_profile_id != $expert->id) {
+                return back()->with([
+                    'alert-type'=> 'warning',
+                    'message'=> 'This consultation does not belong to you!'
+                ]);
+            }
+        }
         $appointment->is_approved = true;
         $appointment->update();
         Calendar::create([
@@ -91,6 +130,15 @@ class UserAppointmentController extends Controller
     public function complete(int $id)
     {
         $appointment = UserAppointment::find($id);
+        if ($appointment->expert_profile_id != null) {
+            $expert = auth()->user()->expertProfile;
+            if ($expert != null && $appointment->expert_profile_id != $expert->id) {
+                return back()->with([
+                    'alert-type'=> 'warning',
+                    'message'=> 'This consultation does not belong to you!'
+                ]);
+            }
+        }
         $appointment->is_completed = true;
         $appointment->completed_at = now();
         $appointment->update();
@@ -113,6 +161,15 @@ class UserAppointmentController extends Controller
     public function destroy(int $id)
     {
         $appointment = UserAppointment::find($id);
+        if ($appointment->expert_profile_id != null) {
+            $expert = auth()->user()->expertProfile;
+            if ($expert != null && $appointment->expert_profile_id != $expert->id) {
+                return back()->with([
+                    'alert-type'=> 'warning',
+                    'message'=> 'This consultation does not belong to you!'
+                ]);
+            }
+        }
         $appointment->delete();
         $alert = [
             'message' => 'Appointment Deleted',

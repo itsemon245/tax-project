@@ -11,6 +11,16 @@ class ExpertProfile extends Model
     use HasFactory;
     protected $guarded = [];
 
+
+    public function owner()
+    {
+       return $this->belongsTo(User::class);
+    }
+    public function maps()
+    {
+       return $this->hasMany(Map::class);
+    }
+
     function reviews(): MorphMany
     {
         return $this->morphMany(Review::class, 'reviewable');

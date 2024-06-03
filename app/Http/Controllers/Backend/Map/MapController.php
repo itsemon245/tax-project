@@ -30,7 +30,8 @@ class MapController extends Controller
      */
     public function index()
     {
-        $maps = Map::paginate(paginateCount());
+        $user_id = auth()->user()->expertProfile ? auth()->id() : null;
+        $maps = Map::where('user_id', $user_id)->paginate(paginateCount());
         return view('backend.map.showMaps', compact('maps'));
     }
 
@@ -53,7 +54,8 @@ class MapController extends Controller
         // dd($src);
         $map = Map::create([
             ...$request->except(['iframe_link']),
-            'src' => $src
+            'src' => $src,
+            'user_id'=> auth()->user()->expertProfile ? auth()->id() : null
         ]);
         $notification = array(
             'message' => "Added Successfully",

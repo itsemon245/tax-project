@@ -133,7 +133,7 @@
                 </x-form.ck-editor>
 
                 <div class="col-md-12">
-                    <x-backend.ui.button type="submit" class="btn-primary mb-3">Create</x-backend.ui.button>
+                    <x-backend.ui.button type="submit" class="btn-primary mb-3">Update</x-backend.ui.button>
                 </div>
             </div>
         </form>

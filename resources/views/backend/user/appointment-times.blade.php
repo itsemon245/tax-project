@@ -15,16 +15,17 @@
             }
         </style>
     @endpush
-    <x-backend.ui.breadcrumbs :list="['User', 'Appointments', 'Times']" />
+    <x-backend.ui.breadcrumbs :list="['User', request('type') == 'consultation' ? 'Consultations' : 'Appointments', 'Times']" />
 
-    <x-backend.ui.section-card name="User Appointment Times" x-data="{
-        times: JSON.parse('{{ $times }}'),
-        action(time) {
-            let url = '{{ route('user-appointments.time.delete', 'TIME') }}';
-            url = url.replace('TIME', time);
-            return url;
-        }
-    }">
+    <x-backend.ui.section-card name="User {{ request('type') == 'consultation' ? 'Consultation' : 'Appointment' }} Times"
+        x-data="{
+            times: JSON.parse('{{ $times }}'),
+            action(time) {
+                let url = '{{ route('user-appointments.time.delete', 'TIME') }}';
+                url = url.replace('TIME', time);
+                return url;
+            }
+        }">
 
         <form action="{{ route('user-appointments.times.update') }}" method="post" class="my-3">
             @csrf
