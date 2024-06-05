@@ -132,11 +132,15 @@
                                                     class="w-100 border shadow rounded mb-2" height="300"
                                                     loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
                                                     <div class="border rounded p-3 map bg-light">
-                                                        <h5>{{ $maps[0]->location }}<span
-                                                                class="text-muted fs-6">(selected)</span></h5>
-                                                        <div id="address-body" class="text-muted mb-0">
-                                                            {{ $maps[0]->address }}
-                                                        </div>
+                                                        @if (count($maps))
+                                                            <h5>{{ $maps[0]->location }}<span
+                                                                    class="text-muted fs-6">(selected)</span></h5>
+                                                            <div id="address-body" class="text-muted mb-0">
+                                                                {{ $maps[0]->address }}
+                                                            </div>
+                                                        @else
+                                                            No Branch Found
+                                                        @endif
                                                     </div>
                                                 </div>
                                             @endif
@@ -271,17 +275,25 @@
                                         <div class="row">
                                             <div class="col-md-6 selected-location">
                                                 <h4>Location</h4>
-                                                <iframe src="{{ $maps[0]->src }}"
-                                                    class="w-100 border shadow rounded mb-2" height="300"
-                                                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                                <div class="border rounded p-3 map bg-light">
-                                                    <h5>{{ $maps[0]->location }}<span
-                                                            class="text-muted fs-6">(selected)</span></h5>
-                                                    <div id="address-body" class="text-muted mb-0">
-                                                        {{ $maps[0]->address }}
+                                                @if (count($maps))
+                                                    <iframe rc="{{ $maps[0]->src }}"
+                                                        class="w-100 border shadow rounded mb-2" height="300"
+                                                        loading="lazy"
+                                                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                                    <div class="border rounded p-3 map bg-light">
+                                                        <h5>{{ $maps[0]->location }}<span
+                                                                class="text-muted fs-6">(selected)</span></h5>
+                                                        <div id="address-body" class="text-muted mb-0">
+                                                            {{ $maps[0]->address }}
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @else
+                                                    <div class="bg-slate-100 h-full flex items-center justify-center">
+                                                        No branches found for this expert.
+                                                    </div>
+                                                @endif
                                             </div>
+
                                             <div class="col-md-6 time-selector">
                                                 <h4>What time works best for you?</h4>
                                                 <div class="border rounded p-3" style="overflow-y: scroll; height:400px;">
@@ -382,10 +394,13 @@
                                                 <div class="card">
                                                     <div class="card-header fs-5">Office</div>
                                                     <div class="card-body">
-                                                        <p class='fw-bold mb-1' id="location">{{ $maps[0]->location }}
-                                                        </p>
-                                                        <div class="text-muted" id="address">{!! $maps[0]->address !!}
-                                                        </div>
+                                                        @if (count($maps))
+                                                            <p class='fw-bold mb-1' id="location">
+                                                                {{ $maps[0]->location }}
+                                                            </p>
+                                                            <div class="text-muted" id="address">{!! $maps[0]->address !!}
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
