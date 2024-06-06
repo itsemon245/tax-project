@@ -29,7 +29,7 @@ class AppointmentApprovedNotification extends Notification implements ShouldQueu
      */
     public function via(object $notifiable): array
     {
-        return $notifiable->email_verified_at ? ['mail', 'database'] : ['database'];
+        return ['mail', 'database'];
     }
 
     /**

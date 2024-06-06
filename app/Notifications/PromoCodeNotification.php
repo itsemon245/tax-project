@@ -30,7 +30,7 @@ class PromoCodeNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return $notifiable->email_verified_at ? ['mail', 'database'] : ['database'];
+        return ($notifiable->email_verified_at ?? true) ? ['mail', 'database'] : ['database'];
     }
 
     /**
