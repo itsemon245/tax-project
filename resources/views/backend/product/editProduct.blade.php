@@ -59,9 +59,9 @@
                                     <div class="d-flex align-items-center justify-content-center border shadow-sm rounded"
                                         style="overflow: hidden;">
                                         <input type="text" id="is-discount" name="is_discounts_fixed"
-                                            :value="$product - > is_discount_fixed" hidden>
+                                            :value="$product->is_discount_fixed" hidden>
                                         <input type="number" id="discount-amount" name="discount_amount"
-                                            :value="$product - > discount" class="amount border-0 rounded-0 w-100 ps-2"
+                                            :value="$product->discount" class="amount border-0 rounded-0 w-100 ps-2"
                                             style="outline:transparent;" placeholder="0" aria-label="Discont">
 
 
@@ -111,13 +111,13 @@
                                     <div class="row d-none" id="feat-template">
                                         <div class="col-md-6">
                                             <x-backend.form.text-input label="Package Feature" type="test"
-                                                name="package_feature[]">
+                                                name="package_feature[]" disabled>
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-2">
                                                 <label for="color" class="form-label mb-0">Color</label>
-                                                <select class="form-select" id="color" name="color[]">
+                                                <select class="form-select" disabled id="color" name="color[]">
                                                     <option value="#282e38" selected>Black</option>
                                                     <option value="#1abc9c">Green</option>
                                                     <option value="#f1556c">Red</option>
@@ -126,7 +126,7 @@
                                         </div>
                                     </div>
                                     {{-- feat Repeater --}}
-                                    <div id="feat-repeater" data-count="1">
+                                    <div id="feat-repeater" data-count="{{count(json_decode($product->package_features, true))}}">
                                         @foreach (json_decode($product->package_features) as $feat)
                                             <div class="row">
                                                 <div class="col-md-6">

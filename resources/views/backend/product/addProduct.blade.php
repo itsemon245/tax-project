@@ -101,14 +101,14 @@
                                     {{-- Feat Template --}}
                                     <div class="row d-none" id="feat-template">
                                         <div class="col-md-6">
-                                            <x-backend.form.text-input label="Package Feature" type="test"
+                                            <x-backend.form.text-input disabled label="Package Feature" type="test"
                                                 name="package_feature[]">
                                             </x-backend.form.text-input>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-2">
                                                 <label for="color" class="form-label mb-0">Color</label>
-                                                <select class="form-select" id="color" name="color[]">
+                                                <select class="form-select" disabled id="color" name="color[]">
                                                     <option value="#282e38" selected>Black</option>
                                                     <option value="#1abc9c">Green</option>
                                                     <option value="#f1556c">Red</option>
