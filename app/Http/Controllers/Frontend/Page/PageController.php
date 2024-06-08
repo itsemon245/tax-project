@@ -50,7 +50,13 @@ class PageController extends Controller
     public function appointmentPage(Request $request, ?ExpertProfile $expertProfile = null)
     {
         $userId = $expertProfile ? $expertProfile->user_id : User::role('super admin')->first()?->id;
-        $times = AppointmentTime::where('user_id', $userId)->pluck('time');
+        $carbon = now('Asia/Dhaka')->subDays(4)->locale('en_BD');
+
+        $dates = [];
+        for ($i = 1; $i <= 7; $i++) {
+            $date = $carbon->addDay();
+            $dates[$date->format('l, F d, Y')] = AppointmentTime::where('user_id', $userId)->where('day', $date->format('l'))->first()->times ?? [];
+        }
         $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
         if ($office == null) {
             $maps = Map::where(function (Builder $q) use ($request, $expertProfile) {
@@ -85,17 +91,24 @@ class PageController extends Controller
         $banners      = getRecords('banners');
         $infos1       = Info::where('section_id', 1)->latest()->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->latest()->get();
-        return view('frontend.pages.appointment.makeAppointment', compact('times', 'banners', 'expertProfile', 'infos1', 'testimonials', 'maps', 'branchDistricts', 'branchThanas', 'office'));
+        return view('frontend.pages.appointment.makeAppointment', compact('dates', 'banners', 'expertProfile', 'infos1', 'testimonials', 'maps', 'branchDistricts', 'branchThanas', 'office'));
     }
     public function appointmentVirtual(Request $request, ?ExpertProfile $expertProfile = null)
     {
         $userId = $expertProfile ? $expertProfile->user_id : User::role('super admin')->first()?->id;
-        $times = AppointmentTime::where('user_id', $userId)->pluck('time');
+        $carbon = now('Asia/Dhaka')->subDays(4)->locale('en_BD');
+
+        $dates = [];
+        for ($i = 1; $i <= 7; $i++) {
+            $date = $carbon->addDay();
+            $dates[$date->format('l, F d, Y')] = AppointmentTime::where('user_id', $userId)->where('day', $date->format('l'))->first()->times ?? [];
+        }
+        
         $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
         $banners      = getRecords('banners');
         $infos1       = Info::where('section_id', 1)->latest()->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->latest()->get();
-        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('times', 'banners', 'expertProfile', 'testimonials', 'infos1', 'office'));
+        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('dates', 'banners', 'expertProfile', 'testimonials', 'infos1', 'office'));
     }
     public function aboutPage()
     {

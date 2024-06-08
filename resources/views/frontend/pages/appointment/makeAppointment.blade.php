@@ -1,14 +1,3 @@
-@php
-    $dates = [
-        now()->addDays(1)->format('d M, Y') => $times,
-        now()->addDays(2)->format('d M, Y') => $times,
-        now()->addDays(3)->format('d M, Y') => $times,
-        now()->addDays(4)->format('d M, Y') => $times,
-        now()->addDays(5)->format('d M, Y') => $times,
-        now()->addDays(6)->format('d M, Y') => $times,
-        now()->addDays(7)->format('d M, Y') => $times,
-    ];
-@endphp
 
 @extends('frontend.layouts.app')
 

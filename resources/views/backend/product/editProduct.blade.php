@@ -29,7 +29,7 @@
                                     data-target="#sub-category" id="category" label="Category" name="category"
                                     placeholder="Choose Category..." required>
                                     @forelse ($categories as $category)
-                                        <option value="{{ $category->id }}" @selected($category->id === $product->product_category_id)>
+                                        <option value="{{ $category->id }}" @selected($category->id == $product->product_category_id)>
                                             {{ $category->name }}
                                         </option>
                                     @empty
@@ -41,7 +41,7 @@
                                 <x-backend.form.select-input id="sub-category" label="Product Sub Category"
                                     placeholder="Choose Sub Category" name="sub_category" required>
                                     @forelse ($subs as $sub)
-                                        <option value="{{ $sub->id }}" @selected($sub->id === $product->product_sub_category_id)>
+                                        <option value="{{ $sub->id }}" @selected($sub->id == $product->product_sub_category_id)>
                                             {{ $sub->name }}
                                         </option>
                                     @empty

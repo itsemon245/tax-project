@@ -33,17 +33,23 @@ class UserAppointmentController extends Controller
     }
     public function times()
     {
-        $times = AppointmentTime::where('user_id', auth()->id())->get();
+        $carbon = now('Asia/Dhaka')->subDays(4)->locale('en_BD');
+        $dates = [];
+        for ($i = 1; $i <= 7; $i++) {
+            $date = $carbon->addDay();
+            $dates[$date->format('l')] = AppointmentTime::where('user_id', auth()->id())->where('day', $date->format('l'))->first()->times ?? [];
+        }
 
-        return view('backend.user.appointment-times', compact('times'));
+        return view('backend.user.appointment-times', compact('dates'));
     }
     public function timesUpdate(Request $request)
     {
         AppointmentTime::where('user_id', auth()->id())->delete();
-        foreach ($request->times as $time) {
+        foreach ($request->times as $day => $times) {
             AppointmentTime::create([
                 'user_id' => auth()->id(),
-                'time' => $time
+                'day'=> $day,
+                'times' => $times
             ]);
         }
         $alert = [
@@ -103,8 +109,8 @@ class UserAppointmentController extends Controller
             $expert = auth()->user()->expertProfile;
             if ($expert != null && $appointment->expert_profile_id != $expert->id) {
                 return back()->with([
-                    'alert-type'=> 'warning',
-                    'message'=> 'This consultation does not belong to you!'
+                    'alert-type' => 'warning',
+                    'message' => 'This consultation does not belong to you!'
                 ]);
             }
         }
@@ -134,8 +140,8 @@ class UserAppointmentController extends Controller
             $expert = auth()->user()->expertProfile;
             if ($expert != null && $appointment->expert_profile_id != $expert->id) {
                 return back()->with([
-                    'alert-type'=> 'warning',
-                    'message'=> 'This consultation does not belong to you!'
+                    'alert-type' => 'warning',
+                    'message' => 'This consultation does not belong to you!'
                 ]);
             }
         }
@@ -165,8 +171,8 @@ class UserAppointmentController extends Controller
             $expert = auth()->user()->expertProfile;
             if ($expert != null && $appointment->expert_profile_id != $expert->id) {
                 return back()->with([
-                    'alert-type'=> 'warning',
-                    'message'=> 'This consultation does not belong to you!'
+                    'alert-type' => 'warning',
+                    'message' => 'This consultation does not belong to you!'
                 ]);
             }
         }
