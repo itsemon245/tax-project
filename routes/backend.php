@@ -90,6 +90,7 @@ Route::prefix('admin')
         //Routes for backend CRUD operation
 
         Route::resource('users', UserController::class); // middlewares are in constructor
+        Route::resource('testimonial', TestimonialController::class)->middleware('can:manage reviews');
         Route::get('internal-users', [UserController::class, 'internalUsers'])->name('users.internal');
 
         Route::resource('product', ProductController::class)

@@ -3,7 +3,7 @@
     <div class="scroll-wrapper">
         <span id="next" class="ti-arrow-circle-left custom-icon"></span>
         <div class="media-scroller snaps-inline">
-            @forelse ($reviews as $item) 
+            @forelse ($reviews as $item)
                 <div class="media-elements">
                     <img loading="lazy" src="{{ useImage($item->avatar) }}" alt="img" width="48px" height="48px"
                         class=" rounded-circle shadow-4-strong d-block">
@@ -11,20 +11,22 @@
                         <div class="mb-2">
                             <h5 class="mb-0">{{ $item->name }}</h5>
                             <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
-                            <div class="rating">
-                                @foreach (range(1, 5) as $rating)
-                                    @php
-                                        $color = $rating > $item->rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)';
-                                    @endphp
-                                    <span class="fas fa-star" style="color: {{ $color }};"></span>
-                                @endforeach
-                            </div>
+                            @if ($item->rating)
+                                <div class="rating">
+                                    @foreach (range(1, 5) as $rating)
+                                        @php
+                                            $color = $rating > $item->rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)';
+                                        @endphp
+                                        <span class="fas fa-star" style="color: {{ $color }};"></span>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                         <p class="text-muted mb-0">{{ $item->comment }}
                         </p>
                     </div>
                 </div>
-                @empty
+            @empty
                 <div class="text-center text-light px-5">
                     No Reviews available
                 </div>

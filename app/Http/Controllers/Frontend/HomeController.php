@@ -26,7 +26,7 @@ class HomeController extends Controller
         $subCategories = ServiceSubCategory::where('service_category_id', 1)->with('serviceCategory')->latest()->take(6)->latest()->get();
         // $products = Product::mappedProducts(['product_category_id' => 1]);
         $banners = Banner::latest()->take(6)->latest()->get();
-        $reviews = Review::latest()->take(6)->latest()->get();
+        $reviews = Testimonial::latest()->get();
         $infos1 = Info::where(['section_id' => 1, 'page_name' => 'homepage'])->latest()->take(4)->latest()->get();
         $infos2 = Info::where(['section_id' => 2, 'page_name' => 'homepage'])->latest()->take(4)->latest()->get();
         $achievements = Achievement::latest()->take(12)->latest()->get();

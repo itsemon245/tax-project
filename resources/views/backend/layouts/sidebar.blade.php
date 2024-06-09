@@ -176,6 +176,28 @@
                                         </div>
                                     </li>
                                 @endcanany
+                                @canany(['manage reviews'])
+                                    <li>
+                                        <a href="#sidebarTestimonialSection" data-bs-toggle="collapse">
+                                            <i class="mdi mdi-account-check-outline"></i>
+                                            <span> Testimonial Section </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="sidebarTestimonialSection">
+                                            <ul class="nav-second-level">
+                                                <li>
+                                                    <a href="{{ route('testimonial.create') }}">Create
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('testimonial.index') }}">
+                                                        View
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endcanany
 
                             </ul>
                         </div>
@@ -761,18 +783,21 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="{{ route('user-appointments.approved') . '?type=consultation' }}">
+                                                        <a
+                                                            href="{{ route('user-appointments.approved') . '?type=consultation' }}">
                                                             Approved
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="{{ route('user-appointments.completed') . '?type=consultation' }}">
+                                                        <a
+                                                            href="{{ route('user-appointments.completed') . '?type=consultation' }}">
                                                             Completed
                                                         </a>
                                                     </li>
                                                     @if (auth()->user()->role_name == 'expert')
                                                         <li>
-                                                            <a href="{{ route('user-appointments.times') . '?type=consultation' }}">
+                                                            <a
+                                                                href="{{ route('user-appointments.times') . '?type=consultation' }}">
                                                                 Appointment Times
                                                             </a>
                                                         </li>
@@ -957,7 +982,8 @@
                     'manage partner request',
                     'read partner request',
                     'read role',
-                    'read promo code',
+                    'read
+                    promo code',
                     'read reviews')
                     <li class="">
                         <a href="#management" data-bs-toggle="collapse">
@@ -996,12 +1022,7 @@
                                         </div>
                                     </li>
                                 @endcanany
-                                @canany([
-                                    'create expert',
-                                    'update expert',
-                                    'delete expert',
-                                    'read expert',
-                                    ])
+                                @canany(['create expert', 'update expert', 'delete expert', 'read expert'])
                                     <li>
                                         <a href="#expertProfile" data-bs-toggle="collapse">
                                             <i class="mdi mdi-account-tie"></i>
