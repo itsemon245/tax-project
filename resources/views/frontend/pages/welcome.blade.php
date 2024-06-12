@@ -4,7 +4,7 @@
     @php
         $productCat = \App\Models\ProductCategory::where('name', 'Standard Package (tax)')
             ->with(['productSubCategories', 'productSubCategories.products'])
-            ->first(); 
+            ->first();
 
     @endphp
     <section class="mb-5">
@@ -64,14 +64,17 @@
     {{-- @dd($reviews) --}}
     <section class="mt-5 py-5" style="background: #474646;">
         <h3 class="text-center text-light">Testimonials</h3>
-        <div class="scroll-wrapper">
-            <span id="next" class="ti-arrow-circle-left custom-icon"></span>
-            <div class="media-scroller snaps-inline">
+
+        <div class="swiper !px-12">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper !mb-8">
+                <!-- Slides -->
                 @forelse ($reviews as $item)
-                    <div class="media-elements">
-                        <img loading="lazy" src="{{ useImage($item->avatar) }}" alt="img" width="48px" height="48px"
-                            class=" rounded-circle shadow-4-strong d-block">
-                        <div>
+                    <div
+                        class="swiper-slide mb-2 bg-white rounded-md shadow-md p-3 w-[220px] sm:w-[300px] md:w-[400px] lg:w-[450px]">
+                        <div class="flex items-start gap-3">
+                            <img loading="lazy" src="{{ useImage($item->avatar) }}" alt="img" width="48px"
+                                height="48px" class=" rounded-circle shadow-4-strong d-block">
                             <div class="mb-2">
                                 <h5 class="mb-0">{{ $item->name }}</h5>
                                 <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
@@ -79,139 +82,100 @@
                                     <div class="rating">
                                         @foreach (range(1, 5) as $rating)
                                             @php
-                                                $color = $rating > $item->rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)';
+                                                $color =
+                                                    $rating > $item->rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)';
                                             @endphp
                                             <span class="fas fa-star" style="color: {{ $color }};"></span>
                                         @endforeach
                                     </div>
                                 @endif
                             </div>
-                            <p class="text-muted mb-0">{{ $item->comment }}
-                            </p>
+                        </div>
+                        <div class="text-muted pl-2 text-justify">
+                            {{ $item->comment }}
                         </div>
                     </div>
                 @empty
-                    <div class="text-center text-light px-5">
+                    <div class="swiper-slide text-center text-light px-5">
                         No Reviews available
                     </div>
                 @endforelse
+                ...
             </div>
-            <span id="prev" class="ti-arrow-circle-right custom-icon"></span>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev">
+            </div>
+            <div class="swiper-button-next">
+            </div>
+
+            <!-- If we need scrollbar -->
+            <div class="swiper-scrollbar"></div>
         </div>
     </section>
-    
     @push('customCss')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
         <style>
-            .scroll-wrapper {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-                padding: 10px;
-            }
-    
-    
-            @media (min-width: 970px) {
-                .scroll-wrapper {
-                    padding: 1rem 5rem
-                }
-            }
-    
-            @media (min-width: 640px) {
-                .scroll-wrapper {
-                    gap: 1rem;
-                    padding: 2rem;
-                }
-            }
-    
-            .media-scroller {
-                display: flex;
-                overflow-x: auto;
-                gap: 1rem;
-                overscroll-behavior-inline: contain;
-                scroll-behavior: smooth;
-            }
-    
-            .media-elements {
-                display: flex;
-                align-items: start;
-                background: white;
-                border-radius: 10px;
-                gap: 1rem;
-                padding: 1rem;
-                max-width: 45ch;
-            }
-    
-            .media-elements .comment {
-                width: 100px;
-                display: inline;
-                margin: 0;
-                text-align: justify;
-            }
-    
-            .media-elements .image {
-                max-width: 70px;
-            }
-    
-            @media (min-width:600px) {
-                .media-elements .image {
-                    max-width: 120px;
-                }
-    
-                .media-elements .comment {
-                    width: 200px
-                }
-            }
-    
-            #next,
-            #prev {
-                background: none;
-                border: none;
-                padding: 0;
-            }
-    
-            .custom-icon {
-                color: var(--bs-primary);
-                font-size: 28px;
-                margin: 0 5px;
-                cursor: pointer;
-            }
-    
-            .media-scroller::-webkit-scrollbar {
-                appearance: none;
-                display: none;
-            }
-    
-            .snaps-inline {
-                scroll-snap-type: inline mandatory;
-                scroll-padding-inline: 5rem;
-            }
-    
-            .snaps-inline>* {
-                scroll-snap-align: start;
+            :root {
+                --swiper-navigation-size: 20px;
+                --swiper-navigation-top-offset: 40%;
+                --swiper-navigation-sides-offset: 20px;
+                --swiper-navigation-color: var(--swiper-theme-color);
             }
         </style>
     @endpush
-    
+
     @push('customJs')
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
         <script>
+            var swiper = new Swiper(".swiper", {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                freeMode: true,
+                grabCursor: true,
+                centeredSlides: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                        centeredSlides: false,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        centeredSlides: false,
+                    },
+                },
+            });
+        </script>
+        {{-- <script>
             const container = document.querySelector('.media-scroller');
             const next = document.getElementById('next')
             const prev = document.getElementById('prev')
-            const scrollElementWidth = parseInt($('.media-elements').css('width').split('px')[0])
-            const scrollUnit = scrollElementWidth + 20;
+            const scrollElementWidth = parseInt($('.media').css('width').split('px')[0])
+            const scrollUnit = container.innerWidth();
             container.addEventListener('wheel', e => {
                 e.preventDefault();
                 container.scrollLeft += e.deltaY;
             })
-    
+
             next.addEventListener('click', () => {
                 container.scrollLeft -= scrollUnit;
+                console.log(scrollUnit);
             })
             prev.addEventListener('click', () => {
                 container.scrollLeft += scrollUnit;
             })
-        </script>
+        </script> --}}
     @endpush
 @endsection
 
