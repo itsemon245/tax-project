@@ -34,8 +34,7 @@
                     <input type="hidden" name="old_title">
 
                     <div class="mt-1">
-                        <label for="desc" class="form-label">Description</label>
-                        <textarea id="desc" class="form-control" name="description" id="description" placeholder="Description"></textarea>
+                        <x-form.ck-editor id="desc" class="form-control" name="description" id="description" placeholder="Description" required></x-form.ck-editor>
                     </div>
 
 

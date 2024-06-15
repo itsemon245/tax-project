@@ -43,8 +43,7 @@
                     </x-backend.form.select-input>
 
                     <div class="mt-1">
-                        <label for="desc" class="form-label">Description</label>
-                        <textarea id="desc" class="form-control" name="description" id="description" placeholder="Description">{{ $info->description }}</textarea>
+                        <x-form.ck-editor id="desc" class="form-control" name="description" id="description" placeholder="Description" required>{!! $info->description !!}</x-form.ck-editor>
                     </div>
 
 

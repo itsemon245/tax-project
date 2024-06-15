@@ -34,8 +34,8 @@ class PageController extends Controller
         $achievements   = Achievement::latest()->latest()->get();
         $partners       = PartnerSection::latest()->limit(10)->latest()->get();
         $customServices = CustomService::with('image')->where('page_name', PageName::Account)->latest()->get();
-        $infos1 = Info::where(['section_id' => 1, 'page_name' => 'account'])->latest()->take(4)->latest()->get();
-        $infos2 = Info::where(['section_id' => 2, 'page_name' => 'account'])->latest()->take(4)->latest()->get();
+        $infos1 = Info::where(['section_id' => 1, 'page_name' => 'account'])->latest()->get();
+        $infos2 = Info::where(['section_id' => 2, 'page_name' => 'account'])->latest()->get();
         return view('frontend.pages.industries.industries', compact('subCategories', 'achievements', 'partners', 'customServices', 'infos1', 'infos2'));
     }
     public function clientStudioPage()

@@ -28,38 +28,37 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        @foreach ($category->booksWithRatings()->limit(6)->get() as $book)
-                            <div class="col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-3">
-                                <a href="{{ route('books.show', $book->id) }}" class="h-100">
-                                    <div>
-                                        <div
-                                            class="d-grid grid-cols-1 mw-md mx-auto  bg-primary border border-3 border-gray-800 rounded overflow-hidden">
-                                            <img loading="lazy" src="{{ useImage($book->thumbnail) }}" alt="{{ $book->title }}"
-                                                style="object-fit: cover; width: 100%" />
-
-                                            <div class="mt-auto px-3 pt-3 pb-1 w-100 bg-white">
-                                                <h4 class="fs-5 mb-1 text-center text-dark text-uppercase">
-                                                    <b>{!! str($book->title)->limit(10, '<span class="text-danger font-20 fw-bold">...</span>') !!}</b>
-                                                </h4>
-                                                <p class="text-center text-dark mt-3"
-                                                    style="font-size: 13px; line-height: 16px;">
-                                                    {!! str($book->description)->limit(100, '<span class="text-danger font-20 fw-bold">...</span>') !!}
-                                                </p>
-                                            </div>
-                                            <div class="mt-auto px-2 d-flex justify-content-between align-content-center py-2 w-100"
-                                                style='background: rgba(14, 14, 14, 0.758);'>
-                                                {{-- <x-avg-review-stars :avg="$book->reviews_avg_rating" class="text-white" /> --}}
-                                                <p class="mb-0 text-white fw-mideum">
-                                                    {{ $book->price }}
-                                                    <span class="mdi mdi-currency-bdt font-16"></span>
-                                                </p>
-                                            </div>
-                                        </div>
+                    <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
+                        @forelse ($category->booksWithRatings()->limit(6)->get() as $book)
+                            <a class="rounded border-2 overflow-hidden" href="{{ route('books.show', $book->id) }}"
+                                class="">
+                                <img class="rounded-t-2 w-full h-[320px] object-cover"
+                                    src="{{ useImage($book->thumbnail) }}" alt="{{ $book->title }}">
+                                <div class="bg-white rounded-b-2">
+                                    <h4 class="text-lg font-medium tracking-wider my-3 text-black text-center">
+                                        {{ $book->title }}</h4>
+                                    <p class="text-center text-dark" style="font-size: 13px; line-height: 16px;">
+                                        {!! str($book->description)->limit(100, '<span class="text-danger font-20 fw-bold">...</span>') !!}
+                                    </p>
+                                    <div class="mt-auto px-2 d-flex justify-content-between align-items-center py-2 w-100"
+                                        style='background: rgba(14, 14, 14, 0.758);'>
+                                        <x-avg-review-stars :avg="$book->reviews_avg_rating" icon-font="font-16" class="text-white" />
+                                        <p class="mb-0 text-white fw-mideum">
+                                            {{ $book->price }}
+                                            <span class="mdi mdi-currency-bdt font-16"></span>
+                                        </p>
                                     </div>
-                                </a>
+                                </div>
+                            </a>
+                        @empty
+                            <div class="col-span-full">
+                                <div class="bg-light text-center">
+                                    <div class="d-flex flex-column justify-content-center" style="height: 50vh;">
+                                        No Books Found!
+                                    </div>
+                                </div>
                             </div>
-                        @endforeach
+                        @endforelse
                     </div>
                 </div>
             </div>

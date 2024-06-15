@@ -43,7 +43,11 @@
                                                 alt="{{ $info->title }}" width="80px" loading="lazy"></td>
                                         <td>{{ Str::limit($info->title, 20, '...') }}</td>
                                         <td>{{ $info->section_id === 1 ? 'Section 1' : 'Section 2' }}</td>
-                                        <td>{!! Str::limit($info->description, 40, '...') !!}</td>
+                                        <td style="width:250px;
+                                        white-space: normal;
+                                        overflow-wrap: break-word!important;
+                                    word-wrap: break-word!important;
+                                word-break: break-word!important;">{!! $info->description !!}</td>
                                         @can('manage info section')
                                             <td>
                                                 <x-backend.ui.button type="edit" href="{{ route('info.edit', $info) }}"

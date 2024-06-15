@@ -24,7 +24,7 @@ class StoreInfoRequest extends FormRequest
         return [
             'section' => 'required',
             'title' => 'required|max:100',
-            'description' => 'required|max:200',
+            'description' => 'required|string',
             'info_image' => 'required|max:5120|image',
             'page_name' => 'required|string'
         ];

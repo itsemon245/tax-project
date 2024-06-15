@@ -50,7 +50,7 @@
                     <div class="col-lg-6 mb-3">
                         <div class="fw-bold">Address:</div>
                         <div style="font-weight: 500; font-size: 16px;max-width:25ch;">
-                            {{ $basic->address }}
+                            {!! $basic->address !!}
                         </div>
                     </div>
                     <div class="col-lg-6 mb-3">
@@ -82,7 +82,7 @@
                 <div class="row text-light justify-content-center">
                     <p class="mb-1 text-center" style="font-weight: 500;font-size:18px;">Stay Connected</p>
                     @foreach (getRecords('social_handles') as $social)
-                        <div class="col-6 col-sm-4 col-md-6 col-xl-4">
+                        <div class="col-6 col-sm-4 col-md-6 col-xl-4 flex items-center gap-2">
                             <span class="{{ $social->icon }}"></span>
                             <a class="text-capitalize" href="{{ $social->link }}" target="_blank"
                                 rel="noopener noreferrer">{{ $social->name }}</a>
@@ -96,7 +96,7 @@
     <div class="bottom-footer bg-primary text-light">
         <div class="d-flex text-dark align-items-center justify-content-center flex-wrap p-2">
             <p class="mb-0 text-center fw-medium">Copyright <span class="font-18 mx-2">&#169;</span>
-                {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by {{ env('APP_NAME') }}</p>
+                {{ Carbon\Carbon::now()->format('Y') }} all rights reserved by {{ config('app.name') }}</p>
             <span class="mx-2 mx-md-4 d-none d-sm-inline ">|</span>
             <hr class="my-2 d-sm-none bg-dark" style="height: 2px;width:80%;">
             </hr>

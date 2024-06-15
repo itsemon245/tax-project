@@ -1,14 +1,13 @@
 <head>
 
     <meta charset="utf-8" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>{{ env('APP_NAME') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
+    <meta content="Fill tax with ease & comfort" name="description" />
+    <meta content="{{ config('app.name') }}" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="{{ asset('libs/tail.select.js-1.0.2/css/tail.select.css') }}">
+    <title>{{ config('app.name') }}</title>
     <style>
         .tail-select {
             width: 100% !important;

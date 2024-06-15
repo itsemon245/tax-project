@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<x-frontend.layouts.head title="Home" description="This is the home page for TextAct website" :favicon="$settings->basic->favicon" />
+<x-frontend.layouts.head description="Fill tax with ease and comfort" :favicon="$settings->basic->favicon" />
 
 <body class="w-100 position-relative" style="overflow: hidden!important;height: 100vh;">
     <style>

@@ -10,7 +10,7 @@
     <meta name="description" content="{{ $description }}">
     <link rel="shortcut icon" href="{{ useImage(app('setting')->basic->favicon) }}">
 
-    <title>{{ config('app.name') . ' - ' . $title }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <link rel="stylesheet" href="{{ asset('libs/tail.select.js-1.0.2/css/tail.select.css') }}">
     @vite(['resources/css/tailwind.css'])

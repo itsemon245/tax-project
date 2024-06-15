@@ -62,6 +62,7 @@ class SettingController extends Controller
             'whatsapp' => 'required|string',
             'favicon' => 'image|max:1024',
             'address' => 'required|string',
+            'app_name' => 'required|string|max:255',
         ]);
         $logo = $request->has('logo') ? saveImage($request->logo, 'settings', 'logo') : $this->setting->basic->logo;
         $favicon = $request->has('favicon') ? saveImage($request->favicon, 'settings', 'favicon') : $this->setting->basic->favicon;
@@ -72,6 +73,7 @@ class SettingController extends Controller
             'phone' => $request->phone,
             'whatsapp' => $request->whatsapp,
             'address' => $request->address,
+            'app_name' => $request->app_name,
         ];
         if ($this->setting) {
             $this->setting->basic = $array;

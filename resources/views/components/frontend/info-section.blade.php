@@ -6,7 +6,7 @@
         <h2 {{ $attributes->merge(['class' => 'text-uppercase text-center mb-5']) }}
             style="font-size: 28px; font-weight: 800;">{!! $title !!}</h2>
         <div class="d-flex align-items-center justify-content-center" style="flex-wrap: wrap;">
-            {{ $slot }}
+            {!! $slot !!}
         </div>
     </div>
     <div>

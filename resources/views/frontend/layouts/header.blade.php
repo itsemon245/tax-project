@@ -83,8 +83,16 @@
                         </ul>
 
                     </li>
-                    <li class="nav-item custom-nav-item {{ request()->routeIs('books.view') ? 'active-link' : '' }}">
-                        <a class=" nav-link text-light" href="{{ route('books.view') }}">Book Store</a>
+                    <li class="nav-item custom-nav-item position-relative dropdown-trigger {{ request()->routeIs('books.*') ? 'active-link' : '' }}">
+                        <a class="nav-link text-light" href="{{ route('books.view') }}">Book Store</a>
+                        <ul class="position-absolute dropdown ">
+                            @foreach (app('bookCategories') as $category)
+                                <li class="nav-item custom-nav-item dropdown-item {{ route('books.view.all', $category->id) == url()->current() ? 'active-link' : '' }}"><a
+                                        href="{{ route('books.view.all', $category->id)  }}"
+                                        class="nav-link text-light">{{ $category->name }}</a></li>
+                            @endforeach
+                        </ul>
+
                     </li>
                 </ul>
             </nav>

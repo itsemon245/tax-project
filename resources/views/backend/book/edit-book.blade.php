@@ -52,7 +52,7 @@
 
                         <div class="col-md-12">
                             <label for="book_desc">Book Description</label>
-                            <textarea required type="text" name="book_desc" class="form-control" rows="4">+{{ $book->description }}</textarea>
+                            <textarea required type="text" name="book_desc" class="form-control" rows="4">{{ $book->description }}</textarea>
                         </div>
 
 
