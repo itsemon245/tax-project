@@ -134,10 +134,7 @@
                                     style="background: none;">
                                     <span class="mdi mdi-close"></span>
                                 </button>
-                                <a href="{{ route('home') }}">
-                                    <img loading="lazy" style="max-width:120px;object-fit:cover;" src="{{ $basic->logo }}"
-                                        alt="Text Act Logo">
-                                </a>
+                                <x-application-logo />
                             </div>
                         </li>
 
