@@ -34,12 +34,12 @@
                     <input type="hidden" name="old_title">
 
                     <div class="mt-1">
-                        <x-form.ck-editor id="desc" class="form-control" name="description" id="description" placeholder="Description" required></x-form.ck-editor>
+                        <x-form.ck-editor  name="description" placeholder="Description" required></x-form.ck-editor>
                     </div>
 
 
 
-                    <x-backend.ui.button class="btn-primary mt-2">Create</x-backend.ui.button>
+                    <x-backend.ui.button class="btn-primary mt-2" type="submit">Create</x-backend.ui.button>
 
                 </div>
             </div>

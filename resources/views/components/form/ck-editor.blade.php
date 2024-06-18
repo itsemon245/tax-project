@@ -31,7 +31,7 @@
             <span class="text-danger">*</span>
         @endif
     </label>
-    <textarea {{ $attributes->merge(['value' => $slot->toHtml(), 'id' => $id]) }}>{!! $slot !!}</textarea>
+    <textarea {{ $attributes->except('required')->merge(['id' => $id]) }}>{!! $slot !!}</textarea>
     @error($name)
         <span class="text-danger">{{ $message }}</span>
     @enderror
