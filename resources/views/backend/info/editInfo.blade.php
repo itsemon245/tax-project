@@ -17,8 +17,8 @@
                             <x-backend.form.select-input id="section" label="Section" name="section"
                                 placeholder="Choose Section..." onchange="getSectionTitle(this)">
                                 {{-- <option selected disabled>Choose Section...</option> --}}
-                                <option value="1" {{ $info->section_id === 1 ? 'selected' : '' }}>Section 1</option>
-                                <option value="2" {{ $info->section_id === 2 ? 'selected' : '' }}>Section 2</option>
+                                <option value="1" @selected($info->section_id == 1)>Section 1</option>
+                                <option value="2" @selected($info->section_id == 2)>Section 2</option>
                             </x-backend.form.select-input>
                         </div>
                         <div class="col-md-6">

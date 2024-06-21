@@ -6,13 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAchievementRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return auth()->user() !== null;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,7 +17,7 @@ class UpdateAchievementRequest extends FormRequest
         return [
             'user' => 'required',
             'total_user' => 'required',
-            'image' => '|nullable|required',
+            'image' => 'nullable',
         ];
     }
 }
