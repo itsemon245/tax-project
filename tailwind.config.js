@@ -15,6 +15,11 @@ module.exports = {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
+        colors: {
+            primary: {
+                DEFAULT: '#38BDF8'
+            }
+        }
     },
 
     plugins: [require('@tailwindcss/forms'), require('flowbite/plugin')],
