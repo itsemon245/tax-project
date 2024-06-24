@@ -58,8 +58,9 @@ class PageController extends Controller
             $dates[$date->format('l, F d, Y')] = AppointmentTime::where('user_id', $userId)->where('day', $date->format('l'))->first()->times ?? [];
         }
         $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
+        $admin = User::role('super admin')->first();
         if ($office == null) {
-            $maps = Map::where(function (Builder $q) use ($request, $expertProfile) {
+            $maps = Map::where(function (Builder $q) use ($request, $expertProfile, $admin) {
                 if ($request->query('branch-thana')) {
                     $q->where('thana', $request->query('branch-thana'));
                 }
@@ -68,25 +69,33 @@ class PageController extends Controller
                 }
                 if ($expertProfile != null) {
                     $q->where('user_id', $expertProfile->user_id);
+                } else {
+                    $q->where('user_id', $admin->id)->orWhere('user_id', null);
                 }
             })->latest()->get();
         } else {
             $maps = [ $office ];
         }
         $branchDistricts = Map::select([ 'district', 'thana', 'user_id' ])
-        ->where(function (Builder $q) use ($request, $expertProfile) {
+        ->where(function (Builder $q) use ($request, $expertProfile, $admin) {
             if ($expertProfile != null) {
                 $q->where('user_id', $expertProfile->user_id);
+            } else {
+                $q->where('user_id', $admin->id)->orWhere('user_id', null);
             }
         })
         ->distinct()->latest()->get()->pluck('district');
-        $branchThanas    = Map::select([ 'district', 'thana', 'user_id' ])->distinct()->where(function (Builder $q) use ($request, $expertProfile) {
+        $branchThanas    = Map::select([ 'district', 'thana', 'user_id' ])
+        ->distinct()
+        ->where(function (Builder $q) use ($request, $expertProfile, $admin) {
             if (!empty($request->query('branch-district'))) {
                 $q->where('district', $request->query('branch-district'));
             }
             if ($expertProfile != null) {
                 $q->where('user_id', $expertProfile->user_id);
-            }
+            }else {
+            $q->where('user_id', $admin->id)->orWhere('user_id', null);
+        }
         })->latest()->get()->pluck('thana');
         $banners      = getRecords('banners');
         $infos1       = Info::where('section_id', 1)->latest()->get();
@@ -103,7 +112,7 @@ class PageController extends Controller
             $date = $carbon->addDay();
             $dates[$date->format('l, F d, Y')] = AppointmentTime::where('user_id', $userId)->where('day', $date->format('l'))->first()->times ?? [];
         }
-        
+
         $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
         $banners      = getRecords('banners');
         $infos1       = Info::where('section_id', 1)->latest()->get();

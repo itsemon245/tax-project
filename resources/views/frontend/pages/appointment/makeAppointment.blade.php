@@ -1,4 +1,3 @@
-
 @extends('frontend.layouts.app')
 
 @section('main')
@@ -162,7 +161,7 @@
                                                             <label for="branch-thana">District <span
                                                                     class="text-danger">*</span></label>
                                                             <select class="tail-select !w-full"
-                                                                hx-get="{{ route('appointment.make') }}"
+                                                                hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
                                                                 hx-select="#hx-filter-target"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
                                                                 label="Select District" id="branch-district"
@@ -182,7 +181,7 @@
                                                             <label for="branch-thana">Thana <span
                                                                     class="text-danger">*</span></label>
                                                             <select class="tail-select !w-full"
-                                                                hx-get={{ route('appointment.make') }}
+                                                                hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
                                                                 hx-select="#hx-filter-target"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
                                                                 id="branch-thana" name="branch-thana" required
