@@ -18,16 +18,16 @@
                     </x-backend.form.text-input>
                 </div>
                 <div class="col-md-4 col-sm-6">
-                    <x-backend.form.text-input label="Client NID" type="number" name="nid" :value="$client->nid" required>
+                    <x-backend.form.text-input label="Client NID" type="number" name="nid" :value="$client->nid" >
                     </x-backend.form.text-input>
                 </div>
                 <div class="col-md-4 col-sm-4">
-                    <x-backend.form.text-input label="Tin" type="text" name="tin" :value="$client->tin" required>
+                    <x-backend.form.text-input label="Tin" type="text" name="tin" :value="$client->tin" >
                     </x-backend.form.text-input>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <x-backend.form.text-input label="Date Of Birth" type="date" name="dob"
-                        :value="$client->dob" required>
+                        :value="$client->dob" >
                     </x-backend.form.text-input>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -40,30 +40,30 @@
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <x-backend.form.text-input label="Taxpayer Status" type="text" name="taxpayer_status"
-                        :value="$client->taxpayer_status" required>
+                        :value="$client->taxpayer_status" >
                     </x-backend.form.text-input>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <x-backend.form.text-input label="Father's Name" type="text" name="father_name"
-                        :value="$client->father_name" required>
+                        :value="$client->father_name" >
                     </x-backend.form.text-input>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <x-backend.form.text-input label="Mother's Name" type="text" name="mother_name"
-                        :value="$client->mother_name" required>
+                        :value="$client->mother_name" >
                     </x-backend.form.text-input>
                 </div>
 
                 <div class="col-md-4 col-sm-6">
                     <x-backend.form.text-input label="Company Name" type="text" name="company_name"
-                        :value="$client->company_name" required>
+                        :value="$client->company_name" >
                     </x-backend.form.text-input>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <x-backend.form.text-input label="Nature Of Business" type="text" name="nature_of_business"
-                        :value="$client->nature_of_business" required>
+                        :value="$client->nature_of_business" >
                     </x-backend.form.text-input>
                 </div>
 
@@ -77,16 +77,16 @@
                 </div>
 
                 <div class="col-md-4 col-sm-4">
-                    <x-backend.form.text-input label="Zone" type="text" name="zone" :value="$client->zone" required>
+                    <x-backend.form.text-input label="Zone" type="text" name="zone" :value="$client->zone" >
                     </x-backend.form.text-input>
                 </div>
                 <div class="col-md-4 col-sm-4">
-                    <x-backend.form.text-input label="Ref. No." required type="text" name="ref_no" :value="$client->ref_no">
+                    <x-backend.form.text-input label="Ref. No."  type="text" name="ref_no" required :value="$client->ref_no">
                     </x-backend.form.text-input>
                 </div>
 
                 <div class="col-md-4 col-sm-4">
-                    <x-backend.form.text-input label="Circle" type="text" name="circle" :value="$client->circle" required>
+                    <x-backend.form.text-input label="Circle" type="text" name="circle" :value="$client->circle" >
                     </x-backend.form.text-input>
                 </div>
 
@@ -98,13 +98,13 @@
                     </x-form.ck-editor>
                 </div>
                 <div class="col-md-6 col-lg-4">
-                    <x-form.text-area label="Permanent Address" type="text" name="permanent_address" required>
+                    <x-form.text-area label="Permanent Address" type="text" name="permanent_address" >
                         {!! $client->permanent_address !!}
                     </x-form.text-area>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <x-form.text-area label="Present Address" type="text" name="present_address" required>
+                    <x-form.text-area label="Present Address" type="text" name="present_address" >
                         {!! $client->present_address !!}
                     </x-form.text-area>
                 </div>
