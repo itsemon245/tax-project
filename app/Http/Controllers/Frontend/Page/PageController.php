@@ -79,7 +79,7 @@ class PageController extends Controller
         } else {
             $maps = [ $office ];
         }
-        $branchDistricts = Map::select([ 'district', 'thana', 'user_id' ])
+        $branchDistricts = Map::select([ 'district','user_id' ])
         ->where(function (Builder $q) use ($request, $expertProfile, $admin) {
             if ($expertProfile != null) {
                 $q->where('user_id', $expertProfile->user_id);
@@ -89,7 +89,7 @@ class PageController extends Controller
                 });
             }
         })
-        ->distinct()->latest()->get()->pluck('district');
+        ->distinct()->latest()->get()->unique('district')->pluck('district');
         $branchThanas    = Map::select([ 'district', 'thana', 'user_id' ])
         ->distinct()
         ->where(function (Builder $q) use ($request, $expertProfile, $admin, $defaultDistrict) {
@@ -103,7 +103,7 @@ class PageController extends Controller
                     $builder->where('user_id', $admin->id)->orWhere('user_id', null);
                 });
             }
-        })->latest()->get()->pluck('thana');
+        })->latest()->get()->unique('thana')->pluck('thana');
         $banners      = getRecords('banners');
         $infos1       = Info::where('section_id', 1)->latest()->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->latest()->get();
@@ -145,21 +145,21 @@ class PageController extends Controller
                 $builder->where('user_id', $admin->id)->orWhere('user_id', null);
             });
         })->latest()->get();
-        $districts = Map::select([ 'district', 'thana' ])->distinct()
+        $districts = Map::select([ 'district'])->distinct()
         ->where(function (Builder $q) use ($admin) {
             $q->where(function (Builder $builder) use ($admin) {
                 $builder->where('user_id', $admin->id)->orWhere('user_id', null);
             });
 
-        })->latest()->get()->pluck('district');
-        $thanas    = Map::select([ 'district', 'thana' ])->distinct()->where(function (Builder $q) use ($request, $admin) {
+        })->latest()->get()->unique('district')->pluck('district');
+        $thanas    = Map::where(function (Builder $q) use ($request, $admin) {
             if (!empty($request->query('district'))) {
                 $q->where('district', $request->query('district'));
             }
             $q->where(function (Builder $builder) use ($admin) {
                 $builder->where('user_id', $admin->id)->orWhere('user_id', null);
             });
-        })->latest()->get()->pluck('thana');
+        })->select([ 'district', 'thana'])->distinct()->latest()->get()->unique('thana')->pluck('thana');
         return view('frontend.pages.office', compact('maps', 'districts', 'thanas'));
     }
     public function contactPage()
