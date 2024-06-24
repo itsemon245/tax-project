@@ -134,23 +134,12 @@
                                             @endif
                                         </div>
                                         @if ($office == null)
-                                            <div class="col-md-5 location-selector" id="hx-filter-target">
-                                                <input type="hidden" id="maps-data" value="{{ json_encode($maps) }}"
-                                                    name="">
+                                            <div class="col-md-5 location-selector">
+
                                                 <h4 class="text-center mb-2">
                                                     Which Office Do You Prefer?
                                                 </h4>
                                                 <div class="row align-items-center">
-                                                    @php
-                                                        $districts = App\Models\Map::select('district')
-                                                            ->distinct()
-                                                            ->get()
-                                                            ->pluck('district');
-                                                        $thanas = App\Models\Map::select('thana')
-                                                            ->distinct()
-                                                            ->get()
-                                                            ->pluck('thana');
-                                                    @endphp
                                                     <div class="col-12">
                                                         <div class="text-center bg-light p-2 rounded">
                                                             Filter Branches
@@ -160,29 +149,28 @@
                                                         <div class="mb-2">
                                                             <label for="branch-thana">District <span
                                                                     class="text-danger">*</span></label>
-                                                            <select class="tail-select !w-full"
+                                                            <select class="tail-select hx-include !w-full"
                                                                 hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
-                                                                hx-select="#hx-filter-target"
+                                                                hx-select="#hx-filter-target" hx-include=".hx-include"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
                                                                 label="Select District" id="branch-district"
                                                                 name="branch-district" required
                                                                 placeholder="Select District...">
                                                                 @foreach ($branchDistricts as $district)
                                                                     <option value="{{ $district }}"
-                                                                        @selected(trim($district) == 'Chattogram')
-                                                                        @selected(trim($district) == request()->query('branch-district'))>{{ trim($district) }}
+                                                                        @selected(trim($district) == 'Chattogram')>{{ trim($district) }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="mb-2">
+                                                        <div class="mb-2" id="hx-branch-thanas" hx-swap-oob="true">
                                                             <label for="branch-thana">Thana <span
                                                                     class="text-danger">*</span></label>
-                                                            <select class="tail-select !w-full"
+                                                            <select class="tail-select hx-include !w-full"
                                                                 hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
-                                                                hx-select="#hx-filter-target"
+                                                                hx-select="#hx-filter-target" hx-include=".hx-include"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
                                                                 id="branch-thana" name="branch-thana" required
                                                                 placeholder="Select Thana...">
@@ -199,8 +187,10 @@
                                                 <div class="row" id="branch-wrapper">
                                                     <div class="text-muted mb-2">Select Branches</div>
 
-                                                    <div>
-                                                        @foreach ($maps as $map)
+                                                    <div id="hx-filter-target">
+                                                        <input type="hidden" id="maps-data"
+                                                            value="{{ json_encode($maps) }}" name="">
+                                                        @forelse ($maps as $map)
                                                             <label for="location-input-{{ $map->id }}"
                                                                 class="col-md-12 col-6 mb-md-1" style="cursor: pointer;">
                                                                 <div id="location-{{ $map->id }}"
@@ -217,7 +207,9 @@
                                                                     id="location-input-{{ $map->id }}"
                                                                     value="{{ $map->id }}" hidden>
                                                             </label>
-                                                        @endforeach
+                                                            @empty
+                                                            <div class="p-5 rounded bg-gray-200">No branches found for selected location</div>
+                                                        @endforelse
                                                     </div>
 
                                                 </div>

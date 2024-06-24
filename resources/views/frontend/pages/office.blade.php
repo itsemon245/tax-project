@@ -11,7 +11,7 @@
         <h4 class="my-5 text-center fs-3">Which Office Do You Prefer?</h4>
         <div id="contact_details">
             <div class="container">
-                <div class="row" style="flex-direction: row-reverse;" id="hx-filter-target">
+                <div class="row" style="flex-direction: row-reverse;">
 
                     <div class="col-12">
                         <div class="row">
@@ -23,31 +23,34 @@
                             <div class="col-md-6">
                                 <div>
                                     <label for="branch-thana">District: </label>
-                                    <select class="tail-select" hx-get="{{ route('office') }}" hx-select="#hx-filter-target"
+                                    <select class="tail-select hx-include" hx-include=".hx-include"
+                                        hx-get="{{ route('office') }}" hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" label="Select District"
-                                        id="branch-district" name="district"
-                                        placeholder="Select District...">
+                                        id="branch-district" name="district" placeholder="Select District...">
                                         @foreach ($districts as $district)
-                                            <option value="{{ $district }}" @selected(trim($district) === 'Chattogram' || trim($district) === request()->query('district') )>{{ trim($district) }}</option>
+                                            <option value="{{ $district }}" @selected(trim($district) == request()->query('district') || trim($district) == 'Chattogram')>
+                                                {{ trim($district) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="mb-2">
+                                <div class="mb-2" id="thanas" hx-swap-oob="true">
                                     <label for="branch-thana">Thana: </label>
-                                    <select class="tail-select" hx-get={{ route('office') }} hx-select="#hx-filter-target"
-                                        hx-target="#hx-filter-target" hx-swap="outerHTML" id="branch-thana"
-                                        name="thana" placeholder="Select Thana...">
+                                    <select class="tail-select hx-include" hx-include=".hx-include"
+                                        hx-get={{ route('office') }} hx-select="#hx-filter-target"
+                                        hx-target="#hx-filter-target" hx-swap="outerHTML" id="branch-thana" name="thana"
+                                        placeholder="Select Thana...">
                                         @foreach ($thanas as $thana)
-                                            <option value="{{ trim($thana) }}" @selected(trim($thana) === request()->query('thana'))>{{ $thana }}</option>
+                                            <option value="{{ trim($thana) }}" @selected(trim($thana) == request()->query('thana') || trim($thana) == 'Karnaphuli')>
+                                                {{ $thana }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="flex-direction: row-reverse;" hx-tranisition>
+                    <div class="row ps-0 my-2" style="flex-direction: row-reverse;" id="hx-filter-target" hx-tranisition>
                         @if ($maps->count() > 0)
                             <div class="col-12 my-2">
                                 Available Branches
@@ -66,11 +69,12 @@
                                             <div class="d-flex gap-5">
 
                                                 <div>
-                                                    <a href="{{ route('appointment.make')."?office_id=".$map->id }}" class="text-dark fw-bold"
+                                                    <a href="{{ route('appointment.make') . '?office_id=' . $map->id }}"
+                                                        class="text-dark fw-bold"
                                                         style="text-decoration: underline!important;">Make
                                                         Appointment</a>
                                                 </div>
-                                            </div>  
+                                            </div>
                                         </div>
                                         @if ($key + 1 !== count($maps))
                                             <hr class="bg-light">
@@ -78,6 +82,8 @@
                                     @endforeach
                                 </div>
                             </div>
+                        @else
+                            <div class="col-12 p-10 rounded bg-gray-200 text-center -ml-3">No branches found for selected location</div>
                         @endif
                     </div>
                 </div>
