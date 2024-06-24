@@ -93,9 +93,9 @@ class PageController extends Controller
             }
             if ($expertProfile != null) {
                 $q->where('user_id', $expertProfile->user_id);
-            }else {
-            $q->where('user_id', $admin->id)->orWhere('user_id', null);
-        }
+            } else {
+                $q->where('user_id', $admin->id)->orWhere('user_id', null);
+            }
         })->latest()->get()->pluck('thana');
         $banners      = getRecords('banners');
         $infos1       = Info::where('section_id', 1)->latest()->get();
@@ -126,19 +126,22 @@ class PageController extends Controller
     }
     public function officePage(Request $request)
     {
-        $maps = Map::where(function (Builder $q) use ($request) {
+        $admin = User::role('super admin')->first();
+        $maps = Map::where(function (Builder $q) use ($request, $admin) {
             if ($request->query('thana')) {
                 $q->where('thana', $request->query('thana'));
             }
             if ($request->query('district')) {
                 $q->where('district', $request->query('district'));
             }
+            $q->where('user_id', $admin->id)->orWhere('user_id', null);
         })->latest()->get();
         $districts = Map::select([ 'district', 'thana' ])->distinct()->latest()->get()->pluck('district');
-        $thanas    = Map::select([ 'district', 'thana' ])->distinct()->where(function (Builder $q) use ($request) {
+        $thanas    = Map::select([ 'district', 'thana' ])->distinct()->where(function (Builder $q) use ($request, $admin) {
             if (!empty($request->query('district'))) {
                 $q->where('district', $request->query('district'));
             }
+            $q->where('user_id', $admin->id)->orWhere('user_id', null);
         })->latest()->get()->pluck('thana');
         return view('frontend.pages.office', compact('maps', 'districts', 'thanas'));
     }
