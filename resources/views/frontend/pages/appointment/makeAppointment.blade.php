@@ -156,7 +156,7 @@
                                                                 label="Select District" id="branch-district"
                                                                 name="branch-district" required
                                                                 placeholder="Select District...">
-                                                                <option selected disabled>Select a district</option>
+                                                                <option selected disabled value="">Select a district</option>
                                                                 @foreach ($branchDistricts as $district)
                                                                     <option value="{{ $district }}"
                                                                         @selected(trim($district) == 'Chattogram')>{{ trim($district) }}
@@ -175,7 +175,7 @@
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
                                                                 id="branch-thana" name="branch-thana" required
                                                                 placeholder="Select Thana...">
-                                                                <option selected disabled>Select a thana</option>
+                                                                <option selected disabled value="">Select a thana</option>
                                                                 @foreach ($branchThanas as $thana)
                                                                     <option value="{{ trim($thana) }}"
                                                                         @selected(trim($thana) == request()->query('branch-thana'))>{{ $thana }}

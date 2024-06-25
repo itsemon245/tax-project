@@ -62,11 +62,11 @@ class PageController extends Controller
         $defaultDistrict = $request->query('branch-district', 'Chattogram');
         if ($office == null) {
             $maps = Map::where(function (Builder $q) use ($request, $expertProfile, $admin, $defaultDistrict) {
-                if ($request->query('branch-thana')) {
-                    $q->where('thana', $request->query('branch-thana'));
-                }
                 if ($defaultDistrict) {
                     $q->where('district', $defaultDistrict);
+                }
+                if ($request->query('branch-thana')) {
+                    $q->where('thana', $request->query('branch-thana'));
                 }
                 if ($expertProfile != null) {
                     $q->where('user_id', $expertProfile->user_id);
