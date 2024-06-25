@@ -21,9 +21,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div>
+                                <div class="flex items-center gap-2 mt-3">
                                     <label for="branch-thana">District: </label>
-                                    <select class=" hx-include" hx-include=".hx-include"
+                                    <select class="grow hx-include" hx-include=".hx-include"
                                         hx-get="{{ route('office') }}" hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" label="Select District"
                                         id="branch-district" name="district" placeholder="Select District...">
@@ -35,9 +35,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="mb-2" id="thanas" hx-swap-oob="true">
+                                <div class="mb-2 flex items-center gap-2 mt-3" id="thanas" hx-swap-oob="true">
                                     <label for="branch-thana">Thana: </label>
-                                    <select class=" hx-include" hx-include=".hx-include"
+                                    <select class="grow hx-include" hx-include=".hx-include"
                                         hx-get={{ route('office') }} hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" id="branch-thana" name="thana"
                                         placeholder="Select Thana...">
