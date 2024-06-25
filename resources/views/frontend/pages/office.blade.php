@@ -22,11 +22,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="flex items-center gap-2 mt-3">
+                                    <input type="hidden" name="dist_only" value="1">
                                     <label for="branch-thana">District: </label>
-                                    <select class="grow hx-include" hx-include=".hx-include"
-                                        hx-get="{{ route('office') }}"
-                                        hx-vals="{'dist_only': 'true'}"
-                                        hx-select="#hx-filter-target"
+                                    <select class="grow hx-include" hx-include=".hx-include, [name='dist_only']"
+                                        hx-get="{{ route('office') }}" hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" label="Select District"
                                         id="branch-district" name="district" placeholder="Select District...">
                                         <option selected disabled value="">Select a district</option>
@@ -40,10 +39,9 @@
                             <div class="col-md-6">
                                 <div class="mb-2 flex items-center gap-2 mt-3" id="thanas" hx-swap-oob="true">
                                     <label for="branch-thana">Thana: </label>
-                                    <select class="grow hx-include" hx-include=".hx-include"
-                                        hx-get={{ route('office') }} hx-select="#hx-filter-target"
-                                        hx-target="#hx-filter-target" hx-swap="outerHTML" id="branch-thana" name="thana"
-                                        placeholder="Select Thana...">
+                                    <select class="grow hx-include" hx-include=".hx-include" hx-get={{ route('office') }}
+                                        hx-select="#hx-filter-target" hx-target="#hx-filter-target" hx-swap="outerHTML"
+                                        id="branch-thana" name="thana" placeholder="Select Thana...">
                                         <option selected disabled value="">Select a thana</option>
                                         @foreach ($thanas as $thana)
                                             <option value="{{ trim($thana) }}" @selected(trim($thana) == request()->query('thana') || trim($thana) == 'Karnaphuli')>
@@ -87,7 +85,8 @@
                                 </div>
                             </div>
                         @else
-                            <div class="col-12 p-10 rounded bg-gray-200 text-center -ml-3">No branches found for selected location</div>
+                            <div class="col-12 p-10 rounded bg-gray-200 text-center -ml-3">No branches found for selected
+                                location</div>
                         @endif
                     </div>
                 </div>

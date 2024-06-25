@@ -147,12 +147,14 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="mb-2">
+                                    <input type="hidden" name="dist_only" value="1">
+
                                                             <label for="branch-thana">District <span
                                                                     class="text-danger">*</span></label>
                                                             <select class="hx-include !w-full"
                                                                 hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
                                                                 hx-vals="{'dist_only': 'true'}"
-                                                                hx-select="#hx-filter-target" hx-include=".hx-include"
+                                                                hx-select="#hx-filter-target" hx-include=".hx-include, [name='dist_only']"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
                                                                 label="Select District" id="branch-district"
                                                                 name="branch-district" required

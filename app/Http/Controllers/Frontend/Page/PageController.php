@@ -65,7 +65,7 @@ class PageController extends Controller
                 if ($defaultDistrict) {
                     $q->where('district', $defaultDistrict);
                 }
-                if ($request->query('dist_only', false) && $request->query('branch-thana')) {
+                if (!$request->query('dist_only', false) && $request->query('branch-thana')) {
                     $q->where('thana', $request->query('branch-thana'));
                 }
                 if ($expertProfile != null) {
@@ -135,7 +135,7 @@ class PageController extends Controller
     {
         $admin = User::role('super admin')->first();
         $maps = Map::where(function (Builder $q) use ($request, $admin) {
-            if ($request->query('dist_only', false) && $request->query('thana')) {
+            if (!$request->query('dist_only', false) && $request->query('thana')) {
                 $q->where('thana', $request->query('thana'));
             }
             if ($request->query('district', 'Chattogram')) {
