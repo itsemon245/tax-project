@@ -151,12 +151,14 @@
                                                                     class="text-danger">*</span></label>
                                                             <select class="hx-include !w-full"
                                                                 hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
+                                                                hx-vals="{'dist_only': 'true'}"
                                                                 hx-select="#hx-filter-target" hx-include=".hx-include"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
                                                                 label="Select District" id="branch-district"
                                                                 name="branch-district" required
                                                                 placeholder="Select District...">
-                                                                <option selected disabled value="">Select a district</option>
+                                                                <option selected disabled value="">Select a district
+                                                                </option>
                                                                 @foreach ($branchDistricts as $district)
                                                                     <option value="{{ $district }}"
                                                                         @selected(trim($district) == 'Chattogram')>{{ trim($district) }}
@@ -175,7 +177,8 @@
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
                                                                 id="branch-thana" name="branch-thana" required
                                                                 placeholder="Select Thana...">
-                                                                <option selected disabled value="">Select a thana</option>
+                                                                <option selected disabled value="">Select a thana
+                                                                </option>
                                                                 @foreach ($branchThanas as $thana)
                                                                     <option value="{{ trim($thana) }}"
                                                                         @selected(trim($thana) == request()->query('branch-thana'))>{{ $thana }}
@@ -209,8 +212,9 @@
                                                                     id="location-input-{{ $map->id }}"
                                                                     value="{{ $map->id }}" hidden>
                                                             </label>
-                                                            @empty
-                                                            <div class="p-5 rounded bg-gray-200">No branches found for selected location</div>
+                                                        @empty
+                                                            <div class="p-5 rounded bg-gray-200">No branches found for
+                                                                selected location</div>
                                                         @endforelse
                                                     </div>
 

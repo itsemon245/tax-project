@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data>
 
 <x-frontend.layouts.head description="Fill tax with ease and comfort" :favicon="$settings->basic->favicon" />
 

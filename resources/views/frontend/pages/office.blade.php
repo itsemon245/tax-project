@@ -24,7 +24,9 @@
                                 <div class="flex items-center gap-2 mt-3">
                                     <label for="branch-thana">District: </label>
                                     <select class="grow hx-include" hx-include=".hx-include"
-                                        hx-get="{{ route('office') }}" hx-select="#hx-filter-target"
+                                        hx-get="{{ route('office') }}"
+                                        hx-vals="{'dist_only': 'true'}"
+                                        hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" label="Select District"
                                         id="branch-district" name="district" placeholder="Select District...">
                                         <option selected disabled value="">Select a district</option>
