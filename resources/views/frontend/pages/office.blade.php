@@ -27,6 +27,7 @@
                                         hx-get="{{ route('office') }}" hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" label="Select District"
                                         id="branch-district" name="district" placeholder="Select District...">
+                                        <option selected disabled>Select a district</option>
                                         @foreach ($districts as $district)
                                             <option value="{{ $district }}" @selected(trim($district) == request()->query('district') || trim($district) == 'Chattogram')>
                                                 {{ trim($district) }}</option>
@@ -41,6 +42,7 @@
                                         hx-get={{ route('office') }} hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" id="branch-thana" name="thana"
                                         placeholder="Select Thana...">
+                                        <option selected disabled>Select a thana</option>
                                         @foreach ($thanas as $thana)
                                             <option value="{{ trim($thana) }}" @selected(trim($thana) == request()->query('thana') || trim($thana) == 'Karnaphuli')>
                                                 {{ $thana }}</option>
