@@ -149,7 +149,7 @@
                                                         <div class="mb-2">
                                                             <label for="branch-thana">District <span
                                                                     class="text-danger">*</span></label>
-                                                            <select class="tail-select hx-include !w-full"
+                                                            <select class="hx-include !w-full"
                                                                 hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
                                                                 hx-select="#hx-filter-target" hx-include=".hx-include"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
@@ -168,7 +168,7 @@
                                                         <div class="mb-2" id="hx-branch-thanas" hx-swap-oob="true">
                                                             <label for="branch-thana">Thana <span
                                                                     class="text-danger">*</span></label>
-                                                            <select class="tail-select hx-include !w-full"
+                                                            <select class="hx-include !w-full"
                                                                 hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
                                                                 hx-select="#hx-filter-target" hx-include=".hx-include"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"

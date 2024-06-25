@@ -23,7 +23,7 @@
                             <div class="col-md-6">
                                 <div>
                                     <label for="branch-thana">District: </label>
-                                    <select class="tail-select hx-include" hx-include=".hx-include"
+                                    <select class=" hx-include" hx-include=".hx-include"
                                         hx-get="{{ route('office') }}" hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" label="Select District"
                                         id="branch-district" name="district" placeholder="Select District...">
@@ -37,7 +37,7 @@
                             <div class="col-md-6">
                                 <div class="mb-2" id="thanas" hx-swap-oob="true">
                                     <label for="branch-thana">Thana: </label>
-                                    <select class="tail-select hx-include" hx-include=".hx-include"
+                                    <select class=" hx-include" hx-include=".hx-include"
                                         hx-get={{ route('office') }} hx-select="#hx-filter-target"
                                         hx-target="#hx-filter-target" hx-swap="outerHTML" id="branch-thana" name="thana"
                                         placeholder="Select Thana...">
