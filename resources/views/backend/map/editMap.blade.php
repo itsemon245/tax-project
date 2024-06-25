@@ -44,7 +44,7 @@
                         <label for="thana">Thana</label>
                         <select id="thana" name="thana" placeholder="Select Thana...">
                             @foreach ($defaultThanas as $thana)
-                                <option value="{{ $thana }}" @selected($thana === $map->thana)>
+                                <option value="{{ $thana }}" @selected(trim($thana) == trim($map->thana))>
                                     {{ $thana }}</option>
                             @endforeach
                         </select>

@@ -23,7 +23,7 @@ class UpdateMapRequest extends FormRequest
     {
         return [
             'district' => ['string', 'required'],
-            'thana' => ['string', 'required'],
+            'thana' => ['string', 'nullable'],
             'location' => ['string', 'required'],
             'address' => ['string', 'required'],
             'iframe_link' => ['required', 'string', 'regex:/https:\/\/www\.google\.com\/maps\/embed/i'],

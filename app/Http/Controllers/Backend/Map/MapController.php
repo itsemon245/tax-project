@@ -90,7 +90,7 @@ class MapController extends Controller
         $map->district = $request->district;
         $map->thana = $request->thana !== null ? $request->thana :  $map->thana;
         $map->address = $request->address;
-        $map->src = $request->src;
+        $map->src = $src;
         $map->update();
 
         $notification = array(
