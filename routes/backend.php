@@ -40,13 +40,13 @@ use App\Http\Controllers\Backend\Settings\SettingController;
 use App\Http\Controllers\Backend\Book\BookCategoryController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
 use App\Http\Controllers\Backend\CkEditor\CkEditorController;
-use App\Http\Controllers\Backend\Training\TrainingController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\ReturnForm\ReturnFormController;
 use App\Http\Controllers\Backend\Service\CustomServiceController;
 use App\Http\Controllers\Backend\Withdrawal\WithdrawalController;
 use App\Http\Controllers\Backend\Appointment\AppointmentController;
+use App\Http\Controllers\Backend\BulkDeleteController;
 use App\Http\Controllers\Backend\Product\ProductCategoryController;
 use App\Http\Controllers\Backend\Testimonial\TestimonialController;
 use App\Http\Controllers\Backend\TaxCalculator\TaxSettingController;
@@ -74,6 +74,7 @@ use App\Http\Controllers\Backend\Withdrawal\CommissionHistoryController;
 Route::prefix('admin')
     ->middleware(['auth', 'can:visit admin panel'])
     ->group(function () {
+        Route::match(['delete'], 'bulk-delete-resources', BulkDeleteController::class)->name('bulk.delete')->middleware('role:super admin');
 
         // test
         Route::get('test', function () {
@@ -178,9 +179,9 @@ Route::prefix('admin')
         Route::resource('promo-code', PromoCodeController::class)
             ->except('index')
             ->middleware('can:manage promo code');
-            Route::resource('notification', NotificationController::class)
-            ->only('index')
-            ->middleware('can:read promo code');
+        Route::resource('notification', NotificationController::class)
+        ->only('index')
+        ->middleware('can:read promo code');
         Route::resource('notification', NotificationController::class)
             ->except('index')
             ->middleware('can:manage promo code');

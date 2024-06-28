@@ -22,7 +22,7 @@
         name="{{ empty(request()->query('status')) ? 'All' : str(request()->query('status'))->title()->toString() }} Events">
         @can('create event')
             <x-backend.ui.button type="custom" href="{{ route('calendar.create') }}"
-                class="mb-3 btn-sm btn-success">Create</x-backend.ui.button>
+                class="mb-2 btn-sm btn-success">Create</x-backend.ui.button>
         @endcan
         <x-backend.table.basic :items="$events">
             <thead>
