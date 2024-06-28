@@ -42,7 +42,11 @@
     <x-backend.ui.breadcrumbs :list="['Dashboard']" />
 
     <x-backend.ui.section-card>
-        @can('create invoice')
+        @hasrole('expert')
+        
+        @endhasrole
+
+        @can('read invoice')
             <x-backend.ui.recent-update-invoice :method="route('invoice.create')" />
         @endcan
         <x-ui.calendar :currentEvents="$currentEvents" :events="$events" :services="$services" :clients="$clients" />

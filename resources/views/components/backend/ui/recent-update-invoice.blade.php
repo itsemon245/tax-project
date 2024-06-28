@@ -5,16 +5,18 @@
 <h4 class="p-2">Recently Updated Invoice</h4>
 <div id="latest-container" class="d-sm-flex flex-wrap justify-content-center gap-3 mb-5"
     style="overflow-x: hidden; overflow-y:hidden;height:min-content;">
-    <a href="{{ $route }}" class="mb-2" style="width: clamp(160px, 190px, 220px);">
-        <div class="card h-100 shadow" style="border: medium dashed var(--ct-gray-400);">
-            <div class="card-body h-100">
-                <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                    <span class="text-success fw-bold display-5">+</span>
-                    <span class="fw-bold text-muted fs-4">New Invoice</span>
+    @can('create invoice')
+        <a href="{{ $route }}" class="mb-2" style="width: clamp(160px, 190px, 220px);">
+            <div class="card h-100 shadow" style="border: medium dashed var(--ct-gray-400);">
+                <div class="card-body h-100">
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                        <span class="text-success fw-bold display-5">+</span>
+                        <span class="fw-bold text-muted fs-4">New Invoice</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </a>
+        </a>
+    @endcan
     @foreach ($recentInvoices as $invoice)
         @php
             $color = 'dark';

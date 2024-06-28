@@ -9,24 +9,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\backend\UserProfileUpdateRequest;
 use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('can:read user', [
             'only' => ['index', 'show', 'internalUsers']
         ]);
-        $this->middleware('can:create user',   [
+        $this->middleware('can:create user', [
             'only' => ['create', 'store']
         ]);
-        $this->middleware('can:update user',   [
+        $this->middleware('can:update user', [
             'only' => ['update', 'edit']
         ]);
-        $this->middleware('can:delete user',  [
+        $this->middleware('can:delete user', [
             'only' => ['destroy']
         ]);
     }
@@ -37,7 +35,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $data = User::with('roles')
-        ->whereHas('roles', function(Builder $q){
+        ->whereHas('roles', function (Builder $q) {
             $q->where('name', '=', 'partner', 'or');
             $q->where('name', 'user');
         })
@@ -50,9 +48,12 @@ class UserController extends Controller
      */
     public function internalUsers()
     {
+        $goBackUrl = route('users.internal');
+        session()->put('go_back_url', $goBackUrl);
+
         $user = Auth::user();
         $data = User::with('roles')
-        ->whereHas('roles', function(Builder $q){
+        ->whereHas('roles', function (Builder $q) {
             $q->whereNot('name', 'partner', 'or');
             $q->whereNot('name', 'user');
         })
@@ -109,7 +110,13 @@ class UserController extends Controller
             return redirect(route('expert-profile.create')."?user_id=$userData->id")->with($notification);
         }
 
-        return back()->with($notification);
+        if (session()->has('go_back_url')) {
+            $goBackUrl = session('go_back_url');
+            session()->forget('go_back_url');
+        } else {
+            $goBackUrl = route('users.index');
+        }
+        return redirect($goBackUrl)->with($notification);
     }
 
     /**
@@ -144,7 +151,7 @@ class UserController extends Controller
         $userData->phone = $request->phone;
         if ($request->hasFile('user_image')) {
             $old_path = $userData->image_url;
-            $userData->image_url = updateFile($request->user_image,  $old_path, 'profile', 'user-image');
+            $userData->image_url = updateFile($request->user_image, $old_path, 'profile', 'user-image');
         }
         $userData->save();
         $userData->assignRole($request->role_id);
@@ -153,7 +160,22 @@ class UserController extends Controller
             'message' => 'User Profile Updated',
             'alert-type' => 'success',
         ];
-        return redirect()->route('users.index')->with($notification);
+        if ($userData->role_name == 'expert') {
+            $url = $userData->expertProfile ?
+            route('expert-profile.edit', ['expert_profile' => $userData->expertProfile->id])."?user_id=$userData->id"
+            :
+            route('expert-profile.create')."?user_id=$userData->id";
+
+            return redirect($url)->with($notification);
+        }
+
+        if (session()->has('go_back_url')) {
+            $goBackUrl = session('go_back_url');
+            session()->forget('go_back_url');
+        } else {
+            $goBackUrl = route('users.index');
+        }
+        return redirect($goBackUrl)->with($notification);
     }
 
     /**
@@ -174,6 +196,12 @@ class UserController extends Controller
             'message' => 'User Profile Deleted Successfully',
             'alert-type' => 'success',
         ];
-        return back()->with($notification);
+        if (session()->has('go_back_url')) {
+            $goBackUrl = session('go_back_url');
+            session()->forget('go_back_url');
+        } else {
+            $goBackUrl = route('users.index');
+        }
+        return redirect($goBackUrl)->with($notification);
     }
 }

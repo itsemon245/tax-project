@@ -134,7 +134,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {!! $payment->approved === 1
+                                            {!! $payment->approved == 1
                                                 ? "<span class='badge bg-success'>Approved</span>"
                                                 : "<span class='badge bg-danger'>Not-Approved</span>" !!}
                                         </td>

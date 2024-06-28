@@ -77,18 +77,23 @@
     @include('frontend.layouts.sidebar')
     @auth
         @if (!auth()->user()->hasVerifiedEmail())
-            <div class="alert alert-warning position-absolute w-100 fade show" style="z-index: 10;!important" role="alert">
+            <div class="alert !rounded-none !py-2 alert-warning position-absolute w-100 fade show" style="z-index: 10;!important" role="alert">
 
                 <div class="d-flex align-items-center">
                     <div class="mx-auto">
-                        <span class="mdi mdi-alert-outline me-2"></span>
-                        Please check your email and verify your account!
-                        <i class="">Need new email?</i>
-                        <form action="{{ route('verification.send') }}" method="post" class="d-inline">
-                            @csrf
-                            <button class="bg-transparent border-0 text-warning fw-medium"
-                                style="text-decoration: underline;">Resend verification</button>
-                        </form>
+                        <div class="flex flex-wrap items-center justify-center">
+                            <span class="mdi mdi-alert-outline me-2"></span>
+                            Please check your email and verify your account!
+                            <form action="{{ route('verification.send') }}" method="post" class="d-inline">
+                                <i class="ms-1">Need new email?</i>
+                                @csrf
+                                <button class="bg-transparent border-0 text-warning fw-medium"
+                                    style="text-decoration: underline;">Resend verification email</button>
+                            </form>
+                        </div>
+                        <div class="text-center text-green-500">
+                            Please check the spam folder if you didn't receive any email
+                        </div>
                     </div>
                     <div class="">
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
