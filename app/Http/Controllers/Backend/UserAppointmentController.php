@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Notification;
 
 class UserAppointmentController extends Controller
 {
+    public function __construct() {
+        if (request('type') != 'consultation'){
+            if(!auth()->user()->hasRole('super admin')){
+                abort(403, 'You don\'t have access to this page');
+            }
+        }
+    }
     public function index()
     {
         $expert = auth()->user()->expertProfile;
@@ -24,6 +31,8 @@ class UserAppointmentController extends Controller
                 if ($expert != null) {
                     $q->where('expert_profile_id', $expert->id);
                 }
+            }{
+                $q->whereNull('expert_profile_id');
             }
         })
         ->with('map', 'user')->latest()->paginate(paginateCount());
@@ -78,6 +87,8 @@ class UserAppointmentController extends Controller
                 if ($expert != null) {
                     $q->where('expert_profile_id', $expert->id);
                 }
+            }{
+                $q->whereNull('expert_profile_id');
             }
         })
         ->with('map', 'user')->latest('approved_at')->get();
@@ -95,6 +106,8 @@ class UserAppointmentController extends Controller
                 if ($expert != null) {
                     $q->where('expert_profile_id', $expert->id);
                 }
+            }{
+                $q->whereNull('expert_profile_id');
             }
         })
         ->with('map', 'user')->latest('completed_at')->get();
