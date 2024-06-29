@@ -74,13 +74,18 @@
                                     <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
                                 @endif
                             </td>
-                            @isset($appointment->map_id)
+                            @if($appointment->map_id)
                                 <td>
+                                @if ($appointment->map)
                                     <strong>Location: {{ $appointment->map->location }}</strong>
                                     <strong class="d-block">Address:</strong>
                                     <p class="text-muted">
                                         {{ $appointment->map->address }}
                                     </p>
+                                    @else
+                                    No branch selected
+                                @endif
+
                                 </td>
                             @else
                                 <td>
@@ -88,7 +93,7 @@
                                         Virtual
                                     </span>
                                 </td>
-                            @endisset
+                            @endif
                             <td>
                                 <span class="fw-bold">
                                     {{ $appointment->created_at->format('d F, Y') }}

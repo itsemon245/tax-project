@@ -81,9 +81,11 @@
                             <td>
                                 @if ($appointment->is_completed)
                                     <span class="badge bg-soft-success text-success p-1 fs-6">Completed</span>
-                                @else
+                                @elseif($appointment->approved_at)
                                     <span class="badge bg-soft-success text-success p-1 fs-5">Approved At:
                                         {{ $appointment->approved_at?->format('d F, Y') }}</span>
+                                @else
+                                <span>No approved date</span>
                                 @endif
                             </td>
                             @if($appointment->map_id)

@@ -131,6 +131,7 @@ class UserAppointmentController extends Controller
             }
         }
         $appointment->is_approved = true;
+        $appointment->approved_at = now();
         $appointment->update();
         Calendar::create([
             'title' => 'Appointment Scheduled',
