@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Notification;
 class UserAppointmentController extends Controller
 {
     public function __construct() {
+        if (auth()->user() == null) {
+            return redirect(route('login'));
+        }
         if (request('type') != 'consultation'){
-            dd(auth()->user());
             if(!auth()->user()->hasRole('super admin')){
                 abort(403, 'You don\'t have access to this page');
             }
