@@ -88,11 +88,16 @@
                             </td>
                             @if($appointment->map_id)
                                 <td>
+                                @if ($appointment->map)
                                     <strong>Location: {{ $appointment->map->location }}</strong>
                                     <strong class="d-block">Address:</strong>
                                     <p class="text-muted">
                                         {{ $appointment->map->address }}
                                     </p>
+                                    @else
+                                    No branch selected
+                                @endif
+
                                 </td>
                             @else
                                 <td>
