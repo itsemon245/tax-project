@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasPurchases;
 use App\Traits\HasSections;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Service extends Model
 {
-    use HasFactory;
+    use HasFactory, HasPurchases;
 
     // user defined traits
     use HasSections;

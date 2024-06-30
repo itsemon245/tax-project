@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\Json;
+use App\Traits\HasPurchases;
 use App\Traits\IsPurchased;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model
 {
-    use HasFactory, IsPurchased;
+    use HasFactory, IsPurchased, HasPurchases;
     protected $guarded = [  ];
     protected $casts   = [
         'page_cards'      => Json::class,

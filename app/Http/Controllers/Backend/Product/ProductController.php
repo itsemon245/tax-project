@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
+use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -121,7 +122,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        Product::find($product->id)->delete();
+        $product->delete();
 
         return redirect()
             ->back()

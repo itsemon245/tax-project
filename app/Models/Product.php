@@ -6,6 +6,7 @@ use App\Interfaces\Services\SettingInterface;
 use Illuminate\Support\Arr;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
+use App\Traits\HasPurchases;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Product extends Model
 {
     use HasFactory;
+    use HasPurchases;
 
     /**
      * The attributes that are mass assignable.
@@ -72,14 +74,14 @@ class Product extends Model
 
     public function purchase()
     {
-        return $this->morphOne(Purchase::class, 'purchasable');
+        return $this->morphMany(Purchase::class, 'purchasable');
     }
     public function isPurchased(int $userId = null)
     {
         if ($userId === null) {
             $userId = auth()->id();
         }
-        return $this->morphOne(Purchase::class, 'purchasable')->where('user_id', $userId);
+        return $this->morphMany(Purchase::class, 'purchasable')->where('user_id', $userId);
     }
 
 
@@ -87,6 +89,9 @@ class Product extends Model
     public function price() : Attribute
     {
         $commission = app('setting')->reference->partner_commission;
+        /**
+         * @var User $user
+         */
         $user = auth()->user();
         return Attribute::make(
             get: fn ($value) => $user?->isPartner() ? $value - ($value * $commission / 100) : $value
