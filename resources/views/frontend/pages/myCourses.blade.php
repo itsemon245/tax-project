@@ -37,7 +37,7 @@
                                 @endphp
                                 <td>
                                     @if ($video)
-                                        @if ($course->isPurchased)
+                                        @if ($course->isPurchased())
                                                 <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark"
                                                     href="{{ route('course.videos', $course->id) . '?videos_id=' . $video->id }}">
                                                     Lessons
