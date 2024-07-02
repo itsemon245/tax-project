@@ -730,43 +730,45 @@
                         </a>
                         <div class="collapse" id="appointments-tab">
                             <ul class="nav-second-level">
-                                @canany(['update appointment', 'read appointment'])
-                                    <li>
-                                        <a href="#my-appointmentSection" data-bs-toggle="collapse">
-                                            <i class="mdi mdi-face-agent"></i>
-                                            <span>My Appointments</span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="my-appointmentSection">
-                                            <ul class="nav-second-level">
-                                                @canany(['update appointment', 'approve appointment', 'read appointment'])
-                                                    <li>
-                                                        <a href="{{ route('user-appointments.index') }}">
-                                                            Pending For Approval
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ route('user-appointments.approved') }}">
-                                                            Approved
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ route('user-appointments.completed') }}">
-                                                            Completed
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ route('user-appointments.times') }}">
-                                                            Appointment Times
-                                                        </a>
-                                                    </li>
-                                                @endcanany
+                                @hasanyrole(['admin', 'super admin'])
+                                    @canany(['update appointment', 'read appointment'])
+                                        <li>
+                                            <a href="#my-appointmentSection" data-bs-toggle="collapse">
+                                                <i class="mdi mdi-face-agent"></i>
+                                                <span>My Appointments</span>
+                                                <span class="menu-arrow"></span>
+                                            </a>
+                                            <div class="collapse" id="my-appointmentSection">
+                                                <ul class="nav-second-level">
+                                                    @canany(['update appointment', 'approve appointment', 'read appointment'])
+                                                        <li>
+                                                            <a href="{{ route('user-appointments.index') }}">
+                                                                Pending For Approval
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('user-appointments.approved') }}">
+                                                                Approved
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('user-appointments.completed') }}">
+                                                                Completed
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('user-appointments.times') }}">
+                                                                Appointment Times
+                                                            </a>
+                                                        </li>
+                                                    @endcanany
 
 
-                                            </ul>
-                                        </div>
-                                    </li>
-                                @endcanany
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    @endcanany
+                                @endhasanyrole
                                 @canany(['update consultation', 'read consultation'])
                                     <li>
                                         <a href="#my-consultation" data-bs-toggle="collapse">

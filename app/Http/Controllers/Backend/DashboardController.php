@@ -27,6 +27,39 @@ class DashboardController extends Controller
     public function index()
     {
         $statReports = $this->getStatReports();
+        $expertStats = [];
+        $recentConsultations = null;
+
+        if (auth()->user()->role_name == 'expert') {
+            $expertProfile = auth()->user()->expertProfile;
+            $recentConsultations = UserAppointment::where('expert_profile_id', $expertProfile->id)
+            ->latest()
+            ->limit(10)
+            ->paginate();
+            $expertStats['Today'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
+            ->whereDate('created_at', now())
+            ->count();
+            $expertStats['This week'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
+            ->whereBetween('created_at', [
+                now()->subWeek()->startOf('week'),
+                now()->startOf('week')
+                ])
+            ->count();
+            $expertStats['This month'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
+            ->whereBetween('created_at', [
+                now()->subMonth()->startOf('month'),
+                now()->startOf('month')
+                ])
+            ->count();
+            $expertStats['This year'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
+            ->whereBetween('created_at', [
+                now()->subYear()->startOf('year'),
+                now()->startOf('year')
+                ])
+            ->count();
+            $expertStats['All time'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
+            ->count();
+        }
         $fiscalYear = FiscalYear::where('year', currentFiscalYear())->first();
         $chartData = $this->getChartData();
         $events = Calendar::with('client')->latest()->latest()->get();
@@ -34,8 +67,8 @@ class DashboardController extends Controller
         $clients = Client::get();
         $services = Calendar::select('service')->distinct()->latest()->get();
         $currentEvents = Calendar::where('start', 'like', "$today%")
-        ->whereNotNull('rejected_at')        
-        ->whereNotNull('completed_at')        
+        ->whereNotNull('rejected_at')
+        ->whereNotNull('completed_at')
         ->latest()->get()->groupBy('type');
         $projects = Project::get();
         $totalExpense = Expense::where('type', 'debit')->sum('amount');
@@ -47,7 +80,7 @@ class DashboardController extends Controller
             'total' => $totalExpense,
             'today' => $todaysExpense?->amount ?? 0
         ];
-        return view('backend.dashboard.dashboard', compact('statReports', 'clients', 'expenses', 'events', 'today', 'services', 'currentEvents', 'fiscalYear', 'chartData', 'projects'));
+        return view('backend.dashboard.dashboard', compact('statReports', 'expertStats', 'recentConsultations', 'clients', 'expenses', 'events', 'today', 'services', 'currentEvents', 'fiscalYear', 'chartData', 'projects'));
     }
 
     protected function getStatReports(): array

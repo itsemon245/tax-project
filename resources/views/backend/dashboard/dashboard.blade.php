@@ -43,7 +43,12 @@
 
     <x-backend.ui.section-card>
         @hasrole('expert')
-        
+            @if ($expertStats)
+                @include('backend.includes.expert-stats', ['expertStats' => $expertStats])
+            @endif
+            @if ($recentConsultations)
+                @include('backend.includes.recent-consultations', ['recentConsultations' => $recentConsultations])
+            @endif
         @endhasrole
 
         @can('read invoice')
