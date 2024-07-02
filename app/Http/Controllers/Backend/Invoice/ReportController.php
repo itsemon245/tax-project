@@ -21,7 +21,7 @@ class ReportController extends Controller
         })
         ->latest()->paginate(paginateCount());
         $fiscalYear = currentFiscalYear();
-        $fiscalYears = FiscalYear::latest()->take(3)->latest()->get()->reverse();
+        $fiscalYears = FiscalYear::latest('year')->limit(3)->get()->reverse();
         return view('backend.report.index', compact('invoices', 'fiscalYear', 'fiscalYears', 'type'));
     }
     function ledger(Request $request)
