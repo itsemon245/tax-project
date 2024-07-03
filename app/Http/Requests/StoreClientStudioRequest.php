@@ -4,14 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreClientStudioRequest extends FormRequest
-{
+class StoreClientStudioRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return auth()->user() != null;
+    public function authorize(): bool {
+        return null != auth()->user();
     }
 
     /**
@@ -19,11 +17,10 @@ class StoreClientStudioRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
             'description' => ['required', 'max:600'],
-            'image' => ['required', 'max:3000','image'],
+            'image' => ['required', 'max:3000', 'image'],
             'title' => ['required', 'string'],
             'count' => ['required'],
         ];

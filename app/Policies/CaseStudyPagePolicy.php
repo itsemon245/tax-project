@@ -4,63 +4,47 @@ namespace App\Policies;
 
 use App\Models\CaseStudyPage;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
-class CaseStudyPagePolicy
-{
+class CaseStudyPagePolicy {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
-    {
-        //
+    public function viewAny(User $user): bool {
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CaseStudyPage $caseStudyPage): bool
-    {
-        //
+    public function view(User $user, CaseStudyPage $caseStudyPage): bool {
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
-    {
-        //
+    public function create(User $user): bool {
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CaseStudyPage $caseStudyPage): bool
-    {
-        //
+    public function update(User $user, CaseStudyPage $caseStudyPage): bool {
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CaseStudyPage $caseStudyPage): bool
-    {
-        //
+    public function delete(User $user, CaseStudyPage $caseStudyPage): bool {
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, CaseStudyPage $caseStudyPage): bool
-    {
-        //
+    public function restore(User $user, CaseStudyPage $caseStudyPage): bool {
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, CaseStudyPage $caseStudyPage): bool
-    {
-        //
+    public function forceDelete(User $user, CaseStudyPage $caseStudyPage): bool {
     }
 }

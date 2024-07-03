@@ -7,23 +7,21 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Course>
  */
-class CourseFactory extends Factory
-{
+class CourseFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         $page_cards = [
             [
                 'title' => fake()->realText(25),
-                'description' => fake()->realText(200)
+                'description' => fake()->realText(200),
             ],
             [
                 'title' => fake()->realText(25),
-                'description' => fake()->realText(200)
+                'description' => fake()->realText(200),
             ],
         ];
         $page_learn_more = [
@@ -32,7 +30,7 @@ class CourseFactory extends Factory
                 picsum(fake()->word()),
                 picsum(fake()->word()),
                 picsum(fake()->word()),
-            ]
+            ],
         ];
         $page_topics = [
             'description' => fake()->realText(100),
@@ -40,8 +38,9 @@ class CourseFactory extends Factory
                 fake()->realText(350),
                 fake()->realText(350),
                 fake()->realText(350),
-            ]
+            ],
         ];
+
         return [
             'name' => fake()->realText(15),
             'price' => fake()->randomFloat(2, 10, 1000),

@@ -2,30 +2,29 @@
 
 namespace App\Http\Controllers\Backend\Settings;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use Illuminate\Http\Request;
 
-class SettingController extends Controller
-{
+class SettingController extends Controller {
     public $setting;
     public $alert;
-    public function __construct()
-    {
+
+    public function __construct() {
         $this->middleware('permission:read basic setting|read referral setting|read payment setting|read return link setting', [
-            'only' => ['index']
+            'only' => ['index'],
         ]);
         $this->middleware('can:manage basic setting', [
-            'only' => ['store']
+            'only' => ['store'],
         ]);
         $this->middleware('can:manage referral setting', [
-            'only' => ['reference']
+            'only' => ['reference'],
         ]);
         $this->middleware('can:manage payment setting', [
-            'only' => ['payment']
+            'only' => ['payment'],
         ]);
         $this->middleware('can:manage return link setting', [
-            'only' => ['returnLink']
+            'only' => ['returnLink'],
         ]);
         $this->setting = Setting::first();
         $this->alert = [
@@ -33,28 +32,26 @@ class SettingController extends Controller
             'alert-type' => 'success',
         ];
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         $data = $this->setting;
+
         return view('backend.settings.index', compact('data'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function create() {
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $request->validate([
             'logo' => 'image|max:5126',
             'email' => 'required|email',
@@ -91,9 +88,7 @@ class SettingController extends Controller
     /**
      * Store a newly created resource in reference.
      */
-    public function reference(Request $request)
-    {
-
+    public function reference(Request $request) {
         $request->validate([
             'commission' => 'numeric',
             'withdrawal' => 'numeric',
@@ -115,12 +110,11 @@ class SettingController extends Controller
         return back()
             ->with($this->alert);
     }
+
     /**
      * Store a newly created resource in reference.
      */
-    public function images(Request $request)
-    {
-
+    public function images(Request $request) {
         $request->validate([
             'header_image' => 'image|max:5124',
             'footer_image' => 'image|max:5124',
@@ -136,18 +130,16 @@ class SettingController extends Controller
         return back()
             ->with($this->alert);
     }
+
     /**
      * Store a newly created resource in reference.
      */
-    public function payment(Request $request)
-    {
-
+    public function payment(Request $request) {
         // dd($request);
         $request->validate([
             'payment_methods' => 'required|array',
             'payment_numbers' => 'required|array',
         ]);
-
 
         $payments = [];
         foreach ($request->payment_methods as $key => $method) {
@@ -168,15 +160,13 @@ class SettingController extends Controller
         return back()
             ->with($this->alert);
     }
-    public function returnLink(Request $request)
-    {
 
+    public function returnLink(Request $request) {
         // dd($request);
         $request->validate([
             'return_link_titles' => 'required|array',
             'return_links' => 'required|array',
         ]);
-
 
         $returnLinks = [];
         foreach ($request->return_link_titles as $key => $title) {
@@ -198,36 +188,27 @@ class SettingController extends Controller
             ->with($this->alert);
     }
 
-
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show(string $id) {
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
+    public function edit(string $id) {
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, string $id) {
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(string $id) {
     }
 }

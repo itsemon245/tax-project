@@ -4,13 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class() extends Migration {
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+    public function up(): void {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->foreignId('service_category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
@@ -23,7 +21,7 @@ return new class extends Migration
             $table->integer('discount')->default(0);
             $table->boolean('is_discount_fixed')->default(false);
             $table->enum('billing_type', ['monthly', 'yearly', 'onetime'])->default('onetime');
-            $table->timestamp('delivery_date')->default(now()->addDays(3)->format("Y-m-d"));
+            $table->timestamp('delivery_date')->default(now()->addDays(3)->format('Y-m-d'));
             $table->decimal('rating');
             $table->text('reviews');
             $table->timestamps();
@@ -33,8 +31,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
+    public function down(): void {
         Schema::dropIfExists('services');
     }
 };

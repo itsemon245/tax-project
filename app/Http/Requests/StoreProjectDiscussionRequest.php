@@ -4,14 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProjectDiscussionRequest extends FormRequest
-{
+class StoreProjectDiscussionRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return auth()->user() !== null;
+    public function authorize(): bool {
+        return null !== auth()->user();
     }
 
     /**
@@ -19,13 +17,12 @@ class StoreProjectDiscussionRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
             'name' => ['required', 'string', 'max:30'],
             'email' => ['required', 'email'],
             'phone' => ['required', 'regex:/^(\+?88|0088)?01[3-9]\d{8}$/'],
-            'location' => ['required', 'string', 'max:350']
+            'location' => ['required', 'string', 'max:350'],
         ];
     }
 }

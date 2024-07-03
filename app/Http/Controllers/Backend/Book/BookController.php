@@ -1,38 +1,37 @@
 <?php
 
 namespace App\Http\Controllers\Backend\Book;
-use App\Models\Book;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateBookRequest;
+use App\Models\Book;
 use App\Models\BookCategory;
+use Illuminate\Support\Facades\Storage;
 
-class BookController extends Controller
-{
+class BookController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         $books = Book::with('bookCategory')->latest()->latest()->paginate(paginateCount());
+
         return view('backend.book.view-book', compact('books'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         $bookCategories = BookCategory::all();
+
         return view('backend.book.create-book', compact('bookCategories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBookRequest $request)
-    {
+    public function store(StoreBookRequest $request) {
         $book_store = new Book();
         $book_store->book_category_id = $request->book_category_id;
         $book_store->title = $request->book_title;
@@ -49,34 +48,32 @@ class BookController extends Controller
             'message' => 'Book Created',
             'alert-type' => 'success',
         ];
+
         return back()->with($notification);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
-    {
-        //
+    public function show(Book $book) {
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Book $book)
-    {
+    public function edit(Book $book) {
         $book = Book::with('bookCategory')
             ->find($book->id)
             ->first();
         $bookCategories = BookCategory::all();
+
         return view('backend.book.edit-book', compact('book', 'bookCategories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBookRequest $request, Book $book)
-    {
+    public function update(UpdateBookRequest $request, Book $book) {
         $book->title = $request->book_title;
         $book->book_category_id = $request->book_category_id;
         $book->author = $request->author;
@@ -97,23 +94,23 @@ class BookController extends Controller
             'message' => 'Book Updated',
             'alert-type' => 'success',
         ];
+
         return back()->with($notification);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
-    {
-        $thumbnail = 'public/' . $book->thumbnail;
+    public function destroy(Book $book) {
+        $thumbnail = 'public/'.$book->thumbnail;
         if (Storage::exists($thumbnail)) {
             Storage::delete($thumbnail);
         }
-        $sample_pdf = 'public/' . $book->sample_pdf;
+        $sample_pdf = 'public/'.$book->sample_pdf;
         if (Storage::exists($sample_pdf)) {
             Storage::delete($sample_pdf);
         }
-        $pdf = 'public/' . $book->pdf;
+        $pdf = 'public/'.$book->pdf;
         if (Storage::exists($pdf)) {
             Storage::delete($pdf);
         }
@@ -122,6 +119,7 @@ class BookController extends Controller
             'message' => 'Book Deleted',
             'alert-type' => 'success',
         ];
+
         return back()->with($notification);
     }
 }

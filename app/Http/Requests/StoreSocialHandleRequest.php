@@ -4,14 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSocialHandleRequest extends FormRequest
-{
+class StoreSocialHandleRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return auth()->user() !== null;
+    public function authorize(): bool {
+        return null !== auth()->user();
     }
 
     /**
@@ -19,11 +17,10 @@ class StoreSocialHandleRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
-            'social' => ['required','unique:social_handles,name'],
-            'social_link' => ['string', 'required','unique:social_handles,link'],
+            'social' => ['required', 'unique:social_handles,name'],
+            'social_link' => ['string', 'required', 'unique:social_handles,link'],
         ];
     }
 }

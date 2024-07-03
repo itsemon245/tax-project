@@ -2,17 +2,15 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class StoreBookCategoryRequest extends FormRequest
-{
+class StoreBookCategoryRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return Auth::user() != null;
+    public function authorize(): bool {
+        return null != Auth::user();
     }
 
     /**
@@ -20,10 +18,9 @@ class StoreBookCategoryRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
-            'category_name'=>'required'
+            'category_name' => 'required',
         ];
     }
 }

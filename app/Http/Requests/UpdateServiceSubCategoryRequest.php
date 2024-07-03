@@ -4,14 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateServiceSubCategoryRequest extends FormRequest
-{
+class UpdateServiceSubCategoryRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return auth()->user() != null;
+    public function authorize(): bool {
+        return null != auth()->user();
     }
 
     /**
@@ -19,12 +17,11 @@ class UpdateServiceSubCategoryRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
             'name' => 'required',
             'description' => 'required',
-            'service_category_id' => 'required'
+            'service_category_id' => 'required',
         ];
     }
 }

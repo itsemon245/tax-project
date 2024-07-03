@@ -6,22 +6,20 @@ use App\Casts\Json;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
-{
+class Question extends Model {
     use HasFactory;
 
     protected $fillable = [
         'exam_id',
         'name',
         'mark',
-        'choices'
+        'choices',
     ];
     protected $casts = [
         'choices' => Json::class,
     ];
 
-    function exam()
-    {
+    public function exam() {
         return $this->belongsTo(Exam::class);
     }
 }

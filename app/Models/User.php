@@ -2,22 +2,21 @@
 
 namespace App\Models;
 
-use App\Models\PromoCode;
-use App\Models\Withdrawal;
-use App\Models\VideoComment;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class User extends Authenticatable implements MustVerifyEmail
-{
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+class User extends Authenticatable implements MustVerifyEmail {
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -44,139 +43,134 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function getRoleNameAttribute()
-    {
+
+    public function getRoleNameAttribute() {
         return $this->roles->first()?->name;
     }
-    public function expertProfile(){
+
+    public function expertProfile() {
         return $this->hasOne(ExpertProfile::class, 'user_id');
     }
 
-    public function commissionHistories()
-    {
+    public function commissionHistories() {
         return $this->hasMany(CommissionHistory::class, 'parent_id');
     }
-    public function referees()
-    {
+
+    public function referees() {
         return $this->hasMany(Referee::class, 'parent_id', 'id');
     }
-    public function userDocs()
-    {
+
+    public function userDocs() {
         return $this->hasMany(UserDoc::class);
     }
-    public function authentications()
-    {
+
+    public function authentications() {
         return $this->hasMany(Authentication::class);
     }
-    public function purchases()
-    {
+
+    public function purchases() {
         return $this->hasMany(Purchase::class);
     }
-    public function approvedPurchases()
-    {
+
+    public function approvedPurchases() {
         return $this->hasMany(Purchase::class)->where('approved', 1);
     }
 
-    public function result()
-    {
+    public function result() {
         return $this->hasMany(Result::class);
     }
 
-    function exams()
-    {
+    public function exams() {
         return $this->belongsToMany(Exam::class);
     }
 
     /**
-     * Returns items that user has purchased based on the item model
+     * Returns items that user has purchased based on the item model.
+     *
      * @return array
      */
-    public function purchased(string $modelName)
-    {
+    public function purchased(string $modelName) {
         $modelName = str($modelName)->singular();
         $modelName = str($modelName)->studly();
         $items = $this->purchases()->where('purchasable_type', $modelName)->get()->map(function ($purchase) {
             return $purchase->purchasable;
         });
+
         return $items;
     }
 
-    public function approvedCourse(string $modelName)
-    {
+    public function approvedCourse(string $modelName) {
         $modelName = str($modelName)->singular();
         $modelName = str($modelName)->studly();
-        $items = $this->purchases()->where('purchasable_type', "Course")->where('approved', true)->get()->map(function ($purchase) {
+        $items = $this->purchases()->where('purchasable_type', 'Course')->where('approved', true)->get()->map(function ($purchase) {
             return $purchase->purchasable;
         });
+
         return $items;
     }
 
-    public function promoCodes()
-    {
+    public function promoCodes() {
         return $this->belongsToMany(PromoCode::class)
             ->withPivot('limit');
     }
 
-    function clients(): BelongsToMany
-    {
+    public function clients(): BelongsToMany {
         return $this->belongsToMany(Client::class);
     }
-    public function withdrawals()
-    {
+
+    public function withdrawals() {
         return $this->hasMany(Withdrawal::class);
     }
-    public function videos(): BelongsToMany
-    {
+
+    public function videos(): BelongsToMany {
         return $this->belongsToMany(Video::class)->withPivot(['is_completed']);
     }
-    public function hasCompletedVideo(int $id): bool
-    {
+
+    public function hasCompletedVideo(int $id): bool {
         $isCompleted = $this->videos()->find($id)?->pivot?->is_completed;
-        return $isCompleted == true;
+
+        return true == $isCompleted;
     }
-    public function toggleVideoStatus(int $id): bool
-    {
+
+    public function toggleVideoStatus(int $id): bool {
         $isCompleted = $this->videos()->find($id)?->pivot?->is_completed;
         $toggle = !$isCompleted;
         $this->videos()->updateExistingPivot($id, [
             'is_completed' => $toggle,
         ]);
-        return $toggle == true;
+
+        return true == $toggle;
     }
-    public function reviews()
-    {
+
+    public function reviews() {
         return $this->hasMany(Review::class);
     }
 
-    public function partnerRequest(): HasOne
-    {
+    public function partnerRequest(): HasOne {
         return $this->hasOne(PartnerRequest::class);
     }
 
-    function taxCalulators(): HasMany
-    {
+    public function taxCalulators(): HasMany {
         return $this->hasMany(TaxCalculator::class);
     }
 
-    function isPartner(): bool
-    {
+    public function isPartner(): bool {
         return $this->hasRole('partner');
     }
 
-
-    function canWithdraw() {
+    public function canWithdraw() {
         $withdrawalAmount = Setting::first()->reference->withdrawal;
         $lastWithdrawal = $this
         ->withdrawals()
         ->latest()
         ->first();
         $hasAmount = $this->remaining_commission >= $withdrawalAmount;
-        $isLastRequestCompleted = $lastWithdrawal === null ? true : $lastWithdrawal->status;
+        $isLastRequestCompleted = null === $lastWithdrawal ? true : $lastWithdrawal->status;
 
-        return ($hasAmount && $isLastRequestCompleted);
+        return $hasAmount && $isLastRequestCompleted;
     }
-    public function video_comments(): HasMany
-    {
+
+    public function video_comments(): HasMany {
         return $this->hasMany(VideoComment::class);
     }
 }

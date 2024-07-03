@@ -2,38 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreServiceRequest;
+use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Section;
 use App\Models\Service;
 use App\Models\ServiceSubCategory;
-use App\Http\Requests\StoreServiceRequest;
-use App\Http\Requests\UpdateServiceRequest;
 
-class ServiceController extends Controller
-{
+class ServiceController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index($subCategoryId)
-    {
+    public function index($subCategoryId) {
         $services = Service::with(['serviceSubCategory', 'serviceCategory'])->where('service_sub_category_id', $subCategoryId)->latest()->paginate(paginateCount());
-        return view('backend.service.viewServices', compact("services"));
+
+        return view('backend.service.viewServices', compact('services'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create($subCategoryId)
-    {
+    public function create($subCategoryId) {
         $subCategory = ServiceSubCategory::find($subCategoryId);
         $service = Service::first();
+
         return view('backend.service.createService', compact('subCategory', 'service'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreServiceRequest $request)
-    {
+    public function store(StoreServiceRequest $request) {
         $service = new Service();
         $service->service_category_id = $request->service_category_id;
         $service->service_sub_category_id = $request->service_sub_category_id;
@@ -53,6 +51,7 @@ class ServiceController extends Controller
             'message' => 'Service Created',
             'alert-type' => 'success',
         ];
+
         return redirect()
             ->back()
             ->with($notification);
@@ -61,25 +60,22 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Service $service)
-    {
-        //
+    public function show(Service $service) {
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Service $service)
-    {
+    public function edit(Service $service) {
         $service = Service::find($service->id);
+
         return view('backend.service.editService', compact('service'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateServiceRequest $request, Service $id)
-    {
+    public function update(UpdateServiceRequest $request, Service $id) {
         $service = $id;
         $service->title = $request->title;
         $service->intro = $request->intro;
@@ -97,6 +93,7 @@ class ServiceController extends Controller
             'message' => 'Service Updated',
             'alert-type' => 'success',
         ];
+
         return back()
             ->with($notification);
     }
@@ -104,20 +101,19 @@ class ServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Service $service)
-    {
-       $service->delete();
-       $notification = [
-        'message' => 'Service Deleted',
-        'alert-type' => 'success',
-    ];
-    return redirect()
-        ->back()
-        ->with($notification);
+    public function destroy(Service $service) {
+        $service->delete();
+        $notification = [
+            'message' => 'Service Deleted',
+            'alert-type' => 'success',
+        ];
+
+        return redirect()
+            ->back()
+            ->with($notification);
     }
 
-    public function setSections($request, $model, string $modelName)
-    {
+    public function setSections($request, $model, string $modelName) {
         // dd($request->section_ids);
         if ($request->section_titles) {
             $dir = str($modelName)->slug();
@@ -128,21 +124,21 @@ class ServiceController extends Controller
                 $sectionId = $request->section_ids[$key] ?? null;
                 $oldSection = $model->sections->find($sectionId);
                 $img = $request->section_images[$key] ?? null;
-                if ($img !== null && $oldSection !== null) {
+                if (null !== $img && null !== $oldSection) {
                     $image = updateFile($img, $oldSection->image, $dir);
                 }
-                if ($img === null && $oldSection !== null) {
+                if (null === $img && null !== $oldSection) {
                     $image = $oldSection->image;
                 }
-                if ($img !== null && $oldSection === null) {
+                if (null !== $img && null === $oldSection) {
                     $image = saveImage($img, $dir);
                 }
                 $section = Section::updateOrCreate(['id' => $sectionId], [
                     'sectionable_type' => $modelName,
                     'sectionable_id' => $model->id,
-                    'title'         => $title,
-                    'description'   => $description,
-                    'image'         => $image
+                    'title' => $title,
+                    'description' => $description,
+                    'image' => $image,
                 ]);
             }
         }

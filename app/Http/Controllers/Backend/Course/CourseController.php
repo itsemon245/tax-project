@@ -6,40 +6,36 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
-use Illuminate\Http\Request;
 
-class CourseController extends Controller
-{
+class CourseController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         $courses = Course::latest()->latest()->paginate(paginateCount());
+
         return view('backend.course.index', compact('courses'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         return view('backend.course.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCourseRequest $request)
-    {
+    public function store(StoreCourseRequest $request) {
         $page_cards = [];
         $page_learn_more = [
             'description' => $request->learn_more_description,
-            'images' => $this->saveFiles($request->learn_more_images, 'course/learn-more')
+            'images' => $this->saveFiles($request->learn_more_images, 'course/learn-more'),
         ];
         $page_topics = [
             'description' => $request->explore_topic_description,
-            'lists' => $request->explore_topic_lists
+            'lists' => $request->explore_topic_lists,
         ];
         // push page cards
         foreach ($request->page_card_titles as $key => $value) {
@@ -74,25 +70,23 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
+    public function show(string $id) {
         $course = Course::findOrFail($id);
+
         return view('backend.course.show', compact('course'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course)
-    {
+    public function edit(Course $course) {
         return view('backend.course.edit', compact('course'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCourseRequest $request, Course $course)
-    {
+    public function update(UpdateCourseRequest $request, Course $course) {
         // dd($request->all());
         $page_cards = [];
         $images = [];
@@ -106,11 +100,11 @@ class CourseController extends Controller
         }
         $page_learn_more = [
             'description' => $request->learn_more_description,
-            'images' => $images
+            'images' => $images,
         ];
         $page_topics = [
             'description' => $request->explore_topic_description,
-            'lists' => $request->explore_topic_lists
+            'lists' => $request->explore_topic_lists,
         ];
         // push page cards
         foreach ($request->page_card_titles as $key => $value) {
@@ -136,31 +130,31 @@ class CourseController extends Controller
         ]);
         $alert = [
             'alert-type' => 'success',
-            'message' => 'Course Updated Successfully'
+            'message' => 'Course Updated Successfully',
         ];
+
         return redirect(route('course.backend.index'))->with($alert);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
-    {
+    public function destroy(Course $course) {
         $course->delete();
 
         return back()->with([
             'alert-type' => 'success',
-            'message' => 'Course Deleted Successfully'
+            'message' => 'Course Deleted Successfully',
         ]);
     }
 
-    function saveFiles(array $files, string $dir, string $prefix = '', string $disk = 'public')
-    {
+    public function saveFiles(array $files, string $dir, string $prefix = '', string $disk = 'public') {
         $paths = [];
         foreach ($files as $key => $file) {
             $path = saveImage($file, $dir, $prefix, $disk);
             $paths[] = $path;
         }
+
         return $paths;
     }
 }

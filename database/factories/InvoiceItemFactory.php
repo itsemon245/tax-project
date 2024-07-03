@@ -7,15 +7,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\InvoiceItem>
  */
-class InvoiceItemFactory extends Factory
-{
+class InvoiceItemFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         $rate = fake()->numberBetween(10, 1000);
         $qty = fake()->numberBetween(1, 50);
         $taxRate = fake()->numberBetween(10, 40);
@@ -25,8 +23,9 @@ class InvoiceItemFactory extends Factory
                 'name' => fake()->word(),
                 'rate' => $taxRate,
                 'number' => fake()->numberBetween(10, 100),
-            ]
+            ],
         ];
+
         return [
             'invoice_id' => 1,
             'name' => fake()->realText(15),

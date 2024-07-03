@@ -2,12 +2,7 @@
 
 namespace App\Filter;
 
-use App\Filter\QueryFilter;
-use Illuminate\Http\Request;
-
-
-class InvoiceFilter extends QueryFilter
-{
+class InvoiceFilter extends QueryFilter {
     protected $allowedParams = [
         'client' => ['eq'],
         'reference' => ['eq'],

@@ -5,13 +5,11 @@ namespace Database\Seeders;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 
-class ProductSeeder extends Seeder
-{
+class ProductSeeder extends Seeder {
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
+    public function run(): void {
         $products = [
             [
                 'title' => fake()->word(),

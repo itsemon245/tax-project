@@ -2,54 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ExpertProfile;
-use App\Models\ExpertCategory;
 use App\Http\Requests\StoreExpertProfileRequest;
 use App\Http\Requests\UpdateExpertProfileRequest;
+use App\Models\ExpertCategory;
+use App\Models\ExpertProfile;
 use App\Models\User;
 
-class ExpertProfileController extends Controller
-{
-    public function __construct()
-    {
+class ExpertProfileController extends Controller {
+    public function __construct() {
         $this->middleware('can:read expert', [
-            'only' => ['index', 'show']
+            'only' => ['index', 'show'],
         ]);
         $this->middleware('can:create expert', [
-            'only' => ['create', 'store']
+            'only' => ['create', 'store'],
         ]);
         $this->middleware('can:update expert', [
-            'only' => ['update', 'edit']
+            'only' => ['update', 'edit'],
         ]);
         $this->middleware('can:delete expert', [
-            'only' => ['destroy']
+            'only' => ['destroy'],
         ]);
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         $profiles = ExpertProfile::paginate(paginateCount());
-        return view("backend.expertProfile.viewExpertProfile", compact('profiles'));
+
+        return view('backend.expertProfile.viewExpertProfile', compact('profiles'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         $expertCategories = ExpertCategory::get();
         $user = User::find(request()->query('user_id'));
         $users = User::role('expert')->get()->pluck('name', 'id');
-        return view("backend.expertProfile.createExpertProfile", compact('expertCategories', 'user', 'users'));
+
+        return view('backend.expertProfile.createExpertProfile', compact('expertCategories', 'user', 'users'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreExpertProfileRequest $request)
-    {
+    public function store(StoreExpertProfileRequest $request) {
         $expert = new ExpertProfile();
         $expert->name = $request->name;
         $expert->user_id = $request->user_id;
@@ -66,7 +64,6 @@ class ExpertProfileController extends Controller
         $expert->image = saveImage($request->image, 'experts');
         $expert->save();
 
-
         $categoryIds = [];
         foreach ($request->categories as $category) {
             $cat = ExpertCategory::firstOrCreate(['name' => $category]);
@@ -76,38 +73,36 @@ class ExpertProfileController extends Controller
         foreach ($categoryIds as $id) {
             $expert->expertCategories()->attach($id);
         }
+
         return redirect()
             ->back()
-            ->with(array(
-                'message'    => "Expert Profile Created",
+            ->with([
+                'message' => 'Expert Profile Created',
                 'alert-type' => 'success',
-            ));
+            ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ExpertProfile $expertProfile)
-    {
-        //
+    public function show(ExpertProfile $expertProfile) {
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ExpertProfile $expertProfile)
-    {
+    public function edit(ExpertProfile $expertProfile) {
         $expertCategories = ExpertCategory::get();
         $user = User::find(request()->query('user_id'));
         $users = User::role('expert')->get()->pluck('name', 'id');
-        return view("backend.expertProfile.editExpertProfile", compact('expertProfile', 'expertCategories', 'user', 'users'));
+
+        return view('backend.expertProfile.editExpertProfile', compact('expertProfile', 'expertCategories', 'user', 'users'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateExpertProfileRequest $request, ExpertProfile $expertProfile)
-    {
+    public function update(UpdateExpertProfileRequest $request, ExpertProfile $expertProfile) {
         $expertProfile->name = $request->name;
         $expertProfile->post = $request->post;
         $expertProfile->user_id = $request->user_id;
@@ -139,22 +134,22 @@ class ExpertProfileController extends Controller
 
         return redirect()
             ->back()
-            ->with(array(
-                'message'    => "Expert Profile Updated",
+            ->with([
+                'message' => 'Expert Profile Updated',
                 'alert-type' => 'success',
-            ));
+            ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ExpertProfile $expertProfile)
-    {
+    public function destroy(ExpertProfile $expertProfile) {
         $expertProfile->delete();
+
         return back()
-            ->with(array(
-                'message'    => "Expert Profile Deleted",
+            ->with([
+                'message' => 'Expert Profile Deleted',
                 'alert-type' => 'success',
-            ));
+            ]);
     }
 }

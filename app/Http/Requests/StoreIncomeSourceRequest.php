@@ -4,14 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreIncomeSourceRequest extends FormRequest
-{
+class StoreIncomeSourceRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return auth()->user() !== null;
+    public function authorize(): bool {
+        return null !== auth()->user();
     }
 
     /**
@@ -19,11 +17,10 @@ class StoreIncomeSourceRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
-            'title'=>'required',
-            'image'=>'required',
+            'title' => 'required',
+            'image' => 'required',
         ];
     }
 }

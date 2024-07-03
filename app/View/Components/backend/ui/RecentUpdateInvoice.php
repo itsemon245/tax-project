@@ -3,24 +3,20 @@
 namespace App\View\Components\backend\ui;
 
 use Closure;
-use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
-class RecentUpdateInvoice extends Component
-{
+class RecentUpdateInvoice extends Component {
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
-        //
+    public function __construct() {
     }
 
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
-    {
+    public function render(): View|Closure|string {
         return view('components.backend.ui.recent-update-invoice');
     }
 }

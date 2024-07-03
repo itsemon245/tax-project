@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Review;
-use Illuminate\Http\Request;
 use App\Models\ExpertProfile;
+use App\Models\Review;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
-class ExpertController extends Controller
-{
-    public function profile(int $id)
-    {
+class ExpertController extends Controller {
+    public function profile(int $id) {
         $expert = ExpertProfile::withAvg('reviews', 'rating')
             ->withCount(reviewsAndStarCounts())
             ->find($id);
         $reviews = $expert->reviews;
         $user = User::find(auth()->id());
-        $canReview = $user ? $user->purchased('ExpertProfile')->find($expert->id) !== null : false;
+        $canReview = $user ? null !== $user->purchased('ExpertProfile')->find($expert->id) : false;
+
         return view('frontend.pages.expert.profile', compact('reviews', 'expert', 'canReview'));
     }
 
-
-    public function browse(Request $request)
-    {
+    public function browse(Request $request) {
         $paramMap = [
             'experience_from' => '>=',
             'experience_to' => '<=',
@@ -39,7 +36,7 @@ class ExpertController extends Controller
 
         $queries = [];
 
-        $experts = ExpertProfile::where(function (Builder $q) use ($columnMap, $request, $paramMap) {
+        $experts = ExpertProfile::where(function (Builder $q) use ($request) {
             $posts = $request->query('posts');
             $district = $request->query('district');
             $thana = $request->query('thana');
@@ -75,7 +72,7 @@ class ExpertController extends Controller
         $district = request()->query('district') ?? ($districts[0] ?? null);
         if ($district) {
             $thanas = ExpertProfile::where('district', $district)->distinct()->latest()->get('thana')->pluck('thana');
-        }else{
+        } else {
             $thanas = ExpertProfile::distinct()->latest()->get('thana')->pluck('thana');
         }
         $minExp = ExpertProfile::min('experience');
@@ -84,6 +81,7 @@ class ExpertController extends Controller
             ->latest()
             ->limit(10)
             ->latest()->get();
-        return view('frontend.pages.expert.browse', compact('experts', 'minExp', 'maxExp',  'posts', 'districts', 'thanas', 'reviews'));
+
+        return view('frontend.pages.expert.browse', compact('experts', 'minExp', 'maxExp', 'posts', 'districts', 'thanas', 'reviews'));
     }
 }

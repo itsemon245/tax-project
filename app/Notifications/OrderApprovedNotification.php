@@ -8,16 +8,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class OrderApprovedNotification extends Notification implements ShouldQueue
-{
+class OrderApprovedNotification extends Notification implements ShouldQueue {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public User $user)
-    {
-        //
+    public function __construct(public User $user) {
     }
 
     /**
@@ -25,20 +22,19 @@ class OrderApprovedNotification extends Notification implements ShouldQueue
      *
      * @return array<int, string>
      */
-    public function via(object $notifiable): array
-    {
+    public function via(object $notifiable): array {
         return ($notifiable->email_verified_at ?? true) ? ['mail', 'database'] : ['database'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
-    {
+    public function toMail(object $notifiable): MailMessage {
         $user = $this->user;
-        return (new MailMessage)
+
+        return (new MailMessage())
                     ->greeting("Dear $user->name,")
-                    ->line("Your order has been approved")
+                    ->line('Your order has been approved')
                     ->action('View Purchases', url('/purchase'))
                     ->line('It\'s a pleasure doing business with you')
                     ->line('Yours Faithfully,')
@@ -50,12 +46,11 @@ class OrderApprovedNotification extends Notification implements ShouldQueue
      *
      * @return array<string, mixed>
      */
-    public function toArray(object $notifiable): array
-    {
+    public function toArray(object $notifiable): array {
         return [
             'title' => 'Order Approved',
             'body' => 'Your Order Has been approved',
-            'url' => url('/purchase')
+            'url' => url('/purchase'),
         ];
     }
 }

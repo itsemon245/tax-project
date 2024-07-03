@@ -2,18 +2,13 @@
 
 namespace App\Models;
 
-use App\Interfaces\Services\SettingInterface;
-use Illuminate\Support\Arr;
-use App\Models\ProductCategory;
-use App\Models\ProductSubCategory;
 use App\Traits\HasPurchases;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Product extends Model
-{
+class Product extends Model {
     use HasFactory;
     use HasPurchases;
 
@@ -22,27 +17,23 @@ class Product extends Model
      */
     protected $guarded = [];
 
-    public function productCategory()
-    {
+    public function productCategory() {
         return $this->belongsTo(ProductCategory::class);
     }
-    public function productSubCategory()
-    {
+
+    public function productSubCategory() {
         return $this->belongsTo(ProductSubCategory::class);
     }
 
-    public function user()
-    {
+    public function user() {
         return $this->belongsTo(User::class);
     }
-    function reviews() : MorphMany
-    {
+
+    public function reviews(): MorphMany {
         return $this->morphMany(Review::class, 'reviewable');
     }
 
-
-    public static function mappedProducts(array $queries) : array
-    {
+    public static function mappedProducts(array $queries): array {
         $silverProducts = [];
         $goldProducts = [];
         $platinumProducts = [];
@@ -63,7 +54,7 @@ class Product extends Model
                     break;
 
                 default:
-                    # code...
+                    // code...
                     break;
             }
         }
@@ -71,28 +62,25 @@ class Product extends Model
         return array_combine(['Silver', 'Gold', 'Platinum', 'Exclusive'], [$silverProducts, $goldProducts, $platinumProducts, $exclusiveProducts]);
     }
 
-
-    public function purchase()
-    {
+    public function purchase() {
         return $this->morphMany(Purchase::class, 'purchasable');
     }
-    public function isPurchased(int $userId = null)
-    {
-        if ($userId === null) {
+
+    public function isPurchased(?int $userId = null) {
+        if (null === $userId) {
             $userId = auth()->id();
         }
+
         return $this->morphMany(Purchase::class, 'purchasable')->where('user_id', $userId);
     }
 
-
-
-    public function price() : Attribute
-    {
+    public function price(): Attribute {
         $commission = app('setting')->reference->partner_commission;
         /**
          * @var User $user
          */
         $user = auth()->user();
+
         return Attribute::make(
             get: fn ($value) => $user?->isPartner() ? $value - ($value * $commission / 100) : $value
         );

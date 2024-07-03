@@ -1,7 +1,6 @@
-<?php 
+<?php
+
 namespace App\Helper;
 
-class Flash{
-
+class Flash {
 }
-?>

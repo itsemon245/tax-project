@@ -4,13 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateExamRequest extends FormRequest
-{
+class UpdateExamRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
+    public function authorize(): bool {
         return true;
     }
 
@@ -19,13 +17,12 @@ class UpdateExamRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
-            "name"          => "required",
-            "course"        => "required",
-            "total_marks"   => "required",
-            "passing_marks" => "required",
+            'name' => 'required',
+            'course' => 'required',
+            'total_marks' => 'required',
+            'passing_marks' => 'required',
         ];
     }
 }

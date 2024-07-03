@@ -2,50 +2,43 @@
 
 namespace App\Http\Controllers\Backend\PromoCode;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePromoCodeRequest;
+use App\Http\Requests\UpdatePromoCodeRequest;
 use App\Mail\TestMail;
 use App\Models\PromoCode;
-use App\Mail\PromoCodeCreated;
-use App\Models\UserNotification;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Http\Requests\StorePromoCodeRequest;
+use App\Models\User;
 use App\Notifications\PromoCodeNotification;
-use Illuminate\Support\Facades\Notification;
-use App\Http\Requests\UpdatePromoCodeRequest;
+use Illuminate\Support\Facades\Mail;
 
-class PromoCodeController extends Controller
-{
+class PromoCodeController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         $promos = PromoCode::with('user:id,name')->latest()->paginate(paginateCount());
+
         return view('backend.promoCode.viewPormoCode', compact('promos'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         return view('backend.promoCode.createPromoCode');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePromoCodeRequest $request)
-    {
+    public function store(StorePromoCodeRequest $request) {
         // dd($request->all());
         $promoCode = PromoCode::create(
             [
                 'code' => $request->code,
                 'amount' => $request->amount,
-                'is_discount' => $request->is_discount === "false" ? false : true,
-                'expired_at' => $request->expired_at
+                'is_discount' => 'false' === $request->is_discount ? false : true,
+                'expired_at' => $request->expired_at,
             ]
         );
 
@@ -71,20 +64,19 @@ class PromoCodeController extends Controller
             $user->promoCodes()->attach($promoCode->id, ['limit' => $request->limit]);
             $user->notify(new PromoCodeNotification($promoCode));
         }
+
         return redirect()
-            ->route("promo-code.index")
-            ->with(array(
-                'message' => "Promo Code Created Successfully",
+            ->route('promo-code.index')
+            ->with([
+                'message' => 'Promo Code Created Successfully',
                 'alert-type' => 'success',
-            ));
+            ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(PromoCode $promoCode)
-    {
-        //
+    public function show(PromoCode $promoCode) {
     }
 
     /**
@@ -145,21 +137,21 @@ class PromoCodeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PromoCode $promoCode)
-    {
+    public function destroy(PromoCode $promoCode) {
         PromoCode::find($promoCode->id)->delete();
-        return back()->with(array(
-            'message' => "Promo Code Deleted Successfully",
+
+        return back()->with([
+            'message' => 'Promo Code Deleted Successfully',
             'alert-type' => 'success',
-        ));
+        ]);
     }
 
     /**
-     * Get User According User Type
+     * Get User According User Type.
      */
-    public function getUsers()
-    {
+    public function getUsers() {
         $users = User::all();
+
         return $users;
     }
 }

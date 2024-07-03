@@ -4,15 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Setting;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class SettingSeeder extends Seeder
-{
+class SettingSeeder extends Seeder {
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
+    public function run(): void {
         $logo = picsum(fake()->name());
         Setting::create([
             'basic' => [
@@ -40,7 +37,7 @@ class SettingSeeder extends Seeder
                 [
                     'method' => 'rocket',
                     'number' => fake()->phoneNumber(),
-                ]
+                ],
             ],
             'return_links' => [
                 [
@@ -51,7 +48,7 @@ class SettingSeeder extends Seeder
                     'title' => fake()->realText(10),
                     'link' => fake()->url(),
                 ],
-            ]
+            ],
         ]);
     }
 }

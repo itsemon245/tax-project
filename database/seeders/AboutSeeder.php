@@ -5,15 +5,12 @@ namespace Database\Seeders;
 use App\Models\About;
 use App\Models\Section;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class AboutSeeder extends Seeder
-{
+class AboutSeeder extends Seeder {
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
+    public function run(): void {
         $about = About::create([
             'description' => fake()->realText(),
         ]);

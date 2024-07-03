@@ -1,62 +1,62 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ExamController;
-use App\Http\Controllers\ResultController;
-use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\IndustryController;
-use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AchievementController;
-use App\Http\Controllers\IncomeSourceController;
-use App\Http\Controllers\SocialHandleController;
-use App\Http\Controllers\Backend\OrderController;
-use App\Http\Controllers\Backend\VideoController;
-use App\Http\Controllers\ExpertProfileController;
-use App\Http\Controllers\Review\ReviewController;
-use App\Http\Controllers\Backend\Map\MapController;
-use App\Http\Controllers\CaseStudyPackageController;
-use App\Http\Controllers\Backend\Book\BookController;
-use App\Http\Controllers\Backend\CaseStudyController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\Info\InfoController;
-use App\Http\Controllers\Backend\Role\RoleController;
-use App\Http\Controllers\Backend\User\UserController;
-use App\Http\Controllers\Backend\Hero\BannerController;
-use App\Http\Controllers\Backend\Pages\AboutController;
-use App\Http\Controllers\Backend\Role\MemberController;
-use App\Http\Controllers\Backend\Tax\ResultsController;
-use App\Http\Controllers\Backend\UserProfileController;
-use App\Http\Controllers\Backend\Chalan\ChalanController;
-use App\Http\Controllers\Backend\Client\ClientController;
-use App\Http\Controllers\Backend\Course\CourseController;
-use App\Http\Controllers\Backend\Invoice\ReportController;
-use App\Http\Controllers\Backend\Expense\ExpenseController;
-use App\Http\Controllers\Backend\Invoice\InvoiceController;
-use App\Http\Controllers\Backend\Product\ProductController;
-use App\Http\Controllers\Backend\Project\ProjectController;
-use App\Http\Controllers\Backend\UserAppointmentController;
-use App\Http\Controllers\Backend\UserDoc\UserDocController;
-use App\Http\Controllers\Backend\Settings\SettingController;
+use App\Http\Controllers\Backend\Appointment\AppointmentController;
 use App\Http\Controllers\Backend\Book\BookCategoryController;
+use App\Http\Controllers\Backend\Book\BookController;
+use App\Http\Controllers\Backend\BulkDeleteController;
 use App\Http\Controllers\Backend\Calendar\CalendarController;
+use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
+use App\Http\Controllers\Backend\CaseStudyController;
+use App\Http\Controllers\Backend\Chalan\ChalanController;
 use App\Http\Controllers\Backend\CkEditor\CkEditorController;
+use App\Http\Controllers\Backend\Client\ClientController;
+use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
+use App\Http\Controllers\Backend\Course\CourseController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Expense\ExpenseController;
+use App\Http\Controllers\Backend\Hero\BannerController;
+use App\Http\Controllers\Backend\Info\InfoController;
+use App\Http\Controllers\Backend\Invoice\InvoiceController;
 use App\Http\Controllers\Backend\Invoice\InvoiceItemController;
+use App\Http\Controllers\Backend\Invoice\ReportController;
+use App\Http\Controllers\Backend\Map\MapController;
+use App\Http\Controllers\Backend\Notification\NotificationController;
+use App\Http\Controllers\Backend\OrderController;
+use App\Http\Controllers\Backend\Pages\AboutController;
+use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\Backend\Product\ProductCategoryController;
+use App\Http\Controllers\Backend\Product\ProductController;
+use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
+use App\Http\Controllers\Backend\Project\ProjectController;
 use App\Http\Controllers\Backend\PromoCode\PromoCodeController;
 use App\Http\Controllers\Backend\ReturnForm\ReturnFormController;
+use App\Http\Controllers\Backend\Role\MemberController;
+use App\Http\Controllers\Backend\Role\RoleController;
 use App\Http\Controllers\Backend\Service\CustomServiceController;
-use App\Http\Controllers\Backend\Withdrawal\WithdrawalController;
-use App\Http\Controllers\Backend\Appointment\AppointmentController;
-use App\Http\Controllers\Backend\BulkDeleteController;
-use App\Http\Controllers\Backend\Product\ProductCategoryController;
-use App\Http\Controllers\Backend\Testimonial\TestimonialController;
-use App\Http\Controllers\Backend\TaxCalculator\TaxSettingController;
-use App\Http\Controllers\Backend\ClientStudio\ClientStudioController;
-use App\Http\Controllers\Backend\Notification\NotificationController;
-use App\Http\Controllers\Backend\Product\ProductSubCategoryController;
 use App\Http\Controllers\Backend\Service\ServiceSubCategoryController;
-use App\Http\Controllers\Backend\CaseStudy\CaseStudyCategoryController;
-use App\Http\Controllers\Backend\PartnerSection\PartnerSectionController;
+use App\Http\Controllers\Backend\Settings\SettingController;
+use App\Http\Controllers\Backend\Tax\ResultsController;
+use App\Http\Controllers\Backend\TaxCalculator\TaxSettingController;
+use App\Http\Controllers\Backend\Testimonial\TestimonialController;
+use App\Http\Controllers\Backend\User\UserController;
+use App\Http\Controllers\Backend\UserAppointmentController;
+use App\Http\Controllers\Backend\UserDoc\UserDocController;
+use App\Http\Controllers\Backend\UserProfileController;
+use App\Http\Controllers\Backend\VideoController;
 use App\Http\Controllers\Backend\Withdrawal\CommissionHistoryController;
+use App\Http\Controllers\Backend\Withdrawal\WithdrawalController;
+use App\Http\Controllers\CaseStudyPackageController;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ExpertProfileController;
+use App\Http\Controllers\IncomeSourceController;
+use App\Http\Controllers\IndustryController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ResultController;
+use App\Http\Controllers\Review\ReviewController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SocialHandleController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,9 +67,7 @@ use App\Http\Controllers\Backend\Withdrawal\CommissionHistoryController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
-
-
+ */
 
 Route::prefix('admin')
     ->middleware(['auth', 'can:visit admin panel'])
@@ -81,14 +79,13 @@ Route::prefix('admin')
             return view('test');
         });
 
-
-        //General Routes
+        // General Routes
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/', 'index')->name('dashboard');
             Route::get('/get-chart-data', 'getChartData')->name('get.chart.data');
         });
 
-        //Routes for backend CRUD operation
+        // Routes for backend CRUD operation
 
         Route::resource('users', UserController::class); // middlewares are in constructor
         Route::resource('testimonial', TestimonialController::class)->middleware('can:manage reviews');
@@ -108,14 +105,12 @@ Route::prefix('admin')
             ->only('index')
             ->middleware('can:read product');
 
-
         Route::resource('book', BookController::class)
             ->except('index')
             ->middleware('can:manage book');
         Route::resource('book', BookController::class)
             ->only('index')
             ->middleware('can:read book');
-
 
         Route::resource('book-category', BookCategoryController::class)
             ->except('index')
@@ -200,7 +195,6 @@ Route::prefix('admin')
             ->only(['destroy'])
             ->middleware('can:delete map');
 
-
         // Route and middlewares for role
         Route::resource('role', RoleController::class)
             ->only(['index'])
@@ -214,7 +208,6 @@ Route::prefix('admin')
         Route::resource('role', RoleController::class)
             ->only(['destroy'])
             ->middleware('can:delete role');
-
 
         // Route and middlewares for invoice
         Route::resource('invoice', InvoiceController::class);
@@ -305,7 +298,6 @@ Route::prefix('admin')
             ->middleware('can:manage exam');
         Route::resource('result', ResultController::class)->middleware('can:manage exam');
 
-
         Route::prefix('setting')
             ->controller(SettingController::class)
             ->name('setting.')
@@ -327,7 +319,6 @@ Route::prefix('admin')
         Route::get('referees', [WithdrawalController::class, 'referees'])->name('referees')->middleware('can:read withdrawal request');
         Route::get('commission-history/{user}', [CommissionHistoryController::class, 'index'])->name('commission.history')->middleware('can:read withdrawal request');
 
-
         Route::resource('course', CourseController::class)
             ->names([
                 'index' => 'course.backend.index',
@@ -342,7 +333,6 @@ Route::prefix('admin')
             ])
             ->except(['index'])
             ->middleware('can:manage course');
-
 
         Route::resource('userDoc', UserDocController::class)->names([
             'index' => 'userDoc.backend.index',
@@ -405,13 +395,10 @@ Route::prefix('admin')
         Route::resource('member', MemberController::class);
         Route::resource('expense', ExpenseController::class);
 
-
-
-
         // custom Routes
 
         Route::get('get/client/{id}', [ChalanController::class, 'clientInfo'])->name('get.client.info');
-        //Review backend
+        // Review backend
         Route::prefix('/review')->name('backend.review.')->controller(ReviewController::class)->group(function () {
             Route::get('/index', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
@@ -419,7 +406,7 @@ Route::prefix('admin')
             Route::delete('{id}/destroy', 'destroy')->name('destroy');
         });
 
-        //service related routes
+        // service related routes
         Route::resource('service-subcategory', ServiceSubCategoryController::class);
         Route::resource('custom-service', CustomServiceController::class);
         // custom routes for service only for spacial purpose
@@ -448,24 +435,23 @@ Route::prefix('admin')
                 Route::delete('delete-time/{time}', 'timeDelete')->name('time.delete');
             });
 
-        //custom routes
+        // custom routes
         Route::get('get-invoice-data/{id}', [InvoiceController::class, 'getInvoiceData']);
         Route::delete('/invoice-item/delete/{id}', [InvoiceController::class, 'deleteInvoiceItem']);
         Route::POST('/get-users', [PromoCodeController::class, 'getUsers'])->name('getUsers');
         Route::POST('/get-info-section-title/{sectionId}', [InfoController::class, 'getInfoSectionTitle'])->name('getInfoSectionTitle');
-        Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); //Change password on admin panel
+        Route::post('user-profile/1/edited', [UserProfileController::class, 'changePassword'])->name('user-profile.changePassword'); // Change password on admin panel
         Route::resource('calendar', CalendarController::class);
         Route::patch('mark-event-completed', [CalendarController::class, 'markCompleted'])->name('mark.event.completed');
         Route::patch('mark-event-rejected', [CalendarController::class, 'markRejected'])->name('mark.event.rejected');
         Route::get('fetch-events', [CalendarController::class, 'fetchEvents'])->name('event.fetch');
         Route::patch('drag-update/{calendar}', [CalendarController::class, 'dragUpdate'])->name('event.dragUpdate');
-        Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become'); //User profile to become a partner update
+        Route::PUT('user-to-become-partner/{id}', [UserProfileController::class, 'userToBecomePartner'])->name('user-profile.update.become'); // User profile to become a partner update
         Route::resource('client', ClientController::class);
-        Route::get('client-execl-demo-download', [ClientController::class , 'downloadDemoExcel'])->name('client.execl.demo');
+        Route::get('client-execl-demo-download', [ClientController::class, 'downloadDemoExcel'])->name('client.execl.demo');
         Route::resource('book', BookController::class);
-        Route::POST('upload-large-video', [VideoController::class, 'videoUpload'])->name('video.upload'); //Uploading Video file
+        Route::POST('upload-large-video', [VideoController::class, 'videoUpload'])->name('video.upload'); // Uploading Video file
     });
 
-
-//test routes
+// test routes
 Route::post('upload-image', [CkEditorController::class, 'uploadImage'])->name('upload.image');

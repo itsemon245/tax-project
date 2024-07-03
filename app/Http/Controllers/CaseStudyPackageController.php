@@ -2,27 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CaseStudy;
-use App\Models\CaseStudyPackage;
-use Symfony\Component\HttpFoundation\Request;
 use App\Http\Requests\StoreCaseStudyPageRequest;
 use App\Http\Requests\UpdateCaseStudyPageRequest;
-use App\Models\CaseStudyCategory;
-use Database\Seeders\CaseStudySeeder;
-use Ramsey\Uuid\Type\Integer;
+use App\Models\CaseStudyPackage;
 
-class CaseStudyPackageController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('can: read case study',   [
-            'only' => ['index']
+class CaseStudyPackageController extends Controller {
+    public function __construct() {
+        $this->middleware('can: read case study', [
+            'only' => ['index'],
         ]);
-        $this->middleware('can:manage case study',   [
-            'except' => ['index']
+        $this->middleware('can:manage case study', [
+            'except' => ['index'],
         ]);
     }
-    
 
     /**
      * Display a listing of the resource.
@@ -31,20 +23,19 @@ class CaseStudyPackageController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         $caseStudyData = CaseStudyPackage::first();
+
         return view('backend.caseStudyPackage.caseStudyIndex', compact('caseStudyData'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCaseStudyPageRequest $request)
-    {
+    public function store(StoreCaseStudyPageRequest $request) {
         $caseStudyData = CaseStudyPackage::first();
 
-        if ($caseStudyData === null) {
+        if (null === $caseStudyData) {
             $caseStudy = new CaseStudyPackage();
             $caseStudy->page_title = $request->title;
             $caseStudy->page_description = $request->page_description;
@@ -76,26 +67,24 @@ class CaseStudyPackageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
-    {
+    public function show() {
         return view('frontend.pages.course.caseStudySingleCategory');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $datum = CaseStudyPackage::find($id);
         $caseStudyData = CaseStudyPackage::first();
+
         return view('backend.caseStudyPackage.editCaseStudy', compact('datum', 'caseStudyData'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCaseStudyPageRequest $request, $id)
-    {
+    public function update(UpdateCaseStudyPageRequest $request, $id) {
         $caseStudyData = CaseStudyPackage::skip(0)->value('id');
         if ($caseStudyData == $id) {
             $caseStudy = CaseStudyPackage::find($id);
@@ -122,20 +111,20 @@ class CaseStudyPackageController extends Controller
             'message' => 'Record Updated',
             'alert-type' => 'success',
         ];
+
         return redirect()
             ->back()
             ->with($notification);
     }
 
-    //Custom method for show all data
-    public function showAll()
-    {
+    // Custom method for show all data
+    public function showAll() {
         $CaseStudyPackages = CaseStudyPackage::all();
+
         return view('backend.caseStudyPackage.viewCaseStudy', compact('CaseStudyPackages'));
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $datum = CaseStudyPackage::findOrFail($id);
         $caseStudyData = (string) CaseStudyPackage::skip(0)->value('id');
         if ($datum->id == $caseStudyData) {
@@ -151,6 +140,7 @@ class CaseStudyPackageController extends Controller
             'message' => 'Record Deleted',
             'alert-type' => 'success',
         ];
+
         return back()->with($notification);
     }
 }

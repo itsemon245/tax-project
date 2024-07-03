@@ -2,37 +2,35 @@
 
 namespace App\Http\Controllers\Backend\User;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Builder;
+use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
-{
-    public function __construct()
-    {
+class UserController extends Controller {
+    public function __construct() {
         $this->middleware('can:read user', [
-            'only' => ['index', 'show', 'internalUsers']
+            'only' => ['index', 'show', 'internalUsers'],
         ]);
         $this->middleware('can:create user', [
-            'only' => ['create', 'store']
+            'only' => ['create', 'store'],
         ]);
         $this->middleware('can:update user', [
-            'only' => ['update', 'edit']
+            'only' => ['update', 'edit'],
         ]);
         $this->middleware('can:delete user', [
-            'only' => ['destroy']
+            'only' => ['destroy'],
         ]);
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         $user = Auth::user();
         $data = User::with('roles')
         ->whereHas('roles', function (Builder $q) {
@@ -41,13 +39,14 @@ class UserController extends Controller
         })
         ->whereNot('id', auth()->id())
         ->latest()->paginate(paginateCount());
+
         return view('backend.users.view-users', compact('user', 'data'));
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function internalUsers()
-    {
+    public function internalUsers() {
         $goBackUrl = route('users.internal');
         session()->put('go_back_url', $goBackUrl);
 
@@ -58,24 +57,23 @@ class UserController extends Controller
             $q->whereNot('name', 'user');
         })
         ->whereNot('id', auth()->id())->latest()->latest()->paginate(paginateCount());
+
         return view('backend.users.view-users', compact('user', 'data'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         $roles = Role::all();
+
         return view('backend.users.create-users', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-
+    public function store(Request $request) {
         $request->validate([
             'name' => 'required',
             'user_name' => 'required|unique:users,user_name',
@@ -84,7 +82,7 @@ class UserController extends Controller
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'admin_ref' => 'required',
-            'user_image' => 'required|image'
+            'user_image' => 'required|image',
         ]);
 
         $userData = new User();
@@ -106,7 +104,7 @@ class UserController extends Controller
             'message' => 'User Profile Created',
             'alert-type' => 'success',
         ];
-        if ($userData->role_name == 'expert') {
+        if ('expert' == $userData->role_name) {
             return redirect(route('expert-profile.create')."?user_id=$userData->id")->with($notification);
         }
 
@@ -116,25 +114,24 @@ class UserController extends Controller
         } else {
             $goBackUrl = route('users.index');
         }
+
         return redirect($goBackUrl)->with($notification);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
+    public function edit(string $id) {
         $user = User::with('roles')->where('id', $id)->first();
         $roles = Role::all();
+
         return view('backend.users.edit-users', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-
+    public function update(Request $request, $id) {
         $request->validate([
             'name' => 'required',
             'user_name' => "unique:users,user_name,$id",
@@ -160,7 +157,7 @@ class UserController extends Controller
             'message' => 'User Profile Updated',
             'alert-type' => 'success',
         ];
-        if ($userData->role_name == 'expert') {
+        if ('expert' == $userData->role_name) {
             $url = $userData->expertProfile ?
             route('expert-profile.edit', ['expert_profile' => $userData->expertProfile->id])."?user_id=$userData->id"
             :
@@ -175,18 +172,18 @@ class UserController extends Controller
         } else {
             $goBackUrl = route('users.index');
         }
+
         return redirect($goBackUrl)->with($notification);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
+    public function destroy(string $id) {
         $user = User::find($id);
         $explode = explode('/', $user->image_url);
         $imageName = end($explode);
-        $path = 'public/uploads/profile/' . $imageName;
+        $path = 'public/uploads/profile/'.$imageName;
         if (Storage::exists($path)) {
             Storage::delete($path);
         }
@@ -202,6 +199,7 @@ class UserController extends Controller
         } else {
             $goBackUrl = route('users.index');
         }
+
         return redirect($goBackUrl)->with($notification);
     }
 }

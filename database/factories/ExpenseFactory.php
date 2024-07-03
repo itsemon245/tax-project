@@ -7,18 +7,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Expense>
  */
-class ExpenseFactory extends Factory
-{
+class ExpenseFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         $type = fake()->randomElement(['credit', 'debit']);
         $amount = random_int(10, 1000);
-        $balance = $type === 'credit' ? $amount : $amount * (-1);
+        $balance = 'credit' === $type ? $amount : $amount * (-1);
+
         return [
             'date' => fake()->date(),
             // 'spend_on' => fake()->realText(20),
@@ -30,8 +29,8 @@ class ExpenseFactory extends Factory
             'items' => [
                 [
                     'amount' => random_int(10, 1000),
-                    'description' => fake()->realText(200)
-                ]
+                    'description' => fake()->realText(200),
+                ],
             ],
         ];
     }

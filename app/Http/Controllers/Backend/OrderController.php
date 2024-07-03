@@ -2,39 +2,37 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Purchase;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CommissionHistory;
 use App\Models\Course;
+use App\Models\Purchase;
 use App\Models\Referee;
 use App\Models\UserAppointment;
 use App\Notifications\OrderApprovedNotification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
-class OrderController extends Controller
-{
-    public function index(Request $request)
-    {
+class OrderController extends Controller {
+    public function index(Request $request) {
         $payments = Purchase::where('approved', $request->status)->has('purchasable')->with('user')->latest('updated_at')->latest()->paginate(paginateCount());
+
         return view('backend.payment.approved', compact('payments'));
     }
 
-    public function consultancyIndex()
-    {
+    public function consultancyIndex() {
         $appointments = UserAppointment::with('expertProfile')->whereNot('expert_profile_id', null)->latest()->latest()->get();
+
         return view('backend.payment.consultancyApproved', compact('appointments'));
     }
 
-    public function status($id)
-    {
-
+    public function status($id) {
         $payment = Purchase::find($id);
         $user = $payment->user;
         $referee = Referee::with('user')->where('user_id', $user->id)->first();
         try {
             DB::beginTransaction();
-            if ($payment->approved == 0) {
+            if (0 == $payment->approved) {
                 $payment->approved = 1;
                 $payment->approved_at = now();
                 $parent = $referee?->parent;
@@ -54,11 +52,11 @@ class OrderController extends Controller
                         'item_id' => $payment->purchasable_id,
                         'trx_id' => $payment->trx_id,
                         'percentage' => (float) $referee->commission,
-                        'earning' => $commission
+                        'earning' => $commission,
                     ]);
                 }
             }
-            if ($payment->purchasable_type === 'Course') {
+            if ('Course' === $payment->purchasable_type) {
                 $course = Course::with('videos')->find($payment->purchasable_id);
                 $videos = $course->videos()->with('users')->latest()->get();
                 foreach ($videos as $video) {
@@ -72,16 +70,16 @@ class OrderController extends Controller
                 'alert-type' => 'success',
             ];
             $user->notify(new OrderApprovedNotification($user));
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollBack();
-            if (config('app.env') == 'local') {
+            if ('local' == config('app.env')) {
                 dd($th);
             }
             $notification = [
                 'message' => $th->getMessage(),
                 'alert-type' => 'success',
             ];
-            //throw $th;
+            // throw $th;
         }
 
         return redirect()
@@ -89,10 +87,9 @@ class OrderController extends Controller
             ->with($notification);
     }
 
-    public function consultancyStatus($id)
-    {
+    public function consultancyStatus($id) {
         $payments = Purchase::find($id);
-        if ($payments->approved == 0) {
+        if (0 == $payments->approved) {
             $payments->approved = 1;
         } else {
             $payments->approved = 0;
@@ -108,14 +105,13 @@ class OrderController extends Controller
             ->with($notification);
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
         Purchase::find($id)->delete();
         $notification = [
             'message' => 'Successfully Deleted',
             'alert-type' => 'success',
         ];
+
         return back()->with($notification);
-        ;
     }
 }

@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CaseStudy>
  */
-class CaseStudyFactory extends Factory
-{
+class CaseStudyFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         $name = fake()->realText(15);
+
         return [
             'case_study_package_id' => 1,
             'name' => $name,

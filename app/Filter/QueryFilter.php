@@ -4,11 +4,9 @@ namespace App\Filter;
 
 use Illuminate\Http\Request;
 
-class QueryFilter
-{
+class QueryFilter {
     protected $allowedParams = [];
     protected $columnMap = [];
-
 
     protected $operatorMap = [
         'eq' => '=',
@@ -22,9 +20,7 @@ class QueryFilter
         'in' => 'IN',
     ];
 
-
-    public function transform(Request $request)
-    {
+    public function transform(Request $request) {
         $eloQuery = [];
         foreach ($this->allowedParams as $param => $operators) {
             $query = $request->query($param);
@@ -34,17 +30,17 @@ class QueryFilter
             }
             $column = $this->columnMap[$param];
 
-            foreach ($operators as  $operator) {
-
+            foreach ($operators as $operator) {
                 if (str_contains($query, $operator)) {
                     $index = strpos($query, ']') + 1;
                     $value = substr($query, $index);
-                    $eloQuery[] = ($operator === 'like' || $operator === 'nl') ?
-                        [$column, $this->operatorMap[$operator], "%" . $value . "%"]
+                    $eloQuery[] = ('like' === $operator || 'nl' === $operator) ?
+                        [$column, $this->operatorMap[$operator], '%'.$value.'%']
                         : [$column, $this->operatorMap[$operator], $value];
                 }
             }
         }
+
         return $eloQuery;
     }
 }

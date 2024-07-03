@@ -1,8 +1,7 @@
-<?php 
+<?php
+
 namespace App\Interfaces\Helper;
 
-interface FlashInterface{
-
+interface FlashInterface {
     public function success(): array;
-
 }

@@ -7,17 +7,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CaseStudyCategory>
  */
-class CaseStudyCategoryFactory extends Factory
-{
+class CaseStudyCategoryFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
-            'name'=> fake()->realText(15)
+            'name' => fake()->realText(15),
         ];
     }
 }

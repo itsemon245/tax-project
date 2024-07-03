@@ -2,42 +2,36 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 
-class Client extends Model
-{
+class Client extends Model {
     use HasFactory;
     protected $guarded = [];
 
-    public function calendars()
-    {
+    public function calendars() {
         return $this->hasMany(Calendar::class);
     }
-    public function invoices()
-    {
+
+    public function invoices() {
         return $this->hasMany(Invoice::class);
     }
 
-    function projects(): BelongsToMany
-    {
+    public function projects(): BelongsToMany {
         return $this->belongsToMany(Project::class);
     }
 
-    function tasks(int $projectId): BelongsToMany
-    {
+    public function tasks(int $projectId): BelongsToMany {
         return $this->belongsToMany(Task::class)->where('project_id', $projectId);
     }
 
-    function users(): BelongsToMany
-    {
+    public function users(): BelongsToMany {
         return $this->belongsToMany(User::class);
     }
 
-    function isEmployeeAssigned($projectId, $userId): bool
-    {
+    public function isEmployeeAssigned($projectId, $userId): bool {
         $options = [
             'client_id' => $this->id,
             'user_id' => $userId,
@@ -46,16 +40,16 @@ class Client extends Model
         $item = DB::table('client_user')
             ->where($options)->first();
 
-        return $item !== null;
+        return null !== $item;
     }
 
-    function toggleTask($projectId, $taskId)
-    {
+    public function toggleTask($projectId, $taskId) {
         $task = $this->tasks($projectId)->withPivot('status')->wherePivot('task_id', $taskId)->first();
         $status = $task->pivot->status;
         $toggle = $this->tasks($projectId)->updateExistingPivot($taskId, [
-            'status' => !$status
+            'status' => !$status,
         ]);
+
         return $task;
     }
 }

@@ -7,18 +7,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Info>
  */
-class InfoFactory extends Factory
-{
+class InfoFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         $seed = fake()->word();
         $sectionId = fake()->randomElement([1, 2]);
-        $title = $sectionId === 1 ? 'we help you file quickly and confidently' : 'how income tax filling process works';
+        $title = 1 === $sectionId ? 'we help you file quickly and confidently' : 'how income tax filling process works';
+
         return [
             'title' => $title,
             'description' => fake()->realText(100),

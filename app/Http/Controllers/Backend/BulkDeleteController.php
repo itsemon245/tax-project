@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use Illuminate\Database\Query\Builder;
+use Throwable;
 
-class BulkDeleteController extends Controller
-{
-    public function __invoke(Request $request)
-    {
+class BulkDeleteController extends Controller {
+    public function __invoke(Request $request) {
         $request->validate([
             'bulk_delete_from' => ['required', 'date'],
             'bulk_delete_to' => ['required', 'date'],
@@ -27,17 +26,15 @@ class BulkDeleteController extends Controller
             })->delete();
             $notification = [
                 'alert-type' => 'success',
-                'message' => 'Bulk delete successful!'
+                'message' => 'Bulk delete successful!',
             ];
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             $notification = [
                 'alert-type' => 'error',
-                'message' => 'Something went wrong!'
+                'message' => 'Something went wrong!',
             ];
         }
 
-
         return back()->with($notification);
-
     }
 }

@@ -5,15 +5,12 @@ namespace Database\Seeders;
 use App\Models\Exam;
 use App\Models\Question;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class ExamSeeder extends Seeder
-{
+class ExamSeeder extends Seeder {
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
+    public function run(): void {
         $exam = Exam::create([
             'course_id' => 1,
             'name' => fake()->realText(20),
@@ -33,7 +30,7 @@ class ExamSeeder extends Seeder
                         fake()->realText(10),
                         fake()->realText(10),
                         fake()->realText(10),
-                    ]
+                    ],
                 ],
             ]);
         }

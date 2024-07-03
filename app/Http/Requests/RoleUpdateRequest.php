@@ -4,13 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleUpdateRequest extends FormRequest
-{
+class RoleUpdateRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
+    public function authorize(): bool {
         return true;
     }
 
@@ -19,10 +17,9 @@ class RoleUpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
-            'role' => 'required|string|max:25|unique:roles,name,except,id'
+            'role' => 'required|string|max:25|unique:roles,name,except,id',
         ];
     }
 }

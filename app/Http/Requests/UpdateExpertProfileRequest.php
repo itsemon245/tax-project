@@ -4,13 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateExpertProfileRequest extends FormRequest
-{
+class UpdateExpertProfileRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
+    public function authorize(): bool {
         return true;
     }
 
@@ -19,17 +17,16 @@ class UpdateExpertProfileRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return
             [
-                "name"          => 'required',
-                "post"          => 'required',
-                "description"   => 'required',
-                "experience"    => 'required',
-                "join_date"     => 'required',
-                "availability"  => 'required',
-                "image"         => 'mimes:png,jpg,webp,jpeg|nullable',
+                'name' => 'required',
+                'post' => 'required',
+                'description' => 'required',
+                'experience' => 'required',
+                'join_date' => 'required',
+                'availability' => 'required',
+                'image' => 'mimes:png,jpg,webp,jpeg|nullable',
             ];
     }
 }

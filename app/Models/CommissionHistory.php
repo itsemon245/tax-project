@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CommissionHistory extends Model
-{
+class CommissionHistory extends Model {
     use HasFactory;
     protected $guarded = [];
 
-    function parent() : BelongsTo {
+    public function parent(): BelongsTo {
         return $this->belongsTo(User::class, 'parent_id');
     }
-    function referee() : BelongsTo {
+
+    public function referee(): BelongsTo {
         return $this->belongsTo(User::class, 'referee_id');
     }
 }

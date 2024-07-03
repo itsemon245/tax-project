@@ -3,22 +3,21 @@
 namespace App\Models;
 
 use App\Casts\Json;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class UserDoc extends Model
-{
+class UserDoc extends Model {
     use HasFactory;
     protected $guarded = [];
     protected $casts = [
-        'files' => Json::class
+        'files' => Json::class,
     ];
-    public function user()
-    {
+
+    public function user() {
         return $this->belongsTo(User::class);
     }
-    public function fiscalYear()
-    {
+
+    public function fiscalYear() {
         return $this->belongsTo(FiscalYear::class);
     }
 }

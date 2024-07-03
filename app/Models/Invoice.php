@@ -5,22 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
-{
+class Invoice extends Model {
     use HasFactory;
     protected $guarded = [];
 
-
-    public function invoiceItems()
-    {
+    public function invoiceItems() {
         return $this->hasMany(InvoiceItem::class);
     }
-    public function client()
-    {
+
+    public function client() {
         return $this->belongsTo(Client::class);
     }
-    function fiscalYears()
-    {
+
+    public function fiscalYears() {
         return $this->belongsToMany(FiscalYear::class)
             ->withPivot([
                 'discount',
@@ -32,11 +29,11 @@ class Invoice extends Model
                 'issue_date',
                 'due_date',
                 'created_at',
-                'status'
+                'status',
             ]);
     }
-    function recentFiscalYears()
-    {
+
+    public function recentFiscalYears() {
         return $this->belongsToMany(FiscalYear::class)
             ->withPivot([
                 'discount',
@@ -48,11 +45,11 @@ class Invoice extends Model
                 'issue_date',
                 'due_date',
                 'created_at',
-                'status'
+                'status',
             ])->orderByPivot('created_at', 'desc');
     }
-    function currentFiscal()
-    {
+
+    public function currentFiscal() {
         return $this->belongsToMany(FiscalYear::class)
             ->where('year', currentFiscalYear())
             ->withPivot([
@@ -64,14 +61,12 @@ class Invoice extends Model
                 'payment_date',
                 'issue_date',
                 'due_date',
-                'status'
+                'status',
             ]);
     }
 
-    protected static function booted(): void
-    {
+    protected static function booted(): void {
         static::created(function (Invoice $invoice) {
-            
         });
     }
 }

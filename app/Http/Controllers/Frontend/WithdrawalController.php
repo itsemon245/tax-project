@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Models\User;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class WithdrawalController extends Controller
-{
+class WithdrawalController extends Controller {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $request->validate([
             'account_type' => 'required',
             'account_no' => 'required|string',
@@ -39,6 +37,7 @@ class WithdrawalController extends Controller
                 'alert-type' => 'success',
             ];
         }
+
         return back()->with($notification);
     }
 }

@@ -3,25 +3,22 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Testing\Fakes\Fake;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Calendar>
  */
-class CalendarFactory extends Factory
-{
+class CalendarFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         $startDates = [now()];
         foreach (range(1, 7) as $key) {
-
             $startDates[] = now()->addDays($key);
         }
+
         return [
             'client_id' => random_int(1, 5),
             'invoice_id' => random_int(1, 5),

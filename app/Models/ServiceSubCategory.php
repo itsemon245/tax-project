@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceSubCategory extends Model
-{
+class ServiceSubCategory extends Model {
     use HasFactory;
-    public function services()
-    {
+
+    public function services() {
         return $this->hasMany(Service::class);
     }
-    public function serviceCategory()
-    {
+
+    public function serviceCategory() {
         return $this->belongsTo(ServiceCategory::class);
     }
 }

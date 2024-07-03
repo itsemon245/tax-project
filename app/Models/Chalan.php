@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Casts\Currency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Chalan extends Model
-{
+class Chalan extends Model {
     use HasFactory;
 
     protected $guarded = [];
@@ -16,8 +14,7 @@ class Chalan extends Model
         'date' => 'date',
     ];
 
-    public function client(): BelongsTo
-    {
+    public function client(): BelongsTo {
         return $this->belongsTo(Client::class);
     }
 }

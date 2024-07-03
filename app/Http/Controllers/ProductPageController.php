@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-class ProductPageController extends Controller
-{
-    function choose() {
+class ProductPageController extends Controller {
+    public function choose() {
         return view('frontend.pages.product.chooseIncome');
     }
 }

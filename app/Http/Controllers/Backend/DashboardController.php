@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
+use App\Models\Calendar;
 use App\Models\Client;
 use App\Models\Expense;
-use App\Models\Project;
-use App\Models\Calendar;
-use App\Http\Controllers\Controller;
 use App\Models\FiscalYear;
+use App\Models\Project;
 use App\Models\Purchase;
 use App\Models\UserAppointment;
 use App\Models\UserDoc;
@@ -26,7 +26,7 @@ class DashboardController extends Controller {
         $statReports = $this->getStatReports();
         $expertStats = [];
         $recentConsultations = null;
-        if (auth()->user()->role_name == 'expert') {
+        if ('expert' == auth()->user()->role_name) {
             $expert = auth()->user()->expertProfile;
             $recentConsultations = $expert->appointments()
                 ->unapproved()
@@ -52,12 +52,13 @@ class DashboardController extends Controller {
         $totalExpense = Expense::where('type', 'debit')->sum('amount');
         $todaysExpense = Expense::where([
             'date' => today()->format('Y-m-d'),
-            'type' => 'debit'
+            'type' => 'debit',
         ])->first();
-        $expenses = (object)[
+        $expenses = (object) [
             'total' => $totalExpense,
-            'today' => $todaysExpense?->amount ?? 0
+            'today' => $todaysExpense?->amount ?? 0,
         ];
+
         return view('backend.dashboard.dashboard', compact('statReports', 'expert', 'recentConsultations', 'clients', 'expenses', 'events', 'today', 'services', 'currentEvents', 'fiscalYear', 'chartData', 'projects'));
     }
 
@@ -68,28 +69,29 @@ class DashboardController extends Controller {
             $data = collect([
                 [
                     'x' => 'Overdue',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'overdue')->sum('due')
+                    'y' => $fy->invoices()->wherePivot('status', 'overdue')->sum('due'),
                 ],
                 [
                     'x' => 'Paid',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'paid')->sum('paid')
+                    'y' => $fy->invoices()->wherePivot('status', 'paid')->sum('paid'),
                 ],
                 [
                     'x' => 'Partial (Paid)',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->sum('paid')
+                    'y' => $fy->invoices()->wherePivot('status', 'partial')->sum('paid'),
                 ],
                 [
                     'x' => 'Partial (Due)',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->sum('due')
+                    'y' => $fy->invoices()->wherePivot('status', 'partial')->sum('due'),
                 ],
                 [
                     'x' => 'Due',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'due')->sum('due')
+                    'y' => $fy->invoices()->wherePivot('status', 'due')->sum('due'),
                 ],
             ]);
+
             return [
                 'name' => $fy->year,
-                'data' => $data
+                'data' => $data,
             ];
         });
         // dd($mappedItems);
@@ -103,7 +105,7 @@ class DashboardController extends Controller {
             'daily',
             'weekly',
             'monthly',
-            'total'
+            'total',
         ];
         foreach ($filters as $filter) {
             switch ($filter) {
@@ -311,7 +313,7 @@ class DashboardController extends Controller {
                             $q->whereDate('created_at', '<=', $dateTo);
                         }
                     })
-                    ->count('amount'). ".00 &#2547",
+                    ->count('amount').'.00 &#2547',
                     'completed' => Withdrawal::where(function ($q) use ($dateFrom, $dateTo) {
                         if ($dateFrom && $dateTo) {
                             $q->whereDate('created_at', '>=', $dateFrom);
@@ -319,7 +321,7 @@ class DashboardController extends Controller {
                         }
                     })
                     ->whereStatus(1)
-                    ->count('amount'). ".00 &#2547",
+                    ->count('amount').'.00 &#2547',
                     'pending' => Withdrawal::where(function ($q) use ($dateFrom, $dateTo) {
                         if ($dateFrom && $dateTo) {
                             $q->whereDate('created_at', '>=', $dateFrom);
@@ -327,7 +329,7 @@ class DashboardController extends Controller {
                         }
                     })
                     ->whereStatus(0)
-                    ->count('amount'). ".00 &#2547",
+                    ->count('amount').'.00 &#2547',
                 ],
             ];
         }

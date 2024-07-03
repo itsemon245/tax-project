@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Appointment>
  */
-class AppointmentFactory extends Factory
-{
+class AppointmentFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         $seed = fake()->word();
+
         return [
             'title' => fake()->realText(10),
             'sub_title' => fake()->realText(10),

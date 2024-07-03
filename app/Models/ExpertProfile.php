@@ -2,34 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ExpertProfile extends Model
-{
+class ExpertProfile extends Model {
     use HasFactory;
     protected $guarded = [];
 
-
-    public function owner()
-    {
-       return $this->belongsTo(User::class);
-    }
-    public function maps()
-    {
-       return $this->hasMany(Map::class);
+    public function owner() {
+        return $this->belongsTo(User::class);
     }
 
-    function reviews(): MorphMany
-    {
+    public function maps() {
+        return $this->hasMany(Map::class);
+    }
+
+    public function reviews(): MorphMany {
         return $this->morphMany(Review::class, 'reviewable');
     }
-    public function expertCategories()
-    {
+
+    public function expertCategories() {
         return $this->belongsToMany(ExpertCategory::class);
     }
-    public function appointments(){
+
+    public function appointments() {
         return $this->hasMany(UserAppointment::class, 'expert_profile_id');
     }
 }

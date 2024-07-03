@@ -7,20 +7,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Book>
  */
-class BookFactory extends Factory
-{
+class BookFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         $text = fake()->realText(15);
         $description = fake()->realText(300);
         $seed = str($text)->slug();
+
         return [
-            'book_category_id' => fake()->numberBetween(1,10),
+            'book_category_id' => fake()->numberBetween(1, 10),
             'title' => $text,
             'author' => fake()->name(),
             'description' => $description,

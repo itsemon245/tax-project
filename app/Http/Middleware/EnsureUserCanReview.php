@@ -2,22 +2,20 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use App\Models\User;
-use Illuminate\Support\Str;
+use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureUserCanReview
-{
+class EnsureUserCanReview {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
      */
-    public function handle(Request $request, Closure $next): Response
-    {
-        if (auth()->id() === null) {
+    public function handle(Request $request, Closure $next): Response {
+        if (null === auth()->id()) {
             return response()->json([
                 'success' => false,
                 'data' => null,
@@ -29,12 +27,13 @@ class EnsureUserCanReview
         $model = Str::studly($slug);
         $user = User::find(auth()->id());
         $item = $user->purchased($model)->find($id);
-        if ($item === null) {
+        if (null === $item) {
             $response = [
                 'success' => false,
                 'data' => null,
                 'message' => 'Please purchase the item before reviewing',
             ];
+
             return response()->json($response);
         } else {
             return $next($request);

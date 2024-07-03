@@ -2,32 +2,31 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Carbon\Carbon;
-use App\Models\Calendar;
-use Illuminate\Http\Request;
-use App\Models\ExpertProfile;
-use App\Models\AppointmentTime;
-use App\Models\UserAppointment;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Notification;
+use App\Models\AppointmentTime;
+use App\Models\Calendar;
+use App\Models\ExpertProfile;
+use App\Models\UserAppointment;
 use App\Notifications\AppointmentApprovedNotification;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Log;
+use Throwable;
 
-class UserAppointmentController extends Controller
-{
-    public function __construct()
-    {
-        if (auth()->user() == null) {
+class UserAppointmentController extends Controller {
+    public function __construct() {
+        if (null == auth()->user()) {
             return redirect(route('login'));
         }
-        if (request('type') != 'consultation') {
-            if(!auth()->user()->hasRole('super admin')) {
+        if ('consultation' != request('type')) {
+            if (!auth()->user()->hasRole('super admin')) {
                 abort(403, 'You don\'t have access to this page');
             }
         }
     }
-    public function index()
-    {
+
+    public function index() {
         /**
          * @var ?ExpertProfile $expert
          */
@@ -48,45 +47,46 @@ class UserAppointmentController extends Controller
 
         return view('backend.user.appointments', compact('appointments'));
     }
-    public function times()
-    {
+
+    public function times() {
         $carbon = now('Asia/Dhaka')->subDays(4)->locale('en_BD');
         $dates = [];
-        for ($i = 1; $i <= 7; $i++) {
+        for ($i = 1; $i <= 7; ++$i) {
             $date = $carbon->addDay();
             $dates[$date->format('l')] = AppointmentTime::where('user_id', auth()->id())->where('day', $date->format('l'))->first()->times ?? [];
         }
 
         return view('backend.user.appointment-times', compact('dates'));
     }
-    public function timesUpdate(Request $request)
-    {
+
+    public function timesUpdate(Request $request) {
         AppointmentTime::where('user_id', auth()->id())->delete();
         foreach ($request->times as $day => $times) {
             AppointmentTime::create([
                 'user_id' => auth()->id(),
                 'day' => $day,
-                'times' => $times
+                'times' => $times,
             ]);
         }
         $alert = [
             'alert-type' => 'success',
-            'message' => 'Updated Successfully!'
+            'message' => 'Updated Successfully!',
         ];
-        return back()->with($alert);
-    }
-    public function timeDelete(AppointmentTime $time)
-    {
-        $time->delete();
-        $alert = [
-            'alert-type' => 'success',
-            'message' => 'Deleted Successfully!'
-        ];
+
         return back()->with($alert);
     }
 
-    public function approvedList()
-    {
+    public function timeDelete(AppointmentTime $time) {
+        $time->delete();
+        $alert = [
+            'alert-type' => 'success',
+            'message' => 'Deleted Successfully!',
+        ];
+
+        return back()->with($alert);
+    }
+
+    public function approvedList() {
         /**
          * @var ?ExpertProfile $expert
          */
@@ -108,8 +108,7 @@ class UserAppointmentController extends Controller
         return view('backend.user.appointmentsApproved', compact('appointments'));
     }
 
-    public function completedList()
-    {
+    public function completedList() {
         /**
          * @var ?ExpertProfile $expert
          */
@@ -127,18 +126,18 @@ class UserAppointmentController extends Controller
                 ->latest()
                 ->paginate(paginateCount());
         }
+
         return view('backend.user.appointmentsCompleted', compact('appointments'));
     }
 
-    public function approve(int $id)
-    {
+    public function approve(int $id) {
         $appointment = UserAppointment::find($id);
-        if ($appointment->expert_profile_id != null) {
+        if (null != $appointment->expert_profile_id) {
             $expert = auth()->user()->expertProfile;
-            if ($expert != null && $appointment->expert_profile_id != $expert->id) {
+            if (null != $expert && $appointment->expert_profile_id != $expert->id) {
                 return back()->with([
                     'alert-type' => 'warning',
-                    'message' => 'This consultation does not belong to you!'
+                    'message' => 'This consultation does not belong to you!',
                 ]);
             }
         }
@@ -155,7 +154,7 @@ class UserAppointmentController extends Controller
         ]);
         try {
             Notification::route('mail', $appointment->email)->notify(new AppointmentApprovedNotification($appointment));
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             Log::error($th->getMessage());
         }
         $alert = [
@@ -166,15 +165,14 @@ class UserAppointmentController extends Controller
         return back()->with($alert);
     }
 
-    public function complete(int $id)
-    {
+    public function complete(int $id) {
         $appointment = UserAppointment::find($id);
-        if ($appointment->expert_profile_id != null) {
+        if (null != $appointment->expert_profile_id) {
             $expert = auth()->user()->expertProfile;
-            if ($expert != null && $appointment->expert_profile_id != $expert->id) {
+            if (null != $expert && $appointment->expert_profile_id != $expert->id) {
                 return back()->with([
                     'alert-type' => 'warning',
-                    'message' => 'This consultation does not belong to you!'
+                    'message' => 'This consultation does not belong to you!',
                 ]);
             }
         }
@@ -198,15 +196,14 @@ class UserAppointmentController extends Controller
         return back()->with($alert);
     }
 
-    public function destroy(int $id)
-    {
+    public function destroy(int $id) {
         $appointment = UserAppointment::find($id);
-        if ($appointment->expert_profile_id != null) {
+        if (null != $appointment->expert_profile_id) {
             $expert = auth()->user()->expertProfile;
-            if ($expert != null && $appointment->expert_profile_id != $expert->id) {
+            if (null != $expert && $appointment->expert_profile_id != $expert->id) {
                 return back()->with([
                     'alert-type' => 'warning',
-                    'message' => 'This consultation does not belong to you!'
+                    'message' => 'This consultation does not belong to you!',
                 ]);
             }
         }

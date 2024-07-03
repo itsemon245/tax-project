@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Purchase extends Model
-{
+class Purchase extends Model {
     use HasFactory;
 
     protected $guarded = [];
@@ -17,18 +16,15 @@ class Purchase extends Model
         'approved_at' => 'date',
     ];
 
-    public function purchasable(): MorphTo
-    {
+    public function purchasable(): MorphTo {
         return $this->morphTo();
     }
 
-    public function incomeSource()
-    {
+    public function incomeSource() {
         return $this->belongsTo(IncomeSource::class);
     }
 
-    public function user(): BelongsTo
-    {
+    public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
 }

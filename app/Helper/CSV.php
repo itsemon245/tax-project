@@ -4,24 +4,23 @@ namespace App\Helper;
 
 use Illuminate\Http\UploadedFile;
 
-class CSV
-{
+class CSV {
     public $path;
-    public function __construct(string $path = null)
-    {
+
+    public function __construct(?string $path = null) {
         $this->path = $path;
     }
 
-    function upload(UploadedFile $file) : string {
-            $path = saveImage(image:$file, disk: 'temp', dir: 'csv');
-            $this->path = 'temp/'.$path;
-            return $path;
+    public function upload(UploadedFile $file): string {
+        $path = saveImage(image: $file, disk: 'temp', dir: 'csv');
+        $this->path = 'temp/'.$path;
+
+        return $path;
     }
 
-    public function parse()
-    {
+    public function parse() {
         $rows = [];
-        $handle = fopen($this->path, "r");
+        $handle = fopen($this->path, 'r');
         while (($row = fgetcsv($handle)) !== false) {
             $rows[] = $row;
         }
@@ -30,6 +29,5 @@ class CSV
         $headers = array_shift($rows);
 
         return compact('headers', 'rows');
-
     }
 }

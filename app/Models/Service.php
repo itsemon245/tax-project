@@ -4,14 +4,14 @@ namespace App\Models;
 
 use App\Traits\HasPurchases;
 use App\Traits\HasSections;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class Service extends Model
-{
-    use HasFactory, HasPurchases;
+class Service extends Model {
+    use HasFactory;
+    use HasPurchases;
 
     // user defined traits
     use HasSections;
@@ -21,32 +21,31 @@ class Service extends Model
      */
     protected $guarded = [];
 
-    public function serviceSubCategory()
-    {
+    public function serviceSubCategory() {
         return $this->belongsTo(ServiceSubCategory::class);
     }
-    public function serviceCategory()
-    {
+
+    public function serviceCategory() {
         return $this->belongsTo(ServiceCategory::class);
     }
-    function reviews(): MorphMany
-    {
+
+    public function reviews(): MorphMany {
         return $this->morphMany(Review::class, 'reviewable');
     }
 
-    public function purchased(int $userId = null)
-    {
-        if ($userId === null) {
+    public function purchased(?int $userId = null) {
+        if (null === $userId) {
             $userId = auth()->id();
         }
+
         return $this->morphOne(Purchase::class, 'purchasable')->where('user_id', $userId);
     }
 
     // accessor
-    public function price(): Attribute
-    {
+    public function price(): Attribute {
         $commission = Setting::first(['reference'])->reference->partner_commission;
         $user = User::find(auth()->id());
+
         return Attribute::make(
             get: fn ($value) => $user?->isPartner() ? $value - ($value * $commission / 100) : $value
         );

@@ -4,14 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateClientRequest extends FormRequest
-{
+class UpdateClientRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return auth()->user() != null;
+    public function authorize(): bool {
+        return null != auth()->user();
     }
 
     /**
@@ -19,10 +17,9 @@ class UpdateClientRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
-        return  [
-            'name' =>['required', 'string'],
+    public function rules(): array {
+        return [
+            'name' => ['required', 'string'],
             // 'tin' =>['required', 'string'],
             // 'nid' =>['required', 'string', 'max:13'],
             // 'circle' =>['required', 'string'],
@@ -40,7 +37,7 @@ class UpdateClientRequest extends FormRequest
             // 'present_address' =>['required', 'string'],
             // 'permanent_address' =>['required', 'string'],
             // 'nature_of_business' =>['required', 'string'],
-            'ref_no' =>['required', 'string'],
+            'ref_no' => ['required', 'string'],
         ];
     }
 }

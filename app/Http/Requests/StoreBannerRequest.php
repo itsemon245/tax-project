@@ -4,14 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBannerRequest extends FormRequest
-{
+class StoreBannerRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return auth()->user() != null;
+    public function authorize(): bool {
+        return null != auth()->user();
     }
 
     /**
@@ -19,13 +17,12 @@ class StoreBannerRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
-            'title'=>['required','max:255'],
-            'sub_title'=>['required','max:255'],
-            'button_link'=>['required','max:255'],
-            'hero_image'=>['required','max:5120','image'],
+            'title' => ['required', 'max:255'],
+            'sub_title' => ['required', 'max:255'],
+            'button_link' => ['required', 'max:255'],
+            'hero_image' => ['required', 'max:5120', 'image'],
         ];
     }
 }

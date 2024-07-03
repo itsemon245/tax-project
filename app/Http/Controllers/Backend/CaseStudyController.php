@@ -8,42 +8,39 @@ use App\Models\CaseStudyCategory;
 use App\Models\CaseStudyPackage;
 use Illuminate\Http\Request;
 
-class CaseStudyController extends Controller
-{
-    public function __construct()
-    {
+class CaseStudyController extends Controller {
+    public function __construct() {
         $this->middleware('can:read case study', [
-            'only' => ['index']
+            'only' => ['index'],
         ]);
         $this->middleware('can:manage case study', [
-            'except' => ['index']
+            'except' => ['index'],
         ]);
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         $data = CaseStudy::with('caseStudyCategory', 'caseStudyPackage')->latest()->latest()->paginate(paginateCount());
+
         return view('backend.case-study.index', compact('data'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         $caseStudyPackage = CaseStudyPackage::latest()->latest()->get();
         $caseStudyCategories = CaseStudyCategory::latest()->latest()->get();
+
         return view('backend.case-study.create', compact('caseStudyPackage', 'caseStudyCategories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-
+    public function store(Request $request) {
         $request->validate([
             'case_study_category_id' => 'required',
             'case_study_package_id' => 'required',
@@ -63,7 +60,7 @@ class CaseStudyController extends Controller
         $caseStudy->image = saveImage($request->image, 'case-study/banners');
         $caseStudy->description = $request->description;
         $caseStudy->price = $request->price;
-        $caseStudy->download_link =  saveImage($request->download_link, 'case-study/files');
+        $caseStudy->download_link = saveImage($request->download_link, 'case-study/files');
         $caseStudy->save();
 
         $notification = [
@@ -79,27 +76,24 @@ class CaseStudyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show(string $id) {
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
+    public function edit(string $id) {
         $caseStudy = CaseStudy::find($id);
         $caseStudyPackage = CaseStudyPackage::latest()->latest()->get();
         $caseStudyCategory = CaseStudyPackage::find($caseStudy->case_study_package_id)->caseStudyCategories;
+
         return view('backend.case-study.edit', compact('caseStudyCategory', 'caseStudyPackage', 'caseStudy'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
+    public function update(Request $request, string $id) {
         $request->validate([
             'case_study_category_id' => 'required',
             'case_study_package_id' => 'required',
@@ -120,7 +114,7 @@ class CaseStudyController extends Controller
         $caseStudy->description = $request->description;
         $caseStudy->price = $request->price;
         if ($request->hasFile('download_link')) {
-            $caseStudy->download_link =  updateFile($request->download_link, $caseStudy->download_link, 'case-study/files');
+            $caseStudy->download_link = updateFile($request->download_link, $caseStudy->download_link, 'case-study/files');
         }
         $caseStudy->save();
 
@@ -137,8 +131,7 @@ class CaseStudyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
+    public function destroy(string $id) {
         $delete = CaseStudy::find($id);
         deleteFile($delete->image);
         deleteFile($delete->download_link);

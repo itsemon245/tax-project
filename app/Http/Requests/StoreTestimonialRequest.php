@@ -4,14 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTestimonialRequest extends FormRequest
-{
+class StoreTestimonialRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return auth()->user() != null;
+    public function authorize(): bool {
+        return null != auth()->user();
     }
 
     /**
@@ -19,12 +17,11 @@ class StoreTestimonialRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
-            'name'=>['required'],
-            'comment'=>['required'],
-            'image'=>['required', 'max:5120','image'],
+            'name' => ['required'],
+            'comment' => ['required'],
+            'image' => ['required', 'max:5120', 'image'],
         ];
     }
 }

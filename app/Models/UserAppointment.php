@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAppointment extends Model
-{
+class UserAppointment extends Model {
     use HasFactory;
 
     protected $guarded = [];
@@ -17,32 +16,28 @@ class UserAppointment extends Model
         'approved_at' => 'date',
     ];
 
-    public function map()
-    {
+    public function map() {
         return $this->belongsTo(Map::class);
     }
 
-    public function user()
-    {
+    public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function expertProfile()
-    {
+    public function expertProfile() {
         return $this->belongsTo(ExpertProfile::class);
     }
 
-    public function scopeApprovedOnly(Builder $builder)
-    {
+    public function scopeApprovedOnly(Builder $builder) {
         $builder->whereNotNull('approved_at')
         ->whereNull('completed_at');
     }
-    public function scopeCompletedOnly(Builder $builder)
-    {
+
+    public function scopeCompletedOnly(Builder $builder) {
         $builder->whereNotNull('completed_at');
     }
-    public function scopeUnapproved(Builder $builder)
-    {
+
+    public function scopeUnapproved(Builder $builder) {
         $builder->whereNull('completed_at')
         ->whereNull('approved_at');
     }

@@ -7,8 +7,7 @@ use App\Casts\Json;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TaxCalculator extends Model
-{
+class TaxCalculator extends Model {
     use HasFactory;
     protected $guarded = [];
     protected $casts = [
@@ -17,7 +16,7 @@ class TaxCalculator extends Model
         'tax' => Currency::class,
     ];
 
-    function user() {
+    public function user() {
         return $this->belongsTo(User::class);
     }
 }

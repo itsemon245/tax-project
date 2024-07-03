@@ -1,36 +1,31 @@
 <?php
 
-use App\Models\Task;
-use App\Models\Product;
-use App\Models\CaseStudy;
-use App\Models\VideoComment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MCQController;
-use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\ExpertController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\ProductPageController;
-use App\Http\Controllers\Frontend\BookController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Review\ReviewController;
-use App\Http\Controllers\PartnerRequestController;
-use App\Http\Controllers\UserAppointmentController;
-use App\Http\Controllers\CaseStudyPackageController;
-use App\Http\Controllers\Frontend\IndustryController;
-use App\Http\Controllers\ProjectDiscussionController;
-use App\Http\Controllers\Frontend\CaseStudyController;
-use App\Http\Controllers\Frontend\Page\PageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Backend\UserProfileController;
-use App\Http\Controllers\Frontend\WithdrawalController;
+use App\Http\Controllers\ExpertController;
+use App\Http\Controllers\Frontend\BookController;
+use App\Http\Controllers\Frontend\CaseStudyController;
+use App\Http\Controllers\Frontend\Course\CourseController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\IndustryController;
+use App\Http\Controllers\Frontend\Page\PageController;
+use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\Frontend\Referee\RefereeController;
+use App\Http\Controllers\Frontend\TaxCalculatorController;
 use App\Http\Controllers\Frontend\User\UserDocController;
 use App\Http\Controllers\Frontend\VideoCommentController;
-use App\Http\Controllers\Frontend\Course\CourseController;
-use App\Http\Controllers\Frontend\TaxCalculatorController;
-use App\Http\Controllers\Frontend\Referee\RefereeController;
-use App\Http\Controllers\Frontend\Page\ServicePageController;
+use App\Http\Controllers\Frontend\WithdrawalController;
+use App\Http\Controllers\MCQController;
+use App\Http\Controllers\PartnerRequestController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductPageController;
+use App\Http\Controllers\ProjectDiscussionController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\Review\ReviewController;
+use App\Http\Controllers\UserAppointmentController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +36,7 @@ use App\Http\Controllers\Frontend\Page\ServicePageController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('user-profile', UserProfileController::class);
@@ -70,7 +65,7 @@ Route::prefix('product')->name('product.')->controller(ProductPageController::cl
     Route::get('{id}/choose', 'choose')->name('choose');
 });
 
-//Project Dicsussion CRUD
+// Project Dicsussion CRUD
 Route::resource('project-discussion', ProjectDiscussionController::class);
 
 Route::prefix('/books')->name('books.')->group(function () {
@@ -82,8 +77,6 @@ Route::prefix('/books')->name('books.')->group(function () {
 Route::resource('user-doc', UserDocController::class);
 Route::get('download-user-doc/{userDoc}/download/{fileIndex}', [UserDocController::class, 'download'])->name('user-doc.download');
 Route::get('user-doc/{userDoc}/move-to', [UserDocController::class, 'moveTo'])->name('user-doc.move-to');
-
-
 
 //  uncategorized pages
 Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
@@ -125,7 +118,7 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
 });
 
-//Become a partner request controller
+// Become a partner request controller
 Route::resource('partner-request', PartnerRequestController::class);
 // these route will only be visible to Courses navigation
 // ! Do not put any new routes in this group
@@ -154,9 +147,10 @@ Route::post('/upload', function (Request $request) {
     $files = $request->fileponds;
     $paths = [];
     foreach ($files as $key => $file) {
-        $paths[] = saveImage($file, "filepond", null, 'temp');
+        $paths[] = saveImage($file, 'filepond', null, 'temp');
     }
-    $pathString = implode(",", $paths);
+    $pathString = implode(',', $paths);
+
     return response($pathString, 200);
 })->name('filepond.upload');
 
@@ -179,7 +173,6 @@ Route::prefix('payment')
         Route::get('cancel', 'cancel')->name('cancel');
         // Route::post('pay-now/{purchase_id?}', 'payNow')->name('pay.now');
     });
-
 
 // Route for payment
 Route::prefix('purchase')

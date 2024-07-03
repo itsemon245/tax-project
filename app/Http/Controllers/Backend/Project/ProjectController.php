@@ -2,87 +2,82 @@
 
 namespace App\Http\Controllers\Backend\Project;
 
-use App\Models\Task;
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Project;
-use App\Models\Progress;
-use Illuminate\Http\Request;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProgressRequest;
-use App\Http\Requests\UpdateProgressRequest;
+use Throwable;
 
-class ProjectController extends Controller
-{
+class ProjectController extends Controller {
     public $employees;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('can:read progress', [
-            'only' => ['index', 'projectClients', 'show']
+            'only' => ['index', 'projectClients', 'show'],
         ]);
-        $this->middleware('can:create progress',   [
-            'only' => ['create', 'store']
+        $this->middleware('can:create progress', [
+            'only' => ['create', 'store'],
         ]);
-        $this->middleware('can:update progress',   [
-            'only' => ['update', 'edit']
+        $this->middleware('can:update progress', [
+            'only' => ['update', 'edit'],
         ]);
-        $this->middleware('can:delete progress',  [
-            'only' => ['destroy']
+        $this->middleware('can:delete progress', [
+            'only' => ['destroy'],
         ]);
-        $this->middleware('can:assign client',  [
-            'only' => ['assign', 'assigned']
+        $this->middleware('can:assign client', [
+            'only' => ['assign', 'assigned'],
         ]);
-        $this->middleware('can:update task progress',  [
-            'only' => ['projectClients', 'updateTask']
+        $this->middleware('can:update task progress', [
+            'only' => ['projectClients', 'updateTask'],
         ]);
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-
+    public function index() {
         // $clients = Client::latest()->latest()->paginate(paginateCount());
         $projects = Project::with('tasks')->latest()->latest()->paginate(paginateCount());
+
         return view('backend.project.viewAllProjectProgress', compact('projects'));
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function projectClients($id)
-    {
-
+    public function projectClients($id) {
         $project = Project::with('tasks', 'tasks.clients')->find($id);
         $clients = User::find(auth()->id())->clients()->with('users:id,name')->latest()->paginate(paginateCount(100));
+
         return view('backend.project.projectClients', compact('project', 'clients'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         $clients = Client::with('users:name,id')->latest()->get(['id', 'name', 'phone', 'circle', 'zone']);
-        if ($clients->count() == 0) {
+        if (0 == $clients->count()) {
             return back()->with([
                 'alert-type' => 'warning',
-                'message'=> 'You need at least 1 client to make a project!'
+                'message' => 'You need at least 1 client to make a project!',
             ]);
         }
-        //!TODO: change random user to a specific role
+        // !TODO: change random user to a specific role
         $users = User::inRandomOrder()->limit(6)->latest()->get();
+
         return view('backend.project.createProjectProgress', compact('clients', 'users'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $data = $request->validate([
             'name' => 'required|string|max:255|unique:projects,name',
             'start_date' => 'date|required',
@@ -97,7 +92,6 @@ class ProjectController extends Controller
         $monthly_target = $request->daily_target * $data['weekdays'] * 4;
         $project = Project::create($data);
         $clients = Client::with('users')->latest()->get();
-
 
         // Create tasks for each project
         $tasks = [];
@@ -119,14 +113,14 @@ class ProjectController extends Controller
             if ($super_admins->count() > 0) {
                 foreach ($super_admins as $admin) {
                     $client->users()->attach($admin->id, [
-                        'project_id' => $project->id
+                        'project_id' => $project->id,
                     ]);
                 }
             }
             if ($admins->count() > 0) {
                 foreach ($admins as $admin) {
                     $client->users()->attach($admin->id, [
-                        'project_id' => $project->id
+                        'project_id' => $project->id,
                     ]);
                 }
             }
@@ -138,13 +132,11 @@ class ProjectController extends Controller
         $project->monthly_target = $monthly_target < $project->total_clients ? $monthly_target : $project->total_clients;
         $project->save();
 
-
-
-
         $notification = [
             'message' => 'Project Created',
             'alert-type' => 'success',
         ];
+
         return redirect(route('project.index'))
             ->with($notification);
     }
@@ -152,19 +144,19 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $project = Project::with('tasks')->find($id);
         $clients = Client::with('users')->latest()->get();
+
         return view('backend.project.editProjectProgress', compact('project', 'clients'));
     }
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $data = $request->validate([
-            'name' => 'required|string|max:255|unique:projects,name,' . $id,
+            'name' => 'required|string|max:255|unique:projects,name,'.$id,
             'start_date' => 'date|required',
             'end_date' => 'date|required',
             'weekdays' => 'required|numeric',
@@ -179,19 +171,19 @@ class ProjectController extends Controller
         $project->tasks()->delete();
         foreach ($request->tasks as $task) {
             Task::create([
-                    'name' => $task, 'project_id' => $project->id
-                ]);
+                'name' => $task, 'project_id' => $project->id,
+            ]);
         }
         $notification = [
             'message' => 'Project Updated',
             'alert-type' => 'success',
         ];
+
         return back()
             ->with($notification);
     }
 
-    function updateTask(int $project, int $client, int $task): JsonResponse
-    {
+    public function updateTask(int $project, int $client, int $task): JsonResponse {
         try {
             $task = Task::find($task);
             $client = Client::find($client);
@@ -203,11 +195,11 @@ class ProjectController extends Controller
                     $project->save();
                 }
                 $task->clients()->updateExistingPivot($client->id, [
-                    'is_completed' => false
+                    'is_completed' => false,
                 ]);
             } else {
                 $task->clients()->updateExistingPivot($client->id, [
-                    'is_completed' => true
+                    'is_completed' => true,
                 ]);
                 $allCompleted = $client->tasks($project)->wherePivot('is_completed', true)->count() === $client->tasks($project)->count();
                 $project = Project::find($project);
@@ -222,53 +214,55 @@ class ProjectController extends Controller
             }
             $success = true;
             $message = 'Task Updated!';
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             $success = false;
             $message = $th->getMessage();
         }
+
         return response()->json([
             'success' => $success,
             'message' => $message,
-            'completedAll' => $allCompleted
+            'completedAll' => $allCompleted,
         ]);
     }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $data = Project::find($id)->delete();
         $notification = [
             'message' => 'Project Deleted',
             'alert-type' => 'success',
         ];
+
         return back()
             ->with($notification);
     }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroyProjectClient($project, $client)
-    {
+    public function destroyProjectClient($project, $client) {
         DB::table('client_project')->where(['client_id' => $client, 'project_id' => $project])->delete();
         $notification = [
             'message' => 'Project Client Deleted',
             'alert-type' => 'success',
         ];
+
         return back()
             ->with($notification);
     }
 
-    public function assign($id)
-    {
+    public function assign($id) {
         $project = Project::find($id);
         $clients = $project->clients()->with('users:name,id')->latest()->paginate(100);
         $employees = Role::where('name', 'employee')->first()->users;
+
         return view('backend.project.assignClientsproject', compact('project', 'clients', 'employees'));
     }
 
-    public function assigned(Request $request, int $client, int $user, int  $project)
-    {
+    public function assigned(Request $request, int $client, int $user, int $project) {
         $options = [
             'client_id' => $client,
             'user_id' => $user,
@@ -277,7 +271,7 @@ class ProjectController extends Controller
         $success = true;
         $query = DB::table('client_user')
             ->where($options);
-        $isAssigned = $query->first() !== null;
+        $isAssigned = null !== $query->first();
         if ($isAssigned) {
             $query->delete();
             $message = 'Removed from project';

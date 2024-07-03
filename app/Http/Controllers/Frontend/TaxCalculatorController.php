@@ -7,23 +7,16 @@ use App\Models\TaxCalculator;
 use App\Models\TaxSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Throwable;
 
-class TaxCalculatorController extends Controller
-{
-    public function calculator()
-    {
+class TaxCalculatorController extends Controller {
+    public function calculator() {
         $settings = TaxSetting::get()->groupBy('for');
 
         return view('frontend.pages.taxCalculator', compact('settings'));
     }
 
-    protected function applyForService(TaxCalculator $result)
-    {
-        return $result;
-    }
-
-    public function calculate(Request $request)
-    {
+    public function calculate(Request $request) {
         try {
             if (empty($request->query('result_id'))) {
                 $request->validate([
@@ -58,38 +51,38 @@ class TaxCalculatorController extends Controller
                 $tax = $turnoverTax > $incomeTax ? $turnoverTax : $incomeTax;
 
                 $totalTax = $tax + $assetTax;
-                $afterRebate = $totalTax - ((float)$request->rebate ?? 0);
+                $afterRebate = $totalTax - ((float) $request->rebate ?? 0);
                 $actualTax = $afterRebate > $minTax ? $afterRebate : $minTax;
-                $afterDeduction = $actualTax - (float)$request->deduction;
+                $afterDeduction = $actualTax - (float) $request->deduction;
                 $formatMinTax = currencyFormat($minTax);
                 $formattedOriginalTax = currencyFormat($originalTax);
                 $afterRebateFormatted = currencyFormat($afterRebate);
-                $formattedDeduction = currencyFormat((float)$request->deduction);
-                if ($request->tax_for != 'individual') {
+                $formattedDeduction = currencyFormat((float) $request->deduction);
+                if ('individual' != $request->tax_for) {
                     $less = [
-                        "Others Paid" => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Deduction applicable</div>" : "- ".$formattedDeduction
+                        'Others Paid' => 0 == $originalTax ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Deduction applicable</div>" : '- '.$formattedDeduction,
                     ];
                 } else {
                     $less = [
-                        'Rebate' => "- ".currencyFormat($request->rebate ?? 0),
-                        'After Rebate' => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>{$afterRebateFormatted}</div>" : $afterRebateFormatted,
+                        'Rebate' => '- '.currencyFormat($request->rebate ?? 0),
+                        'After Rebate' => 0 == $originalTax ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>{$afterRebateFormatted}</div>" : $afterRebateFormatted,
                         'Apply Min-Tax' => $afterRebate < $minTax && $originalTax > 0 ? currencyFormat($minTax) : 'Not Applied',
-                        "Others Paid" => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Deduction applicable</div>" : "- ".$formattedDeduction
+                        'Others Paid' => 0 == $originalTax ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No Deduction applicable</div>" : '- '.$formattedDeduction,
                     ];
                 }
                 $data = [
                     'taxes' => [
-                        'a) Tax On Turnover' =>  currencyFormat($turnoverTax),
-                        "b) Tax On Income<br>".($originalTax > 0 && $minTax > $originalTax ? "<small>Actual Tax ({$formattedOriginalTax})</small>" : '') =>  currencyFormat($incomeTax),
+                        'a) Tax On Turnover' => currencyFormat($turnoverTax),
+                        'b) Tax On Income<br>'.($originalTax > 0 && $minTax > $originalTax ? "<small>Actual Tax ({$formattedOriginalTax})</small>" : '') => currencyFormat($incomeTax),
                         'actual-tax' => $originalTax,
                         '*Tax Paid a or b which is higher'.($minTaxApplied ? "<br> <small>Min. Tax Applied({$formatMinTax})</small>" : '') => currencyFormat($tax),
                     ],
                     'add' => [
-                        'WealthTax' => "+ ".currencyFormat($assetTax),
-                        '*Total Payable Tax' =>  currencyFormat($totalTax),
+                        'WealthTax' => '+ '.currencyFormat($assetTax),
+                        '*Total Payable Tax' => currencyFormat($totalTax),
                     ],
                     'less' => $less,
-                    '*Total Balance Payable' => $originalTax == 0 ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No tax applicable</div>" : currencyFormat($afterDeduction)
+                    '*Total Balance Payable' => 0 == $originalTax ? "<div class='text-center' style='border-bottom: 2px solid rgb(14 159 110);'>No tax applicable</div>" : currencyFormat($afterDeduction),
                 ];
 
                 $incomeOther = $this->calcOthers($income, $request, 'income');
@@ -106,12 +99,12 @@ class TaxCalculatorController extends Controller
                     'tax' => $afterDeduction,
                     'others' => $others,
                     'user_id' => auth()?->id(),
-                    'data' => $data
+                    'data' => $data,
                 ]);
-                $result->update(['has_applied_for_service' => $request->query('apply') == 'true']);
-            } elseif ($request->query('apply') == 'true') {
+                $result->update(['has_applied_for_service' => 'true' == $request->query('apply')]);
+            } elseif ('true' == $request->query('apply')) {
                 $result = TaxCalculator::find($request->query('result_id'));
-                $result->update(['has_applied_for_service' => $request->query('apply') == 'true']);
+                $result->update(['has_applied_for_service' => 'true' == $request->query('apply')]);
 
                 $alert = [
                     'alert-type' => 'success',
@@ -119,9 +112,8 @@ class TaxCalculatorController extends Controller
                 ];
 
                 return redirect('/tax/calculator/results')->with($alert);
-
             }
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             $alert = [
                 'alert-type' => 'error',
                 'message' => $th->getMessage(),
@@ -129,43 +121,38 @@ class TaxCalculatorController extends Controller
 
             return back()->with($alert);
         }
-        $apply = $request->query('apply') == 'true';
+        $apply = 'true' == $request->query('apply');
 
         return view('frontend.pages.taxCalculator.result', compact('result', 'apply'));
     }
 
-    public function results()
-    {
+    public function results() {
         $results = User::find(auth()->id())->taxCalulators;
 
         return view('frontend.pages.taxCalculator.results', compact('results'));
     }
 
-    public function result($id)
-    {
+    public function result($id) {
         $result = User::find(auth()->id())->taxCalulators()->find($id);
         $apply = $result->has_applied_for_service;
+
         return view('frontend.pages.taxCalculator.result', compact('result', 'apply'));
     }
 
     /**
      * Calculate taxes for income and turnover
      * Returns the total tax for income and turnover
-     * Returns the last value slot percentage for Assets
+     * Returns the last value slot percentage for Assets.
      *
-     * @param integer $value
-     * @param \Illuminate\Http\Request $request
-     * @param string $type
-     * @return mixed
+     * @param Request $request
      */
-    public function calcTax(int $value, $request, string $type)
-    {
+    public function calcTax(int $value, $request, string $type) {
         $for = $request->tax_for;
         $gender = $request->gender;
         $totalTax = 0;
         $mainValue = $value;
         $taxSetting = TaxSetting::where(['for' => $for, 'type' => 'tax'])->first();
-        if ($type == 'income') {
+        if ('income' == $type) {
             $taxFree = match ($gender) {
                 'male' => (int) $taxSetting->tax_free->male,
                 'female' => (int) $taxSetting->tax_free->female,
@@ -185,11 +172,11 @@ class TaxCalculatorController extends Controller
         ->where('from', '<=', $afterFree)
         ->latest()->first();
 
-        /**
+        /*
          * For Asset Type just return the last value slot percentage
          */
-        if ($type == 'asset') {
-            return $lastValueSlot->tax_percentage ?? 0 ;
+        if ('asset' == $type) {
+            return $lastValueSlot->tax_percentage ?? 0;
         }
         $slotLimit = $lastValueSlot?->to ?? 0;
         $slots = $taxSetting->slots()->where('type', $type)->where('to', '<=', $slotLimit)->latest()->get();
@@ -202,17 +189,16 @@ class TaxCalculatorController extends Controller
                 /**
                  * Determine the Amount on which tax will be calculated
                  * If it's first calculation then free tax will be deducted
-                 * Else the slot difference will be the amount to calculate tax;
+                 * Else the slot difference will be the amount to calculate tax;.
                  */
-
                 $amountForTax = $slot->difference < $value ? $slot->difference : $value;
                 $tax = $amountForTax * ($slot->tax_percentage / 100);
                 $originalTax = $tax;
-                if ($type == 'income') {
-                    $minTaxApplied = $key == 0 && $minTax > $tax;
+                if ('income' == $type) {
+                    $minTaxApplied = 0 == $key && $minTax > $tax;
                     $tax = $minTaxApplied ? $minTax : $tax;
                 }
-                if (!($type == 'turnover' && $key == 0)) {
+                if (!('turnover' == $type && 0 == $key)) {
                     $value -= $amountForTax;
                 }
                 $totalTax += $tax;
@@ -221,15 +207,15 @@ class TaxCalculatorController extends Controller
                 }
             }
         }
+
         return [
             'tax' => $totalTax,
             'original-tax' => $originalTax,
-            'min-tax-applied' => $minTaxApplied
+            'min-tax-applied' => $minTaxApplied,
         ];
     }
 
-    public function calcOthers(int $value, $request, string $type)
-    {
+    public function calcOthers(int $value, $request, string $type) {
         $otherTaxes = [];
         if ($request->services) {
             foreach ($request->services as $key => $service) {
@@ -251,5 +237,9 @@ class TaxCalculatorController extends Controller
         }
 
         return $otherTaxes;
+    }
+
+    protected function applyForService(TaxCalculator $result) {
+        return $result;
     }
 }

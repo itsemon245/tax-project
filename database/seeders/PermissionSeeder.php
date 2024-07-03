@@ -5,284 +5,275 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 
-class PermissionSeeder extends Seeder
-{
+class PermissionSeeder extends Seeder {
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
+    public function run(): void {
         $permissions = [
-            'homepage' => //group
+            'homepage' => // group
             [
-                'banner' => //operation
+                'banner' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'product' => //operation
+                'product' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'appointment section' => //operation
+                'appointment section' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'achievement' => //operation
+                'achievement' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'info section' => //operation
+                'info section' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
             ],
-            'service page' => //group
+            'service page' => // group
             [
-                'service' => //operation
+                'service' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
             ],
-            'pages & sections' => //group
+            'pages & sections' => // group
             [
-                'book' => //operation
+                'book' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'industry' => //operation
+                'industry' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'about' => //operation
+                'about' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'social media' => //operation
+                'social media' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
             ],
-            'branch' => //group
+            'branch' => // group
             [
-                'map' => //operation
+                'map' => // operation
                 [
-                    'create', //action
-                    'update', //action
-                    'delete', //action
+                    'create', // action
+                    'update', // action
+                    'delete', // action
                 ],
             ],
-            'training' => //group
+            'training' => // group
             [
-                'course' => //operation
+                'course' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'video' => //operation
+                'video' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'exam' => //operation
+                'exam' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'case study' => //operation
+                'case study' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
             ],
-            'people' => //group
+            'people' => // group
             [
-                'partner' => //operation
+                'partner' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'partner request' => //operation
+                'partner request' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'client studio' => //operation
+                'client studio' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
             ],
-            'tax expert' => //group
+            'tax expert' => // group
             [
-                'expert' => //operation
+                'expert' => // operation
                 [
-                    'create', //action
-                    'update', //action
-                    'delete', //action
+                    'create', // action
+                    'update', // action
+                    'delete', // action
                 ],
-                'consultation' => //operation
+                'consultation' => // operation
                 [
-                    'update', //action
-                    'approve', //action
-                    'delete', //action
+                    'update', // action
+                    'approve', // action
+                    'delete', // action
                 ],
             ],
 
-            'project' => //group
+            'project' => // group
             [
-                'discussion' => //operation
+                'discussion' => // operation
                 [
-                    'manage' //action
+                    'manage', // action
                 ],
-                'progress' => //operation
+                'progress' => // operation
                 [
-                    'create', //action
-                    'update', //action
-                    'delete', //action
-                    'update task' //action
+                    'create', // action
+                    'update', // action
+                    'delete', // action
+                    'update task', // action
                 ],
-                'client' => //operation
+                'client' => // operation
                 [
-                    'manage', //action
-                    'assign'
+                    'manage', // action
+                    'assign',
                 ],
             ],
-            'user\'s data' => //group
+            'user\'s data' => // group
             [
-                'document' => //operation
+                'document' => // operation
                 [
-                    'update', //action
-                    'approve', //action
-                    'delete' //action
+                    'update', // action
+                    'approve', // action
+                    'delete', // action
                 ],
             ],
-            'appointment' => //group
+            'appointment' => // group
             [
-                'appointment' => //operation
+                'appointment' => // operation
                 [
-                    'update', //action
-                    'delete', //action
-                    'approve', //action
+                    'update', // action
+                    'delete', // action
+                    'approve', // action
                 ],
             ],
-            'user' => //group
+            'user' => // group
             [
-                'user' => //operation
+                'user' => // operation
                 [
-                    'create', //action
-                    'update', //action
-                    'delete', //action
+                    'create', // action
+                    'update', // action
+                    'delete', // action
                 ],
             ],
-            'accounting' => //group
+            'accounting' => // group
             [
-                'report' => //operation
+                'report' => // operation
                 [
                     'manage',
                 ],
-                'chalan' => //operation
+                'chalan' => // operation
                 [
                     'manage',
                 ],
-                'return' => //operation
+                'return' => // operation
                 [
                     'manage',
                 ],
-                'withdraw request' => //operation
+                'withdraw request' => // operation
                 [
                     'approve',
                 ],
             ],
-            'management' => //group
+            'management' => // group
             [
-                'role' => //operation
+                'role' => // operation
                 [
-                    'create', //action
-                    'update', //action
-                    'delete', //action
+                    'create', // action
+                    'update', // action
+                    'delete', // action
                 ],
-                'promo code' => //operation
+                'promo code' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'reviews' => //operation
+                'reviews' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
-                'order' => //operation
+                'order' => // operation
                 [
-                    'manage', //action
+                    'manage', // action
                 ],
             ],
 
-
-            'invoice' => //group
+            'invoice' => // group
             [
-                'invoice' => //operation
+                'invoice' => // operation
                 [
-                    'create', //action
-                    'update', //action
-                    'delete', //action
-                    'send', //action
+                    'create', // action
+                    'update', // action
+                    'delete', // action
+                    'send', // action
                 ],
             ],
-            'expense' => //group
+            'expense' => // group
             [
-                'expense' => //operation
+                'expense' => // operation
                 [
-                    'create', //action
-                    'update', //action
-                    'delete', //action
-                    'print', //action
+                    'create', // action
+                    'update', // action
+                    'delete', // action
+                    'print', // action
                 ],
             ],
-            'time tracking' => //group
+            'time tracking' => // group
             [
-                'event' => //operation
+                'event' => // operation
                 [
-                    'create', //action
-                    'update', //action
-                    'delete', //action
+                    'create', // action
+                    'update', // action
+                    'delete', // action
                 ],
             ],
-            'tax calculator' =>
-            [
-                'tax setting' =>
-                [
+            'tax calculator' => [
+                'tax setting' => [
                     'create',
                     'update',
                     'delete',
                 ],
-                'result' =>
+                'result' => [
+                    'manage',
+                ],
+            ],
+            'setting' => [
+                'basic setting' => // operation
+                [
+                    'manage', // action
+                ],
+                'referral setting' => // operation
+                [
+                    'manage', // action
+                ],
+                'payment setting' => // operation
+                [
+                    'manage', // action
+                ],
+                'return link setting' => // operation
+                [
+                    'manage', // action
+                ],
+            ],
+
+            'uncategorized' => // group
+            [
+                'admin panel' => // operation
+                [
+                    'visit', // action
+                ],
+                'withdrawal request' => // operation
                 [
                     'manage',
-                ]
-            ],
-            'setting' =>
-            [
-                'basic setting' => //operation
-                [
-                    'manage', //action
                 ],
-                'referral setting' => //operation
-                [
-                    'manage', //action
-                ],
-                'payment setting' => //operation
-                [
-                    'manage', //action
-                ],
-                'return link setting' => //operation
-                [
-                    'manage', //action
-                ],
-            ],
-
-            'uncategorized' => //group
-            [
-                'admin panel' => //operation
-                [
-                    'visit', //action
-                ],
-                'withdrawal request' => //operation
-                [
-                    'manage'
-                ]
-
-
             ],
         ];
 
@@ -291,17 +282,15 @@ class PermissionSeeder extends Seeder
                 // create read permission for each operation
                 Permission::create([
                     'name' => "read $operation",
-                    'group' => $group
+                    'group' => $group,
                 ]);
                 foreach ($actions as $action) {
                     Permission::create([
                         'name' => "$action $operation",
-                        'group' => $group
+                        'group' => $group,
                     ]);
                 }
             }
         }
-
-
     }
 }

@@ -4,16 +4,13 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\ExpertCategory;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
-{
+class DatabaseSeeder extends Seeder {
     /**
      * Seed the application's database.
      */
-    public function run() : void
-    {
+    public function run(): void {
         $this->call([
             UserSeeder::class,
             BannerSeeder::class,
@@ -48,7 +45,7 @@ class DatabaseSeeder extends Seeder
             AboutSeeder::class,
             ExpenseSeeder::class,
             AchievementSeeder::class,
-            CustomServiceSeeder::class
+            CustomServiceSeeder::class,
         ]);
     }
 }

@@ -9,92 +9,89 @@ use App\Http\Requests\CustomService\CustomServiceRequest;
 use App\Models\CustomService;
 use App\Services\CustomService\CustomServiceService;
 
-class CustomServiceController extends Controller
-{
-    public function __construct(protected CustomServiceService $service)
-    {
+class CustomServiceController extends Controller {
+    public function __construct(protected CustomServiceService $service) {
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         $services = CustomService::paginate(paginateCount());
+
         return view('backend.service.custom.index', compact('services'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         $pageNames = PageName::cases();
+
         return view('backend.service.custom.create', compact('pageNames'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CustomServiceRequest $request)
-    {
+    public function store(CustomServiceRequest $request) {
         $service = $this->service->store(CustomServiceDto::transformRequest($request));
         $service->saveImage($request->file('image'));
+
         return redirect(route('custom-service.index'), 201)->with([
             'alert-type' => 'success',
-            'message'    => 'Custom Service Created!',
-         ]);
+            'message' => 'Custom Service Created!',
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show(string $id) {
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CustomService $customService)
-    {
-        $service   = $customService;
-        $pageNames = [ 'homepage', 'account' ];
+    public function edit(CustomService $customService) {
+        $service = $customService;
+        $pageNames = ['homepage', 'account'];
+
         return view('backend.service.custom.edit', compact('service', 'pageNames'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CustomServiceRequest $request, CustomService $customService)
-    {
+    public function update(CustomServiceRequest $request, CustomService $customService) {
         if ($request->has('image')) {
             $image = $request->file('image');
             if ($customService->image) {
                 $customService->updateImage($image, $customService->image?->path);
-            }else{
+            } else {
                 $customService->saveImage($image);
             }
         }
         $service = $this->service->update(CustomServiceDto::transformRequest($request), $customService);
+
         return redirect(route('custom-service.index'))->with([
             'alert-type' => 'success',
-            'message'    => 'Custom Service Updated',
-         ]);
+            'message' => 'Custom Service Updated',
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CustomService $customService)
-    {
+    public function destroy(CustomService $customService) {
         if ($customService->image) {
             $customService->deleteImage($customService->image?->path);
         }
         $this->service->delete($customService);
+
         return redirect(route('custom-service.index'))->with([
             'alert-type' => 'success',
-            'message'    => 'Custom Service Deleted!',
-         ]);
+            'message' => 'Custom Service Deleted!',
+        ]);
     }
 }

@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Facade;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +12,7 @@ return [
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
     |
-    */
+     */
 
     'name' => env('APP_NAME', 'Laravel'),
 
@@ -26,7 +25,7 @@ return [
     | running in. This may determine how you prefer to configure various
     | services the application utilizes. Set this in your ".env" file.
     |
-    */
+     */
 
     'env' => env('APP_ENV', 'production'),
 
@@ -39,7 +38,7 @@ return [
     | stack traces will be shown on every error that occurs within your
     | application. If disabled, a simple generic error page is shown.
     |
-    */
+     */
 
     'debug' => (bool) env('APP_DEBUG', false),
 
@@ -52,7 +51,7 @@ return [
     | the Artisan command line tool. You should set this to the root of
     | your application so that it is used when running Artisan tasks.
     |
-    */
+     */
 
     'url' => env('APP_URL', 'http://localhost'),
 
@@ -67,7 +66,7 @@ return [
     | will be used by the PHP date and date-time functions. We have gone
     | ahead and set this to a sensible default for you out of the box.
     |
-    */
+     */
 
     'timezone' => 'Asia/Dhaka',
 
@@ -80,7 +79,7 @@ return [
     | by the translation service provider. You are free to set this value
     | to any of the locales which will be supported by the application.
     |
-    */
+     */
 
     'locale' => 'en',
 
@@ -93,7 +92,7 @@ return [
     | is not available. You may change the value to correspond to any of
     | the language folders that are provided through your application.
     |
-    */
+     */
 
     'fallback_locale' => 'en',
 
@@ -106,7 +105,7 @@ return [
     | data for your database seeds. For example, this will be used to get
     | localized telephone numbers, street address information and more.
     |
-    */
+     */
 
     'faker_locale' => 'en_US',
 
@@ -119,7 +118,7 @@ return [
     | to a random, 32 character string, otherwise these encrypted strings
     | will not be safe. Please do this before deploying an application!
     |
-    */
+     */
 
     'key' => env('APP_KEY'),
 
@@ -136,7 +135,7 @@ return [
     |
     | Supported drivers: "file", "cache"
     |
-    */
+     */
 
     'maintenance' => [
         'driver' => 'file',
@@ -152,10 +151,9 @@ return [
     | request to your application. Feel free to add your own services to
     | this array to grant expanded functionality to your applications.
     |
-    */
+     */
 
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -195,8 +193,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\SingletonQueryProvider::class,
-        App\Providers\ViewServiceProvider::class
-
+        App\Providers\ViewServiceProvider::class,
     ],
 
     /*
@@ -208,11 +205,10 @@ return [
     | is started. However, feel free to register as many as you wish as
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
-    */
+     */
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
     ])->toArray(),
-
 ];
