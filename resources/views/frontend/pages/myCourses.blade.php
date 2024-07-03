@@ -27,7 +27,7 @@
                                             <div class="fw-medium">{{ $course->name }}</div>
                                             <div class="d-flex mt-2 gap-2 align-items-center">
                                                 <span data-feather="tv" class="icon-dual w-4 h-4"></span>
-                                                {{ $course->videos?->count() }} Case Studies
+                                                {{ $course->videos?->count() }} Videos
                                             </div>
                                         </div>
                                     </a>
