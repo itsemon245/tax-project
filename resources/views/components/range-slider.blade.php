@@ -51,7 +51,7 @@
 
 @pushOnce('customJs')
     <script src="{{ asset('libs/nouislider/dist/nouislider.min.js') }}"></script>
-    <script>
+    <script hx-swap-oob="true" id="slider-format">
         let formatForSlider = {
             from: function(formattedValue) {
                 return Number(formattedValue);
@@ -64,7 +64,7 @@
 @endPushOnce
 
 @push('customJs')
-    <script>
+    <script hx-swap-oob="true" id="slider-config">
         function sliderConfig() {
 
             let from = parseInt('{{ $from }}')
@@ -120,6 +120,8 @@
                 slider.noUiSlider.set([null, value]);
             })
         }
-        sliderConfig()
+        $(function() {
+            sliderConfig()
+        })
     </script>
 @endpush
