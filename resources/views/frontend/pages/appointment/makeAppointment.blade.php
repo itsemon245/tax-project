@@ -17,6 +17,9 @@
 
             <form method="POST" action="{{ route('user-appointment.store') }}" class="">
                 @csrf
+                @isset($expertProfile)
+                    <input type="hidden" name="expert_id" value="{{ $expertProfile?->id }}">
+                @endisset
                 <div class="d-flex justify-content-center">
                     <div class="w-100" style="max-width: 1024px;" class="px-md-0 px-2">
                         <div id="progressbarwizard">
@@ -147,18 +150,18 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="mb-2">
-                                    <input type="hidden" name="dist_only" value="1">
+                                                            <input type="hidden" name="dist_only" value="1">
 
                                                             <label for="branch-thana">District <span
                                                                     class="text-danger">*</span></label>
                                                             <select class="hx-include !w-full"
                                                                 hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
                                                                 hx-vals="{'dist_only': 'true'}"
-                                                                hx-select="#hx-filter-target" hx-include=".hx-include, [name='dist_only']"
+                                                                hx-select="#hx-filter-target"
+                                                                hx-include=".hx-include, [name='dist_only']"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
                                                                 label="Select District" id="branch-district"
-                                                                name="branch-district" required
-                                                                placeholder="Select District...">
+                                                                name="branch-district" placeholder="Select District...">
                                                                 <option selected disabled value="">Select a district
                                                                 </option>
                                                                 @foreach ($branchDistricts as $district)
@@ -177,7 +180,7 @@
                                                                 hx-get="{{ $expertProfile ?? false ? route('consultation.make', ['expertProfile' => $expertProfile]) : route('appointment.make') }}"
                                                                 hx-select="#hx-filter-target" hx-include=".hx-include"
                                                                 hx-target="#hx-filter-target" hx-swap="outerHTML"
-                                                                id="branch-thana" name="branch-thana" required
+                                                                id="branch-thana" name="branch-thana"
                                                                 placeholder="Select Thana...">
                                                                 <option selected disabled value="">Select a thana
                                                                 </option>
@@ -238,7 +241,7 @@
                                                             </div>
 
                                                             <div class="d-flex flex-wrap gap-2 ps-2">
-                                                                @foreach ($times as $key => $time)
+                                                                @forelse ($times as $key => $time)
                                                                     <label
                                                                         class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
                                                                         {{ \Carbon\Carbon::parse($time)->timezone('Asia/Dhaka')->format('h:i A') }}
@@ -248,7 +251,11 @@
                                                                             value="{{ $time }}"
                                                                             @if ($key === 0 && $i === 1) checked @endif>
                                                                     </label>
-                                                                @endforeach
+                                                                @empty
+                                                                    <div class="p-3 w-full bg-slate-200 text-gray-500">
+                                                                        No time is provided
+                                                                    </div>
+                                                                @endforelse
                                                             </div>
                                                         </div>
                                                     @endforeach

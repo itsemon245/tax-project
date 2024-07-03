@@ -32,11 +32,13 @@
 @endPushOnce
 
 @push('customJs')
-    <script>
-        $('#{{ $id }}').selectize({
-            sortField: 'text',
-            maxItems: 1,
-            create: '{{ $canCreate }}',
+    <script hx-swap-oob="true" id="{{ $id }}-selectize">
+        $(function() {
+            $('#{{ $id }}').selectize({
+                sortField: 'text',
+                maxItems: 1,
+                create: '{{ $canCreate }}',
+            })
         })
     </script>
 @endpush

@@ -29,4 +29,7 @@ class ExpertProfile extends Model
     {
         return $this->belongsToMany(ExpertCategory::class);
     }
+    public function appointments(){
+        return $this->hasMany(UserAppointment::class, 'expert_profile_id');
+    }
 }

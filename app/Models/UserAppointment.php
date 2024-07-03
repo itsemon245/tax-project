@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,7 @@ class UserAppointment extends Model
 
     protected $casts = [
         'completed_at' => 'date',
+        'approved_at' => 'date',
     ];
 
     public function map()
@@ -30,17 +32,18 @@ class UserAppointment extends Model
         return $this->belongsTo(ExpertProfile::class);
     }
 
-    protected static function booted(): void
+    public function scopeApprovedOnly(Builder $builder)
     {
-        // static::created(function (UserAppointment $userAppointment) {
-        //     $event = new Calendar();
-        //     $event->title = "Appointment Created";
-        //     $event->client_id = $userAppointment->client;
-        //     $event->service = $userAppointment->name;
-        //     $event->type = 'others';
-        //     $event->start = $userAppointment->start_date;
-        //     $event->description = $userAppointment->event_description;
-        //     $event->save();
-        // });
+        $builder->whereNotNull('approved_at')
+        ->whereNull('completed_at');
+    }
+    public function scopeCompletedOnly(Builder $builder)
+    {
+        $builder->whereNotNull('completed_at');
+    }
+    public function scopeUnapproved(Builder $builder)
+    {
+        $builder->whereNull('completed_at')
+        ->whereNull('approved_at');
     }
 }

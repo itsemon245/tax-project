@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserAppointment;
-use App\Http\Requests\StoreUserAppointmentRequest;
-use App\Http\Requests\UpdateUserAppointmentRequest;
 
-class UserAppointmentController extends Controller
-{
+class UserAppointmentController extends Controller {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+        if (!$request->is_physical && $request->location == null) {
+            $alert = [
+                'alert-type' => 'error',
+                'message' => 'No location has been selected'
+            ];
+            return back()->with($alert);
+        }
         $appointment = UserAppointment::create([
             "date" => $request->date,
             "expert_profile_id" => $request->expert_id,

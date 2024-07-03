@@ -17,6 +17,9 @@
 
             <form method="POST" action="{{ route('user-appointment.store') }}" class="">
                 @csrf
+                @isset($expertProfile)
+                    <input type="hidden" name="expert_id" value="{{ $expertProfile?->id }}">
+                @endisset
                 <div class="d-flex justify-content-center">
                     <div class="w-100" style="max-width: 720px;" class="px-md-0 px-2">
                         <div id="progressbarwizard">
@@ -70,8 +73,8 @@
                                             <h4 class="col-12">
                                                 What time works best for you?
                                             </h4>
-                                            <a href="{{ route('appointment.make').($office ? "?office_id=" . $office?->id : '') }}" for="appointment-input"
-                                                class="row mb-1 text-dark" style="cursor: pointer;">
+                                            <a href="{{ route('appointment.make') . ($office ? '?office_id=' . $office?->id : '') }}"
+                                                for="appointment-input" class="row mb-1 text-dark" style="cursor: pointer;">
                                                 <div id="appointment-type"
                                                     class="border bg-light rounded p-3 appointment-type appointment">
                                                     <h4>Together in Office</h4>
@@ -103,28 +106,31 @@
                                                     $i = 0;
                                                 @endphp
                                                 @foreach ($dates as $date => $times)
-                                                @php
-                                                    $i++;
-                                                @endphp
-                                                <div class="mb-3">
-                                                    <div class="fw-bold">{{ $date }}
-                                                    </div>
+                                                    @php
+                                                        $i++;
+                                                    @endphp
+                                                    <div class="mb-3">
+                                                        <div class="fw-bold">{{ $date }}
+                                                        </div>
 
-                                                    <div class="d-flex flex-wrap gap-2 ps-2">
-                                                        @foreach ($times as $key => $time)
-                                                            <label
-                                                                class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
-                                                                {{ \Carbon\Carbon::parse($time)->timezone('Asia/Dhaka')->format('h:i A') }}
-                                                                <input class="time-input " hidden type="radio"
-                                                                    name="time"
-                                                                    data-date="{{ $date }}"
-                                                                    value="{{ $time }}"
-                                                                    @if ($key === 0 && $i === 1) checked @endif>
-                                                            </label>
-                                                        @endforeach
+                                                        <div class="d-flex flex-wrap gap-2 ps-2">
+                                                            @forelse ($times as $key => $time)
+                                                                <label
+                                                                    class="time-label rounded border p-2 {{ $key === 0 && $i === 1 ? 'selected' : 'bg-light' }}">
+                                                                    {{ \Carbon\Carbon::parse($time)->timezone('Asia/Dhaka')->format('h:i A') }}
+                                                                    <input class="time-input " hidden type="radio"
+                                                                        name="time" data-date="{{ $date }}"
+                                                                        value="{{ $time }}"
+                                                                        @if ($key === 0 && $i === 1) checked @endif>
+                                                                </label>
+                                                            @empty
+                                                                <div class="p-3 w-full bg-slate-200 text-gray-500">
+                                                                    No time is provided
+                                                                </div>
+                                                            @endforelse
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
                                             </div>
                                         </div>
 
@@ -220,7 +226,7 @@
         </div>
     </div>
     {{-- Lets discuss --}}
-    <x-section.discuss-section/>
+    <x-section.discuss-section />
     {{-- Appoinment Section --}}
     <div>
         <x-frontend.appointment-section />

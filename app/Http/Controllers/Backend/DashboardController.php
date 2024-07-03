@@ -14,52 +14,30 @@ use App\Models\UserDoc;
 use App\Models\Withdrawal;
 use Carbon\Carbon;
 
-class DashboardController extends Controller
-{
-    public function __construct()
-    {
+class DashboardController extends Controller {
+    public function __construct() {
         $this->middleware(['auth', 'verified']);
     }
 
     /*
-    * create dashboard view page
-    */
-    public function index()
-    {
+     * create dashboard view page
+     */
+    public function index() {
         $statReports = $this->getStatReports();
         $expertStats = [];
         $recentConsultations = null;
-
         if (auth()->user()->role_name == 'expert') {
-            $expertProfile = auth()->user()->expertProfile;
-            $recentConsultations = UserAppointment::where('expert_profile_id', $expertProfile->id)
-            ->latest()
-            ->limit(10)
-            ->paginate();
-            $expertStats['Today'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
-            ->whereDate('created_at', now())
-            ->count();
-            $expertStats['This week'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
-            ->whereBetween('created_at', [
-                now()->subWeek()->startOf('week'),
-                now()->startOf('week')
-                ])
-            ->count();
-            $expertStats['This month'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
-            ->whereBetween('created_at', [
-                now()->subMonth()->startOf('month'),
-                now()->startOf('month')
-                ])
-            ->count();
-            $expertStats['This year'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
-            ->whereBetween('created_at', [
-                now()->subYear()->startOf('year'),
-                now()->startOf('year')
-                ])
-            ->count();
-            $expertStats['All time'] = UserAppointment::where('expert_profile_id', $expertProfile->id)
-            ->count();
+            $expert = auth()->user()->expertProfile;
+            $recentConsultations = $expert->appointments()
+                ->unapproved()
+                ->latest()
+                ->limit(10)
+                ->paginate();
+        } else {
+            $expert = null;
+            $recentConsultations = null;
         }
+
         $fiscalYear = FiscalYear::where('year', currentFiscalYear())->first();
         $chartData = $this->getChartData();
         $events = Calendar::with('client')->latest()->latest()->get();
@@ -80,11 +58,46 @@ class DashboardController extends Controller
             'total' => $totalExpense,
             'today' => $todaysExpense?->amount ?? 0
         ];
-        return view('backend.dashboard.dashboard', compact('statReports', 'expertStats', 'recentConsultations', 'clients', 'expenses', 'events', 'today', 'services', 'currentEvents', 'fiscalYear', 'chartData', 'projects'));
+        return view('backend.dashboard.dashboard', compact('statReports', 'expert', 'recentConsultations', 'clients', 'expenses', 'events', 'today', 'services', 'currentEvents', 'fiscalYear', 'chartData', 'projects'));
     }
 
-    protected function getStatReports(): array
-    {
+    public function getChartData() {
+        $fiscalYears = FiscalYear::orderBy('year', 'desc')->latest()->latest()->take(3)->get();
+
+        $mappedItems = $fiscalYears->map(function ($fy) {
+            $data = collect([
+                [
+                    'x' => 'Overdue',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'overdue')->sum('due')
+                ],
+                [
+                    'x' => 'Paid',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'paid')->sum('paid')
+                ],
+                [
+                    'x' => 'Partial (Paid)',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->sum('paid')
+                ],
+                [
+                    'x' => 'Partial (Due)',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->sum('due')
+                ],
+                [
+                    'x' => 'Due',
+                    'y' =>  $fy->invoices()->wherePivot('status', 'due')->sum('due')
+                ],
+            ]);
+            return [
+                'name' => $fy->year,
+                'data' => $data
+            ];
+        });
+        // dd($mappedItems);
+
+        return $mappedItems;
+    }
+
+    protected function getStatReports(): array {
         $statReports = [];
         $filters = [
             'daily',
@@ -320,42 +333,5 @@ class DashboardController extends Controller
         }
 
         return $statReports;
-    }
-
-    public function getChartData()
-    {
-        $fiscalYears = FiscalYear::orderBy('year', 'desc')->latest()->latest()->take(3)->get();
-
-        $mappedItems = $fiscalYears->map(function ($fy) {
-            $data = collect([
-                [
-                    'x' => 'Overdue',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'overdue')->sum('due')
-                ],
-                [
-                    'x' => 'Paid',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'paid')->sum('paid')
-                ],
-                [
-                    'x' => 'Partial (Paid)',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->sum('paid')
-                ],
-                [
-                    'x' => 'Partial (Due)',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'partial')->sum('due')
-                ],
-                [
-                    'x' => 'Due',
-                    'y' =>  $fy->invoices()->wherePivot('status', 'due')->sum('due')
-                ],
-            ]);
-            return [
-                'name' => $fy->year,
-                'data' => $data
-            ];
-        });
-        // dd($mappedItems);
-
-        return $mappedItems;
     }
 }

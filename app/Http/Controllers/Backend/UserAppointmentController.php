@@ -2,44 +2,49 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\AppointmentTime;
-use App\Models\Calendar;
-use App\Models\UserAppointment;
-use App\Notifications\AppointmentApprovedNotification;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Calendar;
 use Illuminate\Http\Request;
+use App\Models\ExpertProfile;
+use App\Models\AppointmentTime;
+use App\Models\UserAppointment;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\AppointmentApprovedNotification;
+use Log;
 
 class UserAppointmentController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         if (auth()->user() == null) {
             return redirect(route('login'));
         }
-        if (request('type') != 'consultation'){
-            if(!auth()->user()->hasRole('super admin')){
+        if (request('type') != 'consultation') {
+            if(!auth()->user()->hasRole('super admin')) {
                 abort(403, 'You don\'t have access to this page');
             }
         }
     }
     public function index()
     {
+        /**
+         * @var ?ExpertProfile $expert
+         */
         $expert = auth()->user()->expertProfile;
-        $appointments = UserAppointment::where('is_approved', false)
-        ->where(function (Builder $q) use ($expert) {
-            if (request('type') == 'consultation') {
-                $q->whereNotNull('expert_profile_id');
-                if ($expert != null) {
-                    $q->where('expert_profile_id', $expert->id);
-                }
-            }{
-                $q->whereNull('expert_profile_id');
-            }
-        })
-        ->with('map', 'user')->latest()->paginate(paginateCount());
-        $apt = $appointments->first();
+        if ($expert) {
+            $appointments = $expert->appointments()
+                    ->unapproved()
+                    ->with('map', 'user')
+                    ->latest()
+                    ->paginate(paginateCount());
+        } else {
+            $appointments = UserAppointment::unapproved()
+                ->whereNull('expert_profile_id')
+                ->with('map', 'user')
+                ->latest()
+                ->paginate(paginateCount());
+        }
 
         return view('backend.user.appointments', compact('appointments'));
     }
@@ -60,7 +65,7 @@ class UserAppointmentController extends Controller
         foreach ($request->times as $day => $times) {
             AppointmentTime::create([
                 'user_id' => auth()->id(),
-                'day'=> $day,
+                'day' => $day,
                 'times' => $times
             ]);
         }
@@ -82,39 +87,46 @@ class UserAppointmentController extends Controller
 
     public function approvedList()
     {
+        /**
+         * @var ?ExpertProfile $expert
+         */
         $expert = auth()->user()->expertProfile;
-        $appointments = UserAppointment::where(['is_approved' => true, 'is_completed' => false])
-        ->where(function (Builder $q) use ($expert) {
-            if (request('type') == 'consultation') {
-                $q->whereNotNull('expert_profile_id');
-                if ($expert != null) {
-                    $q->where('expert_profile_id', $expert->id);
-                }
-            }{
-                $q->whereNull('expert_profile_id');
-            }
-        })
-        ->with('map', 'user')->latest('approved_at')->get();
+        if ($expert) {
+            $appointments = $expert->appointments()
+                    ->approvedOnly()
+                    ->with('map', 'user')
+                    ->latest()
+                    ->paginate(paginateCount());
+        } else {
+            $appointments = UserAppointment::approvedOnly()
+                ->whereNull('expert_profile_id')
+                ->with('map', 'user')
+                ->latest()
+                ->paginate(paginateCount());
+        }
 
         return view('backend.user.appointmentsApproved', compact('appointments'));
     }
 
     public function completedList()
     {
+        /**
+         * @var ?ExpertProfile $expert
+         */
         $expert = auth()->user()->expertProfile;
-        $appointments = UserAppointment::where(['is_completed' => true])
-        ->where(function (Builder $q) use ($expert) {
-            if (request('type') == 'consultation') {
-                $q->whereNotNull('expert_profile_id');
-                if ($expert != null) {
-                    $q->where('expert_profile_id', $expert->id);
-                }
-            }{
-                $q->whereNull('expert_profile_id');
-            }
-        })
-        ->with('map', 'user')->latest('completed_at')->get();
-
+        if ($expert) {
+            $appointments = $expert->appointments()
+                    ->completedOnly()
+                    ->with('map', 'user')
+                    ->latest()
+                    ->paginate(paginateCount());
+        } else {
+            $appointments = UserAppointment::completedOnly()
+                ->whereNull('expert_profile_id')
+                ->with('map', 'user')
+                ->latest()
+                ->paginate(paginateCount());
+        }
         return view('backend.user.appointmentsCompleted', compact('appointments'));
     }
 
@@ -141,7 +153,11 @@ class UserAppointmentController extends Controller
             'start' => Carbon::parse($appointment->date.', '.$appointment->time, 'Asia/Dhaka')->format('Y-m-d H:m:s'),
             'description' => null,
         ]);
-        Notification::route('mail', $appointment->email)->notify(new AppointmentApprovedNotification($appointment));
+        try {
+            Notification::route('mail', $appointment->email)->notify(new AppointmentApprovedNotification($appointment));
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+        }
         $alert = [
             'message' => 'Appointment Approved',
             'alert-type' => 'success',
@@ -165,6 +181,7 @@ class UserAppointmentController extends Controller
         $appointment->is_completed = true;
         $appointment->completed_at = now();
         $appointment->update();
+        dd($appointment->refresh());
         Calendar::create([
             'title' => 'Appointment Completed',
             'user_appointment_id' => $appointment->id,

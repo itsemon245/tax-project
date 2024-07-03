@@ -29,6 +29,9 @@
 
         <form action="{{ route('user-appointments.times.update') }}" method="post" class="my-3">
             @csrf
+            <div class="d-flex justify-content-end">
+                <x-backend.ui.button class="btn-primary">Update</x-backend.ui.button>
+            </div>
             <template x-for="(times, day) in dates" :key="day">
                 <div>
                     <h4 class="text-center" x-text="day"></h4>
@@ -61,7 +64,9 @@
                     </div>
                 </div>
             </template>
-            <x-backend.ui.button class="btn-primary">Update</x-backend.ui.button>
+            <div class="d-flex justify-content-end">
+                <x-backend.ui.button class="btn-primary">Update</x-backend.ui.button>
+            </div>
         </form>
     </x-backend.ui.section-card>
 @endsection

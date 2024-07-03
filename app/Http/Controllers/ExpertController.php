@@ -72,7 +72,12 @@ class ExpertController extends Controller
             ->latest()->paginate(20);
         $posts = ExpertProfile::distinct()->latest()->get('post')->pluck('post');
         $districts = ExpertProfile::distinct()->latest()->get('district')->pluck('district');
-        $thanas = ExpertProfile::distinct()->latest()->get('thana')->pluck('thana');
+        $district = request()->query('district') ?? ($districts[0] ?? null);
+        if ($district) {
+            $thanas = ExpertProfile::where('district', $district)->distinct()->latest()->get('thana')->pluck('thana');
+        }else{
+            $thanas = ExpertProfile::distinct()->latest()->get('thana')->pluck('thana');
+        }
         $minExp = ExpertProfile::min('experience');
         $maxExp = ExpertProfile::max('experience');
         $reviews = Review::with('user')

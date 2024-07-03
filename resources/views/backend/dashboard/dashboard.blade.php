@@ -43,11 +43,13 @@
 
     <x-backend.ui.section-card>
         @hasrole('expert')
-            @if ($expertStats)
-                @include('backend.includes.expert-stats', ['expertStats' => $expertStats])
+            @if ($expert)
+                @include('backend.includes.expert-stats', $expert)
             @endif
             @if ($recentConsultations)
-                @include('backend.includes.recent-consultations', ['recentConsultations' => $recentConsultations])
+                @include('backend.includes.recent-consultations', [
+                    'recentConsultations' => $recentConsultations,
+                ])
             @endif
         @endhasrole
 

@@ -18,7 +18,7 @@
                     <div class="circle_right"></div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="hx-filtered-experts">
                 <div class="col-12">
                     <button onclick="filter.clickHandler(event)" id="filter-menu-btn" data-target="#filter-menu"
                         class="btn btn-secondary text-dark rounded-1 d-lg-none mb-3 fw-medium waves-effect waves-dark">
@@ -27,7 +27,8 @@
                     </button>
                 </div>
                 <div id="filter-menu" class="col-6 col-sm-6 col-md-4 col-lg-3 d-none d-lg-block">
-                    <form action="{{ route('expert.browse') }}" method="get">
+                    <form hx-get="{{ route('expert.browse') }}" hx-target="#hx-filtered-experts" hx-swap="outerHTML"
+                        hx-select="#hx-filtered-experts" hx-push-url="true" method="get">
                         <div class="filter-menu p-3 shadow bg-light rounded-2 ">
                             <div class="filters">
                                 <x-range-slider class="" tooltips="false" name="experience" id="experience"
@@ -61,9 +62,6 @@
                                                     {{ $thana }}</option>
                                             @endforeach
                                         </x-form.selectize>
-                                        <x-backend.form.select-input id="branch" name="branch" label="Branch"
-                                            placeholder="Choose Branch">
-                                        </x-backend.form.select-input>
                                     </div>
                                 </div>
                                 <div class="card">
@@ -175,7 +173,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @empty
+                        @empty
                             <div class="col-12">
                                 <div class="bg-light text-center">
                                     <div class="d-flex flex-column justify-content-center" style="height: 50vh;">

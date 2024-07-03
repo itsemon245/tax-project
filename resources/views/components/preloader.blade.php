@@ -35,7 +35,13 @@ height: 100vh;
         </div>
     </div>
 </div>
-
+@push('customCss')
+    <style>
+        .preloader{
+            display: none;
+        }
+    </style>
+@endpush
 @push('customJs')
     <script>
         $(document).ready(function() {
