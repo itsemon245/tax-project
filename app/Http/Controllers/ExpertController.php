@@ -40,6 +40,7 @@ class ExpertController extends Controller {
             $posts = $request->query('posts');
             $district = $request->query('district');
             $thana = $request->query('thana');
+            $dist_only = $request->query('dist_only') == 'false';
             $expTo = $request->query('experience_to');
             $expFrom = $request->query('experience_from');
             if ($posts) {
@@ -48,7 +49,7 @@ class ExpertController extends Controller {
             if ($district) {
                 $q->where('district', $district);
             }
-            if ($thana) {
+            if ($thana && $dist_only) {
                 $q->where('thana', $thana);
             }
             if ($expTo) {

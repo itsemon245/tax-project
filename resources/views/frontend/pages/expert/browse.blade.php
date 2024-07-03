@@ -27,8 +27,9 @@
                     </button>
                 </div>
                 <div id="filter-menu" class="col-6 col-sm-6 col-md-4 col-lg-3 d-none d-lg-block">
-                    <form hx-get="{{ route('expert.browse') }}" hx-target="#hx-filtered-experts" hx-swap="outerHTML"
-                        hx-select="#hx-filtered-experts" hx-push-url="true" method="get">
+                    <form hx-get="{{ route('expert.browse') }}" hx-trigger="change from:.hx-input"
+                        hx-target="#hx-filtered-experts" hx-swap="outerHTML" hx-select="#hx-filtered-experts"
+                        hx-push-url="true" method="get">
                         <div class="filter-menu p-3 shadow bg-light rounded-2 ">
                             <div class="filters">
                                 <x-range-slider class="" tooltips="false" name="experience" id="experience"
@@ -42,26 +43,27 @@
                                             <span class="mdi mdi-chevron-down"></span>
                                         </div>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body" hx-target="hx-form-body">
                                         @php
                                             $selectedDistrict = request()->query('district');
                                             $selectedThana = request()->query('thana');
                                             $selectedBranch = request()->query('branch');
                                         @endphp
-                                        <x-form.selectize class="mb-2" id="district" name="district" label="District"
-                                            placeholder="District">
+                                        <x-backend.form.select-input class="mb-2 hx-input" id="district" name="district"
+                                            label="District" placeholder="District">
                                             @foreach ($districts as $district)
                                                 <option value="{{ $district }}" @selected($district === $selectedDistrict)>
                                                     {{ $district }}</option>
                                             @endforeach
-                                        </x-form.selectize>
-                                        <x-form.selectize class="mb-2" id="thana" name="thana" label="Thana"
-                                            placeholder="Thana">
+                                        </x-backend.form.select-input>
+                                        <input id="dist_only" name="dist_only" value="true" class="d-none" />
+                                        <x-backend.form.select-input class="mb-2 hx-input" id="thana" name="thana"
+                                            label="Thana" placeholder="Thana">
                                             @foreach ($thanas as $thana)
                                                 <option value="{{ $thana }}" @selected($thana === $selectedThana)>
                                                     {{ $thana }}</option>
                                             @endforeach
-                                        </x-form.selectize>
+                                        </x-backend.form.select-input>
                                     </div>
                                 </div>
                                 <div class="card">
@@ -200,6 +202,16 @@
 
 @push('customJs')
     <script>
+        document.querySelectorAll('.hx-input').forEach(input => {
+            input.addEventListener('input', (e) => {
+                let thana = $("[name='thana']")
+                let district = $("[name='district']")
+                if (e.target.id == 'thana') {
+                    let dist_only = $("[name='dist_only']")
+                    dist_only.val('false')
+                }
+            });
+        });
         const filter = {
             toggle: {
                 btnIcon: function(jQBtn) {
