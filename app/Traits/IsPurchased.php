@@ -10,6 +10,6 @@ trait IsPurchased {
             $userId = auth()->id();
         }
 
-        return $this->morphMany(Purchase::class, 'purchasable')->where('user_id', $userId)->where('approved', 1)->first();
+        return $this->morphMany(Purchase::class, 'purchasable')->where('user_id', $userId)->where('approved', 1);
     }
 }
