@@ -21,12 +21,16 @@
                             height="350x" style="border:0;" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                         <div class="card-body p-2">
-                            <p class="fw-bold text-capitalize mb-1 fs-4 mb-0">{{ $map->location }}</p>
+                            <p class="fw-bold text-capitalize mb-1 fs-4">{{ $map->location }}</p>
                             <p class="fw-bold text-capitalize mb-1 fs-5">{{ $map->district . ', ' . $map->thana }}</p>
                             <div class="address mb-2">{!! $map->address !!}</div>
                             <p class="">
                                 <small class="text-muted">{{ $map->updated_at->diffForHumans() }}</small>
                             </p>
+                            @canany('update map')
+                                <x-backend.ui.button class="btn-success btn-sm" type='custom'
+                                    href="{{ route('user-appointments.index', ['map_id' => $map->id]) }}">Appoinments</x-backend.ui.button>
+                            @endcanany
                             @can('update map')
                                 <x-backend.ui.button class="btn-sm" type='edit'
                                     href="{{ route('map.edit', $map) }}"></x-backend.ui.button>
