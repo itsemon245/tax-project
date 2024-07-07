@@ -74,7 +74,7 @@
                                     <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
                                 @endif
                             </td>
-                            @if($appointment->map_id)
+                            if($appointment->map)
                                 <td>
                                 @if ($appointment->map)
                                     <strong>Location: {{ $appointment->map->location }}</strong>

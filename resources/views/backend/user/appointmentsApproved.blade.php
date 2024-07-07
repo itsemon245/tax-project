@@ -88,7 +88,7 @@
                                 <span>No approved date</span>
                                 @endif
                             </td>
-                            @if($appointment->map_id)
+                            if($appointment->map)
                                 <td>
                                 @if ($appointment->map)
                                     <strong>Location: {{ $appointment->map->location }}</strong>
