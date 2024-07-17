@@ -15,18 +15,17 @@
             }
         </style>
     @endpush
-    <x-backend.ui.breadcrumbs :list="['User', (request('type')=='consultation' ? 'Consultations' : 'Appointments')]" />
+    <x-backend.ui.breadcrumbs :list="['User', request('type') == 'consultation' ? 'Consultations' : 'Appointments']" />
 
-    <x-backend.ui.section-card name="User {{request('type')=='consultation' ? 'Consultations' : 'Appointments'}}">
-        @if ($appointments->count() > 0)
+    <x-backend.ui.section-card name="User {{ request('type') == 'consultation' ? 'Consultations' : 'Appointments' }}">
             <x-backend.table.basic :items="$appointments">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>User Info</th>
-                        @if (request('type')=='consultation' && auth()->user()->hasRole('admin'))
-                            <th>Appointment With</th>
-                        @endif
+                        @if (method_exists($appointments->first(), 'expertProfiles'))
+                        <th>Appointment With</th>
+                    @endif
                         <th>Date & Time</th>
                         <th>Status</th>
                         <th>Location</th>
@@ -60,7 +59,7 @@
                                     </p>
                                 </div>
                             </td>
-                            @if (request('type')=='consultation' && auth()->user()->hasRole('admin'))
+                            @if ($appointment->expertProfile)
                                 <td>
                                     <p class="mb-1">
                                         <strong>Expert Name:</strong> <span>{{ $appointment->expertProfile?->name }}</span>
@@ -84,7 +83,7 @@
                                     <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
                                 @endif
                             </td>
-                            @if($appointment->map)
+                            @if ($appointment->map)
                                 <td>
                                     <strong>Location: {{ $appointment->map->location }}</strong>
                                     <strong class="d-block">Address:</strong>
@@ -130,6 +129,5 @@
 
 
             </x-backend.table.basic>
-        @endif
     </x-backend.ui.section-card>
 @endsection

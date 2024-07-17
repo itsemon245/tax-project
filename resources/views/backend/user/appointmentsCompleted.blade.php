@@ -15,15 +15,15 @@
             }
         </style>
     @endpush
-    <x-backend.ui.breadcrumbs :list="['User', (request('type')=='consultation' ? 'Consultations' : 'Appointments')]" />
+    <x-backend.ui.breadcrumbs :list="['User', request('type') == 'consultation' ? 'Consultations' : 'Appointments']" />
 
-    <x-backend.ui.section-card name="User {{request('type')=='consultation' ? 'Consultations' : 'Appointments'}}">
+    <x-backend.ui.section-card name="User {{ request('type') == 'consultation' ? 'Consultations' : 'Appointments' }}">
         <x-backend.table.basic :items="$appointments">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>User Info</th>
-                    @if (method_exists($appointments, 'expertProfiles'))
+                    @if (method_exists($appointments->first(), 'expertProfiles'))
                         <th>Appointment With</th>
                     @endif
                     <th>Date & Time</th>
@@ -37,85 +37,94 @@
             </thead>
 
             <tbody>
-                @if ($appointments->count() > 0)
-                    @forelse ($appointments as $appointment)
-                        <tr>
-                            <td>1</td>
+                @forelse ($appointments as $key => $appointment)
+                    <tr>
+                        <td>{{ ++$key }}</td>
+                        <td>
+                            <p class="mb-1">
+                                <strong>Name:</strong> <span>{{ $appointment->name }}</span>
+                            </p>
+                            <p class="mb-1">
+                                <strong>Email:</strong> <span>{{ $appointment->email }}</span>
+                            </p>
+                            <p class="mb-1">
+                                <strong>Phone:</strong> <span>{{ $appointment->phone }}</span>
+                            </p>
+                            <div class="d-flex gap-3">
+                                <p class="mb-1">
+                                    <strong>District:</strong> <span>{{ $appointment->district }}</span>
+                                </p>
+                                <p class="mb-1">
+                                    <strong>Thana:</strong> <span>{{ $appointment->thana }}</span>
+                                </p>
+                            </div>
+                        </td>
+                        @if ($appointment->expertProfile)
                             <td>
-                                <p class="mb-1">
-                                    <strong>Name:</strong> <span>{{ $appointment->name }}</span>
+                                <p class="mb-1">    
+                                    <strong>Expert Name:</strong> <span>{{ $appointment->expertProfile?->name }}</span>
                                 </p>
                                 <p class="mb-1">
-                                    <strong>Email:</strong> <span>{{ $appointment->email }}</span>
+                                    <strong>Post:</strong> <span
+                                        class="badge bg-success p-2">{{ $appointment->expertProfile?->post }}</span>
                                 </p>
-                                <p class="mb-1">
-                                    <strong>Phone:</strong> <span>{{ $appointment->phone }}</span>
-                                </p>
-                                <div class="d-flex gap-3">
-                                    <p class="mb-1">
-                                        <strong>District:</strong> <span>{{ $appointment->district }}</span>
-                                    </p>
-                                    <p class="mb-1">
-                                        <strong>Thana:</strong> <span>{{ $appointment->thana }}</span>
-                                    </p>
-                                </div>
                             </td>
+                        @endif
 
+                        <td>
+                            <strong class="d-block">Date:
+                                {{ Carbon\Carbon::parse($appointment->date)->format('d M, Y') }}</strong>
+                            <strong class="d-block">Time: {{ $appointment->time }}</strong>
+                        </td>
+                        <td>
+                            @if ($appointment->is_completed)
+                                <span class="badge bg-soft-success text-success p-1 fs-5">Completed At:
+                                    {{ $appointment->completed_at?->format('d F, Y') }}</span>
+                            @else
+                                <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
+                            @endif
+                        </td>
+                        @if ($appointment->map)
                             <td>
-                                <strong class="d-block">Date:
-                                    {{ Carbon\Carbon::parse($appointment->date)->format('d M, Y') }}</strong>
-                                <strong class="d-block">Time: {{ $appointment->time }}</strong>
-                            </td>
-                            <td>
-                                @if ($appointment->is_completed)
-                                    <span class="badge bg-soft-success text-success p-1 fs-5">Completed At:
-                                        {{ $appointment->completed_at?->format('d F, Y') }}</span>
-                                @else
-                                    <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
-                                @endif
-                            </td>
-                            if($appointment->map)
-                                <td>
                                 @if ($appointment->map)
                                     <strong>Location: {{ $appointment->map->location }}</strong>
                                     <strong class="d-block">Address:</strong>
                                     <p class="text-muted">
                                         {{ $appointment->map->address }}
                                     </p>
-                                    @else
+                                @else
                                     No branch selected
                                 @endif
 
-                                </td>
-                            @else
-                                <td>
-                                    <span class="badge bg-info p-1 fs-6">
-                                        Virtual
-                                    </span>
-                                </td>
-                            @endif
+                            </td>
+                        @else
                             <td>
-                                <span class="fw-bold">
-                                    {{ $appointment->created_at->format('d F, Y') }}
+                                <span class="badge bg-info p-1 fs-6">
+                                    Virtual
                                 </span>
                             </td>
-                            @can('delete appointment')
-                                <td>
-                                    <form action="{{ route('user-appointments.destroy', $appointment->id) }}" method="post"
-                                        class="d-inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            @endcan
+                        @endif
+                        <td>
+                            <span class="fw-bold">
+                                {{ $appointment->created_at->format('d F, Y') }}
+                            </span>
+                        </td>
+                        @can('delete appointment')
+                            <td>
+                                <form action="{{ route('user-appointments.destroy', $appointment->id) }}" method="post"
+                                    class="d-inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        @endcan
 
-                        </tr>
-                    @empty
-                    @endforelse
-                @endif
+                    </tr>
+                @empty
+                @endforelse
             </tbody>
 
 

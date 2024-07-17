@@ -18,15 +18,14 @@
     <x-backend.ui.breadcrumbs :list="['User', (request('type')=='consultation' ? 'Consultations' : 'Appointments')]" />
 
     <x-backend.ui.section-card name="User {{request('type')=='consultation' ? 'Consultations' : 'Appointments'}}">
-        @if ($appointments->count() > 0)
             <x-backend.table.basic :items="$appointments">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>User Info</th>
-                        @if ($appointments->first()?->expertProfile)
-                            <th>Appointment With</th>
-                        @endif
+                        @if (method_exists($appointments->first(), 'expertProfiles'))
+                        <th>Appointment With</th>
+                    @endif
                         <th>Date & Time</th>
                         <th>Status</th>
                         <th>Location</th>
@@ -88,7 +87,7 @@
                                 <span>No approved date</span>
                                 @endif
                             </td>
-                            if($appointment->map)
+                            @if($appointment->map)
                                 <td>
                                 @if ($appointment->map)
                                     <strong>Location: {{ $appointment->map->location }}</strong>
@@ -151,6 +150,5 @@
 
 
             </x-backend.table.basic>
-        @endif
     </x-backend.ui.section-card>
 @endsection
