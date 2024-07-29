@@ -23,7 +23,7 @@
                     <tr>
                         <th>#</th>
                         <th>User Info</th>
-                        @if ($appointments->first() && method_exists($appointments->first(), 'expertProfile'))
+                        @if (request('type') == 'consultation')
                         <th>Appointment With</th>
                     @endif
                         <th>Date & Time</th>
@@ -59,7 +59,7 @@
                                     </p>
                                 </div>
                             </td>
-                            @if ($appointment->expertProfile)
+                            @if(request('type') == 'consultation')
                                 <td>
                                     <p class="mb-1">
                                         <strong>Expert Name:</strong> <span>{{ $appointment->expertProfile?->name }}</span>

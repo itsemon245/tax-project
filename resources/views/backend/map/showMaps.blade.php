@@ -29,7 +29,7 @@
                             </p>
                             @canany('update map')
                                 <x-backend.ui.button class="btn-success btn-sm" type='custom'
-                                    href="{{ route('user-appointments.index', ['map_id' => $map->id]) }}">Appoinments</x-backend.ui.button>
+                                    href="{{ auth()->user()->role_name == 'expert' ? route('user-appointments.index', ['map_id' => $map->id, 'type' => 'consultation']) : route('user-appointments.index', ['map_id' => $map->id]) }}">Appoinments</x-backend.ui.button>
                             @endcanany
                             @can('update map')
                                 <x-backend.ui.button class="btn-sm" type='edit'
