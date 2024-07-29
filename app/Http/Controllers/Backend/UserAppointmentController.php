@@ -45,11 +45,16 @@ class UserAppointmentController extends Controller {
                     ->paginate(paginateCount());
         } else {
             $appointments = UserAppointment::unapproved()
-                ->whereNull('expert_profile_id')
                 ->with('map', 'user')
                 ->where(function(Builder $builder){
                     if (request('map_id')) {
                         $builder->where('map_id', request('map_id'));
+                    }
+
+                    if (request('consultation')) {
+                        $builder->whereNotNull('expert_profile_id');
+                    } else{
+                        $builder->whereNull('expert_profile_id');
                     }
                 })
                 ->latest()
@@ -115,11 +120,15 @@ class UserAppointmentController extends Controller {
                     ->paginate(paginateCount());
         } else {
             $appointments = UserAppointment::approvedOnly()
-                ->whereNull('expert_profile_id')
                 ->with('map', 'user')
                 ->where(function(Builder $builder){
                     if (request('map_id')) {
                         $builder->where('map_id', request('map_id'));
+                    }
+                    if (request('consultation')) {
+                        $builder->whereNotNull('expert_profile_id');
+                    } else{
+                        $builder->whereNull('expert_profile_id');
                     }
                 })
                 ->latest()
@@ -147,11 +156,15 @@ class UserAppointmentController extends Controller {
                     ->paginate(paginateCount());
         } else {
             $appointments = UserAppointment::completedOnly()
-                ->whereNull('expert_profile_id')
                 ->with('map', 'user')
                 ->where(function(Builder $builder){
                     if (request('map_id')) {
                         $builder->where('map_id', request('map_id'));
+                    }
+                    if (request('consultation')) {
+                        $builder->whereNotNull('expert_profile_id');
+                    } else{
+                        $builder->whereNull('expert_profile_id');
                     }
                 })
                 ->latest()
