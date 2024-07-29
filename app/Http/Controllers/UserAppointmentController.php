@@ -10,8 +10,6 @@ class UserAppointmentController extends Controller {
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        dd($request->all());
-
         if ($request->is_physical && null == $request->location) {
             $alert = [
                 'alert-type' => 'error',
