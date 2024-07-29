@@ -23,7 +23,7 @@
                     <tr>
                         <th>#</th>
                         <th>User Info</th>
-                        @if (method_exists($appointments->first(), 'expertProfiles'))
+                        @if ($appointments->first() && method_exists($appointments->first(), 'expertProfile'))
                         <th>Appointment With</th>
                     @endif
                         <th>Date & Time</th>
