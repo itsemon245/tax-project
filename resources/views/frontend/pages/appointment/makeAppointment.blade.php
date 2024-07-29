@@ -247,7 +247,7 @@
                                                                         {{ \Carbon\Carbon::parse($time)->timezone('Asia/Dhaka')->format('h:i A') }}
                                                                         <input class="time-input " hidden type="radio"
                                                                             name="time"
-                                                                            data-date="{{ $date }}"
+                                                                            data-date="{{ \Carbon\Carbon::parse($date)->format('Y-m-d') }}"
                                                                             value="{{ $time }}"
                                                                             @if ($key === 0 && $i === 1) checked @endif>
                                                                     </label>
@@ -310,7 +310,7 @@
                                                                         {{ \Carbon\Carbon::parse($time)->timezone('Asia/Dhaka')->format('h:i A') }}
                                                                         <input class="time-input " hidden type="radio"
                                                                             name="time"
-                                                                            data-date="{{ $date }}"
+                                                                            data-date="{{ \Carbon\Carbon::parse($date)->format('Y-m-d') }}"
                                                                             value="{{ $time }}"
                                                                             @if ($key === 0 && $i === 1) checked @endif>
                                                                     </label>

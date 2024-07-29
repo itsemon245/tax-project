@@ -223,7 +223,6 @@ class UserAppointmentController extends Controller {
         $appointment->is_completed = true;
         $appointment->completed_at = now();
         $appointment->update();
-        dd($appointment->refresh());
         Calendar::create([
             'title' => 'Appointment Completed',
             'user_appointment_id' => $appointment->id,
