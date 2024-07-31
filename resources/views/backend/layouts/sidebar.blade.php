@@ -742,17 +742,17 @@
                                                 <ul class="nav-second-level">
                                                     @canany(['update appointment', 'approve appointment', 'read appointment'])
                                                         <li>
-                                                            <a href="{{ route('user-appointments.index') }}">
+                                                            <a href="{{ request('map_id') ? routeWithQuery('user-appointments.index') : route('user-appointments.index') }}">
                                                                 Pending For Approval
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('user-appointments.approved') }}">
+                                                            <a href="{{ request('map_id') ? routeWithQuery('user-appointments.approved') : route('user-appointments.approved') }}">
                                                                 Approved
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('user-appointments.completed') }}">
+                                                            <a href="{{ request('map_id') ? routeWithQuery('user-appointments.completed') : route('user-appointments.completed') }}">
                                                                 Completed
                                                             </a>
                                                         </li>
@@ -780,26 +780,26 @@
                                             <ul class="nav-second-level">
                                                 @canany(['update consultation', 'approve consultation', 'read consultation'])
                                                     <li>
-                                                        <a href="{{ route('user-appointments.index') . '?type=consultation' }}">
+                                                        <a href="{{ route('user-appointments.index', ['type'=> 'consultation'])}}">
                                                             Pending For Approval
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="{{ route('user-appointments.approved') . '?type=consultation' }}">
+                                                            href="{{ route('user-appointments.approved', ['type'=> 'consultation'])}}">
                                                             Approved
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="{{ route('user-appointments.completed') . '?type=consultation' }}">
+                                                            href="{{ route('user-appointments.completed', ['type'=> 'consultation'])}}">
                                                             Completed
                                                         </a>
                                                     </li>
                                                     @if (auth()->user()->role_name == 'expert')
                                                         <li>
                                                             <a
-                                                                href="{{ route('user-appointments.times') . '?type=consultation' }}">
+                                                                href="{{ route('user-appointments.times', ['type'=> 'consultation'])}}">
                                                                 Appointment Times
                                                             </a>
                                                         </li>

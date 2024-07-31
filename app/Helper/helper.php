@@ -346,3 +346,22 @@ function currencyFormat(mixed $value): string {
 
     return '&#2547; '.$formatter->format($value);
 }
+
+function routeWithQuery(string $name, mixed $params = []){
+    $queryStrings = '';
+    $count = 0;
+    if (count(request()->query()) > 0) {
+        $queryStrings = '?';
+        $queryStrings .= http_build_query(request()->query());
+
+        return route(
+            $name,
+            $params
+        ).$queryStrings;
+    }
+
+    return route(
+        $name,
+        $params
+    );
+}
