@@ -18,6 +18,9 @@
     <x-backend.ui.breadcrumbs :list="['User', request('type') == 'consultation' ? 'Consultations' : 'Appointments']" />
 
     <x-backend.ui.section-card name="User {{ request('type') == 'consultation' ? 'Consultations' : 'Appointments' }}">
+            @if (request('map_id'))
+            <x-backend.ui.button type="custom" href="{{route('user-appointments.index')}}" class="btn-dark btn-sm mb-2">Show All</x-backend.ui.button>
+            @endif
             <x-backend.table.basic :items="$appointments">
                 <thead>
                     <tr>
