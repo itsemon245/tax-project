@@ -22,18 +22,20 @@ class SingletonQueryProvider extends ServiceProvider {
      * Bootstrap services.
      */
     public function boot(): void {
-        $this->app->singleton('setting', fn (Application $app) => Setting::first());
-        $this->app->singleton('categories', fn (Application $app) => ServiceCategory::with(['serviceSubCategories', 'serviceSubCategories.services'])->get());
-        $this->app->singleton('bookCategories', fn (Application $app) => BookCategory::get());
-        $this->app->singleton('courses', fn (Application $app) => Course::get(['id', 'name']));
-        $this->app->singleton('customServices', fn (Application $app) => CustomService::with('image')->where('page_name', PageName::Home->value)->get());
-        $this->app->singleton('customServicesAccount', fn (Application $app) => CustomService::with('image')->where('page_name', PageName::Account->value)->get());
+        if (isDatabaseOk()) {
+            $this->app->singleton('setting', fn (Application $app) => Setting::first());
+            $this->app->singleton('categories', fn (Application $app) => ServiceCategory::with(['serviceSubCategories', 'serviceSubCategories.services'])->get());
+            $this->app->singleton('bookCategories', fn (Application $app) => BookCategory::get());
+            $this->app->singleton('courses', fn (Application $app) => Course::get(['id', 'name']));
+            $this->app->singleton('customServices', fn (Application $app) => CustomService::with('image')->where('page_name', PageName::Home->value)->get());
+            $this->app->singleton('customServicesAccount', fn (Application $app) => CustomService::with('image')->where('page_name', PageName::Account->value)->get());
 
-        if (app('setting')->basic?->app_name ?? false) {
-            config([
-                'app.name' => app('setting')->basic?->app_name,
-                'mail.from.name' => app('setting')->basic?->app_name,
-            ]);
+            if (app('setting')->basic?->app_name ?? false) {
+                config([
+                    'app.name' => app('setting')->basic?->app_name,
+                    'mail.from.name' => app('setting')->basic?->app_name,
+                ]);
+            }
         }
     }
 }

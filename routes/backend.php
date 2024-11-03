@@ -72,6 +72,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')
     ->middleware(['auth', 'can:visit admin panel'])
     ->group(function () {
+
+        // Project Dicsussion CRUD
+        Route::resource('project-discussion', ProjectDiscussionController::class);
         Route::match(['delete'], 'bulk-delete-resources', BulkDeleteController::class)->name('bulk.delete')->middleware('role:super admin');
 
         // test

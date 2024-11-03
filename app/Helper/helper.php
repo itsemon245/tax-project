@@ -347,7 +347,7 @@ function currencyFormat(mixed $value): string {
     return '&#2547; '.$formatter->format($value);
 }
 
-function routeWithQuery(string $name, mixed $params = []){
+function routeWithQuery(string $name, mixed $params = []) {
     $queryStrings = '';
     $count = 0;
     if (count(request()->query()) > 0) {
@@ -364,4 +364,15 @@ function routeWithQuery(string $name, mixed $params = []){
         $name,
         $params
     );
+}
+
+function isDatabaseOk() {
+
+    return true;
+    try {
+        DB::getPdo();
+        return true;
+    } catch (\Throwable $th) {
+        return false;
+    }
 }

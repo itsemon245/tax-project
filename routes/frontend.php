@@ -19,7 +19,6 @@ use App\Http\Controllers\MCQController;
 use App\Http\Controllers\PartnerRequestController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductPageController;
-use App\Http\Controllers\ProjectDiscussionController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\UserAppointmentController;
@@ -39,7 +38,6 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::resource('user-profile', UserProfileController::class);
 
 Route::get('/setup', function () {
     // Run an Artisan command
@@ -65,18 +63,13 @@ Route::prefix('product')->name('product.')->controller(ProductPageController::cl
     Route::get('{id}/choose', 'choose')->name('choose');
 });
 
-// Project Dicsussion CRUD
-Route::resource('project-discussion', ProjectDiscussionController::class);
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/categories', [BookController::class, 'getCategoryBooks'])->name('view');
     Route::get('/{categoryId}', [BookController::class, 'index'])->name('view.all');
     Route::get('/book/{book}', [BookController::class, 'show'])->name('show');
 });
-// routes for user docs
-Route::resource('user-doc', UserDocController::class);
-Route::get('download-user-doc/{userDoc}/download/{fileIndex}', [UserDocController::class, 'download'])->name('user-doc.download');
-Route::get('user-doc/{userDoc}/move-to', [UserDocController::class, 'moveTo'])->name('user-doc.move-to');
+
 
 //  uncategorized pages
 Route::get('/make-appointment', [PageController::class, 'appointmentPage'])->name('appointment.make');
@@ -84,16 +77,25 @@ Route::get('/make-appointment/virtual', [PageController::class, 'appointmentVirt
 Route::get('/make-consultation/{expertProfile}', [PageController::class, 'appointmentPage'])->name('consultation.make');
 Route::get('/make-consultation/virtual/{expertProfile}', [PageController::class, 'appointmentVirtual'])->name('consultation.virtual');
 Route::post('/user-appointment/store', [UserAppointmentController::class, 'store'])->name('user-appointment.store');
-Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
 Route::get('/contact', [PageController::class, 'contactPage'])->name('contact');
 Route::get('/office', [PageController::class, 'officePage'])->name('office');
-Route::get('/notification', [PageController::class, 'notificationPage'])->name('notification');
 Route::get('/training', [PageController::class, 'trainingPage'])->name('page.training');
-Route::get('/promo-codes', [PageController::class, 'PromoCodePage'])->name('page.promo.code');
-Route::get('/my-courses', [PageController::class, 'myCourses'])->name('page.my.courses');
-Route::get('/my-case-studies', [PageController::class, 'myCaseStudies'])->name('page.my.case.studies');
-Route::get('/my-payments', [PageController::class, 'myPayments'])->name('page.my.payments');
-Route::get('/my-payments/show/{id}', [PageController::class, 'myPaymentShow'])->name('page.my.payment.show');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('user-profile', UserProfileController::class);
+
+    Route::resource('user-doc', UserDocController::class);
+    Route::get('download-user-doc/{userDoc}/download/{fileIndex}', [UserDocController::class, 'download'])->name('user-doc.download');
+    Route::get('user-doc/{userDoc}/move-to', [UserDocController::class, 'moveTo'])->name('user-doc.move-to');
+
+    Route::get('/referrals', [RefereeController::class, 'index'])->name('referral.index');
+    Route::get('/notification', [PageController::class, 'notificationPage'])->name('notification');
+    Route::get('/promo-codes', [PageController::class, 'PromoCodePage'])->name('page.promo.code');
+    Route::get('/my-courses', [PageController::class, 'myCourses'])->name('page.my.courses');
+    Route::get('/my-case-studies', [PageController::class, 'myCaseStudies'])->name('page.my.case.studies');
+    Route::get('/my-payments', [PageController::class, 'myPayments'])->name('page.my.payments');
+    Route::get('/my-payments/show/{id}', [PageController::class, 'myPaymentShow'])->name('page.my.payment.show');
+});
 // user generated refer link
 Route::get('/register/r/{user_name}', [RegisteredUserController::class, 'create'])->name('refer.link');
 
@@ -115,11 +117,11 @@ Route::prefix('page')->name('page.')->controller(PageController::class)->group(f
     Route::get('/industries', 'industriesPage')->name('industries');
     Route::get('/about', 'aboutPage')->name('about');
     Route::get('/client-studio', 'clientStudioPage')->name('client.studio');
-    Route::get('/become-partner', 'becomePartnerPage')->name('become.partner');
+    Route::get('/become-partner', 'becomePartnerPage')->name('become.partner')->middleware('auth');
 });
 
 // Become a partner request controller
-Route::resource('partner-request', PartnerRequestController::class);
+Route::resource('partner-request', PartnerRequestController::class)->middleware('auth');
 // these route will only be visible to Courses navigation
 // ! Do not put any new routes in this group
 Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
@@ -137,7 +139,7 @@ Route::prefix('course')->name('course.')->controller(CourseController::class)->g
 });
 
 // Review Routes
-Route::prefix('review')->name('review.')->controller(ReviewController::class)->group(function () {
+Route::prefix('review')->name('review.')->middleware('auth')->controller(ReviewController::class)->group(function () {
     Route::get('/{slug}/{id}', 'itemReview')->name('item');
     Route::post('/{slug}/index', 'index')->name('index');
     Route::post('/{slug}/store', 'store')->name('store')->middleware(['can_review']);

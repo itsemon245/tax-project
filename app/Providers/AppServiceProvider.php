@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Models\CustomService;
 use App\Models\FiscalYear;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use App\Models\CustomService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -38,6 +38,8 @@ class AppServiceProvider extends ServiceProvider {
         ]);
         Paginator::useBootstrapFive();
 
-        FiscalYear::updateOrCreate(['year' => currentFiscalYear()], ['year' => currentFiscalYear()]);
+        if (isDatabaseOk()) {
+            FiscalYear::updateOrCreate(['year' => currentFiscalYear()], ['year' => currentFiscalYear()]);
+        }
     }
 }
