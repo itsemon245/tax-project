@@ -57,7 +57,7 @@
                 </li>
                 <li class="sidebar-item {{ request()->routeIs('page.training') ? 'active' : '' }}">
                     <div class="d-flex justify-content-between align-items-center">
-                        <a class="" href="{{ route('page.training') }}">Training/Education</a>
+                        <a class="" href="{{ route('course.index') }}">Training/Education</a>
                         <span class="mdi mdi-chevron-down-box-outline dropdown-click-trigger rounded px-1 bg-light"
                             data-target="#training-education"
                             style="font-size: 20px; color: var(--bs-gray-600); cursor:pointer;"></span>

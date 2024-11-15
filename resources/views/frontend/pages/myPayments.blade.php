@@ -10,7 +10,6 @@
                             <th class="">No</th>
                             <th class="">Name</th>
                             <th class="">Price</th>
-                            <th class="">Trainer</th>
                             <th class="">Action</th>
                         </tr>
                     </thead>
@@ -19,8 +18,7 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>
-
-                                    <a href="{{ route('video.byCourse', $course->id) }}"
+                                    <div
                                         class="gap-2 d-flex align-items-start text-reset">
                                         <div>
                                             <span data-feather="folder" class="icon-dual"></span>
@@ -34,23 +32,6 @@
                                 <td>
                                     {{ $course->price }}
                                 </td>
-                                <td>
-                                    <div class="gap-2 d-flex align-items-start">
-                                        <div>
-                                            <img loading="lazy" src="{{ asset('backend/assets/images/users/user-1.jpg') }}"
-                                                class="rounded rounded-circle" width="48px" height="48px" alt="">
-                                        </div>
-                                        <div>
-                                            <div class="fw-medium">
-                                                <a href="javascript: void(0);"
-                                                    class="text-reset">{{ fake()->name('female') }}</a>
-                                            </div>
-                                            <span>{{ fake()->jobTitle() }}</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-
                                 <td>
                                     <div>
                                         <x-backend.ui.button type="custom" class="btn-sm text-capitalize btn-dark "

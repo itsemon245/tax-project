@@ -127,7 +127,7 @@
 
 
     <div class="row">
-        <div id="auth-sidebar" class="d-none d-lg-block col-6 col-sm-4  col-xl-2 p-0 position-relative">
+        <div id="auth-sidebar" class="bg-light d-none d-lg-block col-6 col-sm-4  col-xl-2 ps-4 pe-2 position-relative">
             {{-- Sidebar 2 -> user dashboard navigation --}}
             @auth
                 <div class="sidebar sidebar-2 col-6 col-sm-4 col-xl-2 p-0">
