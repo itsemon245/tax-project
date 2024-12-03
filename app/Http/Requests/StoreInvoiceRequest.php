@@ -40,7 +40,7 @@ class StoreInvoiceRequest extends FormRequest {
             'payment_note' => ['bail', 'nullable', 'string'],
             'note' => ['bail', 'nullable', 'string'],
             'total' => ['bail', 'required', 'decimal:0'],
-            'paid' => ['bail', 'required', 'decimal:0'],
+            'paid' => ['bail', 'nullable', 'decimal:0'],
             'due' => ['bail', 'required', 'decimal:0'],
             'sub_total' => ['bail', 'required', 'decimal:0'],
             'discount' => ['bail', 'required', 'decimal:0'],
