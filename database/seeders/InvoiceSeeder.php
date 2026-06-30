@@ -28,8 +28,8 @@ class InvoiceSeeder extends Seeder {
                 'number' => fake()->numberBetween(10, 100),
             ],
         ];
-        $fiscalYear = FiscalYear::create(['year' => currentFiscalYear()]);
-        $fiscalYear2 = FiscalYear::create(['year' => currentYear() - 2 .'-'.currentYear() - 1]);
+        $fiscalYear = FiscalYear::firstOrCreate(['year' => currentFiscalYear()]);
+        $fiscalYear2 = FiscalYear::firstOrCreate(['year' => currentYear() - 2 .'-'.currentYear() - 1]);
         foreach (range(1, 10) as $key) {
             $invoice = Invoice::factory(1)->create();
 

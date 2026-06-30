@@ -75,7 +75,7 @@ class Product extends Model {
     }
 
     public function price(): Attribute {
-        $commission = app('setting')->reference->partner_commission;
+        $commission = app('setting')?->reference?->partner_commission ?? 0;
         /**
          * @var User $user
          */

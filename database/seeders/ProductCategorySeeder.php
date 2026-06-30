@@ -26,13 +26,16 @@ class ProductCategorySeeder extends Seeder {
             ],
         ];
         foreach ($categories as $category) {
-            $cat = ProductCategory::create([
-                'name' => $category['name'],
-                'description' => $category['description'],
-            ]);
-            $sub = ProductSubCategory::factory(4)->create([
-                'product_category_id' => $cat->id,
-            ]);
+            $cat = ProductCategory::firstOrCreate(
+                ['name' => $category['name']],
+                ['description' => $category['description']]
+            );
+
+            if (! $cat->productSubCategories()->exists()) {
+                ProductSubCategory::factory(4)->create([
+                    'product_category_id' => $cat->id,
+                ]);
+            }
         }
     }
 }

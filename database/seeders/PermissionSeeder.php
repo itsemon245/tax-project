@@ -280,15 +280,15 @@ class PermissionSeeder extends Seeder {
         foreach ($permissions as $group => $items) {
             foreach ($items as $operation => $actions) {
                 // create read permission for each operation
-                Permission::create([
-                    'name' => "read $operation",
-                    'group' => $group,
-                ]);
+                Permission::firstOrCreate(
+                    ['name' => "read $operation", 'guard_name' => 'web'],
+                    ['group' => $group]
+                );
                 foreach ($actions as $action) {
-                    Permission::create([
-                        'name' => "$action $operation",
-                        'group' => $group,
-                    ]);
+                    Permission::firstOrCreate(
+                        ['name' => "$action $operation", 'guard_name' => 'web'],
+                        ['group' => $group]
+                    );
                 }
             }
         }
