@@ -9,5 +9,5 @@ on:
 
 jobs:
   deploy:
-    uses: itsemon245/gh-workflows/.github/workflows/push-to-cpanel.yml@v0.2.0
+    uses: itsemon245/gh-workflows/.github/workflows/push-to-cpanel.yml@v0.2.1
     secrets: inherit
