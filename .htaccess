@@ -1,0 +1,63 @@
+# Disable directory listings.
+Options -Indexes
+
+# Disable content negotiation for predictable Laravel routing.
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+
+# Block direct access to sensitive project files.
+<FilesMatch "(^\.env|^composer\.(json|lock)$|^package(-lock)?\.json$|^artisan$|^phpunit\.xml$|^README\.md$|^_ide_helper(_models)?\.php$|^vite\.config\.js$|^tailwind\.config\.js$|^postcss\.config\.js$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Compress text-based responses when supported.
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Set browser cache expiry for CSS and JS.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# Send explicit cache headers for CSS and JS.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>
+
+# Protect Laravel internals and route requests through public/.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteRule ^(?:app|bootstrap|config|database|resources|routes|storage|tests)(?:/|$) - [F,L,NC]
+    RewriteRule ^(?:\.git|\.github)(?:/|$) - [F,L,NC]
+
+    RewriteRule ^public/?$ / [R=301,L]
+    RewriteRule ^public/(.*)$ /$1 [R=301,L]
+
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

@@ -3,7 +3,6 @@
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Backend\Chalan\ChalanController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,18 +44,6 @@ Route::prefix('ajax')
         Route::delete('delete/{slot}/slot', 'deleteSlot')->name('slot.destroy');
     });
 Route::get('spell-number/{number}', [ChalanController::class, 'spellNumber'])->name('spell.number');
-Route::get('call-artisan', function () {
-    $exitCode = Artisan::call('migrate:fresh');
-    echo 'Database migrated: '.$exitCode.'<br>';
-    $exitCode = Artisan::call('db:seed');
-    echo 'Database seeded: '.$exitCode.'<br>';
-    $exitCode = Artisan::call('optimize');
-    echo 'Optimized: '.$exitCode.'<br>';
-    $exitCode = Artisan::call('optimize:clear');
-    echo 'Optimize cleared: '.$exitCode.'<br>';
-    $exitCode = Artisan::call('storage:link');
-    echo 'Storage Linked: '.$exitCode.'<br>';
-});
 
 require __DIR__.'/auth.php';
 require __DIR__.'/frontend.php';
