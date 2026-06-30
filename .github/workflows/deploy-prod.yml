@@ -2,6 +2,8 @@ name: production
 
 on:
   push:
+    branches:
+      - production
   workflow_dispatch:
 
 permissions:
@@ -14,6 +16,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
     timeout-minutes: 30
 
     steps:
@@ -36,15 +39,10 @@ jobs:
             printf '%s=%s\n' "$key" "$value" >> "$GITHUB_ENV"
           }
 
-          if [ -z "${DOT_ENV_SECRET:-}" ] && [ "$CURRENT_BRANCH" != "$DEFAULT_BRANCH" ]; then
-            echo "should_deploy=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping deploy for $CURRENT_BRANCH. DOT_ENV is not required outside the default branch."
-            exit 0
-          fi
-
           if [ -z "${DOT_ENV_SECRET:-}" ]; then
-            echo "::error::Missing required DOT_ENV secret."
-            exit 1
+            echo "should_deploy=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping deploy for $CURRENT_BRANCH. No DOT_ENV secret is configured for the '$CURRENT_BRANCH' environment."
+            exit 0
           fi
 
           while IFS= read -r raw_line || [ -n "$raw_line" ]; do
