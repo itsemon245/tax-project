@@ -198,21 +198,35 @@ jobs:
         shell: bash
         env:
           CPANEL_SSH_KEY_SECRET: ${{ secrets.CPANEL_SSH_KEY }}
+          CPANEL_PASSWORD_SECRET: ${{ secrets.CPANEL_PASSWORD }}
           CPANEL_EXCLUDES_SECRET: ${{ secrets.CPANEL_EXCLUDES }}
           CPANEL_REMOTE_POST_DEPLOY_SECRET: ${{ secrets.CPANEL_REMOTE_POST_DEPLOY }}
         run: |
           set -Eeuo pipefail
 
-          write_ssh_key() {
-            if [ -z "${CPANEL_SSH_KEY_SECRET:-}" ]; then
-              echo "::error::Missing required CPANEL_SSH_KEY secret."
+          SSHPASS_PREFIX=()
+          AUTH_METHOD=
+
+          setup_auth() {
+            if [ -n "${CPANEL_PASSWORD_SECRET:-}" ]; then
+              if ! command -v sshpass >/dev/null 2>&1; then
+                sudo apt-get update
+                sudo apt-get install -y sshpass
+              fi
+
+              AUTH_METHOD=password
+              export SSHPASS="$CPANEL_PASSWORD_SECRET"
+              SSHPASS_PREFIX=(sshpass -e)
+            elif [ -n "${CPANEL_SSH_KEY_SECRET:-}" ]; then
+              install -m 700 -d "$HOME/.ssh"
+              SSH_KEY="$HOME/.ssh/cpanel_deploy_key"
+              printf '%s\n' "$CPANEL_SSH_KEY_SECRET" > "$SSH_KEY"
+              chmod 600 "$SSH_KEY"
+              AUTH_METHOD=key
+            else
+              echo "::error::Provide either CPANEL_SSH_KEY or CPANEL_PASSWORD secret."
               exit 1
             fi
-
-            install -m 700 -d "$HOME/.ssh"
-            SSH_KEY="$HOME/.ssh/cpanel_deploy_key"
-            printf '%s\n' "$CPANEL_SSH_KEY_SECRET" > "$SSH_KEY"
-            chmod 600 "$SSH_KEY"
           }
 
           write_excludes() {
@@ -253,27 +267,35 @@ jobs:
           build_ssh_args() {
             SSH_ARGS=(
               -p "$CPANEL_PORT"
-              -i "$SSH_KEY"
               -T
-              -o IdentitiesOnly=yes
               -o StrictHostKeyChecking=accept-new
             )
+
+            if [ "$AUTH_METHOD" = "key" ]; then
+              SSH_ARGS+=(-i "$SSH_KEY" -o IdentitiesOnly=yes)
+            else
+              SSH_ARGS+=(-o PubkeyAuthentication=no -o PreferredAuthentications=password)
+            fi
           }
 
           build_scp_args() {
             SCP_ARGS=(
               -P "$CPANEL_PORT"
-              -i "$SSH_KEY"
-              -o IdentitiesOnly=yes
               -o StrictHostKeyChecking=accept-new
             )
+
+            if [ "$AUTH_METHOD" = "key" ]; then
+              SCP_ARGS+=(-i "$SSH_KEY" -o IdentitiesOnly=yes)
+            else
+              SCP_ARGS+=(-o PubkeyAuthentication=no -o PreferredAuthentications=password)
+            fi
           }
 
           is_clean_ssh_shell() {
             local marker="__github_cpanel_clean_shell__"
             local output
 
-            output="$(ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "printf '%s\n' '$marker'")"
+            output="$("${SSHPASS_PREFIX[@]}" ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "printf '%s\n' '$marker'")"
 
             if [ "$output" != "$marker" ]; then
               CLEAN_SHELL_OUTPUT="$output"
@@ -286,11 +308,11 @@ jobs:
 
           ensure_remote_target() {
             printf -v REMOTE_TARGET '%q' "$CPANEL_TARGET_DIR"
-            ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "mkdir -p $REMOTE_TARGET"
+            "${SSHPASS_PREFIX[@]}" ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "mkdir -p $REMOTE_TARGET"
           }
 
           remote_has_command() {
-            ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "command -v $1 >/dev/null 2>&1"
+            "${SSHPASS_PREFIX[@]}" ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "command -v $1 >/dev/null 2>&1"
           }
 
           select_deploy_method() {
@@ -351,9 +373,16 @@ jobs:
               DELETE_ARGS=(--delete --delete-delay)
             fi
 
+            local rsh="ssh -p $CPANEL_PORT -T -o StrictHostKeyChecking=accept-new"
+            if [ "$AUTH_METHOD" = "key" ]; then
+              rsh="$rsh -i $SSH_KEY -o IdentitiesOnly=yes"
+            else
+              rsh="sshpass -e $rsh -o PubkeyAuthentication=no -o PreferredAuthentications=password"
+            fi
+
             rsync -az --delay-updates "${DELETE_ARGS[@]}" \
               --exclude-from="$EXCLUDES_FILE" \
-              -e "ssh -p $CPANEL_PORT -i $SSH_KEY -T -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
+              -e "$rsh" \
               ./ "$CPANEL_USERNAME@$CPANEL_HOST:${CPANEL_TARGET_DIR%/}/"
           }
 
@@ -362,7 +391,7 @@ jobs:
             local remote_archive=".github-cpanel-deploy-${GITHUB_RUN_ID:-manual}-${GITHUB_RUN_ATTEMPT:-1}.tar.gz"
 
             tar -czf "$archive_file" --exclude-from="$TAR_EXCLUDES_FILE" -C . .
-            scp "${SCP_ARGS[@]}" "$archive_file" "$CPANEL_USERNAME@$CPANEL_HOST:$remote_archive"
+            "${SSHPASS_PREFIX[@]}" scp "${SCP_ARGS[@]}" "$archive_file" "$CPANEL_USERNAME@$CPANEL_HOST:$remote_archive"
 
             printf -v REMOTE_ENV 'CPANEL_TARGET_DIR=%q REMOTE_ARCHIVE=%q' \
               "$CPANEL_TARGET_DIR" \
@@ -376,7 +405,7 @@ jobs:
           mkdir -p "$CPANEL_TARGET_DIR"
           tar -xzf "$REMOTE_ARCHIVE" -C "$CPANEL_TARGET_DIR"
           REMOTE_SCRIPT
-            } | ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "$REMOTE_ENV bash -se"
+            } | "${SSHPASS_PREFIX[@]}" ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "$REMOTE_ENV bash -se"
           }
 
           run_remote() {
@@ -438,10 +467,10 @@ jobs:
                 printf '\n# Custom remote post-deploy\n'
                 printf '%s\n' "$CPANEL_REMOTE_POST_DEPLOY_SECRET"
               fi
-            } | ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "$REMOTE_ENV bash -se"
+            } | "${SSHPASS_PREFIX[@]}" ssh "${SSH_ARGS[@]}" "$CPANEL_USERNAME@$CPANEL_HOST" "$REMOTE_ENV bash -se"
           }
 
-          write_ssh_key
+          setup_auth
           write_excludes
           build_ssh_args
           build_scp_args
