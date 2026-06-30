@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider {
         ]);
         Paginator::useBootstrapFive();
 
-        if (isDatabaseOk()) {
+        if (! $this->app->runningInConsole() && isDatabaseOk()) {
             FiscalYear::updateOrCreate(['year' => currentFiscalYear()], ['year' => currentFiscalYear()]);
         }
     }

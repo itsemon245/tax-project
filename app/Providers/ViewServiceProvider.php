@@ -17,7 +17,7 @@ class ViewServiceProvider extends ServiceProvider {
      * Bootstrap services.
      */
     public function boot(): void {
-        if (isDatabaseOk()) {
+        if (! $this->app->runningInConsole() && isDatabaseOk()) {
             View::composer('components.frontend.testimonial-section', function ($view) {
                 $reviews = Review::with('user')
                     ->latest()

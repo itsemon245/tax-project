@@ -367,8 +367,6 @@ function routeWithQuery(string $name, mixed $params = []) {
 }
 
 function isDatabaseOk() {
-
-    return true;
     try {
         DB::getPdo();
         return true;

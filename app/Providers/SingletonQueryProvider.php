@@ -22,7 +22,7 @@ class SingletonQueryProvider extends ServiceProvider {
      * Bootstrap services.
      */
     public function boot(): void {
-        if (isDatabaseOk()) {
+        if (! $this->app->runningInConsole() && isDatabaseOk()) {
             $this->app->singleton('setting', fn (Application $app) => Setting::first());
             $this->app->singleton('categories', fn (Application $app) => ServiceCategory::with(['serviceSubCategories', 'serviceSubCategories.services'])->get());
             $this->app->singleton('bookCategories', fn (Application $app) => BookCategory::get());

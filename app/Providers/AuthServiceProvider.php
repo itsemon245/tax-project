@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider {
         /*  force logout all users in the first day of the month
          * and delete all sessions
          */
-        if ('1' === today()->format('d')) {
+        if (! $this->app->runningInConsole() && '1' === today()->format('d')) {
             $users = User::each(function ($user) {
                 $user->remember_token = null;
                 $user->save();
