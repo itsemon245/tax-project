@@ -53,6 +53,9 @@ Options -Indexes
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Laravel's public disk is exposed through /storage via public/storage.
+    RewriteRule ^storage/(.*)$ public/storage/$1 [L,NC]
+
     RewriteRule ^(?:app|bootstrap|config|database|resources|routes|storage|tests)(?:/|$) - [F,L,NC]
     RewriteRule ^(?:\.git|\.github)(?:/|$) - [F,L,NC]
 
