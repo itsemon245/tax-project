@@ -1,4 +1,4 @@
-@props(['partners' => \App\Models\PartnerSection::latest()->limit(10)->latest()->get())
+@props(['partners' => \App\Models\PartnerSection::latest()->limit(10)->latest()->get()])
 
 <section class="mt-5 py-5" style="background: #474646;">
     <h3 class="text-center text-light">Our Valuable Partners</h3>
