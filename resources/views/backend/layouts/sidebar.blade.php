@@ -90,6 +90,11 @@
                                                 @endcan
                                                 @can('read product', 'manage product')
                                                     <li>
+                                                        <a href="{{ route('product-category.index') }}">Category</a>
+                                                    </li>
+                                                @endcan
+                                                @can('read product', 'manage product')
+                                                    <li>
                                                         <a href="{{ route('product-sub-category.index') }}">Sub-Category</a>
                                                     </li>
                                                 @endcan

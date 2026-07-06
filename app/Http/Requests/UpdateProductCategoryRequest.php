@@ -22,7 +22,7 @@ class UpdateProductCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category' => ['string', 'required', 'max:30', 'unique:product_categories,name'],
+            'description' => ['nullable', 'string'],
         ];
     }
 }

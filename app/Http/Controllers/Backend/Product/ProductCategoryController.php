@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProductCategoryRequest;
 use App\Http\Requests\UpdateProductCategoryRequest;
 use App\Models\ProductCategory;
 
@@ -26,12 +25,8 @@ class ProductCategoryController extends Controller {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductCategoryRequest $request) {
-        $category = new ProductCategory();
-        $category->name = $request->category;
-        $category->save();
-
-        return back()->with('success', 'Added Successfully');
+    public function store() {
+        return back()->with('danger', 'Product categories cannot be added from the admin panel.');
     }
 
     /**
@@ -51,18 +46,16 @@ class ProductCategoryController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory) {
-        $productCategory->name = $request->category;
+        $productCategory->description = $request->description;
         $productCategory->save();
 
-        return back()->with('success', 'Category Edit Successfully');
+        return back()->with('success', 'Category description updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(ProductCategory $productCategory) {
-        $productCategory->delete();
-
-        return back()->with('danger', 'Deleted Successfully');
+        return back()->with('danger', 'Product categories cannot be deleted from the admin panel.');
     }
 }

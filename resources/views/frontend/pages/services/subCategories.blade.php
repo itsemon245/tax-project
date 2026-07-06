@@ -24,7 +24,7 @@
                 <h2 class="header-title h4 mt-4 text-center">{{ $productCat->name }}</h2>
                 <div class=" d-flex justify-content-center">
                     <p class="text-justify" style="max-width: 100ch; font-weight:500;">
-                        {{ $productCat->description }}</p>
+                        {!! $productCat->description !!}</p>
                 </div>
                 <div class="container d-flex justify-content-center">
                     <ul class="nav nav-pills navtab-bg" role="tablist">

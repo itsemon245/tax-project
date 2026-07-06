@@ -18,84 +18,52 @@
     @endpush
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Product', 'Category']" />
 
-    <x-backend.ui.section-card name="Product Category">
-
-        {{-- add category field --}}
-        @can('manage product')
+    <x-backend.ui.section-card name="Product Categories">
         <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="header-title mb-1">Add Category</h4>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <form action="{{ route('product-category.store') }}" method="POST">
+            @forelse ($categories as $category)
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                                <h4 class="header-title mb-0">{{ $category->name }}</h4>
+                                <span class="badge bg-light text-dark">Name locked</span>
+                            </div>
+
+                            @can('manage product')
+                                <form action="{{ route('product-category.update', $category->id) }}" method="POST">
                                     @csrf
-                                    <div>
-                                        <input type="text" id="simpleinput" name="category" placeholder="Type Category"
-                                            class="form-control
-                                @error('category')
-                                is-invalid
-                                @enderror
-                                ">
-                                        @error('category')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-1"><button class="btn btn-primary w-100 btn-sm profile-button"
-                                            type="submit">Add Category</button>
-                                    </div>
+                                    @method('PUT')
+                                    <x-form.ck-editor id="product-category-description-{{ $category->id }}"
+                                        name="description" label="Description" placeholder="Category Description">
+                                        {!! $category->description !!}
+                                    </x-form.ck-editor>
+                                    <x-backend.ui.button class="btn-sm btn-primary" type="submit">Update
+                                        Description</x-backend.ui.button>
                                 </form>
-                            </div> <!-- end col -->
+                            @else
+                                <div class="border rounded p-2 bg-light">
+                                    {!! $category->description ?: '<span class="text-muted">No description added.</span>' !!}
+                                </div>
+                            @endcan
                         </div>
-                    </div> <!-- end card-body -->
-                </div> <!-- end card -->
-            </div><!-- end col -->
-        </div>
-        @endcan
-        {{-- Show all categories table --}}
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="header-title">All Categories</h4>
-                        <x-backend.table.basic :items="$categories">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Category Name</th>
-                                    @can('manage product')
-                                    <th>Actions</th>
-                                    @endcan
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($categories as $key => $category)
-                                    <tr>
-                                        <td>{{ ++$key }}</td>
-                                        <td>{{ $category->name }}</td>
-                                        @can('manage product')
-                                        <td>
-                                            <x-backend.ui.button type="edit"
-                                                href="{{ route('product-category.edit', $category->id) }}"
-                                                class="btn-sm" />
-                                            <x-backend.ui.button type="delete"
-                                                action="{{ route('product-category.destroy', $category->id) }}"
-                                                class="btn-sm" />
-                                        </td>
-                                        @endcan
-                                    </tr>
-                                @empty
-                                    <td valign="top" colspan="3" class="dataTables_empty">No data available in table
-                                    </td>
-                                @endforelse
-                            </tbody>
-                        </x-backend.table.basic>
-                    </div> <!-- end card body-->
-                </div> <!-- end card -->
-            </div><!-- end col-->
+                    </div>
+                </div>
+            @empty
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center text-muted">
+                            No categories found.
+                        </div>
+                    </div>
+                </div>
+            @endforelse
         </div>
 
+        @if (method_exists($categories, 'links'))
+            <div class="paginate my-2">
+                {{ $categories->onEachSide(3)->links() }}
+            </div>
+        @endif
     </x-backend.ui.section-card>
 
 

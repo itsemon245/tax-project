@@ -4,7 +4,7 @@
 @section('content')
     <x-backend.ui.breadcrumbs :list="['Frontend', 'Product', 'Category', 'Edit']" />
 
-    <x-backend.ui.section-card name="Edit Category">
+    <x-backend.ui.section-card name="Edit Category Description">
         {{-- add category field --}}
         <x-backend.ui.button class="btn-sm btn-info mb-3" href="{{ route('product-category.index') }}"
             type="custom">Back</x-backend.ui.button>
@@ -19,10 +19,14 @@
                                     @method('PUT')
                                     <div>
                                         <x-backend.form.text-input type="text" :value="$productCategory->name" name="category"
-                                            label="Edit Category" placeholder="Type Category" class="form-control" />
+                                            label="Category" placeholder="Category" class="form-control" readonly />
+                                        <x-form.ck-editor id="product-category-description" name="description"
+                                            label="Description" placeholder="Category Description">
+                                            {!! $productCategory->description !!}
+                                        </x-form.ck-editor>
                                     </div>
                                     <div class="mt-1"><button class="btn btn-primary w-100 btn-sm profile-button"
-                                            type="submit">Update Category</button>
+                                            type="submit">Update Description</button>
                                     </div>
                                 </form>
                             </div> <!-- end col -->
