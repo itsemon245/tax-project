@@ -61,60 +61,8 @@
             <x-frontend.info-card :$info />
         @endforeach
     </x-frontend.info-section>
-    {{-- @dd($reviews) --}}
-    <section class="mt-5 py-5" style="background: #474646;">
-        <h3 class="text-center text-light">Testimonials</h3>
-
-        <div class="swiper !px-12">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper !mb-8">
-                <!-- Slides -->
-                @forelse ($reviews as $item)
-                    <div
-                        class="swiper-slide mb-2 bg-white rounded-md shadow-md p-3 w-[220px] sm:w-[300px] md:w-[400px] lg:w-[450px]">
-                        <div class="flex items-start gap-3">
-                            <img loading="lazy" src="{{ useImage($item->avatar) }}" alt="img" width="48px"
-                                height="48px" class=" rounded-circle shadow-4-strong d-block">
-                            <div class="mb-2">
-                                <h5 class="mb-0">{{ $item->name }}</h5>
-                                <small>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
-                                @if ($item->rating)
-                                    <div class="rating">
-                                        @foreach (range(1, 5) as $rating)
-                                            @php
-                                                $color =
-                                                    $rating > $item->rating ? 'var(--bs-gray-200)' : 'var(--bs-yellow)';
-                                            @endphp
-                                            <span class="fas fa-star" style="color: {{ $color }};"></span>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="text-muted pl-2 text-justify">
-                            {{ $item->comment }}
-                        </div>
-                    </div>
-                @empty
-                    <div class="swiper-slide text-center text-light px-5">
-                        No Reviews available
-                    </div>
-                @endforelse
-                ...
-            </div>
-            <!-- If we need pagination -->
-            <div class="swiper-pagination"></div>
-
-            <!-- If we need navigation buttons -->
-            <div class="swiper-button-prev">
-            </div>
-            <div class="swiper-button-next">
-            </div>
-
-            <!-- If we need scrollbar -->
-            <div class="swiper-scrollbar"></div>
-        </div>
-    </section>
+    <x-frontend.partner-section />
+    <x-frontend.testimonial-section :reviews="$reviews" />
     @push('customCss')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
         <style>
