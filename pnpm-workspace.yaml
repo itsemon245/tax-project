@@ -1,0 +1,4 @@
+# Explicitly allow only the dependency build script required for Vite production builds.
+allowBuilds:
+  esbuild: true
+  '@parcel/watcher': false
