@@ -71,10 +71,13 @@
 
     $(document).ready(function() {
         if ("{{ request()->session()->has('message') }}") {
+            const icon = "{{ request()->session()->get('alert-type') }}";
+
             Toast.fire({
-                icon: "{{ request()->session()->get('alert-type') }}",
+                icon,
                 title: "{{ str(request()->session()->get('alert-type'))->title() }}",
-                text: "{{ request()->session()->get('message') }}"
+                text: "{{ request()->session()->get('message') }}",
+                timer: ['warning', 'error'].includes(icon) ? 8000 : 2000,
             })
         }
     });

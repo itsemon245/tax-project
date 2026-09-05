@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateExpertProfileRequest;
 use App\Models\ExpertCategory;
 use App\Models\ExpertProfile;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class ExpertProfileController extends Controller {
     public function __construct() {
@@ -24,6 +25,23 @@ class ExpertProfileController extends Controller {
         ]);
     }
 
+    private function missingExpertRoleRedirect() {
+        if (Role::where(['name' => 'expert', 'guard_name' => 'web'])->exists()) {
+            return null;
+        }
+
+        $notification = [
+            'message' => 'The required expert role is missing. Create it and configure its permissions before managing expert profiles.',
+            'alert-type' => 'warning',
+        ];
+
+        if (auth()->user()->can('create role')) {
+            return redirect()->route('role.create')->with($notification);
+        }
+
+        return redirect()->route('dashboard')->with($notification);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -37,6 +55,10 @@ class ExpertProfileController extends Controller {
      * Show the form for creating a new resource.
      */
     public function create() {
+        if ($redirect = $this->missingExpertRoleRedirect()) {
+            return $redirect;
+        }
+
         $expertCategories = ExpertCategory::get();
         $user = User::find(request()->query('user_id'));
         $users = User::role('expert')->get()->pluck('name', 'id');
@@ -92,6 +114,10 @@ class ExpertProfileController extends Controller {
      * Show the form for editing the specified resource.
      */
     public function edit(ExpertProfile $expertProfile) {
+        if ($redirect = $this->missingExpertRoleRedirect()) {
+            return $redirect;
+        }
+
         $expertCategories = ExpertCategory::get();
         $user = User::find(request()->query('user_id'));
         $users = User::role('expert')->get()->pluck('name', 'id');

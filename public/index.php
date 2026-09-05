@@ -3,6 +3,11 @@
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
+if (PHP_VERSION_ID >= 80400) {
+    // TODO: Remove after the project dependencies are updated for PHP 8.4+.
+    error_reporting(error_reporting() & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+}
+
 define('LARAVEL_START', microtime(true));
 
 /*

@@ -20,6 +20,7 @@ class RoleSeeder extends Seeder {
             'partner',
             'user',
             'employee',
+            'expert',
         ];
         $sudoPermissions = Permission::get();
         $adminPermissions = Permission::where([
