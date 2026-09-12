@@ -1,6 +1,12 @@
 @extends('backend.layouts.app')
 
 @section('content')
+    @php
+        $isConsultation = request('type') === 'consultation';
+        $updatePermission = $isConsultation ? 'update consultation' : 'update appointment';
+        $deletePermission = $isConsultation ? 'delete consultation' : 'delete appointment';
+        $canManage = auth()->user()->can($updatePermission) || auth()->user()->can($deletePermission);
+    @endphp
     @push('customCss')
         <style>
             .paginate {
@@ -34,9 +40,9 @@
                     <th>Location</th>
                     <th>Created at</th>
 
-                    @can('delete appointment')
+                    @if ($canManage)
                         <th>Action</th>
-                    @endcan
+                    @endif
                 </tr>
             </thead>
 
@@ -115,8 +121,9 @@
                                 {{ $appointment->created_at->format('d F, Y') }}
                             </span>
                         </td>
-                        @can('delete appointment')
+                        @if ($canManage)
                             <td>
+                                @can($updatePermission)
                                 <form action="{{ route('user-appointments.complete', $appointment->id) }}" method="post"
                                     class="d-inline-block">
                                     @csrf
@@ -126,6 +133,8 @@
                                         <span class="fs-6">Mark as completed</span>
                                     </button>
                                 </form>
+                                @endcan
+                                @can($deletePermission)
                                 <form action="{{ route('user-appointments.destroy', $appointment->id) }}" method="post"
                                     class="d-inline-block">
                                     @csrf
@@ -134,10 +143,9 @@
                                         Delete
                                     </button>
                                 </form>
-
-
+                                @endcan
                             </td>
-                        @endcan
+                        @endif
                     </tr>
                 @empty
                     <tr>

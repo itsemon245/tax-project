@@ -13,7 +13,7 @@
 
     <div class="bg-white pb-5 pt-3">
         <div class="container">
-            <h2 class="text-center py-3">Make Appointment</h2>
+            <h2 class="text-center py-3">{{ $expertProfile ? 'Make Consultation' : 'Make Appointment' }}</h2>
 
             <form method="POST" action="{{ route('user-appointment.store') }}" class="">
                 @csrf
@@ -85,7 +85,9 @@
                                             <h4 class="col-12">
                                                 What time works best for you?
                                             </h4>
-                                            <a href="{{ route('appointment.make') . ($office ? '?office_id=' . $office?->id : '') }}"
+                                            <a @if ($expertProfile) href="{{ route('consultation.make', $expertProfile->id) }}"
+                                                @else
+                                                href="{{ route('appointment.make') . ($office ? '?office_id=' . $office?->id : '') }}" @endif
                                                 for="appointment-input" class="row mb-1 text-dark" style="cursor: pointer;">
                                                 <div id="appointment-type"
                                                     class="border bg-light rounded p-3 appointment-type appointment">
@@ -98,7 +100,9 @@
                                                     data-effected="#appointment-type" data-cards=".appointment"
                                                     id="appointment-input" value="1" hidden>
                                             </a>
-                                            <a href="{{ route('appointment.virtual') }}" for="appointment-input-2"
+                                            <a @if ($expertProfile) href="{{ route('consultation.virtual', $expertProfile->id) }}"
+                                                @else
+                                                href="{{ route('appointment.virtual') }}" @endif for="appointment-input-2"
                                                 class="row mb-1" style="cursor: pointer;">
                                                 <div id="appointment-type-2"
                                                     class="border rounded p-3 appointment-type selected appointment">
@@ -162,6 +166,13 @@
                                                 <select class="w-100 user-info" id="district" name="district"
                                                     data-target="#push-district" placeholder="Select District..."
                                                     data-wizard-label="District" required>
+                                                    <option value="" disabled @selected(!old('district'))>Select District...</option>
+                                                    @foreach ($locations as $location)
+                                                        <option value="{{ $location['district'] }}"
+                                                            @selected(old('district') === $location['district'])>
+                                                            {{ $location['district'] }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="flex-grow-1">
@@ -169,7 +180,7 @@
                                                 <select class="w-100 user-info" id="thana" name="thana"
                                                     data-target="#push-thana" placeholder="Select Thana..."
                                                     data-wizard-label="Thana" required>
-                                                    <option disabled selected>Select District First</option>
+                                                    <option value="" disabled selected>Select District First</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -265,69 +276,35 @@
                 const prevBtn = $('#prev-btn')
 
 
-                // initialize selectize for thana and district
-                let districtSelctize = $('#district').selectize({
+                const locations = @json($locations);
+                const districtSelect = $('#district').selectize({
                     maxItems: 1,
                     sortField: 'text',
                     create: false,
-                    labelField: 'district',
-                    valueField: 'district',
-                    searchField: 'district',
                 });
-                let thanaSelect = $('#thana').selectize({
+                const thanaSelect = $('#thana').selectize({
                     maxItems: 1,
                     sortField: 'text',
-                    create: true,
-                    labelField: 'thana',
-                    valueField: 'thana',
-                    searchField: ['thana', 'id'],
+                    create: false,
+                });
+                const districtControl = districtSelect[0].selectize;
+                const thanaControl = thanaSelect[0].selectize;
+
+                districtControl.on('change', value => {
+                    const location = locations.find(item => item.district === value);
+                    const thanas = (location?.thanas ?? []).map(thana => ({
+                        value: thana,
+                        text: thana,
+                    }));
+
+                    $('#push-district').text(value);
+                    thanaControl.clear();
+                    thanaControl.clearOptions();
+                    thanaControl.addOption(thanas);
+                    thanaControl.refreshOptions(false);
                 });
 
-                // options for fetching divisions
-                const settings = {
-                    async: true,
-                    crossDomain: true,
-                    url: 'https://bdapi.p.rapidapi.com/v1.1/division/chattogram',
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': '3fdd0dc0f2mshcea4717a7ec6a05p1e2854jsn1bce68040ab7',
-                        'X-RapidAPI-Host': 'bdapi.p.rapidapi.com'
-                    }
-                };
-
-                //fetch divisions
-                $.ajax(settings).done(function(response) {
-                    const data = response.data;
-                    const selectize = districtSelctize[0].selectize
-                    selectize.clear();
-                    selectize.clearOptions();
-                    selectize.load(set => set(data));
-
-                    //set eventlistenr for district select
-                    $('#district').on('input', e => {
-                        const target = $(e.target.dataset.target)
-                        target.text(e.target.value)
-                        // grab ups based on district
-                        const UP = data.filter(item => item.district === e.target.value)[0].upazilla
-                        const upazillas = UP.map(item => {
-                            return {
-                                thana: item,
-                                id: item.toLowerCase
-                            }
-                        })
-                        const thanaSelecize = thanaSelect[0].selectize
-                        thanaSelecize.clear();
-                        thanaSelecize.clearOptions();
-                        thanaSelecize.load(set => set(upazillas));
-
-                    })
-                });
-
-                //on thana change
-                thanaSelect.on('input', e => {
-                    const target = $(e.target.dataset.target)
-                    target.text(e.target.value)
-                })
+                thanaControl.on('change', value => $('#push-thana').text(value));
 
                 //on userinfo change
                 $('.user-info').each((i, item) => {

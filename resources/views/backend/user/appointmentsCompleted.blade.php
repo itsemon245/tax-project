@@ -1,6 +1,9 @@
 @extends('backend.layouts.app')
 
 @section('content')
+    @php
+        $deletePermission = request('type') === 'consultation' ? 'delete consultation' : 'delete appointment';
+    @endphp
     @push('customCss')
         <style>
             .paginate {
@@ -33,7 +36,7 @@
                     <th>Status</th>
                     <th>Location</th>
                     <th>Created At</th>
-                    @can('delete appointment')
+                    @can($deletePermission)
                         <th>Action</th>
                     @endcan
                 </tr>
@@ -112,7 +115,7 @@
                                 {{ $appointment->created_at->format('d F, Y') }}
                             </span>
                         </td>
-                        @can('delete appointment')
+                        @can($deletePermission)
                             <td>
                                 <form action="{{ route('user-appointments.destroy', $appointment->id) }}" method="post"
                                     class="d-inline-block">

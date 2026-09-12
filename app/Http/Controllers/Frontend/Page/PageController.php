@@ -48,85 +48,81 @@ class PageController extends Controller {
         return view('frontend.pages.clientStudio.clientStudio', compact('data', 'description', 'appointmentSections', 'banners', 'partners'));
     }
 
-    public function appointmentPage(Request $request, ?ExpertProfile $expertProfile = null) {
-        $admin = User::role('super admin')->first();
-        $userId = $expertProfile?->user_id ?? $admin?->id;
+    private function appointmentDates(?int $userId, ?int $fallbackUserId): array {
+        $timeRows = AppointmentTime::whereIn('user_id', array_values(array_unique(array_filter([$userId, $fallbackUserId]))))
+            ->get()
+            ->groupBy('user_id')
+            ->map(fn ($times) => $times->keyBy('day'));
+        $userTimes = $timeRows->get($userId, collect());
+        $fallbackTimes = $timeRows->get($fallbackUserId, collect());
         $carbon = now('Asia/Dhaka')->subDays(4)->locale('en_BD');
 
         $dates = [];
         for ($i = 1; $i <= 7; ++$i) {
             $date = $carbon->addDay();
-            $dates[$date->format('l, F d, Y')] = AppointmentTime::where('user_id', $userId)->where('day', $date->format('l'))->first()->times ?? [];
+            $times = $userTimes->get($date->format('l'))?->times;
+            $dates[$date->format('l, F d, Y')] = !empty($times)
+                ? $times
+                : ($fallbackTimes->get($date->format('l'))?->times ?? []);
         }
-        $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
-        $defaultDistrict = $request->query('branch-district', 'Chattogram');
-        if (null == $office) {
-            $maps = Map::where(function (Builder $q) use ($request, $expertProfile, $admin, $defaultDistrict) {
-                if ($defaultDistrict) {
-                    $q->where('district', $defaultDistrict);
-                }
-                if (!$request->query('dist_only', false) && $request->query('branch-thana')) {
-                    $q->where('thana', $request->query('branch-thana'));
-                }
-                if (null != $expertProfile) {
-                    $q->where('user_id', $expertProfile->user_id);
-                } else {
-                    $q->where(function (Builder $builder) use ($admin) {
-                        $builder->where('user_id', $admin->id)->orWhere('user_id', null);
-                    });
-                }
-            })->latest()->get();
-        } else {
-            $maps = [$office];
+
+        return $dates;
+    }
+
+    private function branchQuery(?ExpertProfile $expertProfile, ?User $admin): Builder {
+        if ($expertProfile?->map_id) {
+            return Map::query()->whereKey($expertProfile->map_id);
         }
-        $branchDistricts = Map::select(['district', 'user_id'])
-        ->where(function (Builder $q) use ($expertProfile, $admin) {
-            if (null != $expertProfile) {
-                $q->where('user_id', $expertProfile->user_id);
-            } else {
-                $q->where(function (Builder $builder) use ($admin) {
-                    $builder->where('user_id', $admin->id)->orWhere('user_id', null);
-                });
-            }
-        })
-        ->distinct()->latest()->get()->unique('district')->pluck('district');
-        $branchThanas = Map::select(['district', 'thana', 'user_id'])
-        ->distinct()
-        ->where(function (Builder $q) use ($expertProfile, $admin, $defaultDistrict) {
-            if ($defaultDistrict) {
-                $q->where('district', $defaultDistrict);
-            }
-            if (null != $expertProfile) {
-                $q->where('user_id', $expertProfile->user_id);
-            } else {
-                $q->where(function (Builder $builder) use ($admin) {
-                    $builder->where('user_id', $admin->id)->orWhere('user_id', null);
-                });
-            }
-        })->latest()->get()->unique('thana')->pluck('thana');
+
+        if ($expertProfile) {
+            return Map::query()->where('user_id', $expertProfile->user_id);
+        }
+
+        return Map::query()->where(function (Builder $query) use ($admin) {
+            $query->where('user_id', $admin?->id)->orWhereNull('user_id');
+        });
+    }
+
+    public function appointmentPage(Request $request, ?ExpertProfile $expertProfile = null) {
+        $admin = User::role('super admin')->first();
+        $dates = $this->appointmentDates($expertProfile?->user_id ?? $admin?->id, $admin?->id);
+        $branches = $this->branchQuery($expertProfile, $admin);
+        $branchDistricts = (clone $branches)->select('district')->distinct()->orderBy('district')->pluck('district');
+        $defaultDistrict = $request->query('branch-district') ?: $branchDistricts->first();
+        $office = $request->filled('office_id') ? (clone $branches)->find($request->query('office_id')) : null;
+        $maps = $office
+            ? collect([$office])
+            : (clone $branches)
+                ->when($defaultDistrict, fn (Builder $query) => $query->where('district', $defaultDistrict))
+                ->when(!$request->query('dist_only', false) && $request->query('branch-thana'), fn (Builder $query) => $query->where('thana', $request->query('branch-thana')))
+                ->latest()
+                ->get();
+        $branchThanas = (clone $branches)
+            ->when($defaultDistrict, fn (Builder $query) => $query->where('district', $defaultDistrict))
+            ->select('thana')
+            ->distinct()
+            ->orderBy('thana')
+            ->pluck('thana');
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->latest()->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->latest()->get();
+        $locations = config('locations.districts');
 
-        return view('frontend.pages.appointment.makeAppointment', compact('dates', 'banners', 'expertProfile', 'infos1', 'testimonials', 'maps', 'branchDistricts', 'branchThanas', 'office'));
+        return view('frontend.pages.appointment.makeAppointment', compact('dates', 'banners', 'expertProfile', 'infos1', 'testimonials', 'maps', 'branchDistricts', 'branchThanas', 'office', 'locations'));
     }
 
     public function appointmentVirtual(Request $request, ?ExpertProfile $expertProfile = null) {
-        $userId = $expertProfile?->user_id ?? User::role('super admin')->first()?->id;
-        $carbon = now('Asia/Dhaka')->subDays(4)->locale('en_BD');
-
-        $dates = [];
-        for ($i = 1; $i <= 7; ++$i) {
-            $date = $carbon->addDay();
-            $dates[$date->format('l, F d, Y')] = AppointmentTime::where('user_id', $userId)->where('day', $date->format('l'))->first()->times ?? [];
-        }
-
-        $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
+        $admin = User::role('super admin')->first();
+        $dates = $this->appointmentDates($expertProfile?->user_id ?? $admin?->id, $admin?->id);
+        $office = $request->filled('office_id')
+            ? $this->branchQuery($expertProfile, $admin)->find($request->query('office_id'))
+            : null;
         $banners = getRecords('banners');
         $infos1 = Info::where('section_id', 1)->latest()->get();
         $testimonials = \App\Models\Review::with('user')->latest()->limit(10)->latest()->get();
+        $locations = config('locations.districts');
 
-        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('dates', 'banners', 'expertProfile', 'testimonials', 'infos1', 'office'));
+        return view('frontend.pages.appointment.makeAppointmentVirtual', compact('dates', 'banners', 'expertProfile', 'testimonials', 'infos1', 'office', 'locations'));
     }
 
     public function aboutPage() {

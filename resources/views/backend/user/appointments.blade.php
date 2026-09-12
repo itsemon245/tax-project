@@ -1,6 +1,9 @@
 @extends('backend.layouts.app')
 
 @section('content')
+    @php
+        $approvePermission = request('type') === 'consultation' ? 'approve consultation' : 'approve appointment';
+    @endphp
     @push('customCss')
         <style>
             .paginate {
@@ -33,9 +36,9 @@
                         <th>Status</th>
                         <th>Location</th>
                         <th>Created at</th>
-                        @canany(['update appointment', 'approve appointment'])
+                        @can($approvePermission)
                             <th>Action</th>
-                        @endcanany
+                        @endcan
                     </tr>
                 </thead>
 
@@ -106,7 +109,7 @@
                                     {{ $appointment->created_at->format('d F, Y') }}
                                 </span>
                             </td>
-                            @canany(['update appointment', 'approve appointment'])
+                            @can($approvePermission)
                                 <td>
                                     <form action="{{ route('user-appointments.approve', $appointment->id) }}" method="post">
                                         @csrf
@@ -116,7 +119,7 @@
                                         </button>
                                     </form>
                                 </td>
-                            @endcanany
+                            @endcan
                         </tr>
                     @empty
                         <tr>

@@ -820,6 +820,29 @@
                         </div>
                     </li>
                 @endcanany
+                @if (request('type') === 'consultation')
+                    @push('customJs')
+                        <script>
+                            const appointmentsTab = document.querySelector('#appointments-tab');
+                            const appointmentMenu = document.querySelector('#my-appointmentSection');
+                            const consultationMenu = document.querySelector('#my-consultation');
+                            const activeConsultationLink = Array.from(consultationMenu?.querySelectorAll('a') ?? [])
+                                .find((link) => link.href === window.location.href);
+
+                            appointmentMenu?.querySelectorAll('.active, .menuitem-active').forEach((item) => {
+                                item.classList.remove('active', 'menuitem-active');
+                            });
+                            appointmentMenu?.classList.remove('show');
+                            appointmentMenu?.parentElement.classList.remove('menuitem-active');
+                            appointmentsTab?.classList.add('show');
+                            appointmentsTab?.parentElement.classList.add('menuitem-active');
+                            consultationMenu?.classList.add('show');
+                            consultationMenu?.parentElement.classList.add('menuitem-active');
+                            activeConsultationLink?.classList.add('active');
+                            activeConsultationLink?.parentElement.classList.add('menuitem-active');
+                        </script>
+                    @endpush
+                @endif
                 @php
                     $accountingPermissions = \Spatie\Permission\Models\Permission::where('group', 'accounting')
                         ->get(['name'])

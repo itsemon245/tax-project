@@ -175,16 +175,8 @@ class UserAppointmentController extends Controller {
     }
 
     public function approve(int $id) {
-        $appointment = UserAppointment::find($id);
-        if (null != $appointment->expert_profile_id) {
-            $expert = auth()->user()->expertProfile;
-            if (null != $expert && $appointment->expert_profile_id != $expert->id) {
-                return back()->with([
-                    'alert-type' => 'warning',
-                    'message' => 'This consultation does not belong to you!',
-                ]);
-            }
-        }
+        $appointment = UserAppointment::findOrFail($id);
+        $this->authorizeAppointmentAction($appointment, 'approve');
         $appointment->is_approved = true;
         $appointment->approved_at = now();
         $appointment->update();
@@ -210,16 +202,8 @@ class UserAppointmentController extends Controller {
     }
 
     public function complete(int $id) {
-        $appointment = UserAppointment::find($id);
-        if (null != $appointment->expert_profile_id) {
-            $expert = auth()->user()->expertProfile;
-            if (null != $expert && $appointment->expert_profile_id != $expert->id) {
-                return back()->with([
-                    'alert-type' => 'warning',
-                    'message' => 'This consultation does not belong to you!',
-                ]);
-            }
-        }
+        $appointment = UserAppointment::findOrFail($id);
+        $this->authorizeAppointmentAction($appointment, 'update');
         $appointment->is_completed = true;
         $appointment->completed_at = now();
         $appointment->update();
@@ -240,16 +224,8 @@ class UserAppointmentController extends Controller {
     }
 
     public function destroy(int $id) {
-        $appointment = UserAppointment::find($id);
-        if (null != $appointment->expert_profile_id) {
-            $expert = auth()->user()->expertProfile;
-            if (null != $expert && $appointment->expert_profile_id != $expert->id) {
-                return back()->with([
-                    'alert-type' => 'warning',
-                    'message' => 'This consultation does not belong to you!',
-                ]);
-            }
-        }
+        $appointment = UserAppointment::findOrFail($id);
+        $this->authorizeAppointmentAction($appointment, 'delete');
         $appointment->delete();
         $alert = [
             'message' => 'Appointment Deleted',
@@ -257,5 +233,17 @@ class UserAppointmentController extends Controller {
         ];
 
         return back()->with($alert);
+    }
+
+    private function authorizeAppointmentAction(UserAppointment $appointment, string $action): void {
+        $user = auth()->user();
+        $type = null != $appointment->expert_profile_id ? 'consultation' : 'appointment';
+
+        abort_unless($user->hasRole('super admin') || $user->can($action.' '.$type), 403, 'You do not have permission to manage this '.$type.'.');
+
+        if (null != $appointment->expert_profile_id) {
+            $expert = $user->expertProfile;
+            abort_if(null != $expert && $appointment->expert_profile_id != $expert->id, 403, 'This consultation does not belong to you.');
+        }
     }
 }

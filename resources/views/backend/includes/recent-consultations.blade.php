@@ -14,9 +14,9 @@
                 <th>Status</th>
                 <th>Location</th>
                 <th>Created at</th>
-                @canany(['update appointment', 'approve appointment'])
+                @can('approve consultation')
                     <th>Action</th>
-                @endcanany
+                @endcan
             </tr>
         </thead>
 
@@ -67,7 +67,7 @@
                             <span class="badge bg-warning p-1 fs-6">Yet to complete</span>
                         @endif
                     </td>
-                    if($appointment->map)
+                    @if ($appointment->map)
                         <td>
                             <strong>Location: {{ $appointment->map->location }}</strong>
                             <strong class="d-block">Address:</strong>
@@ -87,7 +87,7 @@
                             {{ $appointment->created_at->format('d F, Y') }}
                         </span>
                     </td>
-                    @canany(['update appointment', 'approve appointment'])
+                    @can('approve consultation')
                         <td>
                             <form action="{{ route('user-appointments.approve', $appointment->id) }}" method="post">
                                 @csrf
@@ -97,7 +97,7 @@
                                 </button>
                             </form>
                         </td>
-                    @endcanany
+                    @endcan
                 </tr>
             @empty
                 <tr>
