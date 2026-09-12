@@ -22,7 +22,7 @@
                 @endisset
                 <div class="d-flex justify-content-center">
                     <div class="w-100" style="max-width: 1024px;" class="px-md-0 px-2">
-                        <div id="progressbarwizard">
+                        <div id="progressbarwizard" data-validate-wizard>
 
                             <div class="d-flex justify-content-center">
                                 <ul class="nav nav-pills bg-light nav-justified form-wizard-header w-100" role="tablist">
@@ -71,6 +71,18 @@
                             </div>
 
 
+                            <div class="alert alert-danger {{ $errors->any() ? '' : 'd-none' }}"
+                                data-wizard-errors role="alert">
+                                @if ($errors->any())
+                                    <strong>Please correct the following before continuing:</strong>
+                                    <ul class="mb-0 mt-2">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
+
                             <div class="tab-content ">
 
                                 <div id="bar" class="progress my-3" style="height: 7px;">
@@ -98,7 +110,7 @@
                                                 </div>
                                                 <input type="radio" class="location-input" name="is_physical"
                                                     data-effected="#appointment-type" data-cards=".appointment"
-                                                    id="appointment-input" value="{{ true }}" hidden checked>
+                                                    id="appointment-input" value="1" hidden checked>
                                             </a>
                                             <a @if ($expertProfile) href="{{ route('consultation.virtual', $expertProfile->id) }}"
                                                 @else
@@ -111,7 +123,7 @@
                                                     </p>
                                                 </div>
                                                 <input type="radio" class="location-input" name="is_physical"
-                                                    value="{{ false }}" data-effected="#appointment-type-2"
+                                                    value="0" data-effected="#appointment-type-2"
                                                     data-cards=".appointment" id="appointment-input-2" hidden>
                                             </a>
                                             @if ($office)
@@ -137,7 +149,7 @@
                                             @endif
                                         </div>
                                         @if ($office == null)
-                                            <div class="col-md-5 location-selector">
+                                            <div class="col-md-5 location-selector" data-wizard-requires-location>
 
                                                 <h4 class="text-center mb-2">
                                                     Which Office Do You Prefer?
@@ -226,7 +238,7 @@
                                                 </div>
                                             </div>
                                         @else
-                                            <div class="col-md-6 time-selector">
+                                            <div class="col-md-6 time-selector" data-wizard-requires-time>
                                                 <h4>What time works best for you?</h4>
                                                 <div class="border rounded p-3" style="overflow-y: scroll; height:400px;">
                                                     @php
@@ -289,7 +301,7 @@
                                                 @endif
                                             </div>
 
-                                            <div class="col-md-6 time-selector">
+                                            <div class="col-md-6 time-selector" data-wizard-requires-time>
                                                 <h4>What time works best for you?</h4>
                                                 <div class="border rounded p-3" style="overflow-y: scroll; height:400px;">
                                                     @php
@@ -326,23 +338,24 @@
                                 <div class="tab-pane my-3" id="tab-3" role="tabpanel">
                                     <div class="row">
                                         <x-backend.form.text-input type='text' class="mb-2 user-info" label="Name"
-                                            name="name" data-target="#push-name" :value="auth()->user() !== null ? auth()->user()->name : ''" required />
+                                            name="name" data-target="#push-name" data-wizard-label="Name" :value="auth()->user() !== null ? auth()->user()->name : ''" required />
                                         <x-backend.form.text-input type='text' class="mb-2 user-info" label="Email"
-                                            name="email" data-target="#push-email" :value="auth()->user() !== null ? auth()->user()->email : ''" required />
+                                            name="email" data-target="#push-email" data-wizard-label="Email" :value="auth()->user() !== null ? auth()->user()->email : ''" required />
                                         <x-backend.form.text-input type='text' class="mb-2 user-info" label="Phone"
-                                            name="phone" data-target="#push-phone" :value="auth()->user() !== null ? auth()->user()->phone : ''" required />
+                                            name="phone" data-target="#push-phone" data-wizard-label="Phone" :value="auth()->user() !== null ? auth()->user()->phone : ''" required />
                                         <div class="d-flex align-items-center justify-content-between gap-3">
                                             <div class="flex-grow-1">
                                                 <label for="district">District <span class="text-danger">*</span></label>
                                                 <select class="w-100 user-info" id="district" name="district"
                                                     data-target="#push-district" placeholder="Select District..."
-                                                    required>
+                                                    data-wizard-label="District" required>
                                                 </select>
                                             </div>
                                             <div class="flex-grow-1">
                                                 <label for="thana">Thana <span class="text-danger">*</span></label>
                                                 <select class="w-100 user-info" id="thana" name="thana"
-                                                    data-target="#push-thana" placeholder="Select Thana..." required>
+                                                    data-target="#push-thana" placeholder="Select Thana..."
+                                                    data-wizard-label="Thana" required>
                                                     <option disabled selected>Select District First</option>
                                                 </select>
                                             </div>

@@ -32,7 +32,7 @@
                         <x-backend.form.select-input id="expert-select" name="user_id" label="Select Expert"
                             placeholder="Select Expert">
                             @foreach ($users as $id => $name)
-                                <option value="{{ $id }}" @selected(request()->query('user_id') == $id)>{{ $name }}
+                                <option value="{{ $id }}" @selected(old('user_id', $expertProfile->user_id) == $id)>{{ $name }}
                                 </option>
                             @endforeach
                         </x-backend.form.select-input>

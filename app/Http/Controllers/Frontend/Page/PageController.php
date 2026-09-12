@@ -49,7 +49,8 @@ class PageController extends Controller {
     }
 
     public function appointmentPage(Request $request, ?ExpertProfile $expertProfile = null) {
-        $userId = $expertProfile ? $expertProfile->user_id : User::role('super admin')->first()?->id;
+        $admin = User::role('super admin')->first();
+        $userId = $expertProfile?->user_id ?? $admin?->id;
         $carbon = now('Asia/Dhaka')->subDays(4)->locale('en_BD');
 
         $dates = [];
@@ -58,7 +59,6 @@ class PageController extends Controller {
             $dates[$date->format('l, F d, Y')] = AppointmentTime::where('user_id', $userId)->where('day', $date->format('l'))->first()->times ?? [];
         }
         $office = !empty($request->query('office_id')) ? Map::find($request->query('office_id')) : null;
-        $admin = User::role('super admin')->first();
         $defaultDistrict = $request->query('branch-district', 'Chattogram');
         if (null == $office) {
             $maps = Map::where(function (Builder $q) use ($request, $expertProfile, $admin, $defaultDistrict) {
@@ -112,7 +112,7 @@ class PageController extends Controller {
     }
 
     public function appointmentVirtual(Request $request, ?ExpertProfile $expertProfile = null) {
-        $userId = $expertProfile ? $expertProfile->user_id : User::role('super admin')->first()?->id;
+        $userId = $expertProfile?->user_id ?? User::role('super admin')->first()?->id;
         $carbon = now('Asia/Dhaka')->subDays(4)->locale('en_BD');
 
         $dates = [];
